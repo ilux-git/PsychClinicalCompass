@@ -5,6 +5,7 @@ from fastapi import FastAPI
 from app.api.deps import get_compass_session  # noqa: F401
 from app.db.session import dispose_engines, ping_databases
 from app.modules.assessments.router import router as assessments_router
+from app.modules.messaging.router import router as messaging_router
 
 
 @asynccontextmanager
@@ -16,6 +17,7 @@ async def lifespan(app: FastAPI):
 
 app = FastAPI(title="Clinical Compass", lifespan=lifespan)
 app.include_router(assessments_router)
+app.include_router(messaging_router)
 
 
 @app.get("/health")

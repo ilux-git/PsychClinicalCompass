@@ -10,6 +10,7 @@ from app.core.config import get_settings
 from app.db.base import Base
 import app.modules.access.models
 import app.modules.assessments.models
+import app.modules.messaging.models
 import app.modules.patients.models
 
 config = context.config
