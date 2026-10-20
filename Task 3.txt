@@ -1,0 +1,29 @@
+Step 3: Assessment Engine Module (03) and Outbox Pattern
+Here we implement the questionnaire logic and the reliable event bus.
+
+Task 3: Assessments and Event Bus.
+Implement the Assessment Engine module (03) and the Outbox pattern.
+
+What to do:
+
+Models (app/modules/assessments/models.py):
+
+QuestionnaireResponse (id, patient_id, form_version, score, risk_flags, created_at).
+
+OutboxEvent (id, event_type, payload_json, status [pending/processed], created_at) — table for the Outbox pattern.
+
+Business Logic (app/modules/assessments/service.py):
+
+Method to save questionnaire responses (scoring logic for PHQ-9, GAD-7).
+
+Crucial: When saving the questionnaire and detecting a risk, the method must atomically write an OutboxEvent within the same DB transaction.
+
+API (app/modules/assessments/router.py):
+
+POST /assessments/responses — endpoint to save responses (accessible only to the patient role).
+
+Background Worker (Stub):
+
+Create app/workers/outbox_worker.py — a simple loop that reads pending events from OutboxEvent every N seconds and logs them (simulating dispatch to Redis/Celery).
+
+Output the code for models, service (with the scoring logic), and router.

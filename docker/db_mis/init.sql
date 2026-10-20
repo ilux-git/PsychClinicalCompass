@@ -1,0 +1,16 @@
+CREATE ROLE mis_reader WITH LOGIN PASSWORD 'mis_readonly';
+GRANT CONNECT ON DATABASE mis TO mis_reader;
+CREATE TABLE patients (id BIGSERIAL PRIMARY KEY, full_name VARCHAR(255) NOT NULL, diagnoses JSONB NOT NULL DEFAULT '[]'::jsonb, prescriptions JSONB NOT NULL DEFAULT '[]'::jsonb);
+INSERT INTO patients (full_name, diagnoses, prescriptions) VALUES ('Ivan Petrov', '["F32.1"]'::jsonb, '["Sertraline 50mg"]'::jsonb);
+INSERT INTO patients (full_name, diagnoses, prescriptions) VALUES ('Maria Ivanova', '["F41.1"]'::jsonb, '["Escitalopram 10mg"]'::jsonb);
+INSERT INTO patients (full_name, diagnoses, prescriptions) VALUES ('Alexander Sokolov', '["F32.1", "F41.1"]'::jsonb, '["Fluoxetine 20mg"]'::jsonb);
+INSERT INTO patients (full_name, diagnoses, prescriptions) VALUES ('Elena Kuznetsova', '["F43.1"]'::jsonb, '["Prazosin 2mg"]'::jsonb);
+INSERT INTO patients (full_name, diagnoses, prescriptions) VALUES ('Dmitry Volkov', '["F32.1"]'::jsonb, '["Venlafaxine 75mg"]'::jsonb);
+INSERT INTO patients (full_name, diagnoses, prescriptions) VALUES ('Olga Smirnova', '["F41.1"]'::jsonb, '["Mirtazapine 15mg"]'::jsonb);
+INSERT INTO patients (full_name, diagnoses, prescriptions) VALUES ('Nikolai Petrov', '["F32.1", "F43.1"]'::jsonb, '["Duloxetine 60mg"]'::jsonb);
+INSERT INTO patients (full_name, diagnoses, prescriptions) VALUES ('Anna Lebedeva', '["F43.1"]'::jsonb, '["Clonazepam 0.5mg"]'::jsonb);
+INSERT INTO patients (full_name, diagnoses, prescriptions) VALUES ('Sergei Ivanov', '["F32.1"]'::jsonb, '["Bupropion 150mg"]'::jsonb);
+INSERT INTO patients (full_name, diagnoses, prescriptions) VALUES ('Tatiana Romanova', '["F41.1", "F43.1"]'::jsonb, '["Quetiapine 50mg"]'::jsonb);
+GRANT USAGE ON SCHEMA public TO mis_reader;
+GRANT SELECT ON ALL TABLES IN SCHEMA public TO mis_reader;
+ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT SELECT ON TABLES TO mis_reader;

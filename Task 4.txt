@@ -1,0 +1,27 @@
+Step 4: Messaging Hub Module (06)
+Implementing the chat and Telegram integration.
+
+Task 4: Messaging Hub.
+Implement the Messaging Hub module (06) according to the technical specifications (single source of truth for messages).
+
+What to do:
+
+Models (app/modules/messaging/models.py):
+
+Message (id, patient_id, sender_id, sender_role, text, status [queued, sent, read], channel [web, tg_doctor, tg_patient], external_message_id, created_at).
+
+Business Logic (app/modules/messaging/service.py):
+
+send_message method: accepts a message, saves it to the DB, and if the channel is Telegram, creates an OutboxEvent to send to the Telegram API.
+
+API (app/modules/messaging/router.py):
+
+GET /conversations/{patient_id}/messages — dialogue history.
+
+POST /conversations/{patient_id}/messages — send a message (accessible to doctor and patient).
+
+Webhook (app/modules/messaging/router.py):
+
+POST /integrations/telegram/webhook — endpoint to receive messages from Telegram (with secret token verification).
+
+Ensure the logic prevents message duplication (using external_message_id). Output the code.

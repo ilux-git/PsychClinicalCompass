@@ -1,0 +1,54 @@
+services:
+  app:
+    build: "."
+    ports:
+      - "8000:8000"
+    env_file: ".env"
+    depends_on:
+      db_compass:
+        condition: service_healthy
+      db_mis:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    command: ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]
+    volumes:
+      - ./alembic:/app/alembic
+      - ./alembic.ini:/app/alembic.ini
+  db_compass:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: compass
+      POSTGRES_PASSWORD: compass
+      POSTGRES_DB: compass
+    volumes:
+      - compass_pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready", "-U", "compass", "-d", "compass"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+  db_mis:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: mis_user
+      POSTGRES_PASSWORD: mis_pass
+      POSTGRES_DB: mis
+    volumes:
+      - mis_pgdata:/var/lib/postgresql/data
+      - ./docker/db_mis/init.sql:/docker-entrypoint-initdb.d/init.sql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready", "-U", "mis_user", "-d", "mis"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+  redis:
+    image: redis:7-alpine
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+volumes:
+  compass_pgdata:
+  mis_pgdata:

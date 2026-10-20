@@ -1,0 +1,21 @@
+Step 5: Documentation and Finalization
+Writing the README and verifying the build.
+
+Task 5: Documentation.
+Write the README.md file for the generated project.
+
+What should be in the README:
+
+Architecture description (dual DB, modular monolith).
+
+System requirements (Docker, Docker Compose).
+
+Startup instructions: Detailed commands to run via docker compose up --build.
+
+Instructions on how to apply Alembic migrations (if we set them up) or how the databases initialize on first startup.
+
+List of available endpoints (Swagger documentation).
+
+Test user credentials (generate a seed.py script to populate the DB with test users: doctor, patient, admin, and 10 synthetic patients).
+
+Output the text of README.md and the app/db/seed.py script.

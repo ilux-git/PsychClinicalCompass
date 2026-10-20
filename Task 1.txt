@@ -1,0 +1,24 @@
+Step 1: Foundation, Infrastructure, and Base DB
+This step creates the skeleton, configuration, and database connections.
+
+Task 1: Project Foundation.
+Generate the files needed to launch the project and set up the basic structure.
+
+What to do:
+
+Create docker-compose.yml with the following services: app (FastAPI), db_compass (PostgreSQL), db_mis (PostgreSQL), and redis (for queues).
+
+Create requirements.txt (fastapi, uvicorn, sqlalchemy, asyncpg, alembic, pydantic-settings, redis, celery or arq).
+
+Create .env.example with environment variables for both databases.
+
+Create the folder structure (empty __init__.py files where necessary): app/core/config.py, app/db/session.py, app/db/base.py, app/main.py.
+
+In app/db/session.py, set up two asynchronous engines and session makers: one for Compass DB, and the second for MIS DB.
+
+In app/core/config.py, set up environment variable loading using pydantic-settings.
+
+In app/main.py, create the basic FastAPI application with lifespan events (DB connection on startup).
+
+Important: Do not create table models yet. Only infrastructure. Output the code for all files with their full paths.
+

@@ -1,0 +1,31 @@
+Step 2: Core Models and System Core
+This step creates the entities essential for the rest of the modules (Users, Patients).
+
+Task 2: Core (Auth & Patients).
+Create the base SQLAlchemy models and structure for the "Access" and "Patients" modules.
+
+What to do:
+
+Compass DB Models (app/modules/access/models.py and app/modules/patients/models.py):
+
+User (id, role [doctor/patient/admin], hashed_password, created_at).
+
+Patient (id, mis_id, full_name, doctor_id).
+
+PatientMapping (mapping table for MIS and Compass identifiers).
+
+MIS DB Models (app/modules/integration/mis_models.py):
+
+MIS_Patient (id, full_name, diagnoses, prescriptions) — read-only.
+
+Security (app/core/security.py):
+
+Stubs for JWT token creation and password hashing.
+
+Dependencies (app/api/deps.py):
+
+get_current_user function (extracts user from token).
+
+require_role(roles: list) function (checks RBAC, raises 403 if the role is not allowed).
+
+Output the code for models, security, and deps. Do not write routers yet, only the foundation for them.
