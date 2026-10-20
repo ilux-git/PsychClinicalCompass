@@ -1,0 +1,141 @@
+Project VISION: "Clinical Compass" Backend Core
+1. Project Overview
+You are a Senior Python Backend Developer and Software Architect. Your goal is to build the backend core for a medical platform called "Clinical Compass". This is a Modular Monolith designed for a medical environment, prioritizing data integrity, strict role-based access control (RBAC), and reliable asynchronous event processing.
+
+2. Tech Stack & Architectural Requirements
+Language: Python 3.11+
+
+Framework: FastAPI
+
+ORM: SQLAlchemy 2.0 (with asyncpg)
+
+Migrations: Alembic
+
+Validation: Pydantic v2
+
+Background Processing: Celery + Redis (or ARQ) for the Outbox pattern and background tasks.
+
+Containerization: Docker + Docker Compose
+
+Architecture: Modular Monolith. The project must be split into independent directories inside app/modules/. Each module must contain layers: router (API), schemas (Pydantic), models (SQLAlchemy), and service (business logic).
+
+Dual Database Setup:
+
+MIS_DB: Read-only (for demo purposes). Source of truth for patient demographics, diagnoses, and prescriptions.
+
+Compass_DB: Read/Write. Stores users, chats, questionnaires, notes, and alerts.
+
+Note: Configure two separate SessionMaker instances (or use separate schemas within a single PostgreSQL instance for skeleton simplicity, but logically separate the models).
+
+Security: Stub for JWT authorization and Dependency Injection for RBAC (roles: doctor, patient, admin).
+
+3. Target Directory Structure
+The project must strictly follow this directory layout:
+
+text
+clinical-compass/
+├── alembic/
+├── app/
+│   ├── api/
+│   │   ├── deps.py          # Dependencies (auth, db sessions, RBAC)
+│   │   └── v1/
+│   │       └── api.py       # Aggregates all routers
+│   ├── core/
+│   │   ├── config.py        # Settings via pydantic-settings
+│   │   ├── security.py      # JWT, hashing
+│   │   └── events.py        # Event bus / Outbox
+│   ├── db/
+│   │   ├── base.py          # Base declarative
+│   │   ├── mis_db.py        # MIS connection settings
+│   │   └── compass_db.py    # Compass connection settings
+│   ├── modules/
+│   │   ├── access/          # Module 01: User & Access Management
+│   │   ├── patients/        # Module 02: Patient Management
+│   │   ├── assessments/     # Module 03: Assessment Engine
+│   │   ├── clinical/        # Module 04: Clinical Decision Engine
+│   │   ├── adherence/       # Module 05: Treatment & Adherence
+│   │   ├── messaging/       # Module 06: Messaging Hub
+│   │   ├── notes/           # Module 07: Doctor Notes & Tasks
+│   │   ├── alerts/          # Module 08: Alert & Crisis Engine
+│   │   ├── availability/    # Module 09: Doctor Availability
+│   │   ├── analytics/       # Module 10: Analytics & Reporting
+│   │   ├── integration/     # Module 11: MIS Integration Adapter
+│   │   └── audit/           # Module 12: Audit & Security
+│   └── main.py              # FastAPI entry point
+├── docker-compose.yml
+├── Dockerfile
+├── requirements.txt
+└── README.md
+4. Execution Roadmap (Iterative Scope)
+Do not generate all code at once. We will build this step-by-step. Wait for my explicit command to proceed to the next phase.
+
+Phase 1: Infrastructure & Foundation
+Create docker-compose.yml (FastAPI app, db_compass PostgreSQL, db_mis PostgreSQL, Redis).
+
+Create requirements.txt and .env.example.
+
+Implement app/core/config.py and app/db/session.py with dual async database engines.
+
+Set up app/main.py with basic FastAPI initialization and lifespan events.
+
+Deliverable: Infrastructure files only. No DB models yet.
+
+Phase 2: Core Entities & Security
+Create SQLAlchemy models for both DBs.
+
+Compass DB Models: User (id, role), Patient (id, mis_id), PatientMapping.
+
+MIS DB Models: MIS_Patient (id, full_name, diagnoses) — Read-only.
+
+Implement app/core/security.py (JWT and password hashing stubs).
+
+Implement app/api/deps.py with get_current_user and require_role(["doctor", "admin"]) (returns 403 if role mismatch).
+
+Deliverable: Models, security utilities, and dependency injection.
+
+Phase 3: Assessment Engine & Outbox Pattern
+Compass DB Models: QuestionnaireResponse (id, patient_id, score), OutboxEvent (id, event_type, payload, processed).
+
+Service Layer: Implement a basic service to save questionnaire responses and calculate scores (PHQ-9, GAD-7). When saving, atomically write an OutboxEvent.
+
+API: Create POST /assessments/responses (accessible to patient).
+
+Worker: Create a stub background worker to process OutboxEvent records.
+
+Deliverable: Assessment models, business logic with Outbox pattern, and API endpoints.
+
+Phase 4: Messaging Hub & Skeleton Modules
+Compass DB Models: Message (id, sender_id, text, status), Alert (id, patient_id, severity, status).
+
+Service Layer: Implement send_message logic that saves to DB and creates an OutboxEvent.
+
+API:
+
+GET /conversations/{patient_id}/messages
+
+POST /conversations/{patient_id}/messages
+
+POST /integrations/telegram/webhook (with stub verification)
+
+Module Skeletons: For the remaining 12 modules, create standard router.py files with placeholder endpoints (e.g., {"status": "not_implemented"}) and empty schemas.py files.
+
+Specific Endpoints (Stubs): POST /auth/login, GET /patients, GET /patients/{id}/timeline, POST /alerts/{id}/acknowledge.
+
+Deliverable: Messaging logic and the scaffolding for all 12 modules.
+
+Phase 5: Documentation & Initialization
+Create a seed.py script to populate the database with test users (doctor, patient, admin) and a few MIS_Patient records.
+
+Write a comprehensive README.md including architecture overview, local setup instructions (docker compose up --build), and Swagger API documentation link.
+
+5. Coding Standards & Rules
+Output Format: Output code sequentially, file by file, always stating the full file path.
+
+Modern Python: Use strict type hints and async/await everywhere applicable.
+
+Environment Variables: All secrets and connection strings must be loaded from .env. Provide the .env.example.
+
+TODO Comments: Where complex clinical logic, actual Telegram integrations, or ML models will eventually go, leave a comment: # TODO: Implement business logic according to Tech Specs.
+
+Wait for Input: Acknowledge this VISION document and wait for the command: "Proceed to Phase 1".
+

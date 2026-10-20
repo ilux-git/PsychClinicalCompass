@@ -2,6 +2,52 @@
 
 A modular monolith backend for a medical platform: patient questionnaires (PHQ-9/GAD-7), doctor-patient messaging with Telegram integration, and a reliable outbox-based event pipeline. FastAPI + SQLAlchemy 2.0 (async) + Pydantic v2 + PostgreSQL + Redis.
 
+## Project Vision & Roadmap (for the team)
+
+**Clinical Compass** is the backend core of a medical platform. Priorities: data integrity, strict role-based access control, reliable asynchronous event processing. The full product brief lives in `VISION.txt` — read it before proposing architecture changes.
+
+**Module map** (each module = `router` / `schemas` / `models` / `service` layers inside `app/modules/<name>/`):
+
+| # | Module | Status |
+|---|---|---|
+| 01 | access — users & access management | models + RBAC deps implemented |
+| 02 | patients — patient management | models implemented |
+| 03 | assessments — assessment engine (PHQ-9/GAD-7 + outbox) | implemented & verified |
+| 04 | clinical — clinical decision engine | planned |
+| 05 | adherence — treatment & adherence | planned |
+| 06 | messaging — messaging hub (web + Telegram) | implemented & verified |
+| 07 | notes — doctor notes & tasks | planned |
+| 08 | alerts — alert & crisis engine | planned |
+| 09 | availability — doctor availability | planned |
+| 10 | analytics — analytics & reporting | planned |
+| 11 | integration — MIS integration adapter | read-only models implemented |
+| 12 | audit — audit & security | planned |
+
+**Near-term backlog, in order:**
+
+1. `POST /auth/login` — real login. Requires adding a `username` column to `User` (one migration), seed update, and a login router. Until then, obtain JWTs from `python -m app.db.seed`.
+2. Skeletons (`router.py` with `not_implemented` placeholders) for modules 04, 05, 07–10, 12.
+3. `POST /alerts/{id}/acknowledge` and `GET /patients/{id}/timeline` stubs per VISION.
+
+**Known deviations from VISION (accepted, revisit if needed):**
+
+- Background worker is a plain asyncio polling loop (ARQ is a declared dependency; Celery was rejected — sync workers fight the async stack).
+- Routers are mounted directly in `app/main.py`; the `app/api/v1/api.py` aggregator from VISION is not built yet.
+- MIS DB is a separate PostgreSQL instance (not just a schema), connected via a SELECT-only role — stronger isolation than the VISION minimum.
+
+## Coding Standards
+
+- Strict type hints and `async`/`await` everywhere.
+- Every module follows the four-layer layout: `router` (API) / `schemas` (Pydantic) / `models` (SQLAlchemy) / `service` (business logic). Routers stay thin; services own the rules.
+- All secrets and connection strings come from `.env` (see `.env.example`); never hardcode them.
+- Where complex clinical logic, real Telegram integration, or ML models will eventually land, leave `# TODO: Implement business logic according to Tech Specs`.
+
+## Team Workflow
+
+- Branch convention: `agent/<task-name>` cut from `main`. Never commit directly to `main` — PRs only.
+- Commit per completed unit of work with a descriptive message; include evidence (test output, screenshots) in the PR body.
+- Dev credentials in `docker/db_mis/init.sql` and `docker-compose.yml` are throwaway local-dev only — never connect them to a real MIS.
+
 ## Architecture
 
 ```
