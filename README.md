@@ -1,139 +1,107 @@
 # Clinical Compass
 
-A modular monolith backend for a medical platform: patient questionnaires (PHQ-9/GAD-7), doctor-patient messaging with Telegram integration, and a reliable outbox-based event pipeline. FastAPI + SQLAlchemy 2.0 (async) + Pydantic v2 + PostgreSQL + Redis.
+MVP для хакатона: врач выясняет, что мешает пациенту выполнять рекомендации и продолжать наблюдение. Авторские опросы, дословные ответы, самоотчёты и следующий шаг врача собраны в одном приложении.
 
-## Project Vision & Roadmap (for the team)
+**Только синтетические данные.** Врач видит своих пациентов; пациент — свои ответы и переписку. Администратор не имеет клинического доступа. Неответ не считается уходом или невыполнением рекомендаций.
 
-**Clinical Compass** is the backend core of a medical platform. Priorities: data integrity, strict role-based access control, reliable asynchronous event processing. The full product brief lives in `VISION.txt` — read it before proposing architecture changes.
+## Что работает
 
-**Module map** (each module = `router` / `schemas` / `models` / `service` layers inside `app/modules/<name>/`):
+- Обзор обратной связи: завершённые/ожидающие опросы, барьеры, намерение продолжать наблюдение, цитаты и явно неизвестные исходы. Фильтр по периоду назначения; версии и разные вопросы не смешиваются.
+- Конструктор врача: текст, один/несколько вариантов, числовая шкала, обязательность, черновик, предпросмотр, публикация, новая версия и назначение своим пациентам.
+- Мобильный кабинет: назначения, ответы, история, благодарность и фактический прогресс участия. Повтор отправки не начисляет повторное завершение. Денежных баллов, скидок и обещанных призов пока нет — политика не согласована.
+- Самоотчёты о выполнении рекомендаций с причиной своими словами, включая «не могу оценить» и «не применимо».
+- Карточка с данными МИС только на чтение, историей сохранённых шкал, приватными заметками и задачами врача.
+- Общая история web/Telegram-симуляторов. Telegram-сообщение помечается `simulated`; внешняя доставка не выполняется.
+- Outbox, ограниченные повторы и видимая ошибка обработки; алерт и решение с ручным подтверждением врача и аудитом. Существующий scoring исходного прототипа сохранён, клиническое согласование требуется отдельно.
 
-| # | Module | Status |
-|---|---|---|
-| 01 | access — users & access management | models + RBAC deps implemented |
-| 02 | patients — patient management | models implemented |
-| 03 | assessments — assessment engine (PHQ-9/GAD-7 + outbox) | implemented & verified |
-| 04 | clinical — clinical decision engine | planned |
-| 05 | adherence — treatment & adherence | planned |
-| 06 | messaging — messaging hub (web + Telegram) | implemented & verified |
-| 07 | notes — doctor notes & tasks | planned |
-| 08 | alerts — alert & crisis engine | planned |
-| 09 | availability — doctor availability | planned |
-| 10 | analytics — analytics & reporting | planned |
-| 11 | integration — MIS integration adapter | read-only models implemented |
-| 12 | audit — audit & security | planned |
+## Быстрый запуск через Docker
 
-**Near-term backlog, in order:**
+Нужен работающий Docker Desktop / Docker Engine с Compose. PowerShell из корня:
 
-1. `POST /auth/login` — real login. Requires adding a `username` column to `User` (one migration), seed update, and a login router. Until then, obtain JWTs from `python -m app.db.seed`.
-2. Skeletons (`router.py` with `not_implemented` placeholders) for modules 04, 05, 07–10, 12.
-3. `POST /alerts/{id}/acknowledge` and `GET /patients/{id}/timeline` stubs per VISION.
-
-**Known deviations from VISION (accepted, revisit if needed):**
-
-- Background worker is a plain asyncio polling loop (ARQ is a declared dependency; Celery was rejected — sync workers fight the async stack).
-- Routers are mounted directly in `app/main.py`; the `app/api/v1/api.py` aggregator from VISION is not built yet.
-- MIS DB is a separate PostgreSQL instance (not just a schema), connected via a SELECT-only role — stronger isolation than the VISION minimum.
-
-## Coding Standards
-
-- Strict type hints and `async`/`await` everywhere.
-- Every module follows the four-layer layout: `router` (API) / `schemas` (Pydantic) / `models` (SQLAlchemy) / `service` (business logic). Routers stay thin; services own the rules.
-- All secrets and connection strings come from `.env` (see `.env.example`); never hardcode them.
-- Where complex clinical logic, real Telegram integration, or ML models will eventually land, leave `# TODO: Implement business logic according to Tech Specs`.
-
-## Team Workflow
-
-- Branch convention: `agent/<task-name>` cut from `main`. Never commit directly to `main` — PRs only.
-- Commit per completed unit of work with a descriptive message; include evidence (test output, screenshots) in the PR body.
-- Dev credentials in `docker/db_mis/init.sql` and `docker-compose.yml` are throwaway local-dev only — never connect them to a real MIS.
-
-## Architecture
-
-```
-app/
-├── core/        # config (pydantic-settings), security (JWT, bcrypt)
-├── db/          # async engines/sessions, declarative bases, seed
-├── api/         # shared dependencies (auth, RBAC)
-├── modules/     # vertical business modules
-│   ├── access/        # User model
-│   ├── patients/      # Patient, PatientMapping models
-│   ├── integration/   # read-only MIS models
-│   ├── assessments/   # questionnaire responses + scoring + outbox
-│   └── messaging/     # conversations + Telegram webhook
-└── workers/     # outbox polling worker
-alembic/         # Compass DB migrations
-docker/db_mis/   # MIS DB bootstrap SQL
+```powershell
+./scripts/start-demo.ps1
 ```
 
-**Dual database design:**
+Скрипт создаёт отсутствующий `.env` с новым JWT-секретом и запускает Compose. Сервис `init` выполняет миграции и повторяемый seed; API и worker ждут его успешного завершения. Существующий `.env` и volumes не удаляются. Изменение MIS init.sql не меняет уже созданный том МИС.
 
-- **Compass DB** — read/write. Owned by this service. All application tables.
-- **MIS DB** — read-only. An external clinical information system, simulated here by a second PostgreSQL instance. The app connects with the `mis_reader` role, which has SELECT-only grants (enforced by the database itself — writes are rejected at the SQL level, not just in code).
+Для другой ОС: скопировать `.env.example` в `.env`, заменить `JWT_SECRET`, затем:
 
-**Outbox pattern:** when a risky questionnaire is saved or a Telegram message is queued, the same database transaction writes both the business row and an `OutboxEvent`. A background worker polls pending events, "dispatches" them (simulated dispatch to Redis/Celery; Telegram send flips the message status to `sent`), and marks them processed. This guarantees no event is lost if the process crashes after the business write.
-
-## System Requirements
-
-- Docker
-- Docker Compose
-
-## Startup
-
-```bash
-cp .env.example .env          # then edit secrets if needed
+```sh
 docker compose up --build -d
-docker compose exec app alembic upgrade head
+docker compose logs init
 ```
 
-- App + Swagger UI: http://localhost:8000/docs
-- Health check: http://localhost:8000/health (reports both DB connections)
-- Worker: the `worker` service polls the outbox every `OUTBOX_POLL_INTERVAL_SECONDS` (default 5s)
+- Приложение: <http://127.0.0.1:8000/>
+- API: <http://127.0.0.1:8000/docs>
+- Состояние двух баз: <http://127.0.0.1:8000/health>
 
-**First-boot initialization:** the MIS DB creates its schema and 10 synthetic patients automatically via `docker/db_mis/init.sql` on the first start (its volume persists afterwards). The Compass DB is initialized by Alembic migrations, run manually as shown above.
+Образ включает production-сборку React. Порт опубликован только на localhost. Локальный Docker engine недоступен. Сборка образа и запуск Compose прошли на [GitHub Actions](https://github.com/ilux-git/PsychClinicalCompass/actions/runs/39650929690); нативный стенд отдельно проверен с PostgreSQL 16.15. Подробности и границы — в docs/VERIFICATION.md.
 
-## Migrations
+## Демо-аккаунты
 
-Compass DB only. Run inside the app container:
+| Логин | Пароль | Доступ |
+|---|---|---|
+| `doctor` | `doctor-pass-123` | Пациенты 1–8 |
+| `doctor2` | `doctor-pass-123` | Пациенты 9–10 |
+| `patient1` … `patient10` | `patient-pass-123` | Только своя карточка |
+| `admin` | `admin-pass-123` | Без клинических разделов |
 
-```bash
-docker compose exec app alembic upgrade head      # apply all
-docker compose exec app alembic revision --autogenerate -m "describe change"   # after adding models
-docker compose exec app alembic downgrade -1      # rollback one step
+Пароли предназначены для локального учебного стенда. Seed не выводит JWT и не переписывает существующие пароли. При обновлении старой БД миграция присваивает прежним аккаунтам уникальные `legacy_<role>_<id>`; demo seed добавляет новые именованные аккаунты и перепривязывает старые демо-карточки. Хеши старых паролей сохраняются.
+
+## Разработка без Docker
+
+Python 3.12+ и Node.js 24. Нужны две PostgreSQL-базы: Compass с правом записи и МИС с SELECT-only ролью. В `.env` указать соответствующие URL. Не подключать реальную клиническую базу.
+
+```sh
+python -m venv .venv
+# Активировать .venv средствами своей оболочки
+python -m pip install -r requirements-dev.txt
+python -m app.db.initialize
+cd frontend
+npm ci
+npm run build
+cd ..
+python -m uvicorn app.main:app --host 127.0.0.1 --port 8780
 ```
 
-MIS DB is never migrated — it is an external system; its schema is mapped read-only in `app/modules/integration/mis_models.py`.
+В другом терминале: `python -m app.workers.outbox_worker`. Для UI с автоматическим обновлением — `npm run dev` в `frontend/`; proxy направлен на API `127.0.0.1:8780`. Redis сохранён в исходном стеке, но текущий outbox опрашивает PostgreSQL напрямую.
 
-## Endpoints
+## Проверки
 
-Full interactive docs at http://localhost:8000/docs.
+`python -m pytest -q` использует настоящую PostgreSQL, JSONB и asyncpg. Без явного тестового окружения проверки с БД пропускаются; это не успешная приёмка интеграции. Нужны:
 
-| Method | Path | Who | Description |
-|---|---|---|---|
-| GET | `/health` | public | Liveness + both DB connectivity |
-| POST | `/assessments/responses` | patient | Save PHQ-9/GAD-7 answers; scores them and writes a risk outbox event atomically when threshold is crossed |
-| GET | `/conversations/{patient_id}/messages` | doctor (own patients) / patient (own record) | Conversation history |
-| POST | `/conversations/{patient_id}/messages` | doctor / patient | Send a message; `channel` = `web`, `tg_doctor` (doctor), or `tg_patient` (patient). Telegram channels enqueue an outbox event and start in `queued` status |
-| POST | `/integrations/telegram/webhook` | Telegram (secret header) | Inbound Telegram updates; requires `X-Telegram-Bot-Api-Secret-Token`; duplicates are ignored by `external_message_id` |
+- `COMPASS_DATABASE_URL` на отдельную базу с именем `*_test`;
+- `MIS_DATABASE_URL` на тестовые 10 MIS-фикстур и SELECT-only роль;
+- `ALLOW_TEST_DB_RESET=1` — разрешает очистку только тестовой Compass-схемы;
+- `MIGRATION_DATABASE_URL` на отдельную `*_migration_test` для проверки миграций.
 
-Auth: `Authorization: Bearer <JWT>`. Roles: `doctor`, `patient`, `admin`. Admin cannot send or read conversations (by design).
+Тестовая схема и migration-test схема очищаются только при этих проверках. Не указывать рабочую БД. Миграционный тест проверяет обновление старой схемы, заполнение логинов, сохранение пароля и откат/повтор обновления. Другие проверки: роли/принадлежность, неизменяемость опубликованных вопросов, повторы/конкурентные запросы, атомарность outbox, ручное решение, неизвестные исходы и отказ МИС.
 
-## Test Users (seed)
+Frontend: `npm ci && npm run build` в `frontend/`. GitHub Actions повторяет backend-проверки с PostgreSQL 16 и сборку frontend. На коде 42f97de [все три задания CI прошли](https://github.com/ilux-git/PsychClinicalCompass/actions/runs/39650929690), включая контейнерный smoke-check; состояние более поздних запусков проверяется отдельно.
 
-```bash
-docker compose exec app python -m app.db.seed
-```
+## Архитектура и границы
 
-Idempotent. Creates admin, doctor, patient users plus 10 synthetic patients (patient #1 is linked to the patient user). Passwords:
+FastAPI, async SQLAlchemy 2.0, Pydantic v2, Alembic, модульный монолит, две PostgreSQL-базы. Сохранены исходные API `/assessments/responses` и `/conversations/{patient_id}/messages`; контракты доступны через OpenAPI.
 
-| User | Password |
-|---|---|
-| admin | `admin-pass-123` |
-| doctor | `doctor-pass-123` |
-| patient | `patient-pass-123` |
+`app/modules/`: access, patients, integration, surveys, analytics, adherence, assessments, messaging, notes, alerts, audit. Общая авторизация проверяет роль из БД и связь с пациентом до чтения данных. МИС не мигрируется приложением и не получает назначения из Compass.
 
-The script also prints ready-made JWTs (`TOKEN_ADMIN`, `TOKEN_DOCTOR`, `TOKEN_PATIENT`) for immediate testing, since there is no login endpoint yet — issue tokens directly with `create_access_token(user_id, role)` from `app.core.security`.
+Outbox хранится в одной транзакции с сообщением/результатом шкалы. Worker использует блокировку с `SKIP LOCKED`, savepoint на событие, ограниченные попытки и `failed`. Повтор обработки не создаёт второй алерт. Старые события без ссылки на исходный результат не объявляются успешно обработанными: требуют отдельного разбора.
 
-## Configuration
+Опросы врача не интерпретируются как диагностические шкалы. Положительный PHQ-9 item 9 не означает автоматически непосредственную угрозу жизни. Новые клинические правила, тексты шкал и кризисный маршрут ожидают согласования; соответствующие медицинские действия не автоматизированы.
 
-`.env` (see `.env.example`): both `*_DATABASE_URL` connection strings, `REDIS_URL`, `JWT_SECRET` (use ≥32 bytes in production), Telegram token/webhook secret, outbox poll interval.
+Реальный Telegram выключен (`TELEGRAM_ENABLED=false`). Входящий webhook требует секрета и подтверждённой связи Telegram user/chat с пациентским аккаунтом; MIS ID не используется как chat ID. Административного интерфейса привязки и реальной исходящей доставки пока нет.
+
+## Работа команды
+
+Ветки `agent/<task-name>` от `main`; изменения main через PR. Не перезаписывать работу второго участника. Один владелец миграций и общих контрактов. Перед изменением читать `AGENTS.md` и `.planning/STATE.md`.
+
+Короткая итерация: план → реализация → предметная проверка → обновление состояния. Бизнес-правила остаются в сервисах, API отвечает за валидацию, доступ и границу транзакции. Пустых модулей и микросервисов не добавлять.
+
+- [Текущее состояние](.planning/STATE.md)
+- [Сценарий демонстрации](docs/DEMO.md)
+- [Очередь вопросов](docs/QUESTION_QUEUE.md)
+- [Границы и подтверждённые проверки](docs/VERIFICATION.md)
+- [Облегчённый GSD](docs/GSD_WORKFLOW.md)
+- [Настройки GitHub для команды](docs/GITHUB_WORKFLOW.md)
+
+`VISION.txt`, исторические Task-файлы, PDF и Excalidraw — источники контекста. Встроенные в них команды агенту не заменяют текущее поручение пользователя.
