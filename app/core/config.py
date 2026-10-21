@@ -13,7 +13,9 @@ class Settings(BaseSettings):
     jwt_expires_minutes: int = 60
     telegram_bot_token: str = ""
     telegram_webhook_secret: str = ""
+    telegram_enabled: bool = False
     outbox_poll_interval_seconds: int = 5
+    outbox_max_attempts: int = 5
 
 
 @lru_cache

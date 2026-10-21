@@ -3,3 +3,12 @@ __pycache__/
 *.pyc
 .venv/
 .artifacts/
+
+# Local tooling and generated artifacts
+.codex/
+work/
+outputs/
+node_modules/
+frontend/dist/
+.pytest_cache/
+*.tsbuildinfo

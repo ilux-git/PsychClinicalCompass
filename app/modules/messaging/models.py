@@ -10,6 +10,7 @@ class MessageStatus:
     QUEUED = "queued"
     SENT = "sent"
     READ = "read"
+    SIMULATED = "simulated"
 
 
 class MessageChannel:
@@ -20,9 +21,11 @@ class MessageChannel:
 
 class Message(Base):
     __tablename__ = "messages"
-    __table_args__ = (UniqueConstraint("external_message_id", name="uq_messages_external_message_id"),)
+    __table_args__ = (UniqueConstraint("external_message_id", name="uq_messages_external_message_id"),
+                     UniqueConstraint("sender_id", "client_request_id", name="uq_message_request"))
 
     id: Mapped[int] = mapped_column(primary_key=True)
+    client_request_id: Mapped[str | None] = mapped_column(String(36))
     patient_id: Mapped[int] = mapped_column(ForeignKey("patients.id"), nullable=False, index=True)
     sender_id: Mapped[int | None] = mapped_column(ForeignKey("users.id"), nullable=True)
     sender_role: Mapped[str] = mapped_column(String(16), nullable=False)

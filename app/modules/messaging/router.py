@@ -1,4 +1,5 @@
-from fastapi import APIRouter, Depends, Header, HTTPException, Request, status
+from fastapi import APIRouter, Depends, Header, HTTPException, Request, Query, status
+from secrets import compare_digest
 
 from app.api.deps import CompassSession, CurrentUser
 from app.core.config import get_settings
@@ -15,9 +16,11 @@ async def list_messages(
     patient_id: int,
     session: CompassSession,
     user: CurrentUser,
+    after_id: int | None = Query(default=None, ge=0),
+    limit: int = Query(default=100, ge=1, le=200),
 ) -> list[Message]:
     try:
-        return await get_history(session, user, patient_id)
+        return await get_history(session, user, patient_id, limit, after_id)
     except MessagingError as e:
         raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail=str(e))
 
@@ -32,7 +35,8 @@ async def post_message(
     if user.role not in (UserRole.doctor, UserRole.patient):
         raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Insufficient role")
     try:
-        message = await send_message(session, patient_id, user, payload.text, payload.channel)
+        message = await send_message(session, patient_id, user, payload.text, payload.channel,
+                                     str(payload.client_request_id) if payload.client_request_id else None)
         await session.commit()
     except MessagingError as e:
         raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail=str(e))
@@ -46,17 +50,32 @@ async def telegram_webhook(
     x_telegram_bot_api_secret_token: str | None = Header(default=None),
 ) -> dict[str, str]:
     settings = get_settings()
-    if not settings.telegram_webhook_secret or x_telegram_bot_api_secret_token != settings.telegram_webhook_secret:
+    # A shared webhook secret does not establish the patient's identity.
+    # Live Telegram remains disabled until channel binding is configured.
+    if not settings.telegram_enabled:
+        raise HTTPException(503, "Живой Telegram не подключён. Используйте авторизованный симулятор")
+    if not settings.telegram_webhook_secret or not compare_digest((x_telegram_bot_api_secret_token or "").encode(), settings.telegram_webhook_secret.encode()):
         raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Invalid webhook secret")
-    update = await request.json()
+    try:
+        update = await request.json()
+    except ValueError:
+        return {"status": "ignored"}
+    if not isinstance(update, dict) or not isinstance(update.get("message"), dict):
+        return {"status": "ignored"}
     message = update.get("message") or {}
     chat = message.get("chat") or {}
+    sender = message.get("from") or {}
+    if not isinstance(chat, dict) or not isinstance(sender, dict):
+        return {"status": "ignored"}
     chat_id = chat.get("id")
+    sender_id = sender.get("id")
     text = message.get("text")
-    if not isinstance(chat_id, int) or not isinstance(text, str) or not text:
+    if chat.get("type") != "private" or type(chat_id) is not int or type(sender_id) is not int or not isinstance(text, str) or not text.strip() or len(text) > 4096:
         return {"status": "ignored"}
     message_id = message.get("message_id")
-    external_id = f"tg:{chat_id}:{message_id}" if isinstance(message_id, int) else f"tg:{chat_id}:unknown"
-    await receive_telegram_message(session, chat_id, external_id, text)
+    if type(message_id) is not int:
+        return {"status": "ignored"}
+    external_id = f"tg:{chat_id}:{message_id}"
+    await receive_telegram_message(session, chat_id, external_id, text, sender_id)
     await session.commit()
     return {"status": "ok"}

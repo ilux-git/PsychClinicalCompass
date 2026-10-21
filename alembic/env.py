@@ -8,6 +8,7 @@ from sqlalchemy.ext.asyncio import async_engine_from_config
 
 from app.core.config import get_settings
 from app.db.base import Base
+import app.db.models
 import app.modules.access.models
 import app.modules.assessments.models
 import app.modules.messaging.models

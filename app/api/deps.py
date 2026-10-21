@@ -5,10 +5,12 @@ import jwt
 from fastapi import Depends, HTTPException, status
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 from sqlalchemy.ext.asyncio import AsyncSession
+from sqlalchemy import select
 
 from app.core.security import decode_token
 from app.db.session import async_session_compass
 from app.modules.access.models import User, UserRole
+from app.modules.patients.models import Patient
 
 bearer_scheme = HTTPBearer(auto_error=False)
 
@@ -41,6 +43,20 @@ async def get_current_user(
 
 
 CurrentUser = Annotated[User, Depends(get_current_user)]
+
+
+async def patient_for_user(session: AsyncSession, user: User, patient_id: int) -> Patient:
+    if user.role == UserRole.admin:
+        raise HTTPException(403, "Нет клинического доступа")
+    query = select(Patient).where(Patient.id == patient_id)
+    if user.role == UserRole.doctor:
+        query = query.where(Patient.doctor_id == user.id)
+    else:
+        query = query.where(Patient.user_id == user.id)
+    patient = await session.scalar(query)
+    if patient is None:
+        raise HTTPException(404, "Пациент не найден или недоступен")
+    return patient
 
 
 def require_role(roles: list[UserRole]) -> Callable[[User], Awaitable[User]]:
