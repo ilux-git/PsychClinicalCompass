@@ -386,7 +386,7 @@ function PatientCard({
                     aside={
                       <Badge>
                         {assignments.data?.filter((a) => a.submission).length ??
-                          0}{" "}
+                          "—"}{" "}
                         завершено
                       </Badge>
                     }
@@ -762,6 +762,8 @@ export function DoctorPatients({
       <ErrorBox message={patients.error} retry={patients.reload} />
       {patients.loading ? (
         <Loading />
+      ) : !filtered ? (
+        <Empty title="Список пациентов пока недоступен" />
       ) : !filtered?.length ? (
         <Empty title="Пациенты не найдены" />
       ) : (

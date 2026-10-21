@@ -359,7 +359,7 @@ export function PatientHome({
             {progress?.message ??
               "Каждый честный ответ помогает врачу понять, какая поддержка вам нужна."}
           </p>
-          {progress && (
+          {progress && progress.progress_percent !== null && (
             <div
               className="progress-track"
               role="progressbar"

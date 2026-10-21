@@ -52,6 +52,6 @@
 - `pytest`: 59 passed in 24.74s; `alembic check`: no new upgrade operations; production build: success.
 - [GitHub Actions](https://github.com/ilux-git/PsychClinicalCompass/actions/runs/39650929690): backend / frontend / containers завершились success на 42f97de. Container smoke подтвердил миграции/seed, health обеих БД, login, scope двух ролей и выдачу production UI.
 - GSD consistency и структура планов проходят; health без ошибок. W010 об отсутствии глобальных GSD agents ожидаем при согласованном core/inline-профиле; недостающие клинические результаты не закрыты фиктивным SUMMARY.
-- Ветка `agent/retention-mvp` опубликована. Main и правила GitHub не менялись. Backend 47fb56a, frontend/infra 42f97de; последующий документационный коммит не меняет приложение.
+- Ветка `agent/retention-mvp` опубликована, создан [черновик PR #1](https://github.com/ilux-git/PsychClinicalCompass/pull/1). Main и правила GitHub не менялись. Backend 47fb56a, frontend/infra 42f97de, документация 9fa1205. На 9fa1205 push/PR CI также прошёл; завершающее UI-исправление показывает неизвестность при отказе списков/счётчиков. Актуальные проверки — на странице PR #1.
 - Снимки сохранены в локальном outputs/: patient-mobile.png, patient-offline.png и финальный обзор врача. Секреты, runtime и снимки не коммитятся.
 - Следующие бизнес/клинические изменения зависят от Q01–Q07; техническая демонстрация этих решений не подменяет.

@@ -194,10 +194,12 @@ export function SurveyBuilder({
         <aside className="survey-library">
           <div className="section-heading">
             <h2>Библиотека</h2>
-            <span className="muted">{library.data?.length ?? 0}</span>
+            <span className="muted">{library.data?.length ?? "—"}</span>
           </div>
           {library.loading ? (
             <Loading />
+          ) : !library.data ? (
+            <Empty title="Библиотека пока недоступна" />
           ) : !library.data?.length ? (
             <Empty title="Начните с одного вопроса">
               Создайте опрос о том, что важно понять вашему пациенту.
