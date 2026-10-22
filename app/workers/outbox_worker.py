@@ -1,38 +1,84 @@
 import asyncio
 import logging
+from datetime import datetime, timedelta, timezone
 
-from sqlalchemy import select, update
+from sqlalchemy import select
+from sqlalchemy.dialects.postgresql import insert
 
 from app.core.config import get_settings
 from app.db.session import async_session_compass
 from app.modules.assessments.models import OutboxEvent
 from app.modules.messaging.models import Message, MessageStatus
+from app.modules.alerts.models import Alert, ClinicalDecision
+from app.modules.assessments.models import QuestionnaireResponse
+from app.modules.audit.service import record_event
+import app.db.models
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(name)s %(message)s")
 logger = logging.getLogger("app.outbox_worker")
 
 
 async def _handle_event(session, event: OutboxEvent) -> None:
-    logger.info("dispatching outbox event id=%s type=%s payload=%s", event.id, event.event_type, event.payload)
+    logger.info("dispatching event id=%s type=%s", event.id, event.event_type)
     if event.event_type == "telegram.send_message":
         message_id = event.payload.get("message_id")
-        if isinstance(message_id, int):
-            await session.execute(update(Message).where(Message.id == message_id).values(status=MessageStatus.SENT))
+        if type(message_id) is not int:
+            raise ValueError("MissingMessageReference")
+        message = await session.get(Message, message_id)
+        if message is None or message.patient_id != event.payload.get("patient_id") or not message.channel.startswith("tg_"):
+            raise ValueError("InvalidMessageReference")
+        message.status = MessageStatus.SIMULATED
+    elif event.event_type == "assessment.risk_detected":
+        assessment_id = event.payload.get("assessment_id")
+        if type(assessment_id) is not int:
+            raise ValueError("MissingAssessmentReference")
+        assessment = await session.get(QuestionnaireResponse, assessment_id)
+        if assessment is None or assessment.patient_id != event.payload.get("patient_id"):
+            raise ValueError("InvalidAssessmentReference")
+        reason = f"{assessment.form_type.upper()}: {assessment.score}. Требуется врачебная оценка результатов."
+        alert = (await session.execute(insert(Alert).values(patient_id=assessment.patient_id, source_event_id=event.id,
+            assessment_id=assessment.id, rule_id="assessment_flags", rule_version="backend_v0", severity="review_required",
+            reason=reason, status="created").on_conflict_do_nothing(index_elements=[Alert.source_event_id]).returning(Alert))).scalar_one_or_none()
+        if alert is None:
+            return
+        session.add(ClinicalDecision(patient_id=assessment.patient_id, alert_id=alert.id,
+            status="pending_review", version=1,
+            facts={"assessment_id": assessment.id, "form_type": assessment.form_type, "score": assessment.score,
+                   "risk_flags": assessment.risk_flags, "source": "existing_demo_scoring"},
+            missing_data=["clinical_review", "approved_clinical_rule_source"]))
+        record_event(session, None, assessment.patient_id, "alert.created", "alert", alert.id,
+                     {"rule_id": alert.rule_id, "rule_version": alert.rule_version})
+    else:
+        raise ValueError("UnsupportedEventType")
 
 
 async def process_pending_events() -> int:
     async with async_session_compass() as session:
         result = await session.execute(
-            select(OutboxEvent).where(OutboxEvent.status == "pending").order_by(OutboxEvent.id).limit(50)
+            select(OutboxEvent).where(OutboxEvent.status == "pending", OutboxEvent.next_attempt_at <= datetime.now(timezone.utc))
+            .order_by(OutboxEvent.id).limit(50).with_for_update(skip_locked=True)
         )
         events = list(result.scalars())
         if not events:
             return 0
+        processed = 0
         for event in events:
-            await _handle_event(session, event)
-            await session.execute(update(OutboxEvent).where(OutboxEvent.id == event.id).values(status="processed"))
+            event.attempts += 1
+            try:
+                async with session.begin_nested():
+                    await _handle_event(session, event)
+                    await session.flush()
+                event.status = "processed"
+                event.processed_at = datetime.now(timezone.utc)
+                event.last_error = None
+                processed += 1
+            except Exception as error:
+                event.last_error = type(error).__name__
+                event.status = "failed" if event.attempts >= get_settings().outbox_max_attempts else "pending"
+                event.next_attempt_at = datetime.now(timezone.utc) + timedelta(seconds=min(300, 2 ** min(event.attempts, 8)))
+                logger.warning("event id=%s attempt=%s error=%s", event.id, event.attempts, event.last_error)
         await session.commit()
-        return len(events)
+        return processed
 
 
 async def main() -> None:
@@ -43,8 +89,8 @@ async def main() -> None:
             processed = await process_pending_events()
             if processed:
                 logger.info("processed %s events", processed)
-        except Exception:
-            logger.exception("outbox poll failed")
+        except Exception as error:
+            logger.error("outbox poll failed error=%s", type(error).__name__)
         await asyncio.sleep(interval)
 
 

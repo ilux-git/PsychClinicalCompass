@@ -2,11 +2,14 @@ import logging
 
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
+from sqlalchemy.dialects.postgresql import insert
 
 from app.modules.assessments.models import OutboxEvent
-from app.modules.access.models import User
+from app.modules.access.models import User, UserRole, TelegramBinding
 from app.modules.messaging.models import Message, MessageChannel, MessageStatus
 from app.modules.patients.models import Patient
+from app.api.deps import patient_for_user
+from app.modules.audit.service import record_event
 
 logger = logging.getLogger("app.messaging")
 
@@ -15,18 +18,10 @@ class MessagingError(Exception):
     pass
 
 
-async def _get_patient(session: AsyncSession, patient_id: int) -> Patient:
-    patient = await session.get(Patient, patient_id)
-    if patient is None:
-        raise MessagingError(f"patient {patient_id} not found")
-    return patient
-
-
 def _validate_channel(user: User, channel: str) -> None:
     allowed_by_role: dict[str, set[str]] = {
         "doctor": {MessageChannel.WEB, MessageChannel.TG_DOCTOR},
         "patient": {MessageChannel.WEB, MessageChannel.TG_PATIENT},
-        "admin": {MessageChannel.WEB},
     }
     if channel not in allowed_by_role[user.role.value]:
         raise MessagingError(f"role {user.role.value} cannot send via channel {channel}")
@@ -42,30 +37,35 @@ async def send_message(
     sender: User,
     text: str,
     channel: str,
+    client_request_id: str | None = None,
 ) -> Message:
-    patient = await _get_patient(session, patient_id)
-    if sender.role == "patient" and patient.user_id != sender.id:
-        raise MessagingError("patient can only send to own conversation")
-    if sender.role == "doctor" and patient.doctor_id != sender.id:
-        raise MessagingError("doctor can only send to own patients")
+    await patient_for_user(session, sender, patient_id)
     _validate_channel(sender, channel)
-    message = Message(
+    values = dict(
         patient_id=patient_id,
         sender_id=sender.id,
         sender_role=sender.role.value,
         text=text,
         status=_initial_status(channel),
         channel=channel,
+        client_request_id=client_request_id,
     )
-    session.add(message)
-    await session.flush()
+    message = (await session.execute(insert(Message).values(**values).on_conflict_do_nothing(
+        constraint="uq_message_request").returning(Message))).scalar_one_or_none()
+    if message is None:
+        message = await session.scalar(select(Message).where(Message.sender_id == sender.id, Message.client_request_id == client_request_id))
+        if message.patient_id != patient_id or message.text != text or message.channel != channel:
+            from fastapi import HTTPException
+            raise HTTPException(409, "Ключ запроса уже использован с другим сообщением")
+        return message
     if channel.startswith("tg_"):
         session.add(
             OutboxEvent(
                 event_type="telegram.send_message",
-                payload={"message_id": message.id, "patient_id": patient_id, "text": text, "channel": channel},
+                payload={"message_id": message.id, "patient_id": patient_id},
             )
         )
+    record_event(session, sender.id, patient_id, "message.created", "message", message.id)
     return message
 
 
@@ -74,19 +74,16 @@ async def get_history(
     viewer: User,
     patient_id: int,
     limit: int = 100,
+    after_id: int | None = None,
 ) -> list[Message]:
-    patient = await _get_patient(session, patient_id)
-    if viewer.role == "patient" and patient.user_id != viewer.id:
-        raise MessagingError("patient can only view own conversation")
-    if viewer.role == "doctor" and patient.doctor_id != viewer.id:
-        raise MessagingError("doctor can only view own patients")
-    result = await session.execute(
-        select(Message)
-        .where(Message.patient_id == patient_id)
-        .order_by(Message.created_at, Message.id)
-        .limit(limit)
-    )
-    return list(result.scalars())
+    if viewer.role.value not in {"doctor", "patient"}:
+        raise MessagingError("Нет клинического доступа")
+    await patient_for_user(session, viewer, patient_id)
+    query = select(Message).where(Message.patient_id == patient_id)
+    if after_id is not None:
+        query = query.where(Message.id > after_id).order_by(Message.id)
+        return list((await session.scalars(query.limit(limit))).all())
+    return list(reversed(list((await session.scalars(query.order_by(Message.id.desc()).limit(limit))).all())))
 
 
 async def receive_telegram_message(
@@ -94,26 +91,28 @@ async def receive_telegram_message(
     chat_id: int,
     external_message_id: str,
     text: str,
+    sender_telegram_id: int | None = None,
 ) -> Message | None:
-    existing = await session.execute(select(Message).where(Message.external_message_id == external_message_id))
-    found = existing.scalar_one_or_none()
-    if found is not None:
-        logger.info("duplicate telegram message %s ignored", external_message_id)
+    if sender_telegram_id is None:
         return None
-    patient_result = await session.execute(select(Patient).where(Patient.mis_id == chat_id))
-    patient = patient_result.scalar_one_or_none()
+    patient = await session.scalar(select(Patient).join(User, User.id == Patient.user_id).join(
+        TelegramBinding, TelegramBinding.user_id == User.id).where(
+        TelegramBinding.telegram_chat_id == chat_id, TelegramBinding.telegram_user_id == sender_telegram_id,
+        User.role == UserRole.patient))
     if patient is None:
-        logger.info("telegram chat %s has no linked patient, message ignored", chat_id)
+        logger.info("ignored Telegram update without verified binding")
         return None
-    message = Message(
+    values = dict(
         patient_id=patient.id,
-        sender_id=None,
+        sender_id=patient.user_id,
         sender_role="patient",
         text=text,
         status=MessageStatus.SENT,
         channel=MessageChannel.TG_PATIENT,
         external_message_id=external_message_id,
     )
-    session.add(message)
-    await session.flush()
+    message = (await session.execute(insert(Message).values(**values).on_conflict_do_nothing(
+        constraint="uq_messages_external_message_id").returning(Message))).scalar_one_or_none()
+    if message:
+        record_event(session, patient.user_id, patient.id, "message.received", "message", message.id)
     return message

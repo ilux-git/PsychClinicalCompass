@@ -1,27 +1,29 @@
 services:
-  app:
+  init:
     build: "."
-    ports:
-      - "8000:8000"
     env_file: ".env"
     depends_on:
       db_compass:
         condition: service_healthy
       db_mis:
         condition: service_healthy
-      redis:
-        condition: service_healthy
+    command: ["python", "-m", "app.db.initialize"]
+  app:
+    build: "."
+    ports:
+      - "127.0.0.1:8000:8000"
+    env_file: ".env"
+    depends_on:
+      init:
+        condition: service_completed_successfully
     command: ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]
-    volumes:
-      - ./alembic:/app/alembic
-      - ./alembic.ini:/app/alembic.ini
   worker:
     build: "."
     env_file: ".env"
     command: ["python", "-m", "app.workers.outbox_worker"]
     depends_on:
-      db_compass:
-        condition: service_healthy
+      init:
+        condition: service_completed_successfully
   db_compass:
     image: postgres:16-alpine
     environment:

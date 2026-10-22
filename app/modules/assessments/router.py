@@ -26,6 +26,7 @@ async def submit_response(
     user: User = Depends(require_role([UserRole.patient])),
 ) -> QuestionnaireResponse:
     patient = await _get_patient_for_user(session, user)
-    response = await save_response(session, patient.id, payload.form_type, payload.form_version, payload.answers)
+    response = await save_response(session, patient.id, payload.form_type, payload.form_version, payload.answers,
+                                   str(payload.client_request_id) if payload.client_request_id else None, user.id)
     await session.commit()
     return response
