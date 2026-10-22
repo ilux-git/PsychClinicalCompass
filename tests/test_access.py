@@ -17,7 +17,7 @@ async def test_login_and_bad_credentials(client):
 
 
 @pytest.mark.parametrize("path", ["/patients", "/surveys", "/analytics/engagement", "/alerts", "/survey-assignments",
-                                  "/patients/1", "/patients/1/notes", "/patients/1/tasks", "/conversations/1/messages"])
+                                  "/patients/1", "/patients/1/assessments", "/patients/1/notes", "/patients/1/tasks", "/conversations/1/messages"])
 async def test_admin_has_no_clinical_access(client, headers, path):
     assert (await client.get(path, headers=headers("admin"))).status_code == 403
 
@@ -35,6 +35,26 @@ async def test_patient_scope_and_private_work(client, headers):
     assert (await client.get("/patients/2", headers=headers("patient1"))).status_code == 404
     for path in ["/patients/1/notes", "/patients/1/tasks", "/patients/1/timeline", "/alerts", "/analytics/engagement", "/surveys"]:
         assert (await client.get(path, headers=headers("patient1"))).status_code == 403
+
+
+async def test_assessment_history_preserves_answers_and_versions_for_own_patient(client, headers):
+    payloads = [
+        {"form_type": "phq9", "form_version": "demo_numeric_v1", "answers": [0, 1, 2, 1, 0, 1, 2, 1, 0]},
+        {"form_type": "gad7", "form_version": "demo_numeric_v1", "answers": [1, 1, 0, 1, 1, 0, 1]},
+        {"form_type": "phq9", "form_version": "another_version", "answers": [1] * 9},
+    ]
+    for payload in payloads:
+        assert (await client.post('/assessments/responses', headers=headers('patient1'), json=payload)).status_code == 201
+    for actor in ('doctor', 'patient1'):
+        response = await client.get('/patients/1/assessments', headers=headers(actor))
+        assert response.status_code == 200
+        rows = response.json()
+        assert len(rows) == len(payloads)
+        for row, expected in zip(rows, payloads):
+            assert row['form_type'] == expected['form_type'] and row['form_version'] == expected['form_version']
+            assert row['answers'] == expected['answers'] and row['score'] == sum(expected['answers'])
+    for actor in ('doctor2', 'patient2'):
+        assert (await client.get('/patients/1/assessments', headers=headers(actor))).status_code == 404
 
 
 async def test_card_readonly_source_and_availability(client, headers):

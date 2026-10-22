@@ -2,12 +2,15 @@
 
 Приоритет от 22.10.2026: выяснять барьеры и причины со слов пациентов, дать врачу собственные опросы и показать пациенту пользу/прогресс участия. Два участника, 2–4 дня; LLM и живой Telegram не обязательны.
 
+После показа технического MVP пользователь запросил общие workflows и полезные метрики, обезличенную админскую сводку и видимость ответов по состоянию. Продуктовый маршрут и формулы — docs/PRODUCT_PLAN.md; техническая приёмка фаз 1–4 не означает готовность этих новых результатов.
+
 ## Phases
 
 - [x] **Phase 1: Foundation and patient access** — PostgreSQL, миграции, login, scope, 10 согласованных карточек.
 - [x] **Phase 2: Feedback and patient participation** — конструктор, версии, назначения, ответы, барьеры/намерения, самоотчёты и прогресс.
 - [ ] **Phase 3: Doctor workflow and event handling** — техническая реализация проверена; клиническая приёмка и резервный маршрут ожидают Q05/Q06.
 - [x] **Phase 4: Demo and verification** — нативный стенд, браузерные сценарии/отказ/восстановление, production build и контейнерный CI проверены; handoff подготовлен.
+- [ ] **Phase 5: Role workflows and clinic measurement** — видимая история PHQ-9/GAD-7, продуктовый план, согласованный состав обезличенной сводки, затем её отдельная реализация.
 
 ## Phase Details
 
@@ -50,6 +53,16 @@
 
 - [x] 04-01: 59 тестов, браузерные сценарии/отказ/восстановление, launcher, production build и успешный контейнерный CI; отчёт и очередь вопросов готовы.
 
+### Phase 5: Role workflows and clinic measurement
+
+**Goal**: перейти от набора модулей к проверяемому рабочему маршруту каждой роли и метрикам с источником, знаменателем и действием.
+**Depends on**: technical MVP phases 1–4.
+**Requirements**: WORKFLOW-01, ASSESS-VISIBLE-01, METRICS-01, ADMIN-AGG-01; расширение CLINIC-01.
+**Success Criteria**: врач и пациент находят исходные ответы и сопоставимую динамику; для администратора согласованы информационные блоки до правил малых групп; отдельный агрегирующий контракт не раскрывает индивидуальные данные. Полный контур «действие → повторное наблюдение → возврат» не объявляется готовым без источников.
+**Plans**: 1 plan.
+
+- [ ] 05-01: план ролей/метрик и видимость шкал; состав админской сводки ожидает Q03. Следующие итерации описаны в docs/PRODUCT_PLAN.md.
+
 ## Progress
 
 | Phase | Plans Complete | Status |
@@ -58,5 +71,6 @@
 | 2. Feedback and patient participation | 1/1 | Verified; business extensions await decisions |
 | 3. Doctor workflow and event handling | 0/1 | Technical checks passed; Q05/Q06 |
 | 4. Demo and verification | 1/1 | Verified native + browser + container CI |
+| 5. Role workflows and clinic measurement | 0/1 | History and product plan in verification; admin contents await Q03 |
 
 Очередь: docs/QUESTION_QUEUE.md. Подготовка следующего пункта не разрешает угадывать его бизнес-правила. Текущая работа продолжает все независимые задачи до их окончания.

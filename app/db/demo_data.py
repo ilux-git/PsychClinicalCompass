@@ -1,4 +1,17 @@
 """Synthetic fixtures shared by the demo MIS bootstrap and Compass seed."""
+
+# Numeric demo records only; no questionnaire wording or new clinical interpretation.
+# Keys are synthetic MIS IDs. Include lower, higher, unchanged and single observations.
+GAD7_DEMO_ANSWERS = {
+    1: [[2, 2, 1, 1, 2, 1, 1], [1, 1, 1, 0, 1, 1, 0]],
+    2: [[1, 1, 1, 1, 1, 1, 1], [1, 1, 1, 1, 1, 1, 1]],
+    3: [[0, 1, 1, 1, 0, 1, 0], [1, 2, 1, 2, 1, 2, 1]],
+    4: [[2, 1, 2, 1, 2, 1, 1], [1, 1, 1, 1, 1, 1, 1]],
+    5: [[1, 1, 0, 1, 0, 1, 0], [0, 1, 0, 0, 0, 1, 0]],
+    6: [[1, 1, 1, 0, 1, 1, 0]],
+    10: [[2, 2, 2, 1, 1, 1, 1], [2, 2, 1, 1, 1, 1, 1]],
+}
+
 DEMO_PATIENTS = [
     ("Иван Петров", ["F32.1"], ["Sertraline 50mg"]),
     ("Мария Иванова", ["F41.1"], ["Escitalopram 10mg"]),

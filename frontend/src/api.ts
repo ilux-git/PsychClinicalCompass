@@ -195,6 +195,7 @@ export type Assessment = {
   id: number;
   form_type: string;
   form_version: string;
+  answers: number[];
   score: number;
   risk_flags: string[];
   created_at: string;

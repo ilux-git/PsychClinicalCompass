@@ -53,7 +53,7 @@ async def assessments(patient_id: int, session: CompassSession, user: CurrentUse
     await patient_for_user(session, user, patient_id)
     rows = (await session.scalars(select(QuestionnaireResponse).where(QuestionnaireResponse.patient_id == patient_id)
                                   .order_by(QuestionnaireResponse.created_at, QuestionnaireResponse.id))).all()
-    return [{"id": r.id, "form_type": r.form_type, "form_version": r.form_version, "score": r.score,
+    return [{"id": r.id, "form_type": r.form_type, "form_version": r.form_version, "answers": r.answers, "score": r.score,
              "risk_flags": r.risk_flags, "created_at": r.created_at} for r in rows]
 
 

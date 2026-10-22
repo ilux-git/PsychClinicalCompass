@@ -18,6 +18,7 @@ import {
   type Participation,
   type User,
   type Adherence,
+  type Assessment,
 } from "./api";
 import {
   Badge,
@@ -35,6 +36,7 @@ import {
 } from "./UI";
 import { SurveyFields, AnswerSummary } from "./SurveyFields";
 import { Chat } from "./Chat";
+import { AssessmentHistory } from "./AssessmentHistory";
 
 function AssignedSurvey({
   assignment,
@@ -273,8 +275,26 @@ export function PatientHome({
     15000,
   );
   const [selected, setSelected] = useState<Assignment | null>(null);
+  const assessmentHistory = useApi<Assessment[]>(
+    view === "state" && user.patient_id ? `/patients/${user.patient_id}/assessments` : null,
+    15000,
+  );
   if (!user.patient_id)
     return <Empty title="Учётная запись пока не связана с карточкой" />;
+  if (view === "state")
+    return (
+      <>
+        <Heading eyebrow="Сохранённые ответы" title="Моё состояние">
+          История PHQ-9 и GAD-7. Обсудить изменения и следующие шаги можно с вашим врачом.
+        </Heading>
+        <Section title="Мои измерения">
+          <ErrorBox message={assessmentHistory.error} retry={assessmentHistory.reload} />
+          {assessmentHistory.loading ? <Loading /> : assessmentHistory.data ? (
+            <AssessmentHistory rows={assessmentHistory.data} />
+          ) : <p className="muted">История пока недоступна.</p>}
+        </Section>
+      </>
+    );
   if (view === "chat" || view === "telegram")
     return (
       <>

@@ -7,7 +7,7 @@ from sqlalchemy import select
 
 from app.core.security import hash_password
 from app.db.session import async_session_compass, async_session_mis, dispose_engines
-from app.db.demo_data import BARRIER_QUESTIONS, CONTINUATION_QUESTIONS
+from app.db.demo_data import BARRIER_QUESTIONS, CONTINUATION_QUESTIONS, GAD7_DEMO_ANSWERS
 from app.modules.access.models import User, UserRole
 from app.modules.adherence.models import AdherenceReport
 from app.modules.assessments.service import save_response
@@ -125,6 +125,11 @@ async def seed_demo() -> dict:
                                                    key(f"scale/{patient.mis_id}/{point}"), patient_users[i].id)
                     if response.created_at >= now - timedelta(minutes=1):
                         response.created_at = now - timedelta(days=14 if point == 0 else 2)
+            for point, answers in enumerate(GAD7_DEMO_ANSWERS.get(patient.mis_id, [])):
+                response = await save_response(session, patient.id, "gad7", "demo_numeric_v1", answers,
+                                               key(f"scale/{patient.mis_id}/gad7/{point}"), patient_users[i].id)
+                if response.created_at >= now - timedelta(minutes=1):
+                    response.created_at = now - timedelta(days=14 if point == 0 else 2)
             for n, text in enumerate(["Здравствуйте! Поделитесь, что сейчас мешает соблюдать согласованный план.",
                                        barriers[i][1] if i < len(barriers) else "Пока не успел(а) заполнить опрос."]):
                 request_key = key(f"message/{patient.mis_id}/{n}")

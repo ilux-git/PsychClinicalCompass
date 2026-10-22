@@ -3013,6 +3013,51 @@ tr:last-child td {
 .required-mark {
   color: #7962c5;
 }
+.assessment-history {
+  display: grid;
+  gap: 22px;
+}
+.assessment-form {
+  min-width: 0;
+}
+.assessment-version {
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 18px;
+  margin-top: 12px;
+}
+.assessment-change {
+  font-size: 12px;
+  line-height: 1.8;
+}
+.assessment-version .scale-points {
+  overflow-x: auto;
+  padding-bottom: 18px;
+}
+.assessment-answers {
+  border-top: 1px solid var(--line);
+  padding: 12px 0;
+  font-size: 12px;
+}
+.assessment-answers summary {
+  cursor: pointer;
+  line-height: 1.8;
+}
+.assessment-answers ol {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+  gap: 8px;
+  list-style: none;
+  padding: 0;
+}
+.assessment-answers li {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 9px;
+  border-radius: 6px;
+  background: #f6f3fa;
+}
 .scale-answer > input {
   width: 140px;
 }

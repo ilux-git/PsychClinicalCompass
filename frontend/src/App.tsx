@@ -33,11 +33,13 @@ import { PatientHome } from "./Patient";
 const doctorNav = [
   { id: "overview", title: "Обзор обратной связи", icon: LayoutDashboard },
   { id: "patients", title: "Мои пациенты", icon: Users },
+  { id: "state", title: "Состояние пациентов", icon: Activity },
   { id: "surveys", title: "Мои опросы", icon: ClipboardList },
   { id: "telegram", title: "Telegram · симулятор", icon: MessageCircle },
 ];
 const patientNav = [
   { id: "overview", title: "Мои опросы", icon: ClipboardList },
+  { id: "state", title: "Моё состояние", icon: Activity },
   { id: "adherence", title: "Как получается", icon: HeartHandshake },
   { id: "chat", title: "Диалог с врачом", icon: MessageCircle },
   { id: "telegram", title: "Telegram · симулятор", icon: Activity },
@@ -423,6 +425,7 @@ export default function App() {
                 onSelect={setSelectedPatient}
                 notify={notify}
                 simulated={view === "telegram"}
+                initialTab={view === "state" ? "clinical" : "feedback"}
               />
             )
           ) : user.role === "patient" ? (

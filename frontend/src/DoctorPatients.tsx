@@ -38,54 +38,9 @@ import {
 } from "./UI";
 import { AnswerSummary } from "./SurveyFields";
 import { Chat } from "./Chat";
+import { AssessmentHistory } from "./AssessmentHistory";
 
 type Source = { type: string; id: number; label: string };
-
-function AssessmentHistory({ rows }: { rows: Assessment[] }) {
-  if (!rows.length) return <Empty title="Числовых результатов пока нет" />;
-  return (
-    <div className="scale-history">
-      {["phq9", "gad7"].map((form) => {
-        const points = rows.filter((r) => r.form_type === form);
-        const maximum = form === "phq9" ? 27 : 21;
-        return (
-          <div key={form}>
-            <h3>
-              {form === "phq9" ? "PHQ-9" : "GAD-7"}{" "}
-              <span className="muted">· демоданные</span>
-            </h3>
-            {!points.length ? (
-              <p className="muted">Нет измерений</p>
-            ) : (
-              <div className="scale-points">
-                {points.map((row) => (
-                  <div key={row.id}>
-                    <span className="scale-point-bar">
-                      <i
-                        style={{ height: `${(100 * row.score) / maximum}%` }}
-                      />
-                    </span>
-                    <strong>{row.score}</strong>
-                    <small>
-                      {new Date(row.created_at).toLocaleDateString("ru-RU", {
-                        day: "numeric",
-                        month: "short",
-                      })}
-                    </small>
-                  </div>
-                ))}
-              </div>
-            )}
-          </div>
-        );
-      })}
-      <p className="field-hint">
-        Разные шкалы показаны отдельно. Это сохранённые числовые результаты,
-        клиническое значение оценивает врач.
-      </p>
-    </div>
-  );
-}
 
 function AlertItem({
   alert,
@@ -224,11 +179,13 @@ function PatientCard({
   back,
   notify,
   simulated = false,
+  initialTab = "feedback",
 }: {
   patientId: number;
   back: () => void;
   notify: Notify;
   simulated?: boolean;
+  initialTab?: "feedback" | "clinical";
 }) {
   const card = useApi<Card>(`/patients/${patientId}`, 15000);
   const assignments = useApi<Assignment[]>(
@@ -247,7 +204,7 @@ function PatientCard({
   );
   const alerts = useApi<Alert[]>(`/alerts?patient_id=${patientId}`, 15000);
   const surveys = useApi<Survey[]>("/surveys");
-  const [tab, setTab] = useState(simulated ? "chat" : "feedback");
+  const [tab, setTab] = useState(simulated ? "chat" : initialTab);
   const [noteText, setNoteText] = useState("");
   const [taskText, setTaskText] = useState("");
   const [source, setSource] = useState<Source | null>(null);
@@ -366,7 +323,7 @@ function PatientCard({
                 {[
                   ["feedback", "Обратная связь"],
                   ["chat", simulated ? "Telegram · симулятор" : "Диалог"],
-                  ["clinical", "Клинические данные"],
+                  ["clinical", "Состояние и данные МИС"],
                 ].map(([key, label]) => (
                   <button
                     role="tab"
@@ -547,6 +504,14 @@ function PatientCard({
               )}
               {tab === "clinical" && (
                 <>
+                  <Section title="История PHQ-9 и GAD-7">
+                    <ErrorBox message={history.error} retry={history.reload} />
+                    {history.data ? (
+                      <AssessmentHistory rows={history.data} />
+                    ) : (
+                      <p className="muted">Результаты шкал ещё не получены.</p>
+                    )}
+                  </Section>
                   <Section
                     title="Данные из МИС"
                     aside={
@@ -583,14 +548,6 @@ function PatientCard({
                         Данные МИС не получены. Пустой список не означает
                         отсутствие диагнозов или назначений.
                       </p>
-                    )}
-                  </Section>
-                  <Section title="История шкал">
-                    <ErrorBox message={history.error} retry={history.reload} />
-                    {history.data ? (
-                      <AssessmentHistory rows={history.data} />
-                    ) : (
-                      <p className="muted">Результаты шкал ещё не получены.</p>
                     )}
                   </Section>
                   <Section title="События для врачебной оценки">
@@ -724,11 +681,13 @@ export function DoctorPatients({
   onSelect,
   notify,
   simulated = false,
+  initialTab = "feedback",
 }: {
   selected: number | null;
   onSelect: (id: number | null) => void;
   notify: Notify;
   simulated?: boolean;
+  initialTab?: "feedback" | "clinical";
 }) {
   const patients = useApi<Patient[]>("/patients");
   const [query, setQuery] = useState("");
@@ -740,6 +699,7 @@ export function DoctorPatients({
         back={() => onSelect(null)}
         notify={notify}
         simulated={simulated}
+        initialTab={initialTab}
       />
     );
   const filtered = patients.data?.filter((p) =>
@@ -747,8 +707,8 @@ export function DoctorPatients({
   );
   return (
     <>
-      <Heading eyebrow="Люди, которым вы помогаете" title="Мои пациенты">
-        Опросы, самоотчёты и переписка в одной карточке.
+      <Heading eyebrow="Люди, которым вы помогаете" title={initialTab === "clinical" ? "Состояние пациентов" : "Мои пациенты"}>
+        {initialTab === "clinical" ? "Выберите пациента, чтобы открыть PHQ-9, GAD-7 и сохранённые ответы по пунктам." : "Опросы, самоотчёты и переписка в одной карточке."}
       </Heading>
       <div className="search-field">
         <Search size={18} />
