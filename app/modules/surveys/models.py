@@ -32,6 +32,7 @@ class SurveyAssignment(Base):
     client_request_id: Mapped[str] = mapped_column(String(36), nullable=False)
     due_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
     status: Mapped[str] = mapped_column(String(16), nullable=False, default="assigned")
+    first_opened_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
 
 

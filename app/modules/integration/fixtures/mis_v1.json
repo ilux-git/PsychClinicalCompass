@@ -1,0 +1,325 @@
+{
+  "schema_version": "synthetic-mis/1",
+  "synthetic": true,
+  "as_of": "2026-10-22T20:00:00Z",
+  "limitations": [
+    "Учебные вымышленные события, не подключение к действующей МИС.",
+    "Профили описывают сценарии демонстрации, а не диагноз или автоматический отбор терапии.",
+    "Названия лекарственных позиций и времена условные; дозировки и взаимодействия не определяются.",
+    "Быстрое заполнение не означает низкой тревоги; отсутствие отметки не означает пропуска лекарства."
+  ],
+  "patients": [
+    {
+      "mis_id": 1,
+      "scenario": {
+        "code": "financial_barrier",
+        "title": "Финансовое затруднение",
+        "description": "Пациент сообщает о расходах и неудобном времени. Врач уточняет потребность, координатор получает отдельную организационную задачу.",
+        "expected_route": "Ответ → уточнение врача → организационная задача → проверка результата"
+      },
+      "recommended_contact": {
+        "start": "2026-10-15T00:00:00Z",
+        "end": "2026-10-22T19:59:59Z",
+        "plan_version": "demo-plan-1",
+        "author": "synthetic_doctor"
+      },
+      "visits": [
+        {
+          "id": "V1-1",
+          "scheduled_at": "2026-10-19T06:00:00Z",
+          "occurred_at": null,
+          "status": "cancelled",
+          "initiator": "patient",
+          "reason": "Со слов пациента: стоимость"
+        }
+      ],
+      "medications": [
+        {
+          "id": "RX1",
+          "label": "Учебное назначение МИС №1",
+          "instructions": "Синтетическая позиция. Доза не задаётся прототипом.",
+          "schedule_text": "Демонстрационное время 09:00",
+          "times": [
+            "09:00"
+          ],
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ],
+          "timezone": "Asia/Novosibirsk",
+          "version": 1,
+          "starts_on": "2026-10-01",
+          "ends_on": null
+        }
+      ],
+      "demo_treatment_status": "in_progress",
+      "visits_complete_through": "2026-10-22T20:00:00Z"
+    },
+    {
+      "mis_id": 2,
+      "scenario": {
+        "code": "anxiety_engaged",
+        "title": "Тревожные жалобы при регулярном участии",
+        "description": "Быстро и регулярно отвечает, но сообщает о тревоге. Скорость и заполненность сами по себе не дают вывода об улучшении.",
+        "expected_route": "Регулярные ответы → оценка состояния врачом → согласованный следующий шаг"
+      },
+      "recommended_contact": {
+        "start": "2026-10-17T00:00:00Z",
+        "end": "2026-10-24T23:59:59Z",
+        "plan_version": "demo-plan-2",
+        "author": "synthetic_doctor"
+      },
+      "visits": [
+        {
+          "id": "V2-1",
+          "scheduled_at": "2026-10-20T07:00:00Z",
+          "occurred_at": "2026-10-20T07:05:00Z",
+          "status": "attended",
+          "initiator": null,
+          "reason": ""
+        }
+      ],
+      "medications": [],
+      "demo_treatment_status": "in_progress",
+      "visits_complete_through": "2026-10-22T20:00:00Z",
+      "synthetic_survey_sessions": [
+        {
+          "assigned_at": "2026-10-02T04:00:00Z",
+          "opened_at": "2026-10-02T04:01:00Z",
+          "submitted_at": "2026-10-02T04:01:40Z"
+        },
+        {
+          "assigned_at": "2026-10-09T04:00:00Z",
+          "opened_at": "2026-10-09T04:00:30Z",
+          "submitted_at": "2026-10-09T04:01:05Z"
+        },
+        {
+          "assigned_at": "2026-10-16T04:00:00Z",
+          "opened_at": "2026-10-16T04:00:20Z",
+          "submitted_at": "2026-10-16T04:01:05Z"
+        }
+      ]
+    },
+    {
+      "mis_id": 3,
+      "scenario": {
+        "code": "medication_self_report",
+        "title": "Сообщает о пропусках лекарства",
+        "description": "Пропуск задан явным синтетическим самоотчётом. Врач выясняет обстоятельства; система не рекомендует дополнительную дозу.",
+        "expected_route": "Самоотчёт о пропуске → задача врачу → обсуждение → повторная проверка"
+      },
+      "recommended_contact": {
+        "start": "2026-10-17T00:00:00Z",
+        "end": "2026-10-24T23:59:59Z",
+        "plan_version": "demo-plan-3",
+        "author": "synthetic_doctor"
+      },
+      "visits": [
+        {
+          "id": "V3-1",
+          "scheduled_at": "2026-10-21T05:00:00Z",
+          "occurred_at": "2026-10-21T05:00:00Z",
+          "status": "attended",
+          "initiator": null,
+          "reason": ""
+        }
+      ],
+      "medications": [
+        {
+          "id": "RX3",
+          "label": "Учебное назначение МИС №3",
+          "instructions": "Синтетическая позиция. Доза не задаётся прототипом.",
+          "schedule_text": "Демонстрационное время 09:00",
+          "times": [
+            "09:00"
+          ],
+          "days": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ],
+          "timezone": "Asia/Novosibirsk",
+          "version": 1,
+          "starts_on": "2026-10-01",
+          "ends_on": null
+        }
+      ],
+      "demo_medication_report": {
+        "status": "not_taken",
+        "reason": "Забыл(а), хочу обсудить удобный способ ведения расписания.",
+        "day": "2026-10-22"
+      },
+      "demo_treatment_status": "in_progress",
+      "visits_complete_through": "2026-10-22T20:00:00Z"
+    },
+    {
+      "mis_id": 4,
+      "scenario": {
+        "code": "uncomfortable_effects",
+        "title": "Неприятные ощущения со слов пациента",
+        "description": "Высокая вовлечённость не исключает затруднение. Клиническое обсуждение назначается врачу, координатор не получает медицинский текст.",
+        "expected_route": "Самоотчёт → клиническая задача врачу → уточнение и ручное решение"
+      },
+      "recommended_contact": null,
+      "visits": [],
+      "medications": [],
+      "demo_treatment_status": "in_progress",
+      "visits_complete_through": null
+    },
+    {
+      "mis_id": 5,
+      "scenario": {
+        "code": "clinic_rescheduled",
+        "title": "Визит перенесла клиника",
+        "description": "Отмена и новая запись со стороны клиники отделены от неявки пациента.",
+        "expected_route": "История переноса → координация записи → подтверждённый визит"
+      },
+      "recommended_contact": {
+        "start": "2026-10-15T00:00:00Z",
+        "end": "2026-10-22T19:59:59Z",
+        "plan_version": "demo-plan-5",
+        "author": "synthetic_doctor"
+      },
+      "visits": [
+        {
+          "id": "V5-1",
+          "scheduled_at": "2026-10-19T05:00:00Z",
+          "occurred_at": null,
+          "status": "rescheduled",
+          "initiator": "clinic",
+          "reason": "Врач недоступен"
+        },
+        {
+          "id": "V5-2",
+          "scheduled_at": "2026-10-26T05:00:00Z",
+          "occurred_at": null,
+          "status": "scheduled",
+          "initiator": "clinic",
+          "reason": "Новая запись вместо V5-1"
+        }
+      ],
+      "medications": [],
+      "demo_treatment_status": "in_progress",
+      "visits_complete_through": "2026-10-22T20:00:00Z"
+    },
+    {
+      "mis_id": 6,
+      "scenario": {
+        "code": "treatment_completed",
+        "title": "Лечение завершено врачом",
+        "description": "Нет следующего визита после согласованного завершения. Это не автоматическая потеря пациента.",
+        "expected_route": "Решение врача «завершил» → история → отдельный исход в сводке"
+      },
+      "recommended_contact": null,
+      "visits": [
+        {
+          "id": "V6-1",
+          "scheduled_at": "2026-10-16T06:00:00Z",
+          "occurred_at": "2026-10-16T06:00:00Z",
+          "status": "attended",
+          "initiator": null,
+          "reason": "Заключительная учебная встреча"
+        }
+      ],
+      "medications": [],
+      "demo_treatment_status": "completed",
+      "visits_complete_through": "2026-10-22T20:00:00Z"
+    },
+    {
+      "mis_id": 7,
+      "scenario": {
+        "code": "treatment_refused",
+        "title": "Отказ подтверждён врачом",
+        "description": "Отказ зафиксирован отдельным решением врача; не выводится из молчания или намерения в анкете.",
+        "expected_route": "Уточнение → врач фиксирует «отказался» → отдельный исход"
+      },
+      "recommended_contact": null,
+      "visits": [],
+      "medications": [],
+      "demo_treatment_status": "refused",
+      "visits_complete_through": null
+    },
+    {
+      "mis_id": 8,
+      "scenario": {
+        "code": "no_data",
+        "title": "Мало данных",
+        "description": "Нет ответов и подтверждённого исхода. В карточке остаётся неизвестность, без нулевого риска и вымышленного отказа.",
+        "expected_route": "Проверить доступность контакта → запросить сведения → не подменять отсутствующее данными"
+      },
+      "recommended_contact": null,
+      "visits": [],
+      "medications": [],
+      "demo_treatment_status": null,
+      "visits_complete_through": null
+    },
+    {
+      "mis_id": 9,
+      "scenario": {
+        "code": "irregular_participation",
+        "title": "Нерегулярное участие",
+        "description": "Синтетический пример незавершённых форм и трудностей с расписанием. Требуется уточнение причины, а не ярлык характера.",
+        "expected_route": "Незавершённые формы → уточнить затруднение → согласовать удобный следующий шаг"
+      },
+      "recommended_contact": {
+        "start": "2026-10-15T00:00:00Z",
+        "end": "2026-10-22T19:59:59Z",
+        "plan_version": "demo-plan-9",
+        "author": "synthetic_doctor"
+      },
+      "visits": [
+        {
+          "id": "V9-1",
+          "scheduled_at": "2026-10-21T08:00:00Z",
+          "occurred_at": null,
+          "status": "no_show",
+          "initiator": null,
+          "reason": "Явный учебный статус из источника; причина не установлена"
+        }
+      ],
+      "medications": [],
+      "demo_treatment_status": "in_progress",
+      "visits_complete_through": "2026-10-22T20:00:00Z",
+      "synthetic_survey_sessions": [
+        {
+          "assigned_at": "2026-10-02T04:00:00Z",
+          "opened_at": "2026-10-03T17:00:00Z",
+          "submitted_at": "2026-10-04T05:00:00Z"
+        },
+        {
+          "assigned_at": "2026-10-09T04:00:00Z",
+          "opened_at": "2026-10-12T05:00:00Z",
+          "submitted_at": null
+        },
+        {
+          "assigned_at": "2026-10-16T04:00:00Z",
+          "opened_at": null,
+          "submitted_at": null
+        }
+      ]
+    },
+    {
+      "mis_id": 10,
+      "scenario": {
+        "code": "manual_clinical_review",
+        "title": "Требуется врачебная оценка",
+        "description": "В синтетической истории есть сигнал исходного прототипа. Положительный пункт 9 не доказывает непосредственную угрозу; новый кризисный маршрут не выдуман.",
+        "expected_route": "Сигнал → показ → принятие врачом → ручная оценка и согласованный маршрут"
+      },
+      "recommended_contact": null,
+      "visits": [],
+      "medications": [],
+      "demo_treatment_status": "in_progress",
+      "visits_complete_through": null
+    }
+  ]
+}

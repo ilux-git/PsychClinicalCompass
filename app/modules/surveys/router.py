@@ -69,7 +69,7 @@ async def assign(survey_id: int, payload: AssignSurvey, session: CompassSession,
 
 @router.get("/survey-assignments")
 async def assignments(session: CompassSession, user: CurrentUser, patient_id: int | None = None) -> list[dict]:
-    if user.role == UserRole.admin:
+    if user.role not in {UserRole.doctor, UserRole.patient}:
         raise HTTPException(403, "Нет клинического доступа")
     query = select(SurveyAssignment, Survey, Patient, SurveySubmission).join(Survey, Survey.id == SurveyAssignment.survey_id).join(
         Patient, Patient.id == SurveyAssignment.patient_id).outerjoin(SurveySubmission, SurveySubmission.assignment_id == SurveyAssignment.id)
@@ -81,9 +81,26 @@ async def assignments(session: CompassSession, user: CurrentUser, patient_id: in
         query = query.where(Patient.id == patient_id)
     rows = (await session.execute(query.order_by(SurveyAssignment.created_at.desc(), SurveyAssignment.id.desc()))).all()
     return [{"id": a.id, "patient_id": p.id, "patient_name": p.full_name, "status": a.status,
-             "due_at": a.due_at, "created_at": a.created_at, "survey": survey_read(s),
+             "due_at": a.due_at, "created_at": a.created_at, "first_opened_at": a.first_opened_at, "survey": survey_read(s),
              "submission": {"id": r.id, "answers": r.answers, "created_at": r.created_at} if r else None}
             for a, s, p, r in rows]
+
+
+@router.post("/survey-assignments/{assignment_id}/open")
+async def open_assignment(assignment_id: int, session: CompassSession, patient: User = PatientUser) -> dict:
+    assignment = await session.scalar(select(SurveyAssignment).join(Patient, Patient.id == SurveyAssignment.patient_id).where(
+        SurveyAssignment.id == assignment_id, Patient.user_id == patient.id).with_for_update(of=SurveyAssignment))
+    if assignment is None:
+        raise HTTPException(404, "Назначение не найдено или недоступно")
+    completed = await session.scalar(select(SurveySubmission.id).where(SurveySubmission.assignment_id == assignment.id))
+    # Reading completed history cannot manufacture a historical start time.
+    if assignment.first_opened_at is None and completed is None:
+        assignment.first_opened_at = datetime.now(timezone.utc)
+        record_event(session, patient.id, assignment.patient_id, "survey.opened", "survey_assignment", assignment.id,
+                     {"source": "visible_patient_form"})
+    await session.commit()
+    return {"assignment_id": assignment.id, "first_opened_at": assignment.first_opened_at,
+            "already_completed": completed is not None}
 
 
 @router.post("/survey-assignments/{assignment_id}/submit")

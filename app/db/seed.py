@@ -1,6 +1,6 @@
 """Idempotent synthetic demo seed. Never writes to the MIS connection."""
 import asyncio
-from datetime import datetime, timedelta, timezone
+from datetime import date, datetime, timedelta, timezone
 from uuid import NAMESPACE_URL, uuid5
 
 from sqlalchemy import select
@@ -12,6 +12,11 @@ from app.modules.access.models import User, UserRole
 from app.modules.adherence.models import AdherenceReport
 from app.modules.assessments.service import save_response
 from app.modules.integration.mis_models import MISPatient
+from app.modules.integration.synthetic import patient_snapshot
+from app.modules.adherence.medication_models import MedicationLog
+from app.modules.adherence.medications import occurrences
+from app.modules.audit.service import record_event
+from app.modules.care.models import TreatmentStatusChange
 from app.modules.messaging.models import Message
 from app.modules.notes.models import DoctorNote, DoctorTask
 from app.modules.patients.models import Patient, PatientMapping
@@ -42,6 +47,7 @@ async def seed_demo() -> dict:
             return row
 
         await user("admin", UserRole.admin, "Администратор демо")
+        coordinator = await user("coordinator", UserRole.coordinator, "Координатор демо")
         doctors = [await user("doctor", UserRole.doctor, "Анна Сергеевна"),
                    await user("doctor2", UserRole.doctor, "Михаил Андреевич")]
         patients: list[Patient] = []
@@ -63,6 +69,12 @@ async def seed_demo() -> dict:
                 if existing_account is None or existing_account.username.startswith("legacy_"):
                     patient.user_id = account.id
             patients.append(patient)
+            fixture = patient_snapshot(patient.mis_id)["data"]
+            if fixture and fixture.get("demo_treatment_status") and not await session.scalar(
+                select(TreatmentStatusChange.id).where(TreatmentStatusChange.patient_id == patient.id).limit(1)):
+                session.add(TreatmentStatusChange(patient_id=patient.id, doctor_id=patient.doctor_id,
+                    client_request_id=key(f"treatment/{patient.mis_id}"), status=fixture["demo_treatment_status"],
+                    reason="Синтетическое решение врача для демонстрационного сценария.", source="synthetic_doctor_fixture"))
             mapping = await session.scalar(select(PatientMapping).where(PatientMapping.compass_patient_id == patient.id))
             if mapping is None:
                 session.add(PatientMapping(compass_patient_id=patient.id, mis_id=source.id))
@@ -144,6 +156,75 @@ async def seed_demo() -> dict:
                         recommendation="Согласованный план между визитами", status="not_followed" if i < 3 else "unknown",
                         reason=barriers[i][1], created_at=now - timedelta(days=1, hours=i)))
         first = patients[0]
+        for patient in patients:
+            fixture = patient_snapshot(patient.mis_id)["data"]
+            if not fixture:
+                continue
+            for index, sample in enumerate(fixture.get("synthetic_survey_sessions", [])):
+                survey = surveys[(patient.doctor_id, "continuation")]
+                request_key = key(f"scenario-session/{patient.mis_id}/{index}")
+                assignment = await session.scalar(select(SurveyAssignment).where(SurveyAssignment.patient_id == patient.id,
+                    SurveyAssignment.client_request_id == request_key))
+                if assignment is None:
+                    assigned_at = datetime.fromisoformat(sample["assigned_at"].replace("Z", "+00:00"))
+                    assignment = SurveyAssignment(patient_id=patient.id, survey_id=survey.id, client_request_id=request_key,
+                        created_at=assigned_at, due_at=assigned_at+timedelta(days=1),
+                        status="completed" if sample["submitted_at"] else "assigned")
+                    session.add(assignment); await session.flush()
+                    if sample["submitted_at"]:
+                        session.add(SurveySubmission(assignment_id=assignment.id, patient_id=patient.id,
+                            answers={"intent":"yes" if patient.mis_id == 2 else "unsure", "clarity":4 if patient.mis_id == 2 else 3,
+                                     "why":"Синтетический ответ для сценария участия."},
+                            created_at=datetime.fromisoformat(sample["submitted_at"].replace("Z", "+00:00"))))
+                    # These source times are fixtures, never a manufactured server opening event or a retroactive award.
+            report_data = fixture.get("demo_medication_report")
+            if report_data and fixture["medications"]:
+                from app.modules.adherence.medications import inventory
+                items, _ = await inventory(session, patient)
+                if items:
+                    day = date.fromisoformat(report_data["day"])
+                    event = occurrences(items[0], day)[0]
+                    old = await session.scalar(select(MedicationLog).where(MedicationLog.patient_id == patient.id,
+                        MedicationLog.item_key == items[0]["key"], MedicationLog.occurrence_key == event["occurrence_key"]))
+                    if old is None:
+                        old = MedicationLog(patient_id=patient.id, client_request_id=key(f"demo-medication/{patient.mis_id}"),
+                            item_key=items[0]["key"], occurrence_key=event["occurrence_key"], scheduled_for=event["scheduled_for"],
+                            status=report_data["status"], reason=report_data["reason"], created_at=event["scheduled_for"]+timedelta(hours=1))
+                        session.add(old); await session.flush()
+                    task_key = key(f"demo-medication-task/{patient.mis_id}")
+                    if not await session.scalar(select(DoctorTask.id).where(DoctorTask.client_request_id == task_key)):
+                        task = DoctorTask(patient_id=patient.id, doctor_id=patient.doctor_id, assigned_to_id=patient.doctor_id,
+                            client_request_id=task_key, title="Уточнить обстоятельства пропуска со слов пациента", kind="clinical",
+                            source_type="medication_log", source_id=old.id, due_at=now+timedelta(days=1), follow_up_at=now+timedelta(days=2))
+                        session.add(task); await session.flush()
+                        record_event(session, patient.doctor_id, patient.id, "demo.task_created", "doctor_task", task.id,
+                                     {"synthetic": True})
+        task_key = key("demo-coordinator-task/1")
+        if not await session.scalar(select(DoctorTask.id).where(DoctorTask.client_request_id == task_key)):
+            source_report = await session.scalar(select(AdherenceReport).where(AdherenceReport.patient_id == first.id).order_by(AdherenceReport.id).limit(1))
+            task = DoctorTask(patient_id=first.id, doctor_id=first.doctor_id, assigned_to_id=coordinator.id,
+                client_request_id=task_key, title="Согласовать удобное время следующего контакта", kind="organization",
+                source_type="adherence_report" if source_report else "manual", source_id=source_report.id if source_report else None,
+                due_at=now+timedelta(days=1), follow_up_at=now+timedelta(days=2))
+            session.add(task); await session.flush()
+            record_event(session, first.doctor_id, first.id, "demo.task_created", "doctor_task", task.id, {"synthetic": True})
+        booking_patient = next(p for p in patients if p.mis_id == 5)
+        booking_key = key("demo-verified-booking/5")
+        if not await session.scalar(select(DoctorTask.id).where(DoctorTask.client_request_id == booking_key)):
+            at = datetime.fromisoformat("2026-10-22T12:00:00+00:00")
+            note = DoctorNote(patient_id=booking_patient.id, doctor_id=booking_patient.doctor_id,
+                text="Синтетическое наблюдение по JSON МИС: клиника перенесла визит; требуется согласовать новую дату.",
+                source_type="manual", dimension="constraints", created_at=at)
+            session.add(note); await session.flush()
+            task = DoctorTask(patient_id=booking_patient.id, doctor_id=booking_patient.doctor_id, assigned_to_id=coordinator.id,
+                client_request_id=booking_key, title="Согласовать новую запись после переноса клиникой", kind="organization",
+                source_type="doctor_note", source_id=note.id, status="done", created_at=at+timedelta(hours=1),
+                due_at=at+timedelta(hours=4), completed_at=at+timedelta(hours=5), follow_up_at=at+timedelta(hours=6),
+                action_result="Синтетический координатор согласовал удобную новую дату.",
+                verification_status="resolved", verification_comment="Синтетическая проверка врача: пациент подтвердил удобство новой записи. Это не факт состоявшегося будущего визита.",
+                verified_at=at+timedelta(hours=6), verified_by_id=booking_patient.doctor_id)
+            session.add(task); await session.flush()
+            record_event(session, booking_patient.doctor_id, booking_patient.id, "demo.task_created", "doctor_task", task.id, {"synthetic": True})
         if not await session.scalar(select(DoctorNote.id).where(DoctorNote.patient_id == first.id)):
             session.add(DoctorNote(patient_id=first.id, doctor_id=first.doctor_id,
                                   text="Уточнить удобное время и финансовые барьеры со слов пациента.", source_type="manual"))

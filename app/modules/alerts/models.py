@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from sqlalchemy import DateTime, ForeignKey, String, func
+from sqlalchemy import DateTime, ForeignKey, String, UniqueConstraint, func
 from sqlalchemy.dialects.postgresql import JSONB
 from sqlalchemy.orm import Mapped, mapped_column
 
@@ -40,3 +40,15 @@ class ClinicalDecision(Base):
     reason: Mapped[str] = mapped_column(String(2000), nullable=False, default="")
     confirmed_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
+
+
+class AlertPresentation(Base):
+    """A visible browser row, not acknowledgement or proof that a person read it."""
+
+    __tablename__ = "alert_presentations"
+    __table_args__ = (UniqueConstraint("alert_id", "doctor_id", name="uq_alert_presentation_doctor"),)
+
+    id: Mapped[int] = mapped_column(primary_key=True)
+    alert_id: Mapped[int] = mapped_column(ForeignKey("alerts.id"), nullable=False)
+    doctor_id: Mapped[int] = mapped_column(ForeignKey("users.id"), nullable=False)
+    presented_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False, server_default=func.now())

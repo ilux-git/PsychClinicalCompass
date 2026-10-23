@@ -1,4 +1,7 @@
 import { useState } from "react";
+import { CollectionMetrics } from "./CollectionMetrics";
+import { DoctorWorkflowMetrics } from "./WorkflowMetrics";
+import { dimensionLabels } from "./collection";
 import {
   ArrowUpRight,
   ClipboardList,
@@ -33,6 +36,7 @@ function AnswerChart({ question }: { question: ChartQuestion }) {
         <span>{question.respondents} ответ.</span>
       </div>
       <h3>{question.prompt}</h3>
+      {question.dimension && <Badge tone="purple">{dimensionLabels[question.dimension]}</Badge>}
       <div className="bars">
         {question.options.map((option) => (
           <div className="bar-row" key={option.id}>
@@ -68,8 +72,8 @@ export function DoctorDashboard({
   const data = useApi<Dashboard>(`/analytics/engagement${period}`, 15000);
   const d = data.data;
   const options = d?.questions.filter((q) => q.kind !== "text") ?? [];
-  const barriers = options.filter((q) => q.purpose === "barriers");
-  const other = options.filter((q) => q.purpose !== "barriers");
+  const barriers = options.filter((q) => q.dimension === "constraints" || (!q.dimension && q.purpose === "barriers"));
+  const other = options.filter((q) => !barriers.includes(q));
   function applyPeriod() {
     const query = new URLSearchParams();
     if (since) query.set("since", new Date(`${since}T00:00:00`).toISOString());
@@ -93,6 +97,7 @@ export function DoctorDashboard({
       >
         Причины со слов пациентов и вопросы, на которые ещё нет ответов.
       </Heading>
+      <DoctorWorkflowMetrics />
       <div className="period-toolbar">
         <span>Назначения за период</span>
         <label className="sr-only" htmlFor="period-start">
@@ -190,10 +195,11 @@ export function DoctorDashboard({
               <p>
                 Он не доказывает уход из клиники или невыполнение рекомендаций.
                 Здесь видны текущие ответы на назначения за выбранный период;
-                данные о визитах пока не подключены.
+            реальные визиты ещё не подключены; синтетические события МИС показаны в отдельном блоке выше.
               </p>
             </div>
           </div>
+          {d.collection && <CollectionMetrics data={d.collection} />}
           <div className="dashboard-columns">
             <div className="dashboard-primary">
               <Section

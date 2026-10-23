@@ -16,6 +16,10 @@ from app.modules.adherence.router import router as adherence_router
 from app.modules.analytics.router import router as analytics_router
 from app.modules.notes.router import router as notes_router
 from app.modules.alerts.router import router as alerts_router
+from app.modules.care.router import router as care_router
+from app.modules.adherence.medication_router import router as medication_router
+from app.modules.adherence.rewards import router as rewards_router
+from app.modules.analytics.privacy import router as privacy_router
 import app.db.models
 
 
@@ -29,7 +33,7 @@ async def lifespan(app: FastAPI):
 app = FastAPI(title="Clinical Compass", lifespan=lifespan)
 app.include_router(assessments_router)
 app.include_router(messaging_router)
-for router in (access_router, patients_router, surveys_router, adherence_router, analytics_router, notes_router, alerts_router):
+for router in (access_router, patients_router, surveys_router, adherence_router, analytics_router, notes_router, alerts_router, care_router, medication_router, rewards_router, privacy_router):
     app.include_router(router)
 
 

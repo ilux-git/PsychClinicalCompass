@@ -1,4 +1,4 @@
-import { useRef, useState, type FormEvent } from "react";
+import { useEffect, useRef, useState, type FormEvent } from "react";
 import {
   ArrowLeft,
   Check,
@@ -37,6 +37,9 @@ import {
 import { SurveyFields, AnswerSummary } from "./SurveyFields";
 import { Chat } from "./Chat";
 import { AssessmentHistory } from "./AssessmentHistory";
+import { PatientDiary } from "./PatientDiary";
+import { MedicationSchedule } from "./MedicationSchedule";
+import { ParticipationPoints } from "./ParticipationPoints";
 
 function AssignedSurvey({
   assignment,
@@ -50,6 +53,28 @@ function AssignedSurvey({
   const [answers, setAnswers] = useState<Record<string, unknown>>({});
   const [busy, setBusy] = useState(false);
   const [saved, setSaved] = useState(false);
+  const formRef = useRef<HTMLElement>(null);
+  const [openingError, setOpeningError] = useState("");
+  const [openingRevision, setOpeningRevision] = useState(0);
+  useEffect(() => {
+    const element = formRef.current;
+    if (!element || assignment.submission || saved) return;
+    let visible = false, requested = false, active = true;
+    async function opened() {
+      if (!visible || requested || document.visibilityState !== "visible") return;
+      requested = true;
+      try {
+        await send(`/survey-assignments/${assignment.id}/open`, {});
+        if (active) setOpeningError("");
+      } catch {
+        if (active) setOpeningError("Не удалось обновить статус опроса. Ответы можно отправить.");
+      }
+    }
+    const observer = new IntersectionObserver(([entry]) => { visible = entry.isIntersecting; void opened(); });
+    observer.observe(element);
+    document.addEventListener("visibilitychange", opened);
+    return () => { active = false; observer.disconnect(); document.removeEventListener("visibilitychange", opened); };
+  }, [assignment.id, assignment.submission, saved, openingRevision]);
   async function submit(event: FormEvent) {
     event.preventDefault();
     setBusy(true);
@@ -91,7 +116,7 @@ function AssignedSurvey({
       <button className="back-link" onClick={done}>
         <ArrowLeft size={16} /> Мои опросы
       </button>
-      <section className="panel patient-form">
+      <section className="panel patient-form" ref={formRef}>
         <Badge tone={assignment.submission ? "good" : "purple"}>
           {assignment.submission
             ? "Ответ сохранён"
@@ -116,6 +141,7 @@ function AssignedSurvey({
           </>
         ) : (
           <form onSubmit={submit}>
+            <ErrorBox message={openingError} retry={() => setOpeningRevision((value) => value + 1)} />
             <SurveyFields
               questions={assignment.survey.questions}
               answers={answers}
@@ -330,6 +356,10 @@ export function PatientHome({
     );
   if (view === "adherence")
     return <SelfReport patientId={user.patient_id} notify={notify} />;
+  if (view === "diary")
+    return <PatientDiary patientId={user.patient_id} notify={notify} />;
+  if (view === "medications")
+    return <MedicationSchedule patientId={user.patient_id} notify={notify} />;
   if (selected)
     return (
       <AssignedSurvey
@@ -410,6 +440,7 @@ export function PatientHome({
         </h2>
         <span className="muted">Вопросы от врача</span>
       </div>
+      <ParticipationPoints />
       {assignments.loading ? (
         <Loading />
       ) : !assignments.data ? (

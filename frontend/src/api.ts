@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
+import type { BarrierCategory, Dimension } from "./collection";
 
 export class ApiError extends Error {
   constructor(
@@ -93,7 +94,7 @@ export type User = {
   id: number;
   username: string;
   display_name: string;
-  role: "doctor" | "patient" | "admin";
+  role: "doctor" | "patient" | "admin" | "coordinator";
   patient_id: number | null;
   availability: string;
 };
@@ -103,6 +104,8 @@ export type Patient = {
   mis_id: number;
   doctor_id: number;
   created_at: string;
+  demo_scenario?: string | null;
+  treatment_status?: string;
 };
 export type Card = Patient & {
   mis: {
@@ -114,11 +117,12 @@ export type Card = Patient & {
   };
   doctor: { name: string; availability: string } | null;
 };
-export type Choice = { id: string; label: string };
+export type Choice = { id: string; label: string; analytics_category?: BarrierCategory | null; exclusive?: boolean };
 export type Question = {
   id: string;
   prompt: string;
   kind: "single" | "multiple" | "text" | "scale";
+  dimension?: Dimension | null;
   required: boolean;
   options: Choice[];
   minimum: number;
@@ -148,6 +152,7 @@ export type Assignment = {
   status: string;
   due_at: string | null;
   created_at: string;
+  first_opened_at: string | null;
   survey: Survey;
   submission: {
     id: number;
@@ -176,6 +181,9 @@ export type Note = {
   text: string;
   source_type: string;
   source_id: number | null;
+  dimension: Dimension | null;
+  doctor_id: number;
+  doctor_name: string;
   created_at: string;
 };
 export type Task = {
@@ -226,6 +234,7 @@ export type ChartQuestion = {
   question_id: string;
   prompt: string;
   kind: string;
+  dimension: Dimension | null;
   respondents: number;
   options: { id: string; label: string; count: number }[];
 };
@@ -262,4 +271,19 @@ export type Dashboard = {
     observation_status: string;
   })[];
   interpretation: string;
+  collection: CollectionMetrics;
 };
+
+export type DurationSummary = { known: number; unknown: number; median_seconds: number | null };
+export type CollectionMetrics = {
+  dimensions: { code: Dimension; label: string; question_versions: number; assigned_patients: number;
+    responding_patients: number; patients_without_answer: number; patients_without_assignment: number;
+    coverage_percent: number | null; answers: number; inferred_score: null }[];
+  journey: { assigned: number; opened: number; completed: number; opened_not_completed: number;
+    not_opened_not_completed: number; completed_without_open_record: number; completed_after_open: number;
+    opening_rate_percent: number | null; completion_after_open_percent: number | null;
+    assignment_to_completion: DurationSummary; open_to_completion: DurationSummary;
+    delivery_to_completion: DurationSummary; interpretation: string };
+};
+export type DiaryEntry = { id: number; text: string; shared_with_doctor: boolean; created_at: string;
+  observed_at: string | null; observation_kind: "moment" | "day_summary" | null; feeling: string | null; daily_impact: string | null };
