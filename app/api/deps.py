@@ -46,7 +46,7 @@ CurrentUser = Annotated[User, Depends(get_current_user)]
 
 
 async def patient_for_user(session: AsyncSession, user: User, patient_id: int) -> Patient:
-    if user.role == UserRole.admin:
+    if user.role not in {UserRole.doctor, UserRole.patient}:
         raise HTTPException(403, "Нет клинического доступа")
     query = select(Patient).where(Patient.id == patient_id)
     if user.role == UserRole.doctor:

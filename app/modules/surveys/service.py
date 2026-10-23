@@ -7,6 +7,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.modules.access.models import User
 from app.modules.audit.service import record_event
+from app.modules.adherence.rewards import grant_points
 from app.modules.patients.models import Patient
 from app.modules.surveys.models import Survey, SurveyAssignment, SurveySubmission
 from app.modules.surveys.schemas import AssignSurvey, SurveyWrite
@@ -94,6 +95,8 @@ def validate_answers(survey: Survey, answers: dict) -> dict:
         elif kind == "multiple":
             valid = isinstance(value, list) and all(isinstance(v, str) for v in value)
             valid = valid and len(set(value)) == len(value) and set(value) <= options
+            if valid and len(value) > 1 and any(o.get("exclusive") and o["id"] in value for o in question["options"]):
+                valid = False
         elif kind == "text":
             valid = isinstance(value, str) and len(value) <= 4000
             if valid:
@@ -119,9 +122,12 @@ async def submit_assignment(session: AsyncSession, user: User, assignment_id: in
         if previous.answers != normalized:
             raise HTTPException(409, "Ответ уже отправлен. Для нового ответа врач назначает новый опрос")
         return previous, True
+    await session.scalar(select(Patient).where(Patient.id == assignment.patient_id).with_for_update())
     submission = SurveySubmission(assignment_id=assignment.id, patient_id=assignment.patient_id, answers=normalized)
     session.add(submission)
     assignment.status = "completed"
     await session.flush()
     record_event(session, user.id, assignment.patient_id, "survey.completed", "survey_submission", submission.id)
+    units = sum(2 if q["kind"] == "text" else 1 for q in survey.questions if q["id"] in normalized)
+    await grant_points(session, assignment.patient_id, "survey", f"survey_submission:{submission.id}", user.id, units)
     return submission, False

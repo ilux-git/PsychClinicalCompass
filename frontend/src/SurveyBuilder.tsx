@@ -28,6 +28,8 @@ import {
   type Notify,
 } from "./UI";
 import { SurveyFields } from "./SurveyFields";
+import { barrierLabels, dimensionLabels, type Dimension, type BarrierCategory } from "./collection";
+import { supportTemplate } from "./supportTemplate";
 
 const id = (prefix: string) =>
   prefix + crypto.randomUUID().replaceAll("-", "").slice(0, 12);
@@ -183,6 +185,11 @@ export function SurveyBuilder({
       >
         Свои вопросы, понятные ответы и история каждой опубликованной версии.
       </Heading>
+      <Section title="Что такое общая анкета сопровождения?">
+        <p>Одинаковые короткие вопросы помогают сравнивать ответы на одну версию: понятен ли план, подходит ли помощь, что мешает и нужен ли следующий шаг. Свои опросы врача остаются доступными.</p>
+        <p className="field-hint">Шаблон C1–C7 — предложение. Он не назначается автоматически, не заменяет PHQ-9/GAD-7 и не вычисляет общий балл «лояльности». Перед публикацией уточните конкретную рекомендацию и период. Частоту назначений определяет врач.</p>
+        <Button variant="secondary" disabled={busy} onClick={() => {setDraft(supportTemplate()); setPreview(false); setPatientIds([]);}}>Открыть предложенный шаблон C1–C7 как черновик</Button>
+      </Section>
       <ErrorBox
         message={library.error || patients.error}
         retry={() => {
@@ -344,6 +351,15 @@ export function SurveyBuilder({
                             placeholder="Сформулируйте один понятный вопрос"
                           />
                         </label>
+                        <label className="field">
+                          Направление аналитики
+                          <select disabled={locked} value={q.dimension ?? ""}
+                            onChange={(e) => patchQuestion(i, {dimension: e.target.value as Dimension || null})}>
+                            <option value="">Без направления</option>
+                            {Object.entries(dimensionLabels).map(([value, label]) => <option key={value} value={value}>{label}</option>)}
+                          </select>
+                        </label>
+                        <p className="field-hint">Помогает собрать ответы по теме. Оценка человека и общий балл автоматически не вычисляются.</p>
                         <div className="form-row">
                           <label className="field">
                             Тип ответа
@@ -407,6 +423,16 @@ export function SurveyBuilder({
                                   }
                                   placeholder={`Вариант ${oi + 1}`}
                                 />
+                                {q.dimension === "constraints" && <select disabled={locked}
+                                  aria-label={`Категория варианта ${oi + 1} вопроса ${i + 1}`}
+                                  value={option.analytics_category ?? ""}
+                                  onChange={(e) => patchQuestion(i, {options: q.options.map((o, n) => n === oi ?
+                                    {...o, analytics_category: e.target.value as BarrierCategory || null} : o)})}>
+                                  <option value="">Без категории</option>
+                                  {Object.entries(barrierLabels).map(([code, label]) => <option key={code} value={code}>{label}</option>)}
+                                </select>}
+                                {q.kind === "multiple" && <label className="checkbox-label"><input type="checkbox" disabled={locked} checked={option.exclusive ?? false}
+                                  onChange={e => patchQuestion(i, {options: q.options.map((o,n) => n === oi ? {...o, exclusive: e.target.checked} : o)})} />Только этот вариант</label>}
                                 {!locked && (
                                   <button
                                     className="icon-button"

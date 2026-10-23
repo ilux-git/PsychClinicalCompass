@@ -2,18 +2,22 @@ from datetime import datetime
 from typing import Literal
 from uuid import UUID
 
-from pydantic import BaseModel, Field, model_validator
+from pydantic import BaseModel, Field, StrictBool, model_validator
+from app.modules.analytics.dimensions import BarrierCategory, ObservationDimension
 
 
 class Choice(BaseModel):
     id: str = Field(pattern=r"^[a-z][a-z0-9_]{0,39}$")
     label: str = Field(min_length=1, max_length=180)
+    analytics_category: BarrierCategory | None = None
+    exclusive: StrictBool = False
 
 
 class Question(BaseModel):
     id: str = Field(pattern=r"^[a-z][a-z0-9_]{0,39}$")
     prompt: str = Field(min_length=1, max_length=500)
     kind: Literal["single", "multiple", "text", "scale"]
+    dimension: ObservationDimension | None = None
     required: bool = True
     options: list[Choice] = Field(default_factory=list, max_length=20)
     minimum: int = Field(default=0, ge=-100, le=100)

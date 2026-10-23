@@ -9,6 +9,8 @@ from app.modules.assessments.models import QuestionnaireResponse
 from app.modules.audit.models import AuditEvent
 from app.modules.integration.mis_models import MISPatient
 from app.modules.patients.models import Patient, PatientMapping
+from app.modules.care.models import TreatmentStatusChange
+from app.modules.integration.synthetic import linked_snapshot
 
 router = APIRouter(prefix="/patients", tags=["patients"])
 
@@ -20,11 +22,22 @@ def patient_summary(patient: Patient) -> dict:
 
 @router.get("")
 async def patients(session: CompassSession, user: CurrentUser) -> list[dict]:
-    if user.role == UserRole.admin:
+    if user.role not in {UserRole.doctor, UserRole.patient}:
         raise HTTPException(403, "Нет клинического доступа")
     query = select(Patient).order_by(Patient.id)
     query = query.where(Patient.doctor_id == user.id) if user.role == UserRole.doctor else query.where(Patient.user_id == user.id)
-    return [patient_summary(p) for p in (await session.scalars(query)).all()]
+    rows = (await session.scalars(query)).all()
+    result = [patient_summary(p) for p in rows]
+    if user.role == UserRole.doctor:
+        latest = {}
+        for row in (await session.scalars(select(TreatmentStatusChange).where(
+            TreatmentStatusChange.patient_id.in_([p.id for p in rows])).order_by(TreatmentStatusChange.id.desc()))).all():
+            latest.setdefault(row.patient_id, row.status)
+        for item, patient in zip(result, rows):
+            fixture = await linked_snapshot(session, patient)
+            item["demo_scenario"] = fixture["data"]["scenario"]["title"] if fixture["data"] else None
+            item["treatment_status"] = latest.get(patient.id, "unknown")
+    return result
 
 
 @router.get("/{patient_id}")
@@ -53,7 +66,7 @@ async def assessments(patient_id: int, session: CompassSession, user: CurrentUse
     await patient_for_user(session, user, patient_id)
     rows = (await session.scalars(select(QuestionnaireResponse).where(QuestionnaireResponse.patient_id == patient_id)
                                   .order_by(QuestionnaireResponse.created_at, QuestionnaireResponse.id))).all()
-    return [{"id": r.id, "form_type": r.form_type, "form_version": r.form_version, "score": r.score,
+    return [{"id": r.id, "form_type": r.form_type, "form_version": r.form_version, "answers": r.answers, "score": r.score,
              "risk_flags": r.risk_flags, "created_at": r.created_at} for r in rows]
 
 

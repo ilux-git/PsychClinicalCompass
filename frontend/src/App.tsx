@@ -14,6 +14,9 @@ import {
   ShieldCheck,
   Sparkles,
   Menu,
+  Bell,
+  BookOpen,
+  Pill,
 } from "lucide-react";
 import { api, send, type User } from "./api";
 import {
@@ -29,19 +32,29 @@ import { DoctorDashboard } from "./DoctorDashboard";
 import { DoctorPatients } from "./DoctorPatients";
 import { SurveyBuilder } from "./SurveyBuilder";
 import { PatientHome } from "./Patient";
+import { DoctorInbox, DoctorInboxNotice } from "./DoctorInbox";
+import { AdminDashboard } from "./AdminDashboard";
+import { CoordinatorHome } from "./CareWorkflow";
 
 const doctorNav = [
   { id: "overview", title: "Обзор обратной связи", icon: LayoutDashboard },
+  { id: "events", title: "События пациентов", icon: Bell },
   { id: "patients", title: "Мои пациенты", icon: Users },
+  { id: "state", title: "Состояние пациентов", icon: Activity },
   { id: "surveys", title: "Мои опросы", icon: ClipboardList },
   { id: "telegram", title: "Telegram · симулятор", icon: MessageCircle },
 ];
 const patientNav = [
   { id: "overview", title: "Мои опросы", icon: ClipboardList },
+  { id: "state", title: "Моё состояние", icon: Activity },
+  { id: "diary", title: "Мой дневник", icon: BookOpen },
+  { id: "medications", title: "Расписание лекарств", icon: Pill },
   { id: "adherence", title: "Как получается", icon: HeartHandshake },
   { id: "chat", title: "Диалог с врачом", icon: MessageCircle },
   { id: "telegram", title: "Telegram · симулятор", icon: Activity },
 ];
+const adminNav = [{ id: "overview", title: "Общая сводка", icon: LayoutDashboard }];
+const coordinatorNav = [{id: "overview", title: "Мои задачи", icon: ClipboardList}];
 
 function Login({ onLogin }: { onLogin: (user: User) => void }) {
   const [username, setUsername] = useState("doctor");
@@ -76,6 +89,7 @@ function Login({ onLogin }: { onLogin: (user: User) => void }) {
         ? "patient-pass-123"
         : value === "admin"
           ? "admin-pass-123"
+          : value === "coordinator" ? "coordinator-pass-123"
           : "doctor-pass-123",
     );
   }
@@ -145,8 +159,9 @@ function Login({ onLogin }: { onLogin: (user: User) => void }) {
                 </option>
               ))}
               <option value="admin">
-                Администратор · без клинического доступа
+                Администратор · обезличенная сводка
               </option>
+              <option value="coordinator">Координатор · назначенные задачи</option>
             </select>
           </label>
           <label className="field">
@@ -190,6 +205,7 @@ export default function App() {
     Boolean(sessionStorage.getItem("compass-token")),
   );
   const [view, setView] = useState("overview");
+  const [inboxRevision, setInboxRevision] = useState(0);
   const [newSurvey, setNewSurvey] = useState(false);
   const [selectedPatient, setSelectedPatient] = useState<number | null>(null);
   const [notice, setNotice] = useState<{
@@ -229,6 +245,7 @@ export default function App() {
   }, [logout]);
   function navigate(next: string) {
     setView(next);
+    if (next === "events") setInboxRevision((value) => value + 1);
     setSelectedPatient(null);
     setMenuOpen(false);
     setNotice(null);
@@ -259,7 +276,7 @@ export default function App() {
       ? doctorNav
       : user.role === "patient"
         ? patientNav
-        : [];
+        : user.role === "coordinator" ? coordinatorNav : adminNav;
   return (
     <div
       className={`app-shell ${user.role === "patient" ? "patient-shell" : ""}`}
@@ -285,7 +302,7 @@ export default function App() {
             ? "Пространство врача"
             : user.role === "patient"
               ? "Моё пространство"
-              : "Администратор"}
+              : user.role === "coordinator" ? "Координатор" : "Администратор"}
         </div>
         <nav aria-label="Главная навигация">
           {nav.map((item) => (
@@ -307,12 +324,12 @@ export default function App() {
           <strong>
             {user.role === "doctor"
               ? "За цифрами — человек"
-              : "Каждый ответ важен"}
+              : user.role === "admin" ? "Общая картина клиники" : user.role === "coordinator" ? "Помочь со следующим шагом" : "Каждый ответ важен"}
           </strong>
           <p>
             {user.role === "doctor"
               ? "Обратная связь помогает начать нужный разговор."
-              : "Расскажите, какая поддержка нужна именно вам."}
+              : user.role === "admin" ? "Охват и препятствия без персональных данных." : user.role === "coordinator" ? "Назначенные организационные задачи и выполненные действия." : "Расскажите, какая поддержка нужна именно вам."}
           </p>
         </div>
         <div className="sidebar-profile">
@@ -324,7 +341,7 @@ export default function App() {
                 ? "Врач"
                 : user.role === "patient"
                   ? "Пациент"
-                  : "Администратор"}
+                  : user.role === "coordinator" ? "Координатор" : "Администратор"}
             </small>
           </div>
           <button className="icon-button" onClick={logout} aria-label="Выйти">
@@ -354,7 +371,7 @@ export default function App() {
               ? "Кабинет врача"
               : user.role === "patient"
                 ? "Мой кабинет"
-                : "Управление"}
+                : user.role === "coordinator" ? "Кабинет координатора" : "Управление"}
             <span>/</span>
             <strong>
               {nav.find((item) => item.id === view)?.title ?? "Доступ"}
@@ -382,6 +399,7 @@ export default function App() {
             )}
           </div>
         </header>
+        {user.role === "doctor" && <DoctorInboxNotice key={user.id} open={() => navigate("events")} />}
         <main className="main-content" key={`${user.id}-${view}`}>
           {notice && (
             <div
@@ -415,6 +433,11 @@ export default function App() {
                   setNewSurvey(true);
                 }}
               />
+            ) : view === "events" ? (
+              <DoctorInbox key={inboxRevision} openPatient={(id) => {
+                setSelectedPatient(id);
+                setView("state");
+              }} />
             ) : view === "surveys" ? (
               <SurveyBuilder notify={notify} initialNew={newSurvey} />
             ) : (
@@ -423,22 +446,15 @@ export default function App() {
                 onSelect={setSelectedPatient}
                 notify={notify}
                 simulated={view === "telegram"}
+                initialTab={view === "state" ? "clinical" : "feedback"}
               />
             )
           ) : user.role === "patient" ? (
             <PatientHome user={user} view={view} notify={notify} />
+          ) : user.role === "coordinator" ? (
+            <CoordinatorHome notify={notify} />
           ) : (
-            <section className="panel admin-panel">
-              <ShieldCheck size={36} />
-              <h1>Клинический доступ ограничен</h1>
-              <p>
-                Роль администратора не даёт доступа к медицинским карточкам,
-                чатам или ответам пациентов.
-              </p>
-              <Button variant="secondary" onClick={logout}>
-                Сменить учётную запись
-              </Button>
-            </section>
+            <AdminDashboard />
           )}
         </main>
         <footer className="app-footer">

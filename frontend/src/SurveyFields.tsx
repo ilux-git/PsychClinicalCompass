@@ -13,6 +13,12 @@ export function SurveyFields({
 }) {
   const change = (id: string, value: unknown) =>
     onChange({ ...answers, [id]: value });
+  function choose(q: Question, option: Question["options"][number]) {
+    if (q.kind === "single") return change(q.id, option.id);
+    const previous = Array.isArray(answers[q.id]) ? answers[q.id] as string[] : [];
+    change(q.id, previous.includes(option.id) ? previous.filter(x => x !== option.id) : option.exclusive ? [option.id] :
+      [...previous.filter(x => !q.options.find(o => o.id === x)?.exclusive), option.id]);
+  }
   return (
     <div className="survey-questions">
       {questions.map((q, index) => (
@@ -81,24 +87,7 @@ export function SurveyFields({
                         : Array.isArray(answers[q.id]) &&
                           (answers[q.id] as string[]).includes(option.id)
                     }
-                    onChange={() =>
-                      q.kind === "single"
-                        ? change(q.id, option.id)
-                        : change(
-                            q.id,
-                            Array.isArray(answers[q.id]) &&
-                              (answers[q.id] as string[]).includes(option.id)
-                              ? (answers[q.id] as string[]).filter(
-                                  (x) => x !== option.id,
-                                )
-                              : [
-                                  ...(Array.isArray(answers[q.id])
-                                    ? (answers[q.id] as string[])
-                                    : []),
-                                  option.id,
-                                ],
-                          )
-                    }
+                    onChange={() => choose(q, option)}
                   />
                   <span>{option.label}</span>
                 </label>

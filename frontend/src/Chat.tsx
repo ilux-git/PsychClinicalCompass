@@ -16,11 +16,13 @@ export function Chat({
   role,
   simulated = false,
   notify,
+  onObservation,
 }: {
   patientId: number;
   role: "doctor" | "patient";
   simulated?: boolean;
   notify: Notify;
+  onObservation?: (message: ChatMessage) => void;
 }) {
   const messages = useApi<ChatMessage[]>(
     `/conversations/${patientId}/messages`,
@@ -99,6 +101,7 @@ export function Chat({
                       ? "В очереди симулятора"
                       : "Получено из канала"}
               </div>
+              {role === "doctor" && onObservation && <Button variant="ghost" onClick={() => onObservation(message)}>Наблюдение к сообщению</Button>}
             </article>
           ))}
         </div>

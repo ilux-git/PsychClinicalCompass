@@ -9,6 +9,7 @@ from app.modules.access.models import User, UserRole
 from app.modules.adherence.models import AdherenceReport
 from app.modules.patients.models import Patient
 from app.modules.surveys.models import Survey, SurveyAssignment, SurveySubmission
+from app.modules.analytics.collection import dimension_coverage, survey_journey
 
 
 async def engagement(session: AsyncSession, user: User,
@@ -46,6 +47,7 @@ async def engagement(session: AsyncSession, user: User,
             key = (survey.id, question["id"])
             item = breakdown.setdefault(key, {"survey_id": survey.id, "survey_title": survey.title, "version": survey.version,
                 "purpose": survey.purpose, "question_id": question["id"], "prompt": question["prompt"], "kind": question["kind"],
+                "dimension": question.get("dimension"),
                 "respondents": 0, "counts": Counter(), "options": {o["id"]: o["label"] for o in question["options"]}})
             item["respondents"] += 1
             if question["kind"] in {"single", "multiple"}:
@@ -72,6 +74,7 @@ async def engagement(session: AsyncSession, user: User,
         "patients_without_assignments": len(patient_ids) - len(assigned_patients),
         "overdue_assignments": sum(r is None and a.due_at is not None and a.due_at < now for a, _, r in rows),
         "questions": charts,
+        "collection": {"dimensions": dimension_coverage(rows, patient_ids), "journey": survey_journey(rows)},
         "quotes": [{**q, "patient_name": names[q["patient_id"]]} for q in sorted(quotes, key=lambda x: x["created_at"], reverse=True)[:20]],
         "adherence": {"reports": len(reports), "statuses": dict(Counter(r.status for r in reports)),
             "patients_without_reports": len(patient_ids) - len({r.patient_id for r in reports}),

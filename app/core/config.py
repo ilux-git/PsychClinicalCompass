@@ -1,5 +1,6 @@
 from functools import lru_cache
 from pydantic_settings import BaseSettings, SettingsConfigDict
+from pydantic import Field
 
 
 class Settings(BaseSettings):
@@ -16,6 +17,7 @@ class Settings(BaseSettings):
     telegram_enabled: bool = False
     outbox_poll_interval_seconds: int = 5
     outbox_max_attempts: int = 5
+    admin_analytics_min_group_size: int | None = Field(default=None, ge=1)
 
 
 @lru_cache

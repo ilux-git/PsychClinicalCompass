@@ -18,7 +18,6 @@ import {
   type Assignment,
   type Assessment,
   type Note,
-  type Task,
   type Adherence,
   type Alert,
   type Survey,
@@ -38,54 +37,13 @@ import {
 } from "./UI";
 import { AnswerSummary } from "./SurveyFields";
 import { Chat } from "./Chat";
+import { AssessmentHistory } from "./AssessmentHistory";
+import { dimensionLabels, type Dimension } from "./collection";
+import { SharedDiary } from "./PatientDiary";
+import { CareWorkflow, treatmentLabels } from "./CareWorkflow";
+import { MedicationSchedule } from "./MedicationSchedule";
 
 type Source = { type: string; id: number; label: string };
-
-function AssessmentHistory({ rows }: { rows: Assessment[] }) {
-  if (!rows.length) return <Empty title="Числовых результатов пока нет" />;
-  return (
-    <div className="scale-history">
-      {["phq9", "gad7"].map((form) => {
-        const points = rows.filter((r) => r.form_type === form);
-        const maximum = form === "phq9" ? 27 : 21;
-        return (
-          <div key={form}>
-            <h3>
-              {form === "phq9" ? "PHQ-9" : "GAD-7"}{" "}
-              <span className="muted">· демоданные</span>
-            </h3>
-            {!points.length ? (
-              <p className="muted">Нет измерений</p>
-            ) : (
-              <div className="scale-points">
-                {points.map((row) => (
-                  <div key={row.id}>
-                    <span className="scale-point-bar">
-                      <i
-                        style={{ height: `${(100 * row.score) / maximum}%` }}
-                      />
-                    </span>
-                    <strong>{row.score}</strong>
-                    <small>
-                      {new Date(row.created_at).toLocaleDateString("ru-RU", {
-                        day: "numeric",
-                        month: "short",
-                      })}
-                    </small>
-                  </div>
-                ))}
-              </div>
-            )}
-          </div>
-        );
-      })}
-      <p className="field-hint">
-        Разные шкалы показаны отдельно. Это сохранённые числовые результаты,
-        клиническое значение оценивает врач.
-      </p>
-    </div>
-  );
-}
 
 function AlertItem({
   alert,
@@ -224,11 +182,13 @@ function PatientCard({
   back,
   notify,
   simulated = false,
+  initialTab = "feedback",
 }: {
   patientId: number;
   back: () => void;
   notify: Notify;
   simulated?: boolean;
+  initialTab?: "feedback" | "clinical";
 }) {
   const card = useApi<Card>(`/patients/${patientId}`, 15000);
   const assignments = useApi<Assignment[]>(
@@ -240,16 +200,15 @@ function PatientCard({
     15000,
   );
   const notes = useApi<Note[]>(`/patients/${patientId}/notes`);
-  const tasks = useApi<Task[]>(`/patients/${patientId}/tasks`);
   const adherence = useApi<{ reports: Adherence[] }>(
     `/patients/${patientId}/adherence`,
     15000,
   );
   const alerts = useApi<Alert[]>(`/alerts?patient_id=${patientId}`, 15000);
   const surveys = useApi<Survey[]>("/surveys");
-  const [tab, setTab] = useState(simulated ? "chat" : "feedback");
+  const [tab, setTab] = useState(simulated ? "chat" : initialTab);
   const [noteText, setNoteText] = useState("");
-  const [taskText, setTaskText] = useState("");
+  const [noteDimension, setNoteDimension] = useState<Dimension | "">("");
   const [source, setSource] = useState<Source | null>(null);
   const [busy, setBusy] = useState(false);
   const [surveyId, setSurveyId] = useState("");
@@ -262,49 +221,16 @@ function PatientCard({
         text: noteText,
         source_type: source?.type ?? "manual",
         source_id: source?.id ?? null,
+        dimension: noteDimension || null,
       });
       setNoteText("");
       setSource(null);
+      setNoteDimension("");
       notes.reload();
       notify("Приватная заметка сохранена");
     } catch (error) {
       notify(
         error instanceof Error ? error.message : "Не удалось сохранить заметку",
-        "error",
-      );
-    } finally {
-      setBusy(false);
-    }
-  }
-  async function addTask(event: FormEvent) {
-    event.preventDefault();
-    setBusy(true);
-    try {
-      await send(`/patients/${patientId}/tasks`, { title: taskText });
-      setTaskText("");
-      tasks.reload();
-      notify("Задача добавлена");
-    } catch (error) {
-      notify(
-        error instanceof Error ? error.message : "Не удалось сохранить задачу",
-        "error",
-      );
-    } finally {
-      setBusy(false);
-    }
-  }
-  async function toggleTask(task: Task) {
-    setBusy(true);
-    try {
-      await send(
-        `/tasks/${task.id}`,
-        { status: task.status === "done" ? "open" : "done" },
-        "PATCH",
-      );
-      tasks.reload();
-    } catch (error) {
-      notify(
-        error instanceof Error ? error.message : "Не удалось обновить задачу",
         "error",
       );
     } finally {
@@ -365,8 +291,10 @@ function PatientCard({
               >
                 {[
                   ["feedback", "Обратная связь"],
+                  ["care", "План и задачи"],
+                  ["medications", "Расписание лекарств"],
                   ["chat", simulated ? "Telegram · симулятор" : "Диалог"],
-                  ["clinical", "Клинические данные"],
+                  ["clinical", "Состояние и данные МИС"],
                 ].map(([key, label]) => (
                   <button
                     role="tab"
@@ -379,6 +307,8 @@ function PatientCard({
                   </button>
                 ))}
               </div>
+              {tab === "care" && <CareWorkflow patientId={patientId} source={source} notify={notify} />}
+              {tab === "medications" && <MedicationSchedule patientId={patientId} notify={notify} readOnly onSource={value => {setSource(value); setTab("care");}} />}
               {tab === "feedback" && (
                 <>
                   <Section
@@ -445,6 +375,8 @@ function PatientCard({
                           <p className="field-hint">
                             Версия {assignment.survey.version} · назначен{" "}
                             {date(assignment.created_at)}
+                            {assignment.first_opened_at ? ` · открыт ${date(assignment.first_opened_at)}` : " · время открытия неизвестно"}
+                            {assignment.submission ? ` · завершён ${date(assignment.submission.created_at)}` : ""}
                             {assignment.due_at
                               ? ` · срок ${date(assignment.due_at)}`
                               : ""}
@@ -542,11 +474,24 @@ function PatientCard({
                     role="doctor"
                     simulated={simulated}
                     notify={notify}
+                    onObservation={(message) => {
+                      setSource({type: "message", id: message.id, label: `Сообщение от ${date(message.created_at)}`});
+                      document.getElementById("note-text")?.focus();
+                    }}
                   />
                 </Section>
               )}
               {tab === "clinical" && (
                 <>
+                  <Section title="История PHQ-9 и GAD-7">
+                    <ErrorBox message={history.error} retry={history.reload} />
+                    {history.data ? (
+                      <AssessmentHistory rows={history.data} />
+                    ) : (
+                      <p className="muted">Результаты шкал ещё не получены.</p>
+                    )}
+                  </Section>
+                  <SharedDiary patientId={patientId} onSource={value => {setSource(value); setTab("care");}} />
                   <Section
                     title="Данные из МИС"
                     aside={
@@ -585,14 +530,6 @@ function PatientCard({
                       </p>
                     )}
                   </Section>
-                  <Section title="История шкал">
-                    <ErrorBox message={history.error} retry={history.reload} />
-                    {history.data ? (
-                      <AssessmentHistory rows={history.data} />
-                    ) : (
-                      <p className="muted">Результаты шкал ещё не получены.</p>
-                    )}
-                  </Section>
                   <Section title="События для врачебной оценки">
                     <ErrorBox message={alerts.error} retry={alerts.reload} />
                     {!alerts.data ? (
@@ -621,8 +558,15 @@ function PatientCard({
                 <p className="field-hint">
                   Приватный раздел врача. Пациент его не видит.
                 </p>
+                <p className="field-hint">Наблюдение хранится отдельно от самоотчёта и не исправляет ответы пациента или баллы шкал.</p>
                 <ErrorBox message={notes.error} retry={notes.reload} />
                 <form onSubmit={addNote}>
+                  <label className="field">Направление наблюдения
+                    <select value={noteDimension} onChange={(e) => setNoteDimension(e.target.value as Dimension | "")}>
+                      <option value="">Общая заметка</option>
+                      {Object.entries(dimensionLabels).map(([code, label]) => <option key={code} value={code}>{label}</option>)}
+                    </select>
+                  </label>
                   {source && (
                     <div className="source-chip">
                       <span>К ответу: {source.label}</span>
@@ -635,6 +579,7 @@ function PatientCard({
                       </button>
                     </div>
                   )}
+                  {source && <Button type="button" variant="secondary" onClick={() => setTab("care")}>Создать задачу по этому источнику</Button>}
                   <label className="sr-only" htmlFor="note-text">
                     Текст приватной заметки
                   </label>
@@ -658,9 +603,11 @@ function PatientCard({
                 <div className="notes-list">
                   {notes.data?.map((note) => (
                     <article key={note.id}>
+                      {note.dimension && <Badge tone="purple">{dimensionLabels[note.dimension]}</Badge>}
                       <p className="preserve">{note.text}</p>
                       <small>
                         {date(note.created_at)}
+                        {` · ${note.doctor_name}`}
                         {note.source_type !== "manual"
                           ? " · связан с источником"
                           : ""}
@@ -673,43 +620,8 @@ function PatientCard({
                 title="Следующий шаг"
                 aside={<Clock3 size={17} className="muted" />}
               >
-                <ErrorBox message={tasks.error} retry={tasks.reload} />
-                <form className="task-compose" onSubmit={addTask}>
-                  <input
-                    aria-label="Название задачи"
-                    value={taskText}
-                    maxLength={300}
-                    onChange={(e) => setTaskText(e.target.value)}
-                    placeholder="Что сделать для пациента?"
-                    required
-                  />
-                  <Button
-                    variant="secondary"
-                    aria-label="Добавить задачу"
-                    type="submit"
-                    disabled={busy || !taskText.trim()}
-                  >
-                    <Plus size={16} />
-                  </Button>
-                </form>
-                <div className="task-list">
-                  {tasks.data?.map((task) => (
-                    <button
-                      disabled={busy}
-                      key={task.id}
-                      className={task.status === "done" ? "done" : ""}
-                      onClick={() => toggleTask(task)}
-                    >
-                      <span className="task-check">
-                        {task.status === "done" && <Check size={13} />}
-                      </span>
-                      <span>{task.title}</span>
-                    </button>
-                  ))}
-                </div>
-                {tasks.data?.length === 0 && (
-                  <p className="field-hint">Пока нет запланированных шагов.</p>
-                )}
+                <p className="field-hint">Назначьте исполнителя, сохраните действие и отдельно проверьте результат.</p>
+                <Button variant="secondary" onClick={() => setTab("care")}>Открыть план и задачи</Button>
               </Section>
             </aside>
           </div>
@@ -724,11 +636,13 @@ export function DoctorPatients({
   onSelect,
   notify,
   simulated = false,
+  initialTab = "feedback",
 }: {
   selected: number | null;
   onSelect: (id: number | null) => void;
   notify: Notify;
   simulated?: boolean;
+  initialTab?: "feedback" | "clinical";
 }) {
   const patients = useApi<Patient[]>("/patients");
   const [query, setQuery] = useState("");
@@ -740,6 +654,7 @@ export function DoctorPatients({
         back={() => onSelect(null)}
         notify={notify}
         simulated={simulated}
+        initialTab={initialTab}
       />
     );
   const filtered = patients.data?.filter((p) =>
@@ -747,8 +662,8 @@ export function DoctorPatients({
   );
   return (
     <>
-      <Heading eyebrow="Люди, которым вы помогаете" title="Мои пациенты">
-        Опросы, самоотчёты и переписка в одной карточке.
+      <Heading eyebrow="Люди, которым вы помогаете" title={initialTab === "clinical" ? "Состояние пациентов" : "Мои пациенты"}>
+        {initialTab === "clinical" ? "Выберите пациента, чтобы открыть PHQ-9, GAD-7 и сохранённые ответы по пунктам." : "Опросы, самоотчёты и переписка в одной карточке."}
       </Heading>
       <div className="search-field">
         <Search size={18} />
@@ -777,6 +692,8 @@ export function DoctorPatients({
               <Avatar name={p.full_name} />
               <strong>{p.full_name}</strong>
               <span>Синтетическая карточка · #{p.id}</span>
+              {p.demo_scenario && <span>{p.demo_scenario}</span>}
+              <Badge tone="muted">{treatmentLabels[p.treatment_status ?? "unknown"]}</Badge>
               <div>
                 <ClipboardList size={16} /> Открыть историю и ответы
                 <ChevronRight size={17} />
