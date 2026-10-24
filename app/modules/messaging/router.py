@@ -36,7 +36,8 @@ async def post_message(
         raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Insufficient role")
     try:
         message = await send_message(session, patient_id, user, payload.text, payload.channel,
-                                     str(payload.client_request_id) if payload.client_request_id else None)
+                                     str(payload.client_request_id) if payload.client_request_id else None,
+                                     payload.support_requested)
         await session.commit()
     except MessagingError as e:
         raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail=str(e))

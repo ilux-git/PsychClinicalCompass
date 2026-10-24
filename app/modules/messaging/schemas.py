@@ -9,6 +9,7 @@ class MessageCreate(BaseModel):
     client_request_id: UUID | None = None
     text: str = Field(min_length=1, max_length=4096)
     channel: Literal["web", "tg_doctor", "tg_patient"] = "web"
+    support_requested: bool = False
 
     @field_validator("text")
     @classmethod
@@ -28,5 +29,6 @@ class MessageRead(BaseModel):
     text: str
     status: str
     channel: str
+    support_requested: bool
     external_message_id: str | None
     created_at: datetime

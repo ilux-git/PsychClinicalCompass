@@ -1,4 +1,8 @@
-import type { ComponentProps, ReactNode } from "react";
+"use client";
+
+import type { ReactNode } from "react";
+import type { HTMLMotionProps } from "motion/react";
+import { m, motionTokens, useInteractionMotion } from "./Interaction";
 import {
   AlertCircle,
   RefreshCw,
@@ -27,13 +31,14 @@ export function Button({
   variant = "primary",
   className = "",
   ...props
-}: ComponentProps<"button"> & {
+}: HTMLMotionProps<"button"> & {
   variant?: "primary" | "secondary" | "ghost" | "danger";
 }) {
+  const { moving, transition } = useInteractionMotion();
   return (
-    <button className={`button ${variant} ${className}`} {...props}>
+    <m.button className={`button ${variant} ${className}`} whileTap={!props.disabled && moving ? { scale: motionTokens.scale.press } : undefined} transition={transition} {...props}>
       {children}
-    </button>
+    </m.button>
   );
 }
 export function Badge({
@@ -71,11 +76,11 @@ export function ErrorBox({
 }) {
   if (!message) return null;
   return (
-    <div className="error-box" role="alert">
+    <div className="error-box" role="alert" tabIndex={-1}>
       <AlertCircle size={18} />
       <span>{message}</span>
       {retry && (
-        <Button variant="ghost" onClick={retry}>
+        <Button type="button" variant="ghost" onClick={retry}>
           <RefreshCw size={15} /> Повторить
         </Button>
       )}

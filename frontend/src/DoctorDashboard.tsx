@@ -1,7 +1,10 @@
-import { useState } from "react";
+import { useId } from "react";
+import { useReturnFocus, useViewState, type PatientAnswerTarget } from "./ViewState";
 import { CollectionMetrics } from "./CollectionMetrics";
 import { DoctorWorkflowMetrics } from "./WorkflowMetrics";
 import { dimensionLabels } from "./collection";
+import { HorizontalBars } from "./Charts";
+import { AnimatePresence, ContentFrame } from "./Interaction";
 import {
   ArrowUpRight,
   ClipboardList,
@@ -11,7 +14,7 @@ import {
   Plus,
   ChevronRight,
 } from "lucide-react";
-import { useApi, type Dashboard, type ChartQuestion } from "./api";
+import { useApi, type Dashboard, type ChartQuestion, type Quote } from "./api";
 import {
   Avatar,
   Badge,
@@ -23,54 +26,42 @@ import {
   Loading,
   Section,
   adherenceLabels,
+  plural,
 } from "./UI";
 
 function AnswerChart({ question }: { question: ChartQuestion }) {
-  const max = Math.max(1, ...question.options.map((option) => option.count));
   return (
     <div className="answer-chart">
       <div className="chart-caption">
         <span>
           {question.survey_title} · v{question.version}
         </span>
-        <span>{question.respondents} ответ.</span>
+        <span>{question.respondents} {plural(question.respondents,"заполнение","заполнения","заполнений")}</span>
       </div>
-      <h3>{question.prompt}</h3>
       {question.dimension && <Badge tone="purple">{dimensionLabels[question.dimension]}</Badge>}
-      <div className="bars">
-        {question.options.map((option) => (
-          <div className="bar-row" key={option.id}>
-            <div className="bar-label">
-              <span>{option.label}</span>
-              <strong>{option.count}</strong>
-            </div>
-            <div className="bar-track">
-              <span style={{ width: `${(100 * option.count) / max}%` }} />
-            </div>
-          </div>
-        ))}
-      </div>
-      <p className="field-hint">
-        {question.kind === "multiple"
-          ? "Можно выбрать несколько вариантов. Один ответ может содержать несколько причин."
-          : "Количество ответов по вариантам. Каждая версия опроса показана отдельно."}
-      </p>
+      <HorizontalBars title={question.prompt} maximum={question.respondents} unit="ответов" rows={question.options.map(option=>({label:option.label,value:option.count}))} caption={question.kind==="multiple"?"Можно выбрать несколько вариантов. Один ответ может содержать несколько причин.":"Количество ответов по вариантам. Каждая версия опроса показана отдельно."}/>
     </div>
   );
 }
+
+const quoteKey=(quote:Quote,index:number)=>quote.submission_id&&quote.question_id?`analytics-quote-${quote.submission_id}-${quote.question_id}`:`analytics-quote-${quote.patient_id}-${quote.created_at}-${index}`;
+const quoteTarget=(quote:Quote):PatientAnswerTarget|undefined=>quote.assignment_id&&quote.submission_id&&quote.question_id?{assignmentId:quote.assignment_id,submissionId:quote.submission_id,questionId:quote.question_id}:undefined;
 
 export function DoctorDashboard({
   openPatient,
   createSurvey,
 }: {
-  openPatient: (id: number) => void;
+  openPatient: (id: number,returnKey?:string,answerTarget?:PatientAnswerTarget) => void;
   createSurvey: () => void;
 }) {
-  const [since, setSince] = useState("");
-  const [until, setUntil] = useState("");
-  const [period, setPeriod] = useState("");
-  const data = useApi<Dashboard>(`/analytics/engagement${period}`, 15000);
+  const [since, setSince] = useViewState("analytics-since","");
+  const [until, setUntil] = useViewState("analytics-until","");
+  const [period, setPeriod] = useViewState("analytics-period","");
+  const [section,setSection]=useViewState("analytics-section","feedback");
+  const panelId=useId();
+  const data = useApi<Dashboard>(section==="feedback"?`/analytics/engagement${period}`:null, 15000);
   const d = data.data;
+  useReturnFocus("overview",Boolean(d||data.error));
   const options = d?.questions.filter((q) => q.kind !== "text") ?? [];
   const barriers = options.filter((q) => q.dimension === "constraints" || (!q.dimension && q.purpose === "barriers"));
   const other = options.filter((q) => !barriers.includes(q));
@@ -88,16 +79,18 @@ export function DoctorDashboard({
     <>
       <Heading
         eyebrow="Обратная связь между визитами"
-        title="Понять, что мешает"
+        title="Аналитика сопровождения"
         action={
           <Button onClick={createSurvey}>
             <Plus size={17} /> Создать опрос
           </Button>
         }
       >
-        Причины со слов пациентов и вопросы, на которые ещё нет ответов.
+        {section==="feedback"?"Причины со слов пациентов и вопросы, на которые ещё нет ответов.":"Действия по затруднениям, проверка результата и решения врача о продолжении лечения."}
       </Heading>
-      <DoctorWorkflowMetrics />
+      <div className="tabs analytics-tabs" role="tablist" aria-label="Разделы аналитики врача">{[{id:"feedback",label:"Опросы и барьеры"},{id:"actions",label:"Действия и исходы"}].map(item=><button key={item.id} id={`${panelId}-tab-${item.id}`} role="tab" aria-selected={section===item.id} aria-controls={`${panelId}-panel-${item.id}`} tabIndex={section===item.id?0:-1} className={section===item.id?"active":""} onClick={()=>setSection(item.id)} onKeyDown={event=>{const next=event.key==="Home"?"feedback":event.key==="End"?"actions":event.key==="ArrowLeft"||event.key==="ArrowRight"?(section==="feedback"?"actions":"feedback"):null;if(next){event.preventDefault();setSection(next);document.getElementById(`${panelId}-tab-${next}`)?.focus();}}}>{item.label}</button>)}</div>
+      <AnimatePresence mode="wait" initial={false}><ContentFrame key={section}><div role="tabpanel" id={`${panelId}-panel-${section}`} aria-labelledby={`${panelId}-tab-${section}`}>
+      {section==="actions"?<DoctorWorkflowMetrics/>:<>
       <div className="period-toolbar">
         <span>Назначения за период</span>
         <label className="sr-only" htmlFor="period-start">
@@ -138,9 +131,11 @@ export function DoctorDashboard({
           За всё время
         </button>
       </div>
+      {since&&until&&since>until&&<p className="question-error" role="alert">Конец периода должен быть не раньше начала.</p>}
+      {d&&<p className="field-hint applied-period" role="status">{!d.period.since&&!d.period.until_exclusive?"Показаны все назначения.":`Показаны назначения с ${d.period.since?new Date(d.period.since).toLocaleDateString("ru-RU"):"начала наблюдения"}${d.period.until_exclusive?` по ${new Date(Date.parse(d.period.until_exclusive)-1).toLocaleDateString("ru-RU")} включительно`:", без конечной даты"}.`} Самоотчёты о рекомендациях отбираются по дате записи.</p>}
       <ErrorBox message={data.error} retry={data.reload} />
       {!d ? (
-        <Loading />
+        data.loading?<Loading />:<Empty title="Аналитика пока недоступна"/>
       ) : (
         <>
           <div className="metric-grid">
@@ -164,7 +159,7 @@ export function DoctorDashboard({
               <small>
                 {d.completion_rate === null
                   ? "Нет назначенных опросов"
-                  : `${d.completion_rate}% от назначений за период`}
+                  : `${d.completion_rate.toLocaleString("ru-RU")}% от назначений за период`}
               </small>
             </article>
             <article className="metric-card">
@@ -193,13 +188,11 @@ export function DoctorDashboard({
             <div>
               <strong>Неответ — это пробел в данных</strong>
               <p>
-                Он не доказывает уход из клиники или невыполнение рекомендаций.
-                Здесь видны текущие ответы на назначения за выбранный период;
-            реальные визиты ещё не подключены; синтетические события МИС показаны в отдельном блоке выше.
+                Неответ не подтверждает отказ от лечения или невыполнение рекомендаций.
+                Синтетические события визитов показаны во вкладке «Действия и исходы».
               </p>
             </div>
           </div>
-          {d.collection && <CollectionMetrics data={d.collection} />}
           <div className="dashboard-columns">
             <div className="dashboard-primary">
               <Section
@@ -254,13 +247,15 @@ export function DoctorDashboard({
                     {d.quotes.slice(0, 5).map((quote, i) => (
                       <article
                         className="patient-quote"
-                        key={`${quote.patient_id}-${i}`}
+                        key={quoteKey(quote,i)}
                       >
                         <p className="quote-prompt">{quote.prompt}</p>
                         <blockquote>«{quote.text}»</blockquote>
                         <button
                           className="person-link"
-                          onClick={() => openPatient(quote.patient_id)}
+                          data-return-key={quoteKey(quote,i)}
+                          aria-label={`${quoteTarget(quote)?"Открыть ответ":"Открыть карточку"}: ${quote.patient_name}`}
+                          onClick={() => openPatient(quote.patient_id,quoteKey(quote,i),quoteTarget(quote))}
                         >
                           <Avatar name={quote.patient_name} small />
                           <span>
@@ -295,7 +290,8 @@ export function DoctorDashboard({
                   <button
                     className="reason-card"
                     key={i}
-                    onClick={() => openPatient(reason.patient_id)}
+                    data-return-key={`analytics-reason-${reason.id??i}-${reason.patient_id}`}
+                    onClick={() => openPatient(reason.patient_id,`analytics-reason-${reason.id??i}-${reason.patient_id}`)}
                   >
                     <Badge tone="muted">
                       {adherenceLabels[reason.status ?? "unknown"]}
@@ -309,11 +305,12 @@ export function DoctorDashboard({
               </Section>
             </div>
           </div>
+          {d.collection && <CollectionMetrics data={d.collection} />}
           <Section
             title="Где обратной связи пока не хватает"
             aside={<span className="muted">Текущий статус назначений</span>}
           >
-            <div className="table-scroll">
+            <div className="table-scroll" role="region" aria-label="Пациенты и ответы на опросы · таблица" tabIndex={0}>
               <table>
                 <thead>
                   <tr>
@@ -333,7 +330,8 @@ export function DoctorDashboard({
                         <td>
                           <button
                             className="person-link"
-                            onClick={() => openPatient(patient.id)}
+                            data-return-key={`analytics-row-${patient.id}`}
+                            onClick={() => openPatient(patient.id,`analytics-row-${patient.id}`)}
                           >
                             <Avatar name={patient.full_name} small />
                             <strong>{patient.full_name}</strong>
@@ -361,7 +359,8 @@ export function DoctorDashboard({
                           <button
                             className="icon-button"
                             aria-label={`Открыть карточку: ${patient.full_name}`}
-                            onClick={() => openPatient(patient.id)}
+                            data-return-key={`analytics-open-${patient.id}`}
+                            onClick={() => openPatient(patient.id,`analytics-open-${patient.id}`)}
                           >
                             <ArrowUpRight size={18} />
                           </button>
@@ -379,6 +378,8 @@ export function DoctorDashboard({
           </Section>
         </>
       )}
+      </>}
+      </div></ContentFrame></AnimatePresence>
     </>
   );
 }

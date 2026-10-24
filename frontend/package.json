@@ -6,10 +6,12 @@
   "scripts": {
     "dev": "vite --host 127.0.0.1 --port 5173",
     "build": "tsc --noEmit && vite build",
+    "build:clean": "tsc --noEmit && vite build --emptyOutDir",
     "preview": "vite preview --host 127.0.0.1"
   },
   "dependencies": {
     "lucide-react": "1.61.0",
+    "motion": "14.6.0",
     "react": "19.3.1",
     "react-dom": "19.3.1"
   },

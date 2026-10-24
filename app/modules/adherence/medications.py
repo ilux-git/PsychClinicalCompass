@@ -18,6 +18,13 @@ def item_read(row: MedicationItem):
 
 async def inventory(session, patient):
     source = await linked_snapshot(session, patient)
+    rows = (await session.scalars(select(MedicationItem).where(MedicationItem.patient_id == patient.id)
+                                  .order_by(MedicationItem.id))).all()
+    return inventory_from(source, rows), source
+
+
+def inventory_from(source, local_rows):
+    """Same source interpretation for individual screens and batched clinic metrics."""
     items = []
     for row in (source["data"] or {}).get("medications", []):
         items.append({"key": f"mis:{row['id']}", "label": row["label"], "instructions": row["instructions"],
@@ -25,9 +32,7 @@ async def inventory(session, patient):
             "weekdays": row["days"], "timezone": row["timezone"], "starts_on": row.get("starts_on"),
             "ends_on": row.get("ends_on"), "active": True, "revision": row["version"],
             "source": "synthetic_mis_json", "is_prescription": True, "editable": False})
-    rows = (await session.scalars(select(MedicationItem).where(MedicationItem.patient_id == patient.id)
-                                  .order_by(MedicationItem.id))).all()
-    return [*items, *[item_read(r) for r in rows]], source
+    return [*items, *[item_read(r) for r in local_rows]]
 
 
 def occurrences(item, day: date):

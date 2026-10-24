@@ -1,11 +1,13 @@
 from contextlib import asynccontextmanager
 from pathlib import Path
+import os
 
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
 from fastapi.responses import JSONResponse
 from fastapi.staticfiles import StaticFiles
 
 from app.api.deps import get_compass_session  # noqa: F401
+from app.core.config import get_settings
 from app.db.session import dispose_engines, ping_databases
 from app.modules.assessments.router import router as assessments_router
 from app.modules.messaging.router import router as messaging_router
@@ -43,6 +45,14 @@ async def health() -> JSONResponse:
     state = "ok" if all(pings.values()) else "degraded" if pings["compass"] else "unavailable"
     return JSONResponse(status_code=200 if pings["compass"] else 503,
                         content={"status": state, "compass_db": pings["compass"], "mis_db": pings["mis"], "mode": "synthetic_demo"})
+
+
+@app.get("/_load-test/context", include_in_schema=False)
+async def load_test_context():
+    settings = get_settings()
+    if not settings.load_test_mode:
+        raise HTTPException(404, "Not found")
+    return {"run_id":settings.load_test_run_id, "synthetic":True, "external_delivery":False, "process_id":os.getpid()}
 
 
 frontend = Path(__file__).resolve().parent.parent / "frontend" / "dist"

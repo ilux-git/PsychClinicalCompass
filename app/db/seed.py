@@ -3,13 +3,14 @@ import asyncio
 from datetime import date, datetime, timedelta, timezone
 from uuid import NAMESPACE_URL, uuid5
 
-from sqlalchemy import select
+from sqlalchemy import func, select
 
 from app.core.security import hash_password
 from app.db.session import async_session_compass, async_session_mis, dispose_engines
 from app.db.demo_data import BARRIER_QUESTIONS, CONTINUATION_QUESTIONS, GAD7_DEMO_ANSWERS
 from app.modules.access.models import User, UserRole
-from app.modules.adherence.models import AdherenceReport
+from app.modules.adherence.models import AdherenceReport, DiaryEntry
+from app.modules.adherence.rewards import ParticipationAward
 from app.modules.assessments.service import save_response
 from app.modules.integration.mis_models import MISPatient
 from app.modules.integration.synthetic import patient_snapshot
@@ -229,6 +230,29 @@ async def seed_demo() -> dict:
             session.add(DoctorNote(patient_id=first.id, doctor_id=first.doctor_id,
                                   text="Уточнить удобное время и финансовые барьеры со слов пациента.", source_type="manual"))
             session.add(DoctorTask(patient_id=first.id, doctor_id=first.doctor_id, title="Обсудить барьеры на следующем контакте"))
+        # A NEW, explicitly synthetic diary/award history makes the loyalty workflow demonstrable.
+        # Existing observations are not retroactively recalculated and real patient data is not used.
+        loyalty_patient = next(p for p in patients if p.mis_id == 2)
+        for offset in range(34):
+            day = date(2026,9,20) + timedelta(days=offset)
+            request_key = key(f"loyalty-observation-v1/{loyalty_patient.mis_id}/{day}")
+            entry = await session.scalar(select(DiaryEntry).where(DiaryEntry.patient_id == loyalty_patient.id,
+                DiaryEntry.client_request_id == request_key))
+            if entry is None:
+                at = datetime.combine(day, datetime.min.time(), tzinfo=timezone.utc)+timedelta(hours=18)
+                entry = DiaryEntry(patient_id=loyalty_patient.id, client_request_id=request_key,
+                    text=f"Синтетическая запись учебного маршрута, день {offset+1}. Не реальное наблюдение.",
+                    shared_with_doctor=False, initial_shared_with_doctor=False,
+                    observed_at=at, created_at=at, observation_kind="day_summary",
+                    feeling=("neutral","good","difficult","neutral")[offset % 4])
+                session.add(entry); await session.flush()
+                used = await session.scalar(select(func.coalesce(func.sum(ParticipationAward.points),0)).where(
+                    ParticipationAward.patient_id == loyalty_patient.id, ParticipationAward.kind == "diary", ParticipationAward.day == day))
+                award = ParticipationAward(patient_id=loyalty_patient.id, kind="diary", source_key=f"diary:{entry.id}",
+                    policy_version="synthetic-effort-v1", points=max(0,3-used), day=day, created_at=at)
+                session.add(award); await session.flush()
+                record_event(session, loyalty_patient.user_id, loyalty_patient.id, "demo.loyalty_history_created", "participation_award", award.id,
+                    {"synthetic":True,"source_diary_id":entry.id,"points":award.points})
         await session.commit()
     await process_pending_events()
     return {"patients": len(patients), "doctors": len(doctors), "synthetic": True}

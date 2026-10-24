@@ -9,7 +9,7 @@ from app.modules.access.models import User
 from app.modules.audit.service import record_event
 from app.modules.adherence.rewards import grant_points
 from app.modules.patients.models import Patient
-from app.modules.surveys.models import Survey, SurveyAssignment, SurveySubmission
+from app.modules.surveys.models import Survey, SurveyAssignment, SurveySubmission, SurveyDraft
 from app.modules.surveys.schemas import AssignSurvey, SurveyWrite
 
 
@@ -75,7 +75,7 @@ async def assign_survey(session: AsyncSession, doctor: User, survey: Survey, pay
     return result_ids
 
 
-def validate_answers(survey: Survey, answers: dict) -> dict:
+def validate_answers(survey: Survey, answers: dict, *, partial: bool = False) -> dict:
     questions = {q["id"]: q for q in survey.questions}
     if set(answers) - set(questions):
         raise HTTPException(422, "В ответах есть неизвестный вопрос")
@@ -84,7 +84,7 @@ def validate_answers(survey: Survey, answers: dict) -> dict:
         value = answers.get(qid)
         empty = value is None or value == "" or value == [] or (isinstance(value, str) and not value.strip())
         if empty:
-            if question["required"]:
+            if question["required"] and not partial:
                 raise HTTPException(422, f"Нужен ответ: {question['prompt']}")
             continue
         kind = question["kind"]
@@ -109,12 +109,55 @@ def validate_answers(survey: Survey, answers: dict) -> dict:
     return normalized
 
 
-async def submit_assignment(session: AsyncSession, user: User, assignment_id: int, answers: dict) -> tuple[SurveySubmission, bool]:
+async def owned_assignment(session: AsyncSession, user: User, assignment_id: int,
+                           *, lock: bool = False) -> SurveyAssignment:
     query = select(SurveyAssignment).join(Patient, Patient.id == SurveyAssignment.patient_id).where(
-        SurveyAssignment.id == assignment_id, Patient.user_id == user.id).with_for_update(of=SurveyAssignment)
+        SurveyAssignment.id == assignment_id, Patient.user_id == user.id)
+    if lock:
+        query = query.with_for_update(of=SurveyAssignment)
     assignment = await session.scalar(query)
     if assignment is None:
         raise HTTPException(404, "Назначение не найдено или недоступно")
+    return assignment
+
+
+def draft_read(assignment_id: int, draft: SurveyDraft | None, *, completed: bool = False) -> dict:
+    return {"assignment_id": assignment_id, "answers": draft.answers if draft else {},
+            "revision": draft.revision if draft else 0, "updated_at": draft.updated_at if draft else None,
+            "already_completed": completed}
+
+
+async def save_draft(session: AsyncSession, user: User, assignment_id: int,
+                     answers: dict, expected_revision: int) -> dict:
+    # The same assignment lock serializes draft writes and final submission.
+    assignment = await owned_assignment(session, user, assignment_id, lock=True)
+    if await session.scalar(select(SurveySubmission.id).where(SurveySubmission.assignment_id == assignment.id)):
+        raise HTTPException(409, "Ответ уже отправлен. Обновите список опросов")
+    survey = await session.get(Survey, assignment.survey_id)
+    normalized = validate_answers(survey, answers, partial=True)
+    draft = await session.get(SurveyDraft, assignment.id)
+    current_revision = draft.revision if draft else 0
+    if normalized == (draft.answers if draft else {}) and expected_revision <= current_revision:
+        return {**draft_read(assignment.id, draft), "replayed": True}
+    if expected_revision != current_revision:
+        raise HTTPException(409, "Черновик изменён в другом окне. Загрузите сохранённую версию перед новой записью")
+    if draft is None:
+        draft = SurveyDraft(assignment_id=assignment.id, answers=normalized, revision=1)
+        session.add(draft)
+    else:
+        draft.answers = normalized
+        draft.revision += 1
+        draft.updated_at = datetime.now(timezone.utc)
+    await session.flush()
+    # Audit metadata never contains private working answers.
+    record_event(session, user.id, assignment.patient_id, "survey.draft_saved", "survey_assignment",
+                 assignment.id, {"revision": draft.revision, "answered_questions": len(normalized)})
+    return {**draft_read(assignment.id, draft), "replayed": False}
+
+
+async def submit_assignment(session: AsyncSession, user: User, assignment_id: int, answers: dict,
+                            expected_draft_revision: int | None = None) -> tuple[SurveySubmission, bool]:
+    assignment = await owned_assignment(session, user, assignment_id, lock=True)
     survey = await session.get(Survey, assignment.survey_id)
     normalized = validate_answers(survey, answers)
     previous = await session.scalar(select(SurveySubmission).where(SurveySubmission.assignment_id == assignment.id))
@@ -122,10 +165,18 @@ async def submit_assignment(session: AsyncSession, user: User, assignment_id: in
         if previous.answers != normalized:
             raise HTTPException(409, "Ответ уже отправлен. Для нового ответа врач назначает новый опрос")
         return previous, True
+    draft = await session.get(SurveyDraft, assignment.id)
+    current_revision = draft.revision if draft else 0
+    if (draft is not None and expected_draft_revision is None) or (
+        expected_draft_revision is not None and expected_draft_revision != current_revision
+    ):
+        raise HTTPException(409, "Черновик изменён в другом окне. Загрузите сохранённую версию перед отправкой")
     await session.scalar(select(Patient).where(Patient.id == assignment.patient_id).with_for_update())
     submission = SurveySubmission(assignment_id=assignment.id, patient_id=assignment.patient_id, answers=normalized)
     session.add(submission)
     assignment.status = "completed"
+    if draft is not None:
+        await session.delete(draft)
     await session.flush()
     record_event(session, user.id, assignment.patient_id, "survey.completed", "survey_submission", submission.id)
     units = sum(2 if q["kind"] == "text" else 1 for q in survey.questions if q["id"] in normalized)

@@ -1,0 +1,344 @@
+{
+  "recorded_at_utc": "2026-10-24T09:10:01.577548+00:00",
+  "synthetic_only": true,
+  "base_commit": "9070ff1624148d151b552a1827882e34f97bf421",
+  "branch": "agent/retention-mvp",
+  "uncommitted": true,
+  "environments": {
+    "main": "http://127.0.0.1:8780/",
+    "qa": "http://127.0.0.1:8782/",
+    "qa_compass_database": "compass_ui_flow_qa",
+    "qa_mode": "normal",
+    "external_delivery": false
+  },
+  "frontend_fingerprint": "516f59cac4da7d409c70fb88ddfafadc3eea1af8a5fe2595f8102a954c02533b",
+  "frontend_hashes": {
+    "frontend/index.html": "e3e086ab60d4205742e59a449957efc5f18d3df4bd43a352a462d591761f2775",
+    "frontend/package-lock.json": "3d31ec33e3e68239b3edcaaec37bb77798fa8bdb427cd9541bebb2c7b9b0e4cc",
+    "frontend/package.json": "38b36850f09f9d49e6d0f74de0a880943789350d5af66c7104dc57d34b651202",
+    "frontend/src/AdminDashboard.tsx": "5928c22aa3518edd6b4f70b4d0a230e01dff72446e7c8fb519390c7cf230f30d",
+    "frontend/src/api.ts": "daff13cab54b73d7c76018c0c236d76e05cda4d0f98cf7ab13ebf983ae49e8ed",
+    "frontend/src/App.tsx": "787dc9cacc486f74a0f318b8a9b5d3263c5cb82f09ece9f389460a03241184d0",
+    "frontend/src/AssessmentHistory.tsx": "82b6aec9b1a920d4fb391082fbfae86167d0e539c4e1c7f72b04d1bc391cb784",
+    "frontend/src/CareWorkflow.tsx": "7fdb7d0765662a924672f8bfccd7d28f9651b90acd22b93dec939b76d08e74a0",
+    "frontend/src/Charts.tsx": "402338c017130073d5898af3b6391a9e4f2c2c1f3d10d7b7decb86db9b2bd045",
+    "frontend/src/Chat.tsx": "77c113d19027edc2f3328551b538bd99bcd8e0dea21e17c1c5d0c17ce77d47d1",
+    "frontend/src/collection.ts": "2788d784703ac9525700eccd009e94f186eac37ffa9329af3901d334d96bd05c",
+    "frontend/src/CollectionMetrics.tsx": "4846c3dfc28d6d8b4383cc10ca6dd4869973bf5a41127577d24f38b25122ec1d",
+    "frontend/src/DoctorDashboard.tsx": "4c8235adc5829b7ae7fb0c13b23ab4897db6c04759bcb3bc6d0a108bcc65cbff",
+    "frontend/src/DoctorInbox.tsx": "5aac1209c3cc270c55280de8ed936f5cee05ba9a1abfe5568c8bf5bbc531bf99",
+    "frontend/src/DoctorPatients.tsx": "6a59c5b730a9c1751d440e0e68b52c21ebe9cc375876cff89ac885bceb64bd73",
+    "frontend/src/EventAction.tsx": "4d4e4ba1453c965f5e71a7c3c119cde7af06b14c835deb002ec7f6e9cafb93ba",
+    "frontend/src/Interaction.tsx": "818a5cbf31e684bee3c3d2c5911d5f02d1b915f38d9a249d21c473601e5de3e7",
+    "frontend/src/main.tsx": "9204fd5a9b66b7c367022685e566bc05bce4a94add23cfb6f7bbd9e26d8e72ed",
+    "frontend/src/MedicationEditor.tsx": "e8c0820c7bad846215b447136c2aac630f8ed7b65c81e8d4bdf0c2fb19ba0d85",
+    "frontend/src/MedicationSchedule.tsx": "5d0e8412859baa5a22272d099818ee279339b2ae88b50ca2d009893eec5e240d",
+    "frontend/src/NavigationGuard.tsx": "badae4baa4ad4a505d57b7980b26498c878e4f72029f19736d534854da0b96a4",
+    "frontend/src/ParticipationPoints.tsx": "3b329a8bbeb3e3610d6db31381467a8184c5de8a1f99fea63ff68635668eb9db",
+    "frontend/src/Patient.tsx": "ed3dd51993d5077d7b96aad5403cdd8849c2b39ed2a16c6befb85d8226c3037a",
+    "frontend/src/PatientDiary.tsx": "355726524b83d83b2df934b6e44b086f359f0f314de7d02aba6614f4bc97a7cd",
+    "frontend/src/PatientJourney.tsx": "f36fba6b2d8ec731d3c91208b0ae534ebdd8754c1d4b3cb2651e14a2aa7510d7",
+    "frontend/src/PatientSurvey.tsx": "03d8aeb0566d4895822012721ee562e9c064ed1503d125c88f6438fd939923c5",
+    "frontend/src/PrivacySettings.tsx": "6dc8107b4d51f41f1e31a95b3ab7da4f8e04cf70216a833d89914ea9d522ef68",
+    "frontend/src/RoleGuide.tsx": "d71e656f6b4745f427add8e203911716f83bb4e2917632de334dc20f799bfa6f",
+    "frontend/src/SectionBoundary.tsx": "e8c126e1b70ad1d18b816f9fa514ca06f03451312bebc44ac1f99c768e5a8b4a",
+    "frontend/src/styles.css": "1218715b861b26f719231895400a4e019fd2c6703f19af2e0d375580808da7e6",
+    "frontend/src/supportTemplate.ts": "b97398f683b2344ad95722d4d097159b58f2a76f073b84d0e93709842de9fb1d",
+    "frontend/src/SurveyBuilder.tsx": "c94fc90969ba896f8380cf29e24aafdfc624ff468c83d2871ec3c7275122e483",
+    "frontend/src/SurveyFields.tsx": "b02b59bccc679d8b37c6ac7d1ed793e62ddda376407061ea3d84d68affe170eb",
+    "frontend/src/TaskBoard.tsx": "27ee5ba763fdeda26b1efec92ce29fd9ca97de0cc2c34cd6549767efe24b28d6",
+    "frontend/src/UI.tsx": "066c884290d259fbe60e5c0703fbe8196ebb2b444c3e1bdd17478a9cd862de94",
+    "frontend/src/ViewState.tsx": "659918998b7b4d2d715f8d2ee9e8bd01478e8208b428a7f4f1c3aa88dd1fa642",
+    "frontend/src/vite-env.d.ts": "65996936fbb042915f7b74a200fcdde7e410f32a669b1ab9597cfaa4b0faddb5",
+    "frontend/src/WorkflowMetrics.tsx": "ee85b15c661b04a5fbc63c80390e1899bc16863ff229a4d722f1aa285b7c0620",
+    "frontend/src/workspace.css": "ed1e28378a5297655afb87413ac3ac218df72ae61c945f103c9d4ab8475771af",
+    "frontend/tsconfig.json": "9e0d4f6f69107f9fdef169fdef36dbb4eedd893d9f3a1fe3c317e79c6ce6f6a6",
+    "frontend/vite.config.ts": "0006f111fc111c02e76866fe22fdb9715bc66e0cd242c66724be2a5237287c6f"
+  },
+  "backend_fingerprint": "ac31c1c8fa98d35826905be464039950874c79bab28af1df70407dd4e6ba54e9",
+  "backend_hashes": {
+    "app/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "app/api/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "app/api/deps.py": "350a81992dcae5df4130446a2d8c89a95f98ee993c63db4e2f3af24cb58616e9",
+    "app/core/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "app/core/config.py": "e2ca12858d622e6d906d7bc0c679b5aeae71f684a93466708b33331207cb615a",
+    "app/core/security.py": "824083595b5768f7e4c09b949182f6b6a379f551a326e9f95dd361718fc94a46",
+    "app/db/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "app/db/base.py": "321535142401636fa46cc06bcbf989563955b44f873ce53eb7b1364a5ddfcdb1",
+    "app/db/demo_data.py": "a7ab6c9e623c8ab05329b4fed5fbd262199c6898a5cb851463ffa55dd9a2bdb0",
+    "app/db/initialize.py": "dc3230951493a28c8fa5aadcf3956c08789670ad0de71bd60da75e49cb11b55d",
+    "app/db/models.py": "11289bef9ddc2a4169c92c117d1a4beaacb2653e61c849f63c33323ce11d7630",
+    "app/db/seed.py": "43526163d05707d8236323fc8aa3f0e2a317050a14cc477936fe287405bdf5c6",
+    "app/db/session.py": "2a43c79ecac6f3bdfe5ae54dcc5c4f6a36177848ee06f672ec313a073c0394a3",
+    "app/main.py": "d7045c10c216c977c3b173dd20dbf148a672432b7e1a6bec912b9d5a6c734594",
+    "app/modules/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "app/modules/access/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "app/modules/access/models.py": "bd145f984ccde27808c0b64fefee8b4716aa47317d04e5f377679e541bb5bdaf",
+    "app/modules/access/router.py": "94595676c643636ec602967f431ced870ce43697896574657aec9c9f78c1a0d9",
+    "app/modules/access/schemas.py": "cf259228edb2a1f2b77b5363de735e8df9d03c235aecdf67edcb21ce31707612",
+    "app/modules/adherence/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "app/modules/adherence/medication_models.py": "498e093542dd8b646c4ca261dd297ecc65ff5287e4904dc30297798d9ead1503",
+    "app/modules/adherence/medication_router.py": "8e352a7756500cebc29b0c1a23ff43e586c16592446fdd29003b3d932916f191",
+    "app/modules/adherence/medication_schemas.py": "9a93ebc31c6f02606e2f3792e187bc763b6d3a083b4275366b4b17efd1caccfc",
+    "app/modules/adherence/medications.py": "0645c31aded6546e06ea755462b3c9e9efa248fb3b37d5310556f71b78e95670",
+    "app/modules/adherence/models.py": "b0ba395d955afd229434dff65eb017cc22edfd31120f34a557fc53ec265d20ff",
+    "app/modules/adherence/rewards.py": "2ac005c3519e2341cad76a91af508205ccc02ecb1bc5fb5b5194c02a8b7788ba",
+    "app/modules/adherence/router.py": "7dc526a5ee50cad7b44eb020a6ebe1ad0934262f45607341059dd7cc325559e4",
+    "app/modules/adherence/schemas.py": "ae4cbc182665f6f18c32052d4542fa7716eb80dff44bdd6bb25b2083f2f6492e",
+    "app/modules/alerts/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "app/modules/alerts/models.py": "e74a06cec5ef5c76acc3c17185957692a2a6ac5837b9a152ff4a147dbf87a3b8",
+    "app/modules/alerts/router.py": "d2fba2461ee7a24fcffcf397b1eb8e4368c1590d05ff863786ae19bb6dfe5f65",
+    "app/modules/alerts/schemas.py": "76a3e6a2e6d8b01df3ed4f5ea6cbd47d671ce7ae447dcde629bd6d68a896c312",
+    "app/modules/analytics/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "app/modules/analytics/admin.py": "5c387dbc2a7e3e65cfe59eb3b3659171d4ef7b0a5db6e361e103cffa1f603e14",
+    "app/modules/analytics/care.py": "63de9b528658062e8116a3950023a15ed93716dcc552f1dde615a369b56574cd",
+    "app/modules/analytics/collection.py": "5c369096cb8e251b26bcae947a611fc85f464f295a74a4d1ab29a73ae716bba2",
+    "app/modules/analytics/dimensions.py": "b7301d0abb927c176ed4b3524388e4051386c4f691b5e30b30e030ba8b81dc4f",
+    "app/modules/analytics/privacy.py": "794df2cc4961ad56b7bed4b212c48fa3359efc8acf218e7b3ad0c2300908897d",
+    "app/modules/analytics/router.py": "b8f22345b4fa9925bf4e24c9a9a6055ae417847ac9faff62ebe01468290c4b80",
+    "app/modules/analytics/service.py": "1e6e2a8feb74ad908a3824845e30a7f5034adc2e0175ed6aae52d1542dd2b934",
+    "app/modules/assessments/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "app/modules/assessments/models.py": "24c449bcfadb0eaad107dfa3fc2e72627faa61aa37bf118f0dfa91554c24019d",
+    "app/modules/assessments/router.py": "87c2a70a37cb8271c03a64f41b6a5fc4b604f0855692e92816371a053ef7f097",
+    "app/modules/assessments/schemas.py": "438fef7a413eb7ad1063c5abf3e530d71352875ab6c4a2719f3a3f9ad4386d80",
+    "app/modules/assessments/service.py": "3b837ee078c376c79e34bb81a47951acdfaba0f32bcbb86c227db44da1a93f10",
+    "app/modules/audit/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "app/modules/audit/models.py": "04915d291474b4234202b465c51f1cfdc05b83681d55d2b697e48768d287ed1e",
+    "app/modules/audit/service.py": "7705ae93e85043d4e30f4f604d2f72ce1727f67b88c385d9decddfc265b2059d",
+    "app/modules/care/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "app/modules/care/categories.py": "3c56cf2564c4813bc86a324e987b7cee2382b1967f0b781fc58e429500b2a36c",
+    "app/modules/care/models.py": "d0b6427579b402c214b6eaa6a674e880d44e3e69a097e966546a3a168a8dcae3",
+    "app/modules/care/router.py": "4938530a882f5a09c7b04f8a06cb2c6b8845d37ad12515f649fb06144f8d961f",
+    "app/modules/care/schemas.py": "31a6af194383ef1bf78f064c38ff544a5027e9d1ddf1d5b06dfdbf43fcdfac0c",
+    "app/modules/integration/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "app/modules/integration/mis_models.py": "c2f7403fd86992507916e3c48ecd264a318c2281bba4d52a916cdd9cda1d5d68",
+    "app/modules/integration/synthetic.py": "e95d4c5976fe9d824d4ab52ecff730708cf4338e6248461382ee256dba92c4d1",
+    "app/modules/messaging/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "app/modules/messaging/models.py": "de8e04be704684bb895b1fe5057a404363d136fce83ae206f7ed5279342ac455",
+    "app/modules/messaging/router.py": "a3da9eacba76c8d6675ff089d96e257319c4bf8e5bd71eeea33ea97f6af088d3",
+    "app/modules/messaging/schemas.py": "19a759abe81dca528dc2ec0aa0d02f5ba87c3ce2675edab1f70abbe3e0b6fb7a",
+    "app/modules/messaging/service.py": "8e518d70f32e1b7721e543173d15329942e9cc23a95f2a039140809c45185c0a",
+    "app/modules/notes/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "app/modules/notes/models.py": "c10c36fa851bb23815ec869beea6b922b3c590c5b03ff82ac755d6977e7f4997",
+    "app/modules/notes/router.py": "b6e85084cf9c0558dc43c7206fb191f88aab4c596a137f06981260cc52f650ec",
+    "app/modules/notes/schemas.py": "6a2645eb2e97c24d84653d0938a296a3257d7c6609bdf4a9db5d5b1271e584c5",
+    "app/modules/patients/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "app/modules/patients/models.py": "3cf683cab98272c2d3af0ea36221e7fee0d6234bc6609dcd604c7f78db33e50e",
+    "app/modules/patients/router.py": "e8c7b71e907f4d0ad42ed9babb29169ec487bf6e78d1229380983be64774b3e0",
+    "app/modules/surveys/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "app/modules/surveys/models.py": "d5114226e8d5d27340ded3d751c8dd007da0ebb79fb51a5261a7a65abf194728",
+    "app/modules/surveys/router.py": "6a7d92d48f1d7fcc3f2732e7688a24f3c740f2b48145f2ed22e26f96e196d0cc",
+    "app/modules/surveys/schemas.py": "d52a86fd4994601d191dbe864813d4aa23ce9dcde67f418e21d80b5eb265aa37",
+    "app/modules/surveys/service.py": "0c26a633f174b16a4fa74ce885a96870e4b22edc0f7c74744e634becd70bfdd0",
+    "app/workers/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "app/workers/outbox_worker.py": "ea69e40554b61f9b08e48a7787b85d2d65eb7751188d53030b69c7aabd458e5f"
+  },
+  "test_hashes": {
+    "tests/test_loyalty.py": "8c8eee8fa03cc7504054439e1c57c08b421eb4c98ed196aeec5066b0d8bcd4fa",
+    "tests/test_quote_sources.py": "ac80adfaa7de597cdaf3888e9d33d47f15e347a97ccfcd5012506bd41fca0ba0",
+    "tests/test_survey_drafts.py": "2b418fc3b430c4468881b1a143cbcda41f350aa374a4675b1b37d250f530ade3",
+    "tests/test_task_board.py": "84fe984007ee27eb786d676ea534f2f1f560c53987eb68ab17f5ba901ac46138",
+    "tests/test_task_read.py": "aebbc45a5f1a5bc38d758044978e07d9d63267e9ef7db4c33b204cbcda4894dc"
+  },
+  "verification": {
+    "full_backend": {
+      "passed": 133,
+      "seconds": 145.476,
+      "failures": 0,
+      "errors": 0,
+      "skips": 0,
+      "report_sha256": "646e03ffed3c4599c561264aa7ca876147a946f40e4c4e26680cb2c540c5f262",
+      "boundary": "Fresh complete run with workspace-local temporary directory; current backend and quote-source metadata."
+    },
+    "earlier_full_backend": {
+      "passed": 133,
+      "seconds": 122.43,
+      "skips": 0,
+      "boundary": "Completed before user stopped development; same application code."
+    },
+    "publication_environment_retry": "Earlier run had 132 passed and 1 tmp_path setup error in sandbox system temp; rerun uses a fresh verified workspace/work subdirectory. Database recovery was awaited before the final run.",
+    "after_rewards_wording": {
+      "passed": 9,
+      "seconds": 9.2,
+      "files": [
+        "tests/test_loyalty.py",
+        "tests/test_survey_drafts.py"
+      ],
+      "overlaps_full_suite": true
+    },
+    "task_read_and_board_subset": {
+      "passed": 5,
+      "seconds": 5.01,
+      "overlaps_full_suite": true
+    },
+    "typescript_and_vite": "passed",
+    "current_entry_files": {
+      "/assets/index-ta6MXOdN.js": {
+        "bytes": 477520,
+        "sha256": "4a2030e8474ff33debc1c6f1b2396d32b9cd04c308a2547b9375dd911209f934"
+      },
+      "/assets/index-BCMfxWNO.css": {
+        "bytes": 87661,
+        "sha256": "73215128fbf79e1b1a2adf2d1d40783674210e46055ca425af0b467e89fb669e"
+      }
+    },
+    "alembic_current": "n32_patient_survey_drafts",
+    "alembic_check": "no new operations",
+    "npm_audit_runtime": {
+      "vulnerabilities": 0
+    },
+    "restart_smoke": {
+      "health": {
+        "status": "ok",
+        "compass_db": true,
+        "mis_db": true,
+        "mode": "synthetic_demo"
+      },
+      "html_and_current_js_css": "HTTP 200",
+      "api_and_worker_started": true,
+      "browser": "Not completed: existing browser error-page blocked by URL policy; no workaround attempted."
+    },
+    "diff_check": "passed",
+    "console": {
+      "since_utc": "2026-10-24T08:23:38.858Z",
+      "errors_or_warnings": 0,
+      "scope": "QA tab 7; source return, role changes and navigation checks. Earlier intentional failures excluded."
+    }
+  },
+  "browser_observations": [
+    "Independent dirty forms: saving one does not discard another; pending requests block leaving.",
+    "Diary/chat/medication forms retain input after failure, cancellation and disclosure toggle.",
+    "Two windows: task version conflict and external stage change retain local text; replacement explicit.",
+    "23 synthetic completed task fixtures make a 30+ task board; changed task outside first 20 remains visible.",
+    "Chat reading position preserved on remote message: scrollTop 0 and composer top 818.328125 before/after.",
+    "Doctor survey: empty title/question/options and invalid scale have localized field errors and focus.",
+    "Unsent assignment selection survives stay action; focus returns to checked patient.",
+    "Custom survey -> publish -> patient8 -> mobile answer -> 2 points -> doctor -> sourced coordinator task -> action -> unknown physician verification.",
+    "Patient8 voluntary private diary from journey adds 3 points; balance 5; physician cannot see entry.",
+    "Patient map/rhythm/calm preserve balance and actions. Progress to nearest milestone, optional full mobile list.",
+    "Points refresh 503 retains known balance with retry; recovered without false zero.",
+    "Clinical comment stays local after other window's synthetic decision; readonly copy and explicit clear preserve saved decision.",
+    "Physician analytics tabs and keyboard arrows; report period 26-31 January 2027 -> empty assignments; back retains period; all-time resets.",
+    "Physician response chart first count 2 of 5 -> width 40%, count axis 0-5.",
+    "Legacy overrides fixed: event buttons 13px/44px, mobile fields 16px, metric captions 12px, event heading 16px.",
+    "Table overflow fixed: root scrollWidth 529 -> 360 at innerWidth 375. Skip-link heading top 116 > topbar bottom 65.",
+    "Return from patient preserves analytics period and focuses source; unsaved physician note still warns.",
+    "Task -> patient plan -> return preserves search QA page, done stage, page 2 and task-10 focus; clearing search resets page 1.",
+    "Inbox -> patient events -> return focuses inbox-15. Multi-page inbox return not exercised on 11-event QA set.",
+    "Directory search Anna -> patient -> back retains query and directory-8 focus. Sign-out clears view state; doctor2 sees only 2 own patients with empty search.",
+    "Mobile navigation/logout cancellation closes drawer and returns textarea focus with unsent diary text retained.",
+    "Admin four-section walkthrough shows no patient name, source quote or private diary; coordinator has no patient-card buttons.",
+    "Old lazy chunks retained across local build; open old session can load a previously unopened section.",
+    "Patient card controlled 503 preserves note and assignment selection plus leave guard; controlled 404 removes clinical data, inputs and spinner; normal retry in same card instance starts with cleared local fields."
+  ],
+  "responsive": {
+    "widths_checked": [
+      375,
+      768,
+      1440
+    ],
+    "horizontal_overflow_after_fixes": false,
+    "boundary": "Role screens sampled at these widths; no claim of every state at every breakpoint."
+  },
+  "screenshots": {
+    "outputs/ui-refresh/qa-patient-assignment-375.jpg": {
+      "sha256": "769e993fb6b351fee716b973ad764a90885b8b55ebcdb1f51faea8eddea21891",
+      "captured_at_utc": "2026-10-24T07:42:15.345126+00:00"
+    },
+    "outputs/ui-refresh/qa-patient-journey-375.jpg": {
+      "sha256": "885224af33d69d93bd58b2edce3bf857f6554272f76f421b7551649b7dde733b",
+      "captured_at_utc": "2026-10-24T07:58:27.623966+00:00"
+    },
+    "outputs/ui-refresh/qa-patient-journey-768.jpg": {
+      "sha256": "025696fd8469f9d0613cebc7ba18e2a3e9ae06d6589d51a17492da185cb9b47c",
+      "captured_at_utc": "2026-10-24T07:58:27.710092+00:00"
+    },
+    "outputs/ui-refresh/qa-patient-journey-1440.jpg": {
+      "sha256": "6c0d2d874f93d604c69018278f28d72aa3d898a7c2a405c6d7003b0af4773e43",
+      "captured_at_utc": "2026-10-24T07:58:27.808968+00:00"
+    },
+    "outputs/ui-refresh/qa-points-retained-error-375.jpg": {
+      "sha256": "49e5e7a7f8022856151c13a5f9cee8a78f712cc4c6926dba81d6b5061fba5265",
+      "captured_at_utc": "2026-10-24T07:53:19.545423+00:00"
+    },
+    "outputs/ui-refresh/qa-doctor-source-task-1440.jpg": {
+      "sha256": "0eb017b0a86f283798767240ee3de731078227777e72a036ee9138dbb0903368",
+      "captured_at_utc": "2026-10-24T07:44:51.903099+00:00"
+    },
+    "outputs/ui-refresh/qa-clinical-comment-retained-1440.jpg": {
+      "sha256": "37ec131a2deec448cbdf523707dee5219890d3e82f197374a0f5574379043c02",
+      "captured_at_utc": "2026-10-24T08:00:40.203355+00:00"
+    },
+    "outputs/ui-refresh/qa-detached-task-draft-375.jpg": {
+      "sha256": "9ffe0fec09edd654a19a343100eec9cdc0a58ce976095049bd30081815e63149",
+      "captured_at_utc": "2026-10-24T07:28:41.436705+00:00"
+    },
+    "outputs/ui-refresh/qa-target-outside-page-375.jpg": {
+      "sha256": "81d6767dd290b2f4e6b1003c215766ce8e48f27eeafcb866389349dc81f79110",
+      "captured_at_utc": "2026-10-24T07:28:51.900260+00:00"
+    },
+    "outputs/ui-refresh/qa-task-to-patient-plan-375.jpg": {
+      "sha256": "3607a967a7c56efb182041044046ba8abba93f0b4b1d42c5aca27fc2d44bf5aa",
+      "captured_at_utc": "2026-10-24T08:24:49.876754+00:00"
+    },
+    "outputs/ui-refresh/qa-doctor-analytics-375.jpg": {
+      "sha256": "9722791d827533f17a2f75803953badd08dd3a3c6440693a693524b52bc00c7e",
+      "captured_at_utc": "2026-10-24T08:14:10.416371+00:00"
+    },
+    "outputs/ui-refresh/qa-doctor-analytics-768.jpg": {
+      "sha256": "fda9728344923ec229cf5b869dfddd68425bc2efefd648b045fe9cc872e882e5",
+      "captured_at_utc": "2026-10-24T08:16:08.249039+00:00"
+    },
+    "outputs/ui-refresh/qa-doctor-analytics-1440.jpg": {
+      "sha256": "948adc7dba2e2858d67cb691c8c768585e36ad2559de6856e7f2029c26f33991",
+      "captured_at_utc": "2026-10-24T08:18:00.302998+00:00"
+    },
+    "outputs/ui-refresh/qa-doctor-barriers-375.jpg": {
+      "sha256": "d8ae27e8fb86ab5a117102bc0ff4c41177d0588c174af61a8e746399992a95f5",
+      "captured_at_utc": "2026-10-24T08:14:53.775894+00:00"
+    },
+    "outputs/ui-refresh/qa-doctor-events-375.jpg": {
+      "sha256": "58ea5ae50de480bbdf21a946ee02412cd5b228448f0e6ad0d93b597174520540",
+      "captured_at_utc": "2026-10-24T08:05:10.838993+00:00"
+    },
+    "outputs/ui-refresh/qa-admin-actions-375.jpg": {
+      "sha256": "4f78e8c7a7e21a059599257a8ac1016edce8a61091e1e069dcd0efc592755116",
+      "captured_at_utc": "2026-10-24T07:49:29.461980+00:00"
+    },
+    "outputs/ui-refresh/qa-admin-actions-768.jpg": {
+      "sha256": "cec910ef45e222115e9c065f97e9251a4f04b57c278b95d2e83876b273000577",
+      "captured_at_utc": "2026-10-24T07:49:29.535498+00:00"
+    },
+    "outputs/ui-refresh/qa-admin-actions-1440.jpg": {
+      "sha256": "4f958b23c815ff2ea2c5578aa6eb96d824f70efd5b5e4392abba067dc0f77f24",
+      "captured_at_utc": "2026-10-24T07:49:29.618717+00:00"
+    },
+    "outputs/ui-refresh/qa-admin-overview-latest-375.jpg": {
+      "sha256": "91fffa752046e88d94b30c88766106bfd979957ebf292f7fa62178652e9ce439",
+      "captured_at_utc": "2026-10-24T08:30:24.838161+00:00"
+    },
+    "outputs/ui-refresh/qa-coordinator-latest-375.jpg": {
+      "sha256": "58654ae45ec1dff962b6d20f90d98071dee53133e96050e843a4971f1d0dfcbe",
+      "captured_at_utc": "2026-10-24T08:30:55.289560+00:00"
+    },
+    "outputs/ui-refresh/qa-card-unavailable-1440.jpg": {
+      "sha256": "9acf484b71b2412ddfedfa669bf68e39a2165095e31e6d5fab6bf615edb24536",
+      "captured_at_utc": "2026-10-24T08:40:42.249666+00:00"
+    }
+  },
+  "screenshot_boundary": "Local ignored files; captures span several small fixes. Timestamps distinguish them; not pixel regression or exact-current-source proof for every image.",
+  "limitations": {
+    "visual_baseline": null,
+    "pixel_regression": "INCONCLUSIVE",
+    "axe": "not run",
+    "screen_reader": "not run",
+    "web_vitals_or_fps": "not measured",
+    "system_reduced_motion_emulation": "unavailable through enabled browser API; implementation inspected",
+    "1000_concurrent_max_500ms": "NOT PASSED; see docs/LOAD_TESTING.md; not rerun for this UI snapshot",
+    "clinical_acceptance": "pending C01-C06",
+    "production_verdict": "DO NOT SHIP",
+    "exact_quote_source_ui": "Implemented and built; backend precision/current ownership tested. Manual highlight, exact return and delayed-load focus checks not completed before user stop.",
+    "publication": "Snapshot recorded before requested commit/push to agent/retention-mvp; see Git history for publication. No deployment or merge to main.",
+    "development": "Paused by user for review; current request only publication, documentation and app restart."
+  }
+}

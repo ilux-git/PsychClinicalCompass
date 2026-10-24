@@ -1,16 +1,20 @@
 import type { Question } from "./api";
+import { useId } from "react";
 
 export function SurveyFields({
   questions,
   answers,
   onChange,
   disabled = false,
+  errors = {},
 }: {
   questions: Question[];
   answers: Record<string, unknown>;
   onChange: (answers: Record<string, unknown>) => void;
   disabled?: boolean;
+  errors?:Record<string,string>;
 }) {
+  const formId=useId();
   const change = (id: string, value: unknown) =>
     onChange({ ...answers, [id]: value });
   function choose(q: Question, option: Question["options"][number]) {
@@ -22,7 +26,7 @@ export function SurveyFields({
   return (
     <div className="survey-questions">
       {questions.map((q, index) => (
-        <fieldset key={q.id} disabled={disabled} className="survey-question">
+        <fieldset key={q.id} data-question={q.id} disabled={disabled} className="survey-question" aria-invalid={Boolean(errors[q.id])||undefined} aria-describedby={errors[q.id]?`${formId}-${index}-error`:undefined}>
           <legend>
             <span className="question-number">{index + 1}</span>
             {q.prompt}
@@ -33,6 +37,7 @@ export function SurveyFields({
               </span>
             )}
           </legend>
+          {errors[q.id]&&<p className="question-error" role="alert" id={`${formId}-${index}-error`}>{errors[q.id]}</p>}
           {q.kind === "text" && (
             <textarea
               aria-label={q.prompt}
@@ -67,8 +72,8 @@ export function SurveyFields({
               </span>
             </div>
           )}
-          {q.kind === "multiple" && (
-            <p className="field-hint">Можно выбрать несколько вариантов</p>
+          {q.kind === "multiple" && !errors[q.id] && (
+            <p className="field-hint">{q.required ? "Выберите хотя бы один вариант. Можно несколько." : "Можно выбрать несколько вариантов"}</p>
           )}
           {(q.kind === "single" || q.kind === "multiple") && (
             <div className="choices">
@@ -103,13 +108,16 @@ export function SurveyFields({
 export function AnswerSummary({
   questions,
   answers,
+  highlightQuestion,
 }: {
   questions: Question[];
   answers: Record<string, unknown>;
+  highlightQuestion?:string;
 }) {
+  const summaryId=useId();
   return (
     <dl className="answer-summary">
-      {questions.map((q) => {
+      {questions.map((q,index) => {
         const value = answers[q.id];
         const label = (id: string) =>
           q.options.find((o) => o.id === id)?.label ?? id;
@@ -122,8 +130,8 @@ export function AnswerSummary({
                 ? label(String(value))
                 : String(value);
         return (
-          <div key={q.id}>
-            <dt>{q.prompt}</dt>
+          <div key={q.id} data-question={q.id} className={highlightQuestion===q.id?"answer-highlight":undefined} tabIndex={highlightQuestion===q.id?-1:undefined} role={highlightQuestion===q.id?"group":undefined} aria-labelledby={highlightQuestion===q.id?`${summaryId}-${index}`:undefined}>
+            <dt id={`${summaryId}-${index}`}>{q.prompt}</dt>
             <dd>{answer}</dd>
           </div>
         );

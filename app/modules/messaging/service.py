@@ -38,9 +38,12 @@ async def send_message(
     text: str,
     channel: str,
     client_request_id: str | None = None,
+    support_requested: bool = False,
 ) -> Message:
     await patient_for_user(session, sender, patient_id)
     _validate_channel(sender, channel)
+    if support_requested and sender.role != UserRole.patient:
+        raise MessagingError("Запрос поддержки отправляет сам пациент")
     values = dict(
         patient_id=patient_id,
         sender_id=sender.id,
@@ -49,12 +52,14 @@ async def send_message(
         status=_initial_status(channel),
         channel=channel,
         client_request_id=client_request_id,
+        support_requested=support_requested,
     )
     message = (await session.execute(insert(Message).values(**values).on_conflict_do_nothing(
         constraint="uq_message_request").returning(Message))).scalar_one_or_none()
     if message is None:
         message = await session.scalar(select(Message).where(Message.sender_id == sender.id, Message.client_request_id == client_request_id))
-        if message.patient_id != patient_id or message.text != text or message.channel != channel:
+        if (message.patient_id != patient_id or message.text != text or message.channel != channel
+                or message.support_requested != support_requested):
             from fastapi import HTTPException
             raise HTTPException(409, "Ключ запроса уже использован с другим сообщением")
         return message
@@ -65,6 +70,9 @@ async def send_message(
                 payload={"message_id": message.id, "patient_id": patient_id},
             )
         )
+    if support_requested:
+        session.add(OutboxEvent(event_type="patient.support_requested",
+                                payload={"message_id": message.id, "patient_id": patient_id}))
     record_event(session, sender.id, patient_id, "message.created", "message", message.id)
     return message
 

@@ -2,7 +2,7 @@ from datetime import datetime
 from typing import Literal
 from uuid import UUID
 
-from pydantic import BaseModel, Field, StrictBool, model_validator
+from pydantic import BaseModel, Field, StrictBool, StrictInt, model_validator
 from app.modules.analytics.dimensions import BarrierCategory, ObservationDimension
 
 
@@ -68,3 +68,9 @@ class AssignSurvey(BaseModel):
 
 class SubmitSurvey(BaseModel):
     answers: dict = Field(max_length=30)
+    expected_draft_revision: StrictInt | None = Field(default=None, ge=0)
+
+
+class SaveSurveyDraft(BaseModel):
+    answers: dict = Field(max_length=30)
+    expected_revision: StrictInt = Field(ge=0)

@@ -1,14 +1,23 @@
-import { useRef, useState, type FormEvent } from "react";
-import { send, useApi } from "./api";
-import { Badge, Button, Empty, ErrorBox, Heading, Loading, Section, date, type Notify } from "./UI";
+import { useEffect, useRef, useState, type FormEvent } from "react";
+import { api, ApiError, send, useApi } from "./api";
+import { Badge, Button, Empty, ErrorBox, Heading, Loading, Section, date, plural, type Notify } from "./UI";
+import { Disclosure } from "./Interaction";
+import { MotivationAdvice } from "./PatientJourney";
+import { useUnsavedForm, type LeavePrompt } from "./NavigationGuard";
+
+const outcomePrompt:LeavePrompt={eyebrow:"Решение врача",title:"Продолжить оформление исхода?",message:"Решение и основание ещё не сохранены. При переходе без сохранения текущий ввод будет потерян.",stayLabel:"Продолжить решение"};
+const taskPrompt:LeavePrompt={eyebrow:"Новая задача",title:"Продолжить назначение задачи?",message:"Следующее действие ещё не назначено. При переходе без сохранения текущий ввод будет потерян.",stayLabel:"Продолжить задачу"};
+const taskResultPrompt:LeavePrompt={eyebrow:"Работа с задачей",title:"Продолжить описание действия?",message:"Описание действия или основание повторной проверки ещё не сохранены. При переходе без сохранения текущий ввод будет потерян.",stayLabel:"Продолжить работу с задачей"};
+const taskReplacePrompt:LeavePrompt={eyebrow:"Новая версия задачи",title:"Заменить текущий ввод сохранённой версией?",message:"Ваш несохранённый текст будет заменён данными с сервера. Перед заменой его можно скопировать из формы.",stayLabel:"Оставить мой черновик",discardLabel:"Заменить текущий ввод"};
 
 export type CareTask = {id: number; patient_id: number; patient_name?: string; title: string; doctor_id: number;
   assigned_to_id: number; kind: string; status: string; action_result: string; due_at: string | null;
   follow_up_at: string | null; source_type?: string; source_id?: number | null;
-  verification_status: string; verification_comment?: string};
+  verification_status: string; verification_comment?: string; revision: number;
+  assignee_name?: string; started_at?: string | null; updated_at?: string | null};
 type Source = {type: string; id: number; label: string};
-type Status = {status: string; revision: number; reason?: string; created_at?: string; source?: string};
-type Care = {treatment: Status; history: Status[]; mis: {as_of: string; data: null | {
+type Status = {status: string; revision: number; reason?: string; reason_category?:string|null; created_at?: string; source?: string};
+type Care = {treatment: Status; history: Status[]; refusal_categories:{code:string;label:string}[]; mis: {as_of: string; data: null | {
   scenario: {title: string; description: string; expected_route: string};
   synthetic_survey_sessions?: {assigned_at: string; opened_at: string | null; submitted_at: string | null}[];
   recommended_contact: null | {start: string; end: string};
@@ -17,51 +26,97 @@ export const treatmentLabels: Record<string, string> = {in_progress: "В про�
 const verificationLabels: Record<string, string> = {pending: "Результат ещё не проверен", resolved: "Затруднение устранено по проверке врача", not_resolved: "Затруднение сохраняется", unknown: "Результат неизвестен"};
 const sourceLabels: Record<string,string> = {manual:"Ручное наблюдение",message:"Сообщение",assessment:"Опросник состояния",survey_submission:"Ответ на опрос",adherence_report:"Самоотчёт о рекомендации",alert:"Событие для оценки",doctor_note:"Наблюдение врача",medication_log:"Лекарственный самоотчёт",diary_entry:"Запись дневника"};
 
-function TaskItem({task, operational, reload, notify}: {task: CareTask; operational: boolean; reload: () => void; notify: Notify}) {
+export type TaskChange={id:number;stage:string};
+export function TaskItem({task:incomingTask, operational, reload, notify, scope, autoFocus=false,onEditing,detached=false}: {task: CareTask; operational: boolean; reload: (change?:TaskChange) => void; notify: Notify;scope?:string;autoFocus?:boolean;onEditing?:(id:number,dirty:boolean)=>void;detached?:boolean}) {
+  const [remote,setRemote]=useState<CareTask|null>(null);
+  const [remoteError,setRemoteError]=useState(""),[remoteRetry,setRemoteRetry]=useState(0);
+  const [unavailable,setUnavailable]=useState(false);
+  const task=remote&&remote.revision>incomingTask.revision?remote:incomingTask;
   const [result, setResult] = useState(task.action_result);
+  const [baseline,setBaseline]=useState({revision:task.revision,result:task.action_result});
   const [comment, setComment] = useState("");
   const [status, setStatus] = useState("unknown");
   const [busy, setBusy] = useState(false);
-  async function act(verify = false) {
+  const [conflict, setConflict] = useState(false);
+  const dirty=Boolean(result!==baseline.result||comment||status!=="unknown");
+  const outdated=task.revision>baseline.revision||detached;
+  const form=useUnsavedForm({dirty,pending:busy,prompt:taskResultPrompt,scope});
+  useEffect(()=>{onEditing?.(task.id,dirty);},[task.id,dirty,onEditing]);
+  useEffect(()=>()=>onEditing?.(incomingTask.id,false),[incomingTask.id,onEditing]);
+  useEffect(()=>{
+    if(!detached)return;
+    let active=true;setRemoteError("");
+    api<CareTask>(`/tasks/${incomingTask.id}`).then(value=>{if(active)setRemote(value);}).catch(error=>{
+      if(!active)return;
+      if(error instanceof ApiError && (error.status===403||error.status===404)) {
+        setResult("");setComment("");setStatus("unknown");setUnavailable(true);form.clear();onEditing?.(incomingTask.id,false);
+      } else setRemoteError(error instanceof Error?error.message:"Не удалось получить актуальную задачу");
+    });
+    return()=>{active=false;};
+  },[detached,incomingTask.id,remoteRetry]);
+  useEffect(()=>{
+    if(outdated&&!detached&&!dirty&&!busy){setBaseline({revision:task.revision,result:task.action_result});setResult(task.action_result);setConflict(false);}
+  },[task.revision,task.action_result,outdated,detached,dirty,busy]);
+  function loadCurrent() {
+    if(detached&&!remote)return;
+    form.confirm(()=>{setBaseline({revision:task.revision,result:task.action_result});setResult(task.action_result);setComment("");setStatus("unknown");setConflict(false);form.clear();if(detached){onEditing?.(task.id,false);reload({id:task.id,stage:task.status});}},taskReplacePrompt);
+  }
+  async function act(verify = false, stage = "done") {
+    if(busy||outdated)return;
     setBusy(true);
     try {
-      await send(`/tasks/${task.id}${verify ? "/verify" : ""}`, verify ? {status, comment} : {status: "done", action_result: result}, verify ? "POST" : "PATCH");
-      reload(); notify(verify ? "Повторная проверка сохранена" : "Выполненное действие сохранено; результат проверяет врач");
-    } catch (e) { notify(e instanceof Error ? e.message : "Не удалось сохранить", "error"); }
+      const saved=await send<CareTask>(`/tasks/${task.id}${verify ? "/verify" : ""}`, verify ? {status, comment, expected_revision: baseline.revision} : {status: stage, action_result:result, expected_revision: baseline.revision}, verify ? "POST" : "PATCH");
+      setBaseline({revision:saved.revision,result:saved.action_result});setResult(saved.action_result);setConflict(false);
+      if(verify){setComment("");setStatus("unknown");}
+      reload({id:task.id,stage:verify?"done":stage}); notify(verify ? "Повторная проверка сохранена" : stage === "in_progress" ? "Задача принята в работу" : "Действие сохранено; результат проверяет врач");
+    } catch (e) {if(e instanceof ApiError && e.status===409){setConflict(true);reload();}notify(e instanceof Error ? e.message : "Не удалось сохранить", "error"); }
     finally { setBusy(false); }
   }
+  if(unavailable)return <p className="field-hint">Задача больше не доступна вашей учётной записи. Обновите список.</p>;
   return <article className="diary-entry">
-    <div className="button-row"><Badge tone={task.status === "done" ? "good" : "warn"}>{task.status === "done" ? "Действие выполнено" : "В работе"}</Badge><Badge tone="muted">{task.kind === "organization" ? "Организационная" : "Клиническая"}</Badge></div>
+    <div className="button-row"><Badge tone={task.status === "done" ? "good" : task.status === "in_progress" ? "purple" : "muted"}>{task.status === "done" ? "Действие выполнено" : task.status === "in_progress" ? "В работе" : "Назначено"}</Badge><Badge tone="muted">{task.kind === "organization" ? "Организационная" : "Клиническая"}</Badge></div>
     <h3>{task.title}</h3>{task.patient_name && <p>{task.patient_name}</p>}
     <p className="field-hint">{task.due_at ? `Срок: ${date(task.due_at)}. ` : "Срок не задан. "}{task.follow_up_at ? `Повторная проверка: ${date(task.follow_up_at)}` : "Дата повторной проверки не задана"}</p>
-    {!operational && <p className="field-hint">Источник: {sourceLabels[task.source_type ?? "manual"]}{task.source_id ? ` #${task.source_id}` : ""} · исполнитель #{task.assigned_to_id}</p>}
-    {task.verification_status === "pending" ? <>
-      <label className="field">Что сделано?<textarea maxLength={2000} value={result} onChange={e => setResult(e.target.value)} /></label>
-      <Button variant="secondary" disabled={busy || !result.trim()} onClick={() => act()}>{task.status === "done" ? "Сохранить описание действия" : "Действие выполнено"}</Button>
+    <p className="field-hint">Исполнитель: {operational ? "вы" : task.assignee_name ?? `участник #${task.assigned_to_id}`}{task.started_at ? ` · в работе с ${date(task.started_at)}` : ""}</p>
+    {!operational && <p className="field-hint">Источник: {sourceLabels[task.source_type ?? "manual"]}{task.source_id ? ` #${task.source_id}` : ""}</p>}
+    {(conflict||outdated)&&<div className="task-conflict" role="alert"><p>Задача изменилась на сервере. Ваш ввод остаётся в форме; его можно скопировать. Проверьте сохранённую версию перед заменой.</p>{remoteError?<><p>{remoteError}</p><Button variant="secondary" onClick={()=>setRemoteRetry(value=>value+1)}>Повторить загрузку задачи</Button></>:detached&&!remote?<p>Получаем актуальную версию…</p>:outdated?<><details><summary>Посмотреть сохранённое описание</summary><p className="preserve">{task.action_result||"Описание ещё не сохранено"}</p></details><Button variant="secondary" onClick={loadCurrent}>Загрузить версию с сервера</Button></>:<Button variant="secondary" onClick={()=>reload()}>Повторить обновление</Button>}</div>}
+    {task.verification_status === "pending" || outdated&&dirty ? <>
+      <fieldset className="form-fields" disabled={busy} aria-busy={busy}>
+      {task.status === "open" && <Button disabled={busy||outdated} onClick={() => act(false, "in_progress")}>{result.trim()?"Взять в работу и сохранить описание":"Взять в работу"}</Button>}
+      <label className="field">Что сделано?<textarea rows={4} readOnly={outdated} autoFocus={autoFocus} maxLength={2000} value={result} onChange={e => setResult(e.target.value)} /></label>
+      <Button variant="secondary" disabled={busy || outdated || !result.trim()} onClick={() => act()}>{task.status === "done" ? "Сохранить описание действия" : "Действие выполнено"}</Button>
       {!operational && task.status === "done" && <div className="follow-up-form">
-        <label className="field">Результат повторной проверки<select value={status} onChange={e => setStatus(e.target.value)}><option value="unknown">Пока неизвестен</option><option value="resolved">Затруднение устранено</option><option value="not_resolved">Затруднение сохраняется</option></select></label>
-        <label className="field">Основание врача<textarea value={comment} onChange={e => setComment(e.target.value)} maxLength={2000} placeholder="Что сообщил пациент, что удалось проверить" /></label>
-        <Button disabled={busy || !comment.trim()} onClick={() => act(true)}>Сохранить проверку результата</Button>
+        <label className="field">Результат повторной проверки<select disabled={outdated} value={status} onChange={e => setStatus(e.target.value)}><option value="unknown">Пока неизвестен</option><option value="resolved">Затруднение устранено</option><option value="not_resolved">Затруднение сохраняется</option></select></label>
+        <label className="field">Основание врача<textarea rows={4} readOnly={outdated} value={comment} onChange={e => setComment(e.target.value)} maxLength={2000} placeholder="Что сообщил пациент, что удалось проверить" /></label>
+        {result!==baseline.result&&<p className="field-hint">Сначала сохраните изменённое описание действия. Основание проверки останется в форме.</p>}
+        <Button disabled={busy || outdated || !comment.trim() || result!==baseline.result} onClick={() => act(true)}>Сохранить проверку результата</Button>
       </div>}
+      </fieldset>
     </> : <><p className="preserve">{task.action_result}</p><Badge tone="muted">{verificationLabels[task.verification_status]}</Badge>{!operational && <p className="preserve">{task.verification_comment}</p>}</>}
   </article>;
 }
 
-export function CareWorkflow({patientId, source, notify}: {patientId: number; source: Source | null; notify: Notify}) {
+export function CareWorkflow({patientId, source, notify, scope}: {patientId: number; source: Source | null; notify: Notify;scope?:string}) {
   const care = useApi<Care>(`/patients/${patientId}/care`);
-  const tasks = useApi<CareTask[]>(`/patients/${patientId}/tasks`);
+  const tasks = useApi<CareTask[]>(`/patients/${patientId}/tasks`,15000);
   const team = useApi<{id: number; name: string; role: string}[]>("/coordination/team");
-  const [outcome, setOutcome] = useState("in_progress"), [reason, setReason] = useState("");
+  const [outcome, setOutcome] = useState(""), [reason, setReason] = useState("");
+  const [reasonCategory,setReasonCategory] = useState("");
   const [title, setTitle] = useState(""), [kind, setKind] = useState("clinical"), [assignee, setAssignee] = useState("");
   const [due, setDue] = useState(""), [followUp, setFollowUp] = useState("");
   const [busy, setBusy] = useState(false);
+  const [createdTask,setCreatedTask]=useState<number|null>(null);
   const statusRequest = useRef({signature: "", id: ""}), taskRequest = useRef({signature: "", id: ""});
+  const {clear:clearOutcome}=useUnsavedForm({dirty:Boolean(outcome||reason||reasonCategory),pending:busy,prompt:outcomePrompt,scope});
+  const {clear:clearTask}=useUnsavedForm({dirty:Boolean(title||kind!=="clinical"||assignee||due||followUp),pending:busy,prompt:taskPrompt,scope});
+  useEffect(() => {if (source) document.getElementById("task-title")?.focus();},[source?.type,source?.id]);
   async function saveOutcome(e: FormEvent) {
     e.preventDefault(); if (!care.data) return;
-    const signature = JSON.stringify([outcome, reason, care.data.treatment.revision]);
+    const category = outcome === "refused" ? reasonCategory || null : null;
+    const signature = JSON.stringify([outcome, reason, category, care.data.treatment.revision]);
     if (statusRequest.current.signature !== signature) statusRequest.current = {signature, id: crypto.randomUUID()};
     setBusy(true);
-    try { await send(`/patients/${patientId}/treatment-status`, {status: outcome, reason, expected_revision: care.data.treatment.revision, client_request_id: statusRequest.current.id}); care.reload(); setReason(""); notify("Исход лечения определён врачом"); }
+    try { await send(`/patients/${patientId}/treatment-status`, {status: outcome, reason, reason_category:category, expected_revision: care.data.treatment.revision, client_request_id: statusRequest.current.id}); care.reload(); setOutcome(""); setReason(""); setReasonCategory(""); clearOutcome();notify("Исход лечения определён врачом"); }
     catch (e) { notify(e instanceof Error ? e.message : "Не удалось сохранить исход", "error"); }
     finally { setBusy(false); }
   }
@@ -71,46 +126,62 @@ export function CareWorkflow({patientId, source, notify}: {patientId: number; so
     const signature = JSON.stringify(data);
     if (taskRequest.current.signature !== signature) taskRequest.current = {signature, id: crypto.randomUUID()};
     setBusy(true);
-    try { await send(`/patients/${patientId}/tasks`, {...data, client_request_id: taskRequest.current.id}); tasks.reload(); setTitle(""); taskRequest.current = {signature: "", id: ""}; notify("Задача связана с источником и назначена исполнителю"); }
+    try { const saved=await send<CareTask>(`/patients/${patientId}/tasks`, {...data, client_request_id: taskRequest.current.id}); tasks.reload(); setTitle("");setKind("clinical");setAssignee("");setDue("");setFollowUp("");clearTask();setCreatedTask(saved.id);taskRequest.current = {signature: "", id: ""}; notify("Задача связана с источником и назначена исполнителю"); }
     catch (e) { notify(e instanceof Error ? e.message : "Не удалось создать задачу", "error"); }
     finally { setBusy(false); }
   }
   const fixture = care.data?.mis.data;
   return <>
-    <Section title="Исход лечения определяет врач">
-      <ErrorBox message={care.error} retry={care.reload} />
-      {care.loading ? <Loading /> : care.data && <>
-        <Badge tone="purple">{treatmentLabels[care.data.treatment.status]}</Badge>
-        <p className="field-hint">Не вычисляется по последнему визиту, молчанию или скорости ответа. Решение сохраняется в Compass; МИС не изменяется.</p>
-        <form onSubmit={saveOutcome}>
-          <label className="field">Новое решение<select value={outcome} onChange={e => setOutcome(e.target.value)}>{Object.entries(treatmentLabels).filter(([k]) => k !== "unknown").map(([k,v]) => <option key={k} value={k}>{v}</option>)}</select></label>
-          <label className="field">Основание<textarea value={reason} maxLength={2000} onChange={e => setReason(e.target.value)} /></label>
-          <Button disabled={busy}>Сохранить решение врача</Button>
-        </form>
-        <details><summary>История решений ({care.data.history.length})</summary>{care.data.history.map(row => <p key={row.revision}>{date(row.created_at!)} · {treatmentLabels[row.status]} · врач #{(row as Status & {doctor_id: number}).doctor_id}<br />{row.reason}{row.source === "synthetic_doctor_fixture" && " · синтетическое решение"}</p>)}</details>
-      </>}
-    </Section>
-    {fixture && <Section title="Сценарий и события МИС · синтетический JSON">
-      <h3>{fixture.scenario.title}</h3><p>{fixture.scenario.description}</p><p className="field-hint">{fixture.scenario.expected_route}</p>
-      {fixture.synthetic_survey_sessions && <details open><summary>Наблюдения учебного сценария</summary><p>Завершено {fixture.synthetic_survey_sessions.filter(s => s.submitted_at).length} из {fixture.synthetic_survey_sessions.length} форм.</p><div className="table-wrap"><table><thead><tr><th>Назначен</th><th>Открыт</th><th>Завершён</th><th>Интервал</th></tr></thead><tbody>{fixture.synthetic_survey_sessions.map((s,i) => <tr key={i}><td>{date(s.assigned_at)}</td><td>{s.opened_at ? date(s.opened_at) : "Нет сведений"}</td><td>{s.submitted_at ? date(s.submitted_at) : "Нет ответа"}</td><td>{s.opened_at && s.submitted_at ? `${(new Date(s.submitted_at).getTime()-new Date(s.opened_at).getTime())/1000} с` : "Неизвестно"}</td></tr>)}</tbody></table></div><p className="field-hint">Синтетические времена из JSON. Они не подмешиваются в серверную воронку приложения. Интервал включает перерывы и не определяет выраженность тревоги.</p></details>}
-      {fixture.recommended_contact ? <p>Рекомендованное окно: {date(fixture.recommended_contact.start)} — {date(fixture.recommended_contact.end)}</p> : <p className="muted">Рекомендованное окно не задано</p>}
-      {fixture.visits.map(v => <article className="diary-entry" key={v.id}><strong>{({attended: "Состоялся", scheduled: "Запланирован", cancelled: "Отменён", rescheduled: "Перенесён", no_show: "Неявка по данным источника"} as Record<string,string>)[v.status] ?? "Неизвестно"}</strong> · {date(v.scheduled_at)}<p>{v.reason}</p>{v.initiator && <small>Инициатор: {v.initiator === "clinic" ? "клиника" : "пациент"}</small>}</article>)}
-      {!fixture.visits.length && <p className="muted">События визитов не предоставлены</p>}
-    </Section>}
-    <Section title="От затруднения к действию и проверке">
+    <Section title="План сопровождения" aside={<div className="button-row"><Badge>{tasks.data?`${tasks.data.length} ${plural(tasks.data.length,"задача","задачи","задач")}`:"Получаем…"}</Badge><Button variant="ghost" disabled={tasks.refreshing} onClick={tasks.reload}>{tasks.refreshing?"Обновляем…":"Обновить задачи"}</Button></div>}>
       <ErrorBox message={tasks.error || team.error} retry={() => { tasks.reload(); team.reload(); }} />
+      <Disclosure key={createdTask??"new-task"} reveal={Boolean(source)&&createdTask===null} title={source?(createdTask?"Добавить ещё действие по источнику":"Назначить действие по источнику"):"Назначить новую задачу"}>
       <form onSubmit={saveTask}>
+        <fieldset className="form-fields" disabled={busy} aria-busy={busy}>
         {source ? <p className="source-chip">Источник: {source.label}</p> : <p className="field-hint">Ручная задача. Для связи выберите ответ/сообщение во вкладке обратной связи.</p>}
-        <label className="field">Следующее действие<input required maxLength={300} value={title} onChange={e => setTitle(e.target.value)} /></label>
+        <label className="field">Следующее действие<input id="task-title" required maxLength={300} value={title} onChange={e => setTitle(e.target.value)} /></label>
         <label className="field">Тип задачи<select value={kind} onChange={e => {setKind(e.target.value); setAssignee("");}}><option value="clinical">Клиническая · только врачу</option><option value="organization">Организационная · врачу или координатору</option></select></label>
         <label className="field">Исполнитель<select value={assignee} onChange={e => setAssignee(e.target.value)}><option value="">Лечащий врач</option>{team.data?.filter(u => kind === "organization" || u.role === "doctor").map(u => <option key={u.id} value={u.id}>{u.name} · {u.role === "coordinator" ? "координатор" : "врач"}</option>)}</select></label>
         {kind === "organization" && <p className="field-hint">Координатор увидит имя пациента, название и описание действия. Не включайте клинические подробности; исходные ответы и приватные заметки ему недоступны.</p>}
         <div className="form-grid"><label className="field">Срок действия<input type="datetime-local" value={due} onChange={e => setDue(e.target.value)} /></label><label className="field">Повторная проверка<input type="datetime-local" value={followUp} onChange={e => setFollowUp(e.target.value)} /></label></div><p className="field-hint">Время в часовом поясе этого устройства.</p>
         <Button disabled={busy || !title.trim()}>Назначить следующий шаг</Button>
+        </fieldset>
       </form>
-      {tasks.data?.map(task => <TaskItem key={task.id} task={task} operational={false} reload={tasks.reload} notify={notify} />)}
+      </Disclosure>
+      {tasks.loading&&<Loading/>}
+      {tasks.data?.map(task => <div className="care-task-card" key={task.id}>
+        <div className="section-heading"><h3>{task.title}</h3><Badge tone={task.status==="done"?"good":task.status==="in_progress"?"purple":"muted"}>{task.status==="done"?"Действие выполнено":task.status==="in_progress"?"В работе":"Назначено"}</Badge></div>
+        {task.status==="done"&&<p className="field-hint">{verificationLabels[task.verification_status]}</p>}
+        <Disclosure reveal={task.id===createdTask} title="Действие и проверка"><TaskItem task={{...task,assignee_name:task.assignee_name??team.data?.find(member=>member.id===task.assigned_to_id)?.name}} operational={false} reload={tasks.reload} notify={notify} scope={scope}/></Disclosure>
+      </div>)}
       {tasks.data?.length === 0 && <Empty title="Следующих шагов пока нет" />}
     </Section>
+    <Section title="Статус лечения">
+      <ErrorBox message={care.error} retry={care.reload} />
+      {care.loading ? <Loading /> : care.data && <>
+        <Badge tone="purple">{treatmentLabels[care.data.treatment.status]}</Badge>
+        {care.data.treatment.status === "refused" && <p>Сообщённая причина: {care.data.refusal_categories.find(c => c.code === care.data!.treatment.reason_category)?.label ?? "пока не классифицирована"}</p>}
+        <p className="field-hint">Не вычисляется по последнему визиту, молчанию или скорости ответа. Решение сохраняется в Compass; МИС не изменяется.</p>
+        <Disclosure lazy title="Изменить исход лечения">
+        <form onSubmit={saveOutcome}>
+          <fieldset className="form-fields" disabled={busy} aria-busy={busy}>
+          <label className="field">Новое решение<select required value={outcome} onChange={e => {setOutcome(e.target.value);setReasonCategory("");}}><option value="">Выберите решение</option>{Object.entries(treatmentLabels).filter(([k]) => k !== "unknown").map(([k,v]) => <option key={k} value={k}>{v}</option>)}</select></label>
+          {outcome === "refused" && <label className="field">Сообщённая причина отказа · необязательно<select value={reasonCategory} onChange={e => setReasonCategory(e.target.value)}><option value="">Пока не классифицирована</option>{care.data.refusal_categories.map(c => <option key={c.code} value={c.code}>{c.label}</option>)}</select><small>Категорию выбирает врач по известным фактам. Она попадёт в обезличенную статистику; текст основания остаётся в карточке.</small></label>}
+          <label className="field">Основание<textarea value={reason} maxLength={2000} onChange={e => setReason(e.target.value)} /></label>
+          <Button disabled={busy || !outcome || !reason.trim()}>Сохранить решение врача</Button>
+          </fieldset>
+        </form>
+        <details><summary>История решений ({care.data.history.length})</summary>{care.data.history.map(row => <p key={row.revision}>{date(row.created_at!)} · {treatmentLabels[row.status]} · врач #{(row as Status & {doctor_id: number}).doctor_id}<br />{row.reason}{row.source === "synthetic_doctor_fixture" && " · синтетическое решение"}</p>)}</details>
+        </Disclosure>
+      </>}
+    </Section>
+    {fixture && <Section title="События МИС · синтетический источник"><Disclosure lazy title="Показать события и учебный сценарий">
+      <h3>{fixture.scenario.title}</h3><p>{fixture.scenario.description}</p><p className="field-hint">{fixture.scenario.expected_route}</p>
+      {fixture.synthetic_survey_sessions && <details open><summary>Наблюдения учебного сценария</summary><p>Завершено {fixture.synthetic_survey_sessions.filter(s => s.submitted_at).length} из {fixture.synthetic_survey_sessions.length} форм.</p><div className="table-wrap"><table><thead><tr><th>Назначен</th><th>Открыт</th><th>Завершён</th><th>Интервал</th></tr></thead><tbody>{fixture.synthetic_survey_sessions.map((s,i) => <tr key={i}><td>{date(s.assigned_at)}</td><td>{s.opened_at ? date(s.opened_at) : "Нет сведений"}</td><td>{s.submitted_at ? date(s.submitted_at) : "Нет ответа"}</td><td>{s.opened_at && s.submitted_at ? `${(new Date(s.submitted_at).getTime()-new Date(s.opened_at).getTime())/1000} с` : "Неизвестно"}</td></tr>)}</tbody></table></div><p className="field-hint">Синтетические времена из JSON. Они не подмешиваются в серверную воронку приложения. Интервал включает перерывы и не определяет выраженность тревоги.</p></details>}
+      {fixture.recommended_contact ? <p>Рекомендованное окно: {date(fixture.recommended_contact.start)} — {date(fixture.recommended_contact.end)}</p> : <p className="muted">Рекомендованное окно не задано</p>}
+      {fixture.visits.map(v => <article className="diary-entry" key={v.id}><strong>{({attended: "Состоялся", scheduled: "Запланирован", cancelled: "Отменён", rescheduled: "Перенесён", no_show: "Неявка по данным источника"} as Record<string,string>)[v.status] ?? "Неизвестно"}</strong> · {date(v.scheduled_at)}<p>{v.reason}</p>{v.initiator && <small>Инициатор: {v.initiator === "clinic" ? "клиника" : "пациент"}</small>}</article>)}
+      {!fixture.visits.length && <p className="muted">События визитов не предоставлены</p>}
+    </Disclosure></Section>}
+    <MotivationAdvice patientId={patientId} notify={notify}/>
   </>;
 }
 

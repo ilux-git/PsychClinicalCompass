@@ -2,6 +2,8 @@ import { useEffect, useRef, useState } from "react";
 import { Bell, ArrowRight } from "lucide-react";
 import { send, useApi } from "./api";
 import { Badge, Button, Empty, ErrorBox, Heading, Loading, date } from "./UI";
+import { Disclosure } from "./Interaction";
+import { useReturnFocus, useViewState } from "./ViewState";
 
 type InboxItem = {
   id: number;
@@ -11,6 +13,7 @@ type InboxItem = {
   status: string;
   rule_id: string;
   rule_version: string;
+  source_kind: "assessment" | "support_request";
   event_created_at: string;
   created_at: string;
   presented_at: string | null;
@@ -29,24 +32,19 @@ type Inbox = {
 };
 
 export function DoctorInboxNotice({ open }: { open: () => void }) {
-  const { data, error, reload } = useApi<Inbox>("/alerts/inbox?limit=1", 5000);
-  if (error)
-    return <div className="inbox-notice"><ErrorBox message={`Не удалось обновить очередь событий. ${error}`} retry={reload} /></div>;
-  if (!data || data.total_open === 0) return null;
-  return (
-    <div className="inbox-notice" role="status">
-      <Bell size={20} />
-      <span><strong>Открытые события: {data.total_open}</strong> · ещё не показаны в очереди: {data.not_presented}</span>
-      <Button variant="secondary" onClick={open}>Открыть события <ArrowRight size={16} /></Button>
-    </div>
-  );
+  const { data, error } = useApi<Inbox>("/alerts/inbox?limit=1", 5000);
+  return <button className={`inbox-counter ${data?.total_open ? "has-events" : ""}`} onClick={open}
+    title={error ? "Не удалось обновить очередь. Откройте события для повторной загрузки" : data ? `Ещё не показаны в очереди: ${data.not_presented}` : "Получаем события"}
+    aria-label={error ? "События: обновление недоступно" : `Открыть события: ${data?.total_open ?? "загрузка"}`}>
+    <Bell size={18}/><span>События</span><strong>{error ? "!" : data?.total_open ?? "…"}</strong>
+  </button>;
 }
 
 const seconds = (value: number | null) => value === null ? "Нет данных" : `${value.toLocaleString("ru-RU", { maximumFractionDigits: 3 })} с`;
 
 function EventRow({ item, openPatient, reload }: {
   item: InboxItem;
-  openPatient: (id: number) => void;
+  openPatient: (id: number,returnKey?:string) => void;
   reload: () => void;
 }) {
   const ref = useRef<HTMLElement>(null);
@@ -102,33 +100,34 @@ function EventRow({ item, openPatient, reload }: {
           {item.status === "created" ? "Ждёт разбора" : "Принято в работу"}
         </Badge>
       </div>
+      <p className="inbox-origin"><time dateTime={item.created_at}>{date(item.created_at)}</time><span>{item.source_kind==="support_request"?"Запрос поддержки":"Результат шкалы"}</span></p>
       <p>{item.reason}</p>
-      <dl className="inbox-times">
-        <div><dt>Данные поступили</dt><dd>{date(item.event_created_at)}</dd></div>
-        <div><dt>Событие создано</dt><dd>{date(item.created_at)}</dd></div>
-        <div><dt>Показано в очереди</dt><dd>{presentedAt ? date(presentedAt) : "Пока не зафиксировано"}</dd></div>
-        <div><dt>Принято врачом</dt><dd>{item.acknowledged_at ? date(item.acknowledged_at) : "Ожидает действия врача"}</dd></div>
-      </dl>
       <div className="inbox-actions">
-        <Button onClick={() => openPatient(item.patient_id)}>Открыть карточку <ArrowRight size={16} /></Button>
+        <Button data-return-key={`inbox-${item.id}`} onClick={() => openPatient(item.patient_id,`inbox-${item.id}`)}>Открыть карточку <ArrowRight size={16} /></Button>
         {item.status === "created" && <Button variant="secondary" disabled={busy} onClick={acknowledge}>Принять в работу</Button>}
       </div>
       <ErrorBox message={presentationError} retry={() => { setPresentationError(""); setRetry((value) => value + 1); }} />
       <ErrorBox message={actionError} retry={acknowledge} />
-      <details className="inbox-details">
-        <summary>Источник и время обработки</summary>
-        <p>Правило {item.rule_id}, версия {item.rule_version}. Учебный сигнал требует проверки врачом.</p>
+      <Disclosure lazy title="Источник и время обработки">
+        <dl className="inbox-times">
+          <div><dt>Данные поступили</dt><dd>{date(item.event_created_at)}</dd></div>
+          <div><dt>Событие создано</dt><dd>{date(item.created_at)}</dd></div>
+          <div><dt>Показано в очереди</dt><dd>{presentedAt ? date(presentedAt) : "Пока не зафиксировано"}</dd></div>
+          <div><dt>Принято врачом</dt><dd>{item.acknowledged_at ? date(item.acknowledged_at) : "Ожидает действия врача"}</dd></div>
+        </dl>
+        <p>{item.source_kind === "support_request" ? "Явный запрос поддержки от пациента. Медицинский риск из текста не вычислялся." : "Учебный сигнал из результата шкалы требует врачебной оценки."} Источник {item.rule_id}, версия {item.rule_version}.</p>
         <p>От поступления данных: создание события — {seconds(item.latency_seconds.event_to_alert)}; показ — {seconds(item.latency_seconds.event_to_presentation)}; принятие — {seconds(item.latency_seconds.event_to_acknowledgement)}.</p>
         <p>Показ фиксируется при видимой строке в активной вкладке. Он не подтверждает прочтение человеком. Внешнее уведомление не отправлялось.</p>
-      </details>
+      </Disclosure>
     </article>
   );
 }
 
-export function DoctorInbox({ openPatient }: { openPatient: (id: number) => void }) {
-  const [pages, setPages] = useState<number[]>([]);
+export function DoctorInbox({ openPatient }: { openPatient: (id: number,returnKey?:string) => void }) {
+  const [pages, setPages] = useViewState<number[]>("inbox-pages",[]);
   const before = pages.at(-1);
   const { data, error, loading, reload } = useApi<Inbox>(`/alerts/inbox?limit=20${before ? `&before_id=${before}` : ""}`, 5000);
+  useReturnFocus("events",Boolean(data||error));
   return (
     <>
       <Heading eyebrow="Работа с событиями" title="События моих пациентов" action={<Button variant="secondary" onClick={() => { setPages([]); reload(); }}>Обновить очередь</Button>}>

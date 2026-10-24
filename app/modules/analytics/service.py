@@ -56,6 +56,7 @@ async def engagement(session: AsyncSession, user: User,
                 item["counts"].update([str(answer)])
             else:
                 quotes.append({"patient_id": assignment.patient_id, "survey_title": survey.title,
+                               "assignment_id": assignment.id, "submission_id": submission.id, "question_id": question["id"],
                                "prompt": question["prompt"], "text": answer, "created_at": submission.created_at,
                                "source": "patient_self_report"})
     charts = []
@@ -66,6 +67,8 @@ async def engagement(session: AsyncSession, user: User,
             {"id": key, "label": key, "count": count} for key, count in sorted(counts.items())]
         charts.append(item)
     names = {p.id: p.full_name for p in patients}
+    assigned_counts = Counter(a.patient_id for a,_,_ in rows)
+    completed_counts = Counter(a.patient_id for a,_,r in rows if r is not None)
     return {
         "period": {"since": since, "until_exclusive": until, "cohort": "assignments_created_in_period"},
         "patients_total": len(patients), "assigned": len(rows), "completed": completed, "pending": len(rows) - completed,
@@ -82,8 +85,8 @@ async def engagement(session: AsyncSession, user: User,
                 "status": r.status, "recommendation": r.recommendation, "text": r.reason,
                 "created_at": r.created_at, "source": "patient_self_report"} for r in reports if r.reason][:20]},
         "patients": [{"id": p.id, "full_name": p.full_name,
-                       "assigned": sum(a.patient_id == p.id for a, _, _ in rows),
-                       "completed": sum(a.patient_id == p.id and r is not None for a, _, r in rows),
+                       "assigned": assigned_counts[p.id],
+                       "completed": completed_counts[p.id],
                        "observation_status": "has_feedback" if p.id in submitted_patients else "unknown"} for p in patients],
         "interpretation": "Ответы и самоотчёты пациентов. Неответ означает отсутствие данных; причины фактического ухода не установлены автоматически.",
         "churn_status": "definition_pending", "source": "Compass: questionnaires and patient self-reports"}

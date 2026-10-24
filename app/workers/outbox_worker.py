@@ -19,7 +19,7 @@ logger = logging.getLogger("app.outbox_worker")
 
 
 async def _handle_event(session, event: OutboxEvent) -> None:
-    logger.info("dispatching event id=%s type=%s", event.id, event.event_type)
+    logger.debug("dispatching event id=%s type=%s", event.id, event.event_type)
     if event.event_type == "telegram.send_message":
         message_id = event.payload.get("message_id")
         if type(message_id) is not int:
@@ -48,6 +48,23 @@ async def _handle_event(session, event: OutboxEvent) -> None:
             missing_data=["clinical_review", "approved_clinical_rule_source"]))
         record_event(session, None, assessment.patient_id, "alert.created", "alert", alert.id,
                      {"rule_id": alert.rule_id, "rule_version": alert.rule_version})
+    elif event.event_type == "patient.support_requested":
+        message_id = event.payload.get("message_id")
+        if type(message_id) is not int:
+            raise ValueError("MissingSupportReference")
+        message = await session.get(Message, message_id)
+        if (message is None or message.patient_id != event.payload.get("patient_id")
+                or message.sender_role != "patient" or not message.support_requested):
+            raise ValueError("InvalidSupportReference")
+        alert = (await session.execute(insert(Alert).values(
+            patient_id=message.patient_id, source_event_id=event.id, message_id=message.id,
+            source_kind="support_request", assessment_id=None, rule_id="patient_explicit_request",
+            rule_version="explicit_request_v1", severity="support_requested",
+            reason="Пациент явно попросил поддержку по сообщению.", status="created"
+        ).on_conflict_do_nothing(index_elements=[Alert.source_event_id]).returning(Alert))).scalar_one_or_none()
+        if alert is not None:
+            record_event(session, None, message.patient_id, "alert.created", "alert", alert.id,
+                         {"source_kind": "support_request", "message_id": message.id})
     else:
         raise ValueError("UnsupportedEventType")
 
@@ -85,13 +102,17 @@ async def main() -> None:
     interval = get_settings().outbox_poll_interval_seconds
     logger.info("outbox worker started, poll interval=%ss", interval)
     while True:
+        processed = 0
         try:
             processed = await process_pending_events()
             if processed:
-                logger.info("processed %s events", processed)
+                logger.debug("processed %s events", processed)
         except Exception as error:
             logger.error("outbox poll failed error=%s", type(error).__name__)
-        await asyncio.sleep(interval)
+        # Drain available work before polling again. Sleeping after every full
+        # batch limits throughput even when the handler/DB have spare capacity.
+        # A zero-delay yield keeps cancellation responsive; failures retain backoff.
+        await asyncio.sleep(0 if processed else interval)
 
 
 if __name__ == "__main__":

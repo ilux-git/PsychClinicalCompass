@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useId, useRef, useState } from "react";
 import {
   Plus,
   Copy,
@@ -30,6 +30,11 @@ import {
 import { SurveyFields } from "./SurveyFields";
 import { barrierLabels, dimensionLabels, type Dimension, type BarrierCategory } from "./collection";
 import { supportTemplate } from "./supportTemplate";
+import { Disclosure } from "./Interaction";
+import { useNavigationGuard, useUnsavedForm, type LeavePrompt } from "./NavigationGuard";
+
+const draftPrompt:LeavePrompt={eyebrow:"Черновик врача",title:"Сохранить изменения опроса?",message:"Изменения ещё не сохранены. Сохранение создаст или обновит черновик; публикация и назначение пациентам выполняются отдельно.",stayLabel:"Продолжить редактирование"};
+const assignmentPrompt:LeavePrompt={eyebrow:"Незавершённое назначение",title:"Продолжить выбор пациентов?",message:"Опрос ещё не назначен. При уходе или смене версии список выбранных пациентов и срок будут сброшены. Назначение отправляется только отдельной кнопкой.",stayLabel:"Продолжить назначение"};
 
 const id = (prefix: string) =>
   prefix + crypto.randomUUID().replaceAll("-", "").slice(0, 12);
@@ -48,6 +53,23 @@ const newDraft = (): Draft => ({
   purpose: "custom",
   questions: [question()],
 });
+const draftSignature = (draft:Draft) => JSON.stringify({title:draft.title,description:draft.description,purpose:draft.purpose,questions:draft.questions});
+function validateDraft(draft:Draft):Record<string,string> {
+  const errors:Record<string,string>={};
+  if(!draft.title.trim())errors.title="Укажите название опроса";
+  draft.questions.forEach(q=>{
+    if(!q.prompt.trim())errors[q.id]="Напишите текст вопроса";
+    if(q.kind==="single"||q.kind==="multiple")q.options.forEach(option=>{
+      if(!option.label.trim())errors[option.id]="Напишите вариант ответа";
+    });
+    if(q.kind==="scale") {
+      if(!Number.isInteger(q.minimum)||q.minimum < -100||q.minimum > 100)errors[`${q.id}-minimum`]="Укажите целое число от −100 до 100";
+      if(!Number.isInteger(q.maximum)||q.maximum < -100||q.maximum > 100)errors[`${q.id}-maximum`]="Укажите целое число от −100 до 100";
+      if(q.minimum>=q.maximum)errors[`${q.id}-maximum`]="Максимум должен быть больше минимума";
+    }
+  });
+  return errors;
+}
 const purposeNames: Record<string, string> = {
   barriers: "Барьеры выполнения рекомендаций",
   continuation: "Намерение продолжать наблюдение",
@@ -69,14 +91,33 @@ export function SurveyBuilder({
     initialNew ? newDraft : null,
   );
   const [preview, setPreview] = useState(false);
+  const [previewAnswers,setPreviewAnswers] = useState<Record<string,unknown>>({});
+  const [baseline,setBaseline] = useState(()=>draft?draftSignature(draft):"");
   const [busy, setBusy] = useState(false);
+  const [saveError,setSaveError]=useState("");
+  const [validationAttempted,setValidationAttempted]=useState(false);
+  const [validationFocus,setValidationFocus]=useState(0);
+  const fieldId=useId();
+  const builderRef=useRef<HTMLFieldSetElement>(null);
   const [patientIds, setPatientIds] = useState<number[]>([]);
   const [due, setDue] = useState("");
   const request = useRef({ signature: "", id: "" });
-  useEffect(() => {
-    if (!draft && library.data) setDraft(library.data[0] ?? newDraft());
-  }, [library.data, draft]);
+  const guard = useNavigationGuard();
   const locked = Boolean(draft?.published_at);
+  const dirty = Boolean(draft && !locked && draftSignature(draft)!==baseline);
+  const fieldErrors=validationAttempted&&draft?validateDraft(draft):{};
+  const errorId=(key:string)=>`${fieldId}-${key}-error`;
+  const errorProps=(key:string)=>({"aria-invalid":Boolean(fieldErrors[key])||undefined,"aria-describedby":fieldErrors[key]?errorId(key):undefined});
+  useEffect(()=>{if(validationFocus)builderRef.current?.querySelector<HTMLElement>('[aria-invalid="true"]')?.focus();},[validationFocus]);
+  const {clear:clearGuard} = useUnsavedForm({dirty,pending:busy,prompt:draftPrompt,save:dirty&&!busy?()=>save(false):undefined,focus:()=>(builderRef.current?.querySelector<HTMLElement>('[aria-invalid="true"]')??builderRef.current?.querySelector<HTMLElement>('.builder-save-error .error-box,.editor-panel input'))?.focus()});
+  const {clear:clearAssignment}=useUnsavedForm({dirty:locked&&Boolean(patientIds.length||due),pending:busy,prompt:assignmentPrompt,focus:()=>(builderRef.current?.querySelector<HTMLElement>('.assign-patients input:checked')??builderRef.current?.querySelector<HTMLElement>('.assign-patients input'))?.focus()});
+  function selectDraft(value:Draft) {
+    setDraft(value);setBaseline(draftSignature(value));setPreview(false);setPreviewAnswers({});setPatientIds([]);setDue("");setSaveError("");setValidationAttempted(false);
+    request.current={signature:"",id:""};
+  }
+  useEffect(() => {
+    if (!draft && library.data) selectDraft(library.data[0] ?? newDraft());
+  }, [library.data, draft]);
   function patch(values: Partial<Draft>) {
     setDraft((current) => (current ? { ...current, ...values } : current));
   }
@@ -89,7 +130,10 @@ export function SurveyBuilder({
     });
   }
   async function save(publish = false) {
-    if (!draft) return;
+    if (!draft) return false;
+    setSaveError("");
+    if(Object.keys(validateDraft(draft)).length){setValidationAttempted(true);setPreview(false);setValidationFocus(value=>value+1);return false;}
+    setValidationAttempted(false);
     setBusy(true);
     try {
       const payload = {
@@ -104,20 +148,26 @@ export function SurveyBuilder({
         draft.id ? "PUT" : "POST",
       );
       setDraft(saved);
+      setBaseline(draftSignature(saved));
       if (publish)
         saved = await send<Survey>(`/surveys/${saved.id}/publish`, {});
       setDraft(saved);
+      setBaseline(draftSignature(saved));
       library.reload();
+      clearGuard();
       notify(
         publish
           ? "Опрос опубликован. Можно назначать пациентам."
           : "Черновик сохранён",
       );
+      return true;
     } catch (error) {
+      setSaveError(error instanceof Error?error.message:"Не удалось сохранить опрос");
       notify(
         error instanceof Error ? error.message : "Не удалось сохранить",
         "error",
       );
+      return false;
     } finally {
       setBusy(false);
     }
@@ -126,7 +176,7 @@ export function SurveyBuilder({
     if (!draft?.id) return;
     setBusy(true);
     try {
-      setDraft(await send<Survey>(`/surveys/${draft.id}/copy`, {}));
+      selectDraft(await send<Survey>(`/surveys/${draft.id}/copy`, {}));
       library.reload();
       setPreview(false);
       notify(
@@ -156,6 +206,7 @@ export function SurveyBuilder({
       });
       notify(`Опрос назначен: ${patientIds.length} чел.`);
       setPatientIds([]);
+      setDue("");clearAssignment();
       request.current = { signature: "", id: "" };
     } catch (error) {
       notify(
@@ -167,17 +218,13 @@ export function SurveyBuilder({
     }
   }
   return (
-    <>
+    <fieldset ref={builderRef} className="survey-builder" disabled={busy} aria-busy={busy} aria-label="Конструктор и назначение опросов">
       <Heading
         eyebrow="Вопросы, которые помогают понять пациента"
         title="Мои опросы"
         action={
           <Button
-            onClick={() => {
-              setDraft(newDraft());
-              setPreview(false);
-              setPatientIds([]);
-            }}
+            onClick={() => guard.run(()=>selectDraft(newDraft()))}
           >
             <Plus size={17} /> Создать опрос
           </Button>
@@ -185,11 +232,12 @@ export function SurveyBuilder({
       >
         Свои вопросы, понятные ответы и история каждой опубликованной версии.
       </Heading>
-      <Section title="Что такое общая анкета сопровождения?">
+      <div className="builder-save-error"><ErrorBox message={saveError||(Object.keys(fieldErrors).length?"Заполните отмеченные поля. Опрос пока не сохранён.":"")}/></div>
+      <div className="template-explainer"><Disclosure title="Общая анкета сопровождения · предложенный шаблон C1–C7">
         <p>Одинаковые короткие вопросы помогают сравнивать ответы на одну версию: понятен ли план, подходит ли помощь, что мешает и нужен ли следующий шаг. Свои опросы врача остаются доступными.</p>
         <p className="field-hint">Шаблон C1–C7 — предложение. Он не назначается автоматически, не заменяет PHQ-9/GAD-7 и не вычисляет общий балл «лояльности». Перед публикацией уточните конкретную рекомендацию и период. Частоту назначений определяет врач.</p>
-        <Button variant="secondary" disabled={busy} onClick={() => {setDraft(supportTemplate()); setPreview(false); setPatientIds([]);}}>Открыть предложенный шаблон C1–C7 как черновик</Button>
-      </Section>
+        <Button variant="secondary" disabled={busy} onClick={() => guard.run(()=>selectDraft(supportTemplate()))}>Открыть предложенный шаблон C1–C7 как черновик</Button>
+      </Disclosure></div>
       <ErrorBox
         message={library.error || patients.error}
         retry={() => {
@@ -198,6 +246,9 @@ export function SurveyBuilder({
         }}
       />
       <div className="builder-layout">
+        <label className="field mobile-survey-select">Выберите опрос<select value={draft?.id??""} onChange={event=>{const survey=library.data?.find(value=>value.id===Number(event.target.value));if(survey)guard.run(()=>selectDraft(survey));}}>
+          <option value="" disabled>Новый черновик</option>{library.data?.map(survey=><option key={survey.id} value={survey.id}>{survey.title} · v{survey.version}{survey.published_at?"":" · черновик"}</option>)}
+        </select></label>
         <aside className="survey-library">
           <div className="section-heading">
             <h2>Библиотека</h2>
@@ -216,11 +267,8 @@ export function SurveyBuilder({
               <button
                 key={s.id}
                 className={`survey-tile ${draft?.id === s.id ? "selected" : ""}`}
-                onClick={() => {
-                  setDraft(s);
-                  setPreview(false);
-                  setPatientIds([]);
-                }}
+                aria-pressed={draft?.id===s.id}
+                onClick={() => guard.run(()=>selectDraft(s))}
               >
                 <Badge tone={s.published_at ? "good" : "muted"}>
                   {s.published_at ? "Опубликован" : "Черновик"}
@@ -240,23 +288,19 @@ export function SurveyBuilder({
             <>
               <section className="panel editor-panel">
                 <div className="section-heading">
-                  <h2>
-                    {locked
-                      ? "Опубликованный опрос"
-                      : draft.id
-                        ? "Редактирование черновика"
-                        : "Новый опрос"}
-                  </h2>
+                  {locked?<p className="editor-kicker">Готов к назначению</p>:<h2>{draft.id?"Редактирование черновика":"Новый опрос"}</h2>}
                   <div className="segmented">
                     <button
                       className={!preview ? "active" : ""}
+                      aria-pressed={!preview}
                       onClick={() => setPreview(false)}
                     >
                       <PenLine size={15} />
-                      Вопросы
+                      {locked?"Назначение":"Вопросы"}
                     </button>
                     <button
                       className={preview ? "active" : ""}
+                      aria-pressed={preview}
                       onClick={() => setPreview(true)}
                     >
                       <Eye size={15} />
@@ -265,21 +309,21 @@ export function SurveyBuilder({
                   </div>
                 </div>
                 {locked && (
-                  <div className="subtle-notice">
+                  <div className={`subtle-notice ${!preview?"published-lock-hint":""}`}>
                     <LockKeyhole size={16} /> Вопросы зафиксированы. Для
                     изменений создайте новую версию.
                   </div>
                 )}
-                {preview ? (
+                {locked&&!preview?<div className="published-survey-summary"><h2>{draft.title}</h2><p>{draft.description}</p><div className="button-row"><Badge tone="good">Опубликован · v{draft.version}</Badge><span>{draft.questions.length} вопр.</span><span>{purposeNames[draft.purpose]??"Авторский опрос"}</span><Button variant="ghost" disabled={busy} onClick={()=>guard.run(()=>void copy())}><Copy size={16}/>Новая версия</Button></div></div>:preview ? (
                   <>
-                    <h3>{draft.title || "Название опроса"}</h3>
+                    <h2 className="preview-title">{draft.title || "Название опроса"}</h2>
                     <p className="muted">{draft.description}</p>
                     <SurveyFields
                       questions={draft.questions}
-                      answers={{}}
-                      onChange={() => {}}
-                      disabled
+                      answers={previewAnswers}
+                      onChange={setPreviewAnswers}
                     />
+                    <p className="field-hint">Пробные ответы остаются в предпросмотре. Они не отправляются, не назначаются пациентам и не попадают в аналитику.</p>
                   </>
                 ) : (
                   <>
@@ -287,11 +331,15 @@ export function SurveyBuilder({
                       Название
                       <input
                         value={draft.title}
+                        aria-label="Название"
+                        required
+                        {...errorProps("title")}
                         disabled={locked}
                         maxLength={200}
                         placeholder="Что важно понять у пациента?"
                         onChange={(e) => patch({ title: e.target.value })}
                       />
+                      {fieldErrors.title&&<span className="question-error" id={errorId("title")}>{fieldErrors.title}</span>}
                     </label>
                     <label className="field">
                       Зачем этот опрос
@@ -344,12 +392,16 @@ export function SurveyBuilder({
                           <input
                             disabled={locked}
                             value={q.prompt}
+                            aria-label="Текст вопроса"
+                            required
+                            {...errorProps(q.id)}
                             maxLength={500}
                             onChange={(e) =>
                               patchQuestion(i, { prompt: e.target.value })
                             }
                             placeholder="Сформулируйте один понятный вопрос"
                           />
+                          {fieldErrors[q.id]&&<span className="question-error" id={errorId(q.id)}>{fieldErrors[q.id]}</span>}
                         </label>
                         <label className="field">
                           Направление аналитики
@@ -410,6 +462,8 @@ export function SurveyBuilder({
                                 <input
                                   disabled={locked}
                                   aria-label={`Вариант ${oi + 1} вопроса ${i + 1}`}
+                                  required
+                                  {...errorProps(option.id)}
                                   maxLength={180}
                                   value={option.label}
                                   onChange={(e) =>
@@ -449,6 +503,7 @@ export function SurveyBuilder({
                                     <Trash2 size={15} />
                                   </button>
                                 )}
+                                {fieldErrors[option.id]&&<span className="question-error option-error" id={errorId(option.id)}>{fieldErrors[option.id]}</span>}
                               </div>
                             ))}
                             {!locked && (
@@ -476,6 +531,10 @@ export function SurveyBuilder({
                               <input
                                 type="number"
                                 disabled={locked}
+                                required
+                                step={1}
+                                {...errorProps(`${q.id}-minimum`)}
+                                aria-label="Минимум"
                                 min={-100}
                                 max={100}
                                 value={q.minimum}
@@ -485,12 +544,17 @@ export function SurveyBuilder({
                                   })
                                 }
                               />
+                              {fieldErrors[`${q.id}-minimum`]&&<span className="question-error" id={errorId(`${q.id}-minimum`)}>{fieldErrors[`${q.id}-minimum`]}</span>}
                             </label>
                             <label className="field">
                               Максимум
                               <input
                                 type="number"
                                 disabled={locked}
+                                required
+                                step={1}
+                                {...errorProps(`${q.id}-maximum`)}
+                                aria-label="Максимум"
                                 min={-100}
                                 max={100}
                                 value={q.maximum}
@@ -500,6 +564,7 @@ export function SurveyBuilder({
                                   })
                                 }
                               />
+                              {fieldErrors[`${q.id}-maximum`]&&<span className="question-error" id={errorId(`${q.id}-maximum`)}>{fieldErrors[`${q.id}-maximum`]}</span>}
                             </label>
                           </div>
                         )}
@@ -518,14 +583,14 @@ export function SurveyBuilder({
                     )}
                   </>
                 )}
-                <p className="field-hint">
+                {(!locked||preview)&&<p className="field-hint">
                   Авторский опрос собирает обратную связь. Он не становится
                   диагностической шкалой и не назначает лечение.
-                </p>
-                <div className="editor-actions">
+                </p>}
+                {(!locked||preview)&&<div className="editor-actions">
                   {locked ? (
-                    <Button variant="secondary" disabled={busy} onClick={copy}>
-                      <Copy size={16} /> Новая версия
+                    <Button variant="secondary" onClick={()=>setPreview(false)}>
+                      К назначению пациентов
                     </Button>
                   ) : (
                     <>
@@ -534,14 +599,14 @@ export function SurveyBuilder({
                         disabled={busy}
                         onClick={() => save(false)}
                       >
-                        Сохранить черновик
+                        {busy?"Сохраняем…":"Сохранить черновик"}
                       </Button>
                       <Button disabled={busy} onClick={() => save(true)}>
                         <Check size={17} /> Опубликовать
                       </Button>
                     </>
                   )}
-                </div>
+                </div>}
               </section>
               {locked && (
                 <Section
@@ -593,6 +658,6 @@ export function SurveyBuilder({
           )}
         </div>
       </div>
-    </>
+    </fieldset>
   );
 }
