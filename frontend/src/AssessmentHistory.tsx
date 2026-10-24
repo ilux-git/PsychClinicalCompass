@@ -1,5 +1,6 @@
 import type { Assessment } from "./api";
 import { Badge, date, Empty } from "./UI";
+import { TimeSeries } from "./Charts";
 
 export function AssessmentHistory({ rows }: { rows: Assessment[] }) {
   if (!rows.length)
@@ -36,17 +37,7 @@ export function AssessmentHistory({ rows }: { rows: Assessment[] }) {
                       <> · изменение от первого: <strong>{change > 0 ? "+" : ""}{change} балл.</strong></>
                     ) : " · для сравнения нужны измерения в разные моменты времени"}
                   </p>
-                  <div className="scale-points" aria-label={`История ${form.toUpperCase()}`}>
-                    {points.map((row) => (
-                      <div key={row.id}>
-                        <span className="scale-point-bar" aria-hidden="true">
-                          <i style={{ height: `${100 * row.score / maximum}%` }} />
-                        </span>
-                        <strong>{row.score}</strong>
-                        <small>{new Date(row.created_at).toLocaleDateString("ru-RU")}</small>
-                      </div>
-                    ))}
-                  </div>
+                  <TimeSeries title={`${form === "phq9" ? "PHQ-9" : "GAD-7"} · история наблюдений`} maximum={maximum} points={points.map(p => ({id:p.id, at:p.created_at, value:p.score}))}/>
                   {points.map((row) => (
                     <details className="assessment-answers" key={row.id}>
                       <summary>{date(row.created_at)} · {row.score} балл. · Ответы по пунктам</summary>

@@ -38,7 +38,8 @@ async def test_private_note_source_and_task_scope(client, headers):
     path = f"/tasks/{task['id']}"
     assert (await client.patch(path, headers=headers('doctor2'), json={'status':'done'})).status_code == 404
     assert (await client.patch(path, headers=headers('patient1'), json={'status':'done'})).status_code == 403
-    completed = (await client.patch(path, headers=headers('doctor'), json={'status':'done'})).json()
+    assert (await client.patch(path, headers=headers('doctor'), json={'status':'done'})).status_code == 422
+    completed = (await client.patch(path, headers=headers('doctor'), json={'status':'done', 'action_result':'Удобное время согласовано'})).json()
     assert completed['status'] == 'done' and completed['completed_at'] is not None
     assert (await client.patch(path, headers=headers('doctor'), json={'status':'done'})).json() == completed
     timeline = (await client.get('/patients/1/timeline', headers=headers('doctor'))).json()

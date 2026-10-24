@@ -1,5 +1,5 @@
-from fastapi import APIRouter, HTTPException
-from sqlalchemy import select
+from fastapi import APIRouter, HTTPException, Query
+from sqlalchemy import func, select
 from sqlalchemy.exc import SQLAlchemyError
 
 from app.api.deps import CompassSession, CurrentUser, patient_for_user
@@ -10,7 +10,9 @@ from app.modules.audit.models import AuditEvent
 from app.modules.integration.mis_models import MISPatient
 from app.modules.patients.models import Patient, PatientMapping
 from app.modules.care.models import TreatmentStatusChange
-from app.modules.integration.synthetic import linked_snapshot
+from app.modules.integration.synthetic import patient_snapshot
+from app.modules.notes.models import DoctorTask
+from app.modules.alerts.models import Alert
 
 router = APIRouter(prefix="/patients", tags=["patients"])
 
@@ -27,17 +29,47 @@ async def patients(session: CompassSession, user: CurrentUser) -> list[dict]:
     query = select(Patient).order_by(Patient.id)
     query = query.where(Patient.doctor_id == user.id) if user.role == UserRole.doctor else query.where(Patient.user_id == user.id)
     rows = (await session.scalars(query)).all()
-    result = [patient_summary(p) for p in rows]
-    if user.role == UserRole.doctor:
-        latest = {}
-        for row in (await session.scalars(select(TreatmentStatusChange).where(
-            TreatmentStatusChange.patient_id.in_([p.id for p in rows])).order_by(TreatmentStatusChange.id.desc()))).all():
-            latest.setdefault(row.patient_id, row.status)
-        for item, patient in zip(result, rows):
-            fixture = await linked_snapshot(session, patient)
-            item["demo_scenario"] = fixture["data"]["scenario"]["title"] if fixture["data"] else None
-            item["treatment_status"] = latest.get(patient.id, "unknown")
+    return await directory_items(session, rows) if user.role == UserRole.doctor else [patient_summary(p) for p in rows]
+
+
+async def directory_items(session, rows):
+    ids = [p.id for p in rows]
+    if not ids: return []
+    latest = dict((await session.execute(select(TreatmentStatusChange.patient_id, TreatmentStatusChange.status).where(
+        TreatmentStatusChange.patient_id.in_(ids)).distinct(TreatmentStatusChange.patient_id).order_by(
+        TreatmentStatusChange.patient_id, TreatmentStatusChange.id.desc()))).all())
+    mappings = dict((await session.execute(select(PatientMapping.compass_patient_id, PatientMapping.mis_id).where(
+        PatientMapping.compass_patient_id.in_(ids)))).all())
+    task_counts = {}
+    for patient_id, stage, count in (await session.execute(select(DoctorTask.patient_id, DoctorTask.status, func.count()).where(
+            DoctorTask.patient_id.in_(ids)).group_by(DoctorTask.patient_id, DoctorTask.status))).all():
+        task_counts.setdefault(patient_id, {})[stage] = count
+    alerts = dict((await session.execute(select(Alert.patient_id,func.count()).where(
+        Alert.patient_id.in_(ids), Alert.status != 'closed').group_by(Alert.patient_id))).all())
+    observations = dict((await session.execute(select(QuestionnaireResponse.patient_id,func.max(QuestionnaireResponse.created_at)).where(
+        QuestionnaireResponse.patient_id.in_(ids)).group_by(QuestionnaireResponse.patient_id))).all())
+    result = []
+    for patient in rows:
+        fixture = patient_snapshot(patient.mis_id if mappings.get(patient.id) == patient.mis_id else None)
+        result.append({**patient_summary(patient), "demo_scenario": fixture['data']['scenario']['title'] if fixture['data'] else None,
+            "treatment_status": latest.get(patient.id,'unknown'), "open_tasks":task_counts.get(patient.id,{}).get('open',0),
+            "in_progress_tasks":task_counts.get(patient.id,{}).get('in_progress',0), "pending_events": alerts.get(patient.id,0),
+            "last_observation_at":observations.get(patient.id)})
     return result
+
+
+@router.get("/directory")
+async def directory(session: CompassSession, user: CurrentUser, q: str = Query(default='', max_length=100),
+        after: int = Query(default=0, ge=0), limit: int = Query(default=24, ge=1, le=100)):
+    if user.role != UserRole.doctor: raise HTTPException(403, 'Список пациентов доступен врачу')
+    conditions = [Patient.doctor_id == user.id]
+    if q.strip():
+        value = q.strip().replace('\\','\\\\').replace('%','\\%').replace('_','\\_')
+        conditions.append(Patient.full_name.ilike(f'%{value}%', escape='\\'))
+    total = await session.scalar(select(func.count()).select_from(Patient).where(*conditions))
+    rows = (await session.scalars(select(Patient).where(*conditions, Patient.id > after).order_by(Patient.id).limit(limit+1))).all()
+    page = rows[:limit]
+    return {'total':total, 'items':await directory_items(session,page), 'next_cursor':page[-1].id if len(rows)>limit else None}
 
 
 @router.get("/{patient_id}")

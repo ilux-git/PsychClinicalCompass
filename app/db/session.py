@@ -5,8 +5,10 @@ from app.core.config import get_settings
 
 settings = get_settings()
 
-engine_compass = create_async_engine(settings.compass_database_url, pool_pre_ping=True, hide_parameters=True, connect_args={"timeout": 3})
-engine_mis = create_async_engine(settings.mis_database_url, pool_pre_ping=True, hide_parameters=True, connect_args={"timeout": 3})
+engine_compass = create_async_engine(settings.compass_database_url, pool_pre_ping=True, hide_parameters=True,
+    connect_args={"timeout": 3}, pool_size=settings.compass_db_pool_size, max_overflow=settings.compass_db_max_overflow)
+engine_mis = create_async_engine(settings.mis_database_url, pool_pre_ping=True, hide_parameters=True,
+    connect_args={"timeout": 3}, pool_size=settings.mis_db_pool_size, max_overflow=settings.mis_db_max_overflow)
 
 async_session_compass = async_sessionmaker(bind=engine_compass, class_=AsyncSession, expire_on_commit=False)
 async_session_mis = async_sessionmaker(bind=engine_mis, class_=AsyncSession, expire_on_commit=False)

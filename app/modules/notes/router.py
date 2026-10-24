@@ -1,7 +1,8 @@
 from datetime import datetime, timezone
 
-from fastapi import APIRouter, Depends, HTTPException
-from sqlalchemy import select, text
+from fastapi import APIRouter, Depends, HTTPException, Query
+from sqlalchemy import func, or_, select, text
+from typing import Literal
 
 from app.api.deps import CompassSession, patient_for_user, require_role
 from app.modules.access.models import User, UserRole
@@ -30,6 +31,7 @@ def note_read(note: DoctorNote) -> dict:
 def task_read(task: DoctorTask, operational: bool = False) -> dict:
     data = {"id": task.id, "patient_id": task.patient_id, "doctor_id": task.doctor_id, "title": task.title,
             "status": task.status, "due_at": task.due_at, "created_at": task.created_at, "completed_at": task.completed_at,
+            "revision": task.revision, "started_at": task.started_at, "updated_at": task.updated_at,
             "assigned_to_id": task.assigned_to_id or task.doctor_id, "kind": task.kind,
             "action_result": task.action_result, "follow_up_at": task.follow_up_at,
             "verification_status": task.verification_status}
@@ -80,6 +82,13 @@ async def tasks(patient_id: int, session: CompassSession, doctor: User = Doctor)
 
 @router.post("/patients/{patient_id}/tasks", status_code=201)
 async def add_task(patient_id: int, payload: TaskWrite, session: CompassSession, doctor: User = Doctor) -> dict:
+    task = await create_task(patient_id, payload, session, doctor)
+    await session.commit()
+    return task_read(task)
+
+
+async def create_task(patient_id: int, payload: TaskWrite, session, doctor: User) -> DoctorTask:
+    """Create within the caller's transaction, also used by the alert handling command."""
     await session.execute(text("SELECT pg_advisory_xact_lock(:key)"), {"key": 847000 + doctor.id})
     patient = await session.scalar(select(Patient).where(Patient.id == patient_id, Patient.doctor_id == doctor.id).with_for_update())
     if patient is None:
@@ -98,14 +107,29 @@ async def add_task(patient_id: int, payload: TaskWrite, session: CompassSession,
         if previous:
             if previous.patient_id != patient_id or any(getattr(previous, k) != v for k, v in data.items()):
                 raise HTTPException(409, "Ключ запроса уже использован для другой задачи")
-            return task_read(previous)
+            return previous
     task = DoctorTask(patient_id=patient_id, doctor_id=doctor.id,
                       client_request_id=str(payload.client_request_id) if payload.client_request_id else None, **data)
     session.add(task)
     await session.flush()
     record_event(session, doctor.id, patient_id, "doctor.task_created", "doctor_task", task.id)
-    await session.commit()
-    return task_read(task)
+    return task
+
+
+@router.get("/tasks/{task_id}")
+async def read_task(task_id: int, session: CompassSession,
+                    user: User = Depends(require_role([UserRole.doctor, UserRole.coordinator]))) -> dict:
+    scope = Patient.doctor_id == user.id if user.role == UserRole.doctor else (
+        (DoctorTask.assigned_to_id == user.id) & (DoctorTask.kind == "organization"))
+    row = (await session.execute(select(DoctorTask, Patient.full_name, User.display_name).join(
+        Patient, Patient.id == DoctorTask.patient_id).outerjoin(
+        User, User.id == func.coalesce(DoctorTask.assigned_to_id, DoctorTask.doctor_id)).where(
+        DoctorTask.id == task_id, scope))).one_or_none()
+    if row is None:
+        raise HTTPException(404, "Задача не найдена или недоступна")
+    task, name, assignee = row
+    return {**task_read(task, operational=user.role == UserRole.coordinator),
+            "patient_name": name, "assignee_name": assignee}
 
 
 @router.patch("/tasks/{task_id}")
@@ -117,17 +141,28 @@ async def update_task(task_id: int, payload: TaskStatus, session: CompassSession
         DoctorTask.id == task_id, scope).with_for_update(of=DoctorTask))
     if task is None:
         raise HTTPException(404, "Задача не найдена или недоступна")
+    result = payload.action_result.strip() if payload.action_result is not None else task.action_result
+    changed = task.status != payload.status or result != task.action_result
+    if changed and payload.expected_revision is not None and payload.expected_revision != task.revision:
+        raise HTTPException(409, "Задача уже изменена. Обновите список и проверьте актуальное действие")
+    if payload.status == "done" and not result:
+        raise HTTPException(422, "Опишите выполненное действие перед завершением задачи")
     if task.verification_status != "pending" and (task.status != payload.status or (
         payload.action_result is not None and task.action_result != payload.action_result.strip())):
         raise HTTPException(409, "Результат уже проверен врачом; создайте новую задачу")
-    changed = task.status != payload.status or (payload.action_result is not None and task.action_result != payload.action_result.strip())
     if changed:
+        previous_status = task.status
         task.status = payload.status
         if payload.action_result is not None:
             task.action_result = payload.action_result.strip()
         task.completed_at = (task.completed_at or datetime.now(timezone.utc)) if task.status == "done" else None
+        if task.status == "in_progress" and task.started_at is None:
+            task.started_at = datetime.now(timezone.utc)
+        task.updated_at = datetime.now(timezone.utc)
+        task.revision += 1
         record_event(session, doctor.id, task.patient_id, "doctor.task_updated", "doctor_task", task.id,
-                     {"status": task.status, "action_result": task.action_result})
+                     {"previous_status": previous_status, "status": task.status,
+                      "action_result": task.action_result, "revision": task.revision})
     await session.commit()
     return task_read(task, operational=doctor.role == UserRole.coordinator)
 
@@ -144,8 +179,12 @@ async def verify_task(task_id: int, payload: TaskVerification, session: CompassS
         if task.verification_status != payload.status or task.verification_comment != payload.comment:
             raise HTTPException(409, "Проверка уже сохранена; для нового наблюдения создайте задачу")
         return task_read(task)
+    if payload.expected_revision is not None and payload.expected_revision != task.revision:
+        raise HTTPException(409, "Действие уже изменено. Обновите задачу перед проверкой результата")
     task.verification_status, task.verification_comment = payload.status, payload.comment
     task.verified_at, task.verified_by_id = datetime.now(timezone.utc), doctor.id
+    task.updated_at = task.verified_at
+    task.revision += 1
     record_event(session, doctor.id, task.patient_id, "task.result_verified", "doctor_task", task.id,
                  {"verification_status": payload.status})
     await session.commit()
@@ -167,3 +206,35 @@ async def coordination_tasks(session: CompassSession,
     rows = (await session.execute(select(DoctorTask, Patient.full_name).join(
         Patient, Patient.id == DoctorTask.patient_id).where(scope).order_by(DoctorTask.id.desc()))).all()
     return [{**task_read(task, operational=user.role == UserRole.coordinator), "patient_name": name} for task, name in rows]
+
+
+@router.get("/coordination/board")
+async def task_board(session: CompassSession,
+        user: User = Depends(require_role([UserRole.doctor, UserRole.coordinator])),
+        stage: Literal["open", "in_progress", "done"] = "open",
+        q: str = Query(default="", max_length=100),
+        patient_id: int | None = Query(default=None, gt=0),
+        before: int | None = Query(default=None, gt=0),
+        limit: int = Query(default=20, ge=1, le=100)):
+    scope = Patient.doctor_id == user.id if user.role == UserRole.doctor else (
+        (DoctorTask.assigned_to_id == user.id) & (DoctorTask.kind == "organization"))
+    conditions = [scope, DoctorTask.status == stage]
+    if patient_id is not None:
+        conditions.append(DoctorTask.patient_id == patient_id)
+    if q.strip():
+        # Treat search input literally; '%' and '_' are not wildcard commands.
+        query = q.strip().replace("\\", "\\\\").replace("%", "\\%").replace("_", "\\_")
+        conditions.append(or_(Patient.full_name.ilike(f"%{query}%", escape="\\"),
+                              DoctorTask.title.ilike(f"%{query}%", escape="\\")))
+    base = select(DoctorTask).join(Patient, Patient.id == DoctorTask.patient_id).where(*conditions)
+    total = await session.scalar(select(func.count()).select_from(base.subquery()))
+    if before is not None:
+        conditions.append(DoctorTask.id < before)
+    rows = (await session.execute(select(DoctorTask, Patient.full_name, User.display_name).join(
+        Patient, Patient.id == DoctorTask.patient_id).outerjoin(
+        User, User.id == func.coalesce(DoctorTask.assigned_to_id, DoctorTask.doctor_id)).where(
+        *conditions).order_by(DoctorTask.id.desc()).limit(limit + 1))).all()
+    page = rows[:limit]
+    return {"stage": stage, "total": total, "next_cursor": page[-1][0].id if len(rows) > limit else None,
+            "items": [{**task_read(task, operational=user.role == UserRole.coordinator),
+                       "patient_name": name, "assignee_name": assignee} for task, name, assignee in page]}

@@ -1,22 +1,17 @@
 import type {CollectionMetrics as CollectionData} from "./api";
 import { elapsed } from "./collection";
 import { Section } from "./UI";
+import { CoverageGrid, HorizontalBars } from "./Charts";
 
 export function CollectionMetrics({data}: {data: CollectionData}) {
   const journey = data.journey;
   return <>
     <Section title="Четыре направления: что уже известно">
       <p className="field-hint">Это охват ответами, а не баллы заинтересованности, лояльности или личности. Ответ пациента и наблюдение врача — разные источники.</p>
-      <div className="collection-grid">
-        {data.dimensions.map((dimension) => <article className="collection-card" key={dimension.code}>
-          <h3>{dimension.label}</h3>
-          <strong>{dimension.assigned_patients ? `${dimension.responding_patients} / ${dimension.assigned_patients}` : "Пока не измеряется"}</strong>
-          <p>{dimension.assigned_patients ? `Пациентов с ответом / получивших вопросы: ${dimension.coverage_percent}%` : "Нет назначенных вопросов с этим направлением"}</p>
-          <small>Без ответа: {dimension.patients_without_answer} · без назначения: {dimension.patients_without_assignment}. Версий вопросов: {dimension.question_versions}.</small>
-        </article>)}
-      </div>
+      <CoverageGrid rows={data.dimensions.map(d=>({label:d.label,responded:d.responding_patients,assigned:d.assigned_patients,percent:d.coverage_percent,note:`Без ответа: ${d.patients_without_answer} · без назначения: ${d.patients_without_assignment}. Версий: ${d.question_versions}.`}))}/>
     </Section>
     <Section title="Как проходят опросы">
+      <HorizontalBars title="Прохождение назначенных опросов" rows={[{label:"Назначено",value:journey.assigned},{label:"Открытие зафиксировано",value:journey.opened},{label:"Завершено после открытия",value:journey.completed_after_open}]} unit="опросов" caption="Старые завершения без зафиксированного открытия показаны отдельно ниже. Назначение не доказывает доставку."/>
       <div className="collection-grid">
         <article className="collection-card"><h3>Назначены</h3><strong>{journey.assigned}</strong><p>Опрос доступен в кабинете</p></article>
         <article className="collection-card"><h3>Открытие зафиксировано</h3><strong>{journey.opened}</strong><p>{journey.opening_rate_percent === null ? "Нет назначений" : `${journey.opening_rate_percent}% от назначений`}</p></article>

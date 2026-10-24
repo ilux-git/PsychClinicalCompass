@@ -42,13 +42,15 @@ class TaskWrite(BaseModel):
 
 
 class TaskStatus(BaseModel):
-    status: Literal["open", "done"]
+    status: Literal["open", "in_progress", "done"]
     action_result: str | None = Field(default=None, max_length=2000)
+    expected_revision: int | None = Field(default=None, ge=0)
 
 
 class TaskVerification(BaseModel):
     status: Literal["resolved", "not_resolved", "unknown"]
     comment: str = Field(min_length=1, max_length=2000)
+    expected_revision: int | None = Field(default=None, ge=0)
 
     @model_validator(mode="after")
     def not_blank(self):

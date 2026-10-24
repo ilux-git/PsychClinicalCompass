@@ -123,7 +123,7 @@ async def clinic_summary(session, minimum: int | None):
     report["barriers"] = protect({"responding_patients": len(barrier_people), "categories": [
         {"code": code, "label": label, "count": categories.get(code, 0)} for code, label in BARRIER_CATEGORIES.items()]},
         [barrier_people, *category_people.values()], population, minimum)
-    adherence = (await session.scalars(select(AdherenceReport))).all()
+    adherence = (await session.execute(select(AdherenceReport.patient_id, AdherenceReport.status))).all()
     status_people = defaultdict(set)
     statuses = Counter()
     for row in adherence:
@@ -132,7 +132,7 @@ async def clinic_summary(session, minimum: int | None):
         statuses[status] += 1
     report["adherence"] = protect({"reports": len(adherence), "statuses": dict(statuses)},
                                     list(status_people.values()), population, minimum)
-    patients = (await session.scalars(select(Patient))).all()
-    values, contributors = await workflow_metrics(session, patients)
+    patients = (await session.execute(select(Patient.id, Patient.mis_id))).all()
+    values, contributors = await workflow_metrics(session, patients, assignment_rows=[(a,r) for a,_,r in rows])
     report["workflow"] = protect(values, contributors, population, minimum)
     return report

@@ -1,14 +1,14 @@
-import { useEffect, useRef, useState, type FormEvent } from "react";
+import { useRef, useState, type FormEvent } from "react";
 import {
-  ArrowLeft,
   Check,
   ChevronRight,
-  HeartHandshake,
   Send,
-  Sparkles,
   ClipboardCheck,
   MessageCircle,
   CircleCheck,
+  BookOpen,
+  Pill,
+  Activity,
 } from "lucide-react";
 import {
   send,
@@ -34,133 +34,16 @@ import {
   plural,
   type Notify,
 } from "./UI";
-import { SurveyFields, AnswerSummary } from "./SurveyFields";
+import { AssignedSurvey } from "./PatientSurvey";
 import { Chat } from "./Chat";
 import { AssessmentHistory } from "./AssessmentHistory";
 import { PatientDiary } from "./PatientDiary";
 import { MedicationSchedule } from "./MedicationSchedule";
-import { ParticipationPoints } from "./ParticipationPoints";
+import { PatientJourney } from "./PatientJourney";
+import { ContentFrame } from "./Interaction";
+import { useUnsavedForm, type LeavePrompt } from "./NavigationGuard";
 
-function AssignedSurvey({
-  assignment,
-  done,
-  notify,
-}: {
-  assignment: Assignment;
-  done: () => void;
-  notify: Notify;
-}) {
-  const [answers, setAnswers] = useState<Record<string, unknown>>({});
-  const [busy, setBusy] = useState(false);
-  const [saved, setSaved] = useState(false);
-  const formRef = useRef<HTMLElement>(null);
-  const [openingError, setOpeningError] = useState("");
-  const [openingRevision, setOpeningRevision] = useState(0);
-  useEffect(() => {
-    const element = formRef.current;
-    if (!element || assignment.submission || saved) return;
-    let visible = false, requested = false, active = true;
-    async function opened() {
-      if (!visible || requested || document.visibilityState !== "visible") return;
-      requested = true;
-      try {
-        await send(`/survey-assignments/${assignment.id}/open`, {});
-        if (active) setOpeningError("");
-      } catch {
-        if (active) setOpeningError("Не удалось обновить статус опроса. Ответы можно отправить.");
-      }
-    }
-    const observer = new IntersectionObserver(([entry]) => { visible = entry.isIntersecting; void opened(); });
-    observer.observe(element);
-    document.addEventListener("visibilitychange", opened);
-    return () => { active = false; observer.disconnect(); document.removeEventListener("visibilitychange", opened); };
-  }, [assignment.id, assignment.submission, saved, openingRevision]);
-  async function submit(event: FormEvent) {
-    event.preventDefault();
-    setBusy(true);
-    try {
-      await send(`/survey-assignments/${assignment.id}/submit`, { answers });
-      setSaved(true);
-      notify("Спасибо! Ваши ответы сохранены и доступны врачу.");
-    } catch (error) {
-      notify(
-        error instanceof Error ? error.message : "Не удалось отправить ответы",
-        "error",
-      );
-    } finally {
-      setBusy(false);
-    }
-  }
-  if (saved)
-    return (
-      <section className="panel thanks-card">
-        <span className="celebration">
-          <Sparkles size={34} />
-        </span>
-        <p className="eyebrow">Ещё один шаг в диалоге с врачом</p>
-        <h1>Спасибо за ваш ответ</h1>
-        <p>
-          Теперь врачу проще понять, что получается и где нужна поддержка. Любой
-          честный ответ полезен.
-        </p>
-        <Badge tone="good">
-          <Check size={14} /> Опрос завершён
-        </Badge>
-        <Button onClick={done}>
-          Вернуться к моим опросам <ChevronRight size={16} />
-        </Button>
-      </section>
-    );
-  return (
-    <>
-      <button className="back-link" onClick={done}>
-        <ArrowLeft size={16} /> Мои опросы
-      </button>
-      <section className="panel patient-form" ref={formRef}>
-        <Badge tone={assignment.submission ? "good" : "purple"}>
-          {assignment.submission
-            ? "Ответ сохранён"
-            : `${assignment.survey.questions.length} вопр.`}
-        </Badge>
-        <h1>{assignment.survey.title}</h1>
-        <p className="lede">{assignment.survey.description}</p>
-        <p className="field-hint">
-          Вопросы от вашего врача · версия {assignment.survey.version}
-          {assignment.due_at ? ` · ответить до ${date(assignment.due_at)}` : ""}
-        </p>
-        {assignment.submission ? (
-          <>
-            <AnswerSummary
-              questions={assignment.survey.questions}
-              answers={assignment.submission.answers}
-            />
-            <p className="field-hint">
-              Отправлено {date(assignment.submission.created_at)}. Для нового
-              ответа врач может назначить ещё один опрос.
-            </p>
-          </>
-        ) : (
-          <form onSubmit={submit}>
-            <ErrorBox message={openingError} retry={() => setOpeningRevision((value) => value + 1)} />
-            <SurveyFields
-              questions={assignment.survey.questions}
-              answers={answers}
-              onChange={setAnswers}
-              disabled={busy}
-            />
-            <p className="field-hint">
-              Необязательные вопросы можно пропустить. Здесь нет правильных и
-              неправильных ответов.
-            </p>
-            <Button type="submit" disabled={busy}>
-              <Send size={17} /> {busy ? "Сохраняем…" : "Отправить ответы"}
-            </Button>
-          </form>
-        )}
-      </section>
-    </>
-  );
-}
+const selfReportPrompt:LeavePrompt={eyebrow:"Незавершённый самоотчёт",title:"Продолжить рассказ о рекомендации?",message:"Самоотчёт ещё не сохранён. При переходе без сохранения выбранный ответ и комментарий будут потеряны.",stayLabel:"Продолжить самоотчёт"};
 
 function SelfReport({
   patientId,
@@ -176,6 +59,7 @@ function SelfReport({
   const [status, setStatus] = useState("");
   const [reason, setReason] = useState("");
   const [busy, setBusy] = useState(false);
+  const {clear}=useUnsavedForm({dirty:Boolean(recommendation || status || reason),pending:busy,prompt:selfReportPrompt});
   const request = useRef({ signature: "", id: "" });
   async function submit(event: FormEvent) {
     event.preventDefault();
@@ -193,6 +77,7 @@ function SelfReport({
       setRecommendation("");
       setStatus("");
       setReason("");
+      clear();
       request.current = { signature: "", id: "" };
       reports.reload();
       notify("Спасибо! Врач увидит, какая поддержка вам нужна.");
@@ -212,6 +97,7 @@ function SelfReport({
       </Heading>
       <Section title="Мой самоотчёт">
         <form onSubmit={submit} className="self-report-form">
+          <fieldset className="form-fields" disabled={busy} aria-busy={busy}>
           <label className="field">
             О какой рекомендации расскажете?
             <input
@@ -256,8 +142,9 @@ function SelfReport({
             type="submit"
             disabled={busy || !recommendation.trim() || !status}
           >
-            <Send size={16} /> Сохранить самоотчёт
+            <Send size={16} /> {busy?"Сохраняем…":"Сохранить самоотчёт"}
           </Button>
+          </fieldset>
         </form>
       </Section>
       <Section title="Мои предыдущие ответы">
@@ -289,24 +176,29 @@ export function PatientHome({
   user,
   view,
   notify,
+  navigate,
 }: {
   user: User;
   view: string;
   notify: Notify;
+  navigate: (view: string) => void;
 }) {
-  const assignments = useApi<Assignment[]>("/survey-assignments", 15000);
-  const participation = useApi<Participation>("/participation/me", 15000);
+  const showsSurveys = view === "overview" || view === "surveys";
+  const assignments = useApi<Assignment[]>(showsSurveys ? "/survey-assignments" : null, 15000);
+  const participation = useApi<Participation>(showsSurveys ? "/participation/me" : null, 15000);
   const card = useApi<Card>(
-    user.patient_id ? `/patients/${user.patient_id}` : null,
+    user.patient_id && (view === "chat" || view === "telegram" || showsSurveys) ? `/patients/${user.patient_id}` : null,
     15000,
   );
   const [selected, setSelected] = useState<Assignment | null>(null);
+  function openSurvey(assignment:Assignment) {window.scrollTo(0,0);setSelected(assignment);}
   const assessmentHistory = useApi<Assessment[]>(
     view === "state" && user.patient_id ? `/patients/${user.patient_id}/assessments` : null,
     15000,
   );
   if (!user.patient_id)
     return <Empty title="Учётная запись пока не связана с карточкой" />;
+  if (view === "journey") return <PatientJourney notify={notify} navigate={navigate}/>;
   if (view === "state")
     return (
       <>
@@ -330,20 +222,18 @@ export function PatientHome({
         >
           Можно рассказать, как вы себя чувствуете, или задать вопрос.
         </Heading>
-        <div className="doctor-contact">
+        <Section title="Переписка" aside={<div className="chat-doctor">
           <span
             className={`availability-dot ${card.data?.doctor?.availability === "available" ? "online" : ""}`}
           />
           <div>
             <strong>{card.data?.doctor?.name ?? "Лечащий врач"}</strong>
-            <p>
+            <small>
               {availability[card.data?.doctor?.availability ?? ""] ??
                 "Статус неизвестен"}
-              . Сообщение сохранится; время ответа не гарантируется.
-            </p>
+            </small>
           </div>
-        </div>
-        <Section title="Переписка">
+        </div>}>
           <Chat
             key={view}
             patientId={user.patient_id}
@@ -362,25 +252,51 @@ export function PatientHome({
     return <MedicationSchedule patientId={user.patient_id} notify={notify} />;
   if (selected)
     return (
+      <ContentFrame key={selected.id}>
       <AssignedSurvey
         key={selected.id}
         assignment={selected}
         notify={notify}
         done={() => {
+          window.scrollTo(0,0);
           setSelected(null);
+          if (view !== "surveys") navigate("surveys");
           assignments.reload();
           participation.reload();
         }}
       />
+      </ContentFrame>
     );
   const progress = participation.data;
   const pending = assignments.data?.filter((a) => !a.submission) ?? [];
-  const completed = assignments.data?.filter((a) => a.submission) ?? [];
+  const completed = assignments.data?.filter((a) => a.submission).sort((a,b) =>
+    Date.parse(b.submission!.created_at)-Date.parse(a.submission!.created_at) || b.id-a.id) ?? [];
+  if (view === "overview") return <>
+    <Heading eyebrow="Ваш день в Compass" title={`Здравствуйте, ${user.display_name.split(" ")[0]}`}>Всё важное между встречами с врачом — в одном месте.</Heading>
+    <ErrorBox message={assignments.error || participation.error || card.error} retry={()=>{assignments.reload();participation.reload();card.reload();}}/>
+    <div className="patient-day-grid">
+      <section className="day-primary">
+        <div className="day-section-label"><ClipboardCheck size={18}/><span>От вашего врача</span><Badge>{assignments.data ? `${pending.length} ${plural(pending.length,"опрос","опроса","опросов")}`:"Получаем…"}</Badge></div>
+        {assignments.loading?<Loading/>:!assignments.data?<><h2>Опросы пока недоступны</h2><p>Обновите данные, когда соединение восстановится.</p><Button variant="secondary" onClick={assignments.reload}>Повторить</Button></>:pending.length?<>
+          <p className="eyebrow">Следующий шаг</p><h2>{pending[0].survey.title}</h2><p>{pending[0].survey.description || "Расскажите врачу, что получается и какая поддержка нужна."}</p>
+          <div className="day-survey-meta"><span>{pending[0].survey.questions.length} вопр.</span><span>{pending[0].due_at?`До ${date(pending[0].due_at)}`:"В удобное время"}</span>{pending[0].draft_updated_at&&<span>Есть ваш черновик</span>}</div>
+          <Button onClick={()=>openSurvey(pending[0])}>{pending[0].draft_updated_at?"Продолжить ответ":"Ответить на вопросы"}<ChevronRight size={17}/></Button>
+        </>:<><span className="day-complete-mark"><Check size={24}/></span><h2>Новых опросов пока нет</h2><p>Когда врач назначит вопросы, они появятся здесь. Сейчас можно записать самочувствие или написать врачу.</p><Button variant="secondary" onClick={()=>navigate('diary')}>Открыть дневник<ChevronRight size={16}/></Button></>}
+        <div className="day-primary-footer"><span>{progress?`Отправлено ${progress.completed} из ${progress.assigned} опросов`:"История ещё загружается"}</span><Button variant="ghost" onClick={()=>navigate('surveys')}>Все мои опросы<ChevronRight size={16}/></Button></div>
+      </section>
+      <section className="day-companion" aria-label="Между встречами">
+        <h2>Позаботиться о себе</h2>
+        {([{view:'diary',title:'Дневник состояния',description:'Сохранить важное о своём дне',icon:BookOpen},{view:'medications',title:'Моё расписание',description:'Лекарства и личные отметки',icon:Pill},{view:'chat',title:'Написать врачу',description:'Вопрос или просьба о поддержке',icon:MessageCircle},{view:'state',title:'Мои измерения',description:'Ответы и изменения со временем',icon:Activity}]).map(item=><button className="day-action" key={item.view} onClick={()=>navigate(item.view)}><span><item.icon size={20}/></span><div><strong>{item.title}</strong><small>{item.description}</small></div><ChevronRight size={17}/></button>)}
+      </section>
+    </div>
+    <PatientJourney compact notify={notify} navigate={navigate}/>
+    {completed.length>0&&<Section title="Последние ответы" aside={<Button variant="ghost" onClick={()=>navigate('surveys')}>Вся история<ChevronRight size={16}/></Button>}>{completed.slice(0,2).map(assignment=><button className="completed-survey" key={assignment.id} onClick={()=>openSurvey(assignment)}><span className="completed-check"><Check size={17}/></span><div><strong>{assignment.survey.title}</strong><small>{date(assignment.submission?.created_at)}</small></div><ChevronRight size={18}/></button>)}</Section>}
+  </>;
   return (
     <>
       <Heading
-        eyebrow="Ваш голос важен"
-        title={`Здравствуйте, ${user.display_name.split(" ")[0]}`}
+        eyebrow={view === "surveys" ? "Вопросы от вашего врача" : "Ваш день в Compass"}
+        title={view === "surveys" ? "Мои опросы" : `Здравствуйте, ${user.display_name.split(" ")[0]}`}
       >
         Небольшие ответы помогают врачу лучше поддерживать вас между визитами.
       </Heading>
@@ -392,45 +308,6 @@ export function PatientHome({
           card.reload();
         }}
       />
-      <div className="participation-card">
-        <div className="participation-text">
-          <span className="eyebrow">
-            <Sparkles size={15} /> Мои шаги к диалогу
-          </span>
-          <h2>
-            {!progress
-              ? "Прогресс пока неизвестен"
-              : !progress.assigned ? "Новые опросы появятся здесь"
-              : progress.completed
-                ? `Вы завершили ${progress.completed} из ${progress.assigned} опросов`
-                : "Начните с одного ответа"}
-          </h2>
-          <p>
-            {progress?.message ??
-              "Каждый честный ответ помогает врачу понять, какая поддержка вам нужна."}
-          </p>
-          {progress && progress.progress_percent !== null && (
-            <div
-              className="progress-track"
-              role="progressbar"
-              aria-label="Прогресс прохождения опросов"
-              aria-valuenow={progress?.progress_percent ?? 0}
-              aria-valuemin={0}
-              aria-valuemax={100}
-            >
-              <span style={{ width: `${progress?.progress_percent ?? 0}%` }} />
-            </div>
-          )}
-          <small>
-            {progress
-              ? `${progress.pending} ${plural(progress.pending, "опрос ждёт", "опроса ждут", "опросов ждут")} ответа`
-              : "Для отображения прогресса нужны данные сервера"}
-          </small>
-        </div>
-        <span className="progress-flower" aria-hidden="true">
-          <HeartHandshake size={54} strokeWidth={1.35} />
-        </span>
-      </div>
       <div className="patient-section-heading">
         <h2>
           Для вас{" "}
@@ -440,7 +317,6 @@ export function PatientHome({
         </h2>
         <span className="muted">Вопросы от врача</span>
       </div>
-      <ParticipationPoints />
       {assignments.loading ? (
         <Loading />
       ) : !assignments.data ? (
@@ -461,7 +337,7 @@ export function PatientHome({
             <button
               className="patient-survey-card"
               key={assignment.id}
-              onClick={() => setSelected(assignment)}
+              onClick={() => openSurvey(assignment)}
             >
               <span className="survey-card-icon">
                 <ClipboardCheck size={23} />
@@ -470,6 +346,7 @@ export function PatientHome({
                 <Badge tone="purple">
                   {assignment.survey.questions.length} вопр.
                 </Badge>
+                {assignment.draft_updated_at && <Badge tone="good">Черновик · продолжить</Badge>}
                 <h3>{assignment.survey.title}</h3>
                 <p>{assignment.survey.description}</p>
                 <small>
@@ -513,7 +390,7 @@ export function PatientHome({
             <button
               className="completed-survey"
               key={assignment.id}
-              onClick={() => setSelected(assignment)}
+              onClick={() => openSurvey(assignment)}
             >
               <span className="completed-check">
                 <Check size={17} />

@@ -51,32 +51,46 @@ export async function api<T>(
 export const send = <T>(path: string, body: unknown, method = "POST") =>
   api<T>(path, { method, body: JSON.stringify(body) });
 
-export function useApi<T>(path: string | null, poll = 0) {
-  const [data, setData] = useState<T>();
+export function useApi<T>(path: string | null, poll = 0, refreshSignal = 0) {
+  const [resource, setResource] = useState<{ path: string; value: T }>();
   const [error, setError] = useState("");
+  const [errorStatus,setErrorStatus]=useState<number|null>(null);
   const [loading, setLoading] = useState(true);
   const [revision, setRevision] = useState(0);
   const reload = useCallback(() => setRevision((value) => value + 1), []);
+  const data = resource?.path === path ? resource.value : undefined;
   useEffect(() => {
     let active = true;
+    let inFlight = false;
+    const controller = new AbortController();
     if (!path) {
-      setData(undefined);
+      setResource(undefined);
+      setError("");
+      setErrorStatus(null);
       setLoading(false);
       return;
     }
-    setData(undefined);
     setLoading(true);
+    setError("");
+    setErrorStatus(null);
     const load = async () => {
+      if (inFlight) return;
+      inFlight = true;
       try {
-        const result = await api<T>(path);
+        const result = await api<T>(path, { signal: controller.signal });
         if (active) {
-          setData(result);
+          setResource({ path, value: result });
           setError("");
+          setErrorStatus(null);
         }
       } catch (error) {
-        if (active)
+        if (active) {
+          if (error instanceof ApiError && (error.status === 403 || error.status === 404)) setResource(undefined);
           setError(error instanceof Error ? error.message : "Нет соединения");
+          setErrorStatus(error instanceof ApiError?error.status:0);
+        }
       } finally {
+        inFlight = false;
         if (active) setLoading(false);
       }
     };
@@ -84,10 +98,12 @@ export function useApi<T>(path: string | null, poll = 0) {
     const timer = poll ? setInterval(load, poll) : null;
     return () => {
       active = false;
+      controller.abort();
       if (timer) clearInterval(timer);
     };
-  }, [path, revision, poll]);
-  return { data, error, loading, reload };
+  }, [path, revision, poll, refreshSignal]);
+  return { data, error, errorStatus, loading: Boolean(path) && data === undefined && loading,
+    refreshing: loading && data !== undefined, reload };
 }
 
 export type User = {
@@ -106,6 +122,10 @@ export type Patient = {
   created_at: string;
   demo_scenario?: string | null;
   treatment_status?: string;
+  open_tasks?: number;
+  in_progress_tasks?: number;
+  pending_events?: number;
+  last_observation_at?: string | null;
 };
 export type Card = Patient & {
   mis: {
@@ -153,6 +173,7 @@ export type Assignment = {
   due_at: string | null;
   created_at: string;
   first_opened_at: string | null;
+  draft_updated_at?: string | null;
   survey: Survey;
   submission: {
     id: number;
@@ -174,6 +195,7 @@ export type ChatMessage = {
   text: string;
   channel: string;
   status: string;
+  support_requested: boolean;
   created_at: string;
 };
 export type Note = {
@@ -217,6 +239,9 @@ export type Alert = {
   reason: string;
   status: string;
   created_at: string;
+  source_kind: "assessment" | "support_request";
+  source_message: {id:number; text:string; created_at:string} | null;
+  actions: {task_id:number; title:string; status:string; reply_message_id:number|null; created_at:string}[];
   decision: {
     id: number;
     status: string;
@@ -239,6 +264,10 @@ export type ChartQuestion = {
   options: { id: string; label: string; count: number }[];
 };
 export type Quote = {
+  id?:number;
+  assignment_id?:number;
+  submission_id?:number;
+  question_id?:string;
   patient_id: number;
   patient_name: string;
   text: string;
@@ -248,6 +277,7 @@ export type Quote = {
   status?: string;
 };
 export type Dashboard = {
+  period: {since:string|null;until_exclusive:string|null;cohort:"assignments_created_in_period"};
   patients_total: number;
   assigned: number;
   completed: number;

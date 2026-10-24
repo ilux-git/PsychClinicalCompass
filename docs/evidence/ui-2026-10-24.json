@@ -1,0 +1,187 @@
+{
+  "verified_at": "2026-10-24T06:29:41.846588+00:00",
+  "synthetic": true,
+  "local_url": "http://127.0.0.1:8780/",
+  "base_commit": "9070ff1624148d151b552a1827882e34f97bf421",
+  "working_tree_changes": true,
+  "source_fingerprint": "ea262dd9db472d0d638df134a738f88e3cb6941edae869020316a5d2bde83d19",
+  "source_hashes": {
+    "frontend/package-lock.json": "3d31ec33e3e68239b3edcaaec37bb77798fa8bdb427cd9541bebb2c7b9b0e4cc",
+    "frontend/package.json": "3ab095dc2a3f76253c5eab19b6cde87f6714c41313903ff6c5a2c0fea6e2b7d5",
+    "frontend/src/AdminDashboard.tsx": "93a897d6b0b52471dd8025bba7b800845cf14a9b56b9c2541eaf26661daef05b",
+    "frontend/src/api.ts": "9260bf364eca651db066a0ec3ca8521ba58b01b9e430fb839cccd5d50e8734c1",
+    "frontend/src/App.tsx": "2c9396edaa26094f8b486dbfa299f1c63672f51f23859a1a34b31a1c122f36a3",
+    "frontend/src/AssessmentHistory.tsx": "82b6aec9b1a920d4fb391082fbfae86167d0e539c4e1c7f72b04d1bc391cb784",
+    "frontend/src/CareWorkflow.tsx": "03cbccc44fceb0c7c8b94e6acaa65f38cdfde1d983241d7d05e77eb5f4e4481f",
+    "frontend/src/Charts.tsx": "fb5bf1a629b327ba3b458c735004be0a6432f17616acefaf35b3f57db2e9f2c6",
+    "frontend/src/Chat.tsx": "6a270486cf460a2ebb2b1778f85a3026dfcc9277298686a3eb6f3279ef44dad7",
+    "frontend/src/collection.ts": "2788d784703ac9525700eccd009e94f186eac37ffa9329af3901d334d96bd05c",
+    "frontend/src/CollectionMetrics.tsx": "4846c3dfc28d6d8b4383cc10ca6dd4869973bf5a41127577d24f38b25122ec1d",
+    "frontend/src/DoctorDashboard.tsx": "8c77af111ff7e912d54d8fdcfe8107bea74925d086371f1a898cac26201f2fe0",
+    "frontend/src/DoctorInbox.tsx": "3c321847486be8eb904e2116b7e09f761ac12d8d1c9f3af7d55a24fb82956ae2",
+    "frontend/src/DoctorPatients.tsx": "368e5ee3568a785a4b5030919230a549b10531c6e3bb6e9b0df9bbcf485fc29b",
+    "frontend/src/EventAction.tsx": "3bf62492519953449609367d4d87e3e51c025dc3c765df25b4f29fe9b91cc14c",
+    "frontend/src/Interaction.tsx": "0f54d12e10003f5adb6955f25e7bc3617c6c2a59ba95483e0604f35dc971feed",
+    "frontend/src/main.tsx": "9204fd5a9b66b7c367022685e566bc05bce4a94add23cfb6f7bbd9e26d8e72ed",
+    "frontend/src/MedicationSchedule.tsx": "62c62d63a85940729a6b88f56f1c3aca05119da58223086abde34fb87c791471",
+    "frontend/src/NavigationGuard.tsx": "2fbb2853a94cac4f96ff2e1170a2a12d3e853cec824a8918bd55e631dd30ffb9",
+    "frontend/src/ParticipationPoints.tsx": "3b329a8bbeb3e3610d6db31381467a8184c5de8a1f99fea63ff68635668eb9db",
+    "frontend/src/Patient.tsx": "0ec5935fe7c534a1325161b98a6678a65cb8492bc133bc051a8dcca29450f2b1",
+    "frontend/src/PatientDiary.tsx": "5ce4d95fe03f8201d61f5cc33e2660f9573d06e5a42b6cb44019fb2cfca64ae4",
+    "frontend/src/PatientJourney.tsx": "3e564431ee5ecbeb383e0cf9b8ea0851f83a54d5815ffadc42737f5d7ab7c0bd",
+    "frontend/src/PatientSurvey.tsx": "f8aa7609d11c537db1a297f8e85cc3a11e9be095c9aa9957c5c2292cffe8d7c0",
+    "frontend/src/PrivacySettings.tsx": "d028ae87575efdbe110cf0b72961e36d9656127d10d7546c9bbbda780229cde0",
+    "frontend/src/RoleGuide.tsx": "5a115f44d1e5e3b1b25fd4c7166f4130996f485db0ec09f1ba59b5bcdfe04f33",
+    "frontend/src/SectionBoundary.tsx": "e8c126e1b70ad1d18b816f9fa514ca06f03451312bebc44ac1f99c768e5a8b4a",
+    "frontend/src/styles.css": "87517ad739484966d321684f931a61efde13286e3468bb5f1ac968e0c7339209",
+    "frontend/src/supportTemplate.ts": "b97398f683b2344ad95722d4d097159b58f2a76f073b84d0e93709842de9fb1d",
+    "frontend/src/SurveyBuilder.tsx": "dbc655d9a9205e7b590a2805880666db65c7261e1d78f263467b37fcbf4177a2",
+    "frontend/src/SurveyFields.tsx": "3814811ba5451920c10d3bf44243e878c31790d99c7b607ed63cfacefa3a05a6",
+    "frontend/src/TaskBoard.tsx": "7363148b48c1251c253b868c626ff06edc4a06c4ac5a1dbe47c455a03616937b",
+    "frontend/src/UI.tsx": "1da29187f8e0c5018b15745b838fb46646cfe6b1e87447ea48ad15d58d500ea9",
+    "frontend/src/vite-env.d.ts": "65996936fbb042915f7b74a200fcdde7e410f32a669b1ab9597cfaa4b0faddb5",
+    "frontend/src/WorkflowMetrics.tsx": "ab5e6cc779c5fed12bc638ecbb423da79a5a600d2eecb426f8909fd8ea5e9092",
+    "frontend/src/workspace.css": "6bd9ee3c4d202af9bdff5e4146a09df3712ce088a370f06ac344345fd14fcbb5",
+    "frontend/vite.config.ts": "0bc37e59578a092df62c5e15efba3f439359724d1439b78b5210d0eec4cf8957"
+  },
+  "local_screenshot_hashes": {
+    "outputs/ui-refresh/admin-1440.jpg": "4f2e5bddae4a6377cb89bd978ff47a7e2cf0ed5cabd458b17dfd75afe7ec87a4",
+    "outputs/ui-refresh/admin-375.jpg": "088b859e945547e238e231a1ac76c224779011934f2cdba6c60d6354f2770b3b",
+    "outputs/ui-refresh/admin-768.jpg": "f22f9a1ad0e2e889c6ca79c0e4947dc63ca93b8e1ceef66a2e6c1560ccf44924",
+    "outputs/ui-refresh/admin-final-1440.jpg": "ae296bfd8d61dddd45f4381c15922d13ecad61f98a4bca528ee570090293d82c",
+    "outputs/ui-refresh/admin-final-375.jpg": "40ec6f6b1d0655ab76ac07cafcd4302b14dac31a421273bde2c0161527b40b20",
+    "outputs/ui-refresh/admin-final-768.jpg": "cf09fafb4c3db1dcf244b9476d1fcd36ac1558e1dedbe810278abbad02e8f0cc",
+    "outputs/ui-refresh/before-admin.jpg": "222bd9c9a8dc996987e3f7ca50e001f4f84394a40cb0a7a02f1e0f54a7f9e172",
+    "outputs/ui-refresh/before-doctor.jpg": "b7dd4f2776de45a46fdfbd7dc9290423b47901b3a2516aadc7a072086c635da8",
+    "outputs/ui-refresh/builder-before-1440.jpg": "bd50dff9faecd1dbc4b1dd440303485a086d2d0b2b584d435994626b616daff5",
+    "outputs/ui-refresh/builder-final-1440.jpg": "a0aba74637e6f7a710c1f7bbb09a33df30c989a08009cfac86560ae06e08148d",
+    "outputs/ui-refresh/builder-final-375.jpg": "a48e9ae69154dd248bd1ad1964ff8df74620f96edc493fdc88b87c20402544de",
+    "outputs/ui-refresh/builder-final-768.jpg": "bd5c64a80497cc4aad77a0ebf8e1cc604c6b4541072a8748fc220ce6bddfb896",
+    "outputs/ui-refresh/coordinator-1440.jpg": "4436b1a60cf5cb7ad6b3dc1f8371966285bc6af1da95e537d64a8afa7e304b1b",
+    "outputs/ui-refresh/coordinator-375.jpg": "704ac8e8d989f1e70fb195970e6800b556150a8d5f31ffbc343428f2df38cc37",
+    "outputs/ui-refresh/coordinator-768.jpg": "dfd64359b8e87553b34ca3b81aa7fb2feec4e3660bf50dd356088d0bd4275663",
+    "outputs/ui-refresh/doctor-1440.jpg": "1a2820b3f8e4d6f599e0b301b4a7238971bd9382131ef1e95e754b93f73290ba",
+    "outputs/ui-refresh/doctor-375.jpg": "57ae84ce35230ed5707d3d996c740ccbb0c1e01a218a97bf2439ad3a97d4a65f",
+    "outputs/ui-refresh/doctor-768.jpg": "344a7b3866b7810ec5be5b36785853c09f0b3922683222abc59aee732fa5e045",
+    "outputs/ui-refresh/patient-1440.jpg": "61a80adfd9c27c8038e27d005a450f0ff3463184115e16a816854a88a1ca8ac7",
+    "outputs/ui-refresh/patient-375.jpg": "cc46adb66ef8870dfe505ebe22dcd4e6df1b3f7d70a839b2c3a5d1048dfa9f08",
+    "outputs/ui-refresh/patient-768.jpg": "d549c28fd3ae800134ce0b39a255736ac40230e9552ab8d5cc969148565fb67d",
+    "outputs/ui-refresh/patient-final-1440.jpg": "4d02f58dd2a431e3fbb3737674f0787990a295b768e19f3edd8fe43055688d70",
+    "outputs/ui-refresh/patient-final-375.jpg": "306162f710c2dab8eb1c5471ace45edece2019ca9d48866eecb8f7a696ff3a4e",
+    "outputs/ui-refresh/patient-final-768.jpg": "d48690fe17b8c92eabcf4aedc7e3c07feef36c4efeb52504b13ddb925b318a73",
+    "outputs/ui-refresh/refresh-offline-1440.jpg": "6517f28b8a6cb087540b7dfddc70da8c296ea98b0235405f7021faf06890e3a7",
+    "outputs/ui-refresh/search-empty-1440.jpg": "4c951428d27340e4b5da865e290c866d5f4735dcc0f84b2853d648095ce0f423",
+    "outputs/ui-refresh/survey-375.jpg": "fd6c6cabb1fbd71cd64d06c76e6b6745f8ffb2a08a36112e9e9e4f703b97bbb3",
+    "outputs/ui-refresh/survey-final-375.jpg": "d107323187268330c8ce7b76f304aaa21dcb492db67a0169a238c8dcf345146f",
+    "outputs/ui-refresh/survey-success-375.jpg": "2cbf9aa2aff855f1fe9187a81742b116cc910a585b002ff643436524d0f97a24",
+    "outputs/ui-refresh/tasks-375.jpg": "79830dea615b11158ed8eb9a9c09eb5ae7dd4d4834d6a5c4c652ad02e742ff56",
+    "outputs/ui-refresh/toast-final-375.jpg": "cb3d1f5856cb3aca91e3f26a84690333610465647fb8146d8edbb8cfae666288",
+    "outputs/ui-refresh/unsaved-dialog-1440.jpg": "8f491522f4badaa4f16298f631c27776401a24474c378e5809f13023a04535bb"
+  },
+  "browser_checks": [
+    "Doctor directory/search, real empty result, same-resource refresh and temporary offline recovery preserve rows.",
+    "Patient partial survey, save-and-navigate, reload/resume, final submit, doctor receipt and 4-point balance observed.",
+    "A different incomplete synthetic patient draft remained private and survived independent backup/restore.",
+    "Patient back action opens survey list when form was entered from home; history sorted by submission time.",
+    "Doctor feedback source action carries source and focuses task title.",
+    "Task text survives collapse/reopen and refresh; temporary test text cleared without saving an action.",
+    "Mobile board arrow keys change selected stage and focus; only selected column visible.",
+    "Coordinator board contains assigned organization work; no patient-card controls or clinical source controls.",
+    "Doctor builder separates assignment from preview; mobile/tablet library uses a select.",
+    "Preview accepts temporary answers without submit; physician draft cancel/save-and-switch/reload verified, no publication or assignment.",
+    "Selecting a patient enables Assign x1; unselection disables it. No assignment sent during this iteration check.",
+    "Admin coverage and denominators visible without names, quotes or patient-card controls.",
+    "Mobile menu Tab/Shift+Tab cycle, Escape restores trigger focus and body scrolling; background inert.",
+    "Skip-to-content anchor moves actual focus to compass-main.",
+    "375px toast height 62px; heading top shift less than 0.03px while its transition finished, no 5px layout jump.",
+    "Visible form padding measured 12px 14px; answer choices 14px 16px; task input text 14px.",
+    "Latest observed browser error/warn logs empty."
+  ],
+  "viewports": {
+    "375x812": {
+      "scroll_width": 360
+    },
+    "768x1024": {
+      "scroll_width": 753
+    },
+    "1440x900": {
+      "scroll_width": 1425
+    }
+  },
+  "viewport_scope": "Main doctor/patient/admin/coordinator screens, plus builder; captures span this iteration and are not a pixel-perfect baseline comparison.",
+  "motion": {
+    "package": "motion",
+    "version": "14.6.0",
+    "duration_seconds": [
+      0.08,
+      0.12,
+      0.2
+    ],
+    "page_distance_px": 4,
+    "toast_distance_px": 8,
+    "reduced_motion": "Implemented; OS-preference emulation not available in this browser check."
+  },
+  "backend_tests": {
+    "passed": 129,
+    "failed": 0,
+    "skipped": 0,
+    "seconds": 82.85
+  },
+  "build": {
+    "typescript": true,
+    "production_build": true,
+    "main_js_kb": 449.92,
+    "main_js_gzip_kb": 138.6,
+    "split_role_modules": true
+  },
+  "dev_proxy_checks": [
+    {
+      "path": "/diary/entries",
+      "status": 401,
+      "json": true
+    },
+    {
+      "path": "/medications/items",
+      "status": 401,
+      "json": true
+    },
+    {
+      "path": "/assessments/responses",
+      "status": 401,
+      "json": true
+    },
+    {
+      "path": "/coordination/board",
+      "status": 200,
+      "json": true
+    },
+    {
+      "path": "/admin/privacy-policy",
+      "status": 200,
+      "json": true
+    }
+  ],
+  "restore": {
+    "local_report": "outputs/ui-restore-20261024-060458/report.json",
+    "data_match": true,
+    "tables": 28,
+    "sequences": 25,
+    "private_patient_draft_present": true,
+    "nonempty_target_rejected": true,
+    "backup_seconds": 0.554,
+    "restore_seconds": 0.65,
+    "archive_bytes": 123100,
+    "scope": "Point-in-time n32 snapshot before later doctor UX test draft was created."
+  },
+  "not_executed": [
+    "axe-core",
+    "Core Web Vitals",
+    "FPS profile",
+    "OS reduced-motion emulation",
+    "full screen-reader pass",
+    "approved-baseline screenshot regression"
+  ],
+  "visual_regression_verdict": "INCONCLUSIVE: no approved baseline",
+  "production_verdict": "DO NOT SHIP: current n32 load limit fails and clinical decisions remain open; local synthetic review is a separate scope.",
+  "load_evidence": "docs/evidence/load-2026-10-24.json"
+}

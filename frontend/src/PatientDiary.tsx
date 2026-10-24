@@ -1,6 +1,9 @@
 import { useRef, useState, type FormEvent } from "react";
 import { send, useApi, type DiaryEntry } from "./api";
 import { Badge, Button, Empty, ErrorBox, Heading, Loading, Section, date, type Notify } from "./UI";
+import { useUnsavedForm, type LeavePrompt } from "./NavigationGuard";
+
+const diaryPrompt:LeavePrompt={eyebrow:"Несохранённая запись",title:"Вернуться к записи дневника?",message:"Запись ещё не сохранена. При переходе без сохранения текущий текст и выбранные наблюдения будут потеряны.",stayLabel:"Продолжить запись"};
 
 type Entries = {entries: DiaryEntry[]};
 const feelings: Record<string,string> = {very_difficult: "Очень тяжело", difficult: "Тяжело", neutral: "Нейтрально", good: "Хорошо", very_good: "Очень хорошо"};
@@ -33,6 +36,8 @@ export function PatientDiary({patientId, notify}: {patientId: number; notify: No
   const [observed, setObserved] = useState(nowLocal), [kind, setKind] = useState("moment");
   const [feeling, setFeeling] = useState(""), [impact, setImpact] = useState("");
   const [busy, setBusy] = useState(false);
+  const textInput=useRef<HTMLTextAreaElement>(null);
+  const {clear:clearGuard} = useUnsavedForm({dirty:Boolean(text || shared || feeling || impact || kind!=="moment"),pending:busy,prompt:diaryPrompt,focus:()=>textInput.current?.focus()});
   const request = useRef({signature: "", id: ""});
   async function save(event: FormEvent) {
     event.preventDefault();
@@ -43,7 +48,7 @@ export function PatientDiary({patientId, notify}: {patientId: number; notify: No
     setBusy(true);
     try {
       await send("/diary/entries", {...data, client_request_id: request.current.id});
-      setText(""); setShared(false); setFeeling(""); setImpact(""); setObserved(nowLocal()); request.current = {signature: "", id: ""}; entries.reload();
+      setText(""); setShared(false); setFeeling(""); setImpact(""); setKind("moment"); setObserved(nowLocal()); clearGuard(); request.current = {signature: "", id: ""}; entries.reload();
       notify("Запись дневника сохранена");
     } catch (failure) { notify(failure instanceof Error ? failure.message : "Не удалось сохранить запись", "error"); }
     finally { setBusy(false); }
@@ -60,17 +65,19 @@ export function PatientDiary({patientId, notify}: {patientId: number; notify: No
     <Heading eyebrow="По желанию" title="Мой дневник">Записывайте, как проходит день и что влияет на самочувствие. Заполнение необязательно.</Heading>
     <Section title="Новая запись">
       <form onSubmit={save}>
+        <fieldset className="form-fields" disabled={busy} aria-busy={busy}>
         <div className="form-grid"><label className="field">Когда наблюдали?<input required type="datetime-local" value={observed} onChange={e => setObserved(e.target.value)} /></label>
         <label className="field">О чём запись?<select value={kind} onChange={e => setKind(e.target.value)}><option value="moment">Состояние в этот момент</option><option value="day_summary">Итог дня</option></select></label></div>
         <label className="field">Как вы себя чувствовали? · необязательно<select value={feeling} onChange={e => setFeeling(e.target.value)}><option value="">Не отмечаю</option>{Object.entries(feelings).map(([k,v]) => <option key={k} value={k}>{v}</option>)}</select></label>
         <label className="field">Влияние на повседневные дела · необязательно<select value={impact} onChange={e => setImpact(e.target.value)}><option value="">Не отмечаю</option>{Object.entries(impacts).map(([k,v]) => <option key={k} value={k}>{v}</option>)}</select></label>
         <p className="field-hint">Свободное наблюдение, а не диагностическая шкала. Можно выбрать наблюдение или оставить только текст.</p>
         <label className="field">Что хотите сохранить?
-          <textarea rows={5} maxLength={4000} value={text} onChange={(e) => setText(e.target.value)} />
+          <textarea ref={textInput} rows={5} maxLength={4000} value={text} onChange={(e) => setText(e.target.value)} />
         </label>
         <label className="checkbox-label"><input type="checkbox" checked={shared} onChange={(e) => setShared(e.target.checked)} />Поделиться этой записью с лечащим врачом</label>
         <p className="field-hint">Без отметки запись видна только вам. Доступ можно изменить позже. Дневник не просматривается врачом круглосуточно.</p>
-        <Button disabled={busy || (!text.trim() && !feeling && !impact)} type="submit">Сохранить запись</Button>
+        <Button disabled={busy || (!text.trim() && !feeling && !impact)} type="submit">{busy?"Сохраняем…":"Сохранить запись"}</Button>
+        </fieldset>
       </form>
     </Section>
     <Section title="Мои записи">

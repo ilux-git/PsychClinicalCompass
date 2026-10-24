@@ -1,0 +1,1556 @@
+{
+  "date": "2026-10-24",
+  "synthetic": true,
+  "scope": "Authenticated HTTP workflows, including connection latency; no login burst, browser concurrency, external provider delivery or clinical efficacy claim.",
+  "machine": {
+    "cpu": "Intel Core i5-13600KF",
+    "cores": 14,
+    "logical_processors": 20,
+    "memory_bytes": 34164097024,
+    "os": "Windows 11 10.0.26200",
+    "postgresql": "16.15",
+    "max_connections": 128,
+    "shared_buffers": "128 MB",
+    "driver": "k6 2.3.0"
+  },
+  "runs": [
+    {
+      "verified_at": "2026-10-23T19:55:49.301Z",
+      "driver_context": null,
+      "profile": null,
+      "patient_sessions": 1000,
+      "doctor_sessions": 20,
+      "analyst_sessions": 1,
+      "server_configuration": null,
+      "source_fingerprint": null,
+      "local_raw_report": "k6-single-worker.json",
+      "raw_sha256": "8c826ae6945477f6a5b28d364eefb8b8eb03b27243833a1d6cc9d6994f50faca",
+      "requests": 14444,
+      "request_failures": 0,
+      "latency_ms": {
+        "p(99)": 5779.374886,
+        "max": 12913.4687,
+        "min": 1.5042,
+        "med": 1739.8744,
+        "avg": 1559.6339203697337,
+        "p(95)": 3843.07717
+      },
+      "thresholds_passed": false
+    },
+    {
+      "verified_at": "2026-10-23T19:57:40.740Z",
+      "driver_context": null,
+      "profile": null,
+      "patient_sessions": 1000,
+      "doctor_sessions": 20,
+      "analyst_sessions": 1,
+      "server_configuration": null,
+      "source_fingerprint": null,
+      "local_raw_report": "k6-four-workers.json",
+      "raw_sha256": "567eb6cca69d67d42c26235d68408311a3ef6320b226102a29bcd0a993e57009",
+      "requests": 30509,
+      "request_failures": 0,
+      "latency_ms": {
+        "max": 1117.5588,
+        "min": 0.634,
+        "med": 181.17815000000002,
+        "avg": 192.30493619706394,
+        "p(95)": 459.09684999999905,
+        "p(99)": 688.4995830000001
+      },
+      "thresholds_passed": false
+    },
+    {
+      "verified_at": "2026-10-23T20:01:12.906Z",
+      "driver_context": null,
+      "profile": null,
+      "patient_sessions": 1000,
+      "doctor_sessions": 20,
+      "analyst_sessions": 1,
+      "server_configuration": null,
+      "source_fingerprint": null,
+      "local_raw_report": "k6-eight-workers.json",
+      "raw_sha256": "bb94c2f4975dee8e8cbb981cf9249c58f5788506654769768ea6ab76b08b40d9",
+      "requests": 35946,
+      "request_failures": 0,
+      "latency_ms": {
+        "min": 0.5057,
+        "med": 5.0365,
+        "avg": 8.544414689108367,
+        "p(95)": 18.918439999999933,
+        "p(99)": 97.54099199999993,
+        "max": 298.0872
+      },
+      "thresholds_passed": true
+    },
+    {
+      "verified_at": "2026-10-23T20:04:28.840Z",
+      "driver_context": null,
+      "profile": null,
+      "patient_sessions": 1000,
+      "doctor_sessions": 20,
+      "analyst_sessions": 1,
+      "server_configuration": {
+        "workers": 8,
+        "compass_pool_size": 8,
+        "compass_max_overflow": 0,
+        "mis_pool_size": 2,
+        "mis_max_overflow": 0
+      },
+      "source_fingerprint": null,
+      "local_raw_report": "k6-soak-1000.json",
+      "raw_sha256": "e4b33e99758eb74d259f85738cd719a9979d9c09e469f34b1e5465ec2b669d17",
+      "requests": 65013,
+      "request_failures": 69,
+      "latency_ms": {
+        "max": 20000.74,
+        "min": 0.5015,
+        "med": 5.4407,
+        "avg": 29.080324490863415,
+        "p(95)": 18.748589999999982,
+        "p(99)": 64.79919999999994
+      },
+      "thresholds_passed": false
+    },
+    {
+      "verified_at": "2026-10-23T20:09:43.711Z",
+      "driver_context": "native desktop execution",
+      "profile": null,
+      "patient_sessions": 1000,
+      "doctor_sessions": 20,
+      "analyst_sessions": 1,
+      "server_configuration": {
+        "workers": 8,
+        "compass_pool_size": 8,
+        "compass_max_overflow": 0,
+        "mis_pool_size": 2,
+        "mis_max_overflow": 0
+      },
+      "source_fingerprint": null,
+      "local_raw_report": "k6-native-soak-1000.json",
+      "raw_sha256": "9c650ca560642f48779caa3c043e6a55ffa50921d289d17657e56309d816c67b",
+      "requests": 66390,
+      "request_failures": 0,
+      "latency_ms": {
+        "p(99)": 46.88026799999997,
+        "max": 196.7242,
+        "min": 0.5018,
+        "med": 5.1306,
+        "avg": 7.05600473271178,
+        "p(95)": 15.170599999999999
+      },
+      "thresholds_passed": true
+    },
+    {
+      "verified_at": "2026-10-23T20:13:40.437Z",
+      "driver_context": "native desktop execution",
+      "profile": null,
+      "patient_sessions": 1000,
+      "doctor_sessions": 20,
+      "analyst_sessions": 1,
+      "server_configuration": {
+        "workers": 8,
+        "compass_pool_size": 8,
+        "compass_max_overflow": 0,
+        "mis_pool_size": 2,
+        "mis_max_overflow": 0
+      },
+      "source_fingerprint": null,
+      "local_raw_report": "k6-native-120s-1000.json",
+      "raw_sha256": "05d5cfdb7f5a01b447e53138ca088f86d606fc4d5d1a55f43fa80eef14ace9c5",
+      "requests": 126852,
+      "request_failures": 0,
+      "latency_ms": {
+        "p(95)": 25.54585,
+        "p(99)": 109.60964999999999,
+        "max": 481.4417,
+        "min": 0.5016,
+        "med": 5.1547,
+        "avg": 9.493969472845896
+      },
+      "thresholds_passed": true
+    },
+    {
+      "verified_at": "2026-10-23T20:25:31.783Z",
+      "driver_context": "native desktop execution",
+      "profile": null,
+      "patient_sessions": 1000,
+      "doctor_sessions": 20,
+      "analyst_sessions": 1,
+      "server_configuration": {
+        "workers": 8,
+        "compass_pool_size": 8,
+        "compass_max_overflow": 0,
+        "mis_pool_size": 2,
+        "mis_max_overflow": 0
+      },
+      "source_fingerprint": null,
+      "local_raw_report": "k6-current-queue-1000.json",
+      "raw_sha256": "176279ed1b5fa90c507a4077f566f045ed3d2a078a7593192d2a27e1da265fb4",
+      "requests": 66220,
+      "request_failures": 0,
+      "latency_ms": {
+        "med": 5.5108,
+        "avg": 8.77871778039545,
+        "p(95)": 20.394029999999994,
+        "p(99)": 87.86361399999971,
+        "max": 334.7162,
+        "min": 0.502
+      },
+      "thresholds_passed": true
+    },
+    {
+      "verified_at": "2026-10-23T20:48:54.694Z",
+      "driver_context": "native desktop execution",
+      "profile": "roles-with-surveys-and-explicit-support-v2",
+      "patient_sessions": 1000,
+      "doctor_sessions": 20,
+      "analyst_sessions": 1,
+      "server_configuration": {
+        "workers": 8,
+        "compass_pool_size": 8,
+        "compass_max_overflow": 0,
+        "mis_pool_size": 2,
+        "mis_max_overflow": 0
+      },
+      "source_fingerprint": "22bff3566a4e04d271f5a8ee7ebdce8df95da70b155d8fd4b300bff48c8b0c55",
+      "local_raw_report": "k6-support-1000.json",
+      "raw_sha256": "f4b0a671c9a90cfe3d8328d857ae07e8e9ec9d6dad7bea073431f2823f088f77",
+      "requests": 66318,
+      "request_failures": 0,
+      "latency_ms": {
+        "avg": 8.222177141607695,
+        "p(95)": 17.590639999999986,
+        "p(99)": 97.18009999999961,
+        "max": 253.6175,
+        "min": 0.5017,
+        "med": 4.9881
+      },
+      "thresholds_passed": true,
+      "operations": {
+        "survey_submit": {
+          "max": 172.6168,
+          "min": 1.5161,
+          "med": 4.7228,
+          "avg": 8.15030533812748,
+          "p(95)": 19.05425,
+          "p(99)": 91.81617999999986
+        },
+        "task_update": {
+          "med": 4.9279,
+          "avg": 9.503872049689445,
+          "p(95)": 17.2226,
+          "p(99)": 112.49910000000006,
+          "max": 143.7368,
+          "min": 2.5142
+        },
+        "diary_write": {
+          "min": 4.2466,
+          "med": 8.320699999999999,
+          "avg": 11.815034420790743,
+          "p(95)": 21.971549999999954,
+          "p(99)": 107.16958000000002,
+          "max": 184.5522
+        },
+        "history": {
+          "min": 0.5119,
+          "med": 3.19625,
+          "avg": 5.7349828492392865,
+          "p(95)": 11.053234999999987,
+          "p(99)": 77.31854000000001,
+          "max": 145.6677
+        },
+        "directory": {
+          "p(95)": 41.68431999999993,
+          "p(99)": 132.26362999999972,
+          "max": 211.7268,
+          "min": 5.5328,
+          "med": 9.1673,
+          "avg": 16.048730285714278
+        },
+        "points": {
+          "avg": 8.526777599557532,
+          "p(95)": 16.220459999999992,
+          "p(99)": 86.97630499999973,
+          "max": 246.2152,
+          "min": 2.5208,
+          "med": 5.6083
+        },
+        "doctor_care": {
+          "min": 10.1663,
+          "med": 16.9572,
+          "avg": 22.113123563218384,
+          "p(95)": 49.13447499999998,
+          "p(99)": 137.43216200000003,
+          "max": 140.1833
+        },
+        "patient_card": {
+          "min": 1.5217,
+          "med": 5.3753,
+          "avg": 9.368650560243465,
+          "p(95)": 21.03903999999998,
+          "p(99)": 107.973708,
+          "max": 191.9488
+        },
+        "doctor_engagement": {
+          "avg": 12.056819767441862,
+          "p(95)": 22.746874999999964,
+          "p(99)": 88.5618439999999,
+          "max": 126.4701,
+          "min": 4.6339,
+          "med": 7.79895
+        },
+        "message_outbox": {
+          "p(99)": 103.74538599999998,
+          "max": 195.782,
+          "min": 2.2168,
+          "med": 5.7261500000000005,
+          "avg": 9.141598351343864,
+          "p(95)": 17.43376999999999
+        },
+        "assignments": {
+          "avg": 5.236701119557716,
+          "p(95)": 10.11239999999994,
+          "p(99)": 70.87704199999999,
+          "max": 152.9061,
+          "min": 0.5021,
+          "med": 3.0176
+        },
+        "doctor_inbox": {
+          "min": 2.5294,
+          "med": 5.5774,
+          "avg": 8.036102762430936,
+          "p(95)": 14.1726,
+          "p(99)": 38.532259999999084,
+          "max": 131.3083
+        },
+        "support_progress": {
+          "min": 0.5017,
+          "med": 3.5631,
+          "avg": 6.120004732254055,
+          "p(95)": 11.17334,
+          "p(99)": 85.82400599999997,
+          "max": 213.3852
+        },
+        "event_action": {
+          "min": 7.8206,
+          "med": 13.62285,
+          "avg": 19.750949350649353,
+          "p(95)": 35.725679999999954,
+          "p(99)": 147.00322899999998,
+          "max": 170.8365
+        },
+        "medications": {
+          "p(99)": 92.519355,
+          "max": 189.2098,
+          "min": 1.7076,
+          "med": 4.67745,
+          "avg": 7.779475767634863,
+          "p(95)": 15.527954999999947
+        },
+        "task_board": {
+          "med": 5.2247,
+          "avg": 8.295475956284152,
+          "p(95)": 16.831620000000004,
+          "p(99)": 90.65906200000016,
+          "max": 114.8277,
+          "min": 3.4771
+        },
+        "clinic_analytics": {
+          "min": 120.4012,
+          "med": 183.3027,
+          "avg": 184.09635294117643,
+          "p(95)": 230.41675,
+          "p(99)": 253.00310000000002,
+          "max": 253.6175
+        }
+      }
+    },
+    {
+      "verified_at": "2026-10-24T05:46:52.271Z",
+      "driver_context": "native Windows verification after UI and private survey drafts n32",
+      "profile": "roles-with-surveys-and-explicit-support-v2",
+      "patient_sessions": 1000,
+      "doctor_sessions": 20,
+      "analyst_sessions": 1,
+      "server_configuration": {
+        "workers": 8,
+        "compass_pool_size": 8,
+        "compass_max_overflow": 0,
+        "mis_pool_size": 2,
+        "mis_max_overflow": 0
+      },
+      "source_fingerprint": "ce2df9f8fc0b47c4dbdaef306a1abdf6a082fcf8ef26a59df2899c2ed17c21ae",
+      "local_raw_report": "k6-ui-n32-1000.json",
+      "raw_sha256": "6a58cf9c89e4a0f722d25d477b96e4941bc81042527f9ae67bc3bdeba4164e0a",
+      "requests": 56386,
+      "request_failures": 0,
+      "latency_ms": {
+        "max": 2211.1915,
+        "min": 3.5652,
+        "med": 112.4482,
+        "avg": 188.19466186042513,
+        "p(95)": 645.1643199999999,
+        "p(99)": 892.3776159999993
+      },
+      "thresholds_passed": false,
+      "operations": {
+        "patient_card": {
+          "min": 5.6037,
+          "med": 140.1107,
+          "avg": 212.12041617145695,
+          "p(95)": 669.3762999999999,
+          "p(99)": 910.5813700000002,
+          "max": 1773.1475
+        },
+        "task_board": {
+          "med": 106.5029,
+          "avg": 155.76608799999997,
+          "p(95)": 398.19797999999975,
+          "p(99)": 544.0477199999996,
+          "max": 746.1462,
+          "min": 8.3675
+        },
+        "clinic_analytics": {
+          "min": 552.557,
+          "med": 734.9958,
+          "avg": 770.2742028571431,
+          "p(95)": 1007.41923,
+          "p(99)": 1146.5572639999993,
+          "max": 1209.9419
+        },
+        "points": {
+          "p(99)": 860.7345349999982,
+          "max": 2061.6608,
+          "min": 7.0984,
+          "med": 110.33105,
+          "avg": 188.56996037181955,
+          "p(95)": 641.9198049999999
+        },
+        "assignments": {
+          "p(95)": 633.0511999999998,
+          "p(99)": 868.2953439999981,
+          "max": 2106.1832,
+          "min": 3.5652,
+          "med": 90.2464,
+          "avg": 170.19530851098438
+        },
+        "support_progress": {
+          "max": 1817.3485,
+          "min": 4.1753,
+          "med": 90.18895,
+          "avg": 167.71137626098255,
+          "p(95)": 617.5903000000001,
+          "p(99)": 857.9274050000002
+        },
+        "diary_write": {
+          "max": 2162.4991,
+          "min": 10.3252,
+          "med": 144.03915,
+          "avg": 219.92203071916626,
+          "p(95)": 685.41575,
+          "p(99)": 933.2316950000003
+        },
+        "medications": {
+          "min": 5.5799,
+          "med": 109.7146,
+          "avg": 185.99971055113016,
+          "p(95)": 634.7139,
+          "p(99)": 901.0835999999999,
+          "max": 1490.8989
+        },
+        "event_action": {
+          "med": 179.67755,
+          "avg": 224.7993261194029,
+          "p(95)": 481.06129999999996,
+          "p(99)": 736.792905999999,
+          "max": 769.1592,
+          "min": 27.216
+        },
+        "doctor_engagement": {
+          "med": 132.66809999999998,
+          "avg": 184.16903356164377,
+          "p(95)": 493.14245,
+          "p(99)": 667.09495,
+          "max": 772.1025,
+          "min": 19.6479
+        },
+        "doctor_inbox": {
+          "p(99)": 846.4048449999999,
+          "max": 1086.1863,
+          "min": 9.2853,
+          "med": 124.4341,
+          "avg": 168.65276493506494,
+          "p(95)": 438.05467999999973
+        },
+        "history": {
+          "min": 3.6383,
+          "med": 91.5467,
+          "avg": 171.08403596219668,
+          "p(95)": 621.8824399999999,
+          "p(99)": 876.9411960000025,
+          "max": 2211.1915
+        },
+        "survey_submit": {
+          "min": 4.5446,
+          "med": 101.57364999999999,
+          "avg": 180.6140239850597,
+          "p(95)": 639.7123649999997,
+          "p(99)": 897.8565030000009,
+          "max": 1896.954
+        },
+        "task_update": {
+          "p(99)": 558.145044,
+          "max": 649.3188,
+          "min": 8.103,
+          "med": 125.7761,
+          "avg": 157.5639812030075,
+          "p(95)": 404.36969999999934
+        },
+        "doctor_care": {
+          "p(95)": 588.7139500000001,
+          "p(99)": 762.5479,
+          "max": 967.0267,
+          "min": 45.3349,
+          "med": 236.8241,
+          "avg": 265.7595205298013
+        },
+        "directory": {
+          "min": 18.8567,
+          "med": 145.38094999999998,
+          "avg": 189.92861842105265,
+          "p(95)": 465.75177499999995,
+          "p(99)": 509.0984360000003,
+          "max": 537.729
+        },
+        "message_outbox": {
+          "min": 6.5626,
+          "med": 114.61734999999999,
+          "avg": 193.44355082845962,
+          "p(95)": 667.33365,
+          "p(99)": 908.6657199999997,
+          "max": 1795.8835
+        }
+      }
+    },
+    {
+      "verified_at": "2026-10-24T05:52:49.556Z",
+      "driver_context": "native Windows n32 single-query assignment metadata",
+      "profile": "roles-with-surveys-and-explicit-support-v2",
+      "patient_sessions": 1000,
+      "doctor_sessions": 20,
+      "analyst_sessions": 1,
+      "server_configuration": {
+        "workers": 8,
+        "compass_pool_size": 8,
+        "compass_max_overflow": 0,
+        "mis_pool_size": 2,
+        "mis_max_overflow": 0
+      },
+      "source_fingerprint": "a6bef84eb3a4a3e3f41b1e9e58771a6b5a6a699bb493a409e4655d351f3f02a9",
+      "local_raw_report": "k6-ui-n32-joined-1000.json",
+      "raw_sha256": "ba640b384bcfb7523e88cb3bf985c48b1e491d6132a1efb5b7066245cc1b2a2c",
+      "requests": 60772,
+      "request_failures": 0,
+      "latency_ms": {
+        "min": 2.9811,
+        "med": 41.4433,
+        "avg": 100.56714199206807,
+        "p(95)": 489.8613,
+        "p(99)": 760.97757,
+        "max": 1888.0674
+      },
+      "thresholds_passed": false,
+      "operations": {
+        "message_outbox": {
+          "min": 6.4324,
+          "med": 44.7585,
+          "avg": 100.74442755394637,
+          "p(95)": 484.3643999999998,
+          "p(99)": 737.7823399999997,
+          "max": 1565.9365
+        },
+        "event_action": {
+          "p(95)": 390.50697999999994,
+          "p(99)": 564.1352080000001,
+          "max": 727.8387,
+          "min": 20.3709,
+          "med": 110.3262,
+          "avg": 150.80972550335576
+        },
+        "clinic_analytics": {
+          "avg": 671.9084783783784,
+          "p(95)": 879.3004799999998,
+          "p(99)": 1008.3328,
+          "max": 1052.1034,
+          "min": 458.877,
+          "med": 671.3521
+        },
+        "task_update": {
+          "p(95)": 320.6685399999999,
+          "p(99)": 511.2675560000003,
+          "max": 581.594,
+          "min": 7.2758,
+          "med": 47.2063,
+          "avg": 87.9201931034483
+        },
+        "points": {
+          "p(99)": 782.8637520000001,
+          "max": 1478.3764,
+          "min": 6.6216,
+          "med": 43.5649,
+          "avg": 99.51026779737661,
+          "p(95)": 487.50063999999975
+        },
+        "survey_submit": {
+          "min": 4.1613,
+          "med": 38.8841,
+          "avg": 97.7295713078895,
+          "p(95)": 484.4056999999999,
+          "p(99)": 773.3302080000003,
+          "max": 1366.7112
+        },
+        "doctor_engagement": {
+          "avg": 93.57227051282054,
+          "p(95)": 362.841175,
+          "p(99)": 574.6840749999991,
+          "max": 742.024,
+          "min": 9.8926,
+          "med": 40.4025
+        },
+        "diary_write": {
+          "avg": 120.3052393994269,
+          "p(95)": 516.4939499999999,
+          "p(99)": 777.3903779999999,
+          "max": 1525.2772,
+          "min": 8.8366,
+          "med": 63.2153
+        },
+        "support_progress": {
+          "min": 3.5383,
+          "med": 32.4336,
+          "avg": 91.42354161509462,
+          "p(95)": 477.9139399999998,
+          "p(99)": 734.514936,
+          "max": 1557.2847
+        },
+        "directory": {
+          "p(95)": 358.47912500000024,
+          "p(99)": 554.194377,
+          "max": 697.4162,
+          "min": 11.5134,
+          "med": 68.6019,
+          "avg": 114.23498860759497
+        },
+        "patient_card": {
+          "med": 60.6814,
+          "avg": 116.14835067893785,
+          "p(95)": 522.7936249999999,
+          "p(99)": 811.9685139999973,
+          "max": 1486.8688,
+          "min": 4.0303
+        },
+        "task_board": {
+          "min": 8.4052,
+          "med": 39.1689,
+          "avg": 90.18063227848106,
+          "p(95)": 350.42170000000004,
+          "p(99)": 574.237971,
+          "max": 578.6254
+        },
+        "assignments": {
+          "p(95)": 474.5867549999998,
+          "p(99)": 731.3686609999993,
+          "max": 1469.1931,
+          "min": 2.9811,
+          "med": 27.39105,
+          "avg": 86.1287766002417
+        },
+        "doctor_care": {
+          "min": 30.4719,
+          "med": 112.60275,
+          "avg": 156.07570925925927,
+          "p(95)": 456.0794649999995,
+          "p(99)": 638.8852549999996,
+          "max": 861.6531
+        },
+        "history": {
+          "p(95)": 465.0885,
+          "p(99)": 745.0525600000002,
+          "max": 1537.1586,
+          "min": 3.0674,
+          "med": 30.0432,
+          "avg": 87.93983058450355
+        },
+        "doctor_inbox": {
+          "p(99)": 615.7203679999994,
+          "max": 790.5373,
+          "min": 7.8178,
+          "med": 39.0375,
+          "avg": 90.3313351851852,
+          "p(95)": 323.4909949999996
+        },
+        "medications": {
+          "max": 1888.0674,
+          "min": 4.7716,
+          "med": 43.849000000000004,
+          "avg": 100.09008571644047,
+          "p(95)": 483.5169749999992,
+          "p(99)": 754.7918730000004
+        }
+      }
+    },
+    {
+      "verified_at": "2026-10-24T06:02:48.290Z",
+      "driver_context": "protected desktop execution",
+      "profile": "roles-baseline-v1",
+      "patient_sessions": 1000,
+      "doctor_sessions": 20,
+      "analyst_sessions": 1,
+      "server_configuration": {
+        "workers": 8,
+        "compass_pool_size": 8,
+        "compass_max_overflow": 0,
+        "mis_pool_size": 2,
+        "mis_max_overflow": 0
+      },
+      "source_fingerprint": "0dfe15de7b7885b8442946602e3f6ba12c0a390a448fea61ef795d939584e647",
+      "local_raw_report": "k6-ui-n32-projections-1000.json",
+      "raw_sha256": "d057fbe18007b49abec6d8481a4705ea0a52fbeb7a5d10eb0a987e81e4161578",
+      "requests": 59195,
+      "request_failures": 0,
+      "latency_ms": {
+        "p(99)": 674.1163210000001,
+        "max": 1941.0587,
+        "min": 1.0498,
+        "med": 81.4268,
+        "avg": 129.4000700983209,
+        "p(95)": 430.86832499999997
+      },
+      "thresholds_passed": false,
+      "operations": {
+        "clinic_analytics": {
+          "p(95)": 969.8948999999999,
+          "p(99)": 1104.93464,
+          "max": 1160.3123,
+          "min": 123.3998,
+          "med": 500.7559,
+          "avg": 503.80935000000017
+        },
+        "history": {
+          "min": 1.0498,
+          "med": 56.4317,
+          "avg": 110.76637475015053,
+          "p(95)": 407.3734999999998,
+          "p(99)": 645.5767519999993,
+          "max": 1241.5548
+        },
+        "patient_card": {
+          "p(99)": 705.737165,
+          "max": 1738.0547,
+          "min": 3.055,
+          "med": 103.49260000000001,
+          "avg": 147.67809201539268,
+          "p(95)": 446.908
+        },
+        "medications": {
+          "avg": 128.38482088691163,
+          "p(95)": 432.2152,
+          "p(99)": 672.2066399999985,
+          "max": 1556.9601,
+          "min": 2.5184,
+          "med": 75.5411
+        },
+        "assignments": {
+          "min": 1.0575,
+          "med": 52.33155,
+          "avg": 107.42865668113863,
+          "p(95)": 394.78234999999995,
+          "p(99)": 623.122664,
+          "max": 1542.4235
+        },
+        "doctor_engagement": {
+          "avg": 143.7599246153846,
+          "p(95)": 495.1447999999998,
+          "p(99)": 642.0896550000001,
+          "max": 674.8233,
+          "min": 6.3798,
+          "med": 89.43725
+        },
+        "diary_write": {
+          "avg": 149.72566343697244,
+          "p(95)": 456.03822499999995,
+          "p(99)": 693.4671760000006,
+          "max": 1585.2044,
+          "min": 4.3392,
+          "med": 104.79480000000001
+        },
+        "doctor_care": {
+          "min": 13.0758,
+          "med": 173.63185,
+          "avg": 211.71877906976735,
+          "p(95)": 549.7157799999998,
+          "p(99)": 821.1234150000007,
+          "max": 1039.9496
+        },
+        "task_board": {
+          "max": 870.2845,
+          "min": 4.0223,
+          "med": 87.7766,
+          "avg": 152.31803449612414,
+          "p(95)": 505.5035799999994,
+          "p(99)": 761.7833260000003
+        },
+        "points": {
+          "min": 3.7452,
+          "med": 75.34595,
+          "avg": 127.51072756874089,
+          "p(95)": 423.115,
+          "p(99)": 659.0093840000001,
+          "max": 1767.1682
+        },
+        "directory": {
+          "med": 122.94385,
+          "avg": 179.69267192307686,
+          "p(95)": 507.2408299999996,
+          "p(99)": 786.3332710000059,
+          "max": 1286.6585,
+          "min": 7.649
+        },
+        "message_outbox": {
+          "p(99)": 644.3175699999994,
+          "max": 1941.0587,
+          "min": 3.3266,
+          "med": 76.54974999999999,
+          "avg": 127.16414551482937,
+          "p(95)": 418.94817499999994
+        }
+      }
+    },
+    {
+      "verified_at": "2026-10-24T06:07:18.797Z",
+      "driver_context": "desktop execution with sandbox escalation requested; 12 workers",
+      "profile": "roles-baseline-v1",
+      "patient_sessions": 1000,
+      "doctor_sessions": 20,
+      "analyst_sessions": 1,
+      "server_configuration": {
+        "workers": 12,
+        "compass_pool_size": 8,
+        "compass_max_overflow": 0,
+        "mis_pool_size": 2,
+        "mis_max_overflow": 0
+      },
+      "source_fingerprint": "0dfe15de7b7885b8442946602e3f6ba12c0a390a448fea61ef795d939584e647",
+      "local_raw_report": "k6-ui-n32-twelve-1000.json",
+      "raw_sha256": "a028b478f17e836b6f0f7cca0c5ec06720ee2483d2edf74b3402b8056dc95338",
+      "requests": 63453,
+      "request_failures": 0,
+      "latency_ms": {
+        "max": 1118.6319,
+        "min": 2.4159,
+        "med": 22.8015,
+        "avg": 54.45018774191527,
+        "p(95)": 234.23653999999996,
+        "p(99)": 478.4111819999996
+      },
+      "thresholds_passed": false,
+      "operations": {
+        "points": {
+          "med": 24.139599999999998,
+          "avg": 55.01942086476767,
+          "p(95)": 221.0621,
+          "p(99)": 476.5214400000001,
+          "max": 1059.412,
+          "min": 6.9289
+        },
+        "assignments": {
+          "min": 2.4159,
+          "med": 13.788,
+          "avg": 41.65512761722724,
+          "p(95)": 198.2026799999999,
+          "p(99)": 443.4852879999999,
+          "max": 983.7901
+        },
+        "directory": {
+          "p(95)": 216.04932499999998,
+          "p(99)": 401.9551849999994,
+          "max": 621.9716,
+          "min": 12.6757,
+          "med": 32.901849999999996,
+          "avg": 60.543236013986004
+        },
+        "medications": {
+          "min": 4.845,
+          "med": 21.4372,
+          "avg": 52.57958064443693,
+          "p(95)": 235.10753999999986,
+          "p(99)": 478.9834500000004,
+          "max": 1100.2529
+        },
+        "doctor_care": {
+          "med": 65.74324999999999,
+          "avg": 93.7950795774648,
+          "p(95)": 262.08194,
+          "p(99)": 429.4905050000004,
+          "max": 591.6881,
+          "min": 25.9665
+        },
+        "patient_card": {
+          "avg": 62.37440071805229,
+          "p(95)": 258.6812799999999,
+          "p(99)": 502.1414919999995,
+          "max": 1058.7382,
+          "min": 4.5474,
+          "med": 26.6216
+        },
+        "diary_write": {
+          "min": 9.0915,
+          "med": 35.6984,
+          "avg": 67.72506899730213,
+          "p(95)": 255.35997500000002,
+          "p(99)": 490.65040999999974,
+          "max": 1118.6319
+        },
+        "message_outbox": {
+          "min": 5.8649,
+          "med": 24.030549999999998,
+          "avg": 55.899711930414945,
+          "p(95)": 237.65071999999904,
+          "p(99)": 480.52543499999985,
+          "max": 906.2355
+        },
+        "doctor_engagement": {
+          "p(95)": 195.33618999999987,
+          "p(99)": 417.8289339999998,
+          "max": 528.5789,
+          "min": 11.2603,
+          "med": 27.8382,
+          "avg": 52.20971324041811
+        },
+        "task_board": {
+          "avg": 38.538713829787234,
+          "p(95)": 98.02551499999998,
+          "p(99)": 426.1286429999998,
+          "max": 702.015,
+          "min": 5.031,
+          "med": 19.6607
+        },
+        "history": {
+          "p(95)": 195.32047999999767,
+          "p(99)": 454.1137669999999,
+          "max": 866.8265,
+          "min": 2.785,
+          "med": 14.8032,
+          "avg": 43.01341227457174
+        },
+        "clinic_analytics": {
+          "min": 297.3341,
+          "med": 485.7423,
+          "avg": 479.7198463414634,
+          "p(95)": 596.9419,
+          "p(99)": 652.7339800000001,
+          "max": 678.0013
+        }
+      },
+      "configuration_caveat": "Generator inherited pool values 8/2. Local server helper configured 6/1 and native process check observed 12 children. Raw report is preserved; its pool declaration is not verified configuration evidence."
+    },
+    {
+      "verified_at": "2026-10-24T06:11:48.363Z",
+      "driver_context": "desktop execution with sandbox escalation requested; 16 workers; extended workflows",
+      "profile": "roles-with-surveys-and-explicit-support-v2",
+      "patient_sessions": 1000,
+      "doctor_sessions": 20,
+      "analyst_sessions": 1,
+      "server_configuration": {
+        "workers": 16,
+        "compass_pool_size": 4,
+        "compass_max_overflow": 0,
+        "mis_pool_size": 1,
+        "mis_max_overflow": 0
+      },
+      "source_fingerprint": "0dfe15de7b7885b8442946602e3f6ba12c0a390a448fea61ef795d939584e647",
+      "local_raw_report": "k6-ui-n32-sixteen-1000.json",
+      "raw_sha256": "c61ac2ee2b6f67261c3d422ba7db58b51bd26159c7af40fe1ebfc39f915c543e",
+      "requests": 63947,
+      "request_failures": 60,
+      "latency_ms": {
+        "min": 1.0223,
+        "med": 11.5171,
+        "avg": 45.59101497357152,
+        "p(95)": 76.89637499999999,
+        "p(99)": 402.24073000000163,
+        "max": 20001.307
+      },
+      "thresholds_passed": false,
+      "operations": {
+        "patient_card": {
+          "min": 2.6015,
+          "med": 11.9672,
+          "avg": 50.43328099813545,
+          "p(95)": 78.07066,
+          "p(99)": 388.7849799999981,
+          "max": 20001.1057
+        },
+        "task_board": {
+          "min": 3.8957,
+          "med": 11.2535,
+          "avg": 16.510986470588225,
+          "p(95)": 43.67996999999998,
+          "p(99)": 65.343151,
+          "max": 103.4706
+        },
+        "diary_write": {
+          "max": 20001.1817,
+          "min": 4.3393,
+          "med": 18.816200000000002,
+          "avg": 52.42860986258221,
+          "p(95)": 94.833475,
+          "p(99)": 427.4685049999999
+        },
+        "doctor_engagement": {
+          "min": 5.0807,
+          "med": 18.1413,
+          "avg": 24.21021097560974,
+          "p(95)": 49.6992,
+          "p(99)": 131.7119830000003,
+          "max": 293.2071
+        },
+        "event_action": {
+          "min": 9.7639,
+          "med": 31.52385,
+          "avg": 38.91301923076926,
+          "p(95)": 89.565025,
+          "p(99)": 130.61437999999995,
+          "max": 232.4885
+        },
+        "points": {
+          "p(99)": 367.31160000000096,
+          "max": 20000.8765,
+          "min": 4.2226,
+          "med": 13.9376,
+          "avg": 33.684346351254575,
+          "p(95)": 76.01696999999979
+        },
+        "directory": {
+          "avg": 30.771242857142852,
+          "p(95)": 93.56970000000007,
+          "p(99)": 142.4624570000003,
+          "max": 177.4012,
+          "min": 7.066,
+          "med": 21.01475
+        },
+        "doctor_care": {
+          "med": 42.539,
+          "avg": 170.6536147058825,
+          "p(95)": 125.96975999999984,
+          "p(99)": 229.85199500000004,
+          "max": 20000.3472,
+          "min": 15.276
+        },
+        "message_outbox": {
+          "min": 3.0128,
+          "med": 12.7962,
+          "avg": 49.26142015770628,
+          "p(95)": 82.06033999999995,
+          "p(99)": 408.98172000000034,
+          "max": 20000.8276
+        },
+        "history": {
+          "p(99)": 389.968577,
+          "max": 20000.7963,
+          "min": 1.0521,
+          "med": 7.4270499999999995,
+          "avg": 47.08743838209996,
+          "p(95)": 65.69935499999997
+        },
+        "clinic_analytics": {
+          "min": 120.4716,
+          "med": 455.7947,
+          "avg": 418.28414761904753,
+          "p(95)": 534.06971,
+          "p(99)": 552.3619199999999,
+          "max": 562.8981
+        },
+        "survey_submit": {
+          "avg": 55.02239532643091,
+          "p(95)": 89.76155999999942,
+          "p(99)": 432.17898200000053,
+          "max": 20001.307,
+          "min": 1.524,
+          "med": 9.73535
+        },
+        "doctor_inbox": {
+          "min": 4.2163,
+          "med": 16.2272,
+          "avg": 21.184663583815027,
+          "p(95)": 49.027300000000004,
+          "p(99)": 106.15092000000004,
+          "max": 162.8893
+        },
+        "task_update": {
+          "med": 12.2386,
+          "avg": 17.27763096774193,
+          "p(95)": 42.04822999999998,
+          "p(99)": 96.09551800000068,
+          "max": 160.851,
+          "min": 3.7491
+        },
+        "assignments": {
+          "min": 1.0223,
+          "med": 6.8213,
+          "avg": 34.211351312580625,
+          "p(95)": 55.9172,
+          "p(99)": 378.79488000000015,
+          "max": 20000.6963
+        },
+        "support_progress": {
+          "min": 1.5554,
+          "med": 8.6175,
+          "avg": 48.67179467566043,
+          "p(95)": 63.131179999999986,
+          "p(99)": 398.463144,
+          "max": 20000.9065
+        },
+        "medications": {
+          "min": 2.5947,
+          "med": 10.6136,
+          "avg": 37.19352767421844,
+          "p(95)": 70.25336999999966,
+          "p(99)": 390.38457299999976,
+          "max": 20000.4797
+        }
+      }
+    }
+  ],
+  "latest_integrity": {
+    "counts": {
+      "patients": 1000,
+      "users": 1022,
+      "diary_entries": 101774,
+      "participation_awards": 102774,
+      "survey_submissions": 1000,
+      "messages": 102355,
+      "alerts": 2456,
+      "alert_handling": 593,
+      "doctor_tasks": 1593,
+      "outbox_events": 104218,
+      "audit_events": 312732
+    },
+    "violations": {
+      "diaries_without_awards": 0,
+      "diaries_without_audit": 0,
+      "messages_without_outbox": 0,
+      "support_without_event": 0,
+      "processed_support_without_alert": 0,
+      "handling_patient_mismatch": 0,
+      "handling_without_audit": 0,
+      "daily_cap_violations": 0
+    },
+    "outbox": [
+      {
+        "status": "processed",
+        "total": 104218
+      }
+    ],
+    "database_activity": [
+      {
+        "state": "active",
+        "wait_event_type": null,
+        "wait_event": null,
+        "total": 1
+      },
+      {
+        "state": "idle",
+        "wait_event_type": "Client",
+        "wait_event": "ClientRead",
+        "total": 65
+      },
+      {
+        "state": null,
+        "wait_event_type": null,
+        "wait_event": null,
+        "total": 16
+      }
+    ],
+    "current_run_processing": {
+      "events": 7616,
+      "pending": 0,
+      "failed": 0,
+      "p50_processing_ms": 60.0195,
+      "p95_processing_ms": 113.72049999999999,
+      "max_processing_ms": 356.283,
+      "scope": "Stored timestamps of simulator processing, before final batch commit; not provider delivery or browser presentation."
+    },
+    "server_process_probe": {
+      "41736": 11,
+      "22764": 1,
+      "20184": 22,
+      "50032": 1,
+      "38384": 3,
+      "41084": 2,
+      "3384": 1,
+      "41404": 5,
+      "51228": 18
+    }
+  },
+  "latest_verdict": "FAIL: current n32 profile does not meet max<=500 ms; sixteen-process run also had 60 request timeouts. Previous m31 passes do not validate current code.",
+  "integrity_history": {
+    "support-integrity.json": {
+      "counts": {
+        "patients": 1000,
+        "users": 1022,
+        "diary_entries": 64821,
+        "participation_awards": 65821,
+        "survey_submissions": 1000,
+        "messages": 64954,
+        "alerts": 659,
+        "alert_handling": 154,
+        "doctor_tasks": 1154,
+        "outbox_events": 65459,
+        "audit_events": 197878
+      },
+      "violations": {
+        "diaries_without_awards": 0,
+        "diaries_without_audit": 0,
+        "messages_without_outbox": 0,
+        "support_without_event": 0,
+        "processed_support_without_alert": 0,
+        "handling_patient_mismatch": 0,
+        "handling_without_audit": 0,
+        "daily_cap_violations": 0
+      },
+      "outbox": [
+        {
+          "status": "processed",
+          "total": 65459
+        }
+      ],
+      "database_activity": [
+        {
+          "state": "active",
+          "wait_event_type": null,
+          "wait_event": null,
+          "total": 1
+        },
+        {
+          "state": "idle",
+          "wait_event_type": "Client",
+          "wait_event": "ClientRead",
+          "total": 63
+        },
+        {
+          "state": null,
+          "wait_event_type": null,
+          "wait_event": null,
+          "total": 16
+        }
+      ],
+      "current_run_processing": {
+        "events": 7877,
+        "pending": 0,
+        "failed": 0,
+        "p50_processing_ms": 58.637,
+        "p95_processing_ms": 111.6598,
+        "max_processing_ms": 197.523,
+        "scope": "Stored timestamps of simulator processing, before final batch commit; not provider delivery or browser presentation."
+      },
+      "server_process_probe": {
+        "28192": 3,
+        "54852": 9,
+        "55752": 4,
+        "45040": 12,
+        "30452": 8,
+        "8216": 21,
+        "37912": 7
+      }
+    },
+    "ui-n32-integrity.json": {
+      "counts": {
+        "patients": 1000,
+        "users": 1022,
+        "diary_entries": 70967,
+        "participation_awards": 71967,
+        "survey_submissions": 1000,
+        "messages": 71244,
+        "alerts": 1220,
+        "alert_handling": 288,
+        "doctor_tasks": 1288,
+        "outbox_events": 72176,
+        "audit_events": 217556
+      },
+      "violations": {
+        "diaries_without_awards": 0,
+        "diaries_without_audit": 0,
+        "messages_without_outbox": 0,
+        "support_without_event": 0,
+        "processed_support_without_alert": 0,
+        "handling_patient_mismatch": 0,
+        "handling_without_audit": 0,
+        "daily_cap_violations": 0
+      },
+      "outbox": [
+        {
+          "status": "processed",
+          "total": 72176
+        }
+      ],
+      "database_activity": [
+        {
+          "state": "active",
+          "wait_event_type": null,
+          "wait_event": null,
+          "total": 1
+        },
+        {
+          "state": "idle",
+          "wait_event_type": "Client",
+          "wait_event": "ClientRead",
+          "total": 65
+        },
+        {
+          "state": null,
+          "wait_event_type": null,
+          "wait_event": null,
+          "total": 16
+        }
+      ],
+      "current_run_processing": {
+        "events": 6717,
+        "pending": 0,
+        "failed": 0,
+        "p50_processing_ms": 86.946,
+        "p95_processing_ms": 147.1506,
+        "max_processing_ms": 443.094,
+        "scope": "Stored timestamps of simulator processing, before final batch commit; not provider delivery or browser presentation."
+      },
+      "server_process_probe": {
+        "51104": 11,
+        "11940": 9,
+        "15364": 7,
+        "18440": 4,
+        "46740": 8,
+        "timeout": 25
+      }
+    },
+    "ui-n32-projections-integrity.json": {
+      "counts": {
+        "patients": 1000,
+        "users": 1022,
+        "diary_entries": 85892,
+        "participation_awards": 86892,
+        "survey_submissions": 1000,
+        "messages": 86314,
+        "alerts": 1815,
+        "alert_handling": 437,
+        "doctor_tasks": 1437,
+        "outbox_events": 87692,
+        "audit_events": 263663
+      },
+      "violations": {
+        "diaries_without_awards": 0,
+        "diaries_without_audit": 0,
+        "messages_without_outbox": 0,
+        "support_without_event": 0,
+        "processed_support_without_alert": 0,
+        "handling_patient_mismatch": 0,
+        "handling_without_audit": 0,
+        "daily_cap_violations": 0
+      },
+      "outbox": [
+        {
+          "status": "processed",
+          "total": 87692
+        }
+      ],
+      "database_activity": [
+        {
+          "state": "active",
+          "wait_event_type": null,
+          "wait_event": null,
+          "total": 1
+        },
+        {
+          "state": "idle",
+          "wait_event_type": "Client",
+          "wait_event": "ClientRead",
+          "total": 65
+        },
+        {
+          "state": null,
+          "wait_event_type": null,
+          "wait_event": null,
+          "total": 16
+        }
+      ],
+      "current_run_processing": {
+        "events": 8294,
+        "pending": 0,
+        "failed": 0,
+        "p50_processing_ms": 81.018,
+        "p95_processing_ms": 139.87294999999997,
+        "max_processing_ms": 397.556,
+        "scope": "Stored timestamps of simulator processing, before final batch commit; not provider delivery or browser presentation."
+      },
+      "server_process_probe": {
+        "31204": 10,
+        "39656": 4,
+        "9068": 12,
+        "53676": 7,
+        "58860": 7,
+        "35308": 10,
+        "20888": 12,
+        "2428": 2
+      }
+    },
+    "ui-n32-twelve-integrity.json": {
+      "counts": {
+        "patients": 1000,
+        "users": 1022,
+        "diary_entries": 94788,
+        "participation_awards": 95788,
+        "survey_submissions": 1000,
+        "messages": 95224,
+        "alerts": 1815,
+        "alert_handling": 437,
+        "doctor_tasks": 1437,
+        "outbox_events": 96602,
+        "audit_events": 290365
+      },
+      "violations": {
+        "diaries_without_awards": 0,
+        "diaries_without_audit": 0,
+        "messages_without_outbox": 0,
+        "support_without_event": 0,
+        "processed_support_without_alert": 0,
+        "handling_patient_mismatch": 0,
+        "handling_without_audit": 0,
+        "daily_cap_violations": 0
+      },
+      "outbox": [
+        {
+          "status": "processed",
+          "total": 96602
+        }
+      ],
+      "database_activity": [
+        {
+          "state": "active",
+          "wait_event_type": null,
+          "wait_event": null,
+          "total": 1
+        },
+        {
+          "state": "idle",
+          "wait_event_type": "Client",
+          "wait_event": "ClientRead",
+          "total": 73
+        },
+        {
+          "state": null,
+          "wait_event_type": null,
+          "wait_event": null,
+          "total": 12
+        }
+      ],
+      "current_run_processing": {
+        "events": 8910,
+        "pending": 0,
+        "failed": 0,
+        "p50_processing_ms": 65.94800000000001,
+        "p95_processing_ms": 124.1236,
+        "max_processing_ms": 355.03,
+        "scope": "Stored timestamps of simulator processing, before final batch commit; not provider delivery or browser presentation."
+      },
+      "server_process_probe": {
+        "49732": 11,
+        "14692": 2,
+        "18236": 9,
+        "59400": 3,
+        "7724": 5,
+        "37164": 3,
+        "6608": 2,
+        "57264": 9,
+        "40272": 2,
+        "53460": 6,
+        "54616": 7,
+        "53436": 5
+      }
+    },
+    "ui-n32-sixteen-integrity.json": {
+      "counts": {
+        "patients": 1000,
+        "users": 1022,
+        "diary_entries": 101774,
+        "participation_awards": 102774,
+        "survey_submissions": 1000,
+        "messages": 102355,
+        "alerts": 2456,
+        "alert_handling": 593,
+        "doctor_tasks": 1593,
+        "outbox_events": 104218,
+        "audit_events": 312732
+      },
+      "violations": {
+        "diaries_without_awards": 0,
+        "diaries_without_audit": 0,
+        "messages_without_outbox": 0,
+        "support_without_event": 0,
+        "processed_support_without_alert": 0,
+        "handling_patient_mismatch": 0,
+        "handling_without_audit": 0,
+        "daily_cap_violations": 0
+      },
+      "outbox": [
+        {
+          "status": "processed",
+          "total": 104218
+        }
+      ],
+      "database_activity": [
+        {
+          "state": "active",
+          "wait_event_type": null,
+          "wait_event": null,
+          "total": 1
+        },
+        {
+          "state": "idle",
+          "wait_event_type": "Client",
+          "wait_event": "ClientRead",
+          "total": 65
+        },
+        {
+          "state": null,
+          "wait_event_type": null,
+          "wait_event": null,
+          "total": 16
+        }
+      ],
+      "current_run_processing": {
+        "events": 7616,
+        "pending": 0,
+        "failed": 0,
+        "p50_processing_ms": 60.0195,
+        "p95_processing_ms": 113.72049999999999,
+        "max_processing_ms": 356.283,
+        "scope": "Stored timestamps of simulator processing, before final batch commit; not provider delivery or browser presentation."
+      },
+      "server_process_probe": {
+        "41736": 11,
+        "22764": 1,
+        "20184": 22,
+        "50032": 1,
+        "38384": 3,
+        "41084": 2,
+        "3384": 1,
+        "41404": 5,
+        "51228": 18
+      }
+    }
+  },
+  "source_hash_manifest": {
+    "fingerprint": "0dfe15de7b7885b8442946602e3f6ba12c0a390a448fea61ef795d939584e647",
+    "local_file": "outputs/load-test/current-source-hashes.json"
+  }
+}

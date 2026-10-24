@@ -1,12 +1,13 @@
 """Read-only synthetic MIS snapshots, not a live integration or a clinical rule base."""
 import json
+import os
 from functools import lru_cache
 from pathlib import Path
 
-from pydantic import BaseModel, ConfigDict, Field, model_validator
+from pydantic import BaseModel, ConfigDict, Field, PrivateAttr, model_validator
 from sqlalchemy import select
 
-PATH = Path(__file__).with_name("fixtures") / "mis_v1.json"
+PATH = Path(os.environ.get("SYNTHETIC_MIS_FIXTURE_PATH", str(Path(__file__).with_name("fixtures") / "mis_v1.json")))
 
 
 class Snapshot(BaseModel):
@@ -16,12 +17,14 @@ class Snapshot(BaseModel):
     as_of: str
     patients: list[dict]
     limitations: list[str]
+    _patients_by_mis: dict = PrivateAttr(default_factory=dict)
 
     @model_validator(mode="after")
     def validate_synthetic(self):
         ids = [p["mis_id"] for p in self.patients]
         if not self.synthetic or len(ids) != len(set(ids)):
             raise ValueError("Expected unique synthetic MIS identities")
+        self._patients_by_mis = {p["mis_id"]: p for p in self.patients}
         return self
 
 
@@ -32,7 +35,7 @@ def snapshot() -> Snapshot:
 
 def patient_snapshot(mis_id: int | None) -> dict:
     data = snapshot()
-    patient = next((p for p in data.patients if p["mis_id"] == mis_id), None)
+    patient = data._patients_by_mis.get(mis_id)
     # Deep copy: callers must not mutate the cached source.
     return {"source": "synthetic_mis_json", "schema_version": data.schema_version,
             "as_of": data.as_of, "synthetic": True, "read_only": True,
