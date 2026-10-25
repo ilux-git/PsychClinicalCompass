@@ -1,0 +1,903 @@
+{
+  "recordedAt": "2026-10-25T03:55:55.721388+00:00",
+  "status": "targeted root navigation defect repaired; overall acceptance remains partial",
+  "changes": [
+    "Approved route mounts immediately without waiting for the previous AnimatePresence exit callback.",
+    "A CSS entrance uses existing motion tokens via custom properties; reduced-motion CSS disables it.",
+    "Unsaved/pending guards, history and source-return mechanisms are unchanged; approved old route unmounts immediately."
+  ],
+  "impact": {
+    "runtimeFiles": [
+      "frontend/src/App.tsx",
+      "frontend/src/workspace.css"
+    ],
+    "scope": "Root route wrapper only. Toast AnimatePresence and nested ContentFrame consumers unchanged.",
+    "data": "No API, auth, storage, role, clinical, reward, MIS or schema change.",
+    "recovery": "Restore two bounded local47 files and rebuild. No data rollback; not executed."
+  },
+  "verification": {
+    "targetedBefore": {
+      "failed": 1,
+      "validLog": {
+        "file": "outputs/route-frame-valid-red-20261025.log",
+        "bytes": 1055,
+        "sha256": "a4ff7808c32921268275225fcb9ff0022dc1f898512e161e139e18e59ae11aa6"
+      }
+    },
+    "targetedAfter": {
+      "passed": 1,
+      "exitCode": 0,
+      "source": {
+        "file": "outputs/route-frame-green-20261025.log",
+        "bytes": 240,
+        "sha256": "d7883a3afd1b6833445dc887cd08fdf4b6ffd3c7e8e9730ac91d92d0b746d8c3"
+      }
+    },
+    "fullFrontend": {
+      "passed": 48,
+      "failed": 0,
+      "exitCode": 0,
+      "durationMs": 42766.2719,
+      "source": {
+        "file": "outputs/route-frame-frontend-20261025.log",
+        "bytes": 6384,
+        "sha256": "e4e9eb7d88c3579a554721196915a1e21738160a13e0bca9da541aaa84df9bdf"
+      }
+    },
+    "buildAndTypes": {
+      "status": "pass",
+      "exitCode": 0,
+      "source": {
+        "file": "outputs/route-frame-build-20261025.log",
+        "bytes": 2056,
+        "sha256": "5eca5a8f31de78356b95283d6764b6fdd9885b627c8228b10458d967a507b4a0"
+      }
+    },
+    "backend": "Unchanged; previous151/151 retained without rerun.",
+    "native": {
+      "before": {
+        "active": "ДневникЗаписать самочувствие своими словами",
+        "frames": [
+          {
+            "hidden": "true",
+            "location": "/?section=overview",
+            "opacity": "0"
+          },
+          {
+            "hidden": "true",
+            "opacity": "1"
+          }
+        ],
+        "heading": "Здравствуйте, Мария",
+        "title": "Дневник · Clinical Compass"
+      },
+      "checks": [
+        {
+          "label": "patient-immediate-after-login",
+          "focus": {
+            "id": "compass-main",
+            "label": null,
+            "tag": "MAIN"
+          },
+          "heading": "Мой дневник",
+          "overflow": false,
+          "rootAnimation": "route-enter",
+          "rootCount": 1,
+          "rootDuration": "0.2s",
+          "rootHidden": null,
+          "rootOpacity": "0.996692",
+          "route": "/?section=diary",
+          "title": "Дневник · Clinical Compass",
+          "viewport": {
+            "height": 720,
+            "width": 1280
+          }
+        },
+        {
+          "label": "patient-fast-medications-1",
+          "focus": {
+            "id": "compass-main",
+            "label": null,
+            "tag": "MAIN"
+          },
+          "heading": "Моё расписание лекарств",
+          "overflow": false,
+          "rootAnimation": "route-enter",
+          "rootCount": 1,
+          "rootDuration": "0.2s",
+          "rootHidden": null,
+          "rootOpacity": "0.996782",
+          "route": "/?section=medications",
+          "title": "Лекарства · Clinical Compass",
+          "viewport": {
+            "height": 720,
+            "width": 1280
+          }
+        },
+        {
+          "label": "patient-fast-home-1",
+          "focus": {
+            "id": "compass-main",
+            "label": null,
+            "tag": "MAIN"
+          },
+          "heading": "Здравствуйте, Мария",
+          "overflow": false,
+          "rootAnimation": "route-enter",
+          "rootCount": 1,
+          "rootDuration": "0.2s",
+          "rootHidden": null,
+          "rootOpacity": "0.999925",
+          "route": "/?section=overview",
+          "title": "Мой день · Clinical Compass",
+          "viewport": {
+            "height": 720,
+            "width": 1280
+          }
+        },
+        {
+          "label": "patient-fast-diary-2",
+          "focus": {
+            "id": "compass-main",
+            "label": null,
+            "tag": "MAIN"
+          },
+          "heading": "Мой дневник",
+          "overflow": false,
+          "rootAnimation": "route-enter",
+          "rootCount": 1,
+          "rootDuration": "0.2s",
+          "rootHidden": null,
+          "rootOpacity": "1",
+          "route": "/?section=diary",
+          "title": "Дневник · Clinical Compass",
+          "viewport": {
+            "height": 720,
+            "width": 1280
+          }
+        },
+        {
+          "label": "patient-fast-medications-2",
+          "focus": {
+            "id": "compass-main",
+            "label": null,
+            "tag": "MAIN"
+          },
+          "heading": "Моё расписание лекарств",
+          "overflow": false,
+          "rootAnimation": "route-enter",
+          "rootCount": 1,
+          "rootDuration": "0.2s",
+          "rootHidden": null,
+          "rootOpacity": "0.999055",
+          "route": "/?section=medications",
+          "title": "Лекарства · Clinical Compass",
+          "viewport": {
+            "height": 720,
+            "width": 1280
+          }
+        },
+        {
+          "label": "patient-fast-home-2",
+          "focus": {
+            "id": "compass-main",
+            "label": null,
+            "tag": "MAIN"
+          },
+          "heading": "Здравствуйте, Мария",
+          "overflow": false,
+          "rootAnimation": "route-enter",
+          "rootCount": 1,
+          "rootDuration": "0.2s",
+          "rootHidden": null,
+          "rootOpacity": "0.999556",
+          "route": "/?section=overview",
+          "title": "Мой день · Clinical Compass",
+          "viewport": {
+            "height": 720,
+            "width": 1280
+          }
+        },
+        {
+          "label": "patient-mobile-guard-discard",
+          "focus": {
+            "id": "compass-main",
+            "label": null,
+            "tag": "MAIN"
+          },
+          "heading": "Опросы врача",
+          "overflow": false,
+          "rootAnimation": "route-enter",
+          "rootCount": 1,
+          "rootDuration": "0.2s",
+          "rootHidden": null,
+          "rootOpacity": "0.990008",
+          "route": "/?section=surveys",
+          "title": "Опросы врача · Clinical Compass",
+          "viewport": {
+            "height": 844,
+            "width": 375
+          }
+        },
+        {
+          "label": "doctor-immediate-analytics-after-login",
+          "focus": {
+            "id": "compass-main",
+            "label": null,
+            "tag": "MAIN"
+          },
+          "heading": "Аналитика сопровождения",
+          "overflow": false,
+          "rootAnimation": "route-enter",
+          "rootCount": 1,
+          "rootDuration": "0.2s",
+          "rootHidden": null,
+          "rootOpacity": "1",
+          "route": "/?section=overview",
+          "title": "Аналитика сопровождения · Clinical Compass",
+          "viewport": {
+            "height": 720,
+            "width": 1280
+          }
+        },
+        {
+          "label": "doctor-exact-source-return",
+          "focus": {
+            "id": "",
+            "label": "Открыть ответ: Иван Петров",
+            "tag": "BUTTON"
+          },
+          "heading": "Аналитика сопровождения",
+          "overflow": false,
+          "rootAnimation": "route-enter",
+          "rootCount": 1,
+          "rootDuration": "0.2s",
+          "rootHidden": null,
+          "rootOpacity": "1",
+          "route": "/?section=overview",
+          "title": "Аналитика сопровождения · Clinical Compass",
+          "viewport": {
+            "height": 720,
+            "width": 1280
+          }
+        },
+        {
+          "label": "admin-immediate-barriers-after-login",
+          "focus": {
+            "id": "compass-main",
+            "label": null,
+            "tag": "MAIN"
+          },
+          "heading": "Причины затруднений",
+          "overflow": false,
+          "rootAnimation": "route-enter",
+          "rootCount": 1,
+          "rootDuration": "0.2s",
+          "rootHidden": null,
+          "rootOpacity": "0.999815",
+          "route": "/?section=barriers",
+          "title": "Причины затруднений · Clinical Compass",
+          "viewport": {
+            "height": 720,
+            "width": 1280
+          }
+        },
+        {
+          "label": "admin-sources-after-barriers",
+          "focus": {
+            "id": "compass-main",
+            "label": null,
+            "tag": "MAIN"
+          },
+          "heading": "Данные и приватность",
+          "overflow": false,
+          "rootAnimation": "route-enter",
+          "rootCount": 1,
+          "rootDuration": "0.2s",
+          "rootHidden": null,
+          "rootOpacity": "0.996563",
+          "route": "/?section=sources",
+          "title": "Данные и приватность · Clinical Compass",
+          "viewport": {
+            "height": 720,
+            "width": 1280
+          }
+        },
+        {
+          "label": "coordinator-after-login",
+          "focus": {
+            "id": "compass-main",
+            "label": null,
+            "tag": "MAIN"
+          },
+          "heading": "Мои задачи",
+          "overflow": false,
+          "rootAnimation": "route-enter",
+          "rootCount": 1,
+          "rootDuration": "0.2s",
+          "rootHidden": null,
+          "rootOpacity": "1",
+          "route": "/?section=overview",
+          "title": "Мои задачи · Clinical Compass",
+          "viewport": {
+            "height": 720,
+            "width": 1280
+          }
+        },
+        {
+          "label": "coordinator-768",
+          "focus": {
+            "id": "compass-main",
+            "label": null,
+            "tag": "MAIN"
+          },
+          "heading": "Мои задачи",
+          "overflow": false,
+          "rootAnimation": "route-enter",
+          "rootCount": 1,
+          "rootDuration": "0.2s",
+          "rootHidden": null,
+          "rootOpacity": "1",
+          "route": "/?section=overview",
+          "title": "Мои задачи · Clinical Compass",
+          "viewport": {
+            "height": 1024,
+            "width": 768
+          }
+        },
+        {
+          "label": "patient-diary-1440",
+          "focus": {
+            "id": "compass-main",
+            "label": null,
+            "tag": "MAIN"
+          },
+          "heading": "Мой дневник",
+          "overflow": false,
+          "rootAnimation": "route-enter",
+          "rootCount": 1,
+          "rootDuration": "0.2s",
+          "rootHidden": null,
+          "rootOpacity": "1",
+          "route": "/?section=diary",
+          "title": "Дневник · Clinical Compass",
+          "viewport": {
+            "height": 1000,
+            "width": 1440
+          }
+        },
+        {
+          "label": "coordinator-768-final",
+          "focus": {
+            "id": "compass-main",
+            "label": null,
+            "tag": "MAIN"
+          },
+          "heading": "Мои задачи",
+          "overflow": false,
+          "rootAnimation": "route-enter",
+          "rootCount": 1,
+          "rootDuration": "0.2s",
+          "rootHidden": null,
+          "rootOpacity": "1",
+          "route": "/?section=overview",
+          "title": "Мои задачи · Clinical Compass",
+          "viewport": {
+            "height": 1024,
+            "width": 768
+          }
+        },
+        {
+          "label": "patient-repeated-immediate-login-final",
+          "focus": {
+            "id": "compass-main",
+            "label": null,
+            "tag": "MAIN"
+          },
+          "heading": "Мой дневник",
+          "overflow": false,
+          "rootAnimation": "route-enter",
+          "rootCount": 1,
+          "rootDuration": "0.2s",
+          "rootHidden": null,
+          "rootOpacity": "1",
+          "route": "/?section=diary",
+          "title": "Дневник · Clinical Compass",
+          "viewport": {
+            "height": 720,
+            "width": 1280
+          }
+        }
+      ],
+      "guard": {
+        "focusText": true,
+        "route": "/?section=diary",
+        "text": "Учебный черновик · переходы страниц"
+      },
+      "source": {
+        "focusedAnswer": true,
+        "highlight": "Что важно знать вашему врачу?После смены сложно приехать, а расходы оказались выше ожидаемых.",
+        "title": "Иван Петров"
+      },
+      "returned": {
+        "count": 19,
+        "expanded": "true",
+        "focusKey": "analytics-quote-1-details"
+      },
+      "console": [],
+      "excludedVisuals": [
+        "coordinator-768 was captured in the same call as viewport set; overwritten with coordinator-768-final after a separate call. One post-reset logout click failed at tool coordinate mapping before action; fresh state retry succeeded."
+      ]
+    },
+    "acceptedLabels": [
+      "patient-immediate-after-login",
+      "patient-fast-medications-1",
+      "patient-fast-home-1",
+      "patient-fast-diary-2",
+      "patient-fast-medications-2",
+      "patient-fast-home-2",
+      "patient-mobile-guard-discard",
+      "doctor-immediate-analytics-after-login",
+      "doctor-exact-source-return",
+      "admin-immediate-barriers-after-login",
+      "admin-sources-after-barriers",
+      "coordinator-after-login",
+      "patient-diary-1440",
+      "coordinator-768-final",
+      "patient-repeated-immediate-login-final"
+    ],
+    "http": {
+      "base_url": "http://127.0.0.1:8780",
+      "scope": "HTTP bytes and MIME only; not browser layout/interactions",
+      "assets": [
+        {
+          "file": "AdminDashboard-D3O71TLi.js",
+          "status": 200,
+          "bytes": 18451,
+          "sha256": "753461f06bfafae7dff33bef7e8908bf478e3f7cd360c2032ba03d27932d7f39",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "CareWorkflow-C-nyisXY.js",
+          "status": 200,
+          "bytes": 26980,
+          "sha256": "19ec5e945a90355239ff9a1663b9c398fc045b86605a347a74124f4c1667e3d1",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "Charts-DhbYXrAk.js",
+          "status": 200,
+          "bytes": 5476,
+          "sha256": "f116976f9324b47b4db278fab732897568cfe6d94ea33a5b80888c8c25c41b6a",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "DoctorDashboard-CmgOeern.js",
+          "status": 200,
+          "bytes": 18046,
+          "sha256": "ae8cc165ca2e80f8109b984cc663f2edce319ecc6c7c8f6c5c8b5f292926e03c",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "DoctorPatients-JFMHNvgL.js",
+          "status": 200,
+          "bytes": 36363,
+          "sha256": "ad9ae9829725b431b8eab024f9f402c42319f474ae6e9c45941a8badef4096f1",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "MedicationSchedule-C9uSPTQP.js",
+          "status": 200,
+          "bytes": 36031,
+          "sha256": "c05a0b872388f55ce876e7c818cdd61840113bdd3f909d389fa432882412f160",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "MedicationSchedule-C_cioHGn.css",
+          "status": 200,
+          "bytes": 2103,
+          "sha256": "3ecca9c112edd867ada5c834649a96069fb7decf7d1ea5da5aebe9da0ab28a4e",
+          "mime": "text/css; charset=utf-8"
+        },
+        {
+          "file": "Patient-B9xuvwdE.css",
+          "status": 200,
+          "bytes": 26258,
+          "sha256": "9160fbf594ce6238151f4e13f5a28e00c0e62184711079b09f25bbebeb327b0b",
+          "mime": "text/css; charset=utf-8"
+        },
+        {
+          "file": "Patient-ddv7nlyB.js",
+          "status": 200,
+          "bytes": 66896,
+          "sha256": "4430dfa81582c6b4a78ac31c98ec7a6caaa9a7da767783deb7785bf10697afda",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "SurveyBuilder-DJ9O8sWa.js",
+          "status": 200,
+          "bytes": 25412,
+          "sha256": "f4ef38be972f7c468da41e1eac42cb2b6b2fba85eb4b9f30dc8849c016be3e61",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "SurveyFields-C3aOaACC.js",
+          "status": 200,
+          "bytes": 3121,
+          "sha256": "00ac9f75ce5473993186148eefc64a27bb9db6227328a3444f1f3ae646611910",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "TaskBoard-DAgY1EXX.js",
+          "status": 200,
+          "bytes": 7839,
+          "sha256": "e58eccbea353a79a0b5effc3c04abc0d85c6199ab29d5d0e85a2340ccb490e51",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "WorkflowMetrics-BQmfMzXf.js",
+          "status": 200,
+          "bytes": 12440,
+          "sha256": "dd6fd2b5ab63dc29b2c007e85b536fbdbbbb159bdcd28f092e58e8af3dd3877d",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "chevron-right-Cu-GORyk.js",
+          "status": 200,
+          "bytes": 159,
+          "sha256": "a12110f6dcb4545c87f4a3e2ffaff6da4bbefc1651d7ff3d3f02e6ed0cbbce22",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "collection-COswcvyL.js",
+          "status": 200,
+          "bytes": 939,
+          "sha256": "b8f61ba215c319fcc2aaf6ce0fb3b26b182c049b9a0d9e4febe85703fe8000e4",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "index-D0cqzOdm.js",
+          "status": 200,
+          "bytes": 387672,
+          "sha256": "d498996069ea7bca02d45161bdcce25dfb5e6255f88b0a9b5eea1b18b70c596d",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "index-DvXqXy--.css",
+          "status": 200,
+          "bytes": 113592,
+          "sha256": "433f386962fb6cd1595d8da96e4ce93521c9814a6d6044b64188671cdae38ddf",
+          "mime": "text/css; charset=utf-8"
+        },
+        {
+          "file": "patientProgress-Do0fObh9.js",
+          "status": 200,
+          "bytes": 1130,
+          "sha256": "611dafc1b1ad2ac66b0b04ac3852b8c0bf56b6f106882f460ee96efa5097a0b3",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "plus-3F25a-vI.js",
+          "status": 200,
+          "bytes": 182,
+          "sha256": "c26e77bad10f3fccec8cb596746a215ff2d634204631ef241d7208894d608693",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "send-BUEnZ_VK.js",
+          "status": 200,
+          "bytes": 652,
+          "sha256": "967952f728c5641f7c1956117ddb5622f3b6ebf2e285ce48a2a014598f444b36",
+          "mime": "text/javascript; charset=utf-8"
+        }
+      ],
+      "health": {
+        "status": "ok",
+        "compass_db": true,
+        "mis_db": true,
+        "mode": "synthetic_demo"
+      },
+      "root_matches_dist": true,
+      "qa_health": {
+        "status": "ok",
+        "compass_db": true,
+        "mis_db": true,
+        "mode": "synthetic_demo"
+      }
+    },
+    "limitedSemantic": {
+      "recordedAt": "2026-10-25T03:55:53.866Z",
+      "engine": "axe-core 4.14.0",
+      "scope": "Semantic analysis of CUA-exported markup in JSDOM29.1.1 with local entry CSS. App scripts and external resources never execute; no actual-browser axe, layout, contrast, keyboard, motion or screen-reader pass.",
+      "source": "https://github.com/dequelabs/axe-core#supported-browsers",
+      "disabledRules": [
+        "color-contrast"
+      ],
+      "pages": [
+        {
+          "file": "route-frame-diary-desktop.html",
+          "sha256": "d14eb4b0a6ee0a5c5cff8ebe74b7003112556baada0e621dbd76fb3869d1c2b5",
+          "title": "Дневник · Clinical Compass",
+          "violations": [],
+          "incomplete": [
+            {
+              "id": "label-content-name-mismatch",
+              "impact": "serious",
+              "description": "Ensure that elements labelled through their content must have their visible text as part of their accessible name",
+              "help": "Elements must have their visible text as part of their accessible name",
+              "helpUrl": "https://dequeuniversity.com/rules/axe/4.14/label-content-name-mismatch?application=axeAPI",
+              "nodes": [
+                {
+                  "target": [
+                    ".section-help-button"
+                  ],
+                  "failureSummary": "Fix all of the following:\n  Axe encountered an error; test the page for this type of problem manually",
+                  "html": "<button class=\"button ghost section-help-button\" aria-label=\"Помощь с разделом\" tabindex=\"0\">"
+                }
+              ]
+            },
+            {
+              "id": "landmark-one-main",
+              "impact": "moderate",
+              "description": "Ensure the document has a main landmark",
+              "help": "Document should have one main landmark",
+              "helpUrl": "https://dequeuniversity.com/rules/axe/4.14/landmark-one-main?application=axeAPI",
+              "nodes": [
+                {
+                  "target": [
+                    "html"
+                  ],
+                  "failureSummary": "Fix all of the following:\n  Axe encountered an error; test the page for this type of problem manually",
+                  "html": "<html lang=\"ru\">"
+                }
+              ]
+            },
+            {
+              "id": "page-has-heading-one",
+              "impact": "moderate",
+              "description": "Ensure that the page, or at least one of its frames contains a level-one heading",
+              "help": "Page should contain a level-one heading",
+              "helpUrl": "https://dequeuniversity.com/rules/axe/4.14/page-has-heading-one?application=axeAPI",
+              "nodes": [
+                {
+                  "target": [
+                    "html"
+                  ],
+                  "failureSummary": "Fix all of the following:\n  Axe encountered an error; test the page for this type of problem manually",
+                  "html": "<html lang=\"ru\">"
+                }
+              ]
+            }
+          ],
+          "passedRuleCount": 34,
+          "passedRuleIds": [
+            "aria-allowed-attr",
+            "aria-conditional-attr",
+            "aria-hidden-body",
+            "aria-hidden-focus",
+            "aria-prohibited-attr",
+            "aria-valid-attr-value",
+            "aria-valid-attr",
+            "avoid-inline-spacing",
+            "button-name",
+            "bypass",
+            "document-title",
+            "duplicate-id-aria",
+            "empty-heading",
+            "form-field-multiple-labels",
+            "heading-order",
+            "html-has-lang",
+            "html-lang-valid",
+            "label-title-only",
+            "label",
+            "landmark-banner-is-top-level",
+            "landmark-contentinfo-is-top-level",
+            "landmark-main-is-top-level",
+            "landmark-no-duplicate-banner",
+            "landmark-no-duplicate-contentinfo",
+            "landmark-no-duplicate-main",
+            "landmark-unique",
+            "link-name",
+            "meta-viewport-large",
+            "meta-viewport",
+            "nested-interactive",
+            "region",
+            "summary-name",
+            "tabindex",
+            "target-size"
+          ],
+          "inapplicableRuleCount": 53,
+          "domWarnings": [
+            "Not implemented: HTMLCanvasElement's getContext() method: without installing the canvas npm package"
+          ]
+        },
+        {
+          "file": "route-frame-coordinator-tablet.html",
+          "sha256": "4d3fc457a6845bc8ce8159dc82f102c069a6197a916c73faeaf4ed796c14f107",
+          "title": "Мои задачи · Clinical Compass",
+          "violations": [],
+          "incomplete": [
+            {
+              "id": "label-content-name-mismatch",
+              "impact": "serious",
+              "description": "Ensure that elements labelled through their content must have their visible text as part of their accessible name",
+              "help": "Elements must have their visible text as part of their accessible name",
+              "helpUrl": "https://dequeuniversity.com/rules/axe/4.14/label-content-name-mismatch?application=axeAPI",
+              "nodes": [
+                {
+                  "target": [
+                    ".section-help-button"
+                  ],
+                  "failureSummary": "Fix all of the following:\n  Axe encountered an error; test the page for this type of problem manually",
+                  "html": "<button class=\"button ghost section-help-button\" aria-label=\"Помощь с разделом\" tabindex=\"0\">"
+                }
+              ]
+            },
+            {
+              "id": "landmark-one-main",
+              "impact": "moderate",
+              "description": "Ensure the document has a main landmark",
+              "help": "Document should have one main landmark",
+              "helpUrl": "https://dequeuniversity.com/rules/axe/4.14/landmark-one-main?application=axeAPI",
+              "nodes": [
+                {
+                  "target": [
+                    "html"
+                  ],
+                  "failureSummary": "Fix all of the following:\n  Axe encountered an error; test the page for this type of problem manually",
+                  "html": "<html lang=\"ru\">"
+                }
+              ]
+            },
+            {
+              "id": "page-has-heading-one",
+              "impact": "moderate",
+              "description": "Ensure that the page, or at least one of its frames contains a level-one heading",
+              "help": "Page should contain a level-one heading",
+              "helpUrl": "https://dequeuniversity.com/rules/axe/4.14/page-has-heading-one?application=axeAPI",
+              "nodes": [
+                {
+                  "target": [
+                    "html"
+                  ],
+                  "failureSummary": "Fix all of the following:\n  Axe encountered an error; test the page for this type of problem manually",
+                  "html": "<html lang=\"ru\">"
+                }
+              ]
+            }
+          ],
+          "passedRuleCount": 37,
+          "passedRuleIds": [
+            "aria-allowed-attr",
+            "aria-allowed-role",
+            "aria-conditional-attr",
+            "aria-deprecated-role",
+            "aria-hidden-body",
+            "aria-hidden-focus",
+            "aria-prohibited-attr",
+            "aria-required-attr",
+            "aria-roles",
+            "aria-valid-attr-value",
+            "aria-valid-attr",
+            "avoid-inline-spacing",
+            "button-name",
+            "bypass",
+            "document-title",
+            "duplicate-id-aria",
+            "empty-heading",
+            "form-field-multiple-labels",
+            "heading-order",
+            "html-has-lang",
+            "html-lang-valid",
+            "label-title-only",
+            "label",
+            "landmark-banner-is-top-level",
+            "landmark-contentinfo-is-top-level",
+            "landmark-main-is-top-level",
+            "landmark-no-duplicate-banner",
+            "landmark-no-duplicate-contentinfo",
+            "landmark-no-duplicate-main",
+            "landmark-unique",
+            "link-name",
+            "meta-viewport-large",
+            "meta-viewport",
+            "nested-interactive",
+            "region",
+            "tabindex",
+            "target-size"
+          ],
+          "inapplicableRuleCount": 50,
+          "domWarnings": [
+            "Not implemented: HTMLCanvasElement's getContext() method: without installing the canvas npm package"
+          ]
+        }
+      ]
+    }
+  },
+  "sources": [
+    {
+      "file": "frontend/src/App.tsx",
+      "bytes": 32648,
+      "sha256": "14397ba249ac341f438ebe1efb882c1f1542a44b0f295567e0e0a3d4af22fe0b"
+    },
+    {
+      "file": "frontend/src/workspace.css",
+      "bytes": 65493,
+      "sha256": "16e2a6bf918394232885571d05d646583a59ac4bb318f19df624947043fbacb3"
+    },
+    {
+      "file": "frontend/tests/route-mount-interaction.test.mjs",
+      "bytes": 5506,
+      "sha256": "12c544917cb2f0385ad6b0912b0259aa52c39e2e940f2afb0ab3d968fec2db05"
+    }
+  ],
+  "entry": {
+    "file": "frontend/dist/assets/index-D0cqzOdm.js",
+    "bytes": 387672,
+    "sha256": "d498996069ea7bca02d45161bdcce25dfb5e6255f88b0a9b5eea1b18b70c596d"
+  },
+  "diff": "--- local47/App.tsx\n+++ current/frontend/src/App.tsx\n@@ -1,4 +1,4 @@\n-import { Fragment, lazy, Suspense, useCallback, useEffect, useId, useLayoutEffect, useRef, useState, type FormEvent } from \"react\";\n+import { Fragment, lazy, Suspense, useCallback, useEffect, useId, useLayoutEffect, useRef, useState, type CSSProperties, type FormEvent } from \"react\";\n import {\n   Activity,\n   LayoutDashboard,\n@@ -34,7 +34,7 @@\n import { DoctorInbox, DoctorInboxNotice } from \"./DoctorInbox\";\n import { RoleGuide } from \"./RoleGuide\";\n import { NavigationGuard, useNavigationGuard } from \"./NavigationGuard\";\n-import { AnimatePresence, ContentFrame, m, motionTokens, useInteractionMotion, usePendingSelectFocus } from \"./Interaction\";\n+import { AnimatePresence, m, motionTokens, useInteractionMotion, usePendingSelectFocus } from \"./Interaction\";\n import { SectionBoundary } from \"./SectionBoundary\";\n import { ViewStateProvider, type PatientAnswerTarget, type ReturnPoint } from \"./ViewState\";\n import { cardSections, defaultView, navigationFor, sectionFor, type NavItem, type CardTab } from \"./navigation\";\n@@ -549,7 +549,11 @@\n             </m.div>\n           )}</AnimatePresence>\n           <RoleGuide key={user.id} user={user} view={view} navigate={navigate} startSignal={guideStart}/>\n-          <AnimatePresence mode=\"wait\" initial={false}><ContentFrame key={`${view}-${navigationRevision}`}>\n+          <div key={`${view}-${navigationRevision}`} className=\"content-frame route-frame\" style={{\n+            \"--route-duration\":`${transition.duration}s`,\n+            \"--route-distance\":`${moving?motionTokens.distance.small:0}px`,\n+            \"--route-ease\":`cubic-bezier(${motionTokens.easing.smooth.join(\",\")})`,\n+          } as CSSProperties}>\n           <div className=\"route-page\" data-page-location={routeHref(locationSnapshot.current?.route??pageRoute(user.role,view))}>\n           <SectionBoundary key={`${user.id}-${view}`} refresh={()=>guard.run(()=>window.location.reload())}>\n           <Suspense fallback={<div className=\"route-loading\"><Loading/></div>}>\n@@ -591,7 +595,7 @@\n           </Suspense>\n           </SectionBoundary>\n           </div>\n-          </ContentFrame></AnimatePresence>\n+          </div>\n         </main>\n         <footer className=\"app-footer\">\n           Clinical Compass · учебный MVP{\" \"}\n--- local47/workspace.css\n+++ current/frontend/src/workspace.css\n@@ -68,6 +68,12 @@\n .search-field:focus-within { outline: 3px solid var(--signal-dark); outline-offset: 2px; }\n .search-field input:focus-visible { outline: none; }\n .content-frame { min-width: 0; }\n+.route-frame { animation:route-enter var(--route-duration) var(--route-ease) backwards; }\n+@keyframes route-enter {\n+  from { opacity:0; transform:translateY(var(--route-distance)); }\n+  to { opacity:1; transform:none; }\n+}\n+@media (prefers-reduced-motion:reduce) { .route-frame { animation:none; } }\n .main-content { scroll-margin-top: 80px; }\n .route-loading { min-height: 340px; }\n .content-frame > :last-child { margin-bottom: 0; }\n",
+  "screenshots": [
+    {
+      "file": "docs/evidence/route-frame-2026-10-25/admin-fast-transitions.jpg",
+      "bytes": 77447,
+      "sha256": "e799e1aed94258ace1fcd4aeaed95c5d611fc80ce63cb05df6329c39e06d20fc",
+      "pixels": [
+        1265,
+        712
+      ]
+    },
+    {
+      "file": "docs/evidence/route-frame-2026-10-25/coordinator-768.jpg",
+      "bytes": 34245,
+      "sha256": "41d08b690c02c194182ff1113726a481284cf078684aa03568a5df4435cc0c22",
+      "pixels": [
+        768,
+        1024
+      ]
+    },
+    {
+      "file": "docs/evidence/route-frame-2026-10-25/doctor-source-return.jpg",
+      "bytes": 60704,
+      "sha256": "dc47a6e119c3f2440c08814c735e79a330c1464f2d8ead5b9a0d8bfcbf1aad95",
+      "pixels": [
+        1265,
+        712
+      ]
+    },
+    {
+      "file": "docs/evidence/route-frame-2026-10-25/patient-diary-1440.jpg",
+      "bytes": 86333,
+      "sha256": "e51145c91adb0ed967e90b704b4e99ec04c9feb0a3bc5ea6db188a4a36fed7ad",
+      "pixels": [
+        1425,
+        990
+      ]
+    },
+    {
+      "file": "docs/evidence/route-frame-2026-10-25/patient-fast-transitions.jpg",
+      "bytes": 73364,
+      "sha256": "5e249072ba04680fa0871165af7d9d9605d80c5204e753e681cbcdb3d6dcb661",
+      "pixels": [
+        1265,
+        712
+      ]
+    },
+    {
+      "file": "docs/evidence/route-frame-2026-10-25/patient-mobile-guard-after.jpg",
+      "bytes": 27840,
+      "sha256": "8cf4b13e6e59746d56c0c915a70cf82e60f897af4acb521e5f5a9e603bee3a93",
+      "pixels": [
+        360,
+        810
+      ]
+    }
+  ],
+  "limits": [
+    "Held RAF is an actual-Workspace JSDOM failure-mode test, not a real-browser CPU/animation benchmark. Initial selector-whitespace failure was corrected before the valid RED; not counted as application evidence.",
+    "Native role/route/header/opacity/source-return observations passed. Most samples were taken during the last part of the200ms CSS entrance; no FPS/WebVitals/max500ms or pixel-baseline claim.",
+    "System reduced-motion preference was not changed; CSS branch and token wiring reviewed, not a new native preference-toggle acceptance.",
+    "One same-call viewport screenshot was excluded and retaken in a separate call; one post-reset tool-coordinate click failed before action and succeeded after fresh state.",
+    "Two limited JSDOM semantic exports are not full browser/WCAG, contrast or screen-reader certification. No new server/performance/privacy-policy acceptance or Git publication."
+  ]
+}

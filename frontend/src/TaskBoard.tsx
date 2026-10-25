@@ -55,7 +55,7 @@ function Column({stage, query, operational, changed, notify, openPatient, revisi
         {task.due_at && <p className={task.status !== "done" && Date.parse(task.due_at) < Date.now() ? "deadline-overdue" : "field-hint"}>Срок: {new Date(task.due_at).toLocaleString("ru-RU")}</p>}
         {task.status === "done" && <Badge tone="muted">{task.verification_status === "pending" ? "Ожидает проверки результата" : task.verification_status === "resolved" ? "Проверено: устранено" : task.verification_status === "not_resolved" ? "Проверено: сохраняется" : "Проверено: результат неизвестен"}</Badge>}
         <Disclosure reveal={task.id===focusedTask} title={task.status === "open" ? "Принять и выполнить" : task.status === "in_progress" ? "Сохранить действие" : "Действие и проверка"}>
-          <TaskItem task={task} operational={operational} reload={changed} notify={notify} scope={scope} autoFocus={task.id===focusedTask} onEditing={editing} detached={detachedRows.some(row=>row.id===task.id)}/>
+          <TaskItem task={task} operational={operational} reload={changed} notify={notify} scope={scope} autoFocus={task.id===focusedTask} onEditing={editing} embedded detached={detachedRows.some(row=>row.id===task.id)}/>
         </Disclosure>
       </article>)}
       <div className="board-pagination"><Button variant="ghost" disabled={!cursors.length} onClick={() => guard.runFor(()=>{clearFocus();setCursors(prev => prev.slice(0,-1));},scope)}>Назад</Button>
@@ -85,7 +85,7 @@ export function TaskBoard({notify, openPatient, operational = false, choosePatie
   }
   useEffect(() => {const timer = setTimeout(() => setQuery(search.trim()), 250); return () => clearTimeout(timer);}, [search]);
   return <>
-    <Heading eyebrow={operational ? "Организационная поддержка" : "Рабочий план врача"} title={operational ? "Мои задачи" : "Задачи пациентов"}>
+    <Heading eyebrow={operational ? "Организационная поддержка" : "Рабочий план врача"} title={operational ? "Мои задачи" : "План работы"}>
       {operational ? "Только порученные вам организационные действия." : "От конкретного затруднения к действию и проверке результата. Новую задачу можно создать в карточке пациента."}
     </Heading>
     {operational&&<figure className="stage-distribution" aria-label={ready?`Мои поручения: ${stages.map(stage=>`${stage.label} ${totals[stage.id].total}`).join(', ')}`:"Получаем этапы поручений"}>
@@ -97,6 +97,7 @@ export function TaskBoard({notify, openPatient, operational = false, choosePatie
       {choosePatient && <Button onClick={choosePatient}>Выбрать пациента</Button>}<Button variant="secondary" onClick={() => setRevision(v => v+1)}>Обновить</Button></div>
     <div className="board-view-tabs" role="tablist" aria-label="Этап задач">{stages.map((stage,index)=><button key={stage.id} role="tab" aria-selected={stage.id===activeStage} tabIndex={stage.id===activeStage?0:-1} onClick={()=>setActiveStage(stage.id)} onKeyDown={event=>{const next=event.key==='ArrowRight'?(index+1)%stages.length:event.key==='ArrowLeft'?(index+stages.length-1)%stages.length:null;if(next!==null){event.preventDefault();setActiveStage(stages[next].id);event.currentTarget.parentElement?.querySelectorAll<HTMLButtonElement>('button')[next]?.focus();}}}>{stage.label}<span className="stage-count">{totals[stage.id]?.query===query?totals[stage.id].total:"…"}</span></button>)}</div>
     <ErrorBox message={focused.error} retry={focused.reload}/>
-    <div className="task-board">{stages.map(stage => <Column key={`${stage.id}-${query}`} stage={stage} query={query} operational={operational} notify={notify} changed={changed} openPatient={openPatient} revision={revision} active={activeStage===stage.id} focusedTask={focusedTask} focused={focused.data} onTotal={onTotal} clearFocus={()=>setFocusedTask(null)}/>)}</div>
+    <p className="board-search-status" role="status">{search.trim()!==query?"Обновляем результаты поиска…":query?"Показаны задачи по вашему запросу":""}</p>
+    <div className="task-board" aria-busy={search.trim()!==query} inert={search.trim()!==query}>{stages.map(stage => <Column key={`${stage.id}-${query}`} stage={stage} query={query} operational={operational} notify={notify} changed={changed} openPatient={openPatient} revision={revision} active={activeStage===stage.id} focusedTask={focusedTask} focused={focused.data} onTotal={onTotal} clearFocus={()=>setFocusedTask(null)}/>)}</div>
   </>;
 }

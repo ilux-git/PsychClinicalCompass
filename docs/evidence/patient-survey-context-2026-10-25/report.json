@@ -1,0 +1,509 @@
+{
+  "recordedAt": "2026-10-25T06:37:40.205168+00:00",
+  "status": "Patient survey navigation/help context and unchanged leave guard verified",
+  "changes": [
+    "A patient assignment uses surveys for active sidebar/bottom links, breadcrumbs and selected-link reveal; the original URL and history are retained.",
+    "Help explains the unfinished/private draft/explicit submission/read-only process rather than the overview. The welcome message refers to the current section.",
+    "Existing navigation guards and completed-answer read-only behavior remain in use."
+  ],
+  "scope": "Three frontend runtime files, two added actual-Workspace regressions in an existing test. No API, data schema, medical, reward, authorization or delivery policy change.",
+  "sources": [
+    {
+      "file": "frontend/src/App.tsx",
+      "bytes": 33027,
+      "sha256": "adad1352e8d3627341d6c3678c0b118d879e9bcdc0990357575d9212aa8a37ba"
+    },
+    {
+      "file": "frontend/src/RoleGuide.tsx",
+      "bytes": 2999,
+      "sha256": "31f8079f4eff63e7341ff1b1468f7c471cd95414ea70dc666d26ff8cf355b121"
+    },
+    {
+      "file": "frontend/src/navigation.ts",
+      "bytes": 18292,
+      "sha256": "4f1a6258aed0e2b6203a62f9a6754d6ae5b1552e73b4e3e3a634fe8d95047a10"
+    },
+    {
+      "file": "frontend/tests/context-help-interaction.test.mjs",
+      "bytes": 12073,
+      "sha256": "a2f693b558dc543ba4eb0fbcd415e1888ffeb9a39c923851a541d91220cdc74e"
+    }
+  ],
+  "diff": "--- local64/App.tsx\n+++ current/frontend/src/App.tsx\n@@ -37,7 +37,7 @@\n import { AnimatePresence, m, motionTokens, useInteractionMotion, usePendingSelectFocus } from \"./Interaction\";\n import { SectionBoundary } from \"./SectionBoundary\";\n import { ViewStateProvider, type PatientAnswerTarget, type ReturnPoint } from \"./ViewState\";\n-import { cardSections, defaultView, navigationFor, sectionFor, type NavItem, type CardTab } from \"./navigation\";\n+import { cardSections, defaultView, navigationFor, patientSurveyGuide, sectionFor, type NavItem, type CardTab } from \"./navigation\";\n import { WorkspaceHome } from \"./WorkspaceHome\";\n import { createWorkspaceHistory, pageRoute, routeHref, type RouteContext, type WorkspaceRoute } from \"./routes\";\n \n@@ -213,6 +213,7 @@\n   const [selectedPatient, setSelectedPatient] = useState<number | null>(null);\n   const [patientEntry,setPatientEntry] = useState<CardTab>(\"feedback\");\n   const [selectedAssignment,setSelectedAssignment]=useState<number|null>(null);\n+  const navigationView=user?.role===\"patient\"&&selectedAssignment!==null?\"surveys\":view;\n   const [patientOrigin,setPatientOrigin]=useState<{view:string;label:string;key:string}|null>(null);\n   const [patientAnswer,setPatientAnswer]=useState<PatientAnswerTarget|null>(null);\n   const [returnPoint,setReturnPoint]=useState<ReturnPoint|null>(null);\n@@ -279,7 +280,7 @@\n     observer?.observe(nav);\n     window.addEventListener(\"resize\",revealCurrent);\n     return()=>{observer?.disconnect();window.removeEventListener(\"resize\",revealCurrent);};\n-  },[user?.id,user?.role,view,menuOpen,moving]);\n+  },[user?.id,user?.role,navigationView,menuOpen,moving]);\n   useEffect(()=>{\n     if(!menuOpen)return;\n     const media=window.matchMedia(\"(max-width: 780px)\");\n@@ -409,14 +410,14 @@\n     );\n   if (!user) return <Login onLogin={value => {setUser(value); setView(defaultView(value.role));}} />;\n   const nav=navigationFor(user.role);\n-  const currentSection=sectionFor(user.role,view);\n+  const currentSection=sectionFor(user.role,navigationView);\n   const primaryNav=nav.filter(item=>!item.secondary);\n   const secondaryNav=nav.filter(item=>item.secondary);\n   const quickNav=user.role===\"doctor\"?[[\"home\",\"Главная\"],[\"patients\",\"Пациенты\"],[\"events\",\"События\"],[\"tasks\",\"План\"]]:user.role===\"patient\"?[[\"overview\",\"Мой день\"],[\"surveys\",\"Опросы\"],[\"diary\",\"Дневник\"],[\"chat\",\"Врачу\"]]:user.role===\"admin\"?[[\"overview\",\"Обзор\"],[\"barriers\",\"Барьеры\"],[\"actions\",\"Действия\"],[\"sources\",\"Данные\"]]:[];\n   function navControl(item:NavItem) {\n     const Icon=navIcons[item.icon];\n-    return <a href={routeHref(pageRoute(user!.role,item.id))} className={view===item.id?\"active\":\"\"} aria-current={view===item.id?\"page\":undefined} onClick={event=>{if(!event.metaKey&&!event.ctrlKey&&!event.shiftKey&&!event.altKey&&event.button===0){event.preventDefault();navigate(item.id);}}}>\n-      <Icon size={19}/><span className=\"nav-item-copy\"><strong>{item.title}</strong><small>{item.description}</small></span>{view===item.id&&<i/>}\n+    return <a href={routeHref(pageRoute(user!.role,item.id))} className={navigationView===item.id?\"active\":\"\"} aria-current={navigationView===item.id?\"page\":undefined} onClick={event=>{if(!event.metaKey&&!event.ctrlKey&&!event.shiftKey&&!event.altKey&&event.button===0){event.preventDefault();navigate(item.id);}}}>\n+      <Icon size={19}/><span className=\"nav-item-copy\"><strong>{item.title}</strong><small>{item.description}</small></span>{navigationView===item.id&&<i/>}\n     </a>;\n   }\n   return (\n@@ -515,8 +516,8 @@\n           </button>\n           <span className=\"mobile-brand\">{selectedPatient!==null?cardSections[patientEntry].title:selectedAssignment!==null?\"Ответ на опрос\":currentSection.title}</span>\n           <nav className=\"breadcrumb\" aria-label=\"Путь к странице\">\n-            {view!==defaultView(user.role)?<><button onClick={()=>navigate(defaultView(user.role))}>Главная</button><span aria-hidden=\"true\">/</span></>:null}\n-            {selectedPatient!==null||selectedAssignment!==null?<><button onClick={()=>navigate(view)}>{currentSection.title}</button><span aria-hidden=\"true\">/</span><strong aria-current=\"page\">{selectedPatient!==null?cardSections[patientEntry].title:\"Ответ на опрос\"}</strong></>:<strong aria-current=\"page\">{currentSection.title}</strong>}\n+            {navigationView!==defaultView(user.role)?<><button onClick={()=>navigate(defaultView(user.role))}>Главная</button><span aria-hidden=\"true\">/</span></>:null}\n+            {selectedPatient!==null||selectedAssignment!==null?<><button onClick={()=>navigate(navigationView)}>{currentSection.title}</button><span aria-hidden=\"true\">/</span><strong aria-current=\"page\">{selectedPatient!==null?cardSections[patientEntry].title:\"Ответ на опрос\"}</strong></>:<strong aria-current=\"page\">{currentSection.title}</strong>}\n           </nav>\n           <div className=\"topbar-actions\">\n             {user.role === \"doctor\" && <DoctorInboxNotice key={user.id} open={() => navigate(\"events\")} />}\n@@ -548,7 +549,7 @@\n               </button>\n             </m.div>\n           )}</AnimatePresence>\n-          <RoleGuide key={user.id} user={user} view={view} navigate={navigate} startSignal={guideStart} context={user.role===\"doctor\"&&selectedPatient!==null?cardSections[patientEntry]:undefined}/>\n+          <RoleGuide key={user.id} user={user} view={navigationView} navigate={navigate} startSignal={guideStart} context={user.role===\"patient\"&&selectedAssignment!==null?patientSurveyGuide:user.role===\"doctor\"&&selectedPatient!==null?cardSections[patientEntry]:undefined}/>\n           <div key={`${view}-${navigationRevision}`} className=\"content-frame route-frame\" style={{\n             \"--route-duration\":`${transition.duration}s`,\n             \"--route-distance\":`${moving?motionTokens.distance.small:0}px`,\n@@ -604,9 +605,9 @@\n         {quickNav.length>0&&<nav className=\"mobile-navigation\" aria-label=\"Быстрые переходы\">\n           {quickNav.map(([id,label])=>{\n             const item=sectionFor(user.role,id),Icon=navIcons[item.icon];\n-            return <a key={id} href={routeHref(pageRoute(user.role,id))} aria-label={item.title} aria-current={view===id?\"page\":undefined} className={view===id?\"active\":\"\"} onClick={event=>{if(!event.metaKey&&!event.ctrlKey&&!event.shiftKey&&!event.altKey&&event.button===0){event.preventDefault();navigate(id);}}}><Icon size={20}/><span>{label}</span></a>;\n+            return <a key={id} href={routeHref(pageRoute(user.role,id))} aria-label={item.title} aria-current={navigationView===id?\"page\":undefined} className={navigationView===id?\"active\":\"\"} onClick={event=>{if(!event.metaKey&&!event.ctrlKey&&!event.shiftKey&&!event.altKey&&event.button===0){event.preventDefault();navigate(id);}}}><Icon size={20}/><span>{label}</span></a>;\n           })}\n-          {user.role!==\"admin\"&&<button type=\"button\" className={!quickNav.some(([id])=>id===view)?\"active\":\"\"} aria-label=\"Все разделы кабинета\" aria-expanded={menuOpen} onClick={()=>setMenuOpen(true)}><Menu size={20}/><span>Ещё</span></button>}\n+          {user.role!==\"admin\"&&<button type=\"button\" className={!quickNav.some(([id])=>id===navigationView)?\"active\":\"\"} aria-label=\"Все разделы кабинета\" aria-expanded={menuOpen} onClick={()=>setMenuOpen(true)}><Menu size={20}/><span>Ещё</span></button>}\n         </nav>}\n       </div>\n     </div></ViewStateProvider>\n--- local64/RoleGuide.tsx\n+++ current/frontend/src/RoleGuide.tsx\n@@ -22,7 +22,7 @@\n   function close(){setOpen(false);dismiss();}\n   return <>\n     {!hidden&&<section className=\"navigation-welcome\" aria-label=\"Первое знакомство\">\n-      <Compass size={21} aria-hidden=\"true\"/><p><strong>Первый раз в кабинете?</strong> Начните с главной. Кнопка «Помощь» объяснит текущий раздел.</p>\n+      <Compass size={21} aria-hidden=\"true\"/><p><strong>Первый раз в кабинете?</strong> Кнопка «Помощь» объяснит текущий раздел и доступные действия.</p>\n       <Button variant=\"ghost\" onClick={()=>setOpen(true)}>Как здесь работать</Button>\n       <button type=\"button\" className=\"icon-button\" aria-label=\"Скрыть приветствие\" onClick={dismiss}><X size={17}/></button>\n     </section>}\n--- local64/navigation.ts\n+++ current/frontend/src/navigation.ts\n@@ -32,6 +32,16 @@\n     \"В дневнике доступны только записи, которыми пациент поделился с лечащим врачом.\",\n     \"Сведения из учебной МИС показаны ниже для чтения. Изменение назначения в МИС отсюда не выполняется.\",\n   ]},\n+};\n+\n+export const patientSurveyGuide:GuideSection={\n+  title:\"Опрос врача\",\n+  description:\"Заполните назначенный опрос или посмотрите свой отправленный ответ.\",\n+  steps:[\n+    \"В незавершённом опросе заполните обязательные вопросы. Необязательные можно пропустить.\",\n+    \"Для паузы нажмите «Сохранить и продолжить позже». Черновик виден только вам.\",\n+    \"«Отправить врачу» делает ответы доступными врачу. Отправленные ответы здесь можно только просматривать.\",\n+  ],\n };\n \n const doctor:NavItem[] = [\n",
+  "verification": {
+    "regression": {
+      "red": "Existing doctor case passes; two new patient cases fail at expected active-survey navigation.",
+      "green": "3/3, 6398.1867ms, including dirty guard and list fallback; closed transport fixtures."
+    },
+    "frontend": {
+      "passed": 66,
+      "durationMs": 75211.4125,
+      "exitCode": 0,
+      "source": {
+        "file": "outputs/patient-survey-context-frontend-20261025.log",
+        "bytes": 9476,
+        "sha256": "ec0e4096b5968979eda4155ab22480fde6656a06ad40cc6d2cd431bb9afebc3d"
+      }
+    },
+    "buildAndTypes": {
+      "exitCode": 0,
+      "source": {
+        "file": "outputs/patient-survey-context-build-20261025.log",
+        "bytes": 2056,
+        "sha256": "df7ad0f7a3be809f21e6a960d27b705876513fea5318050b25ff10915a3890b8"
+      }
+    },
+    "http": {
+      "base_url": "http://127.0.0.1:8780",
+      "scope": "HTTP bytes and MIME only; not browser layout/interactions",
+      "assets": [
+        {
+          "file": "AdminDashboard-CYbDimMt.js",
+          "status": 200,
+          "bytes": 18580,
+          "sha256": "0d64af6ced6fd669c5efd526cc6c1cae70e067700e6663c38ca5c0316956ae48",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "CareWorkflow-C80PrRHh.js",
+          "status": 200,
+          "bytes": 26980,
+          "sha256": "88d5053ad2be600bfd2063125761fb22e0f83c15269826483f336e68d0cc6a46",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "Charts-BYtbmxPZ.js",
+          "status": 200,
+          "bytes": 5476,
+          "sha256": "fa15ec84012c4d114ec7f8038708a26b30fae8dad0d764a71b92876372e4b027",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "DoctorDashboard-ko2QPgi4.js",
+          "status": 200,
+          "bytes": 18046,
+          "sha256": "75c734610a094104cf4874ee43a79178a658ce100dd1c40a62a37b9d27806253",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "DoctorPatients-B3wyYnTq.js",
+          "status": 200,
+          "bytes": 36909,
+          "sha256": "cd122a7624ae15d973453a3560c9c0c87292a417b61585f3fcdf430a64b4b2ae",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "MedicationSchedule-C_cioHGn.css",
+          "status": 200,
+          "bytes": 2103,
+          "sha256": "3ecca9c112edd867ada5c834649a96069fb7decf7d1ea5da5aebe9da0ab28a4e",
+          "mime": "text/css; charset=utf-8"
+        },
+        {
+          "file": "MedicationSchedule-DjuBu8E-.js",
+          "status": 200,
+          "bytes": 37054,
+          "sha256": "ba048aef4cea3a93f468a03c763dfcdab486200f1ce578c7ea13e5957e484514",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "Patient-B8TZ85fQ.js",
+          "status": 200,
+          "bytes": 66883,
+          "sha256": "68ad4ad519d151034e4904b2dd8d9f6c696b58d3f141d78dd167c6a627120825",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "Patient-B9xuvwdE.css",
+          "status": 200,
+          "bytes": 26258,
+          "sha256": "9160fbf594ce6238151f4e13f5a28e00c0e62184711079b09f25bbebeb327b0b",
+          "mime": "text/css; charset=utf-8"
+        },
+        {
+          "file": "SurveyBuilder-Dyo6e5lT.js",
+          "status": 200,
+          "bytes": 25412,
+          "sha256": "295e53dc9ed3f8c37f1e19d5a7e1cddb26bfe57b810f90667568480f4e2c65bf",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "SurveyFields-Da_Z-Cgz.js",
+          "status": 200,
+          "bytes": 3313,
+          "sha256": "7ddf34f77575b7f0dc5acaba7e39c1e765fdbe81b1b2af4a32df267ae2af51c4",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "TaskBoard-BJuZa3fw.js",
+          "status": 200,
+          "bytes": 7839,
+          "sha256": "089f6fa7704acfe49d705f3abdb7175e617d014629a287bbf0636d49dff84433",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "WorkflowMetrics-B9KqwODa.js",
+          "status": 200,
+          "bytes": 12440,
+          "sha256": "8ae3156743a93c112b7cfaa322f02adc6cab2cfba3ffd5ec2bdc42d220dc749c",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "chevron-right-Dw6vq1YM.js",
+          "status": 200,
+          "bytes": 159,
+          "sha256": "df2f3bc41e8cd64bc7be15ae7f9c04d19713bd7a63955a1b32afc930e9ecb44e",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "collection-COswcvyL.js",
+          "status": 200,
+          "bytes": 939,
+          "sha256": "b8f61ba215c319fcc2aaf6ce0fb3b26b182c049b9a0d9e4febe85703fe8000e4",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "index-B163C92B.css",
+          "status": 200,
+          "bytes": 113957,
+          "sha256": "04fe5344a6808cec8526cfda5c8845f287bb3d22bbe9b877555b045b233a8676",
+          "mime": "text/css; charset=utf-8"
+        },
+        {
+          "file": "index-CivSw5YH.js",
+          "status": 200,
+          "bytes": 391449,
+          "sha256": "1db9acbecf3c6638f35c08104a2de362a88203261b817af90055a1024dfd5e8a",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "patientProgress-Do0fObh9.js",
+          "status": 200,
+          "bytes": 1130,
+          "sha256": "611dafc1b1ad2ac66b0b04ac3852b8c0bf56b6f106882f460ee96efa5097a0b3",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "plus--pu7A_T1.js",
+          "status": 200,
+          "bytes": 182,
+          "sha256": "df525a6ee5441e7e2f2378a312da4757955ce1e204cf33986fbe57d36ee5cecd",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "send-C7n5eG51.js",
+          "status": 200,
+          "bytes": 652,
+          "sha256": "80eb559af2f7d28ecad568f668d470ebd6ab814172095e07ce6502dd46961877",
+          "mime": "text/javascript; charset=utf-8"
+        }
+      ],
+      "health": {
+        "status": "ok",
+        "compass_db": true,
+        "mis_db": true,
+        "mode": "synthetic_demo"
+      },
+      "root_matches_dist": true,
+      "qa_health": {
+        "status": "ok",
+        "compass_db": true,
+        "mis_db": true,
+        "mode": "synthetic_demo"
+      }
+    },
+    "native": {
+      "checks": [
+        {
+          "breadcrumb": "Главная/Опросы врача/Ответ на опрос",
+          "current": [
+            "Опросы врачаОтветить или посмотреть историю",
+            "Ответ на опрос",
+            "Опросы"
+          ],
+          "heading": "Проверка UI · опыт приложения",
+          "overflow": false,
+          "stage": "desktop-overview-assignment",
+          "url": "http://127.0.0.1:8782/?section=overview&assignment=31"
+        },
+        {
+          "focus": "",
+          "stage": "desktop-help",
+          "steps": [],
+          "title": "Опрос врача"
+        },
+        {
+          "focus": "На главную",
+          "stage": "help-reverse-tab"
+        },
+        {
+          "dialogs": 0,
+          "focus": "Помощь с разделом",
+          "stage": "help-escape"
+        },
+        {
+          "current": [
+            "Опросы врачаОтветить или посмотреть историю",
+            "Ответ на опрос",
+            "Опросы"
+          ],
+          "focus": "",
+          "stage": "guard-stay",
+          "text": "QA: проверка сохранности ответа при открытии помощи. Не клинический ответ.",
+          "url": "http://127.0.0.1:8782/?section=overview&assignment=31"
+        },
+        {
+          "buttons": [],
+          "overflow": false,
+          "stage": "mobile-help",
+          "title": "Опрос врача",
+          "viewport": [
+            375,
+            844
+          ]
+        },
+        {
+          "current": [
+            "Опросы врачаОтветить или посмотреть историю",
+            "Опросы врача",
+            "Опросы"
+          ],
+          "heading": "Опросы врача",
+          "overflow": false,
+          "stage": "mobile-back-list",
+          "url": "http://127.0.0.1:8782/?section=surveys"
+        },
+        {
+          "stage": "list-help-fallback",
+          "steps": [],
+          "title": "Опросы врача"
+        },
+        {
+          "current": [
+            "Опросы врачаОтветить или посмотреть историю",
+            "Ответ на опрос",
+            "Опросы"
+          ],
+          "fields": 0,
+          "overflow": false,
+          "send": false,
+          "stage": "mobile-completed",
+          "url": "http://127.0.0.1:8782/?section=overview&assignment=30"
+        },
+        {
+          "current": [
+            "Опросы врачаОтветить или посмотреть историю",
+            "Ответ на опрос",
+            "Опросы"
+          ],
+          "selectedBounds": {
+            "bottom": 309.625,
+            "height": 73.5625,
+            "left": 14,
+            "right": 226,
+            "top": 236.0625,
+            "width": 212,
+            "x": 14,
+            "y": 236.0625
+          },
+          "stage": "mobile-menu",
+          "viewport": [
+            375,
+            844
+          ]
+        },
+        {
+          "stage": "completed-help",
+          "title": "Опрос врача"
+        },
+        {
+          "current": [
+            "Мой деньШаги, самочувствие и баллы",
+            "Мой день",
+            "Мой день"
+          ],
+          "heading": "Здравствуйте, Мария",
+          "stage": "home-after-completed-help",
+          "url": "http://127.0.0.1:8782/?section=overview"
+        },
+        {
+          "overflow": false,
+          "stage": "tablet-help",
+          "viewport": [
+            768,
+            1024
+          ]
+        },
+        {
+          "bounds": {
+            "bottom": 582.859375,
+            "height": 445.734375,
+            "left": 352.5,
+            "right": 912.5,
+            "top": 137.125,
+            "width": 560,
+            "x": 352.5,
+            "y": 137.125
+          },
+          "buttons": [
+            {
+              "height": 44,
+              "name": "Закрыть помощь"
+            },
+            {
+              "height": 44,
+              "name": "Понятно"
+            },
+            {
+              "height": 44,
+              "name": "На главную"
+            }
+          ],
+          "focus": "Закрыть помощь",
+          "stage": "desktop-dialog-supplement",
+          "steps": [
+            "1В незавершённом опросе заполните обязательные вопросы. Необязательные можно пропустить.",
+            "2Для паузы нажмите «Сохранить и продолжить позже». Черновик виден только вам.",
+            "3«Отправить врачу» делает ответы доступными врачу. Отправленные ответы здесь можно только просматривать."
+          ],
+          "viewport": [
+            1280,
+            720
+          ]
+        },
+        {
+          "bounds": {
+            "bottom": 700.84375,
+            "height": 557.6875,
+            "left": 17,
+            "right": 343,
+            "top": 143.15625,
+            "width": 326,
+            "x": 17,
+            "y": 143.15625
+          },
+          "buttons": [
+            {
+              "height": 44,
+              "name": "Закрыть помощь"
+            },
+            {
+              "height": 44,
+              "name": "Понятно"
+            },
+            {
+              "height": 44,
+              "name": "На главную"
+            }
+          ],
+          "focus": "Закрыть помощь",
+          "stage": "mobile-dialog-supplement",
+          "steps": [
+            "1В незавершённом опросе заполните обязательные вопросы. Необязательные можно пропустить.",
+            "2Для паузы нажмите «Сохранить и продолжить позже». Черновик виден только вам.",
+            "3«Отправить врачу» делает ответы доступными врачу. Отправленные ответы здесь можно только просматривать."
+          ],
+          "viewport": [
+            375,
+            844
+          ]
+        }
+      ],
+      "assigned": [
+        {
+          "id": "31",
+          "title": "Проверка UI · опыт приложения"
+        },
+        {
+          "id": "30",
+          "title": "Что мешает выполнять рекомендации?"
+        },
+        {
+          "id": "4",
+          "title": "Как вам подходит сопровождение?"
+        },
+        {
+          "id": "3",
+          "title": "Что мешает выполнять рекомендации?"
+        },
+        {
+          "id": "24",
+          "title": "Как вам подходит сопровождение?"
+        },
+        {
+          "id": "23",
+          "title": "Как вам подходит сопровождение?"
+        },
+        {
+          "id": "22",
+          "title": "Как вам подходит сопровождение?"
+        }
+      ],
+      "console": [],
+      "measurementCorrection": "Initial [role=dialog] selector did not match native dialog: empty/missing fields are unmeasured, supplemented with dialog.navigation-help[open]."
+    },
+    "backend": "Unchanged; previous151/151 retained and not rerun."
+  },
+  "screenshots": [
+    {
+      "file": "docs/evidence/patient-survey-context-2026-10-25/desktop-form.jpg",
+      "bytes": 67088,
+      "sha256": "543948c63695eff21694152da4a0f943529ab6b86849d75f378121acee6d0c61",
+      "pixels": [
+        1265,
+        712
+      ]
+    },
+    {
+      "file": "docs/evidence/patient-survey-context-2026-10-25/mobile-completed.jpg",
+      "bytes": 35412,
+      "sha256": "977ddfc0cbdff55a82341634ef12abcd70f8334a953d3d4ad56fa1ad3b34c21a",
+      "pixels": [
+        375,
+        844
+      ]
+    },
+    {
+      "file": "docs/evidence/patient-survey-context-2026-10-25/mobile-help.jpg",
+      "bytes": 33303,
+      "sha256": "986d2d0465757c04a8fd519618c93c6f7b1c1cf7e40918e273e3d054cd3f728e",
+      "pixels": [
+        360,
+        810
+      ]
+    },
+    {
+      "file": "docs/evidence/patient-survey-context-2026-10-25/mobile-leave-guard.jpg",
+      "bytes": 27360,
+      "sha256": "919cafd141e615134b53331d4695525ea452b9905d8404fc01c54fd7ef174267",
+      "pixels": [
+        360,
+        810
+      ]
+    },
+    {
+      "file": "docs/evidence/patient-survey-context-2026-10-25/mobile-menu.jpg",
+      "bytes": 33935,
+      "sha256": "23ae783a293515984fa0a3aad5d3f7ebd8a596ffeee6f6011618db3b8bdfebca",
+      "pixels": [
+        375,
+        844
+      ]
+    },
+    {
+      "file": "docs/evidence/patient-survey-context-2026-10-25/tablet-help.jpg",
+      "bytes": 57139,
+      "sha256": "ad43276ae5f037a79f6085b4518f9ad5fe29b0b32dab91adc64bd8fa264a25af",
+      "pixels": [
+        753,
+        1004
+      ]
+    }
+  ],
+  "qaData": "One assignment31 of an existing published non-medical UI template, patient2, QA database only. First-open telemetry is allowed. Typed unsaved text explicitly discarded; no new draft, submission or points. Existing completed assignment30 used for read-only checks. Main data unchanged.",
+  "limits": [
+    "Initial DOM measurements queried an explicit role selector, which misses the native HTML dialog. Empty fields are not proof of absence; final desktop/mobile supplement uses dialog.navigation-help[open].",
+    "Native observations cover375/768/1280, keyboard reverse-tab/Escape/focus return, guard-stay with text retained, explicit discard to list, list-help fallback and completed-help to home. This is not full WCAG, screen-reader, FPS or load acceptance.",
+    "Existing form Back and resume CTA were already correct; no new implementation was added for them."
+  ]
+}

@@ -1,0 +1,620 @@
+{
+  "recordedAt": "2026-10-25T05:30:56.740687+00:00",
+  "status": "answered-scale bounds preserved across patient, clinician and action-source views",
+  "changes": [
+    "Numeric saved answers show the bounds from their own published question version as separate neutral context.",
+    "Answer values are not normalized, scored or interpreted; known zero and absent response remain distinct. Textual whitespace separates the number and caption for assistive reading."
+  ],
+  "scope": "Two runtime files and two rendering-contract tests. Actual consumers:PatientSurvey,DoctorPatients,CareWorkflow. Admin is not a consumer. No question content, required flag, version, API, access or clinical/reward rule change.",
+  "verification": {
+    "native": {
+      "before": {
+        "answers": [
+          {
+            "answer": "Да",
+            "question": "Планируете ли вы продолжать наблюдение в клинике?"
+          },
+          {
+            "answer": "Мне важно понимать следующий шаг.",
+            "question": "Что повлияло на ваш ответ?"
+          },
+          {
+            "answer": "4",
+            "question": "Насколько понятны дальнейшие шаги?"
+          }
+        ],
+        "overflow": false,
+        "viewport": {
+          "height": 844,
+          "width": 375
+        }
+      },
+      "checks": [
+        {
+          "answers": [
+            {
+              "answer": "Да",
+              "question": "Планируете ли вы продолжать наблюдение в клинике?",
+              "rangeFont": null
+            },
+            {
+              "answer": "Мне важно понимать следующий шаг.",
+              "question": "Что повлияло на ваш ответ?",
+              "rangeFont": null
+            },
+            {
+              "answer": "4Шкала от 1 до 5",
+              "question": "Насколько понятны дальнейшие шаги?",
+              "range": "Шкала от 1 до 5",
+              "rangeFont": "12px",
+              "rect": {
+                "bottom": 547.4405517578125,
+                "height": 19.1875,
+                "left": 52.546875,
+                "right": 140.078125,
+                "top": 528.2530517578125,
+                "width": 87.53125,
+                "x": 52.546875,
+                "y": 528.2530517578125
+              }
+            }
+          ],
+          "overflow": false,
+          "title": "Как вам подходит сопровождение?",
+          "viewport": {
+            "height": 844,
+            "width": 375
+          },
+          "label": "patient-answer-mobile"
+        },
+        {
+          "answers": [
+            {
+              "answer": "Да",
+              "question": "Планируете ли вы продолжать наблюдение в клинике?",
+              "rangeFont": null
+            },
+            {
+              "answer": "Мне важно понимать следующий шаг.",
+              "question": "Что повлияло на ваш ответ?",
+              "rangeFont": null
+            },
+            {
+              "answer": "4 Шкала от 1 до 5",
+              "question": "Насколько понятны дальнейшие шаги?",
+              "range": "Шкала от 1 до 5",
+              "rangeFont": "12px",
+              "rect": {
+                "bottom": 546.140625,
+                "height": 19.1875,
+                "left": 56.390625,
+                "right": 143.921875,
+                "top": 526.953125,
+                "width": 87.53125,
+                "x": 56.390625,
+                "y": 526.953125
+              }
+            }
+          ],
+          "overflow": false,
+          "title": "Как вам подходит сопровождение?",
+          "viewport": {
+            "height": 844,
+            "width": 375
+          },
+          "label": "patient-answer-mobile-final"
+        },
+        {
+          "answers": [
+            {
+              "answer": "Да",
+              "question": "Планируете ли вы продолжать наблюдение в клинике?",
+              "rangeFont": null
+            },
+            {
+              "answer": "Мне важно понимать следующий шаг.",
+              "question": "Что повлияло на ваш ответ?",
+              "rangeFont": null
+            },
+            {
+              "answer": "4 Шкала от 1 до 5",
+              "question": "Насколько понятны дальнейшие шаги?",
+              "range": "Шкала от 1 до 5",
+              "rangeFont": "12px",
+              "rect": {
+                "bottom": 781.140625,
+                "height": 19.1875,
+                "left": 673,
+                "right": 760.53125,
+                "top": 761.953125,
+                "width": 87.53125,
+                "x": 673,
+                "y": 761.953125
+              }
+            },
+            {
+              "answer": "Не всё понятно",
+              "question": "Что сейчас мешает выполнять согласованные рекомендации?",
+              "rangeFont": null
+            },
+            {
+              "answer": "Не до конца понимаю, что делать между приёмами.",
+              "question": "Что важно знать вашему врачу?",
+              "rangeFont": null
+            },
+            {
+              "answer": "Да",
+              "question": "Планируете ли вы продолжать наблюдение в клинике?",
+              "rangeFont": null
+            },
+            {
+              "answer": "Синтетический ответ для сценария участия.",
+              "question": "Что повлияло на ваш ответ?",
+              "rangeFont": null
+            },
+            {
+              "answer": "4 Шкала от 1 до 5",
+              "question": "Насколько понятны дальнейшие шаги?",
+              "range": "Шкала от 1 до 5",
+              "rangeFont": "12px",
+              "rect": {
+                "bottom": 1628.671875,
+                "height": 19.1875,
+                "left": 673,
+                "right": 760.53125,
+                "top": 1609.484375,
+                "width": 87.53125,
+                "x": 673,
+                "y": 1609.484375
+              }
+            },
+            {
+              "answer": "Да",
+              "question": "Планируете ли вы продолжать наблюдение в клинике?",
+              "rangeFont": null
+            },
+            {
+              "answer": "Синтетический ответ для сценария участия.",
+              "question": "Что повлияло на ваш ответ?",
+              "rangeFont": null
+            },
+            {
+              "answer": "4 Шкала от 1 до 5",
+              "question": "Насколько понятны дальнейшие шаги?",
+              "range": "Шкала от 1 до 5",
+              "rangeFont": "12px",
+              "rect": {
+                "bottom": 2069.9375,
+                "height": 19.1875,
+                "left": 673,
+                "right": 760.53125,
+                "top": 2050.75,
+                "width": 87.53125,
+                "x": 673,
+                "y": 2050.75
+              }
+            },
+            {
+              "answer": "Да",
+              "question": "Планируете ли вы продолжать наблюдение в клинике?",
+              "rangeFont": null
+            },
+            {
+              "answer": "Синтетический ответ для сценария участия.",
+              "question": "Что повлияло на ваш ответ?",
+              "rangeFont": null
+            },
+            {
+              "answer": "4 Шкала от 1 до 5",
+              "question": "Насколько понятны дальнейшие шаги?",
+              "range": "Шкала от 1 до 5",
+              "rangeFont": "12px",
+              "rect": {
+                "bottom": 2511.203125,
+                "height": 19.1875,
+                "left": 673,
+                "right": 760.53125,
+                "top": 2492.015625,
+                "width": 87.53125,
+                "x": 673,
+                "y": 2492.015625
+              }
+            }
+          ],
+          "overflow": false,
+          "title": "Мария Иванова",
+          "viewport": {
+            "height": 1000,
+            "width": 1440
+          },
+          "label": "doctor-answer-desktop-final"
+        },
+        {
+          "answers": [
+            {
+              "answer": "Да",
+              "question": "Планируете ли вы продолжать наблюдение в клинике?",
+              "rangeFont": null
+            },
+            {
+              "answer": "Мне важно понимать следующий шаг.",
+              "question": "Что повлияло на ваш ответ?",
+              "rangeFont": null
+            },
+            {
+              "answer": "4 Шкала от 1 до 5",
+              "question": "Насколько понятны дальнейшие шаги?",
+              "range": "Шкала от 1 до 5",
+              "rangeFont": "12px",
+              "rect": {
+                "bottom": 721.359375,
+                "height": 19.1875,
+                "left": 365.390625,
+                "right": 452.921875,
+                "top": 702.171875,
+                "width": 87.53125,
+                "x": 365.390625,
+                "y": 702.171875
+              }
+            }
+          ],
+          "overflow": false,
+          "title": "Мария Иванова",
+          "viewport": {
+            "height": 1000,
+            "width": 1440
+          },
+          "label": "doctor-source-desktop-final"
+        },
+        {
+          "answers": [
+            {
+              "answer": "Да",
+              "question": "Планируете ли вы продолжать наблюдение в клинике?",
+              "rangeFont": null
+            },
+            {
+              "answer": "Мне важно понимать следующий шаг.",
+              "question": "Что повлияло на ваш ответ?",
+              "rangeFont": null
+            },
+            {
+              "answer": "4 Шкала от 1 до 5",
+              "question": "Насколько понятны дальнейшие шаги?",
+              "range": "Шкала от 1 до 5",
+              "rangeFont": "12px",
+              "rect": {
+                "bottom": 918.484375,
+                "height": 19.1875,
+                "left": 75.390625,
+                "right": 162.921875,
+                "top": 899.296875,
+                "width": 87.53125,
+                "x": 75.390625,
+                "y": 899.296875
+              }
+            }
+          ],
+          "overflow": false,
+          "title": "Мария Иванова",
+          "viewport": {
+            "height": 844,
+            "width": 375
+          },
+          "label": "doctor-source-mobile-final"
+        },
+        {
+          "answers": [
+            {
+              "answer": "Да",
+              "question": "Планируете ли вы продолжать наблюдение в клинике?",
+              "rangeFont": null
+            },
+            {
+              "answer": "Мне важно понимать следующий шаг.",
+              "question": "Что повлияло на ваш ответ?",
+              "rangeFont": null
+            },
+            {
+              "answer": "4 Шкала от 1 до 5",
+              "question": "Насколько понятны дальнейшие шаги?",
+              "range": "Шкала от 1 до 5",
+              "rangeFont": "12px",
+              "rect": {
+                "bottom": 431.484375,
+                "height": 19.1875,
+                "left": 75.390625,
+                "right": 162.921875,
+                "top": 412.296875,
+                "width": 87.53125,
+                "x": 75.390625,
+                "y": 412.296875
+              }
+            }
+          ],
+          "overflow": false,
+          "title": "Мария Иванова",
+          "viewport": {
+            "height": 844,
+            "width": 375
+          },
+          "label": "doctor-source-range-mobile-final"
+        }
+      ],
+      "returned": {
+        "activeTag": "ARTICLE",
+        "assignment": "4",
+        "highlighted": "assignment-result care-source-highlight",
+        "overflow": false,
+        "range": "Шкала от 1 до 5",
+        "selectedTab": "Обратная связь"
+      },
+      "console": [],
+      "notes": "Initial after-reload phone capture was during mount motion and lacked spoken whitespace; replaced after final spacing change with opacity1/transformnone. The first source-phone context image did not include the range in the viewport; overwritten after ordinary native locator scrolling to the actual range. No survey, task or clinical write was submitted."
+    },
+    "acceptedVisibleStates": 4,
+    "rawStates": 6,
+    "frontend": {
+      "passed": 60,
+      "durationMs": 63065.5588,
+      "exitCode": 0,
+      "source": {
+        "file": "outputs/answer-scale-frontend-20261025.log",
+        "bytes": 8379,
+        "sha256": "9548b5bbde8e8f042f5a5679dddd194b3451365fffe49068c553803569797050"
+      }
+    },
+    "regression": {
+      "red": "1pass/1fail at missing original bounds",
+      "green": "2/2;two original ranges, unchanged answer, known zero and absent optional response"
+    },
+    "buildAndTypes": {
+      "exitCode": 0,
+      "source": {
+        "file": "outputs/answer-scale-build-20261025.log",
+        "bytes": 2056,
+        "sha256": "4458579b03330b2024df59bfe9b1780f8de6c91d45e34545ba162827e5c8dc36"
+      }
+    },
+    "http": {
+      "base_url": "http://127.0.0.1:8780",
+      "scope": "HTTP bytes and MIME only; not browser layout/interactions",
+      "assets": [
+        {
+          "file": "AdminDashboard-CTwovcUF.js",
+          "status": 200,
+          "bytes": 18580,
+          "sha256": "fec563b886c6a7a349c76d3411a194d0f94a5c57ba63bb702c966ebd26bc4d14",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "CareWorkflow-D4rI80w3.js",
+          "status": 200,
+          "bytes": 26980,
+          "sha256": "913a29d03115ee51f0bdcf5524372ad4e46ce96b5e3866ac659b3cf71ac46a91",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "Charts-oO1Mq9VR.js",
+          "status": 200,
+          "bytes": 5476,
+          "sha256": "db3a4eca1ef745a396234ad500c22c680462557fca535eb9774f85eae9c28886",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "DoctorDashboard-C9dsyYCK.js",
+          "status": 200,
+          "bytes": 18046,
+          "sha256": "55489c91ad174d745f8e74b6d3a1735a08f4fac2f8fe7d696a441a3a3cd678db",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "DoctorPatients-DgkoRMKn.js",
+          "status": 200,
+          "bytes": 36363,
+          "sha256": "1a4ce15ba0400ff18ad7bfdb6dd380949b6457f0187283ddd227a31dce9c97b7",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "MedicationSchedule-C_cioHGn.css",
+          "status": 200,
+          "bytes": 2103,
+          "sha256": "3ecca9c112edd867ada5c834649a96069fb7decf7d1ea5da5aebe9da0ab28a4e",
+          "mime": "text/css; charset=utf-8"
+        },
+        {
+          "file": "MedicationSchedule-DNjEcvb2.js",
+          "status": 200,
+          "bytes": 37054,
+          "sha256": "00bd857024ded14f61ee95c0fdf994c1fc4e7f055729ec26eac09747d9c08606",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "Patient-B9xuvwdE.css",
+          "status": 200,
+          "bytes": 26258,
+          "sha256": "9160fbf594ce6238151f4e13f5a28e00c0e62184711079b09f25bbebeb327b0b",
+          "mime": "text/css; charset=utf-8"
+        },
+        {
+          "file": "Patient-CtPAYQoR.js",
+          "status": 200,
+          "bytes": 66896,
+          "sha256": "b16c5241ce6fd096eb3a33e35041b37653f505bf6289d9a4bff5ad28142d052b",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "SurveyBuilder-P22rzNsG.js",
+          "status": 200,
+          "bytes": 25412,
+          "sha256": "0421d656fdbb24fc6d2b458c6a99ac442baabb593c7acebbda5fe1b5e97c4234",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "SurveyFields-ClV81IGg.js",
+          "status": 200,
+          "bytes": 3313,
+          "sha256": "ab5c22302aca8bc36cb1c62e57a682737bc13c4d00abc8a30f35a4f05210b34b",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "TaskBoard-BS-bl4sK.js",
+          "status": 200,
+          "bytes": 7839,
+          "sha256": "d42ac45afcc32760f51905dc365b129105a8f09e053045bdf2197d03a01c1842",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "WorkflowMetrics-CILZ6LcL.js",
+          "status": 200,
+          "bytes": 12440,
+          "sha256": "b0d69f28e1f06b2f01bd3a6ac6db7be3093786495da612caab2e7dfd32aff2ba",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "chevron-right-BzHs1qgx.js",
+          "status": 200,
+          "bytes": 159,
+          "sha256": "883296f78798b69a7d39a182f58b0a0f9f7ff2189bd413c0d6fd7a9f6f85fc8e",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "collection-COswcvyL.js",
+          "status": 200,
+          "bytes": 939,
+          "sha256": "b8f61ba215c319fcc2aaf6ce0fb3b26b182c049b9a0d9e4febe85703fe8000e4",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "index-B163C92B.css",
+          "status": 200,
+          "bytes": 113957,
+          "sha256": "04fe5344a6808cec8526cfda5c8845f287bb3d22bbe9b877555b045b233a8676",
+          "mime": "text/css; charset=utf-8"
+        },
+        {
+          "file": "index-CbVO0vW2.js",
+          "status": 200,
+          "bytes": 390678,
+          "sha256": "2de2c2fee2d616253146a5761070b76e970a82f441c1bd6894cb1e0e7e490828",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "patientProgress-Do0fObh9.js",
+          "status": 200,
+          "bytes": 1130,
+          "sha256": "611dafc1b1ad2ac66b0b04ac3852b8c0bf56b6f106882f460ee96efa5097a0b3",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "plus-tBx_k3zC.js",
+          "status": 200,
+          "bytes": 182,
+          "sha256": "2b2a494c73c9489737ce7497d8139814c0be7189cac99427ddf29e8ce472357e",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "send-dAeuxDO7.js",
+          "status": 200,
+          "bytes": 652,
+          "sha256": "8b3b1059942543ef2a4bf063a525d8f7b7d5366f876ab6471b7cdff4780aa487",
+          "mime": "text/javascript; charset=utf-8"
+        }
+      ],
+      "health": {
+        "status": "ok",
+        "compass_db": true,
+        "mis_db": true,
+        "mode": "synthetic_demo"
+      },
+      "root_matches_dist": true,
+      "qa_health": {
+        "status": "ok",
+        "compass_db": true,
+        "mis_db": true,
+        "mode": "synthetic_demo"
+      }
+    },
+    "backend": "Unchanged,last151/151 retained; not rerun."
+  },
+  "sources": [
+    {
+      "file": "frontend/src/SurveyFields.tsx",
+      "bytes": 5606,
+      "sha256": "172414d7d2ff3030056b25bab22379965e2cdbcfb4f20483e74db96b59772c9f"
+    },
+    {
+      "file": "frontend/src/workspace.css",
+      "bytes": 65895,
+      "sha256": "17597970ab565be839a6442492d82ac7bf2d2bd91580407024aedd29e1118730"
+    },
+    {
+      "file": "frontend/tests/answer-scale-context.test.mjs",
+      "bytes": 2199,
+      "sha256": "748ce70a39165d60fa85ba7474809ef7f7fd608b588031d60e777f1d8e915924"
+    }
+  ],
+  "diff": "--- local58/SurveyFields.tsx\n+++ current/frontend/src/SurveyFields.tsx\n@@ -132,7 +132,7 @@\n         return (\n           <div key={q.id} data-question={q.id} className={highlightQuestion===q.id?\"answer-highlight\":undefined} tabIndex={highlightQuestion===q.id?-1:undefined} role={highlightQuestion===q.id?\"group\":undefined} aria-labelledby={highlightQuestion===q.id?`${summaryId}-${index}`:undefined}>\n             <dt id={`${summaryId}-${index}`}>{q.prompt}</dt>\n-            <dd>{answer}</dd>\n+            <dd>{answer}{q.kind===\"scale\"&&typeof value===\"number\"&&<> <span className=\"answer-scale-range\">Шкала от {q.minimum} до {q.maximum}</span></>}</dd>\n           </div>\n         );\n       })}\n--- local58/workspace.css\n+++ current/frontend/src/workspace.css\n@@ -209,6 +209,7 @@\n .patient-secondary .panel { padding: 22px; }\n .answer-summary dt { font-size: 13px; color: #63737e; }\n .answer-summary dd { font-size: 14px; line-height: 1.65; color: #243b47; }\n+.answer-summary .answer-scale-range { display:inline-block; margin-inline-start:8px; color:var(--muted); font-size:12px; line-height:1.6; font-weight:400; }\n .answer-source-context { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; padding: 12px 16px; margin: 0 0 20px; background: #edf5f2; border-radius: 9px; color: #325f55; font-size: var(--text-label); }\n .answer-source-context > svg { flex-shrink: 0; }\n .answer-source-context > span { flex: 1; min-width: min(180px,100%); }\n",
+  "screenshots": [
+    {
+      "file": "docs/evidence/answer-scale-context-2026-10-25/doctor-answer-desktop.jpg",
+      "bytes": 106603,
+      "sha256": "6d992a5d7ceddff7e13a5a559219f82c9919e03006884e80bd1bdd5819b2c6a9",
+      "pixels": [
+        1425,
+        990
+      ]
+    },
+    {
+      "file": "docs/evidence/answer-scale-context-2026-10-25/doctor-return-mobile.jpg",
+      "bytes": 33309,
+      "sha256": "981b7fe83e157df946aa4c21e44050dbfc59f9159d925ebd01f95bc51adf87ee",
+      "pixels": [
+        360,
+        810
+      ]
+    },
+    {
+      "file": "docs/evidence/answer-scale-context-2026-10-25/doctor-source-desktop.jpg",
+      "bytes": 94634,
+      "sha256": "4f49c46cd4a1f5ecbfb3c5468e4922721b3b28adf65cefceac666a6ee6f3d800",
+      "pixels": [
+        1425,
+        990
+      ]
+    },
+    {
+      "file": "docs/evidence/answer-scale-context-2026-10-25/doctor-source-mobile.jpg",
+      "bytes": 30352,
+      "sha256": "85617a0de30e0f4af520fb76a14478f6f7622cc3ff9bc6a7b70e29f001f37061",
+      "pixels": [
+        360,
+        810
+      ]
+    },
+    {
+      "file": "docs/evidence/answer-scale-context-2026-10-25/patient-after-mobile.jpg",
+      "bytes": 34935,
+      "sha256": "063f3338d4b85893f07862dffc84632efee946e41b8e9b3208a54ad6a6284f84",
+      "pixels": [
+        375,
+        844
+      ]
+    },
+    {
+      "file": "docs/evidence/answer-scale-context-2026-10-25/patient-before-mobile.jpg",
+      "bytes": 34279,
+      "sha256": "3d2f8f9ee6d9cb1712d066141dd8047c8037c6dc5cc5fab1c2f7a9b78c1b18de",
+      "pixels": [
+        375,
+        844
+      ]
+    }
+  ],
+  "limits": [
+    "Initial phone after-state predates the final whitespace and was captured during entrance motion; screenshot replaced after opacity1/transformnone.",
+    "First source-phone state had the range below the viewport; only the later range-in-view state is accepted for visible mobile proof. Normal native locator scrolling used to frame the caption.",
+    "No survey response, draft, task, note, policy or medical write submitted. Selecting an action source only opened its editor.",
+    "No new whole-browser/WCAG, screen-reader, motion/FPS, load or clinical acceptance."
+  ]
+}

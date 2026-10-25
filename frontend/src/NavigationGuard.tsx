@@ -1,6 +1,6 @@
 import { createContext, useCallback, useContext, useEffect, useId, useMemo, useRef, useState, type ReactNode } from "react";
 import { Button } from "./UI";
-import { m, motionTokens, useInteractionMotion } from "./Interaction";
+import { keepDialogFocus, m, motionTokens, useInteractionMotion } from "./Interaction";
 
 export type LeavePrompt = {eyebrow:string;title:string;message:string;stayLabel:string;discardLabel?:string};
 type FormState = {dirty:boolean;pending?:boolean;prompt?:LeavePrompt;save?:()=>Promise<boolean>;scope?:string;focus?:()=>void};
@@ -20,6 +20,7 @@ export function NavigationGuard({ children }: { children: ReactNode }) {
   const dialog = useRef<HTMLDialogElement>(null);
   const modalOpen = useRef(false);
   const returnFocus=useRef<(()=>void)|undefined>(undefined);
+  const blockedKeys=useRef<string[]>([]);
   const [saving,setSaving] = useState(false);
   const [blocked,setBlocked] = useState(false);
   const [pending, setPending] = useState<{action:()=>void;keys:string[];prompt?:LeavePrompt}|null>(null);
@@ -36,7 +37,7 @@ export function NavigationGuard({ children }: { children: ReactNode }) {
   const run = useCallback((action: () => void,keys?:string[],prompt?:LeavePrompt) => {
     const selected=keys??[...forms.current.keys()];
     const active = selected.flatMap(key=>forms.current.has(key)?[forms.current.get(key)!]:[]);
-    if(active.some(form=>form.pending))setBlocked(true);
+    if(active.some(form=>form.pending)){blockedKeys.current=selected;setBlocked(true);}
     else if(active.some(form=>form.dirty))setPending({action,keys:selected,prompt});
     else action();
   }, []);
@@ -56,7 +57,12 @@ export function NavigationGuard({ children }: { children: ReactNode }) {
     window.addEventListener("beforeunload",protect);
     return()=>window.removeEventListener("beforeunload",protect);
   },[]);
-  useEffect(()=>{if(blocked && !writing)setBlocked(false);},[blocked,writing]);
+  useEffect(()=>{
+    if(blocked&&!writing){
+      returnFocus.current=blockedKeys.current.map(key=>forms.current.get(key)).find(form=>form?.focus)?.focus;
+      blockedKeys.current=[];setBlocked(false);
+    }
+  },[blocked,writing]);
   useEffect(() => {
     if ((pending || blocked) && !dialog.current?.open) dialog.current?.showModal();
     if (!pending && !blocked && dialog.current?.open) {dialog.current.close();returnFocus.current?.();returnFocus.current=undefined;}
@@ -73,7 +79,7 @@ export function NavigationGuard({ children }: { children: ReactNode }) {
   function stay() {returnFocus.current=changed[0]?.focus??active.find(form=>form.pending)?.focus;setPending(null);setBlocked(false);}
   return <NavigationContext.Provider value={context}>
     {children}
-    <dialog ref={dialog} className="leave-dialog" aria-labelledby="leave-form-title"
+    <dialog ref={dialog} className="leave-dialog" aria-labelledby="leave-form-title" onKeyDown={keepDialogFocus}
       onCancel={event => {event.preventDefault();if(!saving)stay();}}>
       <m.div initial={false} animate={{opacity:pending||blocked?1:0,y:pending||blocked||!moving?0:motionTokens.distance.medium}} transition={transition}>
       <p className="eyebrow">{blocked?"Действие выполняется":prompt.eyebrow}</p>

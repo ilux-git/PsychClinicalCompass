@@ -1,0 +1,507 @@
+{
+  "recordedAt": "2026-10-25T07:09:51.786939+00:00",
+  "status": "Mobile notice clears fixed navigation; existing no-footer and desktop positions retained",
+  "scope": "One CSS declaration under max-width780px and only for a main shell containing mobile navigation. No JS, timing, dismissal, announcement, permission or reward change.",
+  "sources": [
+    {
+      "file": "frontend/src/workspace.css",
+      "bytes": 67943,
+      "sha256": "0d64069102161d96383ba94b2b61a151d58f111c5b77306ede6359dd4eb5ea6e"
+    }
+  ],
+  "diff": "--- local69/workspace.css\n+++ current/frontend/src/workspace.css\n@@ -748,6 +748,7 @@\n @media (max-width:1100px) { .workspace-path { gap: 16px; } }\n @media (max-width:780px) {\n   .main-shell:has(.mobile-navigation) { padding-bottom: calc(70px + env(safe-area-inset-bottom)); }\n+  .main-shell:has(.mobile-navigation) .toast { bottom: calc(70px + 16px + env(safe-area-inset-bottom)); }\n   .mobile-navigation { position: fixed; display: flex; z-index: 30; bottom: 0; left: 0; right: 0; min-height: 66px; padding: 6px 8px calc(6px + env(safe-area-inset-bottom)); gap: 4px; border-top: 1px solid #d0deda; background: #fcfefe; box-shadow: 0 -3px 16px #172f3b08; }\n   .mobile-navigation a,.mobile-navigation button { display: flex; flex: 1; min-width: 0; min-height: 54px; align-items: center; justify-content: center; flex-direction: column; gap: 4px; padding: 6px 1px; border: 0; border-radius: 8px; background: transparent; color: #596f7a; font-size: 12px; font-weight: 500; line-height: 1.35; text-decoration: none; cursor: pointer; }\n   .mobile-navigation .active { background: #e8f2ee; color: #1c675c; }\n",
+  "verification": {
+    "native": {
+      "checks": [
+        {
+          "focus": null,
+          "gap": -51.027099609375,
+          "navigation": {
+            "bottom": 844,
+            "height": 67,
+            "left": 0,
+            "right": 360,
+            "top": 777,
+            "width": 360,
+            "x": 0,
+            "y": 777
+          },
+          "navigationVisible": true,
+          "overflow": false,
+          "stage": "before-patient-mobile",
+          "text": "Вид прогресса сохранён",
+          "toast": {
+            "bottom": 828.027099609375,
+            "height": 62,
+            "left": 116.71875,
+            "right": 344,
+            "top": 766.027099609375,
+            "width": 227.28125,
+            "x": 116.71875,
+            "y": 766.027099609375
+          },
+          "toastBottom": "16px",
+          "viewport": [
+            375,
+            844
+          ]
+        },
+        {
+          "focus": null,
+          "gap": 19,
+          "navigation": {
+            "bottom": 844,
+            "height": 67,
+            "left": 0,
+            "right": 360,
+            "top": 777,
+            "width": 360,
+            "x": 0,
+            "y": 777
+          },
+          "navigationVisible": true,
+          "overflow": false,
+          "stage": "after-patient-mobile",
+          "text": "Вид прогресса сохранён",
+          "toast": {
+            "bottom": 758,
+            "height": 62,
+            "left": 116.71875,
+            "right": 344,
+            "top": 696,
+            "width": 227.28125,
+            "x": 116.71875,
+            "y": 696
+          },
+          "toastBottom": "86px",
+          "viewport": [
+            375,
+            844
+          ],
+          "motion": {
+            "opacity": "1",
+            "transform": "none"
+          }
+        },
+        {
+          "focus": null,
+          "gap": 19,
+          "navigation": {
+            "bottom": 1024,
+            "height": 67,
+            "left": 0,
+            "right": 753,
+            "top": 957,
+            "width": 753,
+            "x": 0,
+            "y": 957
+          },
+          "navigationVisible": true,
+          "overflow": false,
+          "stage": "after-patient-tablet",
+          "text": "Вид прогресса сохранён",
+          "toast": {
+            "bottom": 938,
+            "height": 66,
+            "left": 488.515625,
+            "right": 737,
+            "top": 872,
+            "width": 248.484375,
+            "x": 488.515625,
+            "y": 872
+          },
+          "toastBottom": "86px",
+          "viewport": [
+            768,
+            1024
+          ],
+          "motion": {
+            "opacity": "1",
+            "transform": "none"
+          }
+        },
+        {
+          "focus": null,
+          "gap": -979.97802734375,
+          "navigation": {
+            "bottom": 0,
+            "height": 0,
+            "left": 0,
+            "right": 0,
+            "top": 0,
+            "width": 0,
+            "x": 0,
+            "y": 0
+          },
+          "navigationVisible": false,
+          "overflow": false,
+          "stage": "after-patient-desktop",
+          "text": "Вид прогресса сохранён",
+          "toast": {
+            "bottom": 979.97802734375,
+            "height": 66,
+            "left": 1150.515625,
+            "right": 1399,
+            "top": 913.97802734375,
+            "width": 248.484375,
+            "x": 1150.515625,
+            "y": 913.97802734375
+          },
+          "toastBottom": "24px",
+          "viewport": [
+            1440,
+            1000
+          ],
+          "motion": {
+            "opacity": "0.00290087",
+            "transform": "matrix(1, 0, 0, 1, 0, 3.9884)"
+          }
+        },
+        {
+          "focus": null,
+          "gap": 19,
+          "navigation": {
+            "bottom": 844,
+            "height": 67,
+            "left": 0,
+            "right": 360,
+            "top": 777,
+            "width": 360,
+            "x": 0,
+            "y": 777
+          },
+          "navigationVisible": true,
+          "overflow": false,
+          "stage": "after-doctor-mobile",
+          "text": "Задача связана с источником и назначена исполнителю",
+          "toast": {
+            "bottom": 758,
+            "height": 62,
+            "left": 16,
+            "right": 344,
+            "top": 696,
+            "width": 328,
+            "x": 16,
+            "y": 696
+          },
+          "toastBottom": "86px",
+          "viewport": [
+            375,
+            844
+          ],
+          "motion": {
+            "opacity": "1",
+            "transform": "none"
+          }
+        },
+        {
+          "focus": null,
+          "gap": null,
+          "navigationVisible": false,
+          "overflow": false,
+          "stage": "after-coordinator-mobile-no-footer",
+          "text": "Задача принята в работу",
+          "toast": {
+            "bottom": 828,
+            "height": 62,
+            "left": 114.25,
+            "right": 344,
+            "top": 766,
+            "width": 229.75,
+            "x": 114.25,
+            "y": 766
+          },
+          "toastBottom": "16px",
+          "viewport": [
+            375,
+            844
+          ],
+          "motion": {
+            "opacity": "1",
+            "transform": "none"
+          }
+        },
+        {
+          "focus": null,
+          "gap": null,
+          "navigationVisible": false,
+          "overflow": false,
+          "stage": "after-coordinator-desktop",
+          "text": "Действие сохранено; результат проверяет врач",
+          "toast": {
+            "bottom": 976,
+            "height": 66,
+            "left": 1022.171875,
+            "right": 1399,
+            "top": 910,
+            "width": 376.828125,
+            "x": 1022.171875,
+            "y": 910
+          },
+          "toastBottom": "24px",
+          "viewport": [
+            1440,
+            1000
+          ],
+          "motion": {
+            "opacity": "1",
+            "transform": "none"
+          }
+        }
+      ],
+      "patientRestored": {
+        "balance": "113 баллов доступно",
+        "mode": "map",
+        "select": "map"
+      },
+      "console": [],
+      "notes": "Accepted final stages: patient375/768,doctor375,coordinator375-without-footer/1440. Patient desktop capture was taken during toast exit and is excluded from visual acceptance. Doctor availability produced a local status confirmation, not a global toast; original available status restored, then task38 creation supplied the actual global-notice check."
+    },
+    "acceptedFinalStages": [
+      "after-patient-mobile",
+      "after-patient-tablet",
+      "after-doctor-mobile",
+      "after-coordinator-mobile-no-footer",
+      "after-coordinator-desktop"
+    ],
+    "buildAndTypes": {
+      "exitCode": 0,
+      "source": {
+        "file": "outputs/mobile-notice-build-20261025.log",
+        "bytes": 2056,
+        "sha256": "6cb273bff3b4a2fc011bacd6d8bc8f18c49d6648c25df080b6a3a55e9224065c"
+      }
+    },
+    "http": {
+      "base_url": "http://127.0.0.1:8780",
+      "scope": "HTTP bytes and MIME only; not browser layout/interactions",
+      "assets": [
+        {
+          "file": "AdminDashboard-DhDIrMBr.js",
+          "status": 200,
+          "bytes": 18580,
+          "sha256": "5c47b529ee224c471624540a96202e99cc2802060fdd51451de620e047afef85",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "CareWorkflow-DmyqRCW-.js",
+          "status": 200,
+          "bytes": 26980,
+          "sha256": "8008c2cd946a283add8286f9fc16f33d95f1edcf8317bfd9709c09e15a0d1d02",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "Charts-C4jPu13n.js",
+          "status": 200,
+          "bytes": 5476,
+          "sha256": "e9c767d3952123cd6269f1e7eebaefc5217c0ad02ce77dde9efa57bc9313b895",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "DoctorDashboard-D3iL3Pb4.js",
+          "status": 200,
+          "bytes": 18046,
+          "sha256": "7a96ff9c726a52885a89c3f4fc7ebae403e19fcfbe6fa93d5707dff1536e79ac",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "DoctorPatients-DXfhaaH0.js",
+          "status": 200,
+          "bytes": 36909,
+          "sha256": "bff839bb43409014b93170f2b87af0fd577d873a4ffa1b328d53dc6bfd189d66",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "MedicationSchedule-C_cioHGn.css",
+          "status": 200,
+          "bytes": 2103,
+          "sha256": "3ecca9c112edd867ada5c834649a96069fb7decf7d1ea5da5aebe9da0ab28a4e",
+          "mime": "text/css; charset=utf-8"
+        },
+        {
+          "file": "MedicationSchedule-DTf2uTId.js",
+          "status": 200,
+          "bytes": 37054,
+          "sha256": "7137b11b28fa23e3c6df023aa18bc911b7c33ec63e007c6f5cad4f6cf7b07f36",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "Patient-B9xuvwdE.css",
+          "status": 200,
+          "bytes": 26258,
+          "sha256": "9160fbf594ce6238151f4e13f5a28e00c0e62184711079b09f25bbebeb327b0b",
+          "mime": "text/css; charset=utf-8"
+        },
+        {
+          "file": "Patient-BmaNcgTK.js",
+          "status": 200,
+          "bytes": 67631,
+          "sha256": "fe29c17c10a12ebdd25cfac872b193e9bc2e70a16f4c3a2daba98f5097ed52bf",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "SurveyBuilder-5Zggd_JY.js",
+          "status": 200,
+          "bytes": 25412,
+          "sha256": "fe722b85bb694f641a14bb60cdba32dfc88d3dd525e038b89135659cd1bdac1c",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "SurveyFields-aJmvFn55.js",
+          "status": 200,
+          "bytes": 3313,
+          "sha256": "01118ed7889ba1b04b7e4aea6252ebc0e7e078681ce3ad209e9ad7e1d0bbfe8e",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "TaskBoard-DaeZdUdK.js",
+          "status": 200,
+          "bytes": 7839,
+          "sha256": "0cd9617db9a574fa0c16e99cde619c7170753e389a8011e95a95ccefb841ca55",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "WorkflowMetrics-Bx7YOeQQ.js",
+          "status": 200,
+          "bytes": 12440,
+          "sha256": "e0e034215c0e15d7236489503d44dff2314b89ace88bc6bf33ae037aa174266a",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "chevron-right-q65rLo-E.js",
+          "status": 200,
+          "bytes": 159,
+          "sha256": "113614f0190f0888c518b5461b51da1d69a14df488b8b15096bb9aedb469ed49",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "collection-COswcvyL.js",
+          "status": 200,
+          "bytes": 939,
+          "sha256": "b8f61ba215c319fcc2aaf6ce0fb3b26b182c049b9a0d9e4febe85703fe8000e4",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "index-Cb6wxAv7.js",
+          "status": 200,
+          "bytes": 391449,
+          "sha256": "5ff2585d794e293f868c240afd9357e7db47beff171733a0f53bf5fafa8fc342",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "index-CxtEYnsY.css",
+          "status": 200,
+          "bytes": 116614,
+          "sha256": "2c884cfd941fe02c4f464884e5638e5ee78648d0a5bbe30ed0d8273d81527c31",
+          "mime": "text/css; charset=utf-8"
+        },
+        {
+          "file": "patientProgress-Do0fObh9.js",
+          "status": 200,
+          "bytes": 1130,
+          "sha256": "611dafc1b1ad2ac66b0b04ac3852b8c0bf56b6f106882f460ee96efa5097a0b3",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "plus-C-5vi_Ex.js",
+          "status": 200,
+          "bytes": 182,
+          "sha256": "7646e930e30066a7fd208605b61e8c82488075d9fcc85cff3b845a1c29909259",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "send-DggzteI1.js",
+          "status": 200,
+          "bytes": 652,
+          "sha256": "9b761493c289ee0b7a5d15fb3c98a5d86d146ff4096f3bbc7016cee3248a16ec",
+          "mime": "text/javascript; charset=utf-8"
+        }
+      ],
+      "health": {
+        "status": "ok",
+        "compass_db": true,
+        "mis_db": true,
+        "mode": "synthetic_demo"
+      },
+      "root_matches_dist": true,
+      "qa_health": {
+        "status": "ok",
+        "compass_db": true,
+        "mis_db": true,
+        "mode": "synthetic_demo"
+      }
+    },
+    "functionalBaseline": "69/69 frontend and151/151 backend retained, not rerun for one CSS declaration."
+  },
+  "screenshots": [
+    {
+      "file": "docs/evidence/mobile-notice-clearance-2026-10-25/after-coordinator-desktop.jpg",
+      "bytes": 71562,
+      "sha256": "0910e3d5afaf60dcd09315372b44e786db58748f0077a9d8547dc66ba0db8025",
+      "pixels": [
+        1425,
+        990
+      ]
+    },
+    {
+      "file": "docs/evidence/mobile-notice-clearance-2026-10-25/after-coordinator-mobile.jpg",
+      "bytes": 31701,
+      "sha256": "49af18155e5a035419c6de174cf948335b6bf8877d88361d4aaeb33de0a420d9",
+      "pixels": [
+        360,
+        810
+      ]
+    },
+    {
+      "file": "docs/evidence/mobile-notice-clearance-2026-10-25/after-doctor-mobile.jpg",
+      "bytes": 31547,
+      "sha256": "4e254220830fd4588e4069c4f47d9e7212ae556b6bf904491ba3475aa2e7c03f",
+      "pixels": [
+        360,
+        810
+      ]
+    },
+    {
+      "file": "docs/evidence/mobile-notice-clearance-2026-10-25/after-patient-desktop.jpg",
+      "bytes": 117037,
+      "sha256": "85874d01f2a3b9a2c7175c091f23cb25e544172baa1e6d545ca75e96cee9690b",
+      "pixels": [
+        1425,
+        990
+      ]
+    },
+    {
+      "file": "docs/evidence/mobile-notice-clearance-2026-10-25/after-patient-mobile.jpg",
+      "bytes": 38281,
+      "sha256": "f2989a5c12f929e470fca66a95539082b2348c308d80825ce2fdfcb2fefb3ef6",
+      "pixels": [
+        360,
+        810
+      ]
+    },
+    {
+      "file": "docs/evidence/mobile-notice-clearance-2026-10-25/after-patient-tablet.jpg",
+      "bytes": 58682,
+      "sha256": "b4cd1bc0ad5ada5351193ffbe6ed3c936ffef12106fb02c75de3149c807a6502",
+      "pixels": [
+        753,
+        1004
+      ]
+    },
+    {
+      "file": "docs/evidence/mobile-notice-clearance-2026-10-25/before-patient-mobile.jpg",
+      "bytes": 37149,
+      "sha256": "b5c9769077babb914e7e55565fcdea28309724b02c66dff81d197bc5dd3f5153",
+      "pixels": [
+        360,
+        810
+      ]
+    }
+  ],
+  "qaData": "Patient2 preference changed rhythm→map→rhythm→map, final map/balance113. Doctor1 availability busy→available restored; that local confirmation was not a toast. Actual clinician toast came from one non-medical organization task38 created from report8 for coordinator14. Coordinator task38 in-progress then done supplied two notice checks and remains for separate physician result review. Main data, clinical outcomes, privacy policy, points and coupons unchanged.",
+  "limits": [
+    "Before mobile geometry has a negligible0.027px entrance offset; visible51px overlap and computed bottom16 establish the defect. Final accepted observations are fully opaque and untransformed.",
+    "Patient desktop snapshot taken during exit is excluded; coordinator1440 stable snapshot proves desktop24px.",
+    "Temporary notifications may still overlay scrollable content; this change specifically reserves fixed navigation. Full browser/WCAG/screen-reader/FPS/load acceptance not claimed."
+  ]
+}

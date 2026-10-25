@@ -1,0 +1,246 @@
+{
+  "checks": [
+    {
+      "focus": null,
+      "gap": -51.027099609375,
+      "navigation": {
+        "bottom": 844,
+        "height": 67,
+        "left": 0,
+        "right": 360,
+        "top": 777,
+        "width": 360,
+        "x": 0,
+        "y": 777
+      },
+      "navigationVisible": true,
+      "overflow": false,
+      "stage": "before-patient-mobile",
+      "text": "Вид прогресса сохранён",
+      "toast": {
+        "bottom": 828.027099609375,
+        "height": 62,
+        "left": 116.71875,
+        "right": 344,
+        "top": 766.027099609375,
+        "width": 227.28125,
+        "x": 116.71875,
+        "y": 766.027099609375
+      },
+      "toastBottom": "16px",
+      "viewport": [
+        375,
+        844
+      ]
+    },
+    {
+      "focus": null,
+      "gap": 19,
+      "navigation": {
+        "bottom": 844,
+        "height": 67,
+        "left": 0,
+        "right": 360,
+        "top": 777,
+        "width": 360,
+        "x": 0,
+        "y": 777
+      },
+      "navigationVisible": true,
+      "overflow": false,
+      "stage": "after-patient-mobile",
+      "text": "Вид прогресса сохранён",
+      "toast": {
+        "bottom": 758,
+        "height": 62,
+        "left": 116.71875,
+        "right": 344,
+        "top": 696,
+        "width": 227.28125,
+        "x": 116.71875,
+        "y": 696
+      },
+      "toastBottom": "86px",
+      "viewport": [
+        375,
+        844
+      ],
+      "motion": {
+        "opacity": "1",
+        "transform": "none"
+      }
+    },
+    {
+      "focus": null,
+      "gap": 19,
+      "navigation": {
+        "bottom": 1024,
+        "height": 67,
+        "left": 0,
+        "right": 753,
+        "top": 957,
+        "width": 753,
+        "x": 0,
+        "y": 957
+      },
+      "navigationVisible": true,
+      "overflow": false,
+      "stage": "after-patient-tablet",
+      "text": "Вид прогресса сохранён",
+      "toast": {
+        "bottom": 938,
+        "height": 66,
+        "left": 488.515625,
+        "right": 737,
+        "top": 872,
+        "width": 248.484375,
+        "x": 488.515625,
+        "y": 872
+      },
+      "toastBottom": "86px",
+      "viewport": [
+        768,
+        1024
+      ],
+      "motion": {
+        "opacity": "1",
+        "transform": "none"
+      }
+    },
+    {
+      "focus": null,
+      "gap": -979.97802734375,
+      "navigation": {
+        "bottom": 0,
+        "height": 0,
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "width": 0,
+        "x": 0,
+        "y": 0
+      },
+      "navigationVisible": false,
+      "overflow": false,
+      "stage": "after-patient-desktop",
+      "text": "Вид прогресса сохранён",
+      "toast": {
+        "bottom": 979.97802734375,
+        "height": 66,
+        "left": 1150.515625,
+        "right": 1399,
+        "top": 913.97802734375,
+        "width": 248.484375,
+        "x": 1150.515625,
+        "y": 913.97802734375
+      },
+      "toastBottom": "24px",
+      "viewport": [
+        1440,
+        1000
+      ],
+      "motion": {
+        "opacity": "0.00290087",
+        "transform": "matrix(1, 0, 0, 1, 0, 3.9884)"
+      }
+    },
+    {
+      "focus": null,
+      "gap": 19,
+      "navigation": {
+        "bottom": 844,
+        "height": 67,
+        "left": 0,
+        "right": 360,
+        "top": 777,
+        "width": 360,
+        "x": 0,
+        "y": 777
+      },
+      "navigationVisible": true,
+      "overflow": false,
+      "stage": "after-doctor-mobile",
+      "text": "Задача связана с источником и назначена исполнителю",
+      "toast": {
+        "bottom": 758,
+        "height": 62,
+        "left": 16,
+        "right": 344,
+        "top": 696,
+        "width": 328,
+        "x": 16,
+        "y": 696
+      },
+      "toastBottom": "86px",
+      "viewport": [
+        375,
+        844
+      ],
+      "motion": {
+        "opacity": "1",
+        "transform": "none"
+      }
+    },
+    {
+      "focus": null,
+      "gap": null,
+      "navigationVisible": false,
+      "overflow": false,
+      "stage": "after-coordinator-mobile-no-footer",
+      "text": "Задача принята в работу",
+      "toast": {
+        "bottom": 828,
+        "height": 62,
+        "left": 114.25,
+        "right": 344,
+        "top": 766,
+        "width": 229.75,
+        "x": 114.25,
+        "y": 766
+      },
+      "toastBottom": "16px",
+      "viewport": [
+        375,
+        844
+      ],
+      "motion": {
+        "opacity": "1",
+        "transform": "none"
+      }
+    },
+    {
+      "focus": null,
+      "gap": null,
+      "navigationVisible": false,
+      "overflow": false,
+      "stage": "after-coordinator-desktop",
+      "text": "Действие сохранено; результат проверяет врач",
+      "toast": {
+        "bottom": 976,
+        "height": 66,
+        "left": 1022.171875,
+        "right": 1399,
+        "top": 910,
+        "width": 376.828125,
+        "x": 1022.171875,
+        "y": 910
+      },
+      "toastBottom": "24px",
+      "viewport": [
+        1440,
+        1000
+      ],
+      "motion": {
+        "opacity": "1",
+        "transform": "none"
+      }
+    }
+  ],
+  "patientRestored": {
+    "balance": "113 баллов доступно",
+    "mode": "map",
+    "select": "map"
+  },
+  "console": [],
+  "notes": "Accepted final stages: patient375/768,doctor375,coordinator375-without-footer/1440. Patient desktop capture was taken during toast exit and is excluded from visual acceptance. Doctor availability produced a local status confirmation, not a global toast; original available status restored, then task38 creation supplied the actual global-notice check."
+}

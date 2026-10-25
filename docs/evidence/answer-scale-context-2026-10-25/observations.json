@@ -1,0 +1,345 @@
+{
+  "before": {
+    "answers": [
+      {
+        "answer": "Да",
+        "question": "Планируете ли вы продолжать наблюдение в клинике?"
+      },
+      {
+        "answer": "Мне важно понимать следующий шаг.",
+        "question": "Что повлияло на ваш ответ?"
+      },
+      {
+        "answer": "4",
+        "question": "Насколько понятны дальнейшие шаги?"
+      }
+    ],
+    "overflow": false,
+    "viewport": {
+      "height": 844,
+      "width": 375
+    }
+  },
+  "checks": [
+    {
+      "answers": [
+        {
+          "answer": "Да",
+          "question": "Планируете ли вы продолжать наблюдение в клинике?",
+          "rangeFont": null
+        },
+        {
+          "answer": "Мне важно понимать следующий шаг.",
+          "question": "Что повлияло на ваш ответ?",
+          "rangeFont": null
+        },
+        {
+          "answer": "4Шкала от 1 до 5",
+          "question": "Насколько понятны дальнейшие шаги?",
+          "range": "Шкала от 1 до 5",
+          "rangeFont": "12px",
+          "rect": {
+            "bottom": 547.4405517578125,
+            "height": 19.1875,
+            "left": 52.546875,
+            "right": 140.078125,
+            "top": 528.2530517578125,
+            "width": 87.53125,
+            "x": 52.546875,
+            "y": 528.2530517578125
+          }
+        }
+      ],
+      "overflow": false,
+      "title": "Как вам подходит сопровождение?",
+      "viewport": {
+        "height": 844,
+        "width": 375
+      },
+      "label": "patient-answer-mobile"
+    },
+    {
+      "answers": [
+        {
+          "answer": "Да",
+          "question": "Планируете ли вы продолжать наблюдение в клинике?",
+          "rangeFont": null
+        },
+        {
+          "answer": "Мне важно понимать следующий шаг.",
+          "question": "Что повлияло на ваш ответ?",
+          "rangeFont": null
+        },
+        {
+          "answer": "4 Шкала от 1 до 5",
+          "question": "Насколько понятны дальнейшие шаги?",
+          "range": "Шкала от 1 до 5",
+          "rangeFont": "12px",
+          "rect": {
+            "bottom": 546.140625,
+            "height": 19.1875,
+            "left": 56.390625,
+            "right": 143.921875,
+            "top": 526.953125,
+            "width": 87.53125,
+            "x": 56.390625,
+            "y": 526.953125
+          }
+        }
+      ],
+      "overflow": false,
+      "title": "Как вам подходит сопровождение?",
+      "viewport": {
+        "height": 844,
+        "width": 375
+      },
+      "label": "patient-answer-mobile-final"
+    },
+    {
+      "answers": [
+        {
+          "answer": "Да",
+          "question": "Планируете ли вы продолжать наблюдение в клинике?",
+          "rangeFont": null
+        },
+        {
+          "answer": "Мне важно понимать следующий шаг.",
+          "question": "Что повлияло на ваш ответ?",
+          "rangeFont": null
+        },
+        {
+          "answer": "4 Шкала от 1 до 5",
+          "question": "Насколько понятны дальнейшие шаги?",
+          "range": "Шкала от 1 до 5",
+          "rangeFont": "12px",
+          "rect": {
+            "bottom": 781.140625,
+            "height": 19.1875,
+            "left": 673,
+            "right": 760.53125,
+            "top": 761.953125,
+            "width": 87.53125,
+            "x": 673,
+            "y": 761.953125
+          }
+        },
+        {
+          "answer": "Не всё понятно",
+          "question": "Что сейчас мешает выполнять согласованные рекомендации?",
+          "rangeFont": null
+        },
+        {
+          "answer": "Не до конца понимаю, что делать между приёмами.",
+          "question": "Что важно знать вашему врачу?",
+          "rangeFont": null
+        },
+        {
+          "answer": "Да",
+          "question": "Планируете ли вы продолжать наблюдение в клинике?",
+          "rangeFont": null
+        },
+        {
+          "answer": "Синтетический ответ для сценария участия.",
+          "question": "Что повлияло на ваш ответ?",
+          "rangeFont": null
+        },
+        {
+          "answer": "4 Шкала от 1 до 5",
+          "question": "Насколько понятны дальнейшие шаги?",
+          "range": "Шкала от 1 до 5",
+          "rangeFont": "12px",
+          "rect": {
+            "bottom": 1628.671875,
+            "height": 19.1875,
+            "left": 673,
+            "right": 760.53125,
+            "top": 1609.484375,
+            "width": 87.53125,
+            "x": 673,
+            "y": 1609.484375
+          }
+        },
+        {
+          "answer": "Да",
+          "question": "Планируете ли вы продолжать наблюдение в клинике?",
+          "rangeFont": null
+        },
+        {
+          "answer": "Синтетический ответ для сценария участия.",
+          "question": "Что повлияло на ваш ответ?",
+          "rangeFont": null
+        },
+        {
+          "answer": "4 Шкала от 1 до 5",
+          "question": "Насколько понятны дальнейшие шаги?",
+          "range": "Шкала от 1 до 5",
+          "rangeFont": "12px",
+          "rect": {
+            "bottom": 2069.9375,
+            "height": 19.1875,
+            "left": 673,
+            "right": 760.53125,
+            "top": 2050.75,
+            "width": 87.53125,
+            "x": 673,
+            "y": 2050.75
+          }
+        },
+        {
+          "answer": "Да",
+          "question": "Планируете ли вы продолжать наблюдение в клинике?",
+          "rangeFont": null
+        },
+        {
+          "answer": "Синтетический ответ для сценария участия.",
+          "question": "Что повлияло на ваш ответ?",
+          "rangeFont": null
+        },
+        {
+          "answer": "4 Шкала от 1 до 5",
+          "question": "Насколько понятны дальнейшие шаги?",
+          "range": "Шкала от 1 до 5",
+          "rangeFont": "12px",
+          "rect": {
+            "bottom": 2511.203125,
+            "height": 19.1875,
+            "left": 673,
+            "right": 760.53125,
+            "top": 2492.015625,
+            "width": 87.53125,
+            "x": 673,
+            "y": 2492.015625
+          }
+        }
+      ],
+      "overflow": false,
+      "title": "Мария Иванова",
+      "viewport": {
+        "height": 1000,
+        "width": 1440
+      },
+      "label": "doctor-answer-desktop-final"
+    },
+    {
+      "answers": [
+        {
+          "answer": "Да",
+          "question": "Планируете ли вы продолжать наблюдение в клинике?",
+          "rangeFont": null
+        },
+        {
+          "answer": "Мне важно понимать следующий шаг.",
+          "question": "Что повлияло на ваш ответ?",
+          "rangeFont": null
+        },
+        {
+          "answer": "4 Шкала от 1 до 5",
+          "question": "Насколько понятны дальнейшие шаги?",
+          "range": "Шкала от 1 до 5",
+          "rangeFont": "12px",
+          "rect": {
+            "bottom": 721.359375,
+            "height": 19.1875,
+            "left": 365.390625,
+            "right": 452.921875,
+            "top": 702.171875,
+            "width": 87.53125,
+            "x": 365.390625,
+            "y": 702.171875
+          }
+        }
+      ],
+      "overflow": false,
+      "title": "Мария Иванова",
+      "viewport": {
+        "height": 1000,
+        "width": 1440
+      },
+      "label": "doctor-source-desktop-final"
+    },
+    {
+      "answers": [
+        {
+          "answer": "Да",
+          "question": "Планируете ли вы продолжать наблюдение в клинике?",
+          "rangeFont": null
+        },
+        {
+          "answer": "Мне важно понимать следующий шаг.",
+          "question": "Что повлияло на ваш ответ?",
+          "rangeFont": null
+        },
+        {
+          "answer": "4 Шкала от 1 до 5",
+          "question": "Насколько понятны дальнейшие шаги?",
+          "range": "Шкала от 1 до 5",
+          "rangeFont": "12px",
+          "rect": {
+            "bottom": 918.484375,
+            "height": 19.1875,
+            "left": 75.390625,
+            "right": 162.921875,
+            "top": 899.296875,
+            "width": 87.53125,
+            "x": 75.390625,
+            "y": 899.296875
+          }
+        }
+      ],
+      "overflow": false,
+      "title": "Мария Иванова",
+      "viewport": {
+        "height": 844,
+        "width": 375
+      },
+      "label": "doctor-source-mobile-final"
+    },
+    {
+      "answers": [
+        {
+          "answer": "Да",
+          "question": "Планируете ли вы продолжать наблюдение в клинике?",
+          "rangeFont": null
+        },
+        {
+          "answer": "Мне важно понимать следующий шаг.",
+          "question": "Что повлияло на ваш ответ?",
+          "rangeFont": null
+        },
+        {
+          "answer": "4 Шкала от 1 до 5",
+          "question": "Насколько понятны дальнейшие шаги?",
+          "range": "Шкала от 1 до 5",
+          "rangeFont": "12px",
+          "rect": {
+            "bottom": 431.484375,
+            "height": 19.1875,
+            "left": 75.390625,
+            "right": 162.921875,
+            "top": 412.296875,
+            "width": 87.53125,
+            "x": 75.390625,
+            "y": 412.296875
+          }
+        }
+      ],
+      "overflow": false,
+      "title": "Мария Иванова",
+      "viewport": {
+        "height": 844,
+        "width": 375
+      },
+      "label": "doctor-source-range-mobile-final"
+    }
+  ],
+  "returned": {
+    "activeTag": "ARTICLE",
+    "assignment": "4",
+    "highlighted": "assignment-result care-source-highlight",
+    "overflow": false,
+    "range": "Шкала от 1 до 5",
+    "selectedTab": "Обратная связь"
+  },
+  "console": [],
+  "notes": "Initial after-reload phone capture was during mount motion and lacked spoken whitespace; replaced after final spacing change with opacity1/transformnone. The first source-phone context image did not include the range in the viewport; overwritten after ordinary native locator scrolling to the actual range. No survey, task or clinical write was submitted."
+}

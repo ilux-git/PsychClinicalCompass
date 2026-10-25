@@ -1,0 +1,924 @@
+{
+  "recordedAt": "2026-10-25T04:44:40.556345+00:00",
+  "status": "clinician heading hierarchy and personal-schedule error recovery verified",
+  "changes": [
+    "Embedded clinician schedule uses h2/22px; patient name remains the only h1. Standalone patient schedule keeps h1.",
+    "Clinician-only repeated eyebrow/paragraph shortened, retaining unknown-vs-missed distinction.",
+    "Creation and edit errors are inline, focused and connected to fields; values, idempotency identity and expected revision retained; editing clears stale error."
+  ],
+  "scope": "Four frontend runtime files plus three behavior regressions in the existing medication component suite. No backend, schema, permissions, medical or award-policy change.",
+  "verification": {
+    "native": {
+      "headingBefore": {
+        "headings": [
+          {
+            "font": "24px",
+            "lineHeight": "30px",
+            "tag": "H2",
+            "text": "Лекарства"
+          },
+          {
+            "font": "28px",
+            "lineHeight": "35px",
+            "tag": "H1",
+            "text": "Анна Лебедева"
+          },
+          {
+            "font": "28px",
+            "lineHeight": "35px",
+            "tag": "H1",
+            "text": "Расписание и самоотчёты пациента"
+          },
+          {
+            "font": "18px",
+            "lineHeight": "25.2px",
+            "tag": "H2",
+            "text": "Расписание на день"
+          },
+          {
+            "font": "18px",
+            "lineHeight": "25.2px",
+            "tag": "H2",
+            "text": "Рабочие заметки"
+          },
+          {
+            "font": "18px",
+            "lineHeight": "25.2px",
+            "tag": "H2",
+            "text": "Следующий шаг"
+          }
+        ],
+        "overflow": false,
+        "viewport": {
+          "height": 720,
+          "width": 1280
+        }
+      },
+      "errorBefore": {
+        "alerts": [
+          {
+            "focused": false,
+            "insideForm": false,
+            "text": "Техническая проверка: сохранение временно недоступно."
+          }
+        ],
+        "editorOpen": true,
+        "focus": {
+          "tag": "BODY",
+          "text": "\n    Перейти к содержимомуclinicalcompassМоё пространствоМой деньШаги, самочувствие и баллыНа каждый"
+        },
+        "overflow": false,
+        "values": [
+          {
+            "label": "Название",
+            "value": "Учебная позиция QA · проверка формы"
+          },
+          {
+            "label": "Своё описание / инструкция · необязательно",
+            "value": ""
+          },
+          {
+            "label": "Расписание своими словамиСинтетический пример личного учёта, без назначения.",
+            "value": "Синтетический пример личного учёта, без назначения."
+          },
+          {
+            "label": "Тип учётаДни недели и фиксированное времяПо потребности · описаниеПроизвольное расписание · описание",
+            "value": "description"
+          },
+          {
+            "label": "С даты",
+            "value": "2026-10-25"
+          },
+          {
+            "label": "По дату · необязательно",
+            "value": ""
+          },
+          {
+            "label": "Часовой поясОпределён по устройству. Например, Asia/Novosibirsk. Время расписания считается в этом поясе.",
+            "value": "Asia/Novosibirsk"
+          }
+        ]
+      },
+      "checks": [
+        {
+          "alerts": [
+            {
+              "focused": true,
+              "insideForm": true,
+              "rect": {
+                "bottom": 457.3125,
+                "height": 70.78125,
+                "left": 37,
+                "right": 323,
+                "top": 386.53125,
+                "width": 286,
+                "x": 37,
+                "y": 386.53125
+              },
+              "text": "Техническая проверка: сохранение временно недоступно."
+            }
+          ],
+          "editorOpen": true,
+          "errorDescription": "_r_2_",
+          "errorId": "_r_2_",
+          "focusTag": "DIV",
+          "headings": [
+            {
+              "font": "26px",
+              "tag": "H1",
+              "text": "Моё расписание лекарств"
+            },
+            {
+              "font": "18px",
+              "tag": "H2",
+              "text": "Добавить свою позицию"
+            },
+            {
+              "font": "18px",
+              "tag": "H2",
+              "text": "Расписание на день"
+            }
+          ],
+          "name": "Учебная позиция QA · проверка формы",
+          "overflow": false,
+          "schedule": "Синтетический пример личного учёта, без назначения.",
+          "viewport": {
+            "height": 844,
+            "width": 375
+          },
+          "label": "create-error-mobile"
+        },
+        {
+          "alerts": [
+            {
+              "focused": false,
+              "insideForm": true,
+              "rect": {
+                "bottom": 351.3125,
+                "height": 70.78125,
+                "left": 37,
+                "right": 323,
+                "top": 280.53125,
+                "width": 286,
+                "x": 37,
+                "y": 280.53125
+              },
+              "text": "Техническая проверка: сохранение временно недоступно."
+            }
+          ],
+          "editorOpen": true,
+          "errorDescription": "_r_2_",
+          "errorId": "_r_2_",
+          "focusTag": "INPUT",
+          "headings": [
+            {
+              "font": "26px",
+              "tag": "H1",
+              "text": "Моё расписание лекарств"
+            },
+            {
+              "font": "18px",
+              "tag": "H2",
+              "text": "Добавить свою позицию"
+            },
+            {
+              "font": "18px",
+              "tag": "H2",
+              "text": "Расписание на день"
+            }
+          ],
+          "name": "Учебная позиция QA · проверка формы",
+          "overflow": false,
+          "schedule": "Синтетический пример личного учёта, без назначения.",
+          "viewport": {
+            "height": 844,
+            "width": 375
+          },
+          "label": "failed-create-guard-stay"
+        },
+        {
+          "alerts": [],
+          "editorOpen": false,
+          "focusTag": "H2",
+          "headings": [
+            {
+              "font": "26px",
+              "tag": "H1",
+              "text": "Моё расписание лекарств"
+            },
+            {
+              "font": "18px",
+              "tag": "H2",
+              "text": "Расписание сохранено"
+            },
+            {
+              "font": "18px",
+              "tag": "H2",
+              "text": "Расписание на день"
+            }
+          ],
+          "overflow": false,
+          "saved": "Расписание сохраненоЛичная запись обновлена. Назначение в МИС не менялось.Сохранено без дополнительных балловЗаписи и опросы остаются доступны. Баланс и условия начисления — в «Мой прогресс».По записи от 25 окт., 11:41Мой прогресс",
+          "viewport": {
+            "height": 844,
+            "width": 375
+          },
+          "label": "create-retry-saved-mobile"
+        },
+        {
+          "alerts": [
+            {
+              "focused": true,
+              "insideForm": true,
+              "rect": {
+                "bottom": 411.546875,
+                "height": 48.390625,
+                "left": 37,
+                "right": 716,
+                "top": 363.15625,
+                "width": 679,
+                "x": 37,
+                "y": 363.15625
+              },
+              "text": "Техническая проверка: сохранение временно недоступно."
+            }
+          ],
+          "editorOpen": true,
+          "errorDescription": "_r_6_",
+          "errorId": "_r_6_",
+          "focusTag": "DIV",
+          "headings": [
+            {
+              "font": "26px",
+              "tag": "H1",
+              "text": "Моё расписание лекарств"
+            },
+            {
+              "font": "18px",
+              "tag": "H2",
+              "text": "Изменить личную позицию"
+            },
+            {
+              "font": "18px",
+              "tag": "H2",
+              "text": "Расписание на день"
+            }
+          ],
+          "name": "Учебная позиция QA · проверка формы",
+          "overflow": false,
+          "schedule": "Синтетический пример личного учёта, без назначения. Проверка редактирования.",
+          "viewport": {
+            "height": 1024,
+            "width": 768
+          },
+          "label": "edit-error-tablet"
+        },
+        {
+          "alerts": [],
+          "editorOpen": true,
+          "errorDescription": null,
+          "focusTag": "TEXTAREA",
+          "headings": [
+            {
+              "font": "26px",
+              "tag": "H1",
+              "text": "Моё расписание лекарств"
+            },
+            {
+              "font": "18px",
+              "tag": "H2",
+              "text": "Изменить личную позицию"
+            },
+            {
+              "font": "18px",
+              "tag": "H2",
+              "text": "Расписание на день"
+            }
+          ],
+          "name": "Учебная позиция QA · проверка формы",
+          "overflow": false,
+          "schedule": "Синтетический пример личного учёта, без назначения. Проверка редактирования.",
+          "viewport": {
+            "height": 1024,
+            "width": 768
+          },
+          "label": "edit-change-clears-error-tablet"
+        },
+        {
+          "alerts": [],
+          "editorOpen": false,
+          "focusTag": "H2",
+          "headings": [
+            {
+              "font": "26px",
+              "tag": "H1",
+              "text": "Моё расписание лекарств"
+            },
+            {
+              "font": "18px",
+              "tag": "H2",
+              "text": "Расписание сохранено"
+            },
+            {
+              "font": "18px",
+              "tag": "H2",
+              "text": "Расписание на день"
+            }
+          ],
+          "overflow": false,
+          "saved": "Расписание сохраненоЛичная запись обновлена. Назначение в МИС не менялось.Сохранено без дополнительных балловЗаписи и опросы остаются доступны. Баланс и условия начисления — в «Мой прогресс».По записи от 25 окт., 11:41Мой прогресс",
+          "viewport": {
+            "height": 1024,
+            "width": 768
+          },
+          "label": "edit-retry-saved-tablet"
+        },
+        {
+          "alerts": [],
+          "editorOpen": false,
+          "focusTag": "BUTTON",
+          "headings": [
+            {
+              "font": "28px",
+              "tag": "H1",
+              "text": "Анна Лебедева"
+            },
+            {
+              "font": "22px",
+              "tag": "H2",
+              "text": "Расписание и самоотчёты пациента"
+            },
+            {
+              "font": "18px",
+              "tag": "H2",
+              "text": "Расписание на день"
+            },
+            {
+              "font": "18px",
+              "tag": "H2",
+              "text": "Рабочие заметки"
+            },
+            {
+              "font": "18px",
+              "tag": "H2",
+              "text": "Следующий шаг"
+            }
+          ],
+          "overflow": false,
+          "viewport": {
+            "height": 720,
+            "width": 1280
+          },
+          "label": "doctor-heading-desktop"
+        },
+        {
+          "alerts": [],
+          "editorOpen": false,
+          "focusTag": "BUTTON",
+          "headings": [
+            {
+              "font": "28px",
+              "tag": "H1",
+              "text": "Анна Лебедева"
+            },
+            {
+              "font": "22px",
+              "tag": "H2",
+              "text": "Расписание и самоотчёты пациента"
+            },
+            {
+              "font": "18px",
+              "tag": "H2",
+              "text": "Расписание на день"
+            },
+            {
+              "font": "18px",
+              "tag": "H2",
+              "text": "Рабочие заметки"
+            },
+            {
+              "font": "18px",
+              "tag": "H2",
+              "text": "Следующий шаг"
+            }
+          ],
+          "overflow": false,
+          "viewport": {
+            "height": 844,
+            "width": 375
+          },
+          "label": "doctor-heading-mobile"
+        },
+        {
+          "alerts": [],
+          "editorOpen": false,
+          "focusTag": "MAIN",
+          "headings": [
+            {
+              "font": "28px",
+              "tag": "H1",
+              "text": "Анна Лебедева"
+            },
+            {
+              "font": "22px",
+              "tag": "H2",
+              "text": "Расписание и самоотчёты пациента"
+            },
+            {
+              "font": "18px",
+              "tag": "H2",
+              "text": "Расписание на день"
+            },
+            {
+              "font": "18px",
+              "tag": "H2",
+              "text": "Рабочие заметки"
+            },
+            {
+              "font": "18px",
+              "tag": "H2",
+              "text": "Следующий шаг"
+            }
+          ],
+          "overflow": false,
+          "viewport": {
+            "height": 720,
+            "width": 1280
+          },
+          "label": "doctor-heading-desktop-final"
+        },
+        {
+          "alerts": [],
+          "editorOpen": false,
+          "focusTag": "MAIN",
+          "headings": [
+            {
+              "font": "28px",
+              "tag": "H1",
+              "text": "Анна Лебедева"
+            },
+            {
+              "font": "22px",
+              "tag": "H2",
+              "text": "Расписание и самоотчёты пациента"
+            },
+            {
+              "font": "18px",
+              "tag": "H2",
+              "text": "Расписание на день"
+            },
+            {
+              "font": "18px",
+              "tag": "H2",
+              "text": "Рабочие заметки"
+            },
+            {
+              "font": "18px",
+              "tag": "H2",
+              "text": "Следующий шаг"
+            }
+          ],
+          "overflow": false,
+          "viewport": {
+            "height": 844,
+            "width": 375
+          },
+          "label": "doctor-heading-mobile-final"
+        }
+      ],
+      "progress": {
+        "balances": [
+          "Скидка на приём · демо5%Баллов достаточно для тестового купона110 баллов доступно · для обмена нужно 100 балловПосмотреть тестовые скидки"
+        ],
+        "overflow": false,
+        "pointsText": [
+          "110",
+          "110 баллов за всё время"
+        ],
+        "title": "Мой прогресс"
+      },
+      "console": [],
+      "excluded": "First before-heading measurement was captured during the old feedback tab exit; replaced after waiting for the medication heading. Earlier after-heading photos replaced after shortening the repeated clinician-only copy."
+    },
+    "frontend": {
+      "passed": 52,
+      "durationMs": 49514.2402,
+      "exitCode": 0,
+      "source": {
+        "file": "outputs/medication-polish-frontend-20261025.log",
+        "bytes": 7087,
+        "sha256": "1f1bb319da72e09dff7a93c5128b709edaf60f43c514216142d73d0e16648cc3"
+      }
+    },
+    "regression": {
+      "validRed": {
+        "passed": 4,
+        "failed": 3,
+        "source": {
+          "file": "outputs/medication-polish-red-20261025.log",
+          "bytes": 29509,
+          "sha256": "1a8a144038570a07f5b996dc4b0da7dbf28026b80b7ef55468a5af7b7ccd437a"
+        }
+      },
+      "green": {
+        "passed": 7,
+        "source": {
+          "file": "outputs/medication-polish-green-20261025.log",
+          "bytes": 1107,
+          "sha256": "230126feff43364fc5227162b39a1c155c6913e3151d1a46fe804f57a0a4e3af"
+        }
+      }
+    },
+    "buildAndTypes": {
+      "exitCode": 0,
+      "source": {
+        "file": "outputs/medication-polish-build-20261025.log",
+        "bytes": 2056,
+        "sha256": "c05fd95a76bf4a56fd219981ab99036cb2baa171c6849c412023dbd9981843b8"
+      }
+    },
+    "http": {
+      "base_url": "http://127.0.0.1:8780",
+      "scope": "HTTP bytes and MIME only; not browser layout/interactions",
+      "assets": [
+        {
+          "file": "AdminDashboard-n6-Z6WPw.js",
+          "status": 200,
+          "bytes": 18451,
+          "sha256": "72bbab739d3bfa3a7c34c561d742cc92d2463971f634656ae80bff1d9abc6a12",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "CareWorkflow-DxYBBdaR.js",
+          "status": 200,
+          "bytes": 26980,
+          "sha256": "d23ad1e2050f3281ceedc243cd1d7f35d954ed5db7143061024a7a0c7b358338",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "Charts-CGO5r6YK.js",
+          "status": 200,
+          "bytes": 5476,
+          "sha256": "4c2d6d8470b7c8ebfc644d2c59cde6713ee06a8588344e99a8ea9142c619b027",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "DoctorDashboard-DKYtHFWS.js",
+          "status": 200,
+          "bytes": 18046,
+          "sha256": "8a858a09b74ce675bc4214f29aa65589c52662b22c56d6667e6c5b97f10cd45c",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "DoctorPatients-Dloph_Nv.js",
+          "status": 200,
+          "bytes": 36363,
+          "sha256": "20433745e07a363a4d986f00a021f08f6722a6589a344aae913e41339f6622db",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "MedicationSchedule-CW3s1jvC.js",
+          "status": 200,
+          "bytes": 36375,
+          "sha256": "b9e93e0ef32ac88f46200621765235a14a7546b8fdc6ca7aa6d5a94e09584bb4",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "MedicationSchedule-C_cioHGn.css",
+          "status": 200,
+          "bytes": 2103,
+          "sha256": "3ecca9c112edd867ada5c834649a96069fb7decf7d1ea5da5aebe9da0ab28a4e",
+          "mime": "text/css; charset=utf-8"
+        },
+        {
+          "file": "Patient-B9xuvwdE.css",
+          "status": 200,
+          "bytes": 26258,
+          "sha256": "9160fbf594ce6238151f4e13f5a28e00c0e62184711079b09f25bbebeb327b0b",
+          "mime": "text/css; charset=utf-8"
+        },
+        {
+          "file": "Patient-sOfRRPSV.js",
+          "status": 200,
+          "bytes": 66896,
+          "sha256": "a5b29c204130b4978e8a19158b057821a250534941af936ac4aa88a2de8475cc",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "SurveyBuilder-C3w6ZCwl.js",
+          "status": 200,
+          "bytes": 25412,
+          "sha256": "9ea00d89dca97ffccc5b6a4dcb5e1ff5eb26acaa3bf13723e9f003dcc1331533",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "SurveyFields-BQsescFc.js",
+          "status": 200,
+          "bytes": 3121,
+          "sha256": "c5cc27f36d53b5ce572c5f185d33e5d29dee31a6ba0dffbf0d50beb6ac1664f9",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "TaskBoard-B4LPda29.js",
+          "status": 200,
+          "bytes": 7839,
+          "sha256": "880ffb868f33d27d3ab015446ec950834e8e3cb502e67bf3095ce1bf3abb44e9",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "WorkflowMetrics-BvC2Y-IM.js",
+          "status": 200,
+          "bytes": 12440,
+          "sha256": "d68b983b826eea52f79f579d09f3aa9353d55dd6817ea3c6089fe7c2271962cd",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "chevron-right-DKiM1Ttf.js",
+          "status": 200,
+          "bytes": 159,
+          "sha256": "a68ce33a62b033c4774c55fcc37133040365b6de254d8305bbfe0af9beb8dd1d",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "collection-COswcvyL.js",
+          "status": 200,
+          "bytes": 939,
+          "sha256": "b8f61ba215c319fcc2aaf6ce0fb3b26b182c049b9a0d9e4febe85703fe8000e4",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "index-B9TPbLOL.js",
+          "status": 200,
+          "bytes": 390678,
+          "sha256": "2853d2250037421309fd93bf21f59c142c632bca1503af972885fe972c0f98a9",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "index-BJbJxdmH.css",
+          "status": 200,
+          "bytes": 113741,
+          "sha256": "66046031dc6629d78e6449a57d5b2e556c211afc26dcabdecbecdc8634e86570",
+          "mime": "text/css; charset=utf-8"
+        },
+        {
+          "file": "patientProgress-Do0fObh9.js",
+          "status": 200,
+          "bytes": 1130,
+          "sha256": "611dafc1b1ad2ac66b0b04ac3852b8c0bf56b6f106882f460ee96efa5097a0b3",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "plus-DZgGAAol.js",
+          "status": 200,
+          "bytes": 182,
+          "sha256": "9225dfae4d3639458b34dacbb08d5b79bc8680d89a1f0b38bef4fee4f5f9f00f",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "send-C35UuXR6.js",
+          "status": 200,
+          "bytes": 652,
+          "sha256": "187a9398486a848caebf53db471881e1aee1806512eb0ebf2ab3d7ec33a57d08",
+          "mime": "text/javascript; charset=utf-8"
+        }
+      ],
+      "health": {
+        "status": "ok",
+        "compass_db": true,
+        "mis_db": true,
+        "mode": "synthetic_demo"
+      },
+      "root_matches_dist": true,
+      "qa_health": {
+        "status": "ok",
+        "compass_db": true,
+        "mis_db": true,
+        "mode": "synthetic_demo"
+      }
+    },
+    "semantic": {
+      "recordedAt": "2026-10-25T04:44:04.074Z",
+      "engine": "axe-core 4.14.0",
+      "scope": "Semantic analysis of CUA-exported markup in JSDOM29.1.1 with local entry CSS. App scripts and external resources never execute; no actual-browser axe, layout, contrast, keyboard, motion or screen-reader pass.",
+      "source": "https://github.com/dequelabs/axe-core#supported-browsers",
+      "disabledRules": [
+        "color-contrast"
+      ],
+      "pages": [
+        {
+          "file": "medication-polish-doctor.html",
+          "sha256": "5857eaaaaf1dc935c9cf48a168edd7c624ce36a4ee32febb14b69c361fed67bf",
+          "title": "Лекарства · Clinical Compass",
+          "violations": [],
+          "incomplete": [
+            {
+              "id": "label-content-name-mismatch",
+              "impact": "serious",
+              "description": "Ensure that elements labelled through their content must have their visible text as part of their accessible name",
+              "help": "Elements must have their visible text as part of their accessible name",
+              "helpUrl": "https://dequeuniversity.com/rules/axe/4.14/label-content-name-mismatch?application=axeAPI",
+              "nodes": [
+                {
+                  "target": [
+                    ".inbox-counter"
+                  ],
+                  "failureSummary": "Fix all of the following:\n  Axe encountered an error; test the page for this type of problem manually",
+                  "html": "<button class=\"inbox-counter has-events\" title=\"Ещё не показаны в очереди: 5\" aria-label=\"Открыть события: 11\">"
+                }
+              ]
+            },
+            {
+              "id": "landmark-one-main",
+              "impact": "moderate",
+              "description": "Ensure the document has a main landmark",
+              "help": "Document should have one main landmark",
+              "helpUrl": "https://dequeuniversity.com/rules/axe/4.14/landmark-one-main?application=axeAPI",
+              "nodes": [
+                {
+                  "target": [
+                    "html"
+                  ],
+                  "failureSummary": "Fix all of the following:\n  Axe encountered an error; test the page for this type of problem manually",
+                  "html": "<html lang=\"ru\">"
+                }
+              ]
+            },
+            {
+              "id": "page-has-heading-one",
+              "impact": "moderate",
+              "description": "Ensure that the page, or at least one of its frames contains a level-one heading",
+              "help": "Page should contain a level-one heading",
+              "helpUrl": "https://dequeuniversity.com/rules/axe/4.14/page-has-heading-one?application=axeAPI",
+              "nodes": [
+                {
+                  "target": [
+                    "html"
+                  ],
+                  "failureSummary": "Fix all of the following:\n  Axe encountered an error; test the page for this type of problem manually",
+                  "html": "<html lang=\"ru\">"
+                }
+              ]
+            }
+          ],
+          "passedRuleCount": 41,
+          "passedRuleIds": [
+            "aria-allowed-attr",
+            "aria-allowed-role",
+            "aria-conditional-attr",
+            "aria-deprecated-role",
+            "aria-hidden-body",
+            "aria-hidden-focus",
+            "aria-prohibited-attr",
+            "aria-required-attr",
+            "aria-required-children",
+            "aria-required-parent",
+            "aria-roles",
+            "aria-valid-attr-value",
+            "aria-valid-attr",
+            "avoid-inline-spacing",
+            "button-name",
+            "bypass",
+            "document-title",
+            "duplicate-id-aria",
+            "empty-heading",
+            "form-field-multiple-labels",
+            "heading-order",
+            "html-has-lang",
+            "html-lang-valid",
+            "label-title-only",
+            "label",
+            "landmark-banner-is-top-level",
+            "landmark-contentinfo-is-top-level",
+            "landmark-main-is-top-level",
+            "landmark-no-duplicate-banner",
+            "landmark-no-duplicate-contentinfo",
+            "landmark-no-duplicate-main",
+            "landmark-unique",
+            "link-name",
+            "meta-viewport-large",
+            "meta-viewport",
+            "nested-interactive",
+            "region",
+            "select-name",
+            "summary-name",
+            "tabindex",
+            "target-size"
+          ],
+          "inapplicableRuleCount": 46,
+          "domWarnings": [
+            "Not implemented: HTMLCanvasElement's getContext() method: without installing the canvas npm package"
+          ]
+        }
+      ]
+    },
+    "backend": "Unchanged; previous151/151 retained, not rerun."
+  },
+  "sources": [
+    {
+      "file": "frontend/src/UI.tsx",
+      "bytes": 4182,
+      "sha256": "7aa7e9c32c195b35918cee9929fc05a8e0e14f6c55222934df378fe7ce10cf43"
+    },
+    {
+      "file": "frontend/src/MedicationSchedule.tsx",
+      "bytes": 13693,
+      "sha256": "1e9b42c56b182462e08a071cc3a6990d6c572eeb1e8c1e6a201d0919ccb7d496"
+    },
+    {
+      "file": "frontend/src/MedicationEditor.tsx",
+      "bytes": 7177,
+      "sha256": "2f68306bb637e68e197864fb175e76a44e725aa55204475eed7018c6476273d5"
+    },
+    {
+      "file": "frontend/src/workspace.css",
+      "bytes": 65658,
+      "sha256": "ce4090e2b752b53a84af4dee97b21b8fda544be9beb1ee8903e2d15c71699b4e"
+    },
+    {
+      "file": "frontend/tests/medication-receipt-interaction.test.mjs",
+      "bytes": 14948,
+      "sha256": "22ec8215082a218d40d4d5c1f7de79eedb5e043aa16ec703fd5ea338faa0b7e2"
+    }
+  ],
+  "diff": "--- local49/UI.tsx\n+++ current/frontend/src/UI.tsx\n@@ -114,17 +114,20 @@\n   title,\n   children,\n   action,\n+  level = 1,\n }: {\n   eyebrow?: string;\n   title: string;\n   children?: ReactNode;\n   action?: ReactNode;\n+  level?: 1 | 2;\n }) {\n+  const Title = level === 1 ? \"h1\" : \"h2\";\n   return (\n-    <div className=\"page-heading\">\n+    <div className={`page-heading${level === 2 ? \" subsection-heading\" : \"\"}`}>\n       <div>\n         {eyebrow && <p className=\"eyebrow\">{eyebrow}</p>}\n-        <h1>{title}</h1>\n+        <Title>{title}</Title>\n         {children && <p className=\"lede\">{children}</p>}\n       </div>\n       {action}\n--- local49/MedicationSchedule.tsx\n+++ current/frontend/src/MedicationSchedule.tsx\n@@ -71,7 +71,7 @@\n   }\n   function changeDay(value:string) {if(value && value!==day)guard.runFor(()=>{clearConfirmation();setDay(value);},reportScope);}\n   return <>\n-    <Heading eyebrow=\"Личный учёт и данные МИС\" title={readOnly ? \"Расписание и самоотчёты пациента\" : \"Моё расписание лекарств\"} action={!readOnly&&<Button onClick={()=>edit(null)}>Добавить свою позицию</Button>}>Личные позиции отделены от назначений МИС. Отсутствие отметки остаётся неизвестным; отметка — сообщение пациента, а не подтверждение приёма.</Heading>\n+    <Heading level={readOnly?2:1} eyebrow={readOnly?undefined:\"Личный учёт и данные МИС\"} title={readOnly ? \"Расписание и самоотчёты пациента\" : \"Моё расписание лекарств\"} action={!readOnly&&<Button onClick={()=>edit(null)}>Добавить свою позицию</Button>}>{readOnly?\"Отсутствие отметки не доказывает пропуск.\":\"Личные позиции отделены от назначений МИС. Отсутствие отметки остаётся неизвестным; отметка — сообщение пациента, а не подтверждение приёма.\"}</Heading>\n     {saved&&!readOnly&&<section ref={savedPanel} className=\"panel medication-saved-result\" aria-labelledby={savedId}>\n       <div className=\"section-heading\"><h2 ref={savedHeading} id={savedId} tabIndex={-1}>{saved.kind===\"schedule\"?\"Расписание сохранено\":\"Самоотчёт сохранён\"}</h2></div>\n       <p className=\"field-hint\">{saved.kind===\"schedule\"?\"Личная запись обновлена. Назначение в МИС не менялось.\":\"Отметка доступна лечащему врачу. Это ваше наблюдение, а не подтверждение приёма.\"}</p>\n--- local49/MedicationEditor.tsx\n+++ current/frontend/src/MedicationEditor.tsx\n@@ -1,6 +1,6 @@\n-import { useEffect, useRef, useState, type FormEvent } from \"react\";\n+import { useEffect, useId, useRef, useState, type FormEvent } from \"react\";\n import { send } from \"./api\";\n-import { Button, Section, type Notify } from \"./UI\";\n+import { Button, ErrorBox, Section, type Notify } from \"./UI\";\n import { useUnsavedForm, type LeavePrompt } from \"./NavigationGuard\";\n import type { MedicationItem } from \"./MedicationSchedule\";\n import type { ParticipationConfirmation } from \"./ParticipationReceipt\";\n@@ -19,11 +19,14 @@\n   }));\n   const baseline=useRef(JSON.stringify(fields));\n   const [busy,setBusy]=useState(false);\n+  const [saveError,setSaveError]=useState(\"\");\n+  const errorResult=useRef<HTMLDivElement>(null),errorId=useId();\n   const request=useRef({signature:\"\",id:\"\"});\n   const name=useRef<HTMLInputElement>(null);\n   const {clear,confirm}=useUnsavedForm({dirty:JSON.stringify(fields)!==baseline.current,pending:busy,prompt:editorPrompt,scope,focus:()=>name.current?.focus()});\n   useEffect(()=>{name.current?.focus();},[]);\n-  function patch(value:Partial<typeof fields>) {setFields(current=>({...current,...value}));}\n+  useEffect(()=>{if(saveError)errorResult.current?.querySelector<HTMLElement>('.error-box')?.focus();},[saveError]);\n+  function patch(value:Partial<typeof fields>) {setSaveError(\"\");setFields(current=>({...current,...value}));}\n   async function save(event:FormEvent) {\n     event.preventDefault();if(busy)return;\n     const data={label:fields.label,instructions:fields.instructions,schedule_text:fields.text,schedule_kind:fields.kind,\n@@ -31,17 +34,17 @@\n       weekdays:fields.kind===\"fixed\"?fields.weekdays:[],timezone:fields.zone,starts_on:fields.start,ends_on:fields.end||null,active:fields.active};\n     const signature=JSON.stringify(data);\n     if(request.current.signature!==signature)request.current={signature,id:crypto.randomUUID()};\n-    onSaving();setBusy(true);\n+    onSaving();setSaveError(\"\");setBusy(true);\n     try {\n       const response=item?await send<ParticipationConfirmation>(`/medications/items/${item.id}`,{...data,expected_revision:item.revision},\"PUT\"):\n         await send<ParticipationConfirmation>(\"/medications/items\",{...data,client_request_id:request.current.id});\n       clear();notify(\"Личная позиция сохранена; назначение МИС не менялось\");onSaved(response);\n-    } catch(error) {notify(error instanceof Error?error.message:\"Не удалось сохранить расписание\",\"error\");}\n+    } catch(error) {setSaveError(error instanceof Error?error.message:\"Не удалось сохранить расписание\");}\n     finally {setBusy(false);}\n   }\n   return <Section title={item?\"Изменить личную позицию\":\"Добавить свою позицию\"} className=\"medication-editor\">\n     <p className=\"field-hint\">Запишите согласованное с врачом расписание или свой способ учёта. Это личная запись, она не меняет назначение в МИС.</p>\n-    <form onSubmit={save}><fieldset className=\"form-fields\" disabled={busy} aria-busy={busy}>\n+    <form onSubmit={save}><div ref={errorResult} id={errorId}><ErrorBox message={saveError}/></div><fieldset className=\"form-fields\" disabled={busy} aria-busy={busy} aria-describedby={saveError?errorId:undefined}>\n       <label className=\"field\">Название<input ref={name} required maxLength={300} value={fields.label} onChange={e=>patch({label:e.target.value})}/></label>\n       <label className=\"field\">Своё описание / инструкция · необязательно<textarea maxLength={2000} value={fields.instructions} onChange={e=>patch({instructions:e.target.value})}/></label>\n       <label className=\"field\">Расписание своими словами<textarea required maxLength={1500} value={fields.text} onChange={e=>patch({text:e.target.value})}/></label>\n--- local49/workspace.css\n+++ current/frontend/src/workspace.css\n@@ -185,6 +185,7 @@\n .sidebar-availability .availability-error { margin:4px 0 0; color:var(--signal-soft); font-size:12px; line-height:1.6; }\n .main-content,.patient-shell .main-content { padding: 30px 32px; max-width: 1500px; }\n .page-heading { margin-bottom: 24px; }\n+.page-heading.subsection-heading h2 { font-size:22px; line-height:1.35; letter-spacing:-.35px; }\n .patient-shell .page-heading { margin-bottom: 24px; }\n .patient-shell .page-heading h1 { font-size: 28px; }\n .app-footer { font-size: 11px; color: var(--muted); padding: 16px 32px; }\n",
+  "screenshots": [
+    {
+      "file": "docs/evidence/medication-form-polish-2026-10-25/editor-error-before.jpg",
+      "bytes": 69847,
+      "sha256": "d56ab3feebe1b5a470b4c56434cff091661dafe8177dc55303d95bb0c8241b24",
+      "pixels": [
+        1265,
+        712
+      ]
+    },
+    {
+      "file": "docs/evidence/medication-form-polish-2026-10-25/editor-error-mobile.jpg",
+      "bytes": 37262,
+      "sha256": "cc28fed3b3c447fb812e25846f7fab0639340c51309308d82b7495ba463ece70",
+      "pixels": [
+        360,
+        810
+      ]
+    },
+    {
+      "file": "docs/evidence/medication-form-polish-2026-10-25/editor-error-tablet.jpg",
+      "bytes": 61581,
+      "sha256": "f396b8de5d492c6f723e3348ec4bd71696adfdc860bbfc60398296b55cfb3b2b",
+      "pixels": [
+        753,
+        1004
+      ]
+    },
+    {
+      "file": "docs/evidence/medication-form-polish-2026-10-25/editor-saved-mobile.jpg",
+      "bytes": 29706,
+      "sha256": "d5682bdd818b77a9d72bc5f7b118c8f316569c551e92c1d87ec39f158f123a73",
+      "pixels": [
+        360,
+        810
+      ]
+    },
+    {
+      "file": "docs/evidence/medication-form-polish-2026-10-25/editor-saved-tablet.jpg",
+      "bytes": 62875,
+      "sha256": "424d0236a2f19509934921310d431b81e2cd2ae290aaad79719fbde6b6195cb9",
+      "pixels": [
+        753,
+        1004
+      ]
+    },
+    {
+      "file": "docs/evidence/medication-form-polish-2026-10-25/heading-after.jpg",
+      "bytes": 73927,
+      "sha256": "53bc395c15469fcdc0d69b06c2ec493556647ece505ede26237b6738ade96ed2",
+      "pixels": [
+        1265,
+        712
+      ]
+    },
+    {
+      "file": "docs/evidence/medication-form-polish-2026-10-25/heading-before.jpg",
+      "bytes": 79219,
+      "sha256": "b9a6be30a4a6a55c4497513566749ab52fe4af431950ac12aacb815e7db0370e",
+      "pixels": [
+        1265,
+        712
+      ]
+    },
+    {
+      "file": "docs/evidence/medication-form-polish-2026-10-25/heading-mobile.jpg",
+      "bytes": 33079,
+      "sha256": "27ba85dae6d7a2ff7f1b055e8601f6a587f40e5881b6c2d47522418034bf0b7b",
+      "pixels": [
+        360,
+        810
+      ]
+    }
+  ],
+  "qaData": "Patient2: one new inactive personal item, then one edit; both receipts0, visible balance110 unchanged. Synthetic QA database only, main demo data unchanged.",
+  "limits": [
+    "Full suite rerun after shortening the clinician-only copy; no new behavior was inferred from that copy change.",
+    "One actual clinician markup semantic audit in JSDOM:0violations/3incomplete, one virtual-DOM warning; no full browser/WCAG/screen-reader acceptance.",
+    "No real MIS, Telegram, medical, discount, load, Git or external write acceptance."
+  ]
+}

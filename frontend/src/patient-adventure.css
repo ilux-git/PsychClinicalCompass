@@ -1,0 +1,143 @@
+/* Original atlas direction: game affordances belong to the voluntary patient view. */
+.participation-atlas { --atlas-ink:var(--ink); --atlas-muted:var(--muted); margin:24px 0 0; color:var(--atlas-ink); border:1px solid var(--line); border-radius:18px; background:var(--paper); overflow:hidden; }
+.atlas-heading { display:flex; align-items:center; justify-content:space-between; gap:8px 16px; flex-wrap:wrap; padding:18px 22px 0; font-size:13px; line-height:1.6; }
+.atlas-heading > span { display:flex; gap:8px; align-items:center; font-weight:600; }
+.atlas-heading strong { font-size:12px; font-weight:500; color:var(--atlas-muted); font-variant-numeric:tabular-nums; }
+.atlas-scene { display:block; width:100%; height:auto; margin-top:12px; }
+.atlas-scene-frame { position:relative; margin-top:12px; }
+.participation-atlas:not(.participation-atlas-compact) .atlas-scene-frame { margin-inline:6px; }
+.atlas-scene-frame .atlas-scene { margin-top:0; }
+.atlas-map-hint { color:var(--atlas-muted); font-size:12px; line-height:1.6; margin:8px 22px 0; }
+.atlas-map-controls { position:absolute; inset:0; pointer-events:none; }
+.atlas-marker { position:absolute; z-index:1; display:grid; place-items:center; width:clamp(44px,6vw,56px); height:clamp(44px,6vw,56px); padding:0; transform:translate(-50%,-50%); border:2px solid #aaa99f; border-radius:50%; background:#fff; color:var(--muted); box-shadow:0 4px 0 #aaa99f; pointer-events:auto; cursor:pointer; transition:background-color .16s ease,border-color .16s ease,box-shadow .16s ease,transform .12s ease; }
+.participation-atlas .atlas-marker .lucide { display:block; width:22px; height:22px; max-height:none; }
+.atlas-marker[data-reached="true"] { background:var(--ink); border-color:var(--ink); color:#fff; box-shadow:0 4px 0 #595b5a; }
+.atlas-marker:hover { border-color:var(--signal-dark); }
+.atlas-marker[aria-pressed="true"] { box-shadow:0 0 0 3px var(--paper),0 0 0 5px var(--signal-dark),0 5px 0 #aaa99f; }
+.atlas-marker[aria-current="step"]::before { content:""; position:absolute; top:-15px; left:calc(50% - 7px); border:7px solid transparent; border-bottom:0; border-top-color:var(--signal); }
+.atlas-marker:focus-visible { outline:3px solid var(--signal-dark); outline-offset:2px; z-index:2; }
+.journey-map .atlas-scene { display:block; width:100%; max-height:none; }
+.participation-atlas .atlas-scene .lucide { display:block; width:20px; height:20px; max-height:none; }
+.participation-atlas .atlas-heading .lucide { display:block; width:16px; height:16px; max-height:none; flex-shrink:0; }
+.participation-atlas figcaption { font-size:12px; line-height:1.7; padding:0 22px 20px; color:var(--atlas-muted); }
+.journey-map .participation-atlas figcaption { font-size:12px; font-weight:400; text-align:left; color:var(--atlas-muted); }
+.patient-progress-page .journey-map { margin:24px 0 0; }
+.journey-experience { display:grid; gap:24px; margin-top:24px; }
+.journey-panel-heading > div:first-child { flex:1; min-width:0; width:100%; }
+.journey-visual { min-width:0; }
+.journey-experience .journey-map,.journey-experience .participation-atlas { margin-top:0; }
+.journey-experience .participation-rhythm,.journey-experience .participation-calm { margin-top:0; }
+.journey-wallet { min-width:0; align-self:start; padding:20px; border:1px solid var(--line); border-radius:14px; background:var(--paper); }
+.patient-progress-page .journey-wallet .patient-discount-goal { margin:0; }
+.journey-wallet > .button { margin-top:18px; width:100%; }
+.journey-balance-link { flex-shrink:0; font:inherit; cursor:pointer; text-align:left; background:var(--paper); border:1px solid var(--line); border-radius:14px; padding:12px 16px; transition:border-color .16s ease,background-color .16s ease,transform .12s ease; }
+.journey-balance-link > span { display:flex; align-items:center; gap:8px; }
+.journey-balance-link > span svg { flex-shrink:0; }
+.journey-balance-link:hover { border-color:var(--signal-dark); }
+.journey-view-choice { width:100%; max-width:360px; margin:0 0 16px; font-size:13px; }
+.journey-view-choice select { min-height:44px; }
+.journey-mode-note { font-size:13px; line-height:1.7; color:var(--muted); margin:24px 0 0; }
+.loyalty-section-target .section-heading { flex-wrap:wrap; align-items:flex-start; }
+.loyalty-section-target .section-heading h2 { flex:1; min-width:min(100%,250px); }
+.loyalty-catalog-actions { display:flex; align-items:center; flex-wrap:wrap; gap:8px; }
+.loyalty-catalog-actions .button { min-height:44px; }
+@media (min-width:1101px) {
+  .patient-progress-page[data-mode="map"] .journey-experience { grid-template-columns:minmax(0,1fr) 260px; align-items:start; }
+}
+.atlas-next { display:grid; gap:6px; padding:18px 20px; }
+.atlas-next > span { font-size:12px; line-height:1.6; color:var(--atlas-muted); }
+.atlas-next > strong { font-size:16px; line-height:1.55; font-weight:600; text-wrap:pretty; }
+.participation-atlas-compact { margin:24px -4px 0; border-color:var(--line); }
+.participation-atlas-compact .atlas-heading { padding:16px 16px 0; }
+.participation-atlas-compact .atlas-heading > span { font-size:12px; }
+.participation-atlas-compact figcaption { padding:0 20px 18px; }
+.patient-overview[data-mode="map"] .patient-next-step { border:1px solid var(--line); border-top:4px solid var(--signal); border-radius:20px; box-shadow:0 4px 0 #dedbd1; background:#fff; }
+.patient-overview[data-mode="map"] .patient-step-icon { width:48px; height:48px; background:var(--signal-soft); border:1px solid #edc4b7; box-shadow:0 3px 0 #edc4b7; color:var(--signal-dark); border-radius:16px; }
+.patient-reward-card.patient-reward-map { border:1px solid var(--line); border-radius:20px; background:#fff; box-shadow:0 4px 0 #dedbd1; }
+.patient-reward-map .patient-reward-icon { background:var(--signal-soft); color:var(--signal-dark); border:1px solid #edc4b7; box-shadow:0 3px 0 #edc4b7; transform:rotate(-6deg); border-radius:14px; }
+.patient-reward-map .patient-home-balance { border-bottom:1px solid var(--line); padding-bottom:18px; margin-bottom:18px; }
+.patient-reward-map .patient-home-balance strong { font-size:44px; color:var(--ink); }
+.patient-overview[data-mode="map"] .patient-step-detail .button.primary,.patient-progress-page[data-mode="map"] .loyalty-offer .button.primary { min-height:48px; padding:12px 20px; border:1px solid var(--signal-dark); border-bottom-width:4px; border-radius:13px; background:var(--signal); color:var(--ink); font-size:14px; font-weight:650; }
+.patient-overview[data-mode="map"] .patient-step-detail .button.primary:hover,.patient-progress-page[data-mode="map"] .loyalty-offer .button.primary:hover { background:#f26044; }
+.patient-reward-map > .button.secondary { min-height:48px; border:1px solid var(--line); border-bottom-width:3px; border-radius:13px; background:var(--paper); color:var(--ink); font-weight:600; }
+.patient-progress-page[data-mode="map"] .journey-panel { background:#fff; border:1px solid var(--line); border-radius:22px; box-shadow:0 4px 0 #dedbd1; }
+.patient-progress-page[data-mode="map"] .journey-panel-heading h2 { color:var(--ink); max-width:30ch; font-size:clamp(24px,2.2vw,32px); line-height:1.3; letter-spacing:-.55px; }
+.patient-progress-page[data-mode="map"] .journey-balance { padding:14px 18px; border:1px solid #edc4b7; border-bottom-width:4px; border-radius:16px; color:var(--signal-dark); background:var(--signal-soft); }
+.patient-progress-page[data-mode="map"] .journey-balance strong { color:var(--signal-dark); }
+.patient-progress-page[data-mode="map"] .loyalty-offer { position:relative; padding:24px; border:1px solid var(--line); border-bottom-width:4px; border-radius:18px; background:#fff; }
+.patient-progress-page[data-mode="map"] .loyalty-offer > svg { color:var(--signal-dark); width:34px; height:34px; margin-bottom:12px; }
+.patient-progress-page[data-mode="map"] .loyalty-offer > h3 { font-size:19px; line-height:1.45; }
+.patient-progress-page[data-mode="map"] .loyalty-offer > strong { color:var(--ink); font-size:25px; }
+@media (max-width:1100px) {
+  .participation-atlas-compact .atlas-scene { max-height:240px; }
+  .patient-overview[data-mode="map"] .patient-mobile-reward { position:relative; overflow:hidden; min-height:112px; border:1px solid var(--line); border-bottom:4px solid var(--line); border-radius:18px; background:var(--paper); }
+  .patient-ticket-art { position:absolute; inset:0 0 0 auto; width:34%; overflow:hidden; pointer-events:none; }
+  .patient-ticket-art .atlas-scene { width:auto; height:100%; max-width:none; margin:0; position:absolute; right:0; }
+  .patient-overview[data-mode="map"] .patient-mobile-reward > svg:first-of-type { display:none; }
+  .patient-overview[data-mode="map"] .patient-mobile-reward > span:not(.patient-ticket-art) { position:relative; z-index:1; flex:0 1 69%; padding-right:8px; background:var(--paper); }
+  .patient-overview[data-mode="map"] .patient-mobile-reward strong { font-size:17px; line-height:1.45; color:var(--ink); }
+  .patient-overview[data-mode="map"] .patient-mobile-reward small { font-size:12px; color:var(--muted); }
+  .patient-overview[data-mode="map"] .patient-mobile-reward > svg:last-child { position:relative; margin-left:auto; z-index:1; background:var(--paper); border-radius:50%; }
+}
+@media (max-width:700px) {
+  .atlas-heading { padding:16px 16px 0; }
+  .participation-atlas figcaption { padding:0 20px 20px; }
+  .patient-overview[data-mode="map"] .patient-step-detail .button.primary { width:100%; }
+  .patient-progress-page[data-mode="map"] .journey-balance { align-self:flex-start; }
+}
+@media (prefers-reduced-motion:no-preference) {
+  .journey-balance-link:active { transform:translateY(1px); }
+  .atlas-marker:active { transform:translate(-50%,-50%) translateY(2px); }
+  .atlas-boat { animation:atlas-arrival .5s ease-out both; }
+  @keyframes atlas-arrival { from { opacity:0; } to { opacity:1; } }
+}
+
+.atlas-place-detail { margin:0 22px 20px; padding:18px 0 0; border-top:1px solid var(--line); min-height:140px; scroll-margin-block:90px; }
+.atlas-place-detail > .eyebrow { color:var(--signal-dark); font-size:12px; letter-spacing:0; }
+.atlas-place-detail > h3 { font-size:17px; line-height:1.5; margin:6px 0 8px; color:var(--ink); }
+.atlas-place-detail > p { font-size:14px; line-height:1.7; color:var(--muted); margin:0; }
+.participation-rhythm { padding:24px 0 0; margin-top:24px; border-top:1px solid var(--line); }
+.participation-rhythm > header { display:flex; align-items:flex-start; justify-content:space-between; gap:20px; margin-bottom:20px; }
+.participation-rhythm header .eyebrow { margin:0 0 6px; font-size:11px; letter-spacing:.4px; }
+.participation-rhythm header h3 { margin:0; font-size:19px; line-height:1.45; }
+.participation-rhythm header > strong { color:var(--ink); font-size:30px; font-weight:600; line-height:1.2; font-variant-numeric:tabular-nums; text-align:right; }
+.participation-rhythm header > strong > span { display:block; color:var(--muted); font-size:12px; line-height:1.6; font-weight:400; margin-top:4px; max-width:12ch; }
+.rhythm-calendar { display:grid; grid-template-columns:repeat(7,minmax(44px,1fr)); gap:8px; padding:4px; }
+.rhythm-calendar button { min-width:0; min-height:104px; padding:12px 6px; display:flex; flex-direction:column; align-items:center; gap:8px; border:1px solid var(--line); border-radius:14px; color:var(--muted); background:var(--paper); transition:background-color .16s ease,border-color .16s ease; }
+.rhythm-calendar button > span { font-size:12px; line-height:1.4; }
+.rhythm-calendar button > strong { color:var(--ink); font-size:22px; font-weight:600; font-variant-numeric:tabular-nums; line-height:1.3; }
+.rhythm-calendar button i { display:grid; place-items:center; width:20px; height:20px; border-radius:50%; font-style:normal; color:var(--muted); }
+.rhythm-calendar button.has-entries i { background:var(--ink); color:#fff; }
+.rhythm-calendar button[aria-pressed="true"] { border-color:var(--signal-dark); background:var(--signal-soft); }
+.rhythm-calendar button:hover { border-color:var(--signal-dark); }
+.rhythm-day-detail { display:flex; flex-wrap:wrap; gap:4px 16px; min-height:54px; padding:16px 4px 0; color:var(--muted); font-size:13px; line-height:1.6; }
+.rhythm-day-detail > strong { color:var(--ink); font-weight:600; }
+.participation-rhythm > .rhythm-caption { font-size:12px; line-height:1.7; color:var(--muted); margin:12px 4px 0; }
+.participation-rhythm-compact header h3 { font-size:16px; }
+.participation-rhythm-compact .rhythm-calendar { grid-template-columns:repeat(4,minmax(44px,1fr)); }
+.participation-rhythm-compact .rhythm-calendar button { min-height:94px; }
+.participation-calm { margin:24px 0 0; padding:24px; display:flex; align-items:flex-start; gap:18px; border:1px solid var(--line); border-left:3px solid #aaa99f; border-radius:14px; background:var(--paper); }
+.calm-mark { display:grid; place-items:center; flex-shrink:0; width:42px; height:42px; border-radius:50%; background:#e8e6dd; color:var(--muted); }
+.participation-calm .eyebrow { font-size:11px; letter-spacing:.3px; margin:0 0 6px; }
+.participation-calm h3 { font-size:19px; line-height:1.5; margin:0 0 8px; }
+.participation-calm p:not(.eyebrow) { font-size:14px; line-height:1.8; color:var(--muted); margin:0 0 12px; max-width:75ch; }
+.participation-calm small { font-size:12px; line-height:1.7; color:var(--muted); }
+.participation-calm-compact { padding:20px 0 0; border:0; border-top:1px solid var(--line); border-radius:0; background:transparent; gap:12px; }
+.participation-calm-compact .calm-mark { display:none; }
+.participation-calm-compact h3 { font-size:17px; }
+.patient-progress-page .journey-panel { background:#fff; border-color:var(--line); }
+.patient-progress-page .journey-panel .eyebrow { color:var(--muted); }
+.patient-progress-page .journey-balance strong { color:var(--ink); }
+.patient-progress-page .loyalty-offer { background:var(--paper); border-color:var(--line); }
+.patient-progress-page .loyalty-offer > svg { color:var(--signal-dark); }
+.patient-progress-page .loyalty-offer > strong { color:var(--ink); }
+@media (max-width:700px) {
+  .atlas-place-detail { margin-inline:20px; min-height:190px; }
+  .rhythm-calendar { grid-template-columns:repeat(4,minmax(44px,1fr)); }
+  .participation-calm { padding:20px 16px; gap:12px; }
+  .participation-calm .calm-mark { width:32px; height:32px; }
+  .participation-calm-compact { padding:20px 0 0; }
+}
+@media (prefers-reduced-motion:reduce) {
+  .atlas-marker,.rhythm-calendar button,.journey-balance-link { transition:none; }
+}

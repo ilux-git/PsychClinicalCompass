@@ -1,0 +1,117 @@
+{
+  "date": "2026-10-25",
+  "contract": "docs/BARRIER_WORKFLOW_POLISH.md",
+  "git": {
+    "branch": "agent/retention-mvp",
+    "base_head": "9e811153db907b8b6748f5667e901897a1b9a0ab",
+    "uncommitted": true
+  },
+  "targetViewports": [
+    "375x844",
+    "768x1024",
+    "1440x1000"
+  ],
+  "responsive": {
+    "status": "partial",
+    "evidence": "Desktop physician flow inspected before the last questionnaire layout correction. Final mobile/tablet matrix unavailable after Computer Use URL-policy stop."
+  },
+  "accessibility": {
+    "status": "partial",
+    "evidence": "Observed focus after source return, rejected writes and physician verification. Full axe, screen reader, reduced motion emulation and final readonly coordinator focus not completed."
+  },
+  "contentStates": {
+    "loading": {
+      "status": "partial",
+      "evidence": "Existing resilient data/loading UI retained; final route matrix unverified."
+    },
+    "empty": {
+      "status": "partial",
+      "evidence": "Model zero-data behavior checked; rendered empty matrix incomplete."
+    },
+    "error": {
+      "status": "pass",
+      "evidence": "Controlled QA POST and verification 503 preserved input and focused error; retry created/saved once."
+    },
+    "partial": {
+      "status": "partial",
+      "evidence": "Unknown times remain explicit in source; final partial-data rendering unverified."
+    },
+    "success": {
+      "status": "pass",
+      "evidence": "Observed source -> create -> action done -> physician not_resolved/unknown. API reconciliation matches aggregates; treatment status unchanged."
+    },
+    "permission": {
+      "status": "partial",
+      "evidence": "Coordinator view lacked clinical source/editor; backend access covered. Final rendered permission-loss matrix unverified."
+    }
+  },
+  "renderedEvidence": [
+    {
+      "viewport": "1440x1000",
+      "artifact": "verification-desktop.jpg",
+      "observation": "Desktop request1440, actual client1425 due to scrollbar gutter; current physician verification form. Predates final survey-block correction."
+    },
+    {
+      "viewport": "1440x1000",
+      "artifact": "verification-desktop-second.jpg",
+      "observation": "Second desktop capture; originally misnamed tablet, corrected after reading actual client width1425. Not evidence for768."
+    },
+    {
+      "viewport": "1440x1000",
+      "artifact": "create-error.jpg",
+      "observation": "Earlier desktop controlled create failure and preserved title."
+    },
+    {
+      "viewport": "1440x1000",
+      "artifact": "verification-error.jpg",
+      "observation": "Earlier desktop controlled verification failure."
+    }
+  ],
+  "tests": {
+    "backend": {
+      "name": "pytest",
+      "errors": "0",
+      "failures": "0",
+      "skipped": "0",
+      "tests": "137",
+      "time": "119.937",
+      "timestamp": "2026-10-24T23:34:09.302087+07:00",
+      "hostname": "MainPC"
+    },
+    "frontend_models": 20,
+    "typecheck": "pass",
+    "production_build": "pass",
+    "backend_log": "outputs/meeting-flow-full-pytest-20261024.xml",
+    "build_log": "outputs/meeting-flow-build-20261024.log",
+    "limits": "No configured lint/coverage gate, no current load rerun. Last changes after backend tests were frontend-only."
+  },
+  "reconciliation": {
+    "extra_tasks": 3,
+    "extra_done": 3,
+    "extra_checked": 2,
+    "with_source": 10,
+    "awaiting": 27,
+    "checked": 7,
+    "patient_treatment_unchanged": true,
+    "admin_has_no_private_source_or_comment": true,
+    "admin_matches_doctor_for_tasks_in_this_demo": true,
+    "technical_fixture_finalized_via_api": 35
+  },
+  "source_sha256": {
+    "frontend/src/CareWorkflow.tsx": "3bf0998588e514c936a71a9b3db36ac7d3faf06df6182adf16d3551560e2eac0",
+    "frontend/src/DoctorPatients.tsx": "6d77e5ed60700f9a954ff83ff0214dc1ed1a891497484b0b574c755c639f72cb",
+    "frontend/src/Interaction.tsx": "296e49ea4e204efd44a4f44f6176d0bb890572bd3eea5b4f01220289b5c632bd",
+    "frontend/src/TaskBoard.tsx": "95cccd448cd9cfefa1395c0eeb089e4f6154b277564d73014ae3f9ed4cfe669f",
+    "frontend/src/WorkflowMetrics.tsx": "34c078ba3d39d43b1cb294ee4654045660722012cbf24e6c2229fdafb17c59bf",
+    "frontend/src/careProgress.ts": "97c3606f806a2971258014c7dada718078c1897585934d9d1f6c71ca9a5f1914",
+    "app/modules/analytics/care.py": "9617661891fbae0a7c3008e3bf2bd04ecccfeafa13bb3af9e6040b1f0fc06783",
+    "tests/test_workflow_analytics.py": "800e450f00dda757ac581e16a89fcf3d7795e4e081f9bff72231c9fa33b755fb"
+  },
+  "limits": [
+    "No final screenshot of the user-reported questionnaire block.",
+    "Date inputs remained empty in browser automation; date entry persistence not verified.",
+    "Browser URL-policy enforcement unsupported in current Windows browser; no bypass used.",
+    "QA tabs/viewport reset could not be confirmed after the tool stopped. Main patient data not changed by QA writes."
+  ],
+  "visual_gate": "INCOMPLETE: missing viewports and accessibility observations are intentional, not a passing visual acceptance."
+}

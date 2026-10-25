@@ -41,7 +41,7 @@ export async function api<T>(
     } catch {
       /* A transport error may not contain JSON. */
     }
-    if (response.status === 401)
+    if (response.status === 401 && sessionStorage.getItem("compass-token") === token)
       window.dispatchEvent(new Event("compass-auth-expired"));
     throw new ApiError(response.status, message);
   }
@@ -265,6 +265,7 @@ export type ChartQuestion = {
 };
 export type Quote = {
   id?:number;
+  survey_title?:string;
   assignment_id?:number;
   submission_id?:number;
   question_id?:string;

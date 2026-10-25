@@ -1,0 +1,4761 @@
+{
+  "recordedAt": "2026-10-25T06:42:16.455338+00:00",
+  "status": "Measured survey typography and palette corrected; two CSS files only",
+  "changes": [
+    "List title16px, description14px, dates/captions12px at all measured widths; support14/13 and history14/12. Paper/Ink/Signal roles replace purple list and teal selection accents.",
+    "Stable spacing and count size; decorative leading card icon is hidden below600px to give text more width. Green completed indicators remain unchanged.",
+    "Private-draft explanation uses neutral Paper; selected radio/checkbox uses SignalSoft with SignalDark boundary and native checked state. Existing160ms transitions and reduced-motion policy retained."
+  ],
+  "sources": [
+    {
+      "file": "frontend/src/workspace.css",
+      "bytes": 67687,
+      "sha256": "538ffd353b5c535cde87343a828820792210f54e42de9e63985a03d34efdeab9"
+    },
+    {
+      "file": "frontend/src/brand-theme.css",
+      "bytes": 7957,
+      "sha256": "52f48a70009d58b8e4e05f09ec5648c97351702c9878c0e77f284336d1c15ba6"
+    }
+  ],
+  "diff": "--- local66/workspace.css\n+++ current/frontend/src/workspace.css\n@@ -366,6 +366,29 @@\n .participation-actions .collection-card { display: flex; flex-direction: column; align-items: flex-start; }\n .participation-actions .collection-card > .button { margin-top: 16px; text-align: left; }\n @media (max-width: 600px) { .journey-mobile-checkpoints { display: block; } .journey-progress { margin-top: 24px; } }\n+.patient-section-heading { gap: 12px 20px; flex-wrap: wrap; align-items: baseline; margin-bottom: 20px; }\n+.patient-section-heading h2 { font-size: var(--text-title); line-height: 1.4; }\n+.patient-section-heading > .muted { font-size: var(--text-caption); line-height: 1.5; }\n+.count-circle { width: auto; min-width: 24px; height: 24px; padding: 0 6px; font-size: var(--text-caption); font-variant-numeric: tabular-nums; }\n+.patient-surveys { gap: 16px; }\n+.patient-survey-card { min-width: 0; padding: 24px; gap: 16px; transition: background-color 160ms ease, border-color 160ms ease; }\n+.patient-survey-card > div { min-width: 0; }\n+.patient-survey-card .badge { font-size: var(--text-caption); }\n+.patient-survey-card h3 { font-size: 16px; line-height: 1.45; margin: 12px 0 8px; overflow-wrap: anywhere; }\n+.patient-survey-card p { font-size: var(--text-body); line-height: 1.65; margin: 0 0 16px; text-wrap: pretty; }\n+.patient-survey-card small { display: block; font-size: var(--text-caption); line-height: 1.6; }\n+.survey-card-icon { width: 44px; height: 44px; border-radius: 10px; }\n+.support-card { gap: 14px; padding: 20px; margin: 20px 0 24px; border: 1px solid var(--line); border-radius: 12px; }\n+.support-card h3 { font-size: var(--text-body); line-height: 1.5; margin: 0 0 8px; }\n+.support-card p { font-size: var(--text-label); line-height: 1.65; }\n+.completed-survey > div { min-width: 0; }\n+.completed-survey strong { font-size: var(--text-body); line-height: 1.5; overflow-wrap: anywhere; }\n+.completed-survey small { font-size: var(--text-caption); line-height: 1.5; margin-top: 6px; }\n+@media (max-width: 600px) {\n+  .patient-survey-card { padding: 20px; gap: 12px; }\n+  .patient-survey-card > .survey-card-icon { display: none; }\n+  .support-card { padding: 18px; }\n+}\n .patient-form { max-width: 820px; margin: 0 auto 24px; }\n .patient-form h1 { font-size: 26px; line-height: 1.35; margin: 20px 0 12px; color: var(--ink); }\n .patient-form .lede { font-size: 14px; color: var(--muted); line-height: 1.7; }\n--- local66/brand-theme.css\n+++ current/frontend/src/brand-theme.css\n@@ -35,6 +35,18 @@\n .survey-tile.selected,.assign-patients .checkbox-label:has(:checked) { background:var(--signal-soft); border-color:var(--signal-dark); }\n .survey-tile strong { color:var(--ink); }\n .survey-tile:hover { border-color:var(--signal-dark); }\n+.patient-section-heading h2,.patient-survey-card h3,.completed-survey strong,.support-card h3 { color:var(--ink); }\n+.patient-survey-card p,.patient-survey-card small,.completed-survey small,.support-card,.support-card p { color:var(--muted); }\n+.patient-survey-card,.completed-survey { border-color:var(--line); }\n+.patient-survey-card:hover { background:var(--paper); border-color:var(--signal-dark); }\n+.patient-survey-card > svg { color:var(--signal-dark); }\n+.count-circle,.survey-card-icon { background:var(--signal-soft); color:var(--signal-dark); }\n+.draft-disclosure { background:var(--paper); color:var(--muted); }\n+.survey-question legend > .question-number { background:var(--signal-soft); color:var(--signal-dark); }\n+.survey-question legend > .required-mark { color:var(--signal-dark); }\n+.answer-option { color:var(--ink); }\n+.answer-option:hover:not(:has(:disabled)) { background:var(--paper); border-color:var(--muted); }\n+.answer-option.checked,.answer-option.checked:hover { background:var(--signal-soft); border-color:var(--signal-dark); color:var(--ink); }\n .workspace-start { background:var(--surface); border-color:var(--line); border-left:4px solid var(--signal); }\n .workspace-start-icon,.navigation-welcome > svg,.workspace-shortcut > svg { color:var(--signal-dark); border-color:var(--line); }\n .workspace-start p:not(.eyebrow),.navigation-welcome p,.workspace-path p,.workspace-shortcut small,.card-section-purpose { color:var(--muted); }\n",
+  "verification": {
+    "before": [
+      {
+        "elements": [
+          {
+            "background": "rgb(237, 245, 242)",
+            "border": "rgb(73, 104, 94)",
+            "bounds": {
+              "bottom": 214.875,
+              "height": 48.796875,
+              "left": 379.5,
+              "right": 1149.5,
+              "top": 166.078125,
+              "width": 770,
+              "x": 379.5,
+              "y": 166.078125
+            },
+            "color": "rgb(73, 104, 94)",
+            "font": "13px",
+            "gap": "10px",
+            "lineHeight": "20.8px",
+            "padding": "14px 16px",
+            "selector": "DIV.draft-disclosure",
+            "text": "Можно сделать паузу. Черновик виден только вам. Врач получит ответы после отправки."
+          },
+          {
+            "background": "rgba(0, 0, 0, 0)",
+            "border": "rgb(24, 25, 26)",
+            "bounds": {
+              "bottom": 263.875,
+              "height": 25,
+              "left": 379.5,
+              "right": 1149.5,
+              "top": 238.875,
+              "width": 770,
+              "x": 379.5,
+              "y": 238.875
+            },
+            "color": "rgb(24, 25, 26)",
+            "font": "15px",
+            "gap": "normal",
+            "lineHeight": "24px",
+            "padding": "0px 2px",
+            "selector": "LEGEND.",
+            "text": "1Насколько вам понятно, что делать в приложении?"
+          },
+          {
+            "background": "rgb(233, 242, 239)",
+            "border": "rgb(57, 121, 107)",
+            "bounds": {
+              "bottom": 263.875,
+              "height": 22,
+              "left": 381.5,
+              "right": 403.5,
+              "top": 241.875,
+              "width": 22,
+              "x": 381.5,
+              "y": 241.875
+            },
+            "color": "rgb(57, 121, 107)",
+            "font": "10px",
+            "gap": "normal",
+            "lineHeight": "16px",
+            "padding": "0px",
+            "selector": "SPAN.question-number",
+            "text": "1"
+          },
+          {
+            "background": "rgb(237, 246, 242)",
+            "border": "rgb(111, 159, 145)",
+            "bounds": {
+              "bottom": 385.875,
+              "height": 51,
+              "left": 379.5,
+              "right": 1149.5,
+              "top": 334.875,
+              "width": 770,
+              "x": 379.5,
+              "y": 334.875
+            },
+            "color": "rgb(36, 94, 81)",
+            "font": "14px",
+            "gap": "12px",
+            "lineHeight": "21px",
+            "padding": "14px 16px",
+            "selector": "LABEL.answer-option checked",
+            "text": "Частично понятно"
+          },
+          {
+            "background": "rgba(0, 0, 0, 0)",
+            "border": "rgb(24, 25, 26)",
+            "bounds": {
+              "bottom": 686.875,
+              "height": 25,
+              "left": 379.5,
+              "right": 1149.5,
+              "top": 661.875,
+              "width": 770,
+              "x": 379.5,
+              "y": 661.875
+            },
+            "color": "rgb(24, 25, 26)",
+            "font": "15px",
+            "gap": "normal",
+            "lineHeight": "24px",
+            "padding": "0px 2px",
+            "selector": "LEGEND.",
+            "text": "2Насколько приложение полезно вам между встречами с врачом?"
+          },
+          {
+            "background": "rgb(233, 242, 239)",
+            "border": "rgb(57, 121, 107)",
+            "bounds": {
+              "bottom": 686.875,
+              "height": 22,
+              "left": 381.5,
+              "right": 403.5,
+              "top": 664.875,
+              "width": 22,
+              "x": 381.5,
+              "y": 664.875
+            },
+            "color": "rgb(57, 121, 107)",
+            "font": "10px",
+            "gap": "normal",
+            "lineHeight": "16px",
+            "padding": "0px",
+            "selector": "SPAN.question-number",
+            "text": "2"
+          },
+          {
+            "background": "rgba(0, 0, 0, 0)",
+            "border": "rgb(24, 25, 26)",
+            "bounds": {
+              "bottom": 1109.875,
+              "height": 25,
+              "left": 379.5,
+              "right": 1149.5,
+              "top": 1084.875,
+              "width": 770,
+              "x": 379.5,
+              "y": 1084.875
+            },
+            "color": "rgb(24, 25, 26)",
+            "font": "15px",
+            "gap": "normal",
+            "lineHeight": "24px",
+            "padding": "0px 2px",
+            "selector": "LEGEND.",
+            "text": "3Что в приложении стоит сделать удобнее? · по желанию"
+          },
+          {
+            "background": "rgb(233, 242, 239)",
+            "border": "rgb(57, 121, 107)",
+            "bounds": {
+              "bottom": 1109.875,
+              "height": 22,
+              "left": 381.5,
+              "right": 403.5,
+              "top": 1087.875,
+              "width": 22,
+              "x": 381.5,
+              "y": 1087.875
+            },
+            "color": "rgb(57, 121, 107)",
+            "font": "10px",
+            "gap": "normal",
+            "lineHeight": "16px",
+            "padding": "0px",
+            "selector": "SPAN.question-number",
+            "text": "3"
+          }
+        ],
+        "overflow": false,
+        "stage": "before-form-desktop",
+        "url": "http://127.0.0.1:8782/?section=overview&assignment=31",
+        "viewport": [
+          1280,
+          720
+        ]
+      },
+      {
+        "elements": [
+          {
+            "background": "rgb(237, 245, 242)",
+            "border": "rgb(73, 104, 94)",
+            "bounds": {
+              "bottom": 319.75,
+              "height": 90.390625,
+              "left": 37,
+              "right": 323,
+              "top": 229.359375,
+              "width": 286,
+              "x": 37,
+              "y": 229.359375
+            },
+            "color": "rgb(73, 104, 94)",
+            "font": "13px",
+            "gap": "10px",
+            "lineHeight": "20.8px",
+            "padding": "14px 16px",
+            "selector": "DIV.draft-disclosure",
+            "text": "Можно сделать паузу. Черновик виден только вам. Врач получит ответы после отправки."
+          },
+          {
+            "background": "rgba(0, 0, 0, 0)",
+            "border": "rgb(24, 25, 26)",
+            "bounds": {
+              "bottom": 392.75,
+              "height": 49,
+              "left": 37,
+              "right": 323,
+              "top": 343.75,
+              "width": 286,
+              "x": 37,
+              "y": 343.75
+            },
+            "color": "rgb(24, 25, 26)",
+            "font": "15px",
+            "gap": "normal",
+            "lineHeight": "24px",
+            "padding": "0px 2px",
+            "selector": "LEGEND.",
+            "text": "1Насколько вам понятно, что делать в приложении?"
+          },
+          {
+            "background": "rgb(233, 242, 239)",
+            "border": "rgb(57, 121, 107)",
+            "bounds": {
+              "bottom": 368.75,
+              "height": 22,
+              "left": 39,
+              "right": 61,
+              "top": 346.75,
+              "width": 22,
+              "x": 39,
+              "y": 346.75
+            },
+            "color": "rgb(57, 121, 107)",
+            "font": "10px",
+            "gap": "normal",
+            "lineHeight": "16px",
+            "padding": "0px",
+            "selector": "SPAN.question-number",
+            "text": "1"
+          },
+          {
+            "background": "rgb(237, 246, 242)",
+            "border": "rgb(155, 201, 184)",
+            "bounds": {
+              "bottom": 514.75,
+              "height": 51,
+              "left": 37,
+              "right": 323,
+              "top": 463.75,
+              "width": 286,
+              "x": 37,
+              "y": 463.75
+            },
+            "color": "rgb(36, 94, 81)",
+            "font": "14px",
+            "gap": "12px",
+            "lineHeight": "21px",
+            "padding": "14px 16px",
+            "selector": "LABEL.answer-option checked",
+            "text": "Частично понятно"
+          },
+          {
+            "background": "rgba(0, 0, 0, 0)",
+            "border": "rgb(24, 25, 26)",
+            "bounds": {
+              "bottom": 839.75,
+              "height": 49,
+              "left": 37,
+              "right": 323,
+              "top": 790.75,
+              "width": 286,
+              "x": 37,
+              "y": 790.75
+            },
+            "color": "rgb(24, 25, 26)",
+            "font": "15px",
+            "gap": "normal",
+            "lineHeight": "24px",
+            "padding": "0px 2px",
+            "selector": "LEGEND.",
+            "text": "2Насколько приложение полезно вам между встречами с врачом?"
+          },
+          {
+            "background": "rgb(233, 242, 239)",
+            "border": "rgb(57, 121, 107)",
+            "bounds": {
+              "bottom": 815.75,
+              "height": 22,
+              "left": 39,
+              "right": 61,
+              "top": 793.75,
+              "width": 22,
+              "x": 39,
+              "y": 793.75
+            },
+            "color": "rgb(57, 121, 107)",
+            "font": "10px",
+            "gap": "normal",
+            "lineHeight": "16px",
+            "padding": "0px",
+            "selector": "SPAN.question-number",
+            "text": "2"
+          },
+          {
+            "background": "rgba(0, 0, 0, 0)",
+            "border": "rgb(24, 25, 26)",
+            "bounds": {
+              "bottom": 1286.75,
+              "height": 49,
+              "left": 37,
+              "right": 323,
+              "top": 1237.75,
+              "width": 286,
+              "x": 37,
+              "y": 1237.75
+            },
+            "color": "rgb(24, 25, 26)",
+            "font": "15px",
+            "gap": "normal",
+            "lineHeight": "24px",
+            "padding": "0px 2px",
+            "selector": "LEGEND.",
+            "text": "3Что в приложении стоит сделать удобнее? · по желанию"
+          },
+          {
+            "background": "rgb(233, 242, 239)",
+            "border": "rgb(57, 121, 107)",
+            "bounds": {
+              "bottom": 1262.75,
+              "height": 22,
+              "left": 39,
+              "right": 61,
+              "top": 1240.75,
+              "width": 22,
+              "x": 39,
+              "y": 1240.75
+            },
+            "color": "rgb(57, 121, 107)",
+            "font": "10px",
+            "gap": "normal",
+            "lineHeight": "16px",
+            "padding": "0px",
+            "selector": "SPAN.question-number",
+            "text": "3"
+          }
+        ],
+        "overflow": false,
+        "stage": "before-form-mobile",
+        "url": "http://127.0.0.1:8782/?section=overview&assignment=31",
+        "viewport": [
+          375,
+          844
+        ]
+      },
+      {
+        "elements": [
+          {
+            "background": "rgba(0, 0, 0, 0)",
+            "border": "rgb(120, 101, 134)",
+            "bounds": {
+              "bottom": 258.0875244140625,
+              "height": 22.390640258789062,
+              "left": 16,
+              "right": 107.375,
+              "top": 235.69688415527344,
+              "width": 91.375,
+              "x": 16,
+              "y": 235.69688415527344
+            },
+            "color": "rgb(120, 101, 134)",
+            "font": "16px",
+            "gap": "10px",
+            "lineHeight": "22.4px",
+            "padding": "0px",
+            "selector": "H2.",
+            "text": "Для вас 1"
+          },
+          {
+            "background": "rgb(238, 230, 245)",
+            "border": "rgb(121, 99, 137)",
+            "bounds": {
+              "bottom": 257.8843994140625,
+              "height": 22.000015258789062,
+              "left": 85.375,
+              "right": 107.375,
+              "top": 235.88438415527344,
+              "width": 22,
+              "x": 85.375,
+              "y": 235.88438415527344
+            },
+            "color": "rgb(121, 99, 137)",
+            "font": "10px",
+            "gap": "normal",
+            "lineHeight": "14px",
+            "padding": "0px",
+            "selector": "SPAN.count-circle",
+            "text": "1"
+          },
+          {
+            "background": "rgba(0, 0, 0, 0)",
+            "border": "rgb(89, 91, 90)",
+            "bounds": {
+              "bottom": 253.63438415527344,
+              "height": 13.5,
+              "left": 269.0625,
+              "right": 344,
+              "top": 240.13438415527344,
+              "width": 74.9375,
+              "x": 269.0625,
+              "y": 240.13438415527344
+            },
+            "color": "rgb(89, 91, 90)",
+            "font": "9px",
+            "gap": "normal",
+            "lineHeight": "13.5px",
+            "padding": "0px",
+            "selector": "SPAN.muted",
+            "text": "Вопросы от врача"
+          },
+          {
+            "background": "rgb(255, 255, 255)",
+            "border": "rgb(233, 226, 239)",
+            "bounds": {
+              "bottom": 490.6656494140625,
+              "height": 214.578125,
+              "left": 16,
+              "right": 344,
+              "top": 276.0875244140625,
+              "width": 328,
+              "x": 16,
+              "y": 276.0875244140625
+            },
+            "color": "rgb(0, 0, 0)",
+            "font": "14px",
+            "gap": "12px",
+            "lineHeight": "21px",
+            "padding": "20px 17px",
+            "selector": "BUTTON.patient-survey-card",
+            "text": "3 вопр.Проверка UI · опыт приложенияСинтетическая проверка удобства приложения. Можно пропустить люб"
+          },
+          {
+            "background": "rgb(242, 237, 249)",
+            "border": "rgb(118, 102, 135)",
+            "bounds": {
+              "bottom": 331.0875244140625,
+              "height": 34,
+              "left": 34,
+              "right": 68,
+              "top": 297.0875244140625,
+              "width": 34,
+              "x": 34,
+              "y": 297.0875244140625
+            },
+            "color": "rgb(118, 102, 135)",
+            "font": "14px",
+            "gap": "normal",
+            "lineHeight": "21px",
+            "padding": "0px",
+            "selector": "SPAN.survey-card-icon",
+            "text": ""
+          },
+          {
+            "background": "rgb(255, 231, 223)",
+            "border": "rgb(165, 46, 28)",
+            "bounds": {
+              "bottom": 320.2750244140625,
+              "height": 21.1875,
+              "left": 80,
+              "right": 123.34375,
+              "top": 299.0875244140625,
+              "width": 43.34375,
+              "x": 80,
+              "y": 299.0875244140625
+            },
+            "color": "rgb(165, 46, 28)",
+            "font": "8px",
+            "gap": "5px",
+            "lineHeight": "11.2px",
+            "padding": "5px 8px",
+            "selector": "SPAN.badge purple",
+            "text": "3 вопр."
+          },
+          {
+            "background": "rgba(0, 0, 0, 0)",
+            "border": "rgb(123, 99, 139)",
+            "bounds": {
+              "bottom": 353.6656494140625,
+              "height": 23.390625,
+              "left": 80,
+              "right": 297,
+              "top": 330.2750244140625,
+              "width": 217,
+              "x": 80,
+              "y": 330.2750244140625
+            },
+            "color": "rgb(123, 99, 139)",
+            "font": "13px",
+            "gap": "normal",
+            "lineHeight": "23.4px",
+            "padding": "0px",
+            "selector": "H3.",
+            "text": "Проверка UI · опыт приложения"
+          },
+          {
+            "background": "rgba(0, 0, 0, 0)",
+            "border": "rgb(113, 103, 121)",
+            "bounds": {
+              "bottom": 436.6656494140625,
+              "height": 76,
+              "left": 80,
+              "right": 297,
+              "top": 360.6656494140625,
+              "width": 217,
+              "x": 80,
+              "y": 360.6656494140625
+            },
+            "color": "rgb(113, 103, 121)",
+            "font": "10px",
+            "gap": "normal",
+            "lineHeight": "19px",
+            "padding": "0px",
+            "selector": "P.",
+            "text": "Синтетическая проверка удобства приложения. Можно пропустить любой вопрос. Это авторская обратная св"
+          },
+          {
+            "background": "rgba(0, 0, 0, 0)",
+            "border": "rgb(116, 104, 123)",
+            "bounds": {
+              "bottom": 466.6656494140625,
+              "height": 11,
+              "left": 80,
+              "right": 205.609375,
+              "top": 455.6656494140625,
+              "width": 125.609375,
+              "x": 80,
+              "y": 455.6656494140625
+            },
+            "color": "rgb(116, 104, 123)",
+            "font": "8px",
+            "gap": "normal",
+            "lineHeight": "12px",
+            "padding": "0px",
+            "selector": "SMALL.",
+            "text": "Можно ответить в удобное время"
+          },
+          {
+            "background": "rgba(0, 0, 0, 0)",
+            "border": "rgb(114, 105, 123)",
+            "bounds": {
+              "bottom": 595.6343994140625,
+              "height": 100.96875,
+              "left": 16,
+              "right": 344,
+              "top": 494.6656494140625,
+              "width": 328,
+              "x": 16,
+              "y": 494.6656494140625
+            },
+            "color": "rgb(114, 105, 123)",
+            "font": "14px",
+            "gap": "13px",
+            "lineHeight": "21px",
+            "padding": "22px 5px",
+            "selector": "DIV.support-card",
+            "text": "Не всё получается? Об этом можно рассказатьСложности — повод подобрать поддержку. Ваши ответы увидит"
+          },
+          {
+            "background": "rgba(0, 0, 0, 0)",
+            "border": "rgb(117, 101, 127)",
+            "bounds": {
+              "bottom": 534.2593994140625,
+              "height": 17.59375,
+              "left": 58,
+              "right": 339,
+              "top": 516.6656494140625,
+              "width": 281,
+              "x": 58,
+              "y": 516.6656494140625
+            },
+            "color": "rgb(117, 101, 127)",
+            "font": "11px",
+            "gap": "normal",
+            "lineHeight": "17.6px",
+            "padding": "0px",
+            "selector": "H3.",
+            "text": "Не всё получается? Об этом можно рассказать"
+          },
+          {
+            "background": "rgba(0, 0, 0, 0)",
+            "border": "rgb(114, 104, 121)",
+            "bounds": {
+              "bottom": 573.6343994140625,
+              "height": 32.375,
+              "left": 58,
+              "right": 339,
+              "top": 541.2593994140625,
+              "width": 281,
+              "x": 58,
+              "y": 541.2593994140625
+            },
+            "color": "rgb(114, 104, 121)",
+            "font": "9px",
+            "gap": "normal",
+            "lineHeight": "16.2px",
+            "padding": "0px",
+            "selector": "P.",
+            "text": "Сложности — повод подобрать поддержку. Ваши ответы увидит лечащий врач."
+          },
+          {
+            "background": "rgba(0, 0, 0, 0)",
+            "border": "rgb(119, 103, 128)",
+            "bounds": {
+              "bottom": 727.3218994140625,
+              "height": 39.59375,
+              "left": 82,
+              "right": 292,
+              "top": 687.7281494140625,
+              "width": 210,
+              "x": 82,
+              "y": 687.7281494140625
+            },
+            "color": "rgb(119, 103, 128)",
+            "font": "11px",
+            "gap": "normal",
+            "lineHeight": "19.8px",
+            "padding": "0px",
+            "selector": "STRONG.",
+            "text": "Что мешает выполнять рекомендации?"
+          },
+          {
+            "background": "rgba(0, 0, 0, 0)",
+            "border": "rgb(114, 103, 123)",
+            "bounds": {
+              "bottom": 744.3218994140625,
+              "height": 12,
+              "left": 82,
+              "right": 292,
+              "top": 732.3218994140625,
+              "width": 210,
+              "x": 82,
+              "y": 732.3218994140625
+            },
+            "color": "rgb(114, 103, 123)",
+            "font": "8px",
+            "gap": "normal",
+            "lineHeight": "12px",
+            "padding": "0px",
+            "selector": "SMALL.",
+            "text": "25 окт., 13:10"
+          },
+          {
+            "background": "rgba(0, 0, 0, 0)",
+            "border": "rgb(119, 103, 128)",
+            "bounds": {
+              "bottom": 799.1187744140625,
+              "height": 19.796875,
+              "left": 82,
+              "right": 292,
+              "top": 779.3218994140625,
+              "width": 210,
+              "x": 82,
+              "y": 779.3218994140625
+            },
+            "color": "rgb(119, 103, 128)",
+            "font": "11px",
+            "gap": "normal",
+            "lineHeight": "19.8px",
+            "padding": "0px",
+            "selector": "STRONG.",
+            "text": "Как вам подходит сопровождение?"
+          },
+          {
+            "background": "rgba(0, 0, 0, 0)",
+            "border": "rgb(114, 103, 123)",
+            "bounds": {
+              "bottom": 816.1187744140625,
+              "height": 12,
+              "left": 82,
+              "right": 292,
+              "top": 804.1187744140625,
+              "width": 210,
+              "x": 82,
+              "y": 804.1187744140625
+            },
+            "color": "rgb(114, 103, 123)",
+            "font": "8px",
+            "gap": "normal",
+            "lineHeight": "12px",
+            "padding": "0px",
+            "selector": "SMALL.",
+            "text": "19 окт., 23:38"
+          },
+          {
+            "background": "rgba(0, 0, 0, 0)",
+            "border": "rgb(119, 103, 128)",
+            "bounds": {
+              "bottom": 890.7125244140625,
+              "height": 39.59375,
+              "left": 82,
+              "right": 292,
+              "top": 851.1187744140625,
+              "width": 210,
+              "x": 82,
+              "y": 851.1187744140625
+            },
+            "color": "rgb(119, 103, 128)",
+            "font": "11px",
+            "gap": "normal",
+            "lineHeight": "19.8px",
+            "padding": "0px",
+            "selector": "STRONG.",
+            "text": "Что мешает выполнять рекомендации?"
+          },
+          {
+            "background": "rgba(0, 0, 0, 0)",
+            "border": "rgb(114, 103, 123)",
+            "bounds": {
+              "bottom": 907.7125244140624,
+              "height": 12,
+              "left": 82,
+              "right": 292,
+              "top": 895.7125244140625,
+              "width": 210,
+              "x": 82,
+              "y": 895.7125244140625
+            },
+            "color": "rgb(114, 103, 123)",
+            "font": "8px",
+            "gap": "normal",
+            "lineHeight": "12px",
+            "padding": "0px",
+            "selector": "SMALL.",
+            "text": "19 окт., 23:38"
+          },
+          {
+            "background": "rgba(0, 0, 0, 0)",
+            "border": "rgb(119, 103, 128)",
+            "bounds": {
+              "bottom": 962.5093994140624,
+              "height": 19.796875,
+              "left": 82,
+              "right": 292,
+              "top": 942.7125244140624,
+              "width": 210,
+              "x": 82,
+              "y": 942.7125244140624
+            },
+            "color": "rgb(119, 103, 128)",
+            "font": "11px",
+            "gap": "normal",
+            "lineHeight": "19.8px",
+            "padding": "0px",
+            "selector": "STRONG.",
+            "text": "Как вам подходит сопровождение?"
+          },
+          {
+            "background": "rgba(0, 0, 0, 0)",
+            "border": "rgb(114, 103, 123)",
+            "bounds": {
+              "bottom": 979.5093994140624,
+              "height": 12,
+              "left": 82,
+              "right": 292,
+              "top": 967.5093994140624,
+              "width": 210,
+              "x": 82,
+              "y": 967.5093994140624
+            },
+            "color": "rgb(114, 103, 123)",
+            "font": "8px",
+            "gap": "normal",
+            "lineHeight": "12px",
+            "padding": "0px",
+            "selector": "SMALL.",
+            "text": "16 окт., 11:01"
+          },
+          {
+            "background": "rgba(0, 0, 0, 0)",
+            "border": "rgb(119, 103, 128)",
+            "bounds": {
+              "bottom": 1034.3062744140625,
+              "height": 19.796875,
+              "left": 82,
+              "right": 292,
+              "top": 1014.5093994140624,
+              "width": 210,
+              "x": 82,
+              "y": 1014.5093994140624
+            },
+            "color": "rgb(119, 103, 128)",
+            "font": "11px",
+            "gap": "normal",
+            "lineHeight": "19.8px",
+            "padding": "0px",
+            "selector": "STRONG.",
+            "text": "Как вам подходит сопровождение?"
+          },
+          {
+            "background": "rgba(0, 0, 0, 0)",
+            "border": "rgb(114, 103, 123)",
+            "bounds": {
+              "bottom": 1051.3062744140625,
+              "height": 12,
+              "left": 82,
+              "right": 292,
+              "top": 1039.3062744140625,
+              "width": 210,
+              "x": 82,
+              "y": 1039.3062744140625
+            },
+            "color": "rgb(114, 103, 123)",
+            "font": "8px",
+            "gap": "normal",
+            "lineHeight": "12px",
+            "padding": "0px",
+            "selector": "SMALL.",
+            "text": "9 окт., 11:01"
+          },
+          {
+            "background": "rgba(0, 0, 0, 0)",
+            "border": "rgb(119, 103, 128)",
+            "bounds": {
+              "bottom": 1106.1031494140625,
+              "height": 19.796875,
+              "left": 82,
+              "right": 292,
+              "top": 1086.3062744140625,
+              "width": 210,
+              "x": 82,
+              "y": 1086.3062744140625
+            },
+            "color": "rgb(119, 103, 128)",
+            "font": "11px",
+            "gap": "normal",
+            "lineHeight": "19.8px",
+            "padding": "0px",
+            "selector": "STRONG.",
+            "text": "Как вам подходит сопровождение?"
+          },
+          {
+            "background": "rgba(0, 0, 0, 0)",
+            "border": "rgb(114, 103, 123)",
+            "bounds": {
+              "bottom": 1123.1031494140625,
+              "height": 12,
+              "left": 82,
+              "right": 292,
+              "top": 1111.1031494140625,
+              "width": 210,
+              "x": 82,
+              "y": 1111.1031494140625
+            },
+            "color": "rgb(114, 103, 123)",
+            "font": "8px",
+            "gap": "normal",
+            "lineHeight": "12px",
+            "padding": "0px",
+            "selector": "SMALL.",
+            "text": "2 окт., 11:01"
+          }
+        ],
+        "overflow": false,
+        "stage": "before-list-mobile",
+        "url": "http://127.0.0.1:8782/?section=surveys",
+        "viewport": [
+          375,
+          844
+        ]
+      },
+      {
+        "elements": [
+          {
+            "background": "rgba(0, 0, 0, 0)",
+            "border": "rgb(120, 101, 134)",
+            "bounds": {
+              "bottom": 232.890625,
+              "height": 23.796875,
+              "left": 16,
+              "right": 111.1875,
+              "top": 209.09375,
+              "width": 95.1875,
+              "x": 16,
+              "y": 209.09375
+            },
+            "color": "rgb(120, 101, 134)",
+            "font": "17px",
+            "gap": "10px",
+            "lineHeight": "23.8px",
+            "padding": "0px",
+            "selector": "H2.",
+            "text": "Для вас 1"
+          },
+          {
+            "background": "rgb(238, 230, 245)",
+            "border": "rgb(121, 99, 137)",
+            "bounds": {
+              "bottom": 231.984375,
+              "height": 22,
+              "left": 89.1875,
+              "right": 111.1875,
+              "top": 209.984375,
+              "width": 22,
+              "x": 89.1875,
+              "y": 209.984375
+            },
+            "color": "rgb(121, 99, 137)",
+            "font": "10px",
+            "gap": "normal",
+            "lineHeight": "14px",
+            "padding": "0px",
+            "selector": "SPAN.count-circle",
+            "text": "1"
+          },
+          {
+            "background": "rgba(0, 0, 0, 0)",
+            "border": "rgb(89, 91, 90)",
+            "bounds": {
+              "bottom": 228.484375,
+              "height": 15,
+              "left": 653.734375,
+              "right": 737,
+              "top": 213.484375,
+              "width": 83.265625,
+              "x": 653.734375,
+              "y": 213.484375
+            },
+            "color": "rgb(89, 91, 90)",
+            "font": "10px",
+            "gap": "normal",
+            "lineHeight": "15px",
+            "padding": "0px",
+            "selector": "SPAN.muted",
+            "text": "Вопросы от врача"
+          },
+          {
+            "background": "rgb(255, 255, 255)",
+            "border": "rgb(233, 226, 239)",
+            "bounds": {
+              "bottom": 434.0625,
+              "height": 183.171875,
+              "left": 16,
+              "right": 737,
+              "top": 250.890625,
+              "width": 721,
+              "x": 16,
+              "y": 250.890625
+            },
+            "color": "rgb(0, 0, 0)",
+            "font": "14px",
+            "gap": "18px",
+            "lineHeight": "21px",
+            "padding": "20px",
+            "selector": "BUTTON.patient-survey-card",
+            "text": "3 вопр.Проверка UI · опыт приложенияСинтетическая проверка удобства приложения. Можно пропустить люб"
+          },
+          {
+            "background": "rgb(242, 237, 249)",
+            "border": "rgb(118, 102, 135)",
+            "bounds": {
+              "bottom": 319.890625,
+              "height": 48,
+              "left": 37,
+              "right": 85,
+              "top": 271.890625,
+              "width": 48,
+              "x": 37,
+              "y": 271.890625
+            },
+            "color": "rgb(118, 102, 135)",
+            "font": "14px",
+            "gap": "normal",
+            "lineHeight": "21px",
+            "padding": "0px",
+            "selector": "SPAN.survey-card-icon",
+            "text": ""
+          },
+          {
+            "background": "rgb(255, 231, 223)",
+            "border": "rgb(165, 46, 28)",
+            "bounds": {
+              "bottom": 297.28125,
+              "height": 25.390625,
+              "left": 103,
+              "right": 156.59375,
+              "top": 271.890625,
+              "width": 53.59375,
+              "x": 103,
+              "y": 271.890625
+            },
+            "color": "rgb(165, 46, 28)",
+            "font": "11px",
+            "gap": "5px",
+            "lineHeight": "15.4px",
+            "padding": "5px 8px",
+            "selector": "SPAN.badge purple",
+            "text": "3 вопр."
+          },
+          {
+            "background": "rgba(0, 0, 0, 0)",
+            "border": "rgb(123, 99, 139)",
+            "bounds": {
+              "bottom": 331.28125,
+              "height": 24,
+              "left": 103,
+              "right": 676,
+              "top": 307.28125,
+              "width": 573,
+              "x": 103,
+              "y": 307.28125
+            },
+            "color": "rgb(123, 99, 139)",
+            "font": "15px",
+            "gap": "normal",
+            "lineHeight": "24px",
+            "padding": "0px",
+            "selector": "H3.",
+            "text": "Проверка UI · опыт приложения"
+          },
+          {
+            "background": "rgba(0, 0, 0, 0)",
+            "border": "rgb(113, 103, 121)",
+            "bounds": {
+              "bottom": 380.0625,
+              "height": 41.78125,
+              "left": 103,
+              "right": 676,
+              "top": 338.28125,
+              "width": 573,
+              "x": 103,
+              "y": 338.28125
+            },
+            "color": "rgb(113, 103, 121)",
+            "font": "11px",
+            "gap": "normal",
+            "lineHeight": "20.9px",
+            "padding": "0px",
+            "selector": "P.",
+            "text": "Синтетическая проверка удобства приложения. Можно пропустить любой вопрос. Это авторская обратная св"
+          },
+          {
+            "background": "rgba(0, 0, 0, 0)",
+            "border": "rgb(116, 104, 123)",
+            "bounds": {
+              "bottom": 410.0625,
+              "height": 12,
+              "left": 103,
+              "right": 244.3125,
+              "top": 398.0625,
+              "width": 141.3125,
+              "x": 103,
+              "y": 398.0625
+            },
+            "color": "rgb(116, 104, 123)",
+            "font": "9px",
+            "gap": "normal",
+            "lineHeight": "13.5px",
+            "padding": "0px",
+            "selector": "SMALL.",
+            "text": "Можно ответить в удобное время"
+          },
+          {
+            "background": "rgba(0, 0, 0, 0)",
+            "border": "rgb(114, 105, 123)",
+            "bounds": {
+              "bottom": 534.25,
+              "height": 96.1875,
+              "left": 16,
+              "right": 737,
+              "top": 438.0625,
+              "width": 721,
+              "x": 16,
+              "y": 438.0625
+            },
+            "color": "rgb(114, 105, 123)",
+            "font": "14px",
+            "gap": "17px",
+            "lineHeight": "21px",
+            "padding": "26px 10px",
+            "selector": "DIV.support-card",
+            "text": "Не всё получается? Об этом можно рассказатьСложности — повод подобрать поддержку. Ваши ответы увидит"
+          },
+          {
+            "background": "rgba(0, 0, 0, 0)",
+            "border": "rgb(117, 101, 127)",
+            "bounds": {
+              "bottom": 483.25,
+              "height": 19.1875,
+              "left": 67,
+              "right": 435.65625,
+              "top": 464.0625,
+              "width": 368.65625,
+              "x": 67,
+              "y": 464.0625
+            },
+            "color": "rgb(117, 101, 127)",
+            "font": "12px",
+            "gap": "normal",
+            "lineHeight": "19.2px",
+            "padding": "0px",
+            "selector": "H3.",
+            "text": "Не всё получается? Об этом можно рассказать"
+          },
+          {
+            "background": "rgba(0, 0, 0, 0)",
+            "border": "rgb(114, 104, 121)",
+            "bounds": {
+              "bottom": 508.25,
+              "height": 18,
+              "left": 67,
+              "right": 435.65625,
+              "top": 490.25,
+              "width": 368.65625,
+              "x": 67,
+              "y": 490.25
+            },
+            "color": "rgb(114, 104, 121)",
+            "font": "10px",
+            "gap": "normal",
+            "lineHeight": "18px",
+            "padding": "0px",
+            "selector": "P.",
+            "text": "Сложности — повод подобрать поддержку. Ваши ответы увидит лечащий врач."
+          },
+          {
+            "background": "rgba(0, 0, 0, 0)",
+            "border": "rgb(119, 103, 128)",
+            "bounds": {
+              "bottom": 657.9375,
+              "height": 21.59375,
+              "left": 82,
+              "right": 685,
+              "top": 636.34375,
+              "width": 603,
+              "x": 82,
+              "y": 636.34375
+            },
+            "color": "rgb(119, 103, 128)",
+            "font": "12px",
+            "gap": "normal",
+            "lineHeight": "21.6px",
+            "padding": "0px",
+            "selector": "STRONG.",
+            "text": "Что мешает выполнять рекомендации?"
+          },
+          {
+            "background": "rgba(0, 0, 0, 0)",
+            "border": "rgb(114, 103, 123)",
+            "bounds": {
+              "bottom": 676.4375,
+              "height": 13.5,
+              "left": 82,
+              "right": 685,
+              "top": 662.9375,
+              "width": 603,
+              "x": 82,
+              "y": 662.9375
+            },
+            "color": "rgb(114, 103, 123)",
+            "font": "9px",
+            "gap": "normal",
+            "lineHeight": "13.5px",
+            "padding": "0px",
+            "selector": "SMALL.",
+            "text": "25 окт., 13:10"
+          },
+          {
+            "background": "rgba(0, 0, 0, 0)",
+            "border": "rgb(119, 103, 128)",
+            "bounds": {
+              "bottom": 733.03125,
+              "height": 21.59375,
+              "left": 82,
+              "right": 685,
+              "top": 711.4375,
+              "width": 603,
+              "x": 82,
+              "y": 711.4375
+            },
+            "color": "rgb(119, 103, 128)",
+            "font": "12px",
+            "gap": "normal",
+            "lineHeight": "21.6px",
+            "padding": "0px",
+            "selector": "STRONG.",
+            "text": "Как вам подходит сопровождение?"
+          },
+          {
+            "background": "rgba(0, 0, 0, 0)",
+            "border": "rgb(114, 103, 123)",
+            "bounds": {
+              "bottom": 751.53125,
+              "height": 13.5,
+              "left": 82,
+              "right": 685,
+              "top": 738.03125,
+              "width": 603,
+              "x": 82,
+              "y": 738.03125
+            },
+            "color": "rgb(114, 103, 123)",
+            "font": "9px",
+            "gap": "normal",
+            "lineHeight": "13.5px",
+            "padding": "0px",
+            "selector": "SMALL.",
+            "text": "19 окт., 23:38"
+          },
+          {
+            "background": "rgba(0, 0, 0, 0)",
+            "border": "rgb(119, 103, 128)",
+            "bounds": {
+              "bottom": 808.125,
+              "height": 21.59375,
+              "left": 82,
+              "right": 685,
+              "top": 786.53125,
+              "width": 603,
+              "x": 82,
+              "y": 786.53125
+            },
+            "color": "rgb(119, 103, 128)",
+            "font": "12px",
+            "gap": "normal",
+            "lineHeight": "21.6px",
+            "padding": "0px",
+            "selector": "STRONG.",
+            "text": "Что мешает выполнять рекомендации?"
+          },
+          {
+            "background": "rgba(0, 0, 0, 0)",
+            "border": "rgb(114, 103, 123)",
+            "bounds": {
+              "bottom": 826.625,
+              "height": 13.5,
+              "left": 82,
+              "right": 685,
+              "top": 813.125,
+              "width": 603,
+              "x": 82,
+              "y": 813.125
+            },
+            "color": "rgb(114, 103, 123)",
+            "font": "9px",
+            "gap": "normal",
+            "lineHeight": "13.5px",
+            "padding": "0px",
+            "selector": "SMALL.",
+            "text": "19 окт., 23:38"
+          },
+          {
+            "background": "rgba(0, 0, 0, 0)",
+            "border": "rgb(119, 103, 128)",
+            "bounds": {
+              "bottom": 883.21875,
+              "height": 21.59375,
+              "left": 82,
+              "right": 685,
+              "top": 861.625,
+              "width": 603,
+              "x": 82,
+              "y": 861.625
+            },
+            "color": "rgb(119, 103, 128)",
+            "font": "12px",
+            "gap": "normal",
+            "lineHeight": "21.6px",
+            "padding": "0px",
+            "selector": "STRONG.",
+            "text": "Как вам подходит сопровождение?"
+          },
+          {
+            "background": "rgba(0, 0, 0, 0)",
+            "border": "rgb(114, 103, 123)",
+            "bounds": {
+              "bottom": 901.71875,
+              "height": 13.5,
+              "left": 82,
+              "right": 685,
+              "top": 888.21875,
+              "width": 603,
+              "x": 82,
+              "y": 888.21875
+            },
+            "color": "rgb(114, 103, 123)",
+            "font": "9px",
+            "gap": "normal",
+            "lineHeight": "13.5px",
+            "padding": "0px",
+            "selector": "SMALL.",
+            "text": "16 окт., 11:01"
+          },
+          {
+            "background": "rgba(0, 0, 0, 0)",
+            "border": "rgb(119, 103, 128)",
+            "bounds": {
+              "bottom": 958.3125,
+              "height": 21.59375,
+              "left": 82,
+              "right": 685,
+              "top": 936.71875,
+              "width": 603,
+              "x": 82,
+              "y": 936.71875
+            },
+            "color": "rgb(119, 103, 128)",
+            "font": "12px",
+            "gap": "normal",
+            "lineHeight": "21.6px",
+            "padding": "0px",
+            "selector": "STRONG.",
+            "text": "Как вам подходит сопровождение?"
+          },
+          {
+            "background": "rgba(0, 0, 0, 0)",
+            "border": "rgb(114, 103, 123)",
+            "bounds": {
+              "bottom": 976.8125,
+              "height": 13.5,
+              "left": 82,
+              "right": 685,
+              "top": 963.3125,
+              "width": 603,
+              "x": 82,
+              "y": 963.3125
+            },
+            "color": "rgb(114, 103, 123)",
+            "font": "9px",
+            "gap": "normal",
+            "lineHeight": "13.5px",
+            "padding": "0px",
+            "selector": "SMALL.",
+            "text": "9 окт., 11:01"
+          },
+          {
+            "background": "rgba(0, 0, 0, 0)",
+            "border": "rgb(119, 103, 128)",
+            "bounds": {
+              "bottom": 1033.40625,
+              "height": 21.59375,
+              "left": 82,
+              "right": 685,
+              "top": 1011.8125,
+              "width": 603,
+              "x": 82,
+              "y": 1011.8125
+            },
+            "color": "rgb(119, 103, 128)",
+            "font": "12px",
+            "gap": "normal",
+            "lineHeight": "21.6px",
+            "padding": "0px",
+            "selector": "STRONG.",
+            "text": "Как вам подходит сопровождение?"
+          },
+          {
+            "background": "rgba(0, 0, 0, 0)",
+            "border": "rgb(114, 103, 123)",
+            "bounds": {
+              "bottom": 1051.90625,
+              "height": 13.5,
+              "left": 82,
+              "right": 685,
+              "top": 1038.40625,
+              "width": 603,
+              "x": 82,
+              "y": 1038.40625
+            },
+            "color": "rgb(114, 103, 123)",
+            "font": "9px",
+            "gap": "normal",
+            "lineHeight": "13.5px",
+            "padding": "0px",
+            "selector": "SMALL.",
+            "text": "2 окт., 11:01"
+          }
+        ],
+        "overflow": false,
+        "stage": "before-list-tablet",
+        "url": "http://127.0.0.1:8782/?section=surveys",
+        "viewport": [
+          768,
+          1024
+        ]
+      },
+      {
+        "elements": [
+          {
+            "background": "rgba(0, 0, 0, 0)",
+            "border": "rgb(120, 101, 134)",
+            "bounds": {
+              "bottom": 241.890625,
+              "height": 23.796875,
+              "left": 296,
+              "right": 391.1875,
+              "top": 218.09375,
+              "width": 95.1875,
+              "x": 296,
+              "y": 218.09375
+            },
+            "color": "rgb(120, 101, 134)",
+            "font": "17px",
+            "gap": "10px",
+            "lineHeight": "23.8px",
+            "padding": "0px",
+            "selector": "H2.",
+            "text": "Для вас 1"
+          },
+          {
+            "background": "rgb(238, 230, 245)",
+            "border": "rgb(121, 99, 137)",
+            "bounds": {
+              "bottom": 240.984375,
+              "height": 22,
+              "left": 369.1875,
+              "right": 391.1875,
+              "top": 218.984375,
+              "width": 22,
+              "x": 369.1875,
+              "y": 218.984375
+            },
+            "color": "rgb(121, 99, 137)",
+            "font": "10px",
+            "gap": "normal",
+            "lineHeight": "14px",
+            "padding": "0px",
+            "selector": "SPAN.count-circle",
+            "text": "1"
+          },
+          {
+            "background": "rgba(0, 0, 0, 0)",
+            "border": "rgb(89, 91, 90)",
+            "bounds": {
+              "bottom": 237.484375,
+              "height": 15,
+              "left": 1309.734375,
+              "right": 1393,
+              "top": 222.484375,
+              "width": 83.265625,
+              "x": 1309.734375,
+              "y": 222.484375
+            },
+            "color": "rgb(89, 91, 90)",
+            "font": "10px",
+            "gap": "normal",
+            "lineHeight": "15px",
+            "padding": "0px",
+            "selector": "SPAN.muted",
+            "text": "Вопросы от врача"
+          },
+          {
+            "background": "rgb(255, 255, 255)",
+            "border": "rgb(233, 226, 239)",
+            "bounds": {
+              "bottom": 430.171875,
+              "height": 170.28125,
+              "left": 296,
+              "right": 1393,
+              "top": 259.890625,
+              "width": 1097,
+              "x": 296,
+              "y": 259.890625
+            },
+            "color": "rgb(0, 0, 0)",
+            "font": "14px",
+            "gap": "18px",
+            "lineHeight": "21px",
+            "padding": "24px",
+            "selector": "BUTTON.patient-survey-card",
+            "text": "3 вопр.Проверка UI · опыт приложенияСинтетическая проверка удобства приложения. Можно пропустить люб"
+          },
+          {
+            "background": "rgb(242, 237, 249)",
+            "border": "rgb(118, 102, 135)",
+            "bounds": {
+              "bottom": 332.890625,
+              "height": 48,
+              "left": 321,
+              "right": 369,
+              "top": 284.890625,
+              "width": 48,
+              "x": 321,
+              "y": 284.890625
+            },
+            "color": "rgb(118, 102, 135)",
+            "font": "14px",
+            "gap": "normal",
+            "lineHeight": "21px",
+            "padding": "0px",
+            "selector": "SPAN.survey-card-icon",
+            "text": ""
+          },
+          {
+            "background": "rgb(255, 231, 223)",
+            "border": "rgb(165, 46, 28)",
+            "bounds": {
+              "bottom": 310.28125,
+              "height": 25.390625,
+              "left": 387,
+              "right": 440.59375,
+              "top": 284.890625,
+              "width": 53.59375,
+              "x": 387,
+              "y": 284.890625
+            },
+            "color": "rgb(165, 46, 28)",
+            "font": "11px",
+            "gap": "5px",
+            "lineHeight": "15.4px",
+            "padding": "5px 8px",
+            "selector": "SPAN.badge purple",
+            "text": "3 вопр."
+          },
+          {
+            "background": "rgba(0, 0, 0, 0)",
+            "border": "rgb(123, 99, 139)",
+            "bounds": {
+              "bottom": 344.28125,
+              "height": 24,
+              "left": 387,
+              "right": 1328,
+              "top": 320.28125,
+              "width": 941,
+              "x": 387,
+              "y": 320.28125
+            },
+            "color": "rgb(123, 99, 139)",
+            "font": "15px",
+            "gap": "normal",
+            "lineHeight": "24px",
+            "padding": "0px",
+            "selector": "H3.",
+            "text": "Проверка UI · опыт приложения"
+          },
+          {
+            "background": "rgba(0, 0, 0, 0)",
+            "border": "rgb(113, 103, 121)",
+            "bounds": {
+              "bottom": 372.171875,
+              "height": 20.890625,
+              "left": 387,
+              "right": 1328,
+              "top": 351.28125,
+              "width": 941,
+              "x": 387,
+              "y": 351.28125
+            },
+            "color": "rgb(113, 103, 121)",
+            "font": "11px",
+            "gap": "normal",
+            "lineHeight": "20.9px",
+            "padding": "0px",
+            "selector": "P.",
+            "text": "Синтетическая проверка удобства приложения. Можно пропустить любой вопрос. Это авторская обратная св"
+          },
+          {
+            "background": "rgba(0, 0, 0, 0)",
+            "border": "rgb(116, 104, 123)",
+            "bounds": {
+              "bottom": 402.171875,
+              "height": 12,
+              "left": 387,
+              "right": 528.3125,
+              "top": 390.171875,
+              "width": 141.3125,
+              "x": 387,
+              "y": 390.171875
+            },
+            "color": "rgb(116, 104, 123)",
+            "font": "9px",
+            "gap": "normal",
+            "lineHeight": "13.5px",
+            "padding": "0px",
+            "selector": "SMALL.",
+            "text": "Можно ответить в удобное время"
+          },
+          {
+            "background": "rgba(0, 0, 0, 0)",
+            "border": "rgb(114, 105, 123)",
+            "bounds": {
+              "bottom": 530.359375,
+              "height": 96.1875,
+              "left": 296,
+              "right": 1393,
+              "top": 434.171875,
+              "width": 1097,
+              "x": 296,
+              "y": 434.171875
+            },
+            "color": "rgb(114, 105, 123)",
+            "font": "14px",
+            "gap": "17px",
+            "lineHeight": "21px",
+            "padding": "26px 10px",
+            "selector": "DIV.support-card",
+            "text": "Не всё получается? Об этом можно рассказатьСложности — повод подобрать поддержку. Ваши ответы увидит"
+          },
+          {
+            "background": "rgba(0, 0, 0, 0)",
+            "border": "rgb(117, 101, 127)",
+            "bounds": {
+              "bottom": 479.359375,
+              "height": 19.1875,
+              "left": 347,
+              "right": 715.65625,
+              "top": 460.171875,
+              "width": 368.65625,
+              "x": 347,
+              "y": 460.171875
+            },
+            "color": "rgb(117, 101, 127)",
+            "font": "12px",
+            "gap": "normal",
+            "lineHeight": "19.2px",
+            "padding": "0px",
+            "selector": "H3.",
+            "text": "Не всё получается? Об этом можно рассказать"
+          },
+          {
+            "background": "rgba(0, 0, 0, 0)",
+            "border": "rgb(114, 104, 121)",
+            "bounds": {
+              "bottom": 504.359375,
+              "height": 18,
+              "left": 347,
+              "right": 715.65625,
+              "top": 486.359375,
+              "width": 368.65625,
+              "x": 347,
+              "y": 486.359375
+            },
+            "color": "rgb(114, 104, 121)",
+            "font": "10px",
+            "gap": "normal",
+            "lineHeight": "18px",
+            "padding": "0px",
+            "selector": "P.",
+            "text": "Сложности — повод подобрать поддержку. Ваши ответы увидит лечащий врач."
+          },
+          {
+            "background": "rgba(0, 0, 0, 0)",
+            "border": "rgb(119, 103, 128)",
+            "bounds": {
+              "bottom": 658.046875,
+              "height": 21.59375,
+              "left": 366,
+              "right": 1337,
+              "top": 636.453125,
+              "width": 971,
+              "x": 366,
+              "y": 636.453125
+            },
+            "color": "rgb(119, 103, 128)",
+            "font": "12px",
+            "gap": "normal",
+            "lineHeight": "21.6px",
+            "padding": "0px",
+            "selector": "STRONG.",
+            "text": "Что мешает выполнять рекомендации?"
+          },
+          {
+            "background": "rgba(0, 0, 0, 0)",
+            "border": "rgb(114, 103, 123)",
+            "bounds": {
+              "bottom": 676.546875,
+              "height": 13.5,
+              "left": 366,
+              "right": 1337,
+              "top": 663.046875,
+              "width": 971,
+              "x": 366,
+              "y": 663.046875
+            },
+            "color": "rgb(114, 103, 123)",
+            "font": "9px",
+            "gap": "normal",
+            "lineHeight": "13.5px",
+            "padding": "0px",
+            "selector": "SMALL.",
+            "text": "25 окт., 13:10"
+          },
+          {
+            "background": "rgba(0, 0, 0, 0)",
+            "border": "rgb(119, 103, 128)",
+            "bounds": {
+              "bottom": 733.140625,
+              "height": 21.59375,
+              "left": 366,
+              "right": 1337,
+              "top": 711.546875,
+              "width": 971,
+              "x": 366,
+              "y": 711.546875
+            },
+            "color": "rgb(119, 103, 128)",
+            "font": "12px",
+            "gap": "normal",
+            "lineHeight": "21.6px",
+            "padding": "0px",
+            "selector": "STRONG.",
+            "text": "Как вам подходит сопровождение?"
+          },
+          {
+            "background": "rgba(0, 0, 0, 0)",
+            "border": "rgb(114, 103, 123)",
+            "bounds": {
+              "bottom": 751.640625,
+              "height": 13.5,
+              "left": 366,
+              "right": 1337,
+              "top": 738.140625,
+              "width": 971,
+              "x": 366,
+              "y": 738.140625
+            },
+            "color": "rgb(114, 103, 123)",
+            "font": "9px",
+            "gap": "normal",
+            "lineHeight": "13.5px",
+            "padding": "0px",
+            "selector": "SMALL.",
+            "text": "19 окт., 23:38"
+          },
+          {
+            "background": "rgba(0, 0, 0, 0)",
+            "border": "rgb(119, 103, 128)",
+            "bounds": {
+              "bottom": 808.234375,
+              "height": 21.59375,
+              "left": 366,
+              "right": 1337,
+              "top": 786.640625,
+              "width": 971,
+              "x": 366,
+              "y": 786.640625
+            },
+            "color": "rgb(119, 103, 128)",
+            "font": "12px",
+            "gap": "normal",
+            "lineHeight": "21.6px",
+            "padding": "0px",
+            "selector": "STRONG.",
+            "text": "Что мешает выполнять рекомендации?"
+          },
+          {
+            "background": "rgba(0, 0, 0, 0)",
+            "border": "rgb(114, 103, 123)",
+            "bounds": {
+              "bottom": 826.734375,
+              "height": 13.5,
+              "left": 366,
+              "right": 1337,
+              "top": 813.234375,
+              "width": 971,
+              "x": 366,
+              "y": 813.234375
+            },
+            "color": "rgb(114, 103, 123)",
+            "font": "9px",
+            "gap": "normal",
+            "lineHeight": "13.5px",
+            "padding": "0px",
+            "selector": "SMALL.",
+            "text": "19 окт., 23:38"
+          },
+          {
+            "background": "rgba(0, 0, 0, 0)",
+            "border": "rgb(119, 103, 128)",
+            "bounds": {
+              "bottom": 883.328125,
+              "height": 21.59375,
+              "left": 366,
+              "right": 1337,
+              "top": 861.734375,
+              "width": 971,
+              "x": 366,
+              "y": 861.734375
+            },
+            "color": "rgb(119, 103, 128)",
+            "font": "12px",
+            "gap": "normal",
+            "lineHeight": "21.6px",
+            "padding": "0px",
+            "selector": "STRONG.",
+            "text": "Как вам подходит сопровождение?"
+          },
+          {
+            "background": "rgba(0, 0, 0, 0)",
+            "border": "rgb(114, 103, 123)",
+            "bounds": {
+              "bottom": 901.828125,
+              "height": 13.5,
+              "left": 366,
+              "right": 1337,
+              "top": 888.328125,
+              "width": 971,
+              "x": 366,
+              "y": 888.328125
+            },
+            "color": "rgb(114, 103, 123)",
+            "font": "9px",
+            "gap": "normal",
+            "lineHeight": "13.5px",
+            "padding": "0px",
+            "selector": "SMALL.",
+            "text": "16 окт., 11:01"
+          },
+          {
+            "background": "rgba(0, 0, 0, 0)",
+            "border": "rgb(119, 103, 128)",
+            "bounds": {
+              "bottom": 958.421875,
+              "height": 21.59375,
+              "left": 366,
+              "right": 1337,
+              "top": 936.828125,
+              "width": 971,
+              "x": 366,
+              "y": 936.828125
+            },
+            "color": "rgb(119, 103, 128)",
+            "font": "12px",
+            "gap": "normal",
+            "lineHeight": "21.6px",
+            "padding": "0px",
+            "selector": "STRONG.",
+            "text": "Как вам подходит сопровождение?"
+          },
+          {
+            "background": "rgba(0, 0, 0, 0)",
+            "border": "rgb(114, 103, 123)",
+            "bounds": {
+              "bottom": 976.921875,
+              "height": 13.5,
+              "left": 366,
+              "right": 1337,
+              "top": 963.421875,
+              "width": 971,
+              "x": 366,
+              "y": 963.421875
+            },
+            "color": "rgb(114, 103, 123)",
+            "font": "9px",
+            "gap": "normal",
+            "lineHeight": "13.5px",
+            "padding": "0px",
+            "selector": "SMALL.",
+            "text": "9 окт., 11:01"
+          },
+          {
+            "background": "rgba(0, 0, 0, 0)",
+            "border": "rgb(119, 103, 128)",
+            "bounds": {
+              "bottom": 1033.515625,
+              "height": 21.59375,
+              "left": 366,
+              "right": 1337,
+              "top": 1011.921875,
+              "width": 971,
+              "x": 366,
+              "y": 1011.921875
+            },
+            "color": "rgb(119, 103, 128)",
+            "font": "12px",
+            "gap": "normal",
+            "lineHeight": "21.6px",
+            "padding": "0px",
+            "selector": "STRONG.",
+            "text": "Как вам подходит сопровождение?"
+          },
+          {
+            "background": "rgba(0, 0, 0, 0)",
+            "border": "rgb(114, 103, 123)",
+            "bounds": {
+              "bottom": 1052.015625,
+              "height": 13.5,
+              "left": 366,
+              "right": 1337,
+              "top": 1038.515625,
+              "width": 971,
+              "x": 366,
+              "y": 1038.515625
+            },
+            "color": "rgb(114, 103, 123)",
+            "font": "9px",
+            "gap": "normal",
+            "lineHeight": "13.5px",
+            "padding": "0px",
+            "selector": "SMALL.",
+            "text": "2 окт., 11:01"
+          }
+        ],
+        "overflow": false,
+        "stage": "before-list-desktop",
+        "url": "http://127.0.0.1:8782/?section=surveys",
+        "viewport": [
+          1440,
+          1000
+        ]
+      },
+      {
+        "elements": [
+          {
+            "background": "rgb(237, 245, 242)",
+            "border": "rgb(73, 104, 94)",
+            "bounds": {
+              "bottom": 350.875,
+              "height": 48.796875,
+              "left": 459.5,
+              "right": 1229.5,
+              "top": 302.078125,
+              "width": 770,
+              "x": 459.5,
+              "y": 302.078125
+            },
+            "color": "rgb(73, 104, 94)",
+            "font": "13px",
+            "gap": "10px",
+            "lineHeight": "20.8px",
+            "padding": "14px 16px",
+            "selector": "DIV.draft-disclosure",
+            "text": "Можно сделать паузу. Черновик виден только вам. Врач получит ответы после отправки."
+          },
+          {
+            "background": "rgba(0, 0, 0, 0)",
+            "border": "rgb(24, 25, 26)",
+            "bounds": {
+              "bottom": 399.875,
+              "height": 25,
+              "left": 459.5,
+              "right": 1229.5,
+              "top": 374.875,
+              "width": 770,
+              "x": 459.5,
+              "y": 374.875
+            },
+            "color": "rgb(24, 25, 26)",
+            "font": "15px",
+            "gap": "normal",
+            "lineHeight": "24px",
+            "padding": "0px 2px",
+            "selector": "LEGEND.",
+            "text": "1Насколько вам понятно, что делать в приложении?"
+          },
+          {
+            "background": "rgb(233, 242, 239)",
+            "border": "rgb(57, 121, 107)",
+            "bounds": {
+              "bottom": 399.875,
+              "height": 22,
+              "left": 461.5,
+              "right": 483.5,
+              "top": 377.875,
+              "width": 22,
+              "x": 461.5,
+              "y": 377.875
+            },
+            "color": "rgb(57, 121, 107)",
+            "font": "10px",
+            "gap": "normal",
+            "lineHeight": "16px",
+            "padding": "0px",
+            "selector": "SPAN.question-number",
+            "text": "1"
+          },
+          {
+            "background": "rgb(237, 246, 242)",
+            "border": "rgb(111, 159, 145)",
+            "bounds": {
+              "bottom": 521.875,
+              "height": 51,
+              "left": 459.5,
+              "right": 1229.5,
+              "top": 470.875,
+              "width": 770,
+              "x": 459.5,
+              "y": 470.875
+            },
+            "color": "rgb(36, 94, 81)",
+            "font": "14px",
+            "gap": "12px",
+            "lineHeight": "21px",
+            "padding": "14px 16px",
+            "selector": "LABEL.answer-option checked",
+            "text": "Частично понятно"
+          },
+          {
+            "background": "rgba(0, 0, 0, 0)",
+            "border": "rgb(24, 25, 26)",
+            "bounds": {
+              "bottom": 822.875,
+              "height": 25,
+              "left": 459.5,
+              "right": 1229.5,
+              "top": 797.875,
+              "width": 770,
+              "x": 459.5,
+              "y": 797.875
+            },
+            "color": "rgb(24, 25, 26)",
+            "font": "15px",
+            "gap": "normal",
+            "lineHeight": "24px",
+            "padding": "0px 2px",
+            "selector": "LEGEND.",
+            "text": "2Насколько приложение полезно вам между встречами с врачом?"
+          },
+          {
+            "background": "rgb(233, 242, 239)",
+            "border": "rgb(57, 121, 107)",
+            "bounds": {
+              "bottom": 822.875,
+              "height": 22,
+              "left": 461.5,
+              "right": 483.5,
+              "top": 800.875,
+              "width": 22,
+              "x": 461.5,
+              "y": 800.875
+            },
+            "color": "rgb(57, 121, 107)",
+            "font": "10px",
+            "gap": "normal",
+            "lineHeight": "16px",
+            "padding": "0px",
+            "selector": "SPAN.question-number",
+            "text": "2"
+          },
+          {
+            "background": "rgba(0, 0, 0, 0)",
+            "border": "rgb(24, 25, 26)",
+            "bounds": {
+              "bottom": 1245.875,
+              "height": 25,
+              "left": 459.5,
+              "right": 1229.5,
+              "top": 1220.875,
+              "width": 770,
+              "x": 459.5,
+              "y": 1220.875
+            },
+            "color": "rgb(24, 25, 26)",
+            "font": "15px",
+            "gap": "normal",
+            "lineHeight": "24px",
+            "padding": "0px 2px",
+            "selector": "LEGEND.",
+            "text": "3Что в приложении стоит сделать удобнее? · по желанию"
+          },
+          {
+            "background": "rgb(233, 242, 239)",
+            "border": "rgb(57, 121, 107)",
+            "bounds": {
+              "bottom": 1245.875,
+              "height": 22,
+              "left": 461.5,
+              "right": 483.5,
+              "top": 1223.875,
+              "width": 22,
+              "x": 461.5,
+              "y": 1223.875
+            },
+            "color": "rgb(57, 121, 107)",
+            "font": "10px",
+            "gap": "normal",
+            "lineHeight": "16px",
+            "padding": "0px",
+            "selector": "SPAN.question-number",
+            "text": "3"
+          }
+        ],
+        "overflow": false,
+        "stage": "before-form-wide",
+        "url": "http://127.0.0.1:8782/?section=surveys&assignment=31",
+        "viewport": [
+          1440,
+          1000
+        ]
+      },
+      {
+        "elements": [
+          {
+            "background": "rgb(237, 245, 242)",
+            "border": "rgb(73, 104, 94)",
+            "bounds": {
+              "bottom": 334.171875,
+              "height": 48.796875,
+              "left": 37,
+              "right": 716,
+              "top": 285.375,
+              "width": 679,
+              "x": 37,
+              "y": 285.375
+            },
+            "color": "rgb(73, 104, 94)",
+            "font": "13px",
+            "gap": "10px",
+            "lineHeight": "20.8px",
+            "padding": "14px 16px",
+            "selector": "DIV.draft-disclosure",
+            "text": "Можно сделать паузу. Черновик виден только вам. Врач получит ответы после отправки."
+          },
+          {
+            "background": "rgba(0, 0, 0, 0)",
+            "border": "rgb(24, 25, 26)",
+            "bounds": {
+              "bottom": 383.171875,
+              "height": 25,
+              "left": 37,
+              "right": 716,
+              "top": 358.171875,
+              "width": 679,
+              "x": 37,
+              "y": 358.171875
+            },
+            "color": "rgb(24, 25, 26)",
+            "font": "15px",
+            "gap": "normal",
+            "lineHeight": "24px",
+            "padding": "0px 2px",
+            "selector": "LEGEND.",
+            "text": "1Насколько вам понятно, что делать в приложении?"
+          },
+          {
+            "background": "rgb(233, 242, 239)",
+            "border": "rgb(57, 121, 107)",
+            "bounds": {
+              "bottom": 383.171875,
+              "height": 22,
+              "left": 39,
+              "right": 61,
+              "top": 361.171875,
+              "width": 22,
+              "x": 39,
+              "y": 361.171875
+            },
+            "color": "rgb(57, 121, 107)",
+            "font": "10px",
+            "gap": "normal",
+            "lineHeight": "16px",
+            "padding": "0px",
+            "selector": "SPAN.question-number",
+            "text": "1"
+          },
+          {
+            "background": "rgb(237, 246, 242)",
+            "border": "rgb(111, 159, 145)",
+            "bounds": {
+              "bottom": 505.171875,
+              "height": 51,
+              "left": 37,
+              "right": 716,
+              "top": 454.171875,
+              "width": 679,
+              "x": 37,
+              "y": 454.171875
+            },
+            "color": "rgb(36, 94, 81)",
+            "font": "14px",
+            "gap": "12px",
+            "lineHeight": "21px",
+            "padding": "14px 16px",
+            "selector": "LABEL.answer-option checked",
+            "text": "Частично понятно"
+          },
+          {
+            "background": "rgba(0, 0, 0, 0)",
+            "border": "rgb(24, 25, 26)",
+            "bounds": {
+              "bottom": 806.171875,
+              "height": 25,
+              "left": 37,
+              "right": 716,
+              "top": 781.171875,
+              "width": 679,
+              "x": 37,
+              "y": 781.171875
+            },
+            "color": "rgb(24, 25, 26)",
+            "font": "15px",
+            "gap": "normal",
+            "lineHeight": "24px",
+            "padding": "0px 2px",
+            "selector": "LEGEND.",
+            "text": "2Насколько приложение полезно вам между встречами с врачом?"
+          },
+          {
+            "background": "rgb(233, 242, 239)",
+            "border": "rgb(57, 121, 107)",
+            "bounds": {
+              "bottom": 806.171875,
+              "height": 22,
+              "left": 39,
+              "right": 61,
+              "top": 784.171875,
+              "width": 22,
+              "x": 39,
+              "y": 784.171875
+            },
+            "color": "rgb(57, 121, 107)",
+            "font": "10px",
+            "gap": "normal",
+            "lineHeight": "16px",
+            "padding": "0px",
+            "selector": "SPAN.question-number",
+            "text": "2"
+          },
+          {
+            "background": "rgba(0, 0, 0, 0)",
+            "border": "rgb(24, 25, 26)",
+            "bounds": {
+              "bottom": 1229.171875,
+              "height": 25,
+              "left": 37,
+              "right": 716,
+              "top": 1204.171875,
+              "width": 679,
+              "x": 37,
+              "y": 1204.171875
+            },
+            "color": "rgb(24, 25, 26)",
+            "font": "15px",
+            "gap": "normal",
+            "lineHeight": "24px",
+            "padding": "0px 2px",
+            "selector": "LEGEND.",
+            "text": "3Что в приложении стоит сделать удобнее? · по желанию"
+          },
+          {
+            "background": "rgb(233, 242, 239)",
+            "border": "rgb(57, 121, 107)",
+            "bounds": {
+              "bottom": 1229.171875,
+              "height": 22,
+              "left": 39,
+              "right": 61,
+              "top": 1207.171875,
+              "width": 22,
+              "x": 39,
+              "y": 1207.171875
+            },
+            "color": "rgb(57, 121, 107)",
+            "font": "10px",
+            "gap": "normal",
+            "lineHeight": "16px",
+            "padding": "0px",
+            "selector": "SPAN.question-number",
+            "text": "3"
+          }
+        ],
+        "overflow": false,
+        "stage": "before-form-tablet",
+        "url": "http://127.0.0.1:8782/?section=surveys&assignment=31",
+        "viewport": [
+          768,
+          1024
+        ]
+      }
+    ],
+    "after": {
+      "checks": [
+        {
+          "elements": [
+            {
+              "background": "rgba(0, 0, 0, 0)",
+              "border": "rgb(24, 25, 26)",
+              "bounds": {
+                "bottom": 260.875,
+                "height": 25.1875,
+                "left": 16,
+                "right": 117.015625,
+                "top": 235.6875,
+                "width": 101.015625,
+                "x": 16,
+                "y": 235.6875
+              },
+              "color": "rgb(24, 25, 26)",
+              "font": "18px",
+              "gap": "10px",
+              "lineHeight": "25.2px",
+              "padding": "0px",
+              "selector": "H2.",
+              "text": "Для вас 1"
+            },
+            {
+              "background": "rgb(255, 231, 223)",
+              "border": "rgb(165, 46, 28)",
+              "bounds": {
+                "bottom": 260.28125,
+                "height": 24,
+                "left": 93.015625,
+                "right": 117.015625,
+                "top": 236.28125,
+                "width": 24,
+                "x": 93.015625,
+                "y": 236.28125
+              },
+              "color": "rgb(165, 46, 28)",
+              "font": "12px",
+              "gap": "normal",
+              "lineHeight": "16.8px",
+              "padding": "0px 6px",
+              "selector": "SPAN.count-circle",
+              "text": "1"
+            },
+            {
+              "background": "rgba(0, 0, 0, 0)",
+              "border": "rgb(89, 91, 90)",
+              "bounds": {
+                "bottom": 258.6875,
+                "height": 18,
+                "left": 244.078125,
+                "right": 344,
+                "top": 240.6875,
+                "width": 99.921875,
+                "x": 244.078125,
+                "y": 240.6875
+              },
+              "color": "rgb(89, 91, 90)",
+              "font": "12px",
+              "gap": "normal",
+              "lineHeight": "18px",
+              "padding": "0px",
+              "selector": "SPAN.muted",
+              "text": "Вопросы от врача"
+            },
+            {
+              "background": "rgb(255, 255, 255)",
+              "border": "rgb(215, 213, 207)",
+              "bounds": {
+                "bottom": 520.421875,
+                "height": 239.546875,
+                "left": 16,
+                "right": 344,
+                "top": 280.875,
+                "width": 328,
+                "x": 16,
+                "y": 280.875
+              },
+              "color": "rgb(0, 0, 0)",
+              "font": "14px",
+              "gap": "12px",
+              "lineHeight": "21px",
+              "padding": "20px",
+              "selector": "BUTTON.patient-survey-card",
+              "text": "3 вопр.Проверка UI · опыт приложенияСинтетическая проверка удобства приложения. Можно пропустить люб"
+            },
+            {
+              "background": "rgb(255, 231, 223)",
+              "border": "rgb(165, 46, 28)",
+              "bounds": {
+                "bottom": 0,
+                "height": 0,
+                "left": 0,
+                "right": 0,
+                "top": 0,
+                "width": 0,
+                "x": 0,
+                "y": 0
+              },
+              "color": "rgb(165, 46, 28)",
+              "font": "14px",
+              "gap": "normal",
+              "lineHeight": "21px",
+              "padding": "0px",
+              "selector": "SPAN.survey-card-icon",
+              "text": ""
+            },
+            {
+              "background": "rgb(255, 231, 223)",
+              "border": "rgb(165, 46, 28)",
+              "bounds": {
+                "bottom": 328.671875,
+                "height": 26.796875,
+                "left": 37,
+                "right": 94.015625,
+                "top": 301.875,
+                "width": 57.015625,
+                "x": 37,
+                "y": 301.875
+              },
+              "color": "rgb(165, 46, 28)",
+              "font": "12px",
+              "gap": "5px",
+              "lineHeight": "16.8px",
+              "padding": "5px 8px",
+              "selector": "SPAN.badge purple",
+              "text": "3 вопр."
+            },
+            {
+              "background": "rgba(0, 0, 0, 0)",
+              "border": "rgb(24, 25, 26)",
+              "bounds": {
+                "bottom": 363.859375,
+                "height": 23.1875,
+                "left": 37,
+                "right": 294,
+                "top": 340.671875,
+                "width": 257,
+                "x": 37,
+                "y": 340.671875
+              },
+              "color": "rgb(24, 25, 26)",
+              "font": "16px",
+              "gap": "normal",
+              "lineHeight": "23.2px",
+              "padding": "0px",
+              "selector": "H3.",
+              "text": "Проверка UI · опыт приложения"
+            },
+            {
+              "background": "rgba(0, 0, 0, 0)",
+              "border": "rgb(89, 91, 90)",
+              "bounds": {
+                "bottom": 464.234375,
+                "height": 92.375,
+                "left": 37,
+                "right": 294,
+                "top": 371.859375,
+                "width": 257,
+                "x": 37,
+                "y": 371.859375
+              },
+              "color": "rgb(89, 91, 90)",
+              "font": "14px",
+              "gap": "normal",
+              "lineHeight": "23.1px",
+              "padding": "0px",
+              "selector": "P.",
+              "text": "Синтетическая проверка удобства приложения. Можно пропустить любой вопрос. Это авторская обратная св"
+            },
+            {
+              "background": "rgba(0, 0, 0, 0)",
+              "border": "rgb(89, 91, 90)",
+              "bounds": {
+                "bottom": 499.421875,
+                "height": 19.1875,
+                "left": 37,
+                "right": 294,
+                "top": 480.234375,
+                "width": 257,
+                "x": 37,
+                "y": 480.234375
+              },
+              "color": "rgb(89, 91, 90)",
+              "font": "12px",
+              "gap": "normal",
+              "lineHeight": "19.2px",
+              "padding": "0px",
+              "selector": "SMALL.",
+              "text": "Можно ответить в удобное время"
+            },
+            {
+              "background": "rgba(0, 0, 0, 0)",
+              "border": "rgb(215, 213, 207)",
+              "bounds": {
+                "bottom": 692.734375,
+                "height": 152.3125,
+                "left": 16,
+                "right": 344,
+                "top": 540.421875,
+                "width": 328,
+                "x": 16,
+                "y": 540.421875
+              },
+              "color": "rgb(89, 91, 90)",
+              "font": "14px",
+              "gap": "14px",
+              "lineHeight": "21px",
+              "padding": "18px",
+              "selector": "DIV.support-card",
+              "text": "Не всё получается? Об этом можно рассказатьСложности — повод подобрать поддержку. Ваши ответы увидит"
+            },
+            {
+              "background": "rgba(0, 0, 0, 0)",
+              "border": "rgb(24, 25, 26)",
+              "bounds": {
+                "bottom": 601.421875,
+                "height": 42,
+                "left": 73,
+                "right": 325,
+                "top": 559.421875,
+                "width": 252,
+                "x": 73,
+                "y": 559.421875
+              },
+              "color": "rgb(24, 25, 26)",
+              "font": "14px",
+              "gap": "normal",
+              "lineHeight": "21px",
+              "padding": "0px",
+              "selector": "H3.",
+              "text": "Не всё получается? Об этом можно рассказать"
+            },
+            {
+              "background": "rgba(0, 0, 0, 0)",
+              "border": "rgb(89, 91, 90)",
+              "bounds": {
+                "bottom": 673.734375,
+                "height": 64.3125,
+                "left": 73,
+                "right": 325,
+                "top": 609.421875,
+                "width": 252,
+                "x": 73,
+                "y": 609.421875
+              },
+              "color": "rgb(89, 91, 90)",
+              "font": "13px",
+              "gap": "normal",
+              "lineHeight": "21.45px",
+              "padding": "0px",
+              "selector": "P.",
+              "text": "Сложности — повод подобрать поддержку. Ваши ответы увидит лечащий врач."
+            },
+            {
+              "background": "rgba(0, 0, 0, 0)",
+              "border": "rgb(24, 25, 26)",
+              "bounds": {
+                "bottom": 840.828125,
+                "height": 42,
+                "left": 82,
+                "right": 292,
+                "top": 798.828125,
+                "width": 210,
+                "x": 82,
+                "y": 798.828125
+              },
+              "color": "rgb(24, 25, 26)",
+              "font": "14px",
+              "gap": "normal",
+              "lineHeight": "21px",
+              "padding": "0px",
+              "selector": "STRONG.",
+              "text": "Что мешает выполнять рекомендации?"
+            },
+            {
+              "background": "rgba(0, 0, 0, 0)",
+              "border": "rgb(89, 91, 90)",
+              "bounds": {
+                "bottom": 864.828125,
+                "height": 18,
+                "left": 82,
+                "right": 292,
+                "top": 846.828125,
+                "width": 210,
+                "x": 82,
+                "y": 846.828125
+              },
+              "color": "rgb(89, 91, 90)",
+              "font": "12px",
+              "gap": "normal",
+              "lineHeight": "18px",
+              "padding": "0px",
+              "selector": "SMALL.",
+              "text": "25 окт., 13:10"
+            },
+            {
+              "background": "rgba(0, 0, 0, 0)",
+              "border": "rgb(24, 25, 26)",
+              "bounds": {
+                "bottom": 941.828125,
+                "height": 42,
+                "left": 82,
+                "right": 292,
+                "top": 899.828125,
+                "width": 210,
+                "x": 82,
+                "y": 899.828125
+              },
+              "color": "rgb(24, 25, 26)",
+              "font": "14px",
+              "gap": "normal",
+              "lineHeight": "21px",
+              "padding": "0px",
+              "selector": "STRONG.",
+              "text": "Как вам подходит сопровождение?"
+            },
+            {
+              "background": "rgba(0, 0, 0, 0)",
+              "border": "rgb(89, 91, 90)",
+              "bounds": {
+                "bottom": 965.828125,
+                "height": 18,
+                "left": 82,
+                "right": 292,
+                "top": 947.828125,
+                "width": 210,
+                "x": 82,
+                "y": 947.828125
+              },
+              "color": "rgb(89, 91, 90)",
+              "font": "12px",
+              "gap": "normal",
+              "lineHeight": "18px",
+              "padding": "0px",
+              "selector": "SMALL.",
+              "text": "19 окт., 23:38"
+            },
+            {
+              "background": "rgba(0, 0, 0, 0)",
+              "border": "rgb(24, 25, 26)",
+              "bounds": {
+                "bottom": 1042.828125,
+                "height": 42,
+                "left": 82,
+                "right": 292,
+                "top": 1000.828125,
+                "width": 210,
+                "x": 82,
+                "y": 1000.828125
+              },
+              "color": "rgb(24, 25, 26)",
+              "font": "14px",
+              "gap": "normal",
+              "lineHeight": "21px",
+              "padding": "0px",
+              "selector": "STRONG.",
+              "text": "Что мешает выполнять рекомендации?"
+            },
+            {
+              "background": "rgba(0, 0, 0, 0)",
+              "border": "rgb(89, 91, 90)",
+              "bounds": {
+                "bottom": 1066.828125,
+                "height": 18,
+                "left": 82,
+                "right": 292,
+                "top": 1048.828125,
+                "width": 210,
+                "x": 82,
+                "y": 1048.828125
+              },
+              "color": "rgb(89, 91, 90)",
+              "font": "12px",
+              "gap": "normal",
+              "lineHeight": "18px",
+              "padding": "0px",
+              "selector": "SMALL.",
+              "text": "19 окт., 23:38"
+            },
+            {
+              "background": "rgba(0, 0, 0, 0)",
+              "border": "rgb(24, 25, 26)",
+              "bounds": {
+                "bottom": 1143.828125,
+                "height": 42,
+                "left": 82,
+                "right": 292,
+                "top": 1101.828125,
+                "width": 210,
+                "x": 82,
+                "y": 1101.828125
+              },
+              "color": "rgb(24, 25, 26)",
+              "font": "14px",
+              "gap": "normal",
+              "lineHeight": "21px",
+              "padding": "0px",
+              "selector": "STRONG.",
+              "text": "Как вам подходит сопровождение?"
+            },
+            {
+              "background": "rgba(0, 0, 0, 0)",
+              "border": "rgb(89, 91, 90)",
+              "bounds": {
+                "bottom": 1167.828125,
+                "height": 18,
+                "left": 82,
+                "right": 292,
+                "top": 1149.828125,
+                "width": 210,
+                "x": 82,
+                "y": 1149.828125
+              },
+              "color": "rgb(89, 91, 90)",
+              "font": "12px",
+              "gap": "normal",
+              "lineHeight": "18px",
+              "padding": "0px",
+              "selector": "SMALL.",
+              "text": "16 окт., 11:01"
+            },
+            {
+              "background": "rgba(0, 0, 0, 0)",
+              "border": "rgb(24, 25, 26)",
+              "bounds": {
+                "bottom": 1244.828125,
+                "height": 42,
+                "left": 82,
+                "right": 292,
+                "top": 1202.828125,
+                "width": 210,
+                "x": 82,
+                "y": 1202.828125
+              },
+              "color": "rgb(24, 25, 26)",
+              "font": "14px",
+              "gap": "normal",
+              "lineHeight": "21px",
+              "padding": "0px",
+              "selector": "STRONG.",
+              "text": "Как вам подходит сопровождение?"
+            },
+            {
+              "background": "rgba(0, 0, 0, 0)",
+              "border": "rgb(89, 91, 90)",
+              "bounds": {
+                "bottom": 1268.828125,
+                "height": 18,
+                "left": 82,
+                "right": 292,
+                "top": 1250.828125,
+                "width": 210,
+                "x": 82,
+                "y": 1250.828125
+              },
+              "color": "rgb(89, 91, 90)",
+              "font": "12px",
+              "gap": "normal",
+              "lineHeight": "18px",
+              "padding": "0px",
+              "selector": "SMALL.",
+              "text": "9 окт., 11:01"
+            },
+            {
+              "background": "rgba(0, 0, 0, 0)",
+              "border": "rgb(24, 25, 26)",
+              "bounds": {
+                "bottom": 1345.828125,
+                "height": 42,
+                "left": 82,
+                "right": 292,
+                "top": 1303.828125,
+                "width": 210,
+                "x": 82,
+                "y": 1303.828125
+              },
+              "color": "rgb(24, 25, 26)",
+              "font": "14px",
+              "gap": "normal",
+              "lineHeight": "21px",
+              "padding": "0px",
+              "selector": "STRONG.",
+              "text": "Как вам подходит сопровождение?"
+            },
+            {
+              "background": "rgba(0, 0, 0, 0)",
+              "border": "rgb(89, 91, 90)",
+              "bounds": {
+                "bottom": 1369.828125,
+                "height": 18,
+                "left": 82,
+                "right": 292,
+                "top": 1351.828125,
+                "width": 210,
+                "x": 82,
+                "y": 1351.828125
+              },
+              "color": "rgb(89, 91, 90)",
+              "font": "12px",
+              "gap": "normal",
+              "lineHeight": "18px",
+              "padding": "0px",
+              "selector": "SMALL.",
+              "text": "2 окт., 11:01"
+            }
+          ],
+          "overflow": false,
+          "stage": "after-list-mobile",
+          "url": "http://127.0.0.1:8782/?section=surveys",
+          "viewport": [
+            375,
+            844
+          ]
+        },
+        {
+          "elements": [
+            {
+              "background": "rgba(0, 0, 0, 0)",
+              "border": "rgb(24, 25, 26)",
+              "bounds": {
+                "bottom": 234.28125,
+                "height": 25.1875,
+                "left": 16,
+                "right": 117.015625,
+                "top": 209.09375,
+                "width": 101.015625,
+                "x": 16,
+                "y": 209.09375
+              },
+              "color": "rgb(24, 25, 26)",
+              "font": "18px",
+              "gap": "10px",
+              "lineHeight": "25.2px",
+              "padding": "0px",
+              "selector": "H2.",
+              "text": "Для вас 1"
+            },
+            {
+              "background": "rgb(255, 231, 223)",
+              "border": "rgb(165, 46, 28)",
+              "bounds": {
+                "bottom": 233.6875,
+                "height": 24,
+                "left": 93.015625,
+                "right": 117.015625,
+                "top": 209.6875,
+                "width": 24,
+                "x": 93.015625,
+                "y": 209.6875
+              },
+              "color": "rgb(165, 46, 28)",
+              "font": "12px",
+              "gap": "normal",
+              "lineHeight": "16.8px",
+              "padding": "0px 6px",
+              "selector": "SPAN.count-circle",
+              "text": "1"
+            },
+            {
+              "background": "rgba(0, 0, 0, 0)",
+              "border": "rgb(89, 91, 90)",
+              "bounds": {
+                "bottom": 232.09375,
+                "height": 18,
+                "left": 637.078125,
+                "right": 737,
+                "top": 214.09375,
+                "width": 99.921875,
+                "x": 637.078125,
+                "y": 214.09375
+              },
+              "color": "rgb(89, 91, 90)",
+              "font": "12px",
+              "gap": "normal",
+              "lineHeight": "18px",
+              "padding": "0px",
+              "selector": "SPAN.muted",
+              "text": "Вопросы от врача"
+            },
+            {
+              "background": "rgb(246, 244, 239)",
+              "border": "rgb(165, 46, 28)",
+              "bounds": {
+                "bottom": 455.640625,
+                "height": 201.359375,
+                "left": 16,
+                "right": 737,
+                "top": 254.28125,
+                "width": 721,
+                "x": 16,
+                "y": 254.28125
+              },
+              "color": "rgb(0, 0, 0)",
+              "font": "14px",
+              "gap": "16px",
+              "lineHeight": "21px",
+              "padding": "24px",
+              "selector": "BUTTON.patient-survey-card",
+              "text": "3 вопр.Проверка UI · опыт приложенияСинтетическая проверка удобства приложения. Можно пропустить люб"
+            },
+            {
+              "background": "rgb(255, 231, 223)",
+              "border": "rgb(165, 46, 28)",
+              "bounds": {
+                "bottom": 323.28125,
+                "height": 44,
+                "left": 41,
+                "right": 85,
+                "top": 279.28125,
+                "width": 44,
+                "x": 41,
+                "y": 279.28125
+              },
+              "color": "rgb(165, 46, 28)",
+              "font": "14px",
+              "gap": "normal",
+              "lineHeight": "21px",
+              "padding": "0px",
+              "selector": "SPAN.survey-card-icon",
+              "text": ""
+            },
+            {
+              "background": "rgb(255, 231, 223)",
+              "border": "rgb(165, 46, 28)",
+              "bounds": {
+                "bottom": 306.078125,
+                "height": 26.796875,
+                "left": 101,
+                "right": 158.015625,
+                "top": 279.28125,
+                "width": 57.015625,
+                "x": 101,
+                "y": 279.28125
+              },
+              "color": "rgb(165, 46, 28)",
+              "font": "12px",
+              "gap": "5px",
+              "lineHeight": "16.8px",
+              "padding": "5px 8px",
+              "selector": "SPAN.badge purple",
+              "text": "3 вопр."
+            },
+            {
+              "background": "rgba(0, 0, 0, 0)",
+              "border": "rgb(24, 25, 26)",
+              "bounds": {
+                "bottom": 341.265625,
+                "height": 23.1875,
+                "left": 101,
+                "right": 674,
+                "top": 318.078125,
+                "width": 573,
+                "x": 101,
+                "y": 318.078125
+              },
+              "color": "rgb(24, 25, 26)",
+              "font": "16px",
+              "gap": "normal",
+              "lineHeight": "23.2px",
+              "padding": "0px",
+              "selector": "H3.",
+              "text": "Проверка UI · опыт приложения"
+            },
+            {
+              "background": "rgba(0, 0, 0, 0)",
+              "border": "rgb(89, 91, 90)",
+              "bounds": {
+                "bottom": 395.453125,
+                "height": 46.1875,
+                "left": 101,
+                "right": 674,
+                "top": 349.265625,
+                "width": 573,
+                "x": 101,
+                "y": 349.265625
+              },
+              "color": "rgb(89, 91, 90)",
+              "font": "14px",
+              "gap": "normal",
+              "lineHeight": "23.1px",
+              "padding": "0px",
+              "selector": "P.",
+              "text": "Синтетическая проверка удобства приложения. Можно пропустить любой вопрос. Это авторская обратная св"
+            },
+            {
+              "background": "rgba(0, 0, 0, 0)",
+              "border": "rgb(89, 91, 90)",
+              "bounds": {
+                "bottom": 430.640625,
+                "height": 19.1875,
+                "left": 101,
+                "right": 674,
+                "top": 411.453125,
+                "width": 573,
+                "x": 101,
+                "y": 411.453125
+              },
+              "color": "rgb(89, 91, 90)",
+              "font": "12px",
+              "gap": "normal",
+              "lineHeight": "19.2px",
+              "padding": "0px",
+              "selector": "SMALL.",
+              "text": "Можно ответить в удобное время"
+            },
+            {
+              "background": "rgba(0, 0, 0, 0)",
+              "border": "rgb(215, 213, 207)",
+              "bounds": {
+                "bottom": 568.078125,
+                "height": 92.4375,
+                "left": 16,
+                "right": 737,
+                "top": 475.640625,
+                "width": 721,
+                "x": 16,
+                "y": 475.640625
+              },
+              "color": "rgb(89, 91, 90)",
+              "font": "14px",
+              "gap": "14px",
+              "lineHeight": "21px",
+              "padding": "20px",
+              "selector": "DIV.support-card",
+              "text": "Не всё получается? Об этом можно рассказатьСложности — повод подобрать поддержку. Ваши ответы увидит"
+            },
+            {
+              "background": "rgba(0, 0, 0, 0)",
+              "border": "rgb(24, 25, 26)",
+              "bounds": {
+                "bottom": 517.640625,
+                "height": 21,
+                "left": 75,
+                "right": 554.25,
+                "top": 496.640625,
+                "width": 479.25,
+                "x": 75,
+                "y": 496.640625
+              },
+              "color": "rgb(24, 25, 26)",
+              "font": "14px",
+              "gap": "normal",
+              "lineHeight": "21px",
+              "padding": "0px",
+              "selector": "H3.",
+              "text": "Не всё получается? Об этом можно рассказать"
+            },
+            {
+              "background": "rgba(0, 0, 0, 0)",
+              "border": "rgb(89, 91, 90)",
+              "bounds": {
+                "bottom": 547.078125,
+                "height": 21.4375,
+                "left": 75,
+                "right": 554.25,
+                "top": 525.640625,
+                "width": 479.25,
+                "x": 75,
+                "y": 525.640625
+              },
+              "color": "rgb(89, 91, 90)",
+              "font": "13px",
+              "gap": "normal",
+              "lineHeight": "21.45px",
+              "padding": "0px",
+              "selector": "P.",
+              "text": "Сложности — повод подобрать поддержку. Ваши ответы увидит лечащий врач."
+            },
+            {
+              "background": "rgba(0, 0, 0, 0)",
+              "border": "rgb(24, 25, 26)",
+              "bounds": {
+                "bottom": 695.171875,
+                "height": 21,
+                "left": 82,
+                "right": 685,
+                "top": 674.171875,
+                "width": 603,
+                "x": 82,
+                "y": 674.171875
+              },
+              "color": "rgb(24, 25, 26)",
+              "font": "14px",
+              "gap": "normal",
+              "lineHeight": "21px",
+              "padding": "0px",
+              "selector": "STRONG.",
+              "text": "Что мешает выполнять рекомендации?"
+            },
+            {
+              "background": "rgba(0, 0, 0, 0)",
+              "border": "rgb(89, 91, 90)",
+              "bounds": {
+                "bottom": 719.171875,
+                "height": 18,
+                "left": 82,
+                "right": 685,
+                "top": 701.171875,
+                "width": 603,
+                "x": 82,
+                "y": 701.171875
+              },
+              "color": "rgb(89, 91, 90)",
+              "font": "12px",
+              "gap": "normal",
+              "lineHeight": "18px",
+              "padding": "0px",
+              "selector": "SMALL.",
+              "text": "25 окт., 13:10"
+            },
+            {
+              "background": "rgba(0, 0, 0, 0)",
+              "border": "rgb(24, 25, 26)",
+              "bounds": {
+                "bottom": 775.171875,
+                "height": 21,
+                "left": 82,
+                "right": 685,
+                "top": 754.171875,
+                "width": 603,
+                "x": 82,
+                "y": 754.171875
+              },
+              "color": "rgb(24, 25, 26)",
+              "font": "14px",
+              "gap": "normal",
+              "lineHeight": "21px",
+              "padding": "0px",
+              "selector": "STRONG.",
+              "text": "Как вам подходит сопровождение?"
+            },
+            {
+              "background": "rgba(0, 0, 0, 0)",
+              "border": "rgb(89, 91, 90)",
+              "bounds": {
+                "bottom": 799.171875,
+                "height": 18,
+                "left": 82,
+                "right": 685,
+                "top": 781.171875,
+                "width": 603,
+                "x": 82,
+                "y": 781.171875
+              },
+              "color": "rgb(89, 91, 90)",
+              "font": "12px",
+              "gap": "normal",
+              "lineHeight": "18px",
+              "padding": "0px",
+              "selector": "SMALL.",
+              "text": "19 окт., 23:38"
+            },
+            {
+              "background": "rgba(0, 0, 0, 0)",
+              "border": "rgb(24, 25, 26)",
+              "bounds": {
+                "bottom": 855.171875,
+                "height": 21,
+                "left": 82,
+                "right": 685,
+                "top": 834.171875,
+                "width": 603,
+                "x": 82,
+                "y": 834.171875
+              },
+              "color": "rgb(24, 25, 26)",
+              "font": "14px",
+              "gap": "normal",
+              "lineHeight": "21px",
+              "padding": "0px",
+              "selector": "STRONG.",
+              "text": "Что мешает выполнять рекомендации?"
+            },
+            {
+              "background": "rgba(0, 0, 0, 0)",
+              "border": "rgb(89, 91, 90)",
+              "bounds": {
+                "bottom": 879.171875,
+                "height": 18,
+                "left": 82,
+                "right": 685,
+                "top": 861.171875,
+                "width": 603,
+                "x": 82,
+                "y": 861.171875
+              },
+              "color": "rgb(89, 91, 90)",
+              "font": "12px",
+              "gap": "normal",
+              "lineHeight": "18px",
+              "padding": "0px",
+              "selector": "SMALL.",
+              "text": "19 окт., 23:38"
+            },
+            {
+              "background": "rgba(0, 0, 0, 0)",
+              "border": "rgb(24, 25, 26)",
+              "bounds": {
+                "bottom": 935.171875,
+                "height": 21,
+                "left": 82,
+                "right": 685,
+                "top": 914.171875,
+                "width": 603,
+                "x": 82,
+                "y": 914.171875
+              },
+              "color": "rgb(24, 25, 26)",
+              "font": "14px",
+              "gap": "normal",
+              "lineHeight": "21px",
+              "padding": "0px",
+              "selector": "STRONG.",
+              "text": "Как вам подходит сопровождение?"
+            },
+            {
+              "background": "rgba(0, 0, 0, 0)",
+              "border": "rgb(89, 91, 90)",
+              "bounds": {
+                "bottom": 959.171875,
+                "height": 18,
+                "left": 82,
+                "right": 685,
+                "top": 941.171875,
+                "width": 603,
+                "x": 82,
+                "y": 941.171875
+              },
+              "color": "rgb(89, 91, 90)",
+              "font": "12px",
+              "gap": "normal",
+              "lineHeight": "18px",
+              "padding": "0px",
+              "selector": "SMALL.",
+              "text": "16 окт., 11:01"
+            },
+            {
+              "background": "rgba(0, 0, 0, 0)",
+              "border": "rgb(24, 25, 26)",
+              "bounds": {
+                "bottom": 1015.171875,
+                "height": 21,
+                "left": 82,
+                "right": 685,
+                "top": 994.171875,
+                "width": 603,
+                "x": 82,
+                "y": 994.171875
+              },
+              "color": "rgb(24, 25, 26)",
+              "font": "14px",
+              "gap": "normal",
+              "lineHeight": "21px",
+              "padding": "0px",
+              "selector": "STRONG.",
+              "text": "Как вам подходит сопровождение?"
+            },
+            {
+              "background": "rgba(0, 0, 0, 0)",
+              "border": "rgb(89, 91, 90)",
+              "bounds": {
+                "bottom": 1039.171875,
+                "height": 18,
+                "left": 82,
+                "right": 685,
+                "top": 1021.171875,
+                "width": 603,
+                "x": 82,
+                "y": 1021.171875
+              },
+              "color": "rgb(89, 91, 90)",
+              "font": "12px",
+              "gap": "normal",
+              "lineHeight": "18px",
+              "padding": "0px",
+              "selector": "SMALL.",
+              "text": "9 окт., 11:01"
+            },
+            {
+              "background": "rgba(0, 0, 0, 0)",
+              "border": "rgb(24, 25, 26)",
+              "bounds": {
+                "bottom": 1095.171875,
+                "height": 21,
+                "left": 82,
+                "right": 685,
+                "top": 1074.171875,
+                "width": 603,
+                "x": 82,
+                "y": 1074.171875
+              },
+              "color": "rgb(24, 25, 26)",
+              "font": "14px",
+              "gap": "normal",
+              "lineHeight": "21px",
+              "padding": "0px",
+              "selector": "STRONG.",
+              "text": "Как вам подходит сопровождение?"
+            },
+            {
+              "background": "rgba(0, 0, 0, 0)",
+              "border": "rgb(89, 91, 90)",
+              "bounds": {
+                "bottom": 1119.171875,
+                "height": 18,
+                "left": 82,
+                "right": 685,
+                "top": 1101.171875,
+                "width": 603,
+                "x": 82,
+                "y": 1101.171875
+              },
+              "color": "rgb(89, 91, 90)",
+              "font": "12px",
+              "gap": "normal",
+              "lineHeight": "18px",
+              "padding": "0px",
+              "selector": "SMALL.",
+              "text": "2 окт., 11:01"
+            }
+          ],
+          "overflow": false,
+          "stage": "after-list-tablet",
+          "url": "http://127.0.0.1:8782/?section=surveys",
+          "viewport": [
+            768,
+            1024
+          ]
+        },
+        {
+          "elements": [
+            {
+              "background": "rgba(0, 0, 0, 0)",
+              "border": "rgb(24, 25, 26)",
+              "bounds": {
+                "bottom": 243.28125,
+                "height": 25.1875,
+                "left": 296,
+                "right": 397.015625,
+                "top": 218.09375,
+                "width": 101.015625,
+                "x": 296,
+                "y": 218.09375
+              },
+              "color": "rgb(24, 25, 26)",
+              "font": "18px",
+              "gap": "10px",
+              "lineHeight": "25.2px",
+              "padding": "0px",
+              "selector": "H2.",
+              "text": "Для вас 1"
+            },
+            {
+              "background": "rgb(255, 231, 223)",
+              "border": "rgb(165, 46, 28)",
+              "bounds": {
+                "bottom": 242.6875,
+                "height": 24,
+                "left": 373.015625,
+                "right": 397.015625,
+                "top": 218.6875,
+                "width": 24,
+                "x": 373.015625,
+                "y": 218.6875
+              },
+              "color": "rgb(165, 46, 28)",
+              "font": "12px",
+              "gap": "normal",
+              "lineHeight": "16.8px",
+              "padding": "0px 6px",
+              "selector": "SPAN.count-circle",
+              "text": "1"
+            },
+            {
+              "background": "rgba(0, 0, 0, 0)",
+              "border": "rgb(89, 91, 90)",
+              "bounds": {
+                "bottom": 241.09375,
+                "height": 18,
+                "left": 1293.078125,
+                "right": 1393,
+                "top": 223.09375,
+                "width": 99.921875,
+                "x": 1293.078125,
+                "y": 223.09375
+              },
+              "color": "rgb(89, 91, 90)",
+              "font": "12px",
+              "gap": "normal",
+              "lineHeight": "18px",
+              "padding": "0px",
+              "selector": "SPAN.muted",
+              "text": "Вопросы от врача"
+            },
+            {
+              "background": "rgb(255, 255, 255)",
+              "border": "rgb(215, 213, 207)",
+              "bounds": {
+                "bottom": 441.546875,
+                "height": 178.265625,
+                "left": 296,
+                "right": 1393,
+                "top": 263.28125,
+                "width": 1097,
+                "x": 296,
+                "y": 263.28125
+              },
+              "color": "rgb(0, 0, 0)",
+              "font": "14px",
+              "gap": "16px",
+              "lineHeight": "21px",
+              "padding": "24px",
+              "selector": "BUTTON.patient-survey-card",
+              "text": "3 вопр.Проверка UI · опыт приложенияСинтетическая проверка удобства приложения. Можно пропустить люб"
+            },
+            {
+              "background": "rgb(255, 231, 223)",
+              "border": "rgb(165, 46, 28)",
+              "bounds": {
+                "bottom": 332.28125,
+                "height": 44,
+                "left": 321,
+                "right": 365,
+                "top": 288.28125,
+                "width": 44,
+                "x": 321,
+                "y": 288.28125
+              },
+              "color": "rgb(165, 46, 28)",
+              "font": "14px",
+              "gap": "normal",
+              "lineHeight": "21px",
+              "padding": "0px",
+              "selector": "SPAN.survey-card-icon",
+              "text": ""
+            },
+            {
+              "background": "rgb(255, 231, 223)",
+              "border": "rgb(165, 46, 28)",
+              "bounds": {
+                "bottom": 315.078125,
+                "height": 26.796875,
+                "left": 381,
+                "right": 438.015625,
+                "top": 288.28125,
+                "width": 57.015625,
+                "x": 381,
+                "y": 288.28125
+              },
+              "color": "rgb(165, 46, 28)",
+              "font": "12px",
+              "gap": "5px",
+              "lineHeight": "16.8px",
+              "padding": "5px 8px",
+              "selector": "SPAN.badge purple",
+              "text": "3 вопр."
+            },
+            {
+              "background": "rgba(0, 0, 0, 0)",
+              "border": "rgb(24, 25, 26)",
+              "bounds": {
+                "bottom": 350.265625,
+                "height": 23.1875,
+                "left": 381,
+                "right": 1330,
+                "top": 327.078125,
+                "width": 949,
+                "x": 381,
+                "y": 327.078125
+              },
+              "color": "rgb(24, 25, 26)",
+              "font": "16px",
+              "gap": "normal",
+              "lineHeight": "23.2px",
+              "padding": "0px",
+              "selector": "H3.",
+              "text": "Проверка UI · опыт приложения"
+            },
+            {
+              "background": "rgba(0, 0, 0, 0)",
+              "border": "rgb(89, 91, 90)",
+              "bounds": {
+                "bottom": 381.359375,
+                "height": 23.09375,
+                "left": 381,
+                "right": 1330,
+                "top": 358.265625,
+                "width": 949,
+                "x": 381,
+                "y": 358.265625
+              },
+              "color": "rgb(89, 91, 90)",
+              "font": "14px",
+              "gap": "normal",
+              "lineHeight": "23.1px",
+              "padding": "0px",
+              "selector": "P.",
+              "text": "Синтетическая проверка удобства приложения. Можно пропустить любой вопрос. Это авторская обратная св"
+            },
+            {
+              "background": "rgba(0, 0, 0, 0)",
+              "border": "rgb(89, 91, 90)",
+              "bounds": {
+                "bottom": 416.546875,
+                "height": 19.1875,
+                "left": 381,
+                "right": 1330,
+                "top": 397.359375,
+                "width": 949,
+                "x": 381,
+                "y": 397.359375
+              },
+              "color": "rgb(89, 91, 90)",
+              "font": "12px",
+              "gap": "normal",
+              "lineHeight": "19.2px",
+              "padding": "0px",
+              "selector": "SMALL.",
+              "text": "Можно ответить в удобное время"
+            },
+            {
+              "background": "rgba(0, 0, 0, 0)",
+              "border": "rgb(215, 213, 207)",
+              "bounds": {
+                "bottom": 553.984375,
+                "height": 92.4375,
+                "left": 296,
+                "right": 1393,
+                "top": 461.546875,
+                "width": 1097,
+                "x": 296,
+                "y": 461.546875
+              },
+              "color": "rgb(89, 91, 90)",
+              "font": "14px",
+              "gap": "14px",
+              "lineHeight": "21px",
+              "padding": "20px",
+              "selector": "DIV.support-card",
+              "text": "Не всё получается? Об этом можно рассказатьСложности — повод подобрать поддержку. Ваши ответы увидит"
+            },
+            {
+              "background": "rgba(0, 0, 0, 0)",
+              "border": "rgb(24, 25, 26)",
+              "bounds": {
+                "bottom": 503.546875,
+                "height": 21,
+                "left": 355,
+                "right": 834.25,
+                "top": 482.546875,
+                "width": 479.25,
+                "x": 355,
+                "y": 482.546875
+              },
+              "color": "rgb(24, 25, 26)",
+              "font": "14px",
+              "gap": "normal",
+              "lineHeight": "21px",
+              "padding": "0px",
+              "selector": "H3.",
+              "text": "Не всё получается? Об этом можно рассказать"
+            },
+            {
+              "background": "rgba(0, 0, 0, 0)",
+              "border": "rgb(89, 91, 90)",
+              "bounds": {
+                "bottom": 532.984375,
+                "height": 21.4375,
+                "left": 355,
+                "right": 834.25,
+                "top": 511.546875,
+                "width": 479.25,
+                "x": 355,
+                "y": 511.546875
+              },
+              "color": "rgb(89, 91, 90)",
+              "font": "13px",
+              "gap": "normal",
+              "lineHeight": "21.45px",
+              "padding": "0px",
+              "selector": "P.",
+              "text": "Сложности — повод подобрать поддержку. Ваши ответы увидит лечащий врач."
+            },
+            {
+              "background": "rgba(0, 0, 0, 0)",
+              "border": "rgb(24, 25, 26)",
+              "bounds": {
+                "bottom": 685.078125,
+                "height": 21,
+                "left": 366,
+                "right": 1337,
+                "top": 664.078125,
+                "width": 971,
+                "x": 366,
+                "y": 664.078125
+              },
+              "color": "rgb(24, 25, 26)",
+              "font": "14px",
+              "gap": "normal",
+              "lineHeight": "21px",
+              "padding": "0px",
+              "selector": "STRONG.",
+              "text": "Что мешает выполнять рекомендации?"
+            },
+            {
+              "background": "rgba(0, 0, 0, 0)",
+              "border": "rgb(89, 91, 90)",
+              "bounds": {
+                "bottom": 709.078125,
+                "height": 18,
+                "left": 366,
+                "right": 1337,
+                "top": 691.078125,
+                "width": 971,
+                "x": 366,
+                "y": 691.078125
+              },
+              "color": "rgb(89, 91, 90)",
+              "font": "12px",
+              "gap": "normal",
+              "lineHeight": "18px",
+              "padding": "0px",
+              "selector": "SMALL.",
+              "text": "25 окт., 13:10"
+            },
+            {
+              "background": "rgba(0, 0, 0, 0)",
+              "border": "rgb(24, 25, 26)",
+              "bounds": {
+                "bottom": 765.078125,
+                "height": 21,
+                "left": 366,
+                "right": 1337,
+                "top": 744.078125,
+                "width": 971,
+                "x": 366,
+                "y": 744.078125
+              },
+              "color": "rgb(24, 25, 26)",
+              "font": "14px",
+              "gap": "normal",
+              "lineHeight": "21px",
+              "padding": "0px",
+              "selector": "STRONG.",
+              "text": "Как вам подходит сопровождение?"
+            },
+            {
+              "background": "rgba(0, 0, 0, 0)",
+              "border": "rgb(89, 91, 90)",
+              "bounds": {
+                "bottom": 789.078125,
+                "height": 18,
+                "left": 366,
+                "right": 1337,
+                "top": 771.078125,
+                "width": 971,
+                "x": 366,
+                "y": 771.078125
+              },
+              "color": "rgb(89, 91, 90)",
+              "font": "12px",
+              "gap": "normal",
+              "lineHeight": "18px",
+              "padding": "0px",
+              "selector": "SMALL.",
+              "text": "19 окт., 23:38"
+            },
+            {
+              "background": "rgba(0, 0, 0, 0)",
+              "border": "rgb(24, 25, 26)",
+              "bounds": {
+                "bottom": 845.078125,
+                "height": 21,
+                "left": 366,
+                "right": 1337,
+                "top": 824.078125,
+                "width": 971,
+                "x": 366,
+                "y": 824.078125
+              },
+              "color": "rgb(24, 25, 26)",
+              "font": "14px",
+              "gap": "normal",
+              "lineHeight": "21px",
+              "padding": "0px",
+              "selector": "STRONG.",
+              "text": "Что мешает выполнять рекомендации?"
+            },
+            {
+              "background": "rgba(0, 0, 0, 0)",
+              "border": "rgb(89, 91, 90)",
+              "bounds": {
+                "bottom": 869.078125,
+                "height": 18,
+                "left": 366,
+                "right": 1337,
+                "top": 851.078125,
+                "width": 971,
+                "x": 366,
+                "y": 851.078125
+              },
+              "color": "rgb(89, 91, 90)",
+              "font": "12px",
+              "gap": "normal",
+              "lineHeight": "18px",
+              "padding": "0px",
+              "selector": "SMALL.",
+              "text": "19 окт., 23:38"
+            },
+            {
+              "background": "rgba(0, 0, 0, 0)",
+              "border": "rgb(24, 25, 26)",
+              "bounds": {
+                "bottom": 925.078125,
+                "height": 21,
+                "left": 366,
+                "right": 1337,
+                "top": 904.078125,
+                "width": 971,
+                "x": 366,
+                "y": 904.078125
+              },
+              "color": "rgb(24, 25, 26)",
+              "font": "14px",
+              "gap": "normal",
+              "lineHeight": "21px",
+              "padding": "0px",
+              "selector": "STRONG.",
+              "text": "Как вам подходит сопровождение?"
+            },
+            {
+              "background": "rgba(0, 0, 0, 0)",
+              "border": "rgb(89, 91, 90)",
+              "bounds": {
+                "bottom": 949.078125,
+                "height": 18,
+                "left": 366,
+                "right": 1337,
+                "top": 931.078125,
+                "width": 971,
+                "x": 366,
+                "y": 931.078125
+              },
+              "color": "rgb(89, 91, 90)",
+              "font": "12px",
+              "gap": "normal",
+              "lineHeight": "18px",
+              "padding": "0px",
+              "selector": "SMALL.",
+              "text": "16 окт., 11:01"
+            },
+            {
+              "background": "rgba(0, 0, 0, 0)",
+              "border": "rgb(24, 25, 26)",
+              "bounds": {
+                "bottom": 1005.078125,
+                "height": 21,
+                "left": 366,
+                "right": 1337,
+                "top": 984.078125,
+                "width": 971,
+                "x": 366,
+                "y": 984.078125
+              },
+              "color": "rgb(24, 25, 26)",
+              "font": "14px",
+              "gap": "normal",
+              "lineHeight": "21px",
+              "padding": "0px",
+              "selector": "STRONG.",
+              "text": "Как вам подходит сопровождение?"
+            },
+            {
+              "background": "rgba(0, 0, 0, 0)",
+              "border": "rgb(89, 91, 90)",
+              "bounds": {
+                "bottom": 1029.078125,
+                "height": 18,
+                "left": 366,
+                "right": 1337,
+                "top": 1011.078125,
+                "width": 971,
+                "x": 366,
+                "y": 1011.078125
+              },
+              "color": "rgb(89, 91, 90)",
+              "font": "12px",
+              "gap": "normal",
+              "lineHeight": "18px",
+              "padding": "0px",
+              "selector": "SMALL.",
+              "text": "9 окт., 11:01"
+            },
+            {
+              "background": "rgba(0, 0, 0, 0)",
+              "border": "rgb(24, 25, 26)",
+              "bounds": {
+                "bottom": 1085.078125,
+                "height": 21,
+                "left": 366,
+                "right": 1337,
+                "top": 1064.078125,
+                "width": 971,
+                "x": 366,
+                "y": 1064.078125
+              },
+              "color": "rgb(24, 25, 26)",
+              "font": "14px",
+              "gap": "normal",
+              "lineHeight": "21px",
+              "padding": "0px",
+              "selector": "STRONG.",
+              "text": "Как вам подходит сопровождение?"
+            },
+            {
+              "background": "rgba(0, 0, 0, 0)",
+              "border": "rgb(89, 91, 90)",
+              "bounds": {
+                "bottom": 1109.078125,
+                "height": 18,
+                "left": 366,
+                "right": 1337,
+                "top": 1091.078125,
+                "width": 971,
+                "x": 366,
+                "y": 1091.078125
+              },
+              "color": "rgb(89, 91, 90)",
+              "font": "12px",
+              "gap": "normal",
+              "lineHeight": "18px",
+              "padding": "0px",
+              "selector": "SMALL.",
+              "text": "2 окт., 11:01"
+            }
+          ],
+          "overflow": false,
+          "stage": "after-list-desktop",
+          "url": "http://127.0.0.1:8782/?section=surveys",
+          "viewport": [
+            1440,
+            1000
+          ]
+        },
+        {
+          "elements": [
+            {
+              "background": "rgb(246, 244, 239)",
+              "border": "rgb(89, 91, 90)",
+              "bounds": {
+                "bottom": 350.875,
+                "height": 48.796875,
+                "left": 459.5,
+                "right": 1229.5,
+                "top": 302.078125,
+                "width": 770,
+                "x": 459.5,
+                "y": 302.078125
+              },
+              "color": "rgb(89, 91, 90)",
+              "font": "13px",
+              "gap": "10px",
+              "lineHeight": "20.8px",
+              "padding": "14px 16px",
+              "selector": "DIV.draft-disclosure",
+              "text": "Можно сделать паузу. Черновик виден только вам. Врач получит ответы после отправки."
+            },
+            {
+              "background": "rgba(0, 0, 0, 0)",
+              "border": "rgb(24, 25, 26)",
+              "bounds": {
+                "bottom": 399.875,
+                "height": 25,
+                "left": 459.5,
+                "right": 1229.5,
+                "top": 374.875,
+                "width": 770,
+                "x": 459.5,
+                "y": 374.875
+              },
+              "color": "rgb(24, 25, 26)",
+              "font": "15px",
+              "gap": "normal",
+              "lineHeight": "24px",
+              "padding": "0px 2px",
+              "selector": "LEGEND.",
+              "text": "1Насколько вам понятно, что делать в приложении?"
+            },
+            {
+              "background": "rgb(255, 231, 223)",
+              "border": "rgb(165, 46, 28)",
+              "bounds": {
+                "bottom": 399.875,
+                "height": 22,
+                "left": 461.5,
+                "right": 483.5,
+                "top": 377.875,
+                "width": 22,
+                "x": 461.5,
+                "y": 377.875
+              },
+              "color": "rgb(165, 46, 28)",
+              "font": "10px",
+              "gap": "normal",
+              "lineHeight": "16px",
+              "padding": "0px",
+              "selector": "SPAN.question-number",
+              "text": "1"
+            },
+            {
+              "background": "rgb(255, 231, 223)",
+              "border": "rgb(165, 46, 28)",
+              "bounds": {
+                "bottom": 521.875,
+                "height": 51,
+                "left": 459.5,
+                "right": 1229.5,
+                "top": 470.875,
+                "width": 770,
+                "x": 459.5,
+                "y": 470.875
+              },
+              "color": "rgb(24, 25, 26)",
+              "font": "14px",
+              "gap": "12px",
+              "lineHeight": "21px",
+              "padding": "14px 16px",
+              "selector": "LABEL.answer-option checked",
+              "text": "Частично понятно"
+            },
+            {
+              "background": "rgba(0, 0, 0, 0)",
+              "border": "rgb(24, 25, 26)",
+              "bounds": {
+                "bottom": 822.875,
+                "height": 25,
+                "left": 459.5,
+                "right": 1229.5,
+                "top": 797.875,
+                "width": 770,
+                "x": 459.5,
+                "y": 797.875
+              },
+              "color": "rgb(24, 25, 26)",
+              "font": "15px",
+              "gap": "normal",
+              "lineHeight": "24px",
+              "padding": "0px 2px",
+              "selector": "LEGEND.",
+              "text": "2Насколько приложение полезно вам между встречами с врачом?"
+            },
+            {
+              "background": "rgb(255, 231, 223)",
+              "border": "rgb(165, 46, 28)",
+              "bounds": {
+                "bottom": 822.875,
+                "height": 22,
+                "left": 461.5,
+                "right": 483.5,
+                "top": 800.875,
+                "width": 22,
+                "x": 461.5,
+                "y": 800.875
+              },
+              "color": "rgb(165, 46, 28)",
+              "font": "10px",
+              "gap": "normal",
+              "lineHeight": "16px",
+              "padding": "0px",
+              "selector": "SPAN.question-number",
+              "text": "2"
+            },
+            {
+              "background": "rgba(0, 0, 0, 0)",
+              "border": "rgb(24, 25, 26)",
+              "bounds": {
+                "bottom": 1245.875,
+                "height": 25,
+                "left": 459.5,
+                "right": 1229.5,
+                "top": 1220.875,
+                "width": 770,
+                "x": 459.5,
+                "y": 1220.875
+              },
+              "color": "rgb(24, 25, 26)",
+              "font": "15px",
+              "gap": "normal",
+              "lineHeight": "24px",
+              "padding": "0px 2px",
+              "selector": "LEGEND.",
+              "text": "3Что в приложении стоит сделать удобнее? · по желанию"
+            },
+            {
+              "background": "rgb(255, 231, 223)",
+              "border": "rgb(165, 46, 28)",
+              "bounds": {
+                "bottom": 1245.875,
+                "height": 22,
+                "left": 461.5,
+                "right": 483.5,
+                "top": 1223.875,
+                "width": 22,
+                "x": 461.5,
+                "y": 1223.875
+              },
+              "color": "rgb(165, 46, 28)",
+              "font": "10px",
+              "gap": "normal",
+              "lineHeight": "16px",
+              "padding": "0px",
+              "selector": "SPAN.question-number",
+              "text": "3"
+            }
+          ],
+          "overflow": false,
+          "stage": "after-form-desktop",
+          "url": "http://127.0.0.1:8782/?section=surveys&assignment=31",
+          "viewport": [
+            1440,
+            1000
+          ]
+        },
+        {
+          "elements": [
+            {
+              "background": "rgb(246, 244, 239)",
+              "border": "rgb(89, 91, 90)",
+              "bounds": {
+                "bottom": 455.75,
+                "height": 90.390625,
+                "left": 37,
+                "right": 323,
+                "top": 365.359375,
+                "width": 286,
+                "x": 37,
+                "y": 365.359375
+              },
+              "color": "rgb(89, 91, 90)",
+              "font": "13px",
+              "gap": "10px",
+              "lineHeight": "20.8px",
+              "padding": "14px 16px",
+              "selector": "DIV.draft-disclosure",
+              "text": "Можно сделать паузу. Черновик виден только вам. Врач получит ответы после отправки."
+            },
+            {
+              "background": "rgba(0, 0, 0, 0)",
+              "border": "rgb(24, 25, 26)",
+              "bounds": {
+                "bottom": 528.75,
+                "height": 49,
+                "left": 37,
+                "right": 323,
+                "top": 479.75,
+                "width": 286,
+                "x": 37,
+                "y": 479.75
+              },
+              "color": "rgb(24, 25, 26)",
+              "font": "15px",
+              "gap": "normal",
+              "lineHeight": "24px",
+              "padding": "0px 2px",
+              "selector": "LEGEND.",
+              "text": "1Насколько вам понятно, что делать в приложении?"
+            },
+            {
+              "background": "rgb(255, 231, 223)",
+              "border": "rgb(165, 46, 28)",
+              "bounds": {
+                "bottom": 504.75,
+                "height": 22,
+                "left": 39,
+                "right": 61,
+                "top": 482.75,
+                "width": 22,
+                "x": 39,
+                "y": 482.75
+              },
+              "color": "rgb(165, 46, 28)",
+              "font": "10px",
+              "gap": "normal",
+              "lineHeight": "16px",
+              "padding": "0px",
+              "selector": "SPAN.question-number",
+              "text": "1"
+            },
+            {
+              "background": "rgb(255, 231, 223)",
+              "border": "rgb(165, 46, 28)",
+              "bounds": {
+                "bottom": 650.75,
+                "height": 51,
+                "left": 37,
+                "right": 323,
+                "top": 599.75,
+                "width": 286,
+                "x": 37,
+                "y": 599.75
+              },
+              "color": "rgb(24, 25, 26)",
+              "font": "14px",
+              "gap": "12px",
+              "lineHeight": "21px",
+              "padding": "14px 16px",
+              "selector": "LABEL.answer-option checked",
+              "text": "Частично понятно"
+            },
+            {
+              "background": "rgba(0, 0, 0, 0)",
+              "border": "rgb(24, 25, 26)",
+              "bounds": {
+                "bottom": 975.75,
+                "height": 49,
+                "left": 37,
+                "right": 323,
+                "top": 926.75,
+                "width": 286,
+                "x": 37,
+                "y": 926.75
+              },
+              "color": "rgb(24, 25, 26)",
+              "font": "15px",
+              "gap": "normal",
+              "lineHeight": "24px",
+              "padding": "0px 2px",
+              "selector": "LEGEND.",
+              "text": "2Насколько приложение полезно вам между встречами с врачом?"
+            },
+            {
+              "background": "rgb(255, 231, 223)",
+              "border": "rgb(165, 46, 28)",
+              "bounds": {
+                "bottom": 951.75,
+                "height": 22,
+                "left": 39,
+                "right": 61,
+                "top": 929.75,
+                "width": 22,
+                "x": 39,
+                "y": 929.75
+              },
+              "color": "rgb(165, 46, 28)",
+              "font": "10px",
+              "gap": "normal",
+              "lineHeight": "16px",
+              "padding": "0px",
+              "selector": "SPAN.question-number",
+              "text": "2"
+            },
+            {
+              "background": "rgba(0, 0, 0, 0)",
+              "border": "rgb(24, 25, 26)",
+              "bounds": {
+                "bottom": 1422.75,
+                "height": 49,
+                "left": 37,
+                "right": 323,
+                "top": 1373.75,
+                "width": 286,
+                "x": 37,
+                "y": 1373.75
+              },
+              "color": "rgb(24, 25, 26)",
+              "font": "15px",
+              "gap": "normal",
+              "lineHeight": "24px",
+              "padding": "0px 2px",
+              "selector": "LEGEND.",
+              "text": "3Что в приложении стоит сделать удобнее? · по желанию"
+            },
+            {
+              "background": "rgb(255, 231, 223)",
+              "border": "rgb(165, 46, 28)",
+              "bounds": {
+                "bottom": 1398.75,
+                "height": 22,
+                "left": 39,
+                "right": 61,
+                "top": 1376.75,
+                "width": 22,
+                "x": 39,
+                "y": 1376.75
+              },
+              "color": "rgb(165, 46, 28)",
+              "font": "10px",
+              "gap": "normal",
+              "lineHeight": "16px",
+              "padding": "0px",
+              "selector": "SPAN.question-number",
+              "text": "3"
+            }
+          ],
+          "overflow": false,
+          "stage": "after-form-mobile",
+          "url": "http://127.0.0.1:8782/?section=surveys&assignment=31",
+          "viewport": [
+            375,
+            844
+          ]
+        },
+        {
+          "elements": [
+            {
+              "background": "rgb(246, 244, 239)",
+              "border": "rgb(89, 91, 90)",
+              "bounds": {
+                "bottom": 131.171875,
+                "height": 48.796875,
+                "left": 37,
+                "right": 716,
+                "top": 82.375,
+                "width": 679,
+                "x": 37,
+                "y": 82.375
+              },
+              "color": "rgb(89, 91, 90)",
+              "font": "13px",
+              "gap": "10px",
+              "lineHeight": "20.8px",
+              "padding": "14px 16px",
+              "selector": "DIV.draft-disclosure",
+              "text": "Можно сделать паузу. Черновик виден только вам. Врач получит ответы после отправки."
+            },
+            {
+              "background": "rgba(0, 0, 0, 0)",
+              "border": "rgb(24, 25, 26)",
+              "bounds": {
+                "bottom": 180.171875,
+                "height": 25,
+                "left": 37,
+                "right": 716,
+                "top": 155.171875,
+                "width": 679,
+                "x": 37,
+                "y": 155.171875
+              },
+              "color": "rgb(24, 25, 26)",
+              "font": "15px",
+              "gap": "normal",
+              "lineHeight": "24px",
+              "padding": "0px 2px",
+              "selector": "LEGEND.",
+              "text": "1Насколько вам понятно, что делать в приложении?"
+            },
+            {
+              "background": "rgb(255, 231, 223)",
+              "border": "rgb(165, 46, 28)",
+              "bounds": {
+                "bottom": 180.171875,
+                "height": 22,
+                "left": 39,
+                "right": 61,
+                "top": 158.171875,
+                "width": 22,
+                "x": 39,
+                "y": 158.171875
+              },
+              "color": "rgb(165, 46, 28)",
+              "font": "10px",
+              "gap": "normal",
+              "lineHeight": "16px",
+              "padding": "0px",
+              "selector": "SPAN.question-number",
+              "text": "1"
+            },
+            {
+              "background": "rgb(255, 231, 223)",
+              "border": "rgb(165, 46, 28)",
+              "bounds": {
+                "bottom": 302.171875,
+                "height": 51,
+                "left": 37,
+                "right": 716,
+                "top": 251.171875,
+                "width": 679,
+                "x": 37,
+                "y": 251.171875
+              },
+              "color": "rgb(24, 25, 26)",
+              "font": "14px",
+              "gap": "12px",
+              "lineHeight": "21px",
+              "padding": "14px 16px",
+              "selector": "LABEL.answer-option checked",
+              "text": "Частично понятно"
+            },
+            {
+              "background": "rgba(0, 0, 0, 0)",
+              "border": "rgb(24, 25, 26)",
+              "bounds": {
+                "bottom": 603.171875,
+                "height": 25,
+                "left": 37,
+                "right": 716,
+                "top": 578.171875,
+                "width": 679,
+                "x": 37,
+                "y": 578.171875
+              },
+              "color": "rgb(24, 25, 26)",
+              "font": "15px",
+              "gap": "normal",
+              "lineHeight": "24px",
+              "padding": "0px 2px",
+              "selector": "LEGEND.",
+              "text": "2Насколько приложение полезно вам между встречами с врачом?"
+            },
+            {
+              "background": "rgb(255, 231, 223)",
+              "border": "rgb(165, 46, 28)",
+              "bounds": {
+                "bottom": 603.171875,
+                "height": 22,
+                "left": 39,
+                "right": 61,
+                "top": 581.171875,
+                "width": 22,
+                "x": 39,
+                "y": 581.171875
+              },
+              "color": "rgb(165, 46, 28)",
+              "font": "10px",
+              "gap": "normal",
+              "lineHeight": "16px",
+              "padding": "0px",
+              "selector": "SPAN.question-number",
+              "text": "2"
+            },
+            {
+              "background": "rgba(0, 0, 0, 0)",
+              "border": "rgb(24, 25, 26)",
+              "bounds": {
+                "bottom": 1026.171875,
+                "height": 25,
+                "left": 37,
+                "right": 716,
+                "top": 1001.171875,
+                "width": 679,
+                "x": 37,
+                "y": 1001.171875
+              },
+              "color": "rgb(24, 25, 26)",
+              "font": "15px",
+              "gap": "normal",
+              "lineHeight": "24px",
+              "padding": "0px 2px",
+              "selector": "LEGEND.",
+              "text": "3Что в приложении стоит сделать удобнее? · по желанию"
+            },
+            {
+              "background": "rgb(255, 231, 223)",
+              "border": "rgb(165, 46, 28)",
+              "bounds": {
+                "bottom": 1026.171875,
+                "height": 22,
+                "left": 39,
+                "right": 61,
+                "top": 1004.171875,
+                "width": 22,
+                "x": 39,
+                "y": 1004.171875
+              },
+              "color": "rgb(165, 46, 28)",
+              "font": "10px",
+              "gap": "normal",
+              "lineHeight": "16px",
+              "padding": "0px",
+              "selector": "SPAN.question-number",
+              "text": "3"
+            }
+          ],
+          "overflow": false,
+          "stage": "after-form-tablet",
+          "url": "http://127.0.0.1:8782/?section=surveys&assignment=31",
+          "viewport": [
+            768,
+            1024
+          ]
+        },
+        {
+          "elements": [
+            {
+              "background": "rgba(0, 0, 0, 0)",
+              "border": "rgb(24, 25, 26)",
+              "bounds": {
+                "bottom": 204.1875,
+                "height": 24,
+                "left": 321,
+                "right": 941,
+                "top": 180.1875,
+                "width": 620,
+                "x": 321,
+                "y": 180.1875
+              },
+              "color": "rgb(24, 25, 26)",
+              "font": "15px",
+              "gap": "normal",
+              "lineHeight": "24px",
+              "padding": "0px 2px",
+              "selector": "LEGEND.",
+              "text": "Что получилось?"
+            },
+            {
+              "background": "rgb(255, 231, 223)",
+              "border": "rgb(165, 46, 28)",
+              "bounds": {
+                "bottom": 385.1875,
+                "height": 51,
+                "left": 321,
+                "right": 941,
+                "top": 334.1875,
+                "width": 620,
+                "x": 321,
+                "y": 334.1875
+              },
+              "color": "rgb(24, 25, 26)",
+              "font": "14px",
+              "gap": "12px",
+              "lineHeight": "21px",
+              "padding": "14px 16px",
+              "selector": "LABEL.answer-option checked",
+              "text": "Не могу оценить"
+            }
+          ],
+          "overflow": false,
+          "stage": "after-adherence-desktop",
+          "url": "http://127.0.0.1:8782/?section=adherence",
+          "viewport": [
+            1280,
+            720
+          ]
+        }
+      ],
+      "keyboard": {
+        "className": "patient-survey-card",
+        "focusVisible": true,
+        "outline": "rgb(165, 46, 28) solid 3px",
+        "tag": "BUTTON"
+      },
+      "choice": {
+        "checked": [
+          "Сложно разобраться"
+        ],
+        "focus": "Сложно разобраться",
+        "focusVisible": true
+      },
+      "console": []
+    },
+    "solidColorContrasts": [
+      {
+        "pair": "Graphite/White",
+        "ratio": 6.84
+      },
+      {
+        "pair": "Graphite/Paper",
+        "ratio": 6.23
+      },
+      {
+        "pair": "SignalDark/SignalSoft",
+        "ratio": 5.9
+      },
+      {
+        "pair": "Ink/SignalSoft",
+        "ratio": 14.88
+      }
+    ],
+    "buildAndTypes": {
+      "exitCode": 0,
+      "source": {
+        "file": "outputs/survey-visual-build-20261025.log",
+        "bytes": 2056,
+        "sha256": "fe1fe18a628acd8730d292f19bcff781a696c8cea9207884505766fe65d60ed0"
+      }
+    },
+    "http": {
+      "base_url": "http://127.0.0.1:8780",
+      "scope": "HTTP bytes and MIME only; not browser layout/interactions",
+      "assets": [
+        {
+          "file": "AdminDashboard-CYj0mmCa.js",
+          "status": 200,
+          "bytes": 18580,
+          "sha256": "cbaeee53b9059675fe2f485c58b627a2364627d3d745f81d363556fb71aa5f75",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "CareWorkflow-Dlc3Ikdm.js",
+          "status": 200,
+          "bytes": 26980,
+          "sha256": "4e5bda400d46ac3403401044e8a8f0ed6739bb7e3fed57fbdd03914b94656623",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "Charts-UL-oWLOf.js",
+          "status": 200,
+          "bytes": 5476,
+          "sha256": "ad26b3d3156b9f455dacced03c53e822911819ca36e5e4eef9b130f2c7b076d6",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "DoctorDashboard-7VEWHDBH.js",
+          "status": 200,
+          "bytes": 18046,
+          "sha256": "4cf9db49912213277064d33e5b855c5ef19c0dc2f206983054a23edb5e5e2d23",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "DoctorPatients-dnurbptG.js",
+          "status": 200,
+          "bytes": 36909,
+          "sha256": "1772ad7673715e9576819b52c781135064390a2d9be047326f3fb7c5942ba235",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "MedicationSchedule-C_cioHGn.css",
+          "status": 200,
+          "bytes": 2103,
+          "sha256": "3ecca9c112edd867ada5c834649a96069fb7decf7d1ea5da5aebe9da0ab28a4e",
+          "mime": "text/css; charset=utf-8"
+        },
+        {
+          "file": "MedicationSchedule-V5qRKTIe.js",
+          "status": 200,
+          "bytes": 37054,
+          "sha256": "fef00ee0934842fc1b46022c9654c29757995215f2c8198f42c9c941b95ee81b",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "Patient-B9xuvwdE.css",
+          "status": 200,
+          "bytes": 26258,
+          "sha256": "9160fbf594ce6238151f4e13f5a28e00c0e62184711079b09f25bbebeb327b0b",
+          "mime": "text/css; charset=utf-8"
+        },
+        {
+          "file": "Patient-CDZgTG-C.js",
+          "status": 200,
+          "bytes": 66883,
+          "sha256": "a1012004bccd5929ff8ab5e21e06e2f53e195d0c416ee0854a9c15f02549fdf2",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "SurveyBuilder-DIbab9Kq.js",
+          "status": 200,
+          "bytes": 25412,
+          "sha256": "1e9cec1151c9716810812de11e4a14a51c5fa6cd7c0b3745ad495783029cbf08",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "SurveyFields-CHtU5xYP.js",
+          "status": 200,
+          "bytes": 3313,
+          "sha256": "7c14cbaef3b10ac736aa652cd9b856ebda7f4719bf511dc9fae6482058f39588",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "TaskBoard-B6UtZb-3.js",
+          "status": 200,
+          "bytes": 7839,
+          "sha256": "7a1eeec9a04e064be690d87209ad37952721e268a9bb374a9ff34fcfeb4bb0f0",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "WorkflowMetrics-xvCW4bXm.js",
+          "status": 200,
+          "bytes": 12440,
+          "sha256": "7769c091d49b9acca132a6baeb56fd2f8fffc26387ad06075769e746be883ef1",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "chevron-right-DJD5xAaK.js",
+          "status": 200,
+          "bytes": 159,
+          "sha256": "e7a94c28680d5e321f48a01b9994e929fb1618f8f5acf226f70c0a7f1f901226",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "collection-COswcvyL.js",
+          "status": 200,
+          "bytes": 939,
+          "sha256": "b8f61ba215c319fcc2aaf6ce0fb3b26b182c049b9a0d9e4febe85703fe8000e4",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "index-CN8UUptF.js",
+          "status": 200,
+          "bytes": 391449,
+          "sha256": "e3dc5f7f50d119a678c65d08588ce5740e0b4c15ac473f03375224ba0e455026",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "index-DHwbP1jl.css",
+          "status": 200,
+          "bytes": 116341,
+          "sha256": "283930dd83ba3f6e15c8bf18f9d8f7654bb7753367f1ac35fed5800b12b7efba",
+          "mime": "text/css; charset=utf-8"
+        },
+        {
+          "file": "patientProgress-Do0fObh9.js",
+          "status": 200,
+          "bytes": 1130,
+          "sha256": "611dafc1b1ad2ac66b0b04ac3852b8c0bf56b6f106882f460ee96efa5097a0b3",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "plus-CjmgbIpn.js",
+          "status": 200,
+          "bytes": 182,
+          "sha256": "b64cf197c0133b86e9cc740ebb8a300ca2528eabb7857aacc1a73d97491d4f2a",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "send-DsbZEWOk.js",
+          "status": 200,
+          "bytes": 652,
+          "sha256": "6fcfe0c47374ae9ca417b2fb48cb509fde15bae9d5f601e3f46f7aa1ce7ed465",
+          "mime": "text/javascript; charset=utf-8"
+        }
+      ],
+      "health": {
+        "status": "ok",
+        "compass_db": true,
+        "mis_db": true,
+        "mode": "synthetic_demo"
+      },
+      "root_matches_dist": true,
+      "qa_health": {
+        "status": "ok",
+        "compass_db": true,
+        "mis_db": true,
+        "mode": "synthetic_demo"
+      }
+    },
+    "retainedFunctionalBaseline": "66/66 frontend and151/151 backend from preceding cycles. No new behavior or API changes; not rerun for CSS-only change."
+  },
+  "screenshots": [
+    {
+      "file": "docs/evidence/survey-visual-consistency-2026-10-25/after-adherence-desktop.jpg",
+      "bytes": 57575,
+      "sha256": "95088b8b80d651bf0adc0dbf4958c70ab27ad555b08f586b765b5a1a59f94e74",
+      "pixels": [
+        1265,
+        712
+      ]
+    },
+    {
+      "file": "docs/evidence/survey-visual-consistency-2026-10-25/after-form-desktop.jpg",
+      "bytes": 93877,
+      "sha256": "2852b669826f41d1c8d5b630ddae95b98bb161cb34d6a98e15bc8b2e0e56a72d",
+      "pixels": [
+        1425,
+        990
+      ]
+    },
+    {
+      "file": "docs/evidence/survey-visual-consistency-2026-10-25/after-form-mobile.jpg",
+      "bytes": 35877,
+      "sha256": "715ec59fca1989f492b78a9b5415ece59241edf669af29a2cee9623fb5fc9f21",
+      "pixels": [
+        360,
+        810
+      ]
+    },
+    {
+      "file": "docs/evidence/survey-visual-consistency-2026-10-25/after-form-tablet.jpg",
+      "bytes": 62264,
+      "sha256": "be7c18e522c395e58b328e3d3c6de822d15545bd9236d9cd36a6ead1f671c268",
+      "pixels": [
+        753,
+        1004
+      ]
+    },
+    {
+      "file": "docs/evidence/survey-visual-consistency-2026-10-25/after-history-mobile.jpg",
+      "bytes": 36059,
+      "sha256": "0aeb38a37c3989ba5ffb1a06418bf7d2cb5cb3d2c85701d8740b25884da8e957",
+      "pixels": [
+        360,
+        810
+      ]
+    },
+    {
+      "file": "docs/evidence/survey-visual-consistency-2026-10-25/after-list-desktop.jpg",
+      "bytes": 96237,
+      "sha256": "2316317e4ed288cf77a791861d9f944a1270c10a50fb83188d56e17799591887",
+      "pixels": [
+        1425,
+        990
+      ]
+    },
+    {
+      "file": "docs/evidence/survey-visual-consistency-2026-10-25/after-list-keyboard.jpg",
+      "bytes": 38462,
+      "sha256": "96e5c5326868ec90f338ef81068f114365e6b7b37609aded0e59d6f198bcbfbe",
+      "pixels": [
+        360,
+        810
+      ]
+    },
+    {
+      "file": "docs/evidence/survey-visual-consistency-2026-10-25/after-list-mobile.jpg",
+      "bytes": 36146,
+      "sha256": "8b14930c1408fdc6da6b66510cd4b27b57fb5564d0096ff4eb06692773d84c0b",
+      "pixels": [
+        360,
+        810
+      ]
+    },
+    {
+      "file": "docs/evidence/survey-visual-consistency-2026-10-25/after-list-tablet.jpg",
+      "bytes": 56914,
+      "sha256": "bfa105312885d293301e026d0bdb846d550fa52420419c0137427470b92bc879",
+      "pixels": [
+        753,
+        1004
+      ]
+    },
+    {
+      "file": "docs/evidence/survey-visual-consistency-2026-10-25/before-form-desktop.jpg",
+      "bytes": 70194,
+      "sha256": "64fd4ee3e50e2e6da5f558d68a776e36cf0f7fd2f5f8243a358c78a9587c51ff",
+      "pixels": [
+        1265,
+        712
+      ]
+    },
+    {
+      "file": "docs/evidence/survey-visual-consistency-2026-10-25/before-form-mobile.jpg",
+      "bytes": 34986,
+      "sha256": "49bdd001f4bf1e98e5f2a567ab883fc613f69d60ea4e0a6f08fa0b380a5fcfdc",
+      "pixels": [
+        360,
+        810
+      ]
+    },
+    {
+      "file": "docs/evidence/survey-visual-consistency-2026-10-25/before-list-desktop.jpg",
+      "bytes": 84530,
+      "sha256": "ca21a15155d3d3f3da5a4f511bcb35ad518cb46de7008f742994b26cc4d21c89",
+      "pixels": [
+        1425,
+        990
+      ]
+    },
+    {
+      "file": "docs/evidence/survey-visual-consistency-2026-10-25/before-list-mobile.jpg",
+      "bytes": 30861,
+      "sha256": "590eb41b1f7b9696585fac0147166822825a6134c1e81d9e3cd716c05448c53e",
+      "pixels": [
+        360,
+        810
+      ]
+    },
+    {
+      "file": "docs/evidence/survey-visual-consistency-2026-10-25/before-list-tablet.jpg",
+      "bytes": 48804,
+      "sha256": "168df126607e60ba57f0f6acfc6fb40f81249334e1c97d602cfc9e2777b52148",
+      "pixels": [
+        753,
+        1004
+      ]
+    }
+  ],
+  "qaData": "Existing QA assignment31 used, selections discarded through the visible leave guard. Existing adherence form checked at unknown only for visual verification, then explicitly discarded. No saved answers, reports, points, tasks or main-data writes.",
+  "limits": [
+    "Native list/form checked at375/768/1440 plus shared adherence consumer at1280; keyboard Tab/Enter/ArrowDown and focus outline observed. No horizontal overflow in7 final observations.",
+    "Solid-color calculation covers four stated flat pairs, not full browser accessibility, image contrast or WCAG certification.",
+    "The first after-list-tablet screenshot showed the intentional keyboard focus ring. Replaced with the normal state; separate keyboard screenshot retained.",
+    "Adherence field labels still use legacy purple. This is a separately observed visual candidate, not changed in this snapshot."
+  ]
+}

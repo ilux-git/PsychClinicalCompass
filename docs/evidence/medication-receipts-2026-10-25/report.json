@@ -1,0 +1,1038 @@
+{
+  "recordedAt": "2026-10-25T03:25:04.433103+00:00",
+  "status": "targeted medication flow verified; overall MVP acceptance remains partial",
+  "problem": "Medication awards were recorded but the patient received no ledger confirmation. Failed reporting lost focus to BODY; history exposed local keys instead of available item labels.",
+  "impact": {
+    "baseline": "Verified local38 navigation snapshot, not HEAD-only attribution.",
+    "runtimeFiles": [
+      "app/modules/adherence/medication_router.py",
+      "frontend/src/MedicationSchedule.tsx",
+      "frontend/src/MedicationEditor.tsx",
+      "frontend/src/Patient.tsx",
+      "frontend/src/workspace.css"
+    ],
+    "contracts": "POST/PUT /medications/items and POST/PATCH /medications/reports add participation and replayed. Existing fields/statuses and request schemas remain unchanged.",
+    "data": "No schema/migration, historical rewrite, rate, source key, role permission or MIS-write change.",
+    "atomicity": "Read receipt before commit under existing patient/item locks. Four failure-injection tests prove medication state, award and audit remain uncommitted together.",
+    "replay": "Create returns original creation receipt; edits return the current revision receipt. Same/no-op responses set replayed true, unknown historical awards stay null.",
+    "consumers": [
+      "app/modules/adherence\\medication_router.py",
+      "frontend/src\\DoctorPatients.tsx",
+      "frontend/src\\MedicationEditor.tsx",
+      "frontend/src\\MedicationSchedule.tsx",
+      "frontend/src\\Patient.tsx"
+    ],
+    "compatibility": "Additive response fields; old clients can ignore them, new UI retains unknown-receipt fallback. External clients outside this repository unverified.",
+    "release": "Local API restarted after passing server tests; main frontend bytes and both DB connections checked. Worker/PostgreSQL preserved.",
+    "recovery": "Restore these five runtime files from their bounded baseline and rebuild/restart the local API. No schema or data rollback required; rollback not executed."
+  },
+  "verification": {
+    "backendRed": {
+      "failed": 10,
+      "reason": "Missing participation/replayed and failure hooks not invoked."
+    },
+    "backendTargeted": {
+      "passed": 25,
+      "source": {
+        "file": "outputs/medication-receipts-targeted-20261025.log",
+        "bytes": 102,
+        "sha256": "82476a11adbaef4649cfaa85549a5ff0296265f625452ca99aa445aef0e90665"
+      }
+    },
+    "backendFull": {
+      "passed": 151,
+      "failed": 0,
+      "exitCode": 0,
+      "durationSeconds": 86.07,
+      "source": {
+        "file": "outputs/medication-receipts-backend-final-20261025.log",
+        "bytes": 275,
+        "sha256": "6e970454cb9d513766067355bc69ee11b6dc35a7337c1a1c9eb76b763c20fa92"
+      }
+    },
+    "frontendRed": {
+      "passed": 1,
+      "failed": 3
+    },
+    "frontendTargeted": {
+      "passed": 4,
+      "failed": 0,
+      "exitCode": 0,
+      "source": {
+        "file": "outputs/medication-receipt-ui-final-20261025.log",
+        "bytes": 715,
+        "sha256": "20194765fa80fd41164d2b9a75c308344cec916a40d2f8899bc5ec7a59f159aa"
+      }
+    },
+    "frontendFull": {
+      "passed": 42,
+      "failed": 0,
+      "exitCode": 0,
+      "durationMs": 31960.5659,
+      "source": {
+        "file": "outputs/medication-receipts-frontend-final-20261025.log",
+        "bytes": 5546,
+        "sha256": "b74607d3cebfdd745b8aea083594a2a114f43223ae426d6e701a8a8c3a51163e"
+      }
+    },
+    "buildAndTypes": {
+      "status": "pass",
+      "exitCode": 0,
+      "source": {
+        "file": "outputs/medication-receipts-build-20261025.log",
+        "bytes": 2056,
+        "sha256": "1098e6eb1e41a4853e30485568a7bde077ed6ef555cc57d62ca23f48429d8fbf"
+      }
+    },
+    "native": {
+      "checks": [
+        {
+          "label": "schedule-saved-2-mobile",
+          "alerts": [],
+          "comment": "",
+          "confirmation": "Расписание сохранено\n\nЛичная запись обновлена. Назначение в МИС не менялось.\n\n+2 балла за участие\n\nБаллы — за участие. Содержание ответа и самочувствие на награду не влияют.\n\nПо записи от 25 окт., 10:12\nМой прогресс",
+          "confirmationRect": {
+            "bottom": 504.21875,
+            "height": 408.34375,
+            "left": 16,
+            "right": 344,
+            "top": 95.875,
+            "width": 328,
+            "x": 16,
+            "y": 95.875
+          },
+          "editorOpen": false,
+          "focus": {
+            "label": "Расписание сохранено",
+            "tag": "H2"
+          },
+          "fullyVisible": true,
+          "overflow": false,
+          "scrollY": 242,
+          "status": "",
+          "title": "Моё расписание лекарств",
+          "viewport": {
+            "height": 844,
+            "width": 375
+          }
+        },
+        {
+          "label": "report-unsaved-clears-prior-confirmation",
+          "alerts": [],
+          "comment": "Учебная отметка для проверки сохранения",
+          "confirmation": null,
+          "editorOpen": false,
+          "focus": {
+            "label": "",
+            "tag": "INPUT"
+          },
+          "fullyVisible": false,
+          "overflow": false,
+          "scrollY": 488,
+          "status": "not_taken",
+          "title": "Моё расписание лекарств",
+          "viewport": {
+            "height": 844,
+            "width": 375
+          }
+        },
+        {
+          "label": "report-503-retains-input",
+          "alerts": [
+            "Техническая проверка: сохранение временно недоступно."
+          ],
+          "comment": "Учебная отметка для проверки сохранения",
+          "confirmation": null,
+          "editorOpen": false,
+          "focus": {
+            "label": "Перейти к содержимомуclinicalcompassМоё пространствоМой деньШаги,",
+            "tag": "BODY"
+          },
+          "fullyVisible": false,
+          "overflow": false,
+          "scrollY": 488,
+          "status": "not_taken",
+          "title": "Моё расписание лекарств",
+          "viewport": {
+            "height": 844,
+            "width": 375
+          }
+        },
+        {
+          "label": "report-saved-zero-mobile-before-error-polish",
+          "alerts": [],
+          "comment": "Учебная отметка для проверки сохранения",
+          "confirmation": "Самоотчёт сохранён\n\nОтметка доступна лечащему врачу. Это ваше наблюдение, а не подтверждение приёма.\n\nСохранено без дополнительных баллов\n\nЗаписи и опросы остаются доступны. Баланс и условия начисления — в «Мой прогресс».\n\nПо записи от 25 окт., 10:13\nМой прогресс",
+          "confirmationRect": {
+            "bottom": 555.21875,
+            "height": 459.34375,
+            "left": 16,
+            "right": 344,
+            "top": 95.875,
+            "width": 328,
+            "x": 16,
+            "y": 95.875
+          },
+          "editorOpen": false,
+          "focus": {
+            "label": "Самоотчёт сохранён",
+            "tag": "H2"
+          },
+          "fullyVisible": true,
+          "overflow": false,
+          "scrollY": 242,
+          "status": "not_taken",
+          "title": "Моё расписание лекарств",
+          "viewport": {
+            "height": 844,
+            "width": 375
+          }
+        },
+        {
+          "label": "report-inline-503-final",
+          "alerts": [
+            "Техническая проверка: сохранение временно недоступно."
+          ],
+          "comment": "Учебная правка · не могу уточнить",
+          "confirmation": null,
+          "editorOpen": false,
+          "focus": {
+            "label": "Техническая проверка: сохранение временно недоступно.",
+            "tag": "DIV"
+          },
+          "fullyVisible": false,
+          "overflow": false,
+          "scrollY": 592,
+          "status": "unknown",
+          "title": "Моё расписание лекарств",
+          "viewport": {
+            "height": 844,
+            "width": 375
+          }
+        },
+        {
+          "label": "report-corrected-zero-final-mobile",
+          "alerts": [],
+          "comment": "Учебная правка · не могу уточнить",
+          "confirmation": "Самоотчёт сохранён\n\nОтметка доступна лечащему врачу. Это ваше наблюдение, а не подтверждение приёма.\n\nСохранено без дополнительных баллов\n\nЗаписи и опросы остаются доступны. Баланс и условия начисления — в «Мой прогресс».\n\nПо записи от 25 окт., 10:15\nМой прогресс",
+          "confirmationRect": {
+            "bottom": 555.21875,
+            "height": 459.34375,
+            "left": 16,
+            "right": 344,
+            "top": 95.875,
+            "width": 328,
+            "x": 16,
+            "y": 95.875
+          },
+          "editorOpen": false,
+          "focus": {
+            "label": "Самоотчёт сохранён",
+            "tag": "H2"
+          },
+          "fullyVisible": true,
+          "overflow": false,
+          "scrollY": 242,
+          "status": "unknown",
+          "title": "Моё расписание лекарств",
+          "viewport": {
+            "height": 844,
+            "width": 375
+          }
+        },
+        {
+          "label": "report-zero-tablet-after-resize",
+          "alerts": [],
+          "comment": "Учебная правка · не могу уточнить",
+          "confirmation": "Самоотчёт сохранён\n\nОтметка доступна лечащему врачу. Это ваше наблюдение, а не подтверждение приёма.\n\nСохранено без дополнительных баллов\n\nЗаписи и опросы остаются доступны. Баланс и условия начисления — в «Мой прогресс».\n\nПо записи от 25 окт., 10:15\nМой прогресс",
+          "confirmationRect": {
+            "bottom": 320.953125,
+            "height": 327.265625,
+            "left": 16,
+            "right": 737,
+            "top": -6.3125,
+            "width": 721,
+            "x": 16,
+            "y": -6.3125
+          },
+          "editorOpen": false,
+          "focus": {
+            "label": "Самоотчёт сохранён",
+            "tag": "H2"
+          },
+          "fullyVisible": false,
+          "overflow": false,
+          "scrollY": 242,
+          "status": "unknown",
+          "title": "Моё расписание лекарств",
+          "viewport": {
+            "height": 1024,
+            "width": 768
+          }
+        },
+        {
+          "label": "report-zero-desktop-1440",
+          "alerts": [],
+          "comment": "Учебная правка · не могу уточнить",
+          "confirmation": "Самоотчёт сохранён\n\nОтметка доступна лечащему врачу. Это ваше наблюдение, а не подтверждение приёма.\n\nСохранено без дополнительных баллов\n\nЗаписи и опросы остаются доступны. Баланс и условия начисления — в «Мой прогресс».\n\nПо записи от 25 окт., 10:15\nМой прогресс",
+          "confirmationRect": {
+            "bottom": 576.453125,
+            "height": 335.265625,
+            "left": 296,
+            "right": 1393,
+            "top": 241.1875,
+            "width": 1097,
+            "x": 296,
+            "y": 241.1875
+          },
+          "editorOpen": false,
+          "focus": {
+            "label": "Самоотчёт сохранён",
+            "tag": "H2"
+          },
+          "fullyVisible": true,
+          "overflow": false,
+          "scrollY": 0,
+          "status": "unknown",
+          "title": "Моё расписание лекарств",
+          "viewport": {
+            "height": 1000,
+            "width": 1440
+          }
+        },
+        {
+          "label": "report-zero-tablet-final",
+          "alerts": [],
+          "comment": "Учебная правка · не могу уточнить",
+          "confirmation": "Самоотчёт сохранён\n\nОтметка доступна лечащему врачу. Это ваше наблюдение, а не подтверждение приёма.\n\nСохранено без дополнительных баллов\n\nЗаписи и опросы остаются доступны. Баланс и условия начисления — в «Мой прогресс».\n\nПо записи от 25 окт., 10:15\nМой прогресс",
+          "confirmationRect": {
+            "bottom": 562.953125,
+            "height": 327.265625,
+            "left": 16,
+            "right": 737,
+            "top": 235.6875,
+            "width": 721,
+            "x": 16,
+            "y": 235.6875
+          },
+          "editorOpen": false,
+          "focus": {
+            "label": "Самоотчёт сохранён",
+            "tag": "H2"
+          },
+          "fullyVisible": true,
+          "overflow": false,
+          "scrollY": 0,
+          "status": "unknown",
+          "title": "Моё расписание лекарств",
+          "viewport": {
+            "height": 1024,
+            "width": 768
+          }
+        },
+        {
+          "label": "schedule-archived-zero-tablet",
+          "alerts": [],
+          "confirmation": "Расписание сохранено\n\nЛичная запись обновлена. Назначение в МИС не менялось.\n\nСохранено без дополнительных баллов\n\nЗаписи и опросы остаются доступны. Баланс и условия начисления — в «Мой прогресс».\n\nПо записи от 25 окт., 10:17\nМой прогресс",
+          "confirmationRect": {
+            "bottom": 554.953125,
+            "height": 327.265625,
+            "left": 16,
+            "right": 737,
+            "top": 227.6875,
+            "width": 721,
+            "x": 16,
+            "y": 227.6875
+          },
+          "editorOpen": false,
+          "focus": {
+            "label": "Расписание сохранено",
+            "tag": "H2"
+          },
+          "fullyVisible": true,
+          "overflow": false,
+          "scrollY": 8,
+          "title": "Моё расписание лекарств",
+          "viewport": {
+            "height": 1024,
+            "width": 768
+          }
+        }
+      ],
+      "progress": {
+        "balance": "107\nбаллов к обмену",
+        "overflow": false,
+        "points": "107 баллов за всё время",
+        "text": "МАЛЕНЬКИЕ ШАГИ ИМЕЮТ ЗНАЧЕНИЕ\n\nМой прогресс\n\nСохраняйте важное между встречами и получайте баллы за участие. Их можно обменять на тестовый купон; игровой вид можно отключить.\n\nКак показывать маршрут\nПо умолчанию: карта шагов\nКарта маленьких шагов\nМой ритм\nСпокойный режим\nВаш маршрут, ваш темп\n107\nбаллов к обмену\nКарта маленьких шагов\n107 баллов за всё время\n\nВыберите отметку на карте\n\nВы здесь · Маяк\nДо «Новый горизонт» ещё 143 балла\nМЕСТО ОТКРЫТО\nМаяк\n\nЗа всё время у вас накопилось не меньше 100 баллов участия. Это место останется открытым и после обмена баллов на купон.\n\nОбмен баллов сохраняет открытые места. Карта отражает участие, а не результат лечения.\nСкидка на приём · демо\n5%\n\nБаллов",
+        "title": "Мой прогресс"
+      },
+      "diaryBeforeProgress": {
+        "balance": "110\nбаллов к обмену",
+        "title": "Мой прогресс"
+      },
+      "doctorBefore": {
+        "editingControls": [
+          "Открыть день",
+          "Назначить следующий шаг"
+        ],
+        "overflow": false,
+        "patientReceipt": false,
+        "schedule": "Расписание на день\nДень\nЛичная позиция пациента\nУчебная позиция · UI-проверка · архив\n\nСинтетический пример для проверки интерфейса. Не медицинское назначение.\n\nAsia/Novosibirsk · версия 2\nСамоотчёты свободного расписания и предыдущих версий\nПоследние самоотчёты · все даты\n2026-10-25 · Учебная позиция · UI-проверка\n\nНе могу уточнить\n\nУчебная правка · не могу уточнить\n\nОткрыть день\nНазначить следующий шаг\n\nСобытия построены по текущей версии расписания. Исторические отметки сохраняются отдельно. Внешняя доставка напоминаний не подключена.",
+        "title": "Мария Иванова"
+      },
+      "historyBefore": "Самоотчёты свободного расписания и предыдущих версий\n\nlocal:2 · Не могу уточнить · Учебная правка · не могу уточнить",
+      "doctorFinal": {
+        "editableFields": 0,
+        "history": "Самоотчёты свободного расписания и предыдущих версий\n\nУчебная позиция · UI-проверка · Не могу уточнить · Учебная правка · не могу уточнить",
+        "overflow": false,
+        "patientReceipt": false,
+        "title": "Мария Иванова"
+      },
+      "privateDiary": {
+        "entries": 0,
+        "privateMarkerVisible": false,
+        "sharedDiary": "Дневник, которым поделился пациент\n\nТолько записи, для которых пациент включил доступ лечащего врача. Отсутствие записи не означает отсутствие жалоб.\n\nОткрытых вам записей пока нет"
+      },
+      "console": []
+    },
+    "acceptedConfirmationGeometry": [
+      "schedule-saved-2-mobile",
+      "report-corrected-zero-final-mobile",
+      "report-zero-desktop-1440",
+      "report-zero-tablet-final",
+      "schedule-archived-zero-tablet"
+    ],
+    "limitedSemantic": {
+      "recordedAt": "2026-10-25T03:22:55.866Z",
+      "engine": "axe-core 4.14.0",
+      "scope": "Semantic analysis of CUA-exported markup in JSDOM29.1.1 with local entry CSS. App scripts and external resources never execute; no actual-browser axe, layout, contrast, keyboard, motion or screen-reader pass.",
+      "source": "https://github.com/dequelabs/axe-core#supported-browsers",
+      "disabledRules": [
+        "color-contrast"
+      ],
+      "pages": [
+        {
+          "file": "medication-confirmation-mobile.html",
+          "sha256": "80a6e51392310849a3b57241433f46695fe71d557203c061e79c963ca8f1a5d7",
+          "title": "Лекарства · Clinical Compass",
+          "violations": [],
+          "incomplete": [
+            {
+              "id": "label-content-name-mismatch",
+              "impact": "serious",
+              "description": "Ensure that elements labelled through their content must have their visible text as part of their accessible name",
+              "help": "Elements must have their visible text as part of their accessible name",
+              "helpUrl": "https://dequeuniversity.com/rules/axe/4.14/label-content-name-mismatch?application=axeAPI",
+              "nodes": [
+                {
+                  "target": [
+                    ".section-help-button"
+                  ],
+                  "failureSummary": "Fix all of the following:\n  Axe encountered an error; test the page for this type of problem manually",
+                  "html": "<button class=\"button ghost section-help-button\" aria-label=\"Помощь с разделом\" tabindex=\"0\">"
+                }
+              ]
+            },
+            {
+              "id": "landmark-one-main",
+              "impact": "moderate",
+              "description": "Ensure the document has a main landmark",
+              "help": "Document should have one main landmark",
+              "helpUrl": "https://dequeuniversity.com/rules/axe/4.14/landmark-one-main?application=axeAPI",
+              "nodes": [
+                {
+                  "target": [
+                    "html"
+                  ],
+                  "failureSummary": "Fix all of the following:\n  Axe encountered an error; test the page for this type of problem manually",
+                  "html": "<html lang=\"ru\">"
+                }
+              ]
+            },
+            {
+              "id": "page-has-heading-one",
+              "impact": "moderate",
+              "description": "Ensure that the page, or at least one of its frames contains a level-one heading",
+              "help": "Page should contain a level-one heading",
+              "helpUrl": "https://dequeuniversity.com/rules/axe/4.14/page-has-heading-one?application=axeAPI",
+              "nodes": [
+                {
+                  "target": [
+                    "html"
+                  ],
+                  "failureSummary": "Fix all of the following:\n  Axe encountered an error; test the page for this type of problem manually",
+                  "html": "<html lang=\"ru\">"
+                }
+              ]
+            }
+          ],
+          "passedRuleCount": 39,
+          "passedRuleIds": [
+            "aria-allowed-attr",
+            "aria-allowed-role",
+            "aria-conditional-attr",
+            "aria-deprecated-role",
+            "aria-hidden-body",
+            "aria-hidden-focus",
+            "aria-prohibited-attr",
+            "aria-required-attr",
+            "aria-roles",
+            "aria-valid-attr-value",
+            "aria-valid-attr",
+            "avoid-inline-spacing",
+            "button-name",
+            "bypass",
+            "document-title",
+            "duplicate-id-aria",
+            "empty-heading",
+            "form-field-multiple-labels",
+            "heading-order",
+            "html-has-lang",
+            "html-lang-valid",
+            "label-title-only",
+            "label",
+            "landmark-banner-is-top-level",
+            "landmark-contentinfo-is-top-level",
+            "landmark-main-is-top-level",
+            "landmark-no-duplicate-banner",
+            "landmark-no-duplicate-contentinfo",
+            "landmark-no-duplicate-main",
+            "landmark-unique",
+            "link-name",
+            "meta-viewport-large",
+            "meta-viewport",
+            "nested-interactive",
+            "region",
+            "select-name",
+            "summary-name",
+            "tabindex",
+            "target-size"
+          ],
+          "inapplicableRuleCount": 48,
+          "domWarnings": [
+            "Not implemented: HTMLCanvasElement's getContext() method: without installing the canvas npm package"
+          ]
+        },
+        {
+          "file": "medication-inline-error-mobile.html",
+          "sha256": "9519dfa442d62a098c05756147bbc87ea188fae6cc747e206afe1d94de211246",
+          "title": "Лекарства · Clinical Compass",
+          "violations": [],
+          "incomplete": [
+            {
+              "id": "label-content-name-mismatch",
+              "impact": "serious",
+              "description": "Ensure that elements labelled through their content must have their visible text as part of their accessible name",
+              "help": "Elements must have their visible text as part of their accessible name",
+              "helpUrl": "https://dequeuniversity.com/rules/axe/4.14/label-content-name-mismatch?application=axeAPI",
+              "nodes": [
+                {
+                  "target": [
+                    ".section-help-button"
+                  ],
+                  "failureSummary": "Fix all of the following:\n  Axe encountered an error; test the page for this type of problem manually",
+                  "html": "<button class=\"button ghost section-help-button\" aria-label=\"Помощь с разделом\" tabindex=\"0\">"
+                }
+              ]
+            },
+            {
+              "id": "landmark-one-main",
+              "impact": "moderate",
+              "description": "Ensure the document has a main landmark",
+              "help": "Document should have one main landmark",
+              "helpUrl": "https://dequeuniversity.com/rules/axe/4.14/landmark-one-main?application=axeAPI",
+              "nodes": [
+                {
+                  "target": [
+                    "html"
+                  ],
+                  "failureSummary": "Fix all of the following:\n  Axe encountered an error; test the page for this type of problem manually",
+                  "html": "<html lang=\"ru\">"
+                }
+              ]
+            },
+            {
+              "id": "page-has-heading-one",
+              "impact": "moderate",
+              "description": "Ensure that the page, or at least one of its frames contains a level-one heading",
+              "help": "Page should contain a level-one heading",
+              "helpUrl": "https://dequeuniversity.com/rules/axe/4.14/page-has-heading-one?application=axeAPI",
+              "nodes": [
+                {
+                  "target": [
+                    "html"
+                  ],
+                  "failureSummary": "Fix all of the following:\n  Axe encountered an error; test the page for this type of problem manually",
+                  "html": "<html lang=\"ru\">"
+                }
+              ]
+            }
+          ],
+          "passedRuleCount": 39,
+          "passedRuleIds": [
+            "aria-allowed-attr",
+            "aria-allowed-role",
+            "aria-conditional-attr",
+            "aria-deprecated-role",
+            "aria-hidden-body",
+            "aria-hidden-focus",
+            "aria-prohibited-attr",
+            "aria-required-attr",
+            "aria-roles",
+            "aria-valid-attr-value",
+            "aria-valid-attr",
+            "avoid-inline-spacing",
+            "button-name",
+            "bypass",
+            "document-title",
+            "duplicate-id-aria",
+            "empty-heading",
+            "form-field-multiple-labels",
+            "heading-order",
+            "html-has-lang",
+            "html-lang-valid",
+            "label-title-only",
+            "label",
+            "landmark-banner-is-top-level",
+            "landmark-contentinfo-is-top-level",
+            "landmark-main-is-top-level",
+            "landmark-no-duplicate-banner",
+            "landmark-no-duplicate-contentinfo",
+            "landmark-no-duplicate-main",
+            "landmark-unique",
+            "link-name",
+            "meta-viewport-large",
+            "meta-viewport",
+            "nested-interactive",
+            "region",
+            "select-name",
+            "summary-name",
+            "tabindex",
+            "target-size"
+          ],
+          "inapplicableRuleCount": 48,
+          "domWarnings": [
+            "Not implemented: HTMLCanvasElement's getContext() method: without installing the canvas npm package"
+          ]
+        },
+        {
+          "file": "medication-read-only-doctor.html",
+          "sha256": "6a8cfe6b24b9fd758d4a47a46d93425547f7cf6e2674fadb8a8382a66ba0809b",
+          "title": "Лекарства · Clinical Compass",
+          "violations": [],
+          "incomplete": [
+            {
+              "id": "label-content-name-mismatch",
+              "impact": "serious",
+              "description": "Ensure that elements labelled through their content must have their visible text as part of their accessible name",
+              "help": "Elements must have their visible text as part of their accessible name",
+              "helpUrl": "https://dequeuniversity.com/rules/axe/4.14/label-content-name-mismatch?application=axeAPI",
+              "nodes": [
+                {
+                  "target": [
+                    ".inbox-counter"
+                  ],
+                  "failureSummary": "Fix all of the following:\n  Axe encountered an error; test the page for this type of problem manually",
+                  "html": "<button class=\"inbox-counter has-events\" title=\"Ещё не показаны в очереди: 5\" aria-label=\"Открыть события: 11\">"
+                }
+              ]
+            },
+            {
+              "id": "landmark-one-main",
+              "impact": "moderate",
+              "description": "Ensure the document has a main landmark",
+              "help": "Document should have one main landmark",
+              "helpUrl": "https://dequeuniversity.com/rules/axe/4.14/landmark-one-main?application=axeAPI",
+              "nodes": [
+                {
+                  "target": [
+                    "html"
+                  ],
+                  "failureSummary": "Fix all of the following:\n  Axe encountered an error; test the page for this type of problem manually",
+                  "html": "<html lang=\"ru\">"
+                }
+              ]
+            },
+            {
+              "id": "page-has-heading-one",
+              "impact": "moderate",
+              "description": "Ensure that the page, or at least one of its frames contains a level-one heading",
+              "help": "Page should contain a level-one heading",
+              "helpUrl": "https://dequeuniversity.com/rules/axe/4.14/page-has-heading-one?application=axeAPI",
+              "nodes": [
+                {
+                  "target": [
+                    "html"
+                  ],
+                  "failureSummary": "Fix all of the following:\n  Axe encountered an error; test the page for this type of problem manually",
+                  "html": "<html lang=\"ru\">"
+                }
+              ]
+            }
+          ],
+          "passedRuleCount": 41,
+          "passedRuleIds": [
+            "aria-allowed-attr",
+            "aria-allowed-role",
+            "aria-conditional-attr",
+            "aria-deprecated-role",
+            "aria-hidden-body",
+            "aria-hidden-focus",
+            "aria-prohibited-attr",
+            "aria-required-attr",
+            "aria-required-children",
+            "aria-required-parent",
+            "aria-roles",
+            "aria-valid-attr-value",
+            "aria-valid-attr",
+            "avoid-inline-spacing",
+            "button-name",
+            "bypass",
+            "document-title",
+            "duplicate-id-aria",
+            "empty-heading",
+            "form-field-multiple-labels",
+            "heading-order",
+            "html-has-lang",
+            "html-lang-valid",
+            "label-title-only",
+            "label",
+            "landmark-banner-is-top-level",
+            "landmark-contentinfo-is-top-level",
+            "landmark-main-is-top-level",
+            "landmark-no-duplicate-banner",
+            "landmark-no-duplicate-contentinfo",
+            "landmark-no-duplicate-main",
+            "landmark-unique",
+            "link-name",
+            "meta-viewport-large",
+            "meta-viewport",
+            "nested-interactive",
+            "region",
+            "select-name",
+            "summary-name",
+            "tabindex",
+            "target-size"
+          ],
+          "inapplicableRuleCount": 46,
+          "domWarnings": [
+            "Not implemented: HTMLCanvasElement's getContext() method: without installing the canvas npm package"
+          ]
+        }
+      ]
+    },
+    "http": {
+      "base_url": "http://127.0.0.1:8780",
+      "scope": "HTTP bytes and MIME only; not browser layout/interactions",
+      "assets": [
+        {
+          "file": "AdminDashboard-BZD19obd.js",
+          "status": 200,
+          "bytes": 18451,
+          "sha256": "a052d269a85431349e4602ced4e025d9ceea3b565dafaf40908c50f51fc56974",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "CareWorkflow-SIzu2uen.js",
+          "status": 200,
+          "bytes": 26980,
+          "sha256": "953ba4e94ce24a73b4f13b28007077d172078c5f9955b773000efdd01fff5586",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "Charts-CYCwkLNb.js",
+          "status": 200,
+          "bytes": 5476,
+          "sha256": "d8f665772d90363ab256163832d9e7271df6f681ef33464b03ce130941040e3a",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "DoctorDashboard-B6r5sUAe.js",
+          "status": 200,
+          "bytes": 18046,
+          "sha256": "1d0521811e1e4593eda5b06d7ae942df72593f555339d6f5036fd698bd227bf1",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "DoctorPatients-CMcT-uGb.js",
+          "status": 200,
+          "bytes": 36363,
+          "sha256": "86d14d0380215ffa4874f9da695b6abb84099f5fbda8e4bedc5e67b925e13da3",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "MedicationSchedule-BGXX_mka.css",
+          "status": 200,
+          "bytes": 2105,
+          "sha256": "c20413094ff3583bb21b006cdc48aba46037576c0d732dce5ed4bb1689d2d580",
+          "mime": "text/css; charset=utf-8"
+        },
+        {
+          "file": "MedicationSchedule-BfbrVnUd.js",
+          "status": 200,
+          "bytes": 35607,
+          "sha256": "c85b1f1b4513c8de3ee1a7beddb411f604747f85d95a6a0031379ce9caf6ca26",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "Patient-4O0TdIGO.js",
+          "status": 200,
+          "bytes": 66896,
+          "sha256": "1a62e1f01378f82ef945fc5580e6b4846bead9df087eb436e46a5550546c6914",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "Patient-B9xuvwdE.css",
+          "status": 200,
+          "bytes": 26258,
+          "sha256": "9160fbf594ce6238151f4e13f5a28e00c0e62184711079b09f25bbebeb327b0b",
+          "mime": "text/css; charset=utf-8"
+        },
+        {
+          "file": "SurveyBuilder-W3NtvIIH.js",
+          "status": 200,
+          "bytes": 25412,
+          "sha256": "482b36f1241859ac88477e2be723a941d0eddf27b80d99d3a44d05b61342a2b9",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "SurveyFields-DmdEPWWI.js",
+          "status": 200,
+          "bytes": 3121,
+          "sha256": "7485b2028e8bf4cef3003ca617f4418ad43bcb3fecfcb1d73bdc92795f261658",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "TaskBoard-Da0sJEwe.js",
+          "status": 200,
+          "bytes": 7839,
+          "sha256": "4bbee81d13fa3e0fcacc6b3ff9c51010bf46d60a882cc33ac2a808520ba47625",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "WorkflowMetrics-Ct5Bicgf.js",
+          "status": 200,
+          "bytes": 12440,
+          "sha256": "355fa24e97d770413b97d59ebbd6875a6d67add2786ca96bc36bebfab74093f9",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "chevron-right-DnclgXPq.js",
+          "status": 200,
+          "bytes": 159,
+          "sha256": "624b7cf90e2b0c04a5e9be7d0a5787ef13aa3f8879c6e9a0446a79fe9eb79111",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "collection-COswcvyL.js",
+          "status": 200,
+          "bytes": 939,
+          "sha256": "b8f61ba215c319fcc2aaf6ce0fb3b26b182c049b9a0d9e4febe85703fe8000e4",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "index-4rNzyjoO.css",
+          "status": 200,
+          "bytes": 113202,
+          "sha256": "8226370d656e99ba017d3d596252191c760c30909ded50d7f93d3ce5d0cc9d32",
+          "mime": "text/css; charset=utf-8"
+        },
+        {
+          "file": "index-CVqjRkrh.js",
+          "status": 200,
+          "bytes": 387525,
+          "sha256": "d59a0e6167515ad0289e3794bf3ffc0f0e0586705f84b0feb83ad24794a55287",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "patientProgress-Do0fObh9.js",
+          "status": 200,
+          "bytes": 1130,
+          "sha256": "611dafc1b1ad2ac66b0b04ac3852b8c0bf56b6f106882f460ee96efa5097a0b3",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "plus-iunaUVTk.js",
+          "status": 200,
+          "bytes": 182,
+          "sha256": "ea878dd87e09628015284a68d10d012426bc3937ec75b71286253ec8a9fb5217",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "send-CLD0--xu.js",
+          "status": 200,
+          "bytes": 652,
+          "sha256": "fb3d62533baa6264053b0af5b776c22b8dd2d0542ccfa021c8f61a301407afa5",
+          "mime": "text/javascript; charset=utf-8"
+        }
+      ],
+      "health": {
+        "status": "ok",
+        "compass_db": true,
+        "mis_db": true,
+        "mode": "synthetic_demo"
+      },
+      "root_matches_dist": true,
+      "qa_health": {
+        "status": "ok",
+        "compass_db": true,
+        "mis_db": true,
+        "mode": "synthetic_demo"
+      }
+    }
+  },
+  "sources": [
+    {
+      "file": "app/modules/adherence/medication_router.py",
+      "bytes": 11585,
+      "sha256": "f9b2a3ac497960f2f7b4b4e303d04214183ad610ae7e7e682b1f8b73e924656e"
+    },
+    {
+      "file": "frontend/src/MedicationSchedule.tsx",
+      "bytes": 13558,
+      "sha256": "b5a7e81d5eec978389bb0a51437329c9b3d03829f073dc78e67ca62c793f8d37"
+    },
+    {
+      "file": "frontend/src/MedicationEditor.tsx",
+      "bytes": 6778,
+      "sha256": "d60b35465c103896a0faaca4daef2ad91469942d2cef3025ba4f86eca469d79d"
+    },
+    {
+      "file": "frontend/src/Patient.tsx",
+      "bytes": 16558,
+      "sha256": "398ba61e9f9f276e397d4f6cc0c5a8cc950cf687401303d4ead67f5dc3bdb73d"
+    },
+    {
+      "file": "frontend/src/workspace.css",
+      "bytes": 65050,
+      "sha256": "1347f75ab5e8826b7d951468bdf973eb996d765ba60a765b79dc184fc3d9edd6"
+    },
+    {
+      "file": "tests/test_medication_receipts.py",
+      "bytes": 8469,
+      "sha256": "87632e0a86d538530cda4d5f95173874f73e55aa53891951ddcde4a1db44c7aa"
+    },
+    {
+      "file": "frontend/tests/medication-receipt-interaction.test.mjs",
+      "bytes": 9692,
+      "sha256": "588f3f4a2f638f8eb44abd5c31af3fe9f505c2e83106088d2f3ca1c5a62cfa12"
+    }
+  ],
+  "beforeSources": [
+    {
+      "file": "work/medication-receipt-baseline/medication_router.py",
+      "bytes": 10461,
+      "sha256": "8e352a7756500cebc29b0c1a23ff43e586c16592446fdd29003b3d932916f191"
+    },
+    {
+      "file": "work/medication-receipt-baseline/MedicationSchedule.tsx",
+      "bytes": 11043,
+      "sha256": "5d0e8412859baa5a22272d099818ee279339b2ae88b50ca2d009893eec5e240d"
+    },
+    {
+      "file": "work/medication-receipt-baseline/MedicationEditor.tsx",
+      "bytes": 6564,
+      "sha256": "e8c0820c7bad846215b447136c2aac630f8ed7b65c81e8d4bdf0c2fb19ba0d85"
+    },
+    {
+      "file": "work/medication-receipt-baseline/Patient.tsx",
+      "bytes": 16523,
+      "sha256": "0af7cb66f33ed2e4f1629d54eca9ebd6a10d19a546d5fb7dee452357933388c1"
+    },
+    {
+      "file": "work/medication-receipt-baseline/workspace.css",
+      "bytes": 64773,
+      "sha256": "760b47bcb64e7a9073d80c3cb5cb838a9348e6af84025feaa298ddaaf8e14d82"
+    }
+  ],
+  "entry": {
+    "file": "frontend/dist/assets/index-CVqjRkrh.js",
+    "bytes": 387525,
+    "sha256": "d59a0e6167515ad0289e3794bf3ffc0f0e0586705f84b0feb83ad24794a55287"
+  },
+  "diff": "--- local38/medication_router.py\n+++ current/app/modules/adherence/medication_router.py\n@@ -11,7 +11,7 @@\n from app.modules.adherence.medications import inventory, item_read, log_read, occurrences\n from app.modules.audit.service import record_event\n from app.modules.patients.models import Patient\n-from app.modules.adherence.rewards import grant_points\n+from app.modules.adherence.rewards import grant_points, participation_receipt\n \n router = APIRouter(tags=[\"medication schedule\"])\n PatientUser = Depends(require_role([UserRole.patient]))\n@@ -25,6 +25,11 @@\n     if patient is None:\n         raise HTTPException(403, \"Учётная запись не связана с пациентом\")\n     return patient\n+\n+\n+async def medication_response(session, patient_id, data, source_key, replayed):\n+    receipt = await participation_receipt(session, patient_id, \"medication\", source_key)\n+    return {**data, \"replayed\": replayed, \"participation\": receipt}\n \n \n @router.get(\"/patients/{patient_id}/medications\")\n@@ -63,7 +68,7 @@\n     if previous:\n         if previous.initial_payload != data:\n             raise HTTPException(409, \"Ключ запроса уже использован с другой позицией\")\n-        return {**item_read(previous), \"replayed\": True}\n+        return await medication_response(session, patient.id, item_read(previous), f\"item:{previous.id}:v1\", True)\n     row = MedicationItem(patient_id=patient.id, created_by_id=user.id,\n         client_request_id=str(payload.client_request_id), initial_payload=data,\n         **payload.model_dump(exclude={\"client_request_id\"}))\n@@ -71,8 +76,9 @@\n     record_event(session, user.id, patient.id, \"medication.item_created\", \"medication_item\", row.id,\n                  {\"source\": \"patient_entered\", \"mis_write\": False})\n     await grant_points(session, patient.id, \"medication\", f\"item:{row.id}:v1\", user.id)\n+    response = await medication_response(session, patient.id, item_read(row), f\"item:{row.id}:v1\", False)\n     await session.commit()\n-    return {**item_read(row), \"replayed\": False}\n+    return response\n \n \n @router.put(\"/medications/items/{item_id}\")\n@@ -86,7 +92,7 @@\n     same = all(getattr(row, k) == v for k, v in data.items())\n     if row.revision != payload.expected_revision:\n         if same and row.revision == payload.expected_revision + 1:\n-            return item_read(row)\n+            return await medication_response(session, patient.id, item_read(row), f\"item:{row.id}:v{row.revision}\", True)\n         raise HTTPException(409, \"Расписание уже изменено: обновите список\")\n     if not same:\n         for k, v in data.items():\n@@ -95,8 +101,9 @@\n         record_event(session, user.id, patient.id, \"medication.item_updated\", \"medication_item\", row.id,\n                      {\"revision\": row.revision, \"mis_write\": False})\n         await grant_points(session, patient.id, \"medication\", f\"item:{row.id}:v{row.revision}\", user.id)\n+    response = await medication_response(session, patient.id, item_read(row), f\"item:{row.id}:v{row.revision}\", same)\n     await session.commit()\n-    return item_read(row)\n+    return response\n \n \n @router.post(\"/medications/reports\", status_code=201)\n@@ -108,7 +115,7 @@\n         if not previous.occurrence_key.startswith(payload.day.isoformat() + \"@\") or (previous.item_key, previous.occurrence_key, previous.status, previous.reason) != (\n             payload.item_key, payload.occurrence_key, payload.status, payload.reason.strip()):\n             raise HTTPException(409, \"Ключ запроса уже использован с другим самоотчётом\")\n-        return {**log_read(previous), \"replayed\": True}\n+        return await medication_response(session, patient.id, log_read(previous), f\"log:{previous.id}\", True)\n     items, _ = await inventory(session, patient)\n     item = next((i for i in items if i[\"key\"] == payload.item_key), None)\n     if item is None or not item[\"active\"]:\n@@ -134,7 +141,7 @@\n     if existing:\n         if existing.status != payload.status or existing.reason != payload.reason.strip():\n             raise HTTPException(409, \"Самоотчёт уже есть: исправьте существующую запись\")\n-        return {**log_read(existing), \"replayed\": True}\n+        return await medication_response(session, patient.id, log_read(existing), f\"log:{existing.id}\", True)\n     row = MedicationLog(patient_id=patient.id, client_request_id=str(payload.client_request_id),\n         item_key=payload.item_key, occurrence_key=payload.occurrence_key, scheduled_for=scheduled,\n         status=payload.status, reason=payload.reason.strip())\n@@ -142,8 +149,9 @@\n     record_event(session, user.id, patient.id, \"medication.reported\", \"medication_log\", row.id,\n                  {\"status\": row.status, \"ingestion_verified\": False})\n     await grant_points(session, patient.id, \"medication\", f\"log:{row.id}\", user.id)\n+    response = await medication_response(session, patient.id, log_read(row), f\"log:{row.id}\", False)\n     await session.commit()\n-    return {**log_read(row), \"replayed\": False}\n+    return response\n \n \n @router.patch(\"/medications/reports/{report_id}\")\n@@ -156,7 +164,8 @@\n     same = row.status == payload.status and row.reason == payload.reason.strip()\n     if row.revision != payload.expected_revision:\n         if same and row.revision == payload.expected_revision + 1:\n-            return log_read(row)\n+            source_key = f\"log:{row.id}\" if row.revision == 1 else f\"log:{row.id}:v{row.revision}\"\n+            return await medication_response(session, patient.id, log_read(row), source_key, True)\n         raise HTTPException(409, \"Самоотчёт уже изменён\")\n     if not same:\n         row.status, row.reason = payload.status, payload.reason.strip()\n@@ -164,5 +173,7 @@\n         record_event(session, user.id, patient.id, \"medication.report_corrected\", \"medication_log\", row.id,\n                      {\"status\": row.status, \"revision\": row.revision})\n         await grant_points(session, patient.id, \"medication\", f\"log:{row.id}:v{row.revision}\", user.id)\n+    source_key = f\"log:{row.id}\" if row.revision == 1 else f\"log:{row.id}:v{row.revision}\"\n+    response = await medication_response(session, patient.id, log_read(row), source_key, same)\n     await session.commit()\n-    return log_read(row)\n+    return response\n--- local38/MedicationSchedule.tsx\n+++ current/frontend/src/MedicationSchedule.tsx\n@@ -1,8 +1,10 @@\n-import { useRef, useState, type FormEvent } from \"react\";\n+import { useEffect, useId, useRef, useState, type FormEvent } from \"react\";\n import { send, useApi } from \"./api\";\n import { Badge, Button, Empty, ErrorBox, Heading, Loading, Section, date, type Notify } from \"./UI\";\n import { MedicationEditor, localDay } from \"./MedicationEditor\";\n import { useNavigationGuard, useUnsavedForm, type LeavePrompt } from \"./NavigationGuard\";\n+import { ParticipationReceipt, type ParticipationConfirmation } from \"./ParticipationReceipt\";\n+import { useInteractionMotion } from \"./Interaction\";\n export type MedicationItem = {key: string; id?: number; label: string; instructions: string; schedule_text: string; schedule_kind: string;\n   times: string[]; weekdays: number[]; timezone: string; starts_on: string; ends_on: string | null; active: boolean;\n   revision: number; source: string; editable: boolean};\n@@ -14,11 +16,14 @@\n const reportLabels: Record<string,string> = {taken: \"Сообщаю: принял(а)\", not_taken: \"Сообщаю: не принял(а)\", unknown: \"Не могу уточнить\", not_applicable: \"Не требовалось по моему плану\"};\n const reportPrompt:LeavePrompt={eyebrow:\"Незавершённая отметка\",title:\"Продолжить лекарственный самоотчёт?\",message:\"Выбранная отметка или комментарий ещё не сохранены. При переходе без сохранения текущий ввод будет потерян.\",stayLabel:\"Продолжить отметку\"};\n \n-function ReportForm({item, event, prior, day, readOnly, notify, reload, scope}: {item: MedicationItem; event?: Event; prior?: Report; day: string; readOnly: boolean; notify: Notify; reload: () => void; scope:string}) {\n+function ReportForm({item, event, prior, day, readOnly, notify, reload, scope, onSaving, onSaved}: {item: MedicationItem; event?: Event; prior?: Report; day: string; readOnly: boolean; notify: Notify; reload: () => void; scope:string;onSaving:()=>void;onSaved:(result:ParticipationConfirmation)=>void}) {\n   const current = event?.report ?? prior;\n   const [status, setStatus] = useState(current?.status ?? \"\");\n   const [reason, setReason] = useState(current?.reason ?? \"\");\n   const [busy, setBusy] = useState(false);\n+  const [saveError,setSaveError]=useState(\"\");\n+  const errorResult=useRef<HTMLDivElement>(null),errorId=useId();\n+  useEffect(()=>{if(saveError)errorResult.current?.querySelector<HTMLElement>('.error-box')?.focus();},[saveError]);\n   const request = useRef({signature: \"\", id: \"\"});\n   const [baseline,setBaseline]=useState(()=>JSON.stringify([status,reason]));\n   const dirty=JSON.stringify([status,reason])!==baseline;\n@@ -28,41 +33,55 @@\n     const data = {item_key: item.key, day, occurrence_key: event?.occurrence_key ?? `${day}@self_report/v${item.revision}`, status, reason};\n     const signature = JSON.stringify(data);\n     if (request.current.signature !== signature) request.current = {signature, id: crypto.randomUUID()};\n-    setBusy(true);\n+    onSaving();setSaveError(\"\");setBusy(true);\n     try {\n-      if (current) await send(`/medications/reports/${current.id}`, {status, reason, expected_revision: current.revision}, \"PATCH\");\n-      else await send(\"/medications/reports\", {...data, client_request_id: request.current.id});\n-      setBaseline(JSON.stringify([status,reason]));clear();reload(); notify(\"Самоотчёт сохранён. Его видит лечащий врач.\");\n-    } catch (e) { notify(e instanceof Error ? e.message : \"Не удалось сохранить\", \"error\"); }\n+      const response=current?await send<ParticipationConfirmation>(`/medications/reports/${current.id}`, {status, reason, expected_revision: current.revision}, \"PATCH\"):\n+        await send<ParticipationConfirmation>(\"/medications/reports\", {...data, client_request_id: request.current.id});\n+      setBaseline(JSON.stringify([status,reason]));clear();onSaved(response);reload(); notify(\"Самоотчёт сохранён. Его видит лечащий врач.\");\n+    } catch (e) { setSaveError(e instanceof Error ? e.message : \"Не удалось сохранить отметку\"); }\n     finally { setBusy(false); }\n   }\n   if (readOnly) return <p>{current ? reportLabels[current.status] : \"Самоотчёт не получен\"}{current?.reason && <span className=\"preserve\"> · {current.reason}</span>}</p>;\n   if (event && !event.can_report) return <p className=\"field-hint\">{event.requires_time_confirmation ? \"В этом часовом поясе время неоднозначно: уточните расписание.\" : \"Время события ещё не наступило.\"}</p>;\n-  return <form onSubmit={save}><fieldset className=\"form-fields medication-report-form\" disabled={busy} aria-busy={busy}>\n-    <label className=\"field\">Мой самоотчёт<select required value={status} onChange={e => setStatus(e.target.value)}><option value=\"\">Без отметки · неизвестно</option>{Object.entries(reportLabels).map(([k,v]) => <option key={k} value={k}>{v}</option>)}</select></label>\n-    <label className=\"field\">Комментарий · необязательно<input maxLength={2000} value={reason} onChange={e => setReason(e.target.value)} /></label>\n+  return <form onSubmit={save}><div ref={errorResult} id={errorId}><ErrorBox message={saveError}/></div><fieldset className=\"form-fields medication-report-form\" disabled={busy} aria-busy={busy} aria-describedby={saveError?errorId:undefined}>\n+    <label className=\"field\">Мой самоотчёт<select required value={status} onChange={e => {onSaving();setSaveError(\"\");setStatus(e.target.value);}}><option value=\"\">Без отметки · неизвестно</option>{Object.entries(reportLabels).map(([k,v]) => <option key={k} value={k}>{v}</option>)}</select></label>\n+    <label className=\"field\">Комментарий · необязательно<input maxLength={2000} value={reason} onChange={e => {onSaving();setSaveError(\"\");setReason(e.target.value);}} /></label>\n     <Button variant=\"secondary\" disabled={busy || !status || !dirty}>{busy?\"Сохраняем…\":current ? \"Исправить самоотчёт\" : \"Сохранить отметку\"}</Button>\n   </fieldset></form>;\n }\n \n-export function MedicationSchedule({patientId, notify, readOnly = false, onSource}: {patientId: number; notify: Notify; readOnly?: boolean; onSource?: SelectSource}) {\n+export function MedicationSchedule({patientId, notify, readOnly = false, onSource, progress}: {patientId: number; notify: Notify; readOnly?: boolean; onSource?: SelectSource;progress?:()=>void}) {\n   const [day, setDay] = useState(localDay);\n   const schedule = useApi<Schedule>(`/patients/${patientId}/medications?on=${day}`);\n   const [editing, setEditing] = useState<MedicationItem | null>(null);\n   const [editorOpen,setEditorOpen]=useState(false),[editorVersion,setEditorVersion]=useState(0);\n   const guard=useNavigationGuard();\n+  const {moving}=useInteractionMotion();\n+  const [saved,setSaved]=useState<{kind:\"schedule\"|\"report\";result:ParticipationConfirmation}|null>(null);\n+  const savedPanel=useRef<HTMLElement>(null),savedHeading=useRef<HTMLHeadingElement>(null),savedId=useId();\n+  useEffect(()=>{\n+    if(!saved)return;\n+    savedHeading.current?.focus({preventScroll:true});\n+    savedPanel.current?.scrollIntoView({block:\"nearest\",behavior:moving?\"smooth\":\"instant\"});\n+  },[saved,moving]);\n+  const clearConfirmation=()=>setSaved(null);\n   const editorScope=`medication-editor:${patientId}`,reportScope=`medication-reports:${patientId}`;\n   function edit(item:MedicationItem|null) {\n-    guard.runFor(()=>{setEditing(item);setEditorOpen(true);setEditorVersion(value=>value+1);},editorScope);\n+    guard.runFor(()=>{clearConfirmation();setEditing(item);setEditorOpen(true);setEditorVersion(value=>value+1);},editorScope);\n   }\n-  function changeDay(value:string) {if(value && value!==day)guard.runFor(()=>setDay(value),reportScope);}\n+  function changeDay(value:string) {if(value && value!==day)guard.runFor(()=>{clearConfirmation();setDay(value);},reportScope);}\n   return <>\n     <Heading eyebrow=\"Личный учёт и данные МИС\" title={readOnly ? \"Расписание и самоотчёты пациента\" : \"Моё расписание лекарств\"} action={!readOnly&&<Button onClick={()=>edit(null)}>Добавить свою позицию</Button>}>Личные позиции отделены от назначений МИС. Отсутствие отметки остаётся неизвестным; отметка — сообщение пациента, а не подтверждение приёма.</Heading>\n-    {editorOpen&&!readOnly&&<MedicationEditor key={editorVersion} item={editing} scope={editorScope} notify={notify} onClose={()=>setEditorOpen(false)} onSaved={()=>{setEditorOpen(false);schedule.reload();}}/>}\n+    {saved&&!readOnly&&<section ref={savedPanel} className=\"panel medication-saved-result\" aria-labelledby={savedId}>\n+      <div className=\"section-heading\"><h2 ref={savedHeading} id={savedId} tabIndex={-1}>{saved.kind===\"schedule\"?\"Расписание сохранено\":\"Самоотчёт сохранён\"}</h2></div>\n+      <p className=\"field-hint\">{saved.kind===\"schedule\"?\"Личная запись обновлена. Назначение в МИС не менялось.\":\"Отметка доступна лечащему врачу. Это ваше наблюдение, а не подтверждение приёма.\"}</p>\n+      <ParticipationReceipt result={saved.result} progress={progress}/>\n+    </section>}\n+    {editorOpen&&!readOnly&&<MedicationEditor key={editorVersion} item={editing} scope={editorScope} notify={notify} onClose={()=>setEditorOpen(false)} onSaving={clearConfirmation} onSaved={result=>{setSaved({kind:\"schedule\",result});setEditorOpen(false);schedule.reload();}}/>}\n     <Section title=\"Расписание на день\" className=\"medication-schedule\"><label className=\"field medication-day\">День<input type=\"date\" value={day} onChange={e => changeDay(e.target.value)} /></label>\n       <ErrorBox message={schedule.error} retry={schedule.reload} />\n       {schedule.loading ? <Loading /> : schedule.data && <>\n-        {!schedule.data.items.length && <Empty title=\"Позиций пока нет\">{readOnly?\"Пациент ещё не добавлял личных позиций; данные назначений из МИС не предоставлены.\":<>Добавьте личную позицию, чтобы видеть расписание и сохранять отметки.<p><Button variant=\"secondary\" onClick={()=>edit(null)}>Добавить личное расписание</Button></p></>}</Empty>}\n+        {!schedule.data.items.length && <Empty title=\"Позиций пока нет\">{readOnly?\"Пациент ещё не добавлял личных позиций; данные назначений из МИС не предоставлены.\":<>Добавьте личную позицию, чтобы видеть расписание и сохранять отметки.<span className=\"medication-empty-action\"><Button variant=\"secondary\" onClick={()=>edit(null)}>Добавить личное расписание</Button></span></>}</Empty>}\n         {schedule.data.items.map(item => <article className=\"diary-entry\" key={item.key}>\n           <Badge tone={item.source === \"patient_entered\" ? \"purple\" : \"muted\"}>{item.source === \"patient_entered\" ? \"Личная позиция пациента\" : \"МИС · синтетический JSON · только чтение\"}</Badge>\n           <h3>{item.label}{!item.active && \" · архив\"}</h3><p className=\"preserve\">{item.instructions}</p><p className=\"preserve\">{item.schedule_text}</p><small>{item.timezone} · версия {item.revision}</small>\n@@ -70,12 +89,12 @@\n           {schedule.data!.events.filter(e => e.item_key === item.key).map(event => <div className=\"medication-event\" key={event.occurrence_key}>\n             <h4>{event.clock} · {event.report ? \"Есть самоотчёт\" : \"Без отметки\"}</h4>\n             {!readOnly && event.can_report && <Button variant=\"ghost\" onClick={() => notify(`Напоминание · симуляция внутри приложения: ${item.label}, ${event.clock}. Внешняя доставка не выполнялась.`)}>Показать напоминание · симуляция</Button>}\n-            <ReportForm key={`${event.occurrence_key}-${event.report?.revision ?? 0}`} item={item} event={event} day={day} readOnly={readOnly} notify={notify} reload={schedule.reload} scope={reportScope} />\n+            <ReportForm key={`${event.occurrence_key}-${event.report?.revision ?? 0}`} item={item} event={event} day={day} readOnly={readOnly} notify={notify} reload={schedule.reload} scope={reportScope} onSaving={clearConfirmation} onSaved={result=>setSaved({kind:\"report\",result})} />\n           </div>)}\n-          {item.active && item.schedule_kind !== \"fixed\" && <><p className=\"field-hint\">Свободное описание / по потребности: обязательные приёмы не рассчитываются.</p><ReportForm key={`${item.key}-${day}-${schedule.data!.historical_reports.find(r => r.item_key === item.key && r.occurrence_key === `${day}@self_report/v${item.revision}`)?.revision ?? 0}`} prior={schedule.data!.historical_reports.find(r => r.item_key === item.key && r.occurrence_key === `${day}@self_report/v${item.revision}`)} item={item} day={day} readOnly={readOnly} notify={notify} reload={schedule.reload} scope={reportScope} /></>}\n+          {item.active && item.schedule_kind !== \"fixed\" && <><p className=\"field-hint\">Свободное описание / по потребности: обязательные приёмы не рассчитываются.</p><ReportForm key={`${item.key}-${day}-${schedule.data!.historical_reports.find(r => r.item_key === item.key && r.occurrence_key === `${day}@self_report/v${item.revision}`)?.revision ?? 0}`} prior={schedule.data!.historical_reports.find(r => r.item_key === item.key && r.occurrence_key === `${day}@self_report/v${item.revision}`)} item={item} day={day} readOnly={readOnly} notify={notify} reload={schedule.reload} scope={reportScope} onSaving={clearConfirmation} onSaved={result=>setSaved({kind:\"report\",result})} /></>}\n         </article>)}\n-        {schedule.data.historical_reports.length > 0 && <details><summary>Самоотчёты свободного расписания и предыдущих версий</summary>{schedule.data.historical_reports.map(r => <p key={r.id}>{r.item_key} · {reportLabels[r.status]} · {r.reason}</p>)}</details>}\n-        {schedule.data.recent_reports.length > 0 && <div className=\"medication-recent\"><h3>Последние самоотчёты · все даты</h3>{schedule.data.recent_reports.map(r => <article className=\"diary-entry\" key={r.id}><h4>{r.occurrence_key.slice(0,10)} · {schedule.data!.items.find(i => i.key === r.item_key)?.label ?? r.item_key}</h4><p>{reportLabels[r.status]}</p><p className=\"preserve\">{r.reason}</p><div className=\"button-row\"><Button variant=\"ghost\" onClick={() => changeDay(r.occurrence_key.slice(0,10))}>Открыть день</Button>{readOnly && onSource && <Button variant=\"secondary\" onClick={() => onSource({type:\"medication_log\",id:r.id,label:`Лекарственный самоотчёт #${r.id}`})}>Назначить следующий шаг</Button>}</div></article>)}</div>}\n+        {schedule.data.historical_reports.length > 0 && <details><summary>Самоотчёты свободного расписания и предыдущих версий</summary>{schedule.data.historical_reports.map(r => <p key={r.id}>{schedule.data!.items.find(i => i.key === r.item_key)?.label ?? \"Название позиции недоступно\"} · {reportLabels[r.status]} · {r.reason}</p>)}</details>}\n+        {schedule.data.recent_reports.length > 0 && <div className=\"medication-recent\"><h3>Последние самоотчёты · все даты</h3>{schedule.data.recent_reports.map(r => <article className=\"diary-entry\" key={r.id}><h4>{r.occurrence_key.slice(0,10)} · {schedule.data!.items.find(i => i.key === r.item_key)?.label ?? \"Название позиции недоступно\"}</h4><p>{reportLabels[r.status]}</p><p className=\"preserve\">{r.reason}</p><div className=\"button-row\"><Button variant=\"ghost\" onClick={() => changeDay(r.occurrence_key.slice(0,10))}>Открыть день</Button>{readOnly && onSource && <Button variant=\"secondary\" onClick={() => onSource({type:\"medication_log\",id:r.id,label:`Лекарственный самоотчёт #${r.id}`})}>Назначить следующий шаг</Button>}</div></article>)}</div>}\n         <p className=\"field-hint\">События построены по текущей версии расписания. Исторические отметки сохраняются отдельно. Внешняя доставка напоминаний не подключена.</p>\n       </>}\n     </Section>\n--- local38/MedicationEditor.tsx\n+++ current/frontend/src/MedicationEditor.tsx\n@@ -3,12 +3,13 @@\n import { Button, Section, type Notify } from \"./UI\";\n import { useUnsavedForm, type LeavePrompt } from \"./NavigationGuard\";\n import type { MedicationItem } from \"./MedicationSchedule\";\n+import type { ParticipationConfirmation } from \"./ParticipationReceipt\";\n \n const editorPrompt:LeavePrompt={eyebrow:\"Личное расписание\",title:\"Продолжить редактирование расписания?\",message:\"Изменения личной позиции ещё не сохранены. При переходе без сохранения текущий ввод будет потерян. Назначения МИС не меняются.\",stayLabel:\"Продолжить редактирование\"};\n const week=[\"Пн\",\"Вт\",\"Ср\",\"Чт\",\"Пт\",\"Сб\",\"Вс\"];\n export function localDay() {const d=new Date();return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,\"0\")}-${String(d.getDate()).padStart(2,\"0\")}`;}\n \n-export function MedicationEditor({item,scope,notify,onSaved,onClose}:{item:MedicationItem|null;scope:string;notify:Notify;onSaved:()=>void;onClose:()=>void}) {\n+export function MedicationEditor({item,scope,notify,onSaved,onClose,onSaving}:{item:MedicationItem|null;scope:string;notify:Notify;onSaved:(result:ParticipationConfirmation)=>void;onClose:()=>void;onSaving:()=>void}) {\n   const [fields,setFields]=useState(()=>({\n     label:item?.label??\"\",instructions:item?.instructions??\"\",text:item?.schedule_text??\"\",\n     kind:item?.schedule_kind??\"fixed\",times:item?.times.join(\", \")??\"\",\n@@ -30,11 +31,11 @@\n       weekdays:fields.kind===\"fixed\"?fields.weekdays:[],timezone:fields.zone,starts_on:fields.start,ends_on:fields.end||null,active:fields.active};\n     const signature=JSON.stringify(data);\n     if(request.current.signature!==signature)request.current={signature,id:crypto.randomUUID()};\n-    setBusy(true);\n+    onSaving();setBusy(true);\n     try {\n-      if(item)await send(`/medications/items/${item.id}`,{...data,expected_revision:item.revision},\"PUT\");\n-      else await send(\"/medications/items\",{...data,client_request_id:request.current.id});\n-      clear();notify(\"Личная позиция сохранена; назначение МИС не менялось\");onSaved();\n+      const response=item?await send<ParticipationConfirmation>(`/medications/items/${item.id}`,{...data,expected_revision:item.revision},\"PUT\"):\n+        await send<ParticipationConfirmation>(\"/medications/items\",{...data,client_request_id:request.current.id});\n+      clear();notify(\"Личная позиция сохранена; назначение МИС не менялось\");onSaved(response);\n     } catch(error) {notify(error instanceof Error?error.message:\"Не удалось сохранить расписание\",\"error\");}\n     finally {setBusy(false);}\n   }\n--- local38/Patient.tsx\n+++ current/frontend/src/Patient.tsx\n@@ -254,7 +254,7 @@\n   if (view === \"diary\")\n     return <PatientDiary patientId={user.patient_id} notify={notify} progress={()=>navigate(\"journey\")} />;\n   if (view === \"medications\")\n-    return <MedicationSchedule patientId={user.patient_id} notify={notify} />;\n+    return <MedicationSchedule patientId={user.patient_id} notify={notify} progress={()=>navigate(\"journey\")} />;\n   if(assignmentId!==null&&!selected)return <>\n     <Heading eyebrow=\"Опрос врача\" title={assignments.loading?\"Открываем опрос…\":assignments.error||!assignments.data?\"Не удалось загрузить опрос\":\"Опрос недоступен\"}>Открыть можно только назначенные вам опросы.</Heading>\n     <ErrorBox message={assignments.error} retry={assignments.reload}/>\n--- local38/workspace.css\n+++ current/frontend/src/workspace.css\n@@ -532,6 +532,10 @@\n .medication-report-form > .button { justify-self: start; }\n .medication-editor > .field-hint { margin: 0 0 24px; }\n .medication-editor form { max-width: 760px; }\n+.medication-saved-result { scroll-margin:96px 0 88px; }\n+.medication-saved-result > .field-hint { margin:0 0 16px; }\n+.medication-saved-result h2:focus { outline:2px solid var(--signal-dark); outline-offset:4px; }\n+.medication-empty-action { display:block; margin-top:16px; }\n .medication-editor .weekdays { gap: 8px; padding: 12px; margin-bottom: 24px; }\n .medication-editor .weekdays label { min-width: 72px; min-height: 44px; gap: 8px; padding: 8px; border-radius: 7px; background: #f4f7f9; cursor: pointer; }\n .medication-editor .weekdays label:has(:checked) { background: #e7f3ef; color: #236d68; }\n",
+  "screenshots": [
+    {
+      "file": "docs/evidence/medication-receipts-2026-10-25/doctor-read-only-before-history-label.jpg",
+      "bytes": 73813,
+      "sha256": "1f923388d1c30ade451afb5e86f6a97ed487b4fa8d13ad6fe6e9b0df0d131216",
+      "pixels": [
+        1265,
+        712
+      ]
+    },
+    {
+      "file": "docs/evidence/medication-receipts-2026-10-25/doctor-read-only-final.jpg",
+      "bytes": 74916,
+      "sha256": "8cd4dc31633b8aadaf24eff9fc64888d70576f83083df6efba658656b5bef92e",
+      "pixels": [
+        1265,
+        712
+      ]
+    },
+    {
+      "file": "docs/evidence/medication-receipts-2026-10-25/report-error-mobile-final.jpg",
+      "bytes": 37178,
+      "sha256": "0934be145e794ff12c2088aa36795e8bed8c947fe0b857985bf74a50e31be856",
+      "pixels": [
+        360,
+        810
+      ]
+    },
+    {
+      "file": "docs/evidence/medication-receipts-2026-10-25/report-error-mobile.jpg",
+      "bytes": 37408,
+      "sha256": "158d91892757fe80fa5a490ad902de3673ac8290bb582f4cb1807a18c6a174c7",
+      "pixels": [
+        360,
+        810
+      ]
+    },
+    {
+      "file": "docs/evidence/medication-receipts-2026-10-25/report-zero-1440.jpg",
+      "bytes": 98121,
+      "sha256": "dbfca7dd0e8569ff546ff87d6b3f6568212b477a5c74e2c70652811d93a83afe",
+      "pixels": [
+        1425,
+        990
+      ]
+    },
+    {
+      "file": "docs/evidence/medication-receipts-2026-10-25/report-zero-768.jpg",
+      "bytes": 60717,
+      "sha256": "a2dd51731d8ed0674576638ff2651dbb914a9119a753a98206e843fe99b4e957",
+      "pixels": [
+        753,
+        1004
+      ]
+    },
+    {
+      "file": "docs/evidence/medication-receipts-2026-10-25/report-zero-mobile.jpg",
+      "bytes": 30597,
+      "sha256": "d5d7fd340e430a65fe6127cbe2cc5a13daed5fecaa8e2110f14d3a6ec52925fc",
+      "pixels": [
+        360,
+        810
+      ]
+    },
+    {
+      "file": "docs/evidence/medication-receipts-2026-10-25/schedule-2-mobile.jpg",
+      "bytes": 31622,
+      "sha256": "f6bd3bfbaf349448586002b87780366b73a62b38b2fab0fd2344ea053666b04a",
+      "pixels": [
+        360,
+        810
+      ]
+    }
+  ],
+  "limits": [
+    "The first whole-backend run had150 passes and one tmp_path setup error outside writable roots. A fresh, verified workspace basetemp produced151/151 with no skips; no application failure hidden.",
+    "The first stale-confirmation assertion hit Node DOM formatting allocation limits. Boolean assertion produced the valid RED; this is not evidence of application memory exhaustion.",
+    "First mobile503 and report-zero-before-error-polish precede local error-focus polish; report-inline-503-final and report-corrected-zero-final-mobile supersede them.",
+    "Tablet-after-resize preserves scroll242 and clips the panel top. Final tablet was taken after deliberate Home at scroll0; no automatic resize re-anchoring claim.",
+    "First two semantic exports precede the final text-only history-label mapping; final physician export follows it. Three JSDOM samples are not browser/WCAG or color/keyboard certification; incompletes remain.",
+    "Synthetic QA patient2 balance105→107 for medication, then110 for a private diary check. Medication item archived; existing log retained. Main demo patient data unchanged.",
+    "Diary first-fold and bottom-menu issues were found and captured for the next independent UI cycle, not marked fixed by this report.",
+    "No Git/external publication, real prescription, real discount, real MIS update, full WebVitals/FPS or max500ms acceptance."
+  ]
+}

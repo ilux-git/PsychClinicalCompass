@@ -1,0 +1,257 @@
+{
+  "before": {
+    "alerts": [
+      {
+        "focused": false,
+        "inChat": false,
+        "text": "Техническая проверка: сохранение временно недоступно."
+      }
+    ],
+    "focus": "BODY",
+    "messages": 2,
+    "overflow": false,
+    "support": true,
+    "text": "QA: проверка восстановления отправки. Не клиническое обращение."
+  },
+  "checks": [
+    {
+      "alerts": [
+        {
+          "focused": true,
+          "inComposer": true,
+          "rect": {
+            "bottom": 346.96875,
+            "height": 70.78125,
+            "left": 37,
+            "right": 323,
+            "top": 276.1875,
+            "width": 286,
+            "x": 37,
+            "y": 276.1875
+          },
+          "text": "Техническая проверка: сохранение временно недоступно."
+        }
+      ],
+      "errorDescription": "_r_2_",
+      "errorId": "_r_2_",
+      "focus": {
+        "label": null,
+        "tag": "DIV"
+      },
+      "lastMessage": "Пациент19 окт., 00:39Не до конца понимаю, что делать между приёмами.Сохранено",
+      "messages": 2,
+      "overflow": false,
+      "support": true,
+      "text": "QA: проверка восстановления отправки. Не клиническое обращение.",
+      "title": "Написать врачу",
+      "viewport": {
+        "height": 844,
+        "width": 375
+      },
+      "label": "patient-error-mobile"
+    },
+    {
+      "alerts": [
+        {
+          "focused": false,
+          "inComposer": true,
+          "rect": {
+            "bottom": 346.96875,
+            "height": 70.78125,
+            "left": 37,
+            "right": 323,
+            "top": 276.1875,
+            "width": 286,
+            "x": 37,
+            "y": 276.1875
+          },
+          "text": "Техническая проверка: сохранение временно недоступно."
+        }
+      ],
+      "errorDescription": "_r_2_",
+      "errorId": "_r_2_",
+      "focus": {
+        "label": "Текст сообщения",
+        "tag": "TEXTAREA"
+      },
+      "lastMessage": "Пациент19 окт., 00:39Не до конца понимаю, что делать между приёмами.Сохранено",
+      "messages": 2,
+      "overflow": false,
+      "support": true,
+      "text": "QA: проверка восстановления отправки. Не клиническое обращение.",
+      "title": "Написать врачу",
+      "viewport": {
+        "height": 844,
+        "width": 375
+      },
+      "label": "patient-guard-stay-mobile"
+    },
+    {
+      "alerts": [],
+      "errorDescription": null,
+      "focus": {
+        "label": null,
+        "tag": "BODY"
+      },
+      "lastMessage": "Пациент25 окт., 11:59QA: проверка восстановления отправки. Не клиническое обращение.Пациент попросил поддержкуСохранено",
+      "messages": 3,
+      "overflow": false,
+      "support": false,
+      "text": "",
+      "title": "Написать врачу",
+      "viewport": {
+        "height": 844,
+        "width": 375
+      },
+      "label": "patient-retry-saved-mobile"
+    },
+    {
+      "alerts": [],
+      "errorDescription": null,
+      "focus": {
+        "label": "Текст сообщения",
+        "tag": "TEXTAREA"
+      },
+      "lastMessage": "Пациент25 окт., 12:02QA: проверка возврата курсора после сохранения.Сохранено",
+      "messages": 4,
+      "overflow": false,
+      "support": false,
+      "text": "",
+      "title": "Написать врачу",
+      "viewport": {
+        "height": 844,
+        "width": 375
+      },
+      "label": "patient-saved-focus-mobile-final"
+    },
+    {
+      "alerts": [],
+      "errorDescription": null,
+      "focus": {
+        "label": "История переписки",
+        "tag": "DIV"
+      },
+      "lastMessage": "Пациент25 окт., 12:02QA: проверка возврата курсора после сохранения.Сохранено",
+      "messages": 4,
+      "overflow": false,
+      "support": false,
+      "text": "QA: проверка выбранного фокуса при задержке отправки.",
+      "title": "Написать врачу",
+      "viewport": {
+        "height": 844,
+        "width": 375
+      },
+      "label": "patient-delayed-other-focus-pending"
+    },
+    {
+      "alerts": [],
+      "errorDescription": null,
+      "focus": {
+        "label": "История переписки",
+        "tag": "DIV"
+      },
+      "lastMessage": "Пациент25 окт., 12:02QA: проверка выбранного фокуса при задержке отправки.Сохранено",
+      "messages": 5,
+      "overflow": false,
+      "support": false,
+      "text": "",
+      "title": "Написать врачу",
+      "viewport": {
+        "height": 844,
+        "width": 375
+      },
+      "label": "patient-delayed-other-focus-saved-final"
+    },
+    {
+      "alerts": [
+        {
+          "focused": true,
+          "inComposer": true,
+          "rect": {
+            "bottom": 511.859375,
+            "height": 48.390625,
+            "left": 321,
+            "right": 884,
+            "top": 463.46875,
+            "width": 563,
+            "x": 321,
+            "y": 463.46875
+          },
+          "text": "Техническая проверка: сохранение временно недоступно."
+        }
+      ],
+      "errorDescription": "_r_l_",
+      "errorId": "_r_l_",
+      "focus": {
+        "label": null,
+        "tag": "DIV"
+      },
+      "lastMessage": "Пациент25 окт., 12:02QA: проверка выбранного фокуса при задержке отправки.СохраненоНаблюдение к сообщению",
+      "messages": 5,
+      "overflow": false,
+      "text": "QA: ответ врача для проверки формы, без медицинской рекомендации.",
+      "title": "Мария Иванова",
+      "viewport": {
+        "height": 720,
+        "width": 1280
+      },
+      "label": "doctor-error-desktop-final"
+    },
+    {
+      "alerts": [],
+      "errorDescription": null,
+      "focus": {
+        "label": "Текст сообщения",
+        "tag": "TEXTAREA"
+      },
+      "lastMessage": "Пациент25 окт., 12:02QA: проверка выбранного фокуса при задержке отправки.СохраненоНаблюдение к сообщению",
+      "messages": 5,
+      "overflow": false,
+      "text": "QA: уточнённый ответ врача для проверки формы, без медицинской рекомендации.",
+      "title": "Мария Иванова",
+      "viewport": {
+        "height": 720,
+        "width": 1280
+      },
+      "label": "doctor-edit-clears-error-desktop-final"
+    },
+    {
+      "alerts": [],
+      "errorDescription": null,
+      "focus": {
+        "label": "Текст сообщения",
+        "tag": "TEXTAREA"
+      },
+      "lastMessage": "Врач25 окт., 12:03QA: уточнённый ответ врача для проверки формы, без медицинской рекомендации.СохраненоНаблюдение к сообщению",
+      "messages": 6,
+      "overflow": false,
+      "text": "",
+      "title": "Мария Иванова",
+      "viewport": {
+        "height": 720,
+        "width": 1280
+      },
+      "label": "doctor-retry-saved-desktop-final"
+    },
+    {
+      "alerts": [],
+      "errorDescription": null,
+      "focus": {
+        "label": "Текст сообщения",
+        "tag": "TEXTAREA"
+      },
+      "lastMessage": "Врач25 окт., 12:03QA: уточнённый ответ врача для проверки формы, без медицинской рекомендации.СохраненоНаблюдение к сообщению",
+      "messages": 6,
+      "overflow": false,
+      "text": "",
+      "title": "Мария Иванова",
+      "viewport": {
+        "height": 1024,
+        "width": 768
+      },
+      "label": "doctor-saved-tablet-final"
+    }
+  ],
+  "console": [],
+  "phases": "First three checks show the inline-error fix before success-focus restoration: the third confirms BODY focus after success. Final-suffixed checks verify success focus, deliberate later focus and doctor failure/edit/retry on final source. Synthetic QA message count2→6; three patient messages(one support flag), one doctor reply. No actual external channel used."
+}

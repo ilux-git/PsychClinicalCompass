@@ -1,0 +1,23 @@
+{
+  "readingDuringSend": {
+    "clientHeight": 220,
+    "draft": "QA: проверка сохранения места чтения при отправке.",
+    "focus": "История переписки",
+    "messages": 6,
+    "scrollHeight": 1169,
+    "scrollTop": 530,
+    "submitDisabled": true
+  },
+  "afterSave": {
+    "clientHeight": 220,
+    "draft": "",
+    "focus": "История переписки",
+    "messages": 7,
+    "newMessages": null,
+    "scrollHeight": 1346,
+    "scrollTop": 1126,
+    "submitDisabled": true,
+    "busy": false
+  },
+  "note": "Home had started a native scroll:530 is an intermediate reading position, not a claimed settled0. Save forces1126=max(1346−220), no new-message control. Disabled submit after save is due to empty text; fieldset is enabled."
+}

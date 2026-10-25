@@ -1,0 +1,45 @@
+{
+  "recorded_at": "2026-10-24T23:29:17.930164+00:00",
+  "note_source_guard": {
+    "red_failed": 1,
+    "green_passed": 5,
+    "browser": "CUA/IAB isolated8782,1280x720",
+    "observed": [
+      "Cancel retains original source and text and focuses note-text",
+      "Confirm clears old text and category before opening new source",
+      "The new draft blocks navigation and survives cancellation",
+      "Saved notes count remains1; verification drafts discarded without saving"
+    ],
+    "scope": "Sourced unsaved notes only; explicitly unlinking or initially linking a manual note preserves the chosen behavior"
+  },
+  "initial_bundle": {
+    "before": {
+      "file": "index-CFMSWbXX.js",
+      "bytes": 499876,
+      "gzip_bytes": 150552,
+      "sha256": "2c4acdcfe9ee1d6b3a40a4f96173eb247422af5da014383e543e7bf56c1610d9"
+    },
+    "after": {
+      "file": "index-CC5F7A93.js",
+      "bytes": 385235,
+      "gzip_bytes": 122278,
+      "sha256": "79e3755f9252ae9e1a504295db421c1793d1fec5d6473c99f373083d6d42a7d7"
+    },
+    "bytes_reduction_percent": 22.93,
+    "gzip_reduction_percent": 18.78,
+    "scope": "Physician card and task board load through existing Suspense/SectionBoundary; build bytes, not a measured startup-time, Web Vitals, FPS or API-latency improvement"
+  },
+  "bundle_browser_smoke": {
+    "doctor": "Directory reload preserves authorized8patients and return focus; work board opens",
+    "patient": "Home and My Progress load, balance105 unchanged, no alert",
+    "coordinator": "Own organizational board loads,8done, no clinical cards",
+    "administrator": "Overview loads, no patient links or alert;27awaiting checks",
+    "console_warnings_errors": 0,
+    "scope": "1280x720 smoke after code splitting; earlier375/768/1440 evidence remains separate"
+  },
+  "source_hashes": {
+    "frontend/src/App.tsx": "f65c0019100a4bf22f4900055c6eb1434424ca8865d3a050a8ab18ddb5a42987",
+    "frontend/src/DoctorPatients.tsx": "98c653561f8ac638b095338601e91d3dda5de8c6ce458ad42da175523b643dde",
+    "frontend/tests/doctor-note-interaction.test.mjs": "f10b92f884198fd723552c75c141c4e64c2dd0de926771a8071c70656e9a2fab"
+  }
+}

@@ -1,0 +1,456 @@
+{
+  "recordedAt": "2026-10-25T05:17:18.950584+00:00",
+  "status": "later reading position and explicit Show-latest focus verified",
+  "changes": [
+    "A scroll revision captured on send prevents a successful response from overriding a later scroll. Auto-follow is not enabled on failure.",
+    "Existing Show-latest control moves to the end and focuses the persistent history before the temporary button disappears."
+  ],
+  "scope": "One runtime component and one new behavior regression in its existing suite. No markup, CSS, API, permission, medical, reward or channel rule change.",
+  "verification": {
+    "native": {
+      "before": {
+        "duringSend": {
+          "clientHeight": 220,
+          "draft": "QA: проверка сохранения места чтения при отправке.",
+          "focus": "История переписки",
+          "messages": 6,
+          "scrollHeight": 1169,
+          "scrollTop": 530,
+          "submitDisabled": true
+        },
+        "afterSave": {
+          "clientHeight": 220,
+          "draft": "",
+          "focus": "История переписки",
+          "messages": 7,
+          "newMessages": null,
+          "scrollHeight": 1346,
+          "scrollTop": 1126,
+          "submitDisabled": true,
+          "busy": false
+        }
+      },
+      "showLatestFocusBefore": {
+        "label": null,
+        "tag": "BODY"
+      },
+      "checks": [
+        {
+          "busy": true,
+          "clientHeight": 220,
+          "draft": "QA: сохранение места чтения после исправления.",
+          "focus": "История переписки",
+          "messages": 7,
+          "newMessages": null,
+          "overflow": false,
+          "scrollHeight": 1346,
+          "scrollTop": 937,
+          "viewport": {
+            "height": 720,
+            "width": 1280
+          },
+          "label": "doctor-reading-during-send"
+        },
+        {
+          "busy": false,
+          "clientHeight": 220,
+          "draft": "",
+          "focus": "История переписки",
+          "messages": 8,
+          "newMessages": "Новые сообщения · Показать",
+          "overflow": false,
+          "scrollHeight": 1523,
+          "scrollTop": 0,
+          "viewport": {
+            "height": 720,
+            "width": 1280
+          },
+          "label": "doctor-reading-preserved-after-save"
+        },
+        {
+          "busy": false,
+          "clientHeight": 220,
+          "draft": "",
+          "focus": null,
+          "messages": 8,
+          "newMessages": null,
+          "overflow": false,
+          "scrollHeight": 1523,
+          "scrollTop": 1303,
+          "viewport": {
+            "height": 720,
+            "width": 1280
+          },
+          "label": "doctor-show-latest-after-click-before-focus-fix"
+        },
+        {
+          "busy": true,
+          "clientHeight": 220,
+          "draft": "QA: проверка перехода к новым сообщениям и фокуса.",
+          "focus": "История переписки",
+          "messages": 8,
+          "newMessages": null,
+          "overflow": false,
+          "scrollHeight": 1523,
+          "scrollTop": 1068,
+          "viewport": {
+            "height": 720,
+            "width": 1280
+          },
+          "label": "doctor-reading-pending-final"
+        },
+        {
+          "busy": false,
+          "clientHeight": 220,
+          "draft": "",
+          "focus": "История переписки",
+          "messages": 9,
+          "newMessages": "Новые сообщения · Показать",
+          "overflow": false,
+          "scrollHeight": 1701,
+          "scrollTop": 0,
+          "viewport": {
+            "height": 720,
+            "width": 1280
+          },
+          "label": "doctor-reading-preserved-final"
+        },
+        {
+          "busy": false,
+          "clientHeight": 220,
+          "draft": "",
+          "focus": "История переписки",
+          "messages": 9,
+          "newMessages": null,
+          "overflow": false,
+          "scrollHeight": 1701,
+          "scrollTop": 1481,
+          "viewport": {
+            "height": 720,
+            "width": 1280
+          },
+          "label": "doctor-show-latest-focus-final"
+        },
+        {
+          "busy": true,
+          "clientHeight": 294,
+          "draft": "QA: чтение истории пациентом при ожидании отправки.",
+          "focus": "История переписки",
+          "messages": 9,
+          "newMessages": null,
+          "overflow": false,
+          "scrollHeight": 1476,
+          "scrollTop": 911,
+          "viewport": {
+            "height": 844,
+            "width": 375
+          },
+          "label": "patient-reading-pending-mobile-final"
+        },
+        {
+          "busy": false,
+          "clientHeight": 294,
+          "draft": "",
+          "focus": "История переписки",
+          "messages": 10,
+          "newMessages": "Новые сообщения · Показать",
+          "overflow": false,
+          "scrollHeight": 1629,
+          "scrollTop": 0,
+          "viewport": {
+            "height": 844,
+            "width": 375
+          },
+          "label": "patient-reading-preserved-mobile-final"
+        },
+        {
+          "busy": false,
+          "clientHeight": 294,
+          "draft": "",
+          "focus": "История переписки",
+          "messages": 10,
+          "newMessages": null,
+          "overflow": false,
+          "scrollHeight": 1629,
+          "scrollTop": 1335,
+          "viewport": {
+            "height": 844,
+            "width": 375
+          },
+          "label": "patient-show-latest-focus-mobile-final"
+        }
+      ],
+      "console": [],
+      "phases": "First3 rows precede explicit Show-latest focus restoration;6 final rows cover doctor1280 and patient375 on final source. Native Home sampled during scroll animation; only post-save0 readings are treated as settled. No failure-branch auto-follow change: scroll revision is compared only after a successful send."
+    },
+    "acceptedFinalStates": 6,
+    "rawStates": 9,
+    "frontend": {
+      "passed": 58,
+      "durationMs": 61357.6796,
+      "exitCode": 0,
+      "source": {
+        "file": "outputs/chat-reading-frontend-20261025.log",
+        "bytes": 8162,
+        "sha256": "2cf9e408f40353f50befc040cc4537cdbc3caad88ae7a0c3b0792b7525772276"
+      }
+    },
+    "regression": {
+      "readingRed": "3pass/1fail;1169 instead of the selected180",
+      "buttonFocusRed": "3pass/1fail at focus lost after temporary control removal",
+      "green": "4/4; existing failure/retry/intentional-focus cases retained"
+    },
+    "buildAndTypes": {
+      "exitCode": 0,
+      "source": {
+        "file": "outputs/chat-reading-build-20261025.log",
+        "bytes": 2056,
+        "sha256": "6d47b4454c49c36c1d6700adddb49a73418484eb8ece7a1ca188a46051a90ce3"
+      }
+    },
+    "http": {
+      "base_url": "http://127.0.0.1:8780",
+      "scope": "HTTP bytes and MIME only; not browser layout/interactions",
+      "assets": [
+        {
+          "file": "AdminDashboard-BSyI3mvK.js",
+          "status": 200,
+          "bytes": 18580,
+          "sha256": "424781a5e80267bbdb56f87fb724dccc06c0aa2aeb469270725f7ae098de6362",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "CareWorkflow-DUTiVTSK.js",
+          "status": 200,
+          "bytes": 26980,
+          "sha256": "80ba9547a960520be79f5d7ed5798fd0dfbacd99fdea76b735a65e05618bea65",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "Charts-D-GPr1dJ.js",
+          "status": 200,
+          "bytes": 5476,
+          "sha256": "3e72f8b733c402869ca4b59bf7d336e4e6e4ddaeb70f647886aa017ab575ac05",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "DoctorDashboard-BQkng1By.js",
+          "status": 200,
+          "bytes": 18046,
+          "sha256": "4a96a1af14dae5793a08f3c804dcaaffbfd6ffe35179937a2601f95b15a104d2",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "DoctorPatients-CRhZRNsx.js",
+          "status": 200,
+          "bytes": 36363,
+          "sha256": "3271a70e2fad514eb6a451be3c7f486ae7329d72bb6d8b3c61bab5871d27c02d",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "MedicationSchedule-CWGaeKfK.js",
+          "status": 200,
+          "bytes": 37054,
+          "sha256": "c84bf2902ad11b60c15a02098c0031659cfaad5564f9536e1c2e86c73cfdf719",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "MedicationSchedule-C_cioHGn.css",
+          "status": 200,
+          "bytes": 2103,
+          "sha256": "3ecca9c112edd867ada5c834649a96069fb7decf7d1ea5da5aebe9da0ab28a4e",
+          "mime": "text/css; charset=utf-8"
+        },
+        {
+          "file": "Patient-B9xuvwdE.css",
+          "status": 200,
+          "bytes": 26258,
+          "sha256": "9160fbf594ce6238151f4e13f5a28e00c0e62184711079b09f25bbebeb327b0b",
+          "mime": "text/css; charset=utf-8"
+        },
+        {
+          "file": "Patient-rNtghg2c.js",
+          "status": 200,
+          "bytes": 66896,
+          "sha256": "7a39f13d7ffde6567cf636e82e313e643124c66310b300a7c0663c27e680ca5b",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "SurveyBuilder-CmTAc4ti.js",
+          "status": 200,
+          "bytes": 25412,
+          "sha256": "fe88cae5089993add689ad4c95d310dc6e272b3fe8c68bbae82ad880fe3e7754",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "SurveyFields-C7G8T23J.js",
+          "status": 200,
+          "bytes": 3121,
+          "sha256": "2f555f1f4887c4f9daebe0392e1d9da804cfd09e7896c9842c391d6b83af6195",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "TaskBoard-DegwBk1B.js",
+          "status": 200,
+          "bytes": 7839,
+          "sha256": "b0679a7c932702d2f6c2fb5605cd7fd1b100a3b3ee42aa8f02c2f5f8a8c16b39",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "WorkflowMetrics-BjTTwm0N.js",
+          "status": 200,
+          "bytes": 12440,
+          "sha256": "fabb0bafa248c871824be67e9415b72446f2ec8e090129369cdc86d7570b160e",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "chevron-right-C9_uLnP4.js",
+          "status": 200,
+          "bytes": 159,
+          "sha256": "8b1b1a236ee5307de60c3c5d4bff955813f644b647ebf51556deff4993605149",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "collection-COswcvyL.js",
+          "status": 200,
+          "bytes": 939,
+          "sha256": "b8f61ba215c319fcc2aaf6ce0fb3b26b182c049b9a0d9e4febe85703fe8000e4",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "index-BJrhIZ7R.css",
+          "status": 200,
+          "bytes": 113810,
+          "sha256": "e351c86a387f1283379c88703fc001aceeb5c2c2ee05417a8b95e45823e80f86",
+          "mime": "text/css; charset=utf-8"
+        },
+        {
+          "file": "index-ChEUj0ns.js",
+          "status": 200,
+          "bytes": 390678,
+          "sha256": "3c239efcb62d9096a7a352e946192f8510c08a23e0d31bbc4ef1379345e5f105",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "patientProgress-Do0fObh9.js",
+          "status": 200,
+          "bytes": 1130,
+          "sha256": "611dafc1b1ad2ac66b0b04ac3852b8c0bf56b6f106882f460ee96efa5097a0b3",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "plus-CVgJceGK.js",
+          "status": 200,
+          "bytes": 182,
+          "sha256": "9aaebdf3e85555e07823af2a85279a9bc259909e698ec05ac99c5e78d8dbd3f5",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "send-1vE8xMf5.js",
+          "status": 200,
+          "bytes": 652,
+          "sha256": "0a7d02df75d04be1313d516fe111343c34d73c3f30b44b2c2f9730f24422ed7a",
+          "mime": "text/javascript; charset=utf-8"
+        }
+      ],
+      "health": {
+        "status": "ok",
+        "compass_db": true,
+        "mis_db": true,
+        "mode": "synthetic_demo"
+      },
+      "root_matches_dist": true,
+      "qa_health": {
+        "status": "ok",
+        "compass_db": true,
+        "mis_db": true,
+        "mode": "synthetic_demo"
+      }
+    },
+    "backend": "Unchanged, previous151/151 retained; not rerun."
+  },
+  "sources": [
+    {
+      "file": "frontend/src/Chat.tsx",
+      "bytes": 10561,
+      "sha256": "462af8f4baee14d90f63e6407aeb13ae10b4f44478d05d193580c88f987923ef"
+    },
+    {
+      "file": "frontend/tests/chat-recovery-interaction.test.mjs",
+      "bytes": 9555,
+      "sha256": "9895bc43285727deaffefa6e5d496c1f4c50657a146558dd702c7dd3b3ce83ee"
+    }
+  ],
+  "diff": "--- local57/Chat.tsx\n+++ current/frontend/src/Chat.tsx\n@@ -54,6 +54,7 @@\n   const list = useRef<HTMLDivElement>(null);\n   const lastMessage = useRef<number | null>(null);\n   const following = useRef(true);\n+  const scrollRevision = useRef(0);\n   const [newMessages,setNewMessages] = useState(false);\n   const {moving,transition} = useInteractionMotion();\n   const latestId = messages.data?.at(-1)?.id;\n@@ -68,6 +69,7 @@\n   },[latestId]);\n   function showLatest() {\n     list.current?.scrollTo({top:list.current.scrollHeight,behavior:moving?\"smooth\":\"auto\"});\n+    list.current?.focus({preventScroll:true});\n     following.current=true;setNewMessages(false);\n   }\n   const request = useRef({ text: \"\", id: \"\" });\n@@ -77,6 +79,7 @@\n     const signature = JSON.stringify([text,supportRequested]);\n     if (request.current.text !== signature || !request.current.id)\n       request.current = { text:signature, id: crypto.randomUUID() };\n+    const scrollAtSend=scrollRevision.current;\n     resumeComposer.current=document.activeElement===composer.current||document.activeElement===sendButton.current;\n     setSendError(\"\");setBusy(true);\n     try {\n@@ -89,7 +92,7 @@\n       setText(\"\");\n       setSupportRequested(false);\n       clearGuard();\n-      following.current=true;\n+      if(scrollRevision.current===scrollAtSend)following.current=true;\n       request.current = { text: \"\", id: \"\" };\n       messages.reload();\n       requests.reload();\n@@ -122,7 +125,7 @@\n         )\n       ) : (\n         <div className=\"message-list\" ref={list} role=\"log\" aria-live=\"polite\" aria-relevant=\"additions\" aria-label=\"История переписки\"\n-          tabIndex={0} onScroll={event=>{const node=event.currentTarget;following.current=node.scrollHeight-node.scrollTop-node.clientHeight<48;if(following.current)setNewMessages(false);}}>\n+          tabIndex={0} onScroll={event=>{scrollRevision.current++;const node=event.currentTarget;following.current=node.scrollHeight-node.scrollTop-node.clientHeight<48;if(following.current)setNewMessages(false);}}>\n           {!messages.data?.length && (\n             <Empty title=\"Диалог ещё не начат\">\n               Можно написать сообщение — оно сохранится в истории.\n",
+  "screenshots": [
+    {
+      "file": "docs/evidence/chat-reading-position-2026-10-25/doctor-reading-preserved-final.jpg",
+      "bytes": 76160,
+      "sha256": "218f5318deb075467700b5f73c521d416c23d8a217d7e9571877976f989a8f21",
+      "pixels": [
+        1265,
+        712
+      ]
+    },
+    {
+      "file": "docs/evidence/chat-reading-position-2026-10-25/doctor-reading-preserved.jpg",
+      "bytes": 76158,
+      "sha256": "c8e09773efc66ad5103169bd3c52d244ea95ec428bbb82e85f28cccb1c62f18f",
+      "pixels": [
+        1265,
+        712
+      ]
+    },
+    {
+      "file": "docs/evidence/chat-reading-position-2026-10-25/doctor-show-latest-before-focus.jpg",
+      "bytes": 72149,
+      "sha256": "8e056fa676a761d09042b6514c043d926c72b6110c5665f247a587481f9f34fc",
+      "pixels": [
+        1265,
+        712
+      ]
+    },
+    {
+      "file": "docs/evidence/chat-reading-position-2026-10-25/doctor-show-latest-final.jpg",
+      "bytes": 72151,
+      "sha256": "9d19c0f33971a1b440744a8ce6c307102121e5253d8c70f310cf2c1efb4df973",
+      "pixels": [
+        1265,
+        712
+      ]
+    },
+    {
+      "file": "docs/evidence/chat-reading-position-2026-10-25/jump-after-save-before.jpg",
+      "bytes": 72766,
+      "sha256": "9bbbf055d796374869d0d2bbf7e7096fa38d30a0261d648005b5d2cf4c714302",
+      "pixels": [
+        1265,
+        712
+      ]
+    },
+    {
+      "file": "docs/evidence/chat-reading-position-2026-10-25/patient-reading-preserved-mobile.jpg",
+      "bytes": 35981,
+      "sha256": "cc727d7756c7dc43e2fb76f951d760b058791f47d1e39395860481e125655ce4",
+      "pixels": [
+        360,
+        810
+      ]
+    },
+    {
+      "file": "docs/evidence/chat-reading-position-2026-10-25/patient-show-latest-mobile-final.jpg",
+      "bytes": 31765,
+      "sha256": "59a1d429af04b0d918aaab54e230ba676cf1874366908428ad1a44e664b31e6f",
+      "pixels": [
+        360,
+        810
+      ]
+    }
+  ],
+  "qaData": "QA conversation2 messages6→10:3doctor/1patient synthetic text, no new support flag; main data and real channels untouched.",
+  "limits": [
+    "JSDOM regression uses explicit scroll metrics because it has no layout; independent native Home/real scroll positions cover doctor1280 and patient375.",
+    "Pending Home samples are intermediate during native smooth scroll. Only settled post-save0 and explicit end-position observations are acceptance evidence.",
+    "First3 raw states precede the one-line explicit-focus fix; six final states cover final source. No new whole-browser/WCAG, screen-reader, FPS, load or clinical acceptance."
+  ]
+}

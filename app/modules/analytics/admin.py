@@ -19,8 +19,8 @@ SOURCES = [
     {"code": "diary", "status": "patient_controlled_excluded", "label": "Дневник: доступ выбирает пациент"},
     {"code": "visits", "status": "synthetic_json", "label": "Визиты: синтетический JSON МИС"},
     {"code": "medication_reminders", "status": "in_app_simulation", "label": "Личные расписания и самоотчёты; напоминания — симуляция"},
-    {"code": "wearables", "status": "not_connected", "label": "Устройства: нет выбранного поставщика"},
-    {"code": "apple_state_of_mind", "status": "not_connected", "label": "Apple Health: нет подключения"},
+    {"code": "wearables", "status": "not_connected", "label": "Носимые устройства: нет реального подключения"},
+    {"code": "apple_state_of_mind", "status": "not_connected", "label": "Apple Health / HealthKit: выбран первым источником, подключение запланировано"},
 ]
 
 
@@ -43,9 +43,15 @@ async def clinic_summary(session, minimum: int | None):
     if minimum is None:
         return report
     population = set((await session.scalars(select(Patient.id))).all())
-    rows = (await session.execute(select(SurveyAssignment, Survey, SurveySubmission).join(
+    assignments = (await session.execute(select(SurveyAssignment, SurveySubmission).join(
         Survey, Survey.id == SurveyAssignment.survey_id).outerjoin(
         SurveySubmission, SurveySubmission.assignment_id == SurveyAssignment.id))).all()
+    # Published definitions are immutable. Fetch each once instead of decoding its
+    # JSON again for every assignment; retain the original inner/outer join rows.
+    survey_ids = {assignment.survey_id for assignment, _ in assignments}
+    surveys = {survey.id: survey for survey in (await session.scalars(
+        select(Survey).where(Survey.id.in_(survey_ids)))).all()} if survey_ids else {}
+    rows = [(assignment, surveys[assignment.survey_id], response) for assignment, response in assignments]
     report["cohort"] = protect({"patients": len(population)}, [population], population, minimum)
     for dimension in dimension_coverage(rows, population):
         code = dimension["code"]

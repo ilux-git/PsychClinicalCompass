@@ -11,7 +11,7 @@ from app.modules.adherence.medication_schemas import MedicationCreate, Medicatio
 from app.modules.adherence.medications import inventory, item_read, log_read, occurrences
 from app.modules.audit.service import record_event
 from app.modules.patients.models import Patient
-from app.modules.adherence.rewards import grant_points
+from app.modules.adherence.rewards import grant_points, participation_receipt
 
 router = APIRouter(tags=["medication schedule"])
 PatientUser = Depends(require_role([UserRole.patient]))
@@ -25,6 +25,11 @@ async def own_patient(session, user, lock=False):
     if patient is None:
         raise HTTPException(403, "Учётная запись не связана с пациентом")
     return patient
+
+
+async def medication_response(session, patient_id, data, source_key, replayed):
+    receipt = await participation_receipt(session, patient_id, "medication", source_key)
+    return {**data, "replayed": replayed, "participation": receipt}
 
 
 @router.get("/patients/{patient_id}/medications")
@@ -63,7 +68,7 @@ async def create_item(payload: MedicationCreate, session: CompassSession, user: 
     if previous:
         if previous.initial_payload != data:
             raise HTTPException(409, "Ключ запроса уже использован с другой позицией")
-        return {**item_read(previous), "replayed": True}
+        return await medication_response(session, patient.id, item_read(previous), f"item:{previous.id}:v1", True)
     row = MedicationItem(patient_id=patient.id, created_by_id=user.id,
         client_request_id=str(payload.client_request_id), initial_payload=data,
         **payload.model_dump(exclude={"client_request_id"}))
@@ -71,8 +76,9 @@ async def create_item(payload: MedicationCreate, session: CompassSession, user: 
     record_event(session, user.id, patient.id, "medication.item_created", "medication_item", row.id,
                  {"source": "patient_entered", "mis_write": False})
     await grant_points(session, patient.id, "medication", f"item:{row.id}:v1", user.id)
+    response = await medication_response(session, patient.id, item_read(row), f"item:{row.id}:v1", False)
     await session.commit()
-    return {**item_read(row), "replayed": False}
+    return response
 
 
 @router.put("/medications/items/{item_id}")
@@ -86,7 +92,7 @@ async def edit_item(item_id: int, payload: MedicationEdit, session: CompassSessi
     same = all(getattr(row, k) == v for k, v in data.items())
     if row.revision != payload.expected_revision:
         if same and row.revision == payload.expected_revision + 1:
-            return item_read(row)
+            return await medication_response(session, patient.id, item_read(row), f"item:{row.id}:v{row.revision}", True)
         raise HTTPException(409, "Расписание уже изменено: обновите список")
     if not same:
         for k, v in data.items():
@@ -95,8 +101,9 @@ async def edit_item(item_id: int, payload: MedicationEdit, session: CompassSessi
         record_event(session, user.id, patient.id, "medication.item_updated", "medication_item", row.id,
                      {"revision": row.revision, "mis_write": False})
         await grant_points(session, patient.id, "medication", f"item:{row.id}:v{row.revision}", user.id)
+    response = await medication_response(session, patient.id, item_read(row), f"item:{row.id}:v{row.revision}", same)
     await session.commit()
-    return item_read(row)
+    return response
 
 
 @router.post("/medications/reports", status_code=201)
@@ -108,7 +115,7 @@ async def medication_report(payload: MedicationReport, session: CompassSession, 
         if not previous.occurrence_key.startswith(payload.day.isoformat() + "@") or (previous.item_key, previous.occurrence_key, previous.status, previous.reason) != (
             payload.item_key, payload.occurrence_key, payload.status, payload.reason.strip()):
             raise HTTPException(409, "Ключ запроса уже использован с другим самоотчётом")
-        return {**log_read(previous), "replayed": True}
+        return await medication_response(session, patient.id, log_read(previous), f"log:{previous.id}", True)
     items, _ = await inventory(session, patient)
     item = next((i for i in items if i["key"] == payload.item_key), None)
     if item is None or not item["active"]:
@@ -134,7 +141,7 @@ async def medication_report(payload: MedicationReport, session: CompassSession, 
     if existing:
         if existing.status != payload.status or existing.reason != payload.reason.strip():
             raise HTTPException(409, "Самоотчёт уже есть: исправьте существующую запись")
-        return {**log_read(existing), "replayed": True}
+        return await medication_response(session, patient.id, log_read(existing), f"log:{existing.id}", True)
     row = MedicationLog(patient_id=patient.id, client_request_id=str(payload.client_request_id),
         item_key=payload.item_key, occurrence_key=payload.occurrence_key, scheduled_for=scheduled,
         status=payload.status, reason=payload.reason.strip())
@@ -142,8 +149,9 @@ async def medication_report(payload: MedicationReport, session: CompassSession, 
     record_event(session, user.id, patient.id, "medication.reported", "medication_log", row.id,
                  {"status": row.status, "ingestion_verified": False})
     await grant_points(session, patient.id, "medication", f"log:{row.id}", user.id)
+    response = await medication_response(session, patient.id, log_read(row), f"log:{row.id}", False)
     await session.commit()
-    return {**log_read(row), "replayed": False}
+    return response
 
 
 @router.patch("/medications/reports/{report_id}")
@@ -156,7 +164,8 @@ async def edit_report(report_id: int, payload: MedicationReportEdit, session: Co
     same = row.status == payload.status and row.reason == payload.reason.strip()
     if row.revision != payload.expected_revision:
         if same and row.revision == payload.expected_revision + 1:
-            return log_read(row)
+            source_key = f"log:{row.id}" if row.revision == 1 else f"log:{row.id}:v{row.revision}"
+            return await medication_response(session, patient.id, log_read(row), source_key, True)
         raise HTTPException(409, "Самоотчёт уже изменён")
     if not same:
         row.status, row.reason = payload.status, payload.reason.strip()
@@ -164,5 +173,7 @@ async def edit_report(report_id: int, payload: MedicationReportEdit, session: Co
         record_event(session, user.id, patient.id, "medication.report_corrected", "medication_log", row.id,
                      {"status": row.status, "revision": row.revision})
         await grant_points(session, patient.id, "medication", f"log:{row.id}:v{row.revision}", user.id)
+    source_key = f"log:{row.id}" if row.revision == 1 else f"log:{row.id}:v{row.revision}"
+    response = await medication_response(session, patient.id, log_read(row), source_key, same)
     await session.commit()
-    return log_read(row)
+    return response

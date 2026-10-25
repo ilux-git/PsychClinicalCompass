@@ -4,6 +4,7 @@ import exec from 'k6/execution';
 import {SharedArray} from 'k6/data';
 import {Trend} from 'k6/metrics';
 import {randomBytes} from 'k6/crypto';
+import {requestLatency} from './load_latency.mjs';
 
 const users = new SharedArray('isolated users', () => JSON.parse(open(__ENV.LOAD_USER_FILE)));
 const manifest = JSON.parse(open(__ENV.LOAD_MANIFEST));
@@ -12,6 +13,7 @@ const base = __ENV.LOAD_BASE_URL;
 const extended = __ENV.LOAD_EXTENDED_WORKFLOWS === '1';
 let nextTask = null, nextAlert = null;
 const latency = new Trend('user_request_latency', true);
+const legacyLatency = new Trend('legacy_duplicated_connect_latency', true);
 const operations = ['assignments','points','history','medications','patient_card','diary_write','message_outbox','directory','task_board','doctor_care','doctor_engagement','clinic_analytics'];
 if(extended) operations.push('survey_submit','support_progress','doctor_inbox','task_update','event_action');
 const thresholds = {http_req_failed:['rate==0'],checks:['rate==1'],user_request_latency:['max<=500']};
@@ -68,12 +70,17 @@ export default function() {
     }
   } else {operation='clinic_analytics';path='/analytics/clinic';}
   const response=http.request(method,base+path,body ? JSON.stringify(body) : null,{
-    headers:{Authorization:'Bearer '+user.token,'Content-Type':'application/json'},
+    headers:{Authorization:'Bearer '+user.token,'Content-Type':'application/json',...(__ENV.LOAD_TRACE_REQUESTS==='1'?{'X-Load-Request':`${vu}:${i}`}:{})},
     timeout:'20s',responseType:extended && (operation==='task_board' || operation==='doctor_inbox') ? 'text' : 'none',tags:{name:operation,operation},
   });
   const t=response.timings;
-  // Includes connection/queue time omitted by bare http_req_duration.
-  latency.add(t.blocked+t.connecting+t.tls_handshaking+t.duration,{operation});
+  const elapsed=requestLatency(t);
+  latency.add(elapsed,{operation});
+  // Preserve the previous over-counted metric for transparent comparison only.
+  legacyLatency.add(t.blocked+t.connecting+t.tls_handshaking+t.duration,{operation});
+  if(elapsed>500) console.warn(JSON.stringify({kind:'slow_workflow',operation,elapsed_ms:elapsed,
+    blocked_ms:t.blocked,connecting_ms:t.connecting,tls_ms:t.tls_handshaking,request_ms:t.duration,
+    test_ms:exec.instance.currentTestRunDuration,vu,request_id:__ENV.LOAD_TRACE_REQUESTS==='1'?`${vu}:${i}`:undefined}));
   check(response,{'workflow request succeeds':r=>r.status>=200 && r.status<300},{operation});
   if(extended && response.status===200 && operation==='task_board') nextTask=response.json().items[0] || null;
   if(extended && response.status===200 && operation==='doctor_inbox') nextAlert=(response.json().items.find(item=>item.source_kind==='support_request' && item.status==='created') || {}).id || null;
@@ -87,6 +94,9 @@ export function handleSummary(data) {
     driver_context:__ENV.LOAD_DRIVER_CONTEXT || 'protected desktop execution',
     profile:extended ? 'roles-with-surveys-and-explicit-support-v2' : 'roles-baseline-v1',
     source_fingerprint:__ENV.LOAD_SOURCE_FINGERPRINT || null,
+    latency_method:'k6-blocked-plus-duration-v2',
+    diagnostic_trace:__ENV.LOAD_TRACE_REQUESTS==='1',
+    deployment_mode:__ENV.LOAD_DEPLOYMENT_MODE || 'uvicorn-shared-listener',
     doctor_sessions:20,analyst_sessions:1,limit_ms:500,
     server_configuration:{workers:Number(__ENV.LOAD_SERVER_WORKERS || 1),
       compass_pool_size:Number(__ENV.COMPASS_DB_POOL_SIZE || 5),compass_max_overflow:Number(__ENV.COMPASS_DB_MAX_OVERFLOW || 10),

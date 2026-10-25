@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, type FormEvent } from "react";
+import { useEffect, useId, useRef, useState, type FormEvent } from "react";
 import { Send, MessageCircle } from "lucide-react";
 import { send, useApi, type ChatMessage } from "./api";
 import {
@@ -39,11 +39,22 @@ export function Chat({
   const requests = useApi<{message_id:number; text:string; created_at:string; status:string; acknowledged_at:string|null}[]>(
     role === "patient" ? `/patients/${patientId}/support-requests` : null, 5000);
   const [busy, setBusy] = useState(false);
+  const [sendError,setSendError] = useState("");
+  const errorResult=useRef<HTMLDivElement>(null),errorId=useId();
+  useEffect(()=>{if(sendError)errorResult.current?.querySelector<HTMLElement>('.error-box')?.focus();},[sendError]);
   const composer=useRef<HTMLTextAreaElement>(null);
+  const sendButton=useRef<HTMLButtonElement>(null),resumeComposer=useRef(false);
+  useEffect(()=>{
+    if(busy||!resumeComposer.current)return;
+    resumeComposer.current=false;
+    const active=document.activeElement;
+    if(active===document.body||active===sendButton.current||active===composer.current)composer.current?.focus({preventScroll:true});
+  },[busy]);
   const {clear:clearGuard} = useUnsavedForm({dirty:Boolean(text || supportRequested),pending:busy,prompt:messagePrompt,scope,focus:()=>composer.current?.focus()});
   const list = useRef<HTMLDivElement>(null);
   const lastMessage = useRef<number | null>(null);
   const following = useRef(true);
+  const scrollRevision = useRef(0);
   const [newMessages,setNewMessages] = useState(false);
   const {moving,transition} = useInteractionMotion();
   const latestId = messages.data?.at(-1)?.id;
@@ -58,6 +69,7 @@ export function Chat({
   },[latestId]);
   function showLatest() {
     list.current?.scrollTo({top:list.current.scrollHeight,behavior:moving?"smooth":"auto"});
+    list.current?.focus({preventScroll:true});
     following.current=true;setNewMessages(false);
   }
   const request = useRef({ text: "", id: "" });
@@ -67,7 +79,9 @@ export function Chat({
     const signature = JSON.stringify([text,supportRequested]);
     if (request.current.text !== signature || !request.current.id)
       request.current = { text:signature, id: crypto.randomUUID() };
-    setBusy(true);
+    const scrollAtSend=scrollRevision.current;
+    resumeComposer.current=document.activeElement===composer.current||document.activeElement===sendButton.current;
+    setSendError("");setBusy(true);
     try {
       await send(`/conversations/${patientId}/messages`, {
         text,
@@ -78,16 +92,14 @@ export function Chat({
       setText("");
       setSupportRequested(false);
       clearGuard();
-      following.current=true;
+      if(scrollRevision.current===scrollAtSend)following.current=true;
       request.current = { text: "", id: "" };
       messages.reload();
       requests.reload();
       if (supportRequested) notify("Запрос поддержки сохранён. Он появится в очереди лечащего врача; ответ не мгновенный.");
     } catch (error) {
-      notify(
-        error instanceof Error ? error.message : "Сообщение не отправлено",
-        "error",
-      );
+      resumeComposer.current=false;
+      setSendError(error instanceof Error ? error.message : "Сообщение не отправлено");
     } finally {
       setBusy(false);
     }
@@ -113,7 +125,7 @@ export function Chat({
         )
       ) : (
         <div className="message-list" ref={list} role="log" aria-live="polite" aria-relevant="additions" aria-label="История переписки"
-          tabIndex={0} onScroll={event=>{const node=event.currentTarget;following.current=node.scrollHeight-node.scrollTop-node.clientHeight<48;if(following.current)setNewMessages(false);}}>
+          tabIndex={0} onScroll={event=>{scrollRevision.current++;const node=event.currentTarget;following.current=node.scrollHeight-node.scrollTop-node.clientHeight<48;if(following.current)setNewMessages(false);}}>
           {!messages.data?.length && (
             <Empty title="Диалог ещё не начат">
               Можно написать сообщение — оно сохранится в истории.
@@ -150,8 +162,9 @@ export function Chat({
       </div>
       {(messages.data?.length??0)>=100&&<p className="field-hint">Показаны последние 100 сообщений диалога.</p>}
       <form onSubmit={submit}>
-      <fieldset className="form-fields" disabled={busy} aria-busy={busy}>
-      {role === "patient" && <label className="support-request-choice"><input type="checkbox" checked={supportRequested} onChange={e => setSupportRequested(e.target.checked)}/><span>Мне нужна поддержка по этому сообщению<small>Создаст отдельное событие лечащему врачу. Здесь нет экстренной или круглосуточной службы.</small></span></label>}
+      <div ref={errorResult} id={errorId}><ErrorBox message={sendError}/></div>
+      <fieldset className="form-fields" disabled={busy} aria-busy={busy} aria-describedby={sendError?errorId:undefined}>
+      {role === "patient" && <label className="support-request-choice"><input type="checkbox" checked={supportRequested} onChange={e => {setSendError("");setSupportRequested(e.target.checked);}}/><span>Мне нужна поддержка по этому сообщению<small>Создаст отдельное событие лечащему врачу. Здесь нет экстренной или круглосуточной службы.</small></span></label>}
       <div className="message-compose">
         <textarea
           ref={composer}
@@ -159,11 +172,12 @@ export function Chat({
           maxLength={4096}
           rows={2}
           value={text}
-          onChange={(e) => setText(e.target.value)}
+          onChange={(e) => {setSendError("");setText(e.target.value);}}
           placeholder="Написать сообщение…"
           required
         />
         <Button
+          ref={sendButton}
           aria-label="Отправить сообщение"
           type="submit"
           disabled={busy || !text.trim()}

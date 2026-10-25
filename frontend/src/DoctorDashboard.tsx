@@ -4,7 +4,7 @@ import { CollectionMetrics } from "./CollectionMetrics";
 import { DoctorWorkflowMetrics } from "./WorkflowMetrics";
 import { dimensionLabels } from "./collection";
 import { HorizontalBars } from "./Charts";
-import { AnimatePresence, ContentFrame } from "./Interaction";
+import { AnimatePresence, ContentFrame, Disclosure } from "./Interaction";
 import {
   ArrowUpRight,
   ClipboardList,
@@ -58,13 +58,24 @@ export function DoctorDashboard({
   const [until, setUntil] = useViewState("analytics-until","");
   const [period, setPeriod] = useViewState("analytics-period","");
   const [section,setSection]=useViewState("analytics-section","feedback");
-  const panelId=useId();
+  const [showAllQuotes,setShowAllQuotes]=useViewState("analytics-all-quotes",false);
+  const panelId=useId(),extraQuotesId=useId();
   const data = useApi<Dashboard>(section==="feedback"?`/analytics/engagement${period}`:null, 15000);
   const d = data.data;
   useReturnFocus("overview",Boolean(d||data.error));
   const options = d?.questions.filter((q) => q.kind !== "text") ?? [];
   const barriers = options.filter((q) => q.dimension === "constraints" || (!q.dimension && q.purpose === "barriers"));
   const other = options.filter((q) => !barriers.includes(q));
+  function renderQuote(quote:Quote,index:number) {
+    return <article className="patient-quote" key={quoteKey(quote,index)}>
+      {quote.survey_title&&<p className="quote-survey-title">{quote.survey_title}</p>}
+      <p className="quote-prompt">{quote.prompt}</p>
+      <blockquote>«{quote.text}»</blockquote>
+      <button className="person-link" data-return-key={quoteKey(quote,index)} aria-label={`${quoteTarget(quote)?"Открыть ответ":"Открыть карточку"}: ${quote.patient_name}`} onClick={()=>openPatient(quote.patient_id,quoteKey(quote,index),quoteTarget(quote))}>
+        <Avatar name={quote.patient_name} small/><span>{quote.patient_name}<small>{date(quote.created_at)}</small></span><ChevronRight size={15}/>
+      </button>
+    </article>;
+  }
   function applyPeriod() {
     const query = new URLSearchParams();
     if (since) query.set("since", new Date(`${since}T00:00:00`).toISOString());
@@ -226,47 +237,31 @@ export function DoctorDashboard({
                     Врач сам выбирает, о чём спросить пациентов.
                   </Empty>
                 ) : (
-                  other.map((q) => (
+                  <Disclosure title={`Показать распределения ответов · ${other.length}`} lazy>{other.map((q) => (
                     <AnswerChart
                       key={`${q.survey_id}-${q.question_id}`}
                       question={q}
                     />
-                  ))
+                  ))}</Disclosure>
                 )}
               </Section>
             </div>
             <div className="dashboard-secondary">
               <Section
                 title="Голос пациента"
-                aside={<Badge>Последние ответы</Badge>}
+                aside={<Badge>{d.quotes.length?`${showAllQuotes?d.quotes.length:Math.min(5,d.quotes.length)} из ${d.quotes.length}`:"Последние ответы"}</Badge>}
               >
                 {!d.quotes.length ? (
                   <Empty title="Свободных ответов пока нет" />
                 ) : (
-                  <div className="quote-list">
-                    {d.quotes.slice(0, 5).map((quote, i) => (
-                      <article
-                        className="patient-quote"
-                        key={quoteKey(quote,i)}
-                      >
-                        <p className="quote-prompt">{quote.prompt}</p>
-                        <blockquote>«{quote.text}»</blockquote>
-                        <button
-                          className="person-link"
-                          data-return-key={quoteKey(quote,i)}
-                          aria-label={`${quoteTarget(quote)?"Открыть ответ":"Открыть карточку"}: ${quote.patient_name}`}
-                          onClick={() => openPatient(quote.patient_id,quoteKey(quote,i),quoteTarget(quote))}
-                        >
-                          <Avatar name={quote.patient_name} small />
-                          <span>
-                            {quote.patient_name}
-                            <small>{date(quote.created_at)}</small>
-                          </span>
-                          <ChevronRight size={15} />
-                        </button>
-                      </article>
-                    ))}
-                  </div>
+                  <>
+                    <p className="field-hint quote-source-hint">До 20 последних свободных ответов из отобранных назначений. Полная история — в карточках пациентов.</p>
+                    <div className="quote-list">{d.quotes.slice(0,5).map(renderQuote)}</div>
+                    {d.quotes.length>5&&<>
+                      <Button className="quote-more" variant="secondary" aria-expanded={showAllQuotes} aria-controls={extraQuotesId} onClick={()=>setShowAllQuotes(!showAllQuotes)}>{showAllQuotes?"Свернуть дополнительные ответы":`Показать ещё ${d.quotes.length-5} ${plural(d.quotes.length-5,"ответ","ответа","ответов")}`}<ChevronRight size={16} aria-hidden="true"/></Button>
+                      <div className="quote-list quote-extra-list" id={extraQuotesId} hidden={!showAllQuotes}>{showAllQuotes&&d.quotes.slice(5).map((quote,index)=>renderQuote(quote,index+5))}</div>
+                    </>}
+                  </>
                 )}
               </Section>
               <Section

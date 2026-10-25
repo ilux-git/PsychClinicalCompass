@@ -1,0 +1,933 @@
+{
+  "before": {
+    "active": "Мой прогресс\nПрогресс участия и тестовые купоны",
+    "fullyVisible": false,
+    "link": {
+      "bottom": 731.0625,
+      "height": 56,
+      "left": 14,
+      "right": 240,
+      "top": 675.0625,
+      "width": 226,
+      "x": 14,
+      "y": 675.0625
+    },
+    "nav": {
+      "bottom": 554,
+      "height": 443,
+      "left": 14,
+      "right": 250,
+      "top": 111,
+      "width": 236,
+      "x": 14,
+      "y": 111
+    },
+    "navScrollTop": 0,
+    "scrollY": 0,
+    "title": "Мой прогресс",
+    "viewport": {
+      "height": 720,
+      "width": 1280
+    }
+  },
+  "checks": [
+    {
+      "label": "direct-route-after",
+      "active": "Мой прогресс\nПрогресс участия и тестовые купоны",
+      "focused": {
+        "id": "compass-main",
+        "label": "Помощь с разделомМой прогрессПрогресс участия и тестовые купоны1Посмотрите начисления за о",
+        "tag": "MAIN"
+      },
+      "fullyVisible": true,
+      "link": {
+        "bottom": 546.0625,
+        "height": 56,
+        "left": 14,
+        "right": 240,
+        "top": 490.0625,
+        "width": 226,
+        "x": 14,
+        "y": 490.0625
+      },
+      "menuOpen": false,
+      "nav": {
+        "bottom": 554,
+        "height": 443,
+        "left": 14,
+        "right": 250,
+        "top": 111,
+        "width": 236,
+        "x": 14,
+        "y": 111
+      },
+      "navScrollTop": 185,
+      "overflow": false,
+      "scrollY": 0,
+      "title": "Мой прогресс",
+      "viewport": {
+        "height": 720,
+        "width": 1280
+      }
+    },
+    {
+      "label": "home-after-return",
+      "active": "Мой день\nШаги, самочувствие и баллы",
+      "focused": {
+        "id": "compass-main",
+        "label": "Помощь с разделомМой деньШаги, самочувствие и баллы1Начните с одного доступного действия и",
+        "tag": "MAIN"
+      },
+      "fullyVisible": true,
+      "link": {
+        "bottom": 168.375,
+        "height": 57.375,
+        "left": 14,
+        "right": 240,
+        "top": 111,
+        "width": 226,
+        "x": 14,
+        "y": 111
+      },
+      "menuOpen": false,
+      "nav": {
+        "bottom": 554,
+        "height": 443,
+        "left": 14,
+        "right": 250,
+        "top": 111,
+        "width": 236,
+        "x": 14,
+        "y": 111
+      },
+      "navScrollTop": 0,
+      "overflow": false,
+      "scrollY": 0,
+      "title": "Здравствуйте, Мария",
+      "viewport": {
+        "height": 720,
+        "width": 1280
+      }
+    },
+    {
+      "label": "home-cta-final-desktop",
+      "active": "Мой прогресс\nПрогресс участия и тестовые купоны",
+      "focused": {
+        "id": "compass-main",
+        "label": "Помощь с разделомМой прогрессПрогресс участия и тестовые купоны1Посмотрите начисления за о",
+        "tag": "MAIN"
+      },
+      "fullyVisible": true,
+      "link": {
+        "bottom": 546,
+        "height": 73.5625,
+        "left": 14,
+        "right": 240,
+        "top": 472.4375,
+        "width": 226,
+        "x": 14,
+        "y": 472.4375
+      },
+      "menuOpen": false,
+      "nav": {
+        "bottom": 554,
+        "height": 443,
+        "left": 14,
+        "right": 250,
+        "top": 111,
+        "width": 236,
+        "x": 14,
+        "y": 111
+      },
+      "navScrollTop": 277,
+      "overflow": false,
+      "scrollY": 0,
+      "title": "Мой прогресс",
+      "viewport": {
+        "height": 720,
+        "width": 1280
+      }
+    },
+    {
+      "label": "mobile-drawer-after-open",
+      "active": "Мой прогресс\nПрогресс участия и тестовые купоны",
+      "focused": {
+        "id": "",
+        "label": "clinicalcompass",
+        "tag": "A"
+      },
+      "fullyVisible": true,
+      "link": {
+        "bottom": 666.375,
+        "height": 73.5625,
+        "left": 14,
+        "right": 226,
+        "top": 592.8125,
+        "width": 212,
+        "x": 14,
+        "y": 592.8125
+      },
+      "menuOpen": true,
+      "nav": {
+        "bottom": 678,
+        "height": 550,
+        "left": 14,
+        "right": 236,
+        "top": 128,
+        "width": 222,
+        "x": 14,
+        "y": 128
+      },
+      "navScrollTop": 208,
+      "overflow": false,
+      "scrollY": 0,
+      "title": "Мой прогресс",
+      "viewport": {
+        "height": 844,
+        "width": 375
+      }
+    },
+    {
+      "label": "mobile-keyboard-deliberate-other-link",
+      "active": "Мой прогресс\nПрогресс участия и тестовые купоны",
+      "focused": {
+        "id": "",
+        "label": "Мой деньШаги, самочувствие и баллы",
+        "tag": "A"
+      },
+      "fullyVisible": false,
+      "link": {
+        "bottom": 874.375,
+        "height": 73.5625,
+        "left": 14,
+        "right": 226,
+        "top": 800.8125,
+        "width": 212,
+        "x": 14,
+        "y": 800.8125
+      },
+      "menuOpen": true,
+      "nav": {
+        "bottom": 678,
+        "height": 550,
+        "left": 14,
+        "right": 236,
+        "top": 128,
+        "width": 222,
+        "x": 14,
+        "y": 128
+      },
+      "navScrollTop": 0,
+      "overflow": false,
+      "scrollY": 0,
+      "title": "Мой прогресс",
+      "viewport": {
+        "height": 844,
+        "width": 375
+      }
+    },
+    {
+      "label": "mobile-resize-preserves-other-link-focus",
+      "active": "Мой прогресс\nПрогресс участия и тестовые купоны",
+      "focused": {
+        "id": "",
+        "label": "Мой деньШаги, самочувствие и баллы",
+        "tag": "A"
+      },
+      "fullyVisible": false,
+      "link": {
+        "bottom": 874.375,
+        "height": 73.5625,
+        "left": 14,
+        "right": 226,
+        "top": 800.8125,
+        "width": 212,
+        "x": 14,
+        "y": 800.8125
+      },
+      "menuOpen": true,
+      "nav": {
+        "bottom": 534,
+        "height": 406,
+        "left": 14,
+        "right": 236,
+        "top": 128,
+        "width": 222,
+        "x": 14,
+        "y": 128
+      },
+      "navScrollTop": 0,
+      "overflow": false,
+      "scrollY": 0,
+      "title": "Мой прогресс",
+      "viewport": {
+        "height": 700,
+        "width": 375
+      }
+    },
+    {
+      "label": "mobile-escape-focus-restored",
+      "active": "",
+      "focused": {
+        "id": "",
+        "label": "Открыть меню",
+        "tag": "BUTTON"
+      },
+      "fullyVisible": false,
+      "link": {
+        "bottom": 542.375,
+        "height": 73.5625,
+        "left": -236,
+        "right": -24,
+        "top": 468.8125,
+        "width": 212,
+        "x": -236,
+        "y": 468.8125
+      },
+      "menuOpen": false,
+      "nav": {
+        "bottom": 534,
+        "height": 406,
+        "left": -236,
+        "right": -14,
+        "top": 128,
+        "width": 222,
+        "x": -236,
+        "y": 128
+      },
+      "navScrollTop": 332,
+      "overflow": false,
+      "scrollY": 0,
+      "title": "Мой прогресс",
+      "viewport": {
+        "height": 700,
+        "width": 375
+      }
+    },
+    {
+      "label": "mobile-short-reopened",
+      "active": "Мой прогресс\nПрогресс участия и тестовые купоны",
+      "focused": {
+        "id": "",
+        "label": "clinicalcompass",
+        "tag": "A"
+      },
+      "fullyVisible": true,
+      "link": {
+        "bottom": 526.375,
+        "height": 73.5625,
+        "left": 14,
+        "right": 226,
+        "top": 452.8125,
+        "width": 212,
+        "x": 14,
+        "y": 452.8125
+      },
+      "menuOpen": true,
+      "nav": {
+        "bottom": 534,
+        "height": 406,
+        "left": 14,
+        "right": 236,
+        "top": 128,
+        "width": 222,
+        "x": 14,
+        "y": 128
+      },
+      "navScrollTop": 348,
+      "overflow": false,
+      "scrollY": 0,
+      "title": "Мой прогресс",
+      "viewport": {
+        "height": 700,
+        "width": 375
+      }
+    },
+    {
+      "label": "patient-menu-768",
+      "active": "Мой прогресс\nПрогресс участия и тестовые купоны",
+      "focused": {
+        "id": "",
+        "label": "clinicalcompass",
+        "tag": "A"
+      },
+      "fullyVisible": true,
+      "link": {
+        "bottom": 846.375,
+        "height": 73.5625,
+        "left": 14,
+        "right": 226,
+        "top": 772.8125,
+        "width": 212,
+        "x": 14,
+        "y": 772.8125
+      },
+      "menuOpen": true,
+      "nav": {
+        "bottom": 858,
+        "height": 730,
+        "left": 14,
+        "right": 236,
+        "top": 128,
+        "width": 222,
+        "x": 14,
+        "y": 128
+      },
+      "navScrollTop": 28,
+      "overflow": false,
+      "scrollY": 0,
+      "title": "Мой прогресс",
+      "viewport": {
+        "height": 1024,
+        "width": 768
+      }
+    },
+    {
+      "label": "patient-desktop-1440-after-resize",
+      "active": "Мой прогресс\nПрогресс участия и тестовые купоны",
+      "focused": {
+        "id": "",
+        "label": "clinicalcompass",
+        "tag": "A"
+      },
+      "fullyVisible": true,
+      "link": {
+        "bottom": 822,
+        "height": 73.5625,
+        "left": 14,
+        "right": 240,
+        "top": 748.4375,
+        "width": 226,
+        "x": 14,
+        "y": 748.4375
+      },
+      "menuOpen": false,
+      "nav": {
+        "bottom": 834,
+        "height": 723,
+        "left": 14,
+        "right": 250,
+        "top": 111,
+        "width": 236,
+        "x": 14,
+        "y": 111
+      },
+      "navScrollTop": 1,
+      "overflow": false,
+      "scrollY": 0,
+      "title": "Мой прогресс",
+      "viewport": {
+        "height": 1000,
+        "width": 1440
+      }
+    },
+    {
+      "label": "doctor-analytics-short",
+      "active": "Аналитика сопровождения\nБарьеры, ответы и результаты действий",
+      "focused": {
+        "id": "",
+        "label": "Свернуть дополнительные ответы",
+        "tag": "BUTTON"
+      },
+      "fullyVisible": true,
+      "link": {
+        "bottom": 452.375,
+        "height": 73.5625,
+        "left": 14,
+        "right": 240,
+        "top": 378.8125,
+        "width": 226,
+        "x": 14,
+        "y": 378.8125
+      },
+      "menuOpen": false,
+      "nav": {
+        "bottom": 460,
+        "height": 349,
+        "left": 14,
+        "right": 250,
+        "top": 111,
+        "width": 236,
+        "x": 14,
+        "y": 111
+      },
+      "navScrollTop": 184,
+      "overflow": false,
+      "scrollY": 1388,
+      "title": "Аналитика сопровождения",
+      "viewport": {
+        "height": 720,
+        "width": 1280
+      }
+    },
+    {
+      "label": "doctor-answer-source",
+      "active": "Пациенты\nКарточки, ответы и переписка",
+      "focused": {
+        "id": "",
+        "label": "Что важно знать вашему врачу?После смены сложно приехать, а расходы оказались выше ожидаем",
+        "tag": "DIV"
+      },
+      "fullyVisible": true,
+      "link": {
+        "bottom": 176.4375,
+        "height": 57.375,
+        "left": 14,
+        "right": 240,
+        "top": 119.0625,
+        "width": 226,
+        "x": 14,
+        "y": 119.0625
+      },
+      "menuOpen": false,
+      "nav": {
+        "bottom": 460,
+        "height": 349,
+        "left": 14,
+        "right": 250,
+        "top": 111,
+        "width": 236,
+        "x": 14,
+        "y": 111
+      },
+      "navScrollTop": 100,
+      "overflow": false,
+      "scrollY": 1049,
+      "title": "Иван Петров",
+      "viewport": {
+        "height": 720,
+        "width": 1280
+      }
+    },
+    {
+      "label": "doctor-back-to-same-quote",
+      "active": "Аналитика сопровождения\nБарьеры, ответы и результаты действий",
+      "focused": {
+        "id": "",
+        "label": "Открыть ответ: Иван Петров",
+        "tag": "BUTTON"
+      },
+      "fullyVisible": true,
+      "link": {
+        "bottom": 452.375,
+        "height": 73.5625,
+        "left": 14,
+        "right": 240,
+        "top": 378.8125,
+        "width": 226,
+        "x": 14,
+        "y": 378.8125
+      },
+      "menuOpen": false,
+      "nav": {
+        "bottom": 460,
+        "height": 349,
+        "left": 14,
+        "right": 250,
+        "top": 111,
+        "width": 236,
+        "x": 14,
+        "y": 111
+      },
+      "navScrollTop": 184,
+      "overflow": false,
+      "scrollY": 2411,
+      "title": "Аналитика сопровождения",
+      "viewport": {
+        "height": 720,
+        "width": 1280
+      }
+    },
+    {
+      "label": "doctor-last-section-short-desktop",
+      "active": "Динамика состояния\nИстория PHQ-9 и GAD-7 по пациентам",
+      "focused": {
+        "id": "compass-main",
+        "label": "Помощь с разделомДинамика состоянияИстория PHQ-9 и GAD-7 по пациентам1Выберите своего паци",
+        "tag": "MAIN"
+      },
+      "fullyVisible": true,
+      "link": {
+        "bottom": 447.9375,
+        "height": 73.5625,
+        "left": 14,
+        "right": 240,
+        "top": 374.375,
+        "width": 226,
+        "x": 14,
+        "y": 374.375
+      },
+      "menuOpen": false,
+      "nav": {
+        "bottom": 460,
+        "height": 349,
+        "left": 14,
+        "right": 250,
+        "top": 111,
+        "width": 236,
+        "x": 14,
+        "y": 111
+      },
+      "navScrollTop": 267,
+      "overflow": false,
+      "scrollY": 0,
+      "title": "Динамика состояния",
+      "viewport": {
+        "height": 720,
+        "width": 1280
+      }
+    },
+    {
+      "label": "doctor-last-section-mobile",
+      "active": "Динамика состояния\nИстория PHQ-9 и GAD-7 по пациентам",
+      "focused": {
+        "id": "",
+        "label": "clinicalcompass",
+        "tag": "A"
+      },
+      "fullyVisible": true,
+      "link": {
+        "bottom": 571.3125,
+        "height": 73.5625,
+        "left": 14,
+        "right": 226,
+        "top": 497.75,
+        "width": 212,
+        "x": 14,
+        "y": 497.75
+      },
+      "menuOpen": true,
+      "nav": {
+        "bottom": 583,
+        "height": 455,
+        "left": 14,
+        "right": 236,
+        "top": 128,
+        "width": 222,
+        "x": 14,
+        "y": 128
+      },
+      "navScrollTop": 195,
+      "overflow": false,
+      "scrollY": 0,
+      "title": "Динамика состояния",
+      "viewport": {
+        "height": 844,
+        "width": 375
+      }
+    },
+    {
+      "label": "admin-role-menu",
+      "active": "Обзор клиники\nПродолжение лечения и работа с обращениями",
+      "focused": {
+        "id": "compass-main",
+        "label": "Помощь с разделомОбзор клиникиПродолжение лечения и работа с обращениями1Начните с текущих",
+        "tag": "MAIN"
+      },
+      "fullyVisible": true,
+      "link": {
+        "bottom": 230.25,
+        "height": 73.5625,
+        "left": 14,
+        "right": 250,
+        "top": 156.6875,
+        "width": 236,
+        "x": 14,
+        "y": 156.6875
+      },
+      "menuOpen": false,
+      "nav": {
+        "bottom": 643,
+        "height": 532,
+        "left": 14,
+        "right": 250,
+        "top": 111,
+        "width": 236,
+        "x": 14,
+        "y": 111
+      },
+      "navScrollTop": 0,
+      "overflow": false,
+      "scrollY": 0,
+      "viewport": {
+        "height": 720,
+        "width": 1280
+      }
+    },
+    {
+      "label": "admin-role-ready",
+      "active": "Обзор клиники\nПродолжение лечения и работа с обращениями",
+      "focused": {
+        "id": "compass-main",
+        "label": "Помощь с разделомОбзор клиникиПродолжение лечения и работа с обращениями1Начните с текущих",
+        "tag": "MAIN"
+      },
+      "fullyVisible": true,
+      "link": {
+        "bottom": 230.25,
+        "height": 73.5625,
+        "left": 14,
+        "right": 250,
+        "top": 156.6875,
+        "width": 236,
+        "x": 14,
+        "y": 156.6875
+      },
+      "menuOpen": false,
+      "nav": {
+        "bottom": 643,
+        "height": 532,
+        "left": 14,
+        "right": 250,
+        "top": 111,
+        "width": 236,
+        "x": 14,
+        "y": 111
+      },
+      "navScrollTop": 0,
+      "overflow": false,
+      "scrollY": 0,
+      "title": "Обзор клиники",
+      "viewport": {
+        "height": 720,
+        "width": 1280
+      }
+    },
+    {
+      "label": "coordinator-role-menu",
+      "active": "Мои задачи\nПорученные организационные действия",
+      "focused": {
+        "id": "compass-main",
+        "label": "Помощь с разделомМои задачиПорученные организационные действия1Откройте назначенную задачу",
+        "tag": "MAIN"
+      },
+      "fullyVisible": true,
+      "link": {
+        "bottom": 184.5625,
+        "height": 73.5625,
+        "left": 14,
+        "right": 250,
+        "top": 111,
+        "width": 236,
+        "x": 14,
+        "y": 111
+      },
+      "menuOpen": false,
+      "nav": {
+        "bottom": 643,
+        "height": 532,
+        "left": 14,
+        "right": 250,
+        "top": 111,
+        "width": 236,
+        "x": 14,
+        "y": 111
+      },
+      "navScrollTop": 0,
+      "overflow": false,
+      "scrollY": 0,
+      "title": "Мои задачи",
+      "viewport": {
+        "height": 720,
+        "width": 1280
+      }
+    }
+  ],
+  "copyChecks": [
+    {
+      "label": "doctor-1280",
+      "items": [
+        {
+          "copyBottomPadding": 10,
+          "copyContained": true,
+          "height": 57.375,
+          "title": "Главная"
+        },
+        {
+          "copyBottomPadding": 10,
+          "copyContained": true,
+          "height": 57.375,
+          "title": "Пациенты"
+        },
+        {
+          "copyBottomPadding": 10,
+          "copyContained": true,
+          "height": 73.5625,
+          "title": "События и обращения"
+        },
+        {
+          "copyBottomPadding": 10,
+          "copyContained": true,
+          "height": 73.5625,
+          "title": "План работы"
+        },
+        {
+          "copyBottomPadding": 10,
+          "copyContained": true,
+          "height": 73.5625,
+          "title": "Опросы для пациентов"
+        },
+        {
+          "copyBottomPadding": 10,
+          "copyContained": true,
+          "height": 73.5625,
+          "title": "Аналитика сопровождения"
+        },
+        {
+          "copyBottomPadding": 10,
+          "copyContained": true,
+          "height": 73.5625,
+          "title": "Динамика состояния"
+        }
+      ]
+    },
+    {
+      "label": "doctor-375",
+      "items": [
+        {
+          "copyBottomPadding": 10,
+          "copyContained": true,
+          "height": 57.375,
+          "title": "Главная"
+        },
+        {
+          "copyBottomPadding": 10,
+          "copyContained": true,
+          "height": 73.5625,
+          "title": "Пациенты"
+        },
+        {
+          "copyBottomPadding": 10,
+          "copyContained": true,
+          "height": 73.5625,
+          "title": "События и обращения"
+        },
+        {
+          "copyBottomPadding": 10,
+          "copyContained": true,
+          "height": 73.5625,
+          "title": "План работы"
+        },
+        {
+          "copyBottomPadding": 10,
+          "copyContained": true,
+          "height": 73.5625,
+          "title": "Опросы для пациентов"
+        },
+        {
+          "copyBottomPadding": 10,
+          "copyContained": true,
+          "height": 91.75,
+          "title": "Аналитика сопровождения"
+        },
+        {
+          "copyBottomPadding": 10,
+          "copyContained": true,
+          "height": 73.5625,
+          "title": "Динамика состояния"
+        }
+      ]
+    },
+    {
+      "label": "admin-1280",
+      "items": [
+        {
+          "copyBottomPadding": 10,
+          "copyContained": true,
+          "height": 73.5625,
+          "title": "Обзор клиники"
+        },
+        {
+          "copyBottomPadding": 10,
+          "copyContained": true,
+          "height": 73.5625,
+          "title": "Причины затруднений"
+        },
+        {
+          "copyBottomPadding": 10,
+          "copyContained": true,
+          "height": 73.5625,
+          "title": "Действия и результаты"
+        },
+        {
+          "copyBottomPadding": 10,
+          "copyContained": true,
+          "height": 57.375,
+          "title": "Данные и приватность"
+        }
+      ]
+    },
+    {
+      "label": "coordinator-1280",
+      "items": [
+        {
+          "copyBottomPadding": 10,
+          "copyContained": true,
+          "height": 73.5625,
+          "title": "Мои задачи"
+        }
+      ]
+    },
+    {
+      "label": "patient-1280",
+      "items": [
+        {
+          "copyBottomPadding": 10,
+          "copyContained": true,
+          "height": 57.375,
+          "title": "Мой день"
+        },
+        {
+          "copyBottomPadding": 10,
+          "copyContained": true,
+          "height": 73.5625,
+          "title": "Опросы врача"
+        },
+        {
+          "copyBottomPadding": 10,
+          "copyContained": true,
+          "height": 57.375,
+          "title": "Лекарства"
+        },
+        {
+          "copyBottomPadding": 10,
+          "copyContained": true,
+          "height": 73.5625,
+          "title": "Дневник"
+        },
+        {
+          "copyBottomPadding": 10,
+          "copyContained": true,
+          "height": 73.5625,
+          "title": "История состояния"
+        },
+        {
+          "copyBottomPadding": 10,
+          "copyContained": true,
+          "height": 57.375,
+          "title": "Выполнение рекомендаций"
+        },
+        {
+          "copyBottomPadding": 10,
+          "copyContained": true,
+          "height": 73.5625,
+          "title": "Написать врачу"
+        },
+        {
+          "copyBottomPadding": 10,
+          "copyContained": true,
+          "height": 73.5625,
+          "title": "Мой прогресс"
+        }
+      ]
+    }
+  ],
+  "sourceReturn": {
+    "expanded": "true",
+    "focusKey": "analytics-quote-1-details",
+    "quoteCount": 19,
+    "quoteTop": 330.84375,
+    "scrollY": 2411
+  },
+  "console": []
+}

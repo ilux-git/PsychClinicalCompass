@@ -1,7 +1,9 @@
-import { useRef, useState, type FormEvent } from "react";
+import { useEffect, useRef, useState, type FormEvent } from "react";
 import { send, useApi, type DiaryEntry } from "./api";
 import { Badge, Button, Empty, ErrorBox, Heading, Loading, Section, date, type Notify } from "./UI";
 import { useUnsavedForm, type LeavePrompt } from "./NavigationGuard";
+import { ParticipationReceipt, type ParticipationConfirmation } from "./ParticipationReceipt";
+import { Disclosure, useInteractionMotion } from "./Interaction";
 
 const diaryPrompt:LeavePrompt={eyebrow:"Несохранённая запись",title:"Вернуться к записи дневника?",message:"Запись ещё не сохранена. При переходе без сохранения текущий текст и выбранные наблюдения будут потеряны.",stayLabel:"Продолжить запись"};
 
@@ -29,15 +31,29 @@ export function SharedDiary({patientId, onSource}: {patientId: number; onSource?
   </Section>;
 }
 
-export function PatientDiary({patientId, notify}: {patientId: number; notify: Notify}) {
+export function PatientDiary({patientId, notify, progress}: {patientId: number; notify: Notify; progress?:()=>void}) {
   const entries = useApi<Entries>(`/patients/${patientId}/diary`);
   const [text, setText] = useState("");
   const [shared, setShared] = useState(false);
   const [observed, setObserved] = useState(nowLocal), [kind, setKind] = useState("moment");
   const [feeling, setFeeling] = useState(""), [impact, setImpact] = useState("");
   const [busy, setBusy] = useState(false);
+  const [saved,setSaved]=useState<(DiaryEntry&ParticipationConfirmation)|null>(null);
+  const [saveError,setSaveError]=useState("");
+  const [invalidReveal,setInvalidReveal]=useState(0);
+  const {moving}=useInteractionMotion();
+  const savedPanel=useRef<HTMLDivElement>(null);
+  const savedResult=useRef<HTMLHeadingElement>(null),errorResult=useRef<HTMLDivElement>(null);
+  useEffect(()=>{
+    if(!saved)return;
+    savedResult.current?.focus({preventScroll:true});
+    savedPanel.current?.scrollIntoView({block:"nearest",behavior:moving?"smooth":"instant"});
+  },[saved?.id,moving]);
+  useEffect(()=>{if(saveError)errorResult.current?.querySelector<HTMLElement>('.error-box')?.focus();},[saveError]);
   const textInput=useRef<HTMLTextAreaElement>(null);
-  const {clear:clearGuard} = useUnsavedForm({dirty:Boolean(text || shared || feeling || impact || kind!=="moment"),pending:busy,prompt:diaryPrompt,focus:()=>textInput.current?.focus()});
+  const dirty=Boolean(text || shared || feeling || impact || kind!=="moment");
+  useEffect(()=>{if(dirty)setSaved(null);},[dirty]);
+  const {clear:clearGuard} = useUnsavedForm({dirty,pending:busy,prompt:diaryPrompt,focus:()=>textInput.current?.focus()});
   const request = useRef({signature: "", id: ""});
   async function save(event: FormEvent) {
     event.preventDefault();
@@ -45,18 +61,20 @@ export function PatientDiary({patientId, notify}: {patientId: number; notify: No
       feeling: feeling || null, daily_impact: impact || null};
     const signature = JSON.stringify(data);
     if (request.current.signature !== signature) request.current = {signature, id: crypto.randomUUID()};
+    setSaveError("");setSaved(null);
     setBusy(true);
     try {
-      await send("/diary/entries", {...data, client_request_id: request.current.id});
+      const response=await send<DiaryEntry&ParticipationConfirmation>("/diary/entries", {...data, client_request_id: request.current.id});
+      setSaved(response);
       setText(""); setShared(false); setFeeling(""); setImpact(""); setKind("moment"); setObserved(nowLocal()); clearGuard(); request.current = {signature: "", id: ""}; entries.reload();
-      notify("Запись дневника сохранена");
-    } catch (failure) { notify(failure instanceof Error ? failure.message : "Не удалось сохранить запись", "error"); }
+    } catch (failure) { const message=failure instanceof Error?failure.message:"Не удалось сохранить запись";setSaveError(message); }
     finally { setBusy(false); }
   }
   async function sharing(entry: DiaryEntry) {
     setBusy(true);
     try {
-      await send(`/diary/entries/${entry.id}/sharing`, {shared_with_doctor: !entry.shared_with_doctor}, "PATCH");
+      const response=await send<DiaryEntry>(`/diary/entries/${entry.id}/sharing`, {shared_with_doctor: !entry.shared_with_doctor}, "PATCH");
+      setSaved(current=>current?.id===entry.id?{...current,shared_with_doctor:response.shared_with_doctor}:current);
       entries.reload(); notify(entry.shared_with_doctor ? "Доступ врача к записи отключён" : "Запись доступна лечащему врачу");
     } catch (failure) { notify(failure instanceof Error ? failure.message : "Не удалось изменить доступ", "error"); }
     finally { setBusy(false); }
@@ -64,21 +82,28 @@ export function PatientDiary({patientId, notify}: {patientId: number; notify: No
   return <>
     <Heading eyebrow="По желанию" title="Мой дневник">Записывайте, как проходит день и что влияет на самочувствие. Заполнение необязательно.</Heading>
     <Section title="Новая запись">
-      <form onSubmit={save}>
+      <form className="diary-form" onSubmit={save} onInvalidCapture={()=>setInvalidReveal(value=>value+1)}>
+        <div ref={errorResult}><ErrorBox message={saveError}/></div>
         <fieldset className="form-fields" disabled={busy} aria-busy={busy}>
-        <div className="form-grid"><label className="field">Когда наблюдали?<input required type="datetime-local" value={observed} onChange={e => setObserved(e.target.value)} /></label>
-        <label className="field">О чём запись?<select value={kind} onChange={e => setKind(e.target.value)}><option value="moment">Состояние в этот момент</option><option value="day_summary">Итог дня</option></select></label></div>
-        <label className="field">Как вы себя чувствовали? · необязательно<select value={feeling} onChange={e => setFeeling(e.target.value)}><option value="">Не отмечаю</option>{Object.entries(feelings).map(([k,v]) => <option key={k} value={k}>{v}</option>)}</select></label>
-        <label className="field">Влияние на повседневные дела · необязательно<select value={impact} onChange={e => setImpact(e.target.value)}><option value="">Не отмечаю</option>{Object.entries(impacts).map(([k,v]) => <option key={k} value={k}>{v}</option>)}</select></label>
-        <p className="field-hint">Свободное наблюдение, а не диагностическая шкала. Можно выбрать наблюдение или оставить только текст.</p>
         <label className="field">Что хотите сохранить?
-          <textarea ref={textInput} rows={5} maxLength={4000} value={text} onChange={(e) => setText(e.target.value)} />
+          <textarea ref={textInput} rows={4} maxLength={4000} placeholder="Можно всего несколько слов" value={text} onChange={(e) => setText(e.target.value)} />
         </label>
         <label className="checkbox-label"><input type="checkbox" checked={shared} onChange={(e) => setShared(e.target.checked)} />Поделиться этой записью с лечащим врачом</label>
         <p className="field-hint">Без отметки запись видна только вам. Доступ можно изменить позже. Дневник не просматривается врачом круглосуточно.</p>
+        <Disclosure title="Добавить наблюдения или уточнить время" revealRequest={invalidReveal} focusTarget='input[type="datetime-local"]'>
+          <label className="field">Как вы себя чувствовали? · необязательно<select value={feeling} onChange={e => setFeeling(e.target.value)}><option value="">Не отмечаю</option>{Object.entries(feelings).map(([k,v]) => <option key={k} value={k}>{v}</option>)}</select></label>
+          <label className="field">Влияние на повседневные дела · необязательно<select value={impact} onChange={e => setImpact(e.target.value)}><option value="">Не отмечаю</option>{Object.entries(impacts).map(([k,v]) => <option key={k} value={k}>{v}</option>)}</select></label>
+          <div className="form-grid"><label className="field">Когда наблюдали?<input required type="datetime-local" value={observed} onChange={e => setObserved(e.target.value)} /></label>
+          <label className="field">О чём запись?<select value={kind} onChange={e => setKind(e.target.value)}><option value="moment">Состояние в этот момент</option><option value="day_summary">Итог дня</option></select></label></div>
+          <p className="field-hint">Свободное наблюдение, а не диагностическая шкала. Можно выбрать наблюдение или оставить только текст.</p>
+        </Disclosure>
         <Button disabled={busy || (!text.trim() && !feeling && !impact)} type="submit">{busy?"Сохраняем…":"Сохранить запись"}</Button>
         </fieldset>
       </form>
+      {saved&&<div ref={savedPanel} className="diary-saved-result">
+        <h3 ref={savedResult} tabIndex={-1}>Запись сохранена</h3><p>{saved.shared_with_doctor?"Эта запись доступна лечащему врачу.":"Эта запись остаётся личной. Поделиться с врачом можно позже."}</p>
+        <ParticipationReceipt result={saved} progress={progress}/>
+      </div>}
     </Section>
     <Section title="Мои записи">
       <ErrorBox message={entries.error} retry={entries.reload} />

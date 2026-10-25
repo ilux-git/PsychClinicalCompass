@@ -1,0 +1,617 @@
+{
+  "status": "in-progress",
+  "layouts": [
+    {
+      "balance": "105",
+      "controls": [
+        {
+          "current": null,
+          "label": "Отправная точка · 0 баллов · Открыто",
+          "rect": {
+            "bottom": 735.734375,
+            "height": 44,
+            "left": 42.796875,
+            "right": 86.796875,
+            "top": 691.734375,
+            "width": 44,
+            "x": 42.796875,
+            "y": 691.734375
+          },
+          "selected": "false"
+        },
+        {
+          "current": null,
+          "label": "Тихая поляна · 25 баллов · Открыто",
+          "rect": {
+            "bottom": 716.53125,
+            "height": 44,
+            "left": 101.1875,
+            "right": 145.1875,
+            "top": 672.53125,
+            "width": 44,
+            "x": 101.1875,
+            "y": 672.53125
+          },
+          "selected": "false"
+        },
+        {
+          "current": null,
+          "label": "Мост наблюдений · 50 баллов · Открыто",
+          "rect": {
+            "bottom": 730.53125,
+            "height": 44,
+            "left": 158,
+            "right": 202,
+            "top": 686.53125,
+            "width": 44,
+            "x": 158,
+            "y": 686.53125
+          },
+          "selected": "false"
+        },
+        {
+          "current": "step",
+          "label": "Маяк · 100 баллов · Вы здесь",
+          "rect": {
+            "bottom": 704.140625,
+            "height": 44,
+            "left": 214.796875,
+            "right": 258.796875,
+            "top": 660.140625,
+            "width": 44,
+            "x": 214.796875,
+            "y": 660.140625
+          },
+          "selected": "true"
+        },
+        {
+          "current": null,
+          "label": "Новый горизонт · 250 баллов · Впереди",
+          "rect": {
+            "bottom": 714.9375,
+            "height": 44,
+            "left": 271.1875,
+            "right": 315.1875,
+            "top": 670.9375,
+            "width": 44,
+            "x": 271.1875,
+            "y": 670.9375
+          },
+          "selected": "false"
+        }
+      ],
+      "detail": {
+        "bottom": 1054.921875,
+        "height": 190,
+        "left": 54,
+        "right": 306,
+        "top": 864.921875,
+        "width": 252,
+        "x": 54,
+        "y": 864.921875
+      },
+      "detailTitle": "Маяк",
+      "figure": {
+        "bottom": 1157.09375,
+        "height": 619.125,
+        "left": 33,
+        "right": 327,
+        "top": 537.96875,
+        "width": 294,
+        "x": 33,
+        "y": 537.96875
+      },
+      "footer": 777,
+      "overflow": false,
+      "overlaps": [],
+      "scene": {
+        "bottom": 754.140625,
+        "height": 112,
+        "left": 40,
+        "right": 320,
+        "top": 642.140625,
+        "width": 280,
+        "x": 40,
+        "y": 642.140625
+      },
+      "scrollY": 0,
+      "total": "105 баллов за всё время",
+      "viewport": {
+        "height": 844,
+        "width": 375
+      }
+    },
+    {
+      "balance": "105",
+      "controls": [
+        {
+          "current": null,
+          "label": "Отправная точка · 0 баллов · Открыто",
+          "rect": {
+            "bottom": 678.9140625,
+            "height": 45.171875,
+            "left": 85.2421875,
+            "right": 130.4140625,
+            "top": 633.7421875,
+            "width": 45.171875,
+            "x": 85.2421875,
+            "y": 633.7421875
+          },
+          "selected": "false"
+        },
+        {
+          "current": null,
+          "label": "Тихая поляна · 25 баллов · Открыто",
+          "rect": {
+            "bottom": 634.1328125,
+            "height": 45.171875,
+            "left": 221.4453125,
+            "right": 266.6171875,
+            "top": 588.9609375,
+            "width": 45.171875,
+            "x": 221.4453125,
+            "y": 588.9609375
+          },
+          "selected": "false"
+        },
+        {
+          "current": null,
+          "label": "Мост наблюдений · 50 баллов · Открыто",
+          "rect": {
+            "bottom": 666.7890625,
+            "height": 45.171875,
+            "left": 353.9140625,
+            "right": 399.0859375,
+            "top": 621.6171875,
+            "width": 45.171875,
+            "x": 353.9140625,
+            "y": 621.6171875
+          },
+          "selected": "false"
+        },
+        {
+          "current": "step",
+          "label": "Маяк · 100 баллов · Вы здесь",
+          "rect": {
+            "bottom": 605.2265625,
+            "height": 45.171875,
+            "left": 486.3671875,
+            "right": 531.5390625,
+            "top": 560.0546875,
+            "width": 45.171875,
+            "x": 486.3671875,
+            "y": 560.0546875
+          },
+          "selected": "true"
+        },
+        {
+          "current": null,
+          "label": "Новый горизонт · 250 баллов · Впереди",
+          "rect": {
+            "bottom": 630.3984375,
+            "height": 45.171875,
+            "left": 617.8984375,
+            "right": 663.0703125,
+            "top": 585.2265625,
+            "width": 45.171875,
+            "x": 617.8984375,
+            "y": 585.2265625
+          },
+          "selected": "false"
+        }
+      ],
+      "detail": {
+        "bottom": 976.53125,
+        "height": 140,
+        "left": 66,
+        "right": 687,
+        "top": 836.53125,
+        "width": 621,
+        "x": 66,
+        "y": 836.53125
+      },
+      "detailTitle": "Маяк",
+      "figure": {
+        "bottom": 1037.921875,
+        "height": 627.546875,
+        "left": 43,
+        "right": 710,
+        "top": 410.375,
+        "width": 667,
+        "x": 43,
+        "y": 410.375
+      },
+      "footer": 957,
+      "overflow": false,
+      "overlaps": [],
+      "scene": {
+        "bottom": 750.546875,
+        "height": 261.1875,
+        "left": 50,
+        "right": 703,
+        "top": 489.359375,
+        "width": 653,
+        "x": 50,
+        "y": 489.359375
+      },
+      "scrollY": 0,
+      "total": "105 баллов за всё время",
+      "viewport": {
+        "height": 1024,
+        "width": 768
+      }
+    },
+    {
+      "balance": "105",
+      "controls": [
+        {
+          "current": null,
+          "label": "Отправная точка · 0 баллов · Открыто",
+          "rect": {
+            "bottom": 720.90625,
+            "height": 56,
+            "left": 367.984375,
+            "right": 423.984375,
+            "top": 664.90625,
+            "width": 56,
+            "x": 367.984375,
+            "y": 664.90625
+          },
+          "selected": "false"
+        },
+        {
+          "current": null,
+          "label": "Тихая поляна · 25 баллов · Открыто",
+          "rect": {
+            "bottom": 669.8125,
+            "height": 56,
+            "left": 523.359375,
+            "right": 579.359375,
+            "top": 613.8125,
+            "width": 56,
+            "x": 523.359375,
+            "y": 613.8125
+          },
+          "selected": "false"
+        },
+        {
+          "current": null,
+          "label": "Мост наблюдений · 50 баллов · Открыто",
+          "rect": {
+            "bottom": 707.0625,
+            "height": 56,
+            "left": 674.5,
+            "right": 730.5,
+            "top": 651.0625,
+            "width": 56,
+            "x": 674.5,
+            "y": 651.0625
+          },
+          "selected": "false"
+        },
+        {
+          "current": "step",
+          "label": "Маяк · 100 баллов · Вы здесь",
+          "rect": {
+            "bottom": 636.828125,
+            "height": 56,
+            "left": 825.625,
+            "right": 881.625,
+            "top": 580.828125,
+            "width": 56,
+            "x": 825.625,
+            "y": 580.828125
+          },
+          "selected": "true"
+        },
+        {
+          "current": null,
+          "label": "Новый горизонт · 250 баллов · Впереди",
+          "rect": {
+            "bottom": 665.5625,
+            "height": 56,
+            "left": 975.6875,
+            "right": 1031.6875,
+            "top": 609.5625,
+            "width": 56,
+            "x": 975.6875,
+            "y": 609.5625
+          },
+          "selected": "false"
+        }
+      ],
+      "detail": {
+        "bottom": 1026.390625,
+        "height": 140,
+        "left": 346,
+        "right": 1059,
+        "top": 886.390625,
+        "width": 713,
+        "x": 346,
+        "y": 886.390625
+      },
+      "detailTitle": "Маяк",
+      "figure": {
+        "bottom": 1087.78125,
+        "height": 664.359375,
+        "left": 323,
+        "right": 1082,
+        "top": 423.421875,
+        "width": 759,
+        "x": 323,
+        "y": 423.421875
+      },
+      "footer": null,
+      "overflow": false,
+      "overlaps": [],
+      "scene": {
+        "bottom": 800.40625,
+        "height": 298,
+        "left": 330,
+        "right": 1075,
+        "top": 502.40625,
+        "width": 745,
+        "x": 330,
+        "y": 502.40625
+      },
+      "scrollY": 0,
+      "total": "105 баллов за всё время",
+      "viewport": {
+        "height": 1000,
+        "width": 1440
+      }
+    },
+    {
+      "balance": "105",
+      "controls": [
+        {
+          "current": null,
+          "label": "Отправная точка · 0 баллов · Открыто",
+          "rect": {
+            "bottom": 779.453125,
+            "height": 44,
+            "left": 40,
+            "right": 84,
+            "top": 735.453125,
+            "width": 44,
+            "x": 40,
+            "y": 735.453125
+          },
+          "selected": "false"
+        },
+        {
+          "current": null,
+          "label": "Тихая поляна · 25 баллов · Открыто",
+          "rect": {
+            "bottom": 764.015625,
+            "height": 44,
+            "left": 84.84375,
+            "right": 128.84375,
+            "top": 720.015625,
+            "width": 44,
+            "x": 84.84375,
+            "y": 720.015625
+          },
+          "selected": "false"
+        },
+        {
+          "current": null,
+          "label": "Мост наблюдений · 50 баллов · Открыто",
+          "rect": {
+            "bottom": 775.265625,
+            "height": 44,
+            "left": 130.5,
+            "right": 174.5,
+            "top": 731.265625,
+            "width": 44,
+            "x": 130.5,
+            "y": 731.265625
+          },
+          "selected": "false"
+        },
+        {
+          "current": "step",
+          "label": "Маяк · 100 баллов · Вы здесь",
+          "rect": {
+            "bottom": 754.0625,
+            "height": 44,
+            "left": 176.140625,
+            "right": 220.140625,
+            "top": 710.0625,
+            "width": 44,
+            "x": 176.140625,
+            "y": 710.0625
+          },
+          "selected": "true"
+        },
+        {
+          "current": null,
+          "label": "Новый горизонт · 250 баллов · Впереди",
+          "rect": {
+            "bottom": 762.734375,
+            "height": 44,
+            "left": 221,
+            "right": 265,
+            "top": 718.734375,
+            "width": 44,
+            "x": 221,
+            "y": 718.734375
+          },
+          "selected": "false"
+        }
+      ],
+      "detail": {
+        "bottom": 1100.1875,
+        "height": 199.484375,
+        "left": 54,
+        "right": 251,
+        "top": 900.703125,
+        "width": 197,
+        "x": 54,
+        "y": 900.703125
+      },
+      "detailTitle": "Маяк",
+      "figure": {
+        "bottom": 1202.359375,
+        "height": 606.609375,
+        "left": 33,
+        "right": 272,
+        "top": 595.75,
+        "width": 239,
+        "x": 33,
+        "y": 595.75
+      },
+      "footer": 762.625,
+      "overflow": false,
+      "overlaps": [],
+      "scene": {
+        "bottom": 789.921875,
+        "height": 90,
+        "left": 40,
+        "right": 265,
+        "top": 699.921875,
+        "width": 225,
+        "x": 40,
+        "y": 699.921875
+      },
+      "scrollY": 0,
+      "total": "105 баллов за всё время",
+      "viewport": {
+        "height": 844,
+        "width": 320
+      }
+    }
+  ],
+  "interactions": [
+    {
+      "scenario": "visible-marker-before",
+      "coordinate": [
+        60,
+        690
+      ],
+      "before": {
+        "detailTop": 1419.46875,
+        "firstButton": 862.53125,
+        "scrollY": 0,
+        "selected": "Маяк",
+        "svg": {
+          "height": 116.796875,
+          "width": 292,
+          "x": 34,
+          "y": 614.953125
+        }
+      },
+      "after": {
+        "detailTop": 1419.46875,
+        "oldBelowMapButtons": 5,
+        "scrollY": 0,
+        "selected": "Маяк"
+      },
+      "result": "No response to a native click on the visible marker; actual buttons and explanation were below the fold."
+    },
+    {
+      "scenario": "phone-native-marker-tap",
+      "coordinate": [
+        65,
+        714
+      ],
+      "before": {
+        "point": {
+          "bottom": 735.734375,
+          "height": 44,
+          "left": 42.796875,
+          "right": 86.796875,
+          "top": 691.734375,
+          "width": 44,
+          "x": 42.796875,
+          "y": 691.734375
+        },
+        "scrollY": 0,
+        "selected": "Маяк"
+      },
+      "after": {
+        "balance": "105",
+        "current": "Маяк · 100 баллов · Вы здесь",
+        "detail": {
+          "bottom": 753.921875,
+          "height": 190,
+          "left": 54,
+          "right": 306,
+          "top": 563.921875,
+          "width": 252,
+          "x": 54,
+          "y": 563.921875
+        },
+        "focused": "Отправная точка · 0 баллов · Открыто",
+        "nav": [
+          {
+            "className": "",
+            "top": 128
+          },
+          {
+            "className": "breadcrumb",
+            "top": 0
+          },
+          {
+            "className": "mobile-navigation",
+            "top": 777
+          }
+        ],
+        "scrollY": 301,
+        "selected": "Отправная точка"
+      }
+    },
+    {
+      "scenario": "phone-future-native-marker-tap",
+      "coordinate": [
+        293,
+        392
+      ],
+      "after": {
+        "balance": "105",
+        "current": "Маяк · 100 баллов · Вы здесь",
+        "detailBottom": 754.203125,
+        "focused": "Новый горизонт · 250 баллов · Впереди",
+        "footer": 777,
+        "scrollY": 334,
+        "selected": "Новый горизонт",
+        "total": "105 баллов за всё время"
+      }
+    },
+    {
+      "scenario": "native-shift-tab-enter",
+      "before": {
+        "focused": "Маяк · 100 баллов · Вы здесь",
+        "selected": "Новый горизонт"
+      },
+      "after": {
+        "current": "Маяк · 100 баллов · Вы здесь",
+        "focused": "Маяк · 100 баллов · Вы здесь",
+        "pressed": "true",
+        "selected": "Маяк"
+      }
+    },
+    {
+      "scenario": "home-preview-mobile",
+      "observed": {
+        "mapControlCount": 0,
+        "mode": "map",
+        "nestedButtons": 0,
+        "overflow": false,
+        "previewMarkers": 5,
+        "width": 375
+      }
+    },
+    {
+      "scenario": "home-preview-desktop",
+      "observed": {
+        "mapControlCount": 0,
+        "mode": "map",
+        "nestedButtons": 0,
+        "overflow": false,
+        "previewMarkers": 5,
+        "width": 1440
+      }
+    }
+  ]
+}

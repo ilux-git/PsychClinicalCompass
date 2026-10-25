@@ -1,4 +1,4 @@
-import { useRef, useState, type FormEvent } from "react";
+import { useEffect, useId, useRef, useState, type FormEvent } from "react";
 import {
   Check,
   ChevronRight,
@@ -40,6 +40,7 @@ import { AssessmentHistory } from "./AssessmentHistory";
 import { PatientDiary } from "./PatientDiary";
 import { MedicationSchedule } from "./MedicationSchedule";
 import { PatientJourney } from "./PatientJourney";
+import { PatientOverview } from "./PatientOverview";
 import { ContentFrame } from "./Interaction";
 import { useUnsavedForm, type LeavePrompt } from "./NavigationGuard";
 
@@ -59,6 +60,16 @@ function SelfReport({
   const [status, setStatus] = useState("");
   const [reason, setReason] = useState("");
   const [busy, setBusy] = useState(false);
+  const [saveError,setSaveError]=useState("");
+  const [savedId,setSavedId]=useState<number|null>(null);
+  const errorId=useId(),errorResult=useRef<HTMLDivElement>(null);
+  const reportForm=useRef<HTMLFormElement>(null),savedResult=useRef<HTMLElement>(null),returnFocus=useRef(false);
+  useEffect(()=>{if(saveError)errorResult.current?.querySelector<HTMLElement>('.error-box')?.focus();},[saveError]);
+  useEffect(()=>{
+    if(savedId===null||!savedResult.current)return;
+    if(returnFocus.current&&(document.activeElement===document.body||reportForm.current?.contains(document.activeElement)))savedResult.current.focus();
+    returnFocus.current=false;
+  },[savedId,reports.data]);
   const {clear}=useUnsavedForm({dirty:Boolean(recommendation || status || reason),pending:busy,prompt:selfReportPrompt});
   const request = useRef({ signature: "", id: "" });
   async function submit(event: FormEvent) {
@@ -66,14 +77,15 @@ function SelfReport({
     const signature = JSON.stringify([recommendation, status, reason]);
     if (signature !== request.current.signature)
       request.current = { signature, id: crypto.randomUUID() };
-    setBusy(true);
+    setSaveError("");setSavedId(null);setBusy(true);
     try {
-      await send("/adherence/reports", {
+      const response=await send<Adherence>("/adherence/reports", {
         recommendation,
         status,
         reason,
         client_request_id: request.current.id,
       });
+      returnFocus.current=true;setSavedId(response.id);
       setRecommendation("");
       setStatus("");
       setReason("");
@@ -82,29 +94,27 @@ function SelfReport({
       reports.reload();
       notify("Спасибо! Врач увидит, какая поддержка вам нужна.");
     } catch (error) {
-      notify(
-        error instanceof Error ? error.message : "Не удалось сохранить",
-        "error",
-      );
+      setSaveError(error instanceof Error ? error.message : "Не удалось сохранить самоотчёт");
     } finally {
       setBusy(false);
     }
   }
   return (
     <>
-      <Heading eyebrow="Без оценок и осуждения" title="Как получается?">
+      <Heading eyebrow="Без оценок и осуждения" title="Выполнение рекомендаций">
         Расскажите, что получается с рекомендациями врача и что мешает.
       </Heading>
       <Section title="Мой самоотчёт">
-        <form onSubmit={submit} className="self-report-form">
-          <fieldset className="form-fields" disabled={busy} aria-busy={busy}>
+        <form ref={reportForm} onSubmit={submit} className="self-report-form">
+          <div ref={errorResult} id={errorId}><ErrorBox message={saveError}/></div>
+          <fieldset className="form-fields" disabled={busy} aria-busy={busy} aria-describedby={saveError?errorId:undefined}>
           <label className="field">
             О какой рекомендации расскажете?
             <input
               required
               maxLength={300}
               value={recommendation}
-              onChange={(e) => setRecommendation(e.target.value)}
+              onChange={(e) => {setSaveError("");setSavedId(null);setRecommendation(e.target.value);}}
               placeholder="Например, вести дневник самочувствия"
             />
           </label>
@@ -121,19 +131,18 @@ function SelfReport({
                   required
                   value={key}
                   checked={status === key}
-                  onChange={() => setStatus(key)}
+                  onChange={() => {setSaveError("");setSavedId(null);setStatus(key);}}
                 />
                 {label}
               </label>
             ))}
           </fieldset>
           <label className="field">
-            Что помогло или помешало?{" "}
-            <span className="optional">Необязательно</span>
+            <span>Что помогло или помешало? <span className="optional">Необязательно</span></span>
             <textarea
               value={reason}
               maxLength={2000}
-              onChange={(e) => setReason(e.target.value)}
+              onChange={(e) => {setSaveError("");setSavedId(null);setReason(e.target.value);}}
               rows={4}
               placeholder="Можно написать своими словами. Например, было трудно найти время."
             />
@@ -159,9 +168,9 @@ function SelfReport({
           </Empty>
         ) : (
           reports.data.reports.map((report) => (
-            <article className="adherence-report" key={report.id}>
+            <article className="adherence-report" key={report.id} ref={report.id===savedId?savedResult:undefined} tabIndex={-1} aria-labelledby={`${errorId}-report-${report.id}`}>
               <Badge tone="muted">{adherenceLabels[report.status]}</Badge>
-              <h3>{report.recommendation}</h3>
+              <h3 id={`${errorId}-report-${report.id}`}>{report.recommendation}</h3>
               {report.reason && <p className="preserve">{report.reason}</p>}
               <small className="muted">{date(report.created_at)}</small>
             </article>
@@ -177,11 +186,15 @@ export function PatientHome({
   view,
   notify,
   navigate,
+  assignmentId,
+  selectAssignment,
 }: {
   user: User;
   view: string;
   notify: Notify;
   navigate: (view: string) => void;
+  assignmentId:number|null;
+  selectAssignment:(id:number)=>void;
 }) {
   const showsSurveys = view === "overview" || view === "surveys";
   const assignments = useApi<Assignment[]>(showsSurveys ? "/survey-assignments" : null, 15000);
@@ -190,8 +203,8 @@ export function PatientHome({
     user.patient_id && (view === "chat" || view === "telegram" || showsSurveys) ? `/patients/${user.patient_id}` : null,
     15000,
   );
-  const [selected, setSelected] = useState<Assignment | null>(null);
-  function openSurvey(assignment:Assignment) {window.scrollTo(0,0);setSelected(assignment);}
+  const selected=assignmentId===null?null:assignments.data?.find(assignment=>assignment.id===assignmentId)??null;
+  function openSurvey(assignment:Assignment) {selectAssignment(assignment.id);}
   const assessmentHistory = useApi<Assessment[]>(
     view === "state" && user.patient_id ? `/patients/${user.patient_id}/assessments` : null,
     15000,
@@ -202,7 +215,7 @@ export function PatientHome({
   if (view === "state")
     return (
       <>
-        <Heading eyebrow="Сохранённые ответы" title="Моё состояние">
+        <Heading eyebrow="Сохранённые ответы" title="История состояния">
           История PHQ-9 и GAD-7. Обсудить изменения и следующие шаги можно с вашим врачом.
         </Heading>
         <Section title="Мои измерения">
@@ -218,7 +231,7 @@ export function PatientHome({
       <>
         <Heading
           eyebrow="В контакте с врачом"
-          title={view === "telegram" ? "Telegram · симулятор" : "Мой диалог"}
+          title={view === "telegram" ? "Симулятор Telegram" : "Написать врачу"}
         >
           Можно рассказать, как вы себя чувствуете, или задать вопрос.
         </Heading>
@@ -247,9 +260,14 @@ export function PatientHome({
   if (view === "adherence")
     return <SelfReport patientId={user.patient_id} notify={notify} />;
   if (view === "diary")
-    return <PatientDiary patientId={user.patient_id} notify={notify} />;
+    return <PatientDiary patientId={user.patient_id} notify={notify} progress={()=>navigate("journey")} />;
   if (view === "medications")
-    return <MedicationSchedule patientId={user.patient_id} notify={notify} />;
+    return <MedicationSchedule patientId={user.patient_id} notify={notify} progress={()=>navigate("journey")} />;
+  if(assignmentId!==null&&!selected)return <>
+    <Heading eyebrow="Опрос врача" title={assignments.loading?"Открываем опрос…":assignments.error||!assignments.data?"Не удалось загрузить опрос":"Опрос недоступен"}>Открыть можно только назначенные вам опросы.</Heading>
+    <ErrorBox message={assignments.error} retry={assignments.reload}/>
+    {assignments.loading?<Loading/>:<><p className="muted">{assignments.error||!assignments.data?"Список назначений пока не получен или не обновился. Повторите загрузку, когда соединение восстановится.":"Назначение не найдено среди доступных. Вернитесь к списку или повторите загрузку."}</p><div className="button-row"><Button onClick={()=>navigate("surveys")}>К опросам врача</Button><Button variant="secondary" onClick={assignments.reload}>Повторить загрузку</Button></div></>}
+  </>;
   if (selected)
     return (
       <ContentFrame key={selected.id}>
@@ -257,10 +275,10 @@ export function PatientHome({
         key={selected.id}
         assignment={selected}
         notify={notify}
+        progress={()=>navigate("journey")}
         done={() => {
           window.scrollTo(0,0);
-          setSelected(null);
-          if (view !== "surveys") navigate("surveys");
+          navigate("surveys");
           assignments.reload();
           participation.reload();
         }}
@@ -271,32 +289,13 @@ export function PatientHome({
   const pending = assignments.data?.filter((a) => !a.submission) ?? [];
   const completed = assignments.data?.filter((a) => a.submission).sort((a,b) =>
     Date.parse(b.submission!.created_at)-Date.parse(a.submission!.created_at) || b.id-a.id) ?? [];
-  if (view === "overview") return <>
-    <Heading eyebrow="Ваш день в Compass" title={`Здравствуйте, ${user.display_name.split(" ")[0]}`}>Всё важное между встречами с врачом — в одном месте.</Heading>
-    <ErrorBox message={assignments.error || participation.error || card.error} retry={()=>{assignments.reload();participation.reload();card.reload();}}/>
-    <div className="patient-day-grid">
-      <section className="day-primary">
-        <div className="day-section-label"><ClipboardCheck size={18}/><span>От вашего врача</span><Badge>{assignments.data ? `${pending.length} ${plural(pending.length,"опрос","опроса","опросов")}`:"Получаем…"}</Badge></div>
-        {assignments.loading?<Loading/>:!assignments.data?<><h2>Опросы пока недоступны</h2><p>Обновите данные, когда соединение восстановится.</p><Button variant="secondary" onClick={assignments.reload}>Повторить</Button></>:pending.length?<>
-          <p className="eyebrow">Следующий шаг</p><h2>{pending[0].survey.title}</h2><p>{pending[0].survey.description || "Расскажите врачу, что получается и какая поддержка нужна."}</p>
-          <div className="day-survey-meta"><span>{pending[0].survey.questions.length} вопр.</span><span>{pending[0].due_at?`До ${date(pending[0].due_at)}`:"В удобное время"}</span>{pending[0].draft_updated_at&&<span>Есть ваш черновик</span>}</div>
-          <Button onClick={()=>openSurvey(pending[0])}>{pending[0].draft_updated_at?"Продолжить ответ":"Ответить на вопросы"}<ChevronRight size={17}/></Button>
-        </>:<><span className="day-complete-mark"><Check size={24}/></span><h2>Новых опросов пока нет</h2><p>Когда врач назначит вопросы, они появятся здесь. Сейчас можно записать самочувствие или написать врачу.</p><Button variant="secondary" onClick={()=>navigate('diary')}>Открыть дневник<ChevronRight size={16}/></Button></>}
-        <div className="day-primary-footer"><span>{progress?`Отправлено ${progress.completed} из ${progress.assigned} опросов`:"История ещё загружается"}</span><Button variant="ghost" onClick={()=>navigate('surveys')}>Все мои опросы<ChevronRight size={16}/></Button></div>
-      </section>
-      <section className="day-companion" aria-label="Между встречами">
-        <h2>Позаботиться о себе</h2>
-        {([{view:'diary',title:'Дневник состояния',description:'Сохранить важное о своём дне',icon:BookOpen},{view:'medications',title:'Моё расписание',description:'Лекарства и личные отметки',icon:Pill},{view:'chat',title:'Написать врачу',description:'Вопрос или просьба о поддержке',icon:MessageCircle},{view:'state',title:'Мои измерения',description:'Ответы и изменения со временем',icon:Activity}]).map(item=><button className="day-action" key={item.view} onClick={()=>navigate(item.view)}><span><item.icon size={20}/></span><div><strong>{item.title}</strong><small>{item.description}</small></div><ChevronRight size={17}/></button>)}
-      </section>
-    </div>
-    <PatientJourney compact notify={notify} navigate={navigate}/>
-    {completed.length>0&&<Section title="Последние ответы" aside={<Button variant="ghost" onClick={()=>navigate('surveys')}>Вся история<ChevronRight size={16}/></Button>}>{completed.slice(0,2).map(assignment=><button className="completed-survey" key={assignment.id} onClick={()=>openSurvey(assignment)}><span className="completed-check"><Check size={17}/></span><div><strong>{assignment.survey.title}</strong><small>{date(assignment.submission?.created_at)}</small></div><ChevronRight size={18}/></button>)}</Section>}
-  </>;
+  if (view === "overview") return <PatientOverview user={user} assignments={assignments} doctor={card.data?.doctor}
+    doctorError={card.error} retryDoctor={card.reload} openSurvey={openSurvey} navigate={navigate} notify={notify}/>;
   return (
     <>
       <Heading
         eyebrow={view === "surveys" ? "Вопросы от вашего врача" : "Ваш день в Compass"}
-        title={view === "surveys" ? "Мои опросы" : `Здравствуйте, ${user.display_name.split(" ")[0]}`}
+        title={view === "surveys" ? "Опросы врача" : `Здравствуйте, ${user.display_name.split(" ")[0]}`}
       >
         Небольшие ответы помогают врачу лучше поддерживать вас между визитами.
       </Heading>

@@ -1,0 +1,94 @@
+/* Team palette: Paper / Ink / Signal. Color roles only; layout stays in its component. */
+body,.app-shell,.main-shell { background:var(--paper); }
+.topbar,.panel { background:var(--surface); }
+.button.primary { color:#fff; background:var(--ink); border-color:var(--ink); }
+.button.primary:hover:not(:disabled) { background:#333536; border-color:#333536; }
+.button.secondary { color:var(--ink); border-color:var(--line); }
+.button.secondary:hover:not(:disabled) { background:var(--paper); border-color:var(--muted); }
+.button.ghost,.back-link,.skip-link,.text-link,.disclosure-trigger { color:var(--signal-dark); }
+.button.ghost:hover:not(:disabled) { background:var(--signal-soft); }
+button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible { outline-color:var(--signal-dark); }
+input:not([type="checkbox"],[type="radio"]),select,textarea { border-color:#858681; color:var(--ink); background:var(--surface); }
+input[type="checkbox"],input[type="radio"] { accent-color:var(--signal-dark); }
+.badge.purple { color:var(--signal-dark); background:var(--signal-soft); }
+.badge.muted { color:var(--muted); background:#eeede8; }
+.avatar { background:var(--signal-soft); color:var(--signal-dark); }
+.sidebar,.sidebar-profile { background:var(--ink); }
+.sidebar .brand-mark { background:var(--signal); color:var(--ink); }
+.sidebar .brand-light,.sidebar-profile small,.sidebar .workspace-label,.sidebar .nav-section-label { color:#c4c3bd; }
+.sidebar nav a,.sidebar nav button,.demo-navigation a,.demo-navigation button,.demo-navigation summary { color:#e8e7e2; }
+.sidebar nav a > svg,.sidebar nav button > svg,.demo-navigation a > svg { color:#c4c3bd; }
+.sidebar .nav-item-copy small { color:#c4c3bd; }
+.sidebar nav a:hover,.sidebar nav button:hover,.demo-navigation a:hover,.demo-navigation button:hover { background:#303130; }
+.sidebar nav a.active,.sidebar nav button.active,.demo-navigation a.active,.demo-navigation button.active { background:var(--signal-soft); color:var(--ink); }
+.sidebar nav a.active small,.sidebar nav button.active small { color:var(--signal-dark); }
+.sidebar nav a.active > svg,.sidebar nav button.active > svg { color:var(--signal-dark); }
+.sidebar nav a i,.sidebar nav button i { background:var(--signal); }
+.sidebar button:focus-visible,.sidebar a:focus-visible,.sidebar summary:focus-visible { outline-color:var(--signal); }
+.sidebar-profile,.demo-navigation { border-color:#414240; }
+.sidebar-profile .avatar { background:#414240; color:#fff; }
+.sidebar-profile .icon-button,.drawer-close { color:#e8e7e2; }
+.breadcrumb button { color:var(--muted); }
+.breadcrumb button:hover { color:var(--signal-dark); background:var(--signal-soft); }
+.tabs button,.board-view-tabs button,.segmented button { color:var(--muted); }
+.tabs button.active,.board-view-tabs button.active,.segmented button.active { color:var(--signal-dark); background:var(--signal-soft); border-color:var(--signal-dark); }
+.survey-tile.selected,.assign-patients .checkbox-label:has(:checked) { background:var(--signal-soft); border-color:var(--signal-dark); }
+.survey-tile strong { color:var(--ink); }
+.survey-tile:hover { border-color:var(--signal-dark); }
+.patient-section-heading h2,.patient-survey-card h3,.completed-survey strong,.support-card h3 { color:var(--ink); }
+.patient-survey-card p,.patient-survey-card small,.completed-survey small,.support-card,.support-card p { color:var(--muted); }
+.patient-survey-card,.completed-survey { border-color:var(--line); }
+.patient-survey-card:hover { background:var(--paper); border-color:var(--signal-dark); }
+.patient-survey-card > svg { color:var(--signal-dark); }
+.count-circle,.survey-card-icon { background:var(--signal-soft); color:var(--signal-dark); }
+.draft-disclosure { background:var(--paper); color:var(--muted); }
+.survey-question legend > .question-number { background:var(--signal-soft); color:var(--signal-dark); }
+.survey-question legend > .required-mark { color:var(--signal-dark); }
+.answer-option { color:var(--ink); }
+.answer-option:hover:not(:has(:disabled)) { background:var(--paper); border-color:var(--muted); }
+.answer-option.checked,.answer-option.checked:hover { background:var(--signal-soft); border-color:var(--signal-dark); color:var(--ink); }
+.self-report-form .field { color:var(--ink); }
+.workspace-start { background:var(--surface); border-color:var(--line); border-left:4px solid var(--signal); }
+.workspace-start-icon,.navigation-welcome > svg,.workspace-shortcut > svg { color:var(--signal-dark); border-color:var(--line); }
+.workspace-start p:not(.eyebrow),.navigation-welcome p,.workspace-path p,.workspace-shortcut small,.card-section-purpose { color:var(--muted); }
+.workspace-shortcut:hover { background:#eeece5; }
+.workspace-path li > span,.navigation-help li > span { background:var(--signal-soft); color:var(--signal-dark); }
+.navigation-help { border-color:var(--line); }
+.report-route button { color:var(--muted); }
+.report-route button[aria-current="step"] { background:var(--signal-soft); color:var(--signal-dark); border-color:var(--signal-dark); }
+.care-source-context { border-color:var(--signal); background:#fbf4ef; }
+.care-source-highlight { outline-color:var(--signal-dark); }
+.answer-summary .answer-highlight { border-left-color:var(--signal); background:var(--signal-soft); }
+.answer-highlight:focus { outline-color:var(--signal-dark); }
+.answer-source-context { background:var(--signal-soft); color:var(--ink); }
+.insight-notice { background:var(--paper); border-color:var(--line); }
+.insight-notice .notice-symbol,.insight-notice strong { color:var(--ink); }
+.privacy-setup-action { margin-bottom:24px; }
+.care-progress-summary dt,.care-progress-summary dd > span,.task-source-line,.task-facts dt,.task-next-notice,.workflow-check-coverage { color:var(--muted); }
+.clinic-decision-summary { margin:0 0 28px; padding:24px; border:1px solid var(--line); border-top:3px solid var(--signal); border-radius:12px; background:var(--surface); }
+.clinic-decision-summary > header { display:flex; justify-content:space-between; align-items:flex-start; gap:12px 20px; flex-wrap:wrap; }
+.clinic-decision-summary header .eyebrow { margin:0 0 7px; }
+.clinic-decision-summary header h2 { font-size:21px; }
+.clinic-decision-summary header > span { font-size:12px; color:var(--muted); line-height:1.6; }
+.clinic-summary-values { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); margin:24px 0 0; }
+.clinic-summary-values > div { min-width:0; padding:0 24px; border-left:1px solid var(--line); }
+.clinic-summary-values > div:first-child { border:0; padding-left:0; }
+.clinic-summary-values > div:last-child { padding-right:0; }
+.clinic-summary-values dt { font-size:13px; line-height:1.6; color:var(--muted); }
+.clinic-summary-values dd { margin:8px 0 0; color:var(--ink); font-size:32px; line-height:1.3; font-weight:600; font-variant-numeric:tabular-nums; }
+.clinic-summary-values p,.clinic-summary-note,.clinic-summary-hidden { font-size:13px; line-height:1.7; color:var(--muted); margin:0; }
+.clinic-summary-values dd p { margin:12px 0 0; font-weight:400; }
+.clinic-summary-note { margin:24px 0 0; }
+.clinic-summary-hidden { margin-top:20px; }
+.clinic-decision-summary > .button-row { border-top:1px solid var(--line); padding-top:18px; margin-top:20px; gap:12px; }
+@media (max-width:780px) {
+  .clinic-decision-summary { padding:20px; }
+  .clinic-summary-values { grid-template-columns:minmax(0,1fr); gap:20px; }
+  .clinic-summary-values > div,.clinic-summary-values > div:first-child { padding:0 0 20px; border:0; border-bottom:1px solid var(--line); }
+  .clinic-summary-values > div:last-child { border:0; padding:0; }
+  .clinic-summary-values dd { font-size:28px; }
+  .clinic-summary-values dd p { margin-top:8px; }
+  .mobile-navigation { background:var(--surface); border-color:var(--line); }
+  .mobile-navigation a,.mobile-navigation button { color:var(--muted); }
+  .mobile-navigation .active { background:var(--signal-soft); color:var(--signal-dark); }
+}

@@ -1,29 +1,35 @@
 import { useEffect, useRef, useState, type FormEvent } from "react";
-import { ArrowLeft, Check, ChevronRight, LockKeyhole, Save, Send, Sparkles } from "lucide-react";
+import { ArrowLeft, ChevronRight, LockKeyhole, Save, Send, Sparkles } from "lucide-react";
 import { api, ApiError, send, type Assignment } from "./api";
 import { Badge, Button, date, ErrorBox, Loading, type Notify } from "./UI";
 import { AnswerSummary, SurveyFields } from "./SurveyFields";
 import { useNavigationGuard, useUnsavedForm, type LeavePrompt } from "./NavigationGuard";
 import { ContentFrame } from "./Interaction";
+import { ParticipationReceipt, type ParticipationConfirmation } from "./ParticipationReceipt";
 
 type Draft = { answers: Record<string, unknown>; revision: number; updated_at: string | null; already_completed: boolean };
 const replaceDraftPrompt:LeavePrompt={eyebrow:"Сохранённый черновик",title:"Заменить текущие ответы сохранённой версией?",message:"Ответы на экране будут заменены черновиком с сервера. Сначала можно вернуться в форму и скопировать свой текст.",stayLabel:"Оставить текущие ответы",discardLabel:"Загрузить и заменить ответы"};
 
-export function AssignedSurvey({ assignment, done, notify }: {assignment:Assignment; done:()=>void; notify:Notify}) {
+export function AssignedSurvey({ assignment:initialAssignment, done, progress, notify }: {assignment:Assignment; done:()=>void; progress?:()=>void; notify:Notify}) {
+  // The parent route is keyed by assignment.id. Polling must not replace an active form's baseline.
+  const [assignment]=useState(initialAssignment);
   const [answers,setAnswers] = useState<Record<string,unknown>>({});
   const [draft,setDraft] = useState<Draft | null>(null);
   const [action,setAction] = useState<"submit"|"draft"|null>(null);
   const [saved,setSaved] = useState(false), [loadRevision,setLoadRevision] = useState(0);
+  const [confirmation,setConfirmation]=useState<ParticipationConfirmation>({});
   const [draftError,setDraftError] = useState(""), [conflict,setConflict] = useState(false);
   const [openingError,setOpeningError] = useState(""), [openingRevision,setOpeningRevision] = useState(0);
   const [fieldErrors,setFieldErrors]=useState<Record<string,string>>({});
   const [validationAttempt,setValidationAttempt]=useState(0);
   const invalidQuestion=useRef<string|null>(null);
   const formRef = useRef<HTMLElement>(null);
+  const thanksTitle=useRef<HTMLHeadingElement>(null);
   const guard = useNavigationGuard();
   const dirty = Boolean(draft && !saved && JSON.stringify(answers) !== JSON.stringify(draft.answers));
   const {clear:clearGuard,confirm} = useUnsavedForm({dirty,pending:Boolean(action),save:!conflict && draft && !action ? ()=>saveDraft(false) : undefined,focus:()=>{const section=formRef.current;section?.querySelector<HTMLElement>('.error-box,textarea,input')?.focus();}});
   useEffect(()=>{if(draftError)formRef.current?.querySelector<HTMLElement>('.error-box')?.focus();},[draftError]);
+  useEffect(()=>{if(saved)thanksTitle.current?.focus({preventScroll:true});},[saved]);
   useEffect(()=>{
     const first=invalidQuestion.current;
     if(first)Array.from(formRef.current?.querySelectorAll<HTMLElement>('[data-question]')??[]).find(element=>element.dataset.question===first)?.querySelector<HTMLInputElement>('input')?.focus();
@@ -61,7 +67,6 @@ export function AssignedSurvey({ assignment, done, notify }: {assignment:Assignm
   function failed(error:unknown) {
     const text=error instanceof Error ? error.message : "Не удалось сохранить ответы";
     setDraftError(text); if(error instanceof ApiError && error.status===409)setConflict(true);
-    notify(text,"error");
   }
   async function saveDraft(close=true) {
     if(!draft || action || conflict)return false;
@@ -70,7 +75,7 @@ export function AssignedSurvey({ assignment, done, notify }: {assignment:Assignm
     try {
       const result=await send<Draft>(`/survey-assignments/${assignment.id}/draft`,{answers,expected_revision:draft.revision},"PUT");
       setDraft(result); setAnswers(result.answers); clearGuard();
-      notify("Черновик сохранён. Продолжить можно в разделе «Мои опросы»."); if(close)done();
+      notify("Черновик сохранён. Продолжить можно в разделе «Опросы врача»."); if(close)done();
       return true;
     } catch(error){failed(error);return false;} finally{setAction(null);}
   }
@@ -81,21 +86,21 @@ export function AssignedSurvey({ assignment, done, notify }: {assignment:Assignm
     setDraftError("");
     setAction("submit");
     try {
-      await send(`/survey-assignments/${assignment.id}/submit`,{answers,expected_draft_revision:draft.revision});
-      clearGuard(); setSaved(true); window.scrollTo(0,0); notify("Ответы отправлены врачу. Спасибо!");
+      const response=await send<ParticipationConfirmation>(`/survey-assignments/${assignment.id}/submit`,{answers,expected_draft_revision:draft.revision});
+      setConfirmation(response); clearGuard(); setSaved(true); window.scrollTo(0,0);
     } catch(error){failed(error);} finally{setAction(null);}
   }
-  if(saved)return <ContentFrame><section className="panel thanks-card"><span className="celebration"><Sparkles size={30}/></span>
-    <p className="eyebrow">Ответы отправлены</p><h1>Спасибо за ваш ответ</h1><p>Ответы доступны вашему врачу. Любой честный ответ полезен.</p>
-    <Badge tone="good"><Check size={14}/> Опрос завершён</Badge><Button onClick={done}>К моим опросам <ChevronRight size={16}/></Button></section></ContentFrame>;
+  if(saved)return <ContentFrame><section className="panel thanks-card patient-success"><span className="celebration" aria-hidden="true"><Sparkles size={30}/></span>
+    <p className="eyebrow">Ответы отправлены</p><h1 ref={thanksTitle} tabIndex={-1}>Спасибо за ваш ответ</h1><p>Ответы доступны вашему врачу. Любой честный ответ полезен.</p>
+    <ParticipationReceipt result={confirmation} progress={progress}/><Button onClick={done}>К опросам врача <ChevronRight size={16}/></Button></section></ContentFrame>;
   return <>
-    <button className="back-link" disabled={Boolean(action)} onClick={()=>guard.run(done)}><ArrowLeft size={16}/> Мои опросы</button>
+    <button className="back-link" disabled={Boolean(action)} onClick={()=>guard.run(done)}><ArrowLeft size={16}/> Опросы врача</button>
     <section className="panel patient-form" ref={formRef}>
       <div className="survey-form-meta"><Badge tone={assignment.submission?"good":"purple"}>{assignment.submission?"Ответ отправлен":`${assignment.survey.questions.length} вопр.`}</Badge><span>Версия {assignment.survey.version}{assignment.due_at?` · до ${date(assignment.due_at)}`:""}</span></div>
       <h1>{assignment.survey.title}</h1><p className="lede">{assignment.survey.description}</p>
       {assignment.submission?<><AnswerSummary questions={assignment.survey.questions} answers={assignment.submission.answers}/><p className="field-hint">Отправлено {date(assignment.submission.created_at)}. Для нового ответа врач может назначить ещё один опрос.</p></>:
         !draft?<><ErrorBox message={draftError} retry={()=>setLoadRevision(v=>v+1)}/>{!draftError&&<Loading/>}</>:
-        draft.already_completed?<><p>Опрос уже отправлен в другом окне. Откройте обновлённую историю.</p><Button onClick={done}>Обновить мои опросы</Button></>:
+        draft.already_completed?<><p>Опрос уже отправлен в другом окне. Откройте обновлённую историю.</p><Button onClick={done}>Обновить опросы врача</Button></>:
         <form onSubmit={submit}>
           <div className="draft-disclosure"><LockKeyhole size={18}/><span>{draft.updated_at?`Продолжаем черновик от ${date(draft.updated_at)}. `:"Можно сделать паузу. "}Черновик виден только вам. Врач получит ответы после отправки.</span></div>
           <ErrorBox message={openingError} retry={()=>setOpeningRevision(v=>v+1)}/>

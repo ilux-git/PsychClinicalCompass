@@ -1,0 +1,945 @@
+{
+  "recordedAt": "2026-10-25T07:24:43.292375+00:00",
+  "status": "Task fact labels readable in board cards; all-task denominator explicit",
+  "changes": [
+    "Two CSS rules apply the existing two-column fact arrangement to narrow board cards, including desktop. The third fact spans the row. Full physician patient cards retain three columns.",
+    "Without-follow-up caption now states33 out of all38 tasks. The observed completed37 and due-for-check3 denominators remain distinct and unchanged. Backend aggregation was reviewed; no formula or source changed."
+  ],
+  "sources": [
+    {
+      "file": "frontend/src/workspace.css",
+      "bytes": 68098,
+      "sha256": "6c8e3355665bc6fa1b7e1fcd631e136bce04459e59f60a05719db183f7158bee"
+    },
+    {
+      "file": "frontend/src/WorkflowMetrics.tsx",
+      "bytes": 13311,
+      "sha256": "79d2277c7322b0316fe48a131b876d32a8e764af77b8ff8a64aaafd9353c6b2d"
+    }
+  ],
+  "diff": "--- local69/workspace.css\n+++ current/frontend/src/workspace.css\n@@ -720,6 +720,8 @@\n .task-facts > div { min-width: 0; }\n .task-facts dt { color: #536971; font-size: 12px; line-height: 1.5; }\n .task-facts dd { margin: 4px 0 0; font-size: 13px; line-height: 1.6; color: var(--ink); overflow-wrap: anywhere; }\n+.board-card .task-facts { grid-template-columns: repeat(2,minmax(0,1fr)); gap: 14px; }\n+.board-card .task-facts > div:last-child { grid-column: 1 / -1; }\n .task-source-line { display: flex; align-items: center; flex-wrap: wrap; gap: 8px 16px; margin-bottom: 18px; font-size: 13px; color: #536971; }\n .task-source-line > .button { min-height: 44px; }\n .task-current-step h4 { margin: 6px 0 18px; font-size: 16px; line-height: 1.5; color: var(--ink); text-wrap: pretty; }\n--- local69/WorkflowMetrics.tsx\n+++ current/frontend/src/WorkflowMetrics.tsx\n@@ -40,7 +40,7 @@\n       <HorizontalBars title=\"Действия клиники\" maximum={d.tasks.total} unit=\"задач\" rows={[{label:\"Назначено\",value:d.tasks.open},{label:\"В работе\",value:d.tasks.in_progress},{label:\"Действие выполнено\",value:d.tasks.action_done}]} caption=\"Текущие этапы всех задач. Выполненное действие ещё требует отдельной проверки результата.\"/>\n       <HorizontalBars title=\"Что известно о результате\" maximum={d.tasks.action_done} unit=\"задач\" rows={[{label:\"Ещё не проверен\",value:checks.awaiting},{label:\"Затруднение устранено\",value:checks.resolved},{label:\"Затруднение сохраняется\",value:checks.notResolved},{label:\"Проверен: результат неизвестен\",value:checks.unknown}]} caption={`Только ${d.tasks.action_done} выполненных действий. «Неизвестен» — сохранённый вывод врача; «не проверен» — проверки ещё не было.`}/>\n     </div>\n-    <p className=\"workflow-check-coverage\"><strong>Проверены к текущему моменту: {ratio(d.tasks.recheck_coverage)}.</strong> Среди задач с наступившим сроком проверки. Без даты проверки: {d.tasks.without_followup_date}. Показатель не измеряет соблюдение срока.</p>\n+    <p className=\"workflow-check-coverage\"><strong>Проверены к текущему моменту: {ratio(d.tasks.recheck_coverage)}.</strong> Среди задач с наступившим сроком проверки. Без даты проверки: {d.tasks.without_followup_date} из всех {d.tasks.total} задач. Показатель не измеряет соблюдение срока.</p>\n     {includeContinuity&&<Disclosure title=\"Продолжение лечения и сообщённые причины отказов\"><TreatmentContinuityView d={d}/></Disclosure>}\n     <Disclosure title=\"Обращения за поддержкой и время реакции\">\n     {d.support_requests && <>\n",
+  "verification": {
+    "before": [
+      {
+        "card": {
+          "bottom": 703.65625,
+          "height": 525.0625,
+          "left": 949.65625,
+          "right": 1216,
+          "top": 178.59375,
+          "width": 266.34375,
+          "x": 949.65625,
+          "y": 178.59375
+        },
+        "grid": "66.7812px 66.7812px 66.7812px",
+        "labels": [
+          {
+            "box": {
+              "bottom": 429.484375,
+              "height": 36,
+              "left": 966.65625,
+              "right": 1033.4375,
+              "top": 393.484375,
+              "width": 66.78125,
+              "x": 966.65625,
+              "y": 393.484375
+            },
+            "font": "12px",
+            "lineHeight": "18px",
+            "text": "Исполнитель"
+          },
+          {
+            "box": {
+              "bottom": 429.484375,
+              "height": 36,
+              "left": 1049.4375,
+              "right": 1116.21875,
+              "top": 393.484375,
+              "width": 66.78125,
+              "x": 1049.4375,
+              "y": 393.484375
+            },
+            "font": "12px",
+            "lineHeight": "18px",
+            "text": "Срок действия"
+          },
+          {
+            "box": {
+              "bottom": 429.484375,
+              "height": 36,
+              "left": 1132.21875,
+              "right": 1199,
+              "top": 393.484375,
+              "width": 66.78125,
+              "x": 1132.21875,
+              "y": 393.484375
+            },
+            "font": "12px",
+            "lineHeight": "18px",
+            "text": "Проверка результата"
+          }
+        ],
+        "overflow": false,
+        "stage": "before-board-1280",
+        "viewport": [
+          1280,
+          720
+        ]
+      },
+      {
+        "card": {
+          "bottom": 1123.03125,
+          "height": 543.0625,
+          "left": 33,
+          "right": 327,
+          "top": 579.96875,
+          "width": 294,
+          "x": 33,
+          "y": 579.96875
+        },
+        "grid": "123px 123px",
+        "labels": [
+          {
+            "box": {
+              "bottom": 812.859375,
+              "height": 18,
+              "left": 50,
+              "right": 173,
+              "top": 794.859375,
+              "width": 123,
+              "x": 50,
+              "y": 794.859375
+            },
+            "font": "12px",
+            "lineHeight": "18px",
+            "text": "Исполнитель"
+          },
+          {
+            "box": {
+              "bottom": 812.859375,
+              "height": 18,
+              "left": 187,
+              "right": 310,
+              "top": 794.859375,
+              "width": 123,
+              "x": 187,
+              "y": 794.859375
+            },
+            "font": "12px",
+            "lineHeight": "18px",
+            "text": "Срок действия"
+          },
+          {
+            "box": {
+              "bottom": 869.65625,
+              "height": 18,
+              "left": 50,
+              "right": 310,
+              "top": 851.65625,
+              "width": 260,
+              "x": 50,
+              "y": 851.65625
+            },
+            "font": "12px",
+            "lineHeight": "18px",
+            "text": "Проверка результата"
+          }
+        ],
+        "overflow": false,
+        "stage": "before-board-375",
+        "viewport": [
+          375,
+          844
+        ]
+      },
+      {
+        "card": {
+          "bottom": 1003.84375,
+          "height": 450.46875,
+          "left": 33,
+          "right": 720,
+          "top": 553.375,
+          "width": 687,
+          "x": 33,
+          "y": 553.375
+        },
+        "grid": "319.5px 319.5px",
+        "labels": [
+          {
+            "box": {
+              "bottom": 741.265625,
+              "height": 18,
+              "left": 50,
+              "right": 369.5,
+              "top": 723.265625,
+              "width": 319.5,
+              "x": 50,
+              "y": 723.265625
+            },
+            "font": "12px",
+            "lineHeight": "18px",
+            "text": "Исполнитель"
+          },
+          {
+            "box": {
+              "bottom": 741.265625,
+              "height": 18,
+              "left": 383.5,
+              "right": 703,
+              "top": 723.265625,
+              "width": 319.5,
+              "x": 383.5,
+              "y": 723.265625
+            },
+            "font": "12px",
+            "lineHeight": "18px",
+            "text": "Срок действия"
+          },
+          {
+            "box": {
+              "bottom": 798.0625,
+              "height": 18,
+              "left": 50,
+              "right": 703,
+              "top": 780.0625,
+              "width": 653,
+              "x": 50,
+              "y": 780.0625
+            },
+            "font": "12px",
+            "lineHeight": "18px",
+            "text": "Проверка результата"
+          }
+        ],
+        "overflow": false,
+        "stage": "before-board-768",
+        "viewport": [
+          768,
+          1024
+        ]
+      },
+      {
+        "card": {
+          "bottom": 789.15625,
+          "height": 502.5625,
+          "left": 1056.328125,
+          "right": 1375.984375,
+          "top": 286.59375,
+          "width": 319.65625,
+          "x": 1056.328125,
+          "y": 286.59375
+        },
+        "grid": "84.5469px 84.5469px 84.5625px",
+        "labels": [
+          {
+            "box": {
+              "bottom": 496.984375,
+              "height": 18,
+              "left": 1073.328125,
+              "right": 1157.875,
+              "top": 478.984375,
+              "width": 84.546875,
+              "x": 1073.328125,
+              "y": 478.984375
+            },
+            "font": "12px",
+            "lineHeight": "18px",
+            "text": "Исполнитель"
+          },
+          {
+            "box": {
+              "bottom": 496.984375,
+              "height": 18,
+              "left": 1173.875,
+              "right": 1258.421875,
+              "top": 478.984375,
+              "width": 84.546875,
+              "x": 1173.875,
+              "y": 478.984375
+            },
+            "font": "12px",
+            "lineHeight": "18px",
+            "text": "Срок действия"
+          },
+          {
+            "box": {
+              "bottom": 514.984375,
+              "height": 36,
+              "left": 1274.421875,
+              "right": 1358.984375,
+              "top": 478.984375,
+              "width": 84.5625,
+              "x": 1274.421875,
+              "y": 478.984375
+            },
+            "font": "12px",
+            "lineHeight": "18px",
+            "text": "Проверка результата"
+          }
+        ],
+        "overflow": false,
+        "stage": "before-board-1440",
+        "viewport": [
+          1440,
+          1000
+        ]
+      }
+    ],
+    "after": {
+      "facts": [
+        {
+          "card": {
+            "bottom": 862.15625,
+            "height": 520.5625,
+            "left": 1056.328125,
+            "right": 1375.984375,
+            "top": 341.59375,
+            "width": 319.65625,
+            "x": 1056.328125,
+            "y": 341.59375
+          },
+          "grid": "135.828px 135.828px",
+          "labels": [
+            {
+              "box": {
+                "bottom": 551.984375,
+                "height": 18,
+                "left": 1073.328125,
+                "right": 1209.15625,
+                "top": 533.984375,
+                "width": 135.828125,
+                "x": 1073.328125,
+                "y": 533.984375
+              },
+              "font": "12px",
+              "lineHeight": "18px",
+              "text": "Исполнитель"
+            },
+            {
+              "box": {
+                "bottom": 551.984375,
+                "height": 18,
+                "left": 1223.15625,
+                "right": 1358.984375,
+                "top": 533.984375,
+                "width": 135.828125,
+                "x": 1223.15625,
+                "y": 533.984375
+              },
+              "font": "12px",
+              "lineHeight": "18px",
+              "text": "Срок действия"
+            },
+            {
+              "box": {
+                "bottom": 608.78125,
+                "height": 18,
+                "left": 1073.328125,
+                "right": 1358.984375,
+                "top": 590.78125,
+                "width": 285.65625,
+                "x": 1073.328125,
+                "y": 590.78125
+              },
+              "font": "12px",
+              "lineHeight": "18px",
+              "text": "Проверка результата"
+            }
+          ],
+          "overflow": false,
+          "stage": "after-board-1440",
+          "viewport": [
+            1440,
+            1000
+          ]
+        },
+        {
+          "card": {
+            "bottom": 884.65625,
+            "height": 543.0625,
+            "left": 949.65625,
+            "right": 1216,
+            "top": 341.59375,
+            "width": 266.34375,
+            "x": 949.65625,
+            "y": 341.59375
+          },
+          "grid": "109.172px 109.172px",
+          "labels": [
+            {
+              "box": {
+                "bottom": 574.484375,
+                "height": 18,
+                "left": 966.65625,
+                "right": 1075.828125,
+                "top": 556.484375,
+                "width": 109.171875,
+                "x": 966.65625,
+                "y": 556.484375
+              },
+              "font": "12px",
+              "lineHeight": "18px",
+              "text": "Исполнитель"
+            },
+            {
+              "box": {
+                "bottom": 574.484375,
+                "height": 18,
+                "left": 1089.828125,
+                "right": 1199,
+                "top": 556.484375,
+                "width": 109.171875,
+                "x": 1089.828125,
+                "y": 556.484375
+              },
+              "font": "12px",
+              "lineHeight": "18px",
+              "text": "Срок действия"
+            },
+            {
+              "box": {
+                "bottom": 631.28125,
+                "height": 18,
+                "left": 966.65625,
+                "right": 1199,
+                "top": 613.28125,
+                "width": 232.34375,
+                "x": 966.65625,
+                "y": 613.28125
+              },
+              "font": "12px",
+              "lineHeight": "18px",
+              "text": "Проверка результата"
+            }
+          ],
+          "overflow": false,
+          "stage": "after-board-1280",
+          "viewport": [
+            1280,
+            900
+          ]
+        },
+        {
+          "card": {
+            "bottom": 1003.84375,
+            "height": 450.46875,
+            "left": 33,
+            "right": 720,
+            "top": 553.375,
+            "width": 687,
+            "x": 33,
+            "y": 553.375
+          },
+          "grid": "319.5px 319.5px",
+          "labels": [
+            {
+              "box": {
+                "bottom": 741.265625,
+                "height": 18,
+                "left": 50,
+                "right": 369.5,
+                "top": 723.265625,
+                "width": 319.5,
+                "x": 50,
+                "y": 723.265625
+              },
+              "font": "12px",
+              "lineHeight": "18px",
+              "text": "Исполнитель"
+            },
+            {
+              "box": {
+                "bottom": 741.265625,
+                "height": 18,
+                "left": 383.5,
+                "right": 703,
+                "top": 723.265625,
+                "width": 319.5,
+                "x": 383.5,
+                "y": 723.265625
+              },
+              "font": "12px",
+              "lineHeight": "18px",
+              "text": "Срок действия"
+            },
+            {
+              "box": {
+                "bottom": 798.0625,
+                "height": 18,
+                "left": 50,
+                "right": 703,
+                "top": 780.0625,
+                "width": 653,
+                "x": 50,
+                "y": 780.0625
+              },
+              "font": "12px",
+              "lineHeight": "18px",
+              "text": "Проверка результата"
+            }
+          ],
+          "overflow": false,
+          "stage": "after-board-768",
+          "viewport": [
+            768,
+            1024
+          ]
+        },
+        {
+          "card": {
+            "bottom": 903.03125,
+            "height": 543.0625,
+            "left": 33,
+            "right": 327,
+            "top": 359.96875,
+            "width": 294,
+            "x": 33,
+            "y": 359.96875
+          },
+          "grid": "123px 123px",
+          "labels": [
+            {
+              "box": {
+                "bottom": 592.859375,
+                "height": 18,
+                "left": 50,
+                "right": 173,
+                "top": 574.859375,
+                "width": 123,
+                "x": 50,
+                "y": 574.859375
+              },
+              "font": "12px",
+              "lineHeight": "18px",
+              "text": "Исполнитель"
+            },
+            {
+              "box": {
+                "bottom": 592.859375,
+                "height": 18,
+                "left": 187,
+                "right": 310,
+                "top": 574.859375,
+                "width": 123,
+                "x": 187,
+                "y": 574.859375
+              },
+              "font": "12px",
+              "lineHeight": "18px",
+              "text": "Срок действия"
+            },
+            {
+              "box": {
+                "bottom": 649.65625,
+                "height": 18,
+                "left": 50,
+                "right": 310,
+                "top": 631.65625,
+                "width": 260,
+                "x": 50,
+                "y": 631.65625
+              },
+              "font": "12px",
+              "lineHeight": "18px",
+              "text": "Проверка результата"
+            }
+          ],
+          "overflow": false,
+          "stage": "after-board-375",
+          "viewport": [
+            375,
+            844
+          ]
+        }
+      ],
+      "fullCard": {
+        "grid": "163px 163px 163px",
+        "insideBoard": false,
+        "labels": [
+          {
+            "box": {
+              "bottom": 409.46875,
+              "height": 18,
+              "left": 342,
+              "right": 505,
+              "top": 391.46875,
+              "width": 163,
+              "x": 342,
+              "y": 391.46875
+            },
+            "text": "Исполнитель"
+          },
+          {
+            "box": {
+              "bottom": 409.46875,
+              "height": 18,
+              "left": 521,
+              "right": 684,
+              "top": 391.46875,
+              "width": 163,
+              "x": 521,
+              "y": 391.46875
+            },
+            "text": "Срок действия"
+          },
+          {
+            "box": {
+              "bottom": 409.46875,
+              "height": 18,
+              "left": 700,
+              "right": 863,
+              "top": 391.46875,
+              "width": 163,
+              "x": 700,
+              "y": 391.46875
+            },
+            "text": "Проверка результата"
+          }
+        ],
+        "overflow": false,
+        "stage": "physician-full-card"
+      },
+      "metrics": [
+        {
+          "metrics": [
+            {
+              "label": "Связаны с источником",
+              "value": "13 из 38 задач"
+            },
+            {
+              "label": "Ждут проверки врача",
+              "value": "27 из 37 выполненных"
+            },
+            {
+              "label": "Результат проверен",
+              "value": "10 из 37 выполненных"
+            }
+          ],
+          "overflow": false,
+          "stage": "physician-metric-scope",
+          "text": "Проверены к текущему моменту: 2 / 3 (66,7%). Среди задач с наступившим сроком проверки. Без даты проверки: 33 из всех 38 задач. Показатель не измеряет соблюдение срока.",
+          "viewport": [
+            1280,
+            720
+          ]
+        },
+        {
+          "bounds": {
+            "bottom": 477.390625,
+            "height": 110.46875,
+            "left": 37,
+            "right": 323,
+            "top": 366.921875,
+            "width": 286,
+            "x": 37,
+            "y": 366.921875
+          },
+          "hasName": false,
+          "overflow": false,
+          "stage": "admin-metric-mobile",
+          "text": "Проверены к текущему моменту: 2 / 3 (66,7%). Среди задач с наступившим сроком проверки. Без даты проверки: 33 из всех 38 задач. Показатель не измеряет соблюдение срока.",
+          "viewport": [
+            375,
+            844
+          ]
+        },
+        {
+          "overflow": false,
+          "stage": "admin-metric-tablet",
+          "text": "Проверены к текущему моменту: 2 / 3 (66,7%). Среди задач с наступившим сроком проверки. Без даты проверки: 33 из всех 38 задач. Показатель не измеряет соблюдение срока.",
+          "viewport": [
+            768,
+            1024
+          ]
+        }
+      ],
+      "console": [],
+      "notes": "One initial unscoped text locator matched9 terms across lazy task details; corrected by the visible target card. It was a test locator issue, not an application defect."
+    },
+    "buildAndTypes": {
+      "exitCode": 0,
+      "source": {
+        "file": "outputs/task-facts-build-20261025.log",
+        "bytes": 2056,
+        "sha256": "22c51bdd4b5787ec3e7bbd1aabc3210dfd753a49c4f1f90040f6ef8645fadfa6"
+      }
+    },
+    "http": {
+      "base_url": "http://127.0.0.1:8780",
+      "scope": "HTTP bytes and MIME only; not browser layout/interactions",
+      "assets": [
+        {
+          "file": "AdminDashboard-CpifcUOJ.js",
+          "status": 200,
+          "bytes": 18580,
+          "sha256": "2bc0ed6c89145756103dfcea96b1ebbce7458e5bc92764172c460be5b4718276",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "CareWorkflow-Bikx4ozR.js",
+          "status": 200,
+          "bytes": 26980,
+          "sha256": "99834ab9e2b898e7255d1943c4805a6cd6462b28773ffc186b00cb9a8dd60cbc",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "Charts-WQ0zc3IJ.js",
+          "status": 200,
+          "bytes": 5476,
+          "sha256": "167ed3ff3f15338ca97441a630b4fd6c1d7d6506e9e5149607c9f499fde5ad0f",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "DoctorDashboard-CzWqzzmL.js",
+          "status": 200,
+          "bytes": 18046,
+          "sha256": "f88a7fc6ba8cfe1e0b2a233805986003175f8968a3b5d7810bfd935bd0cf42c7",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "DoctorPatients-DcoZJ56A.js",
+          "status": 200,
+          "bytes": 36909,
+          "sha256": "ae97a369595f22207649543817ac3cf9dd14c9053a5322d7903339383730db9f",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "MedicationSchedule-CBR1I6Yk.js",
+          "status": 200,
+          "bytes": 37054,
+          "sha256": "d098f588997c3548a1652fd8e0ba1b11088ef9adc4bd84810b8065c6880870f3",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "MedicationSchedule-C_cioHGn.css",
+          "status": 200,
+          "bytes": 2103,
+          "sha256": "3ecca9c112edd867ada5c834649a96069fb7decf7d1ea5da5aebe9da0ab28a4e",
+          "mime": "text/css; charset=utf-8"
+        },
+        {
+          "file": "Patient-B9xuvwdE.css",
+          "status": 200,
+          "bytes": 26258,
+          "sha256": "9160fbf594ce6238151f4e13f5a28e00c0e62184711079b09f25bbebeb327b0b",
+          "mime": "text/css; charset=utf-8"
+        },
+        {
+          "file": "Patient-DzmqTas7.js",
+          "status": 200,
+          "bytes": 67631,
+          "sha256": "6ada41eccb6342a597a93b10f90c99647b57b89ecaf968ea32c4ec4167c58f3f",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "SurveyBuilder-V5zXVaVD.js",
+          "status": 200,
+          "bytes": 25412,
+          "sha256": "6495162afd56fe7784f2fc900b8a7f3141b1c518748f221af98a1fb9f62b3c53",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "SurveyFields-DYsDBakA.js",
+          "status": 200,
+          "bytes": 3313,
+          "sha256": "8687cc59774a1a1007534cc8090af0a02c12697f59db3d56c83a97d30e7a3d3d",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "TaskBoard-BEHXdBnW.js",
+          "status": 200,
+          "bytes": 7839,
+          "sha256": "b9a9683a45385b1980eeac0e53eaabbe29abc81132488a49bea648d69ff4fbe6",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "WorkflowMetrics-Db0f92aT.js",
+          "status": 200,
+          "bytes": 12483,
+          "sha256": "a9243a2d288c1ec666657e963f09c962dea1d5089112066706b7f4285ef4c839",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "chevron-right-CbxJUXC0.js",
+          "status": 200,
+          "bytes": 159,
+          "sha256": "4b460bb1da33169a605a133f6ab57c31a834efdf6692943df735b005213682ce",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "collection-COswcvyL.js",
+          "status": 200,
+          "bytes": 939,
+          "sha256": "b8f61ba215c319fcc2aaf6ce0fb3b26b182c049b9a0d9e4febe85703fe8000e4",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "index-D9t0-VgL.css",
+          "status": 200,
+          "bytes": 116749,
+          "sha256": "cf3267e2767ab1a5f4074216b8e509e537d16664a99e2809c5467f9e46dedcb6",
+          "mime": "text/css; charset=utf-8"
+        },
+        {
+          "file": "index-DYfQdEuZ.js",
+          "status": 200,
+          "bytes": 391449,
+          "sha256": "a2e30a6b9fc384c8e635efa3de36f3b58991f97dc314c91e147ffde957ec0326",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "patientProgress-Do0fObh9.js",
+          "status": 200,
+          "bytes": 1130,
+          "sha256": "611dafc1b1ad2ac66b0b04ac3852b8c0bf56b6f106882f460ee96efa5097a0b3",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "plus-B6hbjZJe.js",
+          "status": 200,
+          "bytes": 182,
+          "sha256": "48bf8f094a1872d691db28119b44c74e2a7b3e5f36950b8cbf5f38ebf304ca30",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "send-DCwjY5Bk.js",
+          "status": 200,
+          "bytes": 652,
+          "sha256": "a465128a003fe5cc9c2f7f7e3b4cd7784ac5ac271150d3852de3c6ee52931445",
+          "mime": "text/javascript; charset=utf-8"
+        }
+      ],
+      "health": {
+        "status": "ok",
+        "compass_db": true,
+        "mis_db": true,
+        "mode": "synthetic_demo"
+      },
+      "root_matches_dist": true,
+      "qa_health": {
+        "status": "ok",
+        "compass_db": true,
+        "mis_db": true,
+        "mode": "synthetic_demo"
+      }
+    },
+    "functionalBaseline": "69/69 frontend and151/151 backend retained; no repeated tests for reversible CSS/caption-only changes."
+  },
+  "screenshots": [
+    {
+      "file": "docs/evidence/task-facts-clarity-2026-10-25/admin-metric-mobile.jpg",
+      "bytes": 40675,
+      "sha256": "164ed6f6905d109f1803f17f8156f09575197dea728acc8c1b5dee7dee7a4c98",
+      "pixels": [
+        360,
+        810
+      ]
+    },
+    {
+      "file": "docs/evidence/task-facts-clarity-2026-10-25/admin-metric-tablet.jpg",
+      "bytes": 59087,
+      "sha256": "d59af2dad122807bb9c42e192304a9caf892881ba073745e14c8a63f5880c788",
+      "pixels": [
+        753,
+        1004
+      ]
+    },
+    {
+      "file": "docs/evidence/task-facts-clarity-2026-10-25/after-board-1280.jpg",
+      "bytes": 66153,
+      "sha256": "68b3f71a1f739f394f6b79b922920ec5c6adbb96537b2ad8d3c7de17c5ac4db3",
+      "pixels": [
+        1265,
+        889
+      ]
+    },
+    {
+      "file": "docs/evidence/task-facts-clarity-2026-10-25/after-board-1440.jpg",
+      "bytes": 77065,
+      "sha256": "f4b2e02ce9bd36723cec2c3dbf409b89809372a60ad889a817b6b7373617bb4b",
+      "pixels": [
+        1425,
+        990
+      ]
+    },
+    {
+      "file": "docs/evidence/task-facts-clarity-2026-10-25/after-board-375.jpg",
+      "bytes": 34420,
+      "sha256": "cbecdcf30854f53521c19d5f738a1bf0538e57fa46607555f56002f160bc3cfe",
+      "pixels": [
+        360,
+        810
+      ]
+    },
+    {
+      "file": "docs/evidence/task-facts-clarity-2026-10-25/after-board-768.jpg",
+      "bytes": 56740,
+      "sha256": "17d69d597e7bc433df17bbfdc68f92226d82f2fb5e58da7816ec324babab0a95",
+      "pixels": [
+        753,
+        1004
+      ]
+    },
+    {
+      "file": "docs/evidence/task-facts-clarity-2026-10-25/before-board-1280.jpg",
+      "bytes": 55223,
+      "sha256": "ed2dc246c5ece10751135122a39f799e431a0cffc41259e2bd92edcc9d5a68d4",
+      "pixels": [
+        1265,
+        712
+      ]
+    },
+    {
+      "file": "docs/evidence/task-facts-clarity-2026-10-25/before-board-1440.jpg",
+      "bytes": 76209,
+      "sha256": "df88c9db507bc07fa5a3820d2299d435087603452d267982ba1da013622dcf36",
+      "pixels": [
+        1425,
+        990
+      ]
+    },
+    {
+      "file": "docs/evidence/task-facts-clarity-2026-10-25/before-board-375.jpg",
+      "bytes": 32835,
+      "sha256": "4f690c30224221aeda06c0612b903ee2742118c14c398f3794d2449801690689",
+      "pixels": [
+        360,
+        810
+      ]
+    },
+    {
+      "file": "docs/evidence/task-facts-clarity-2026-10-25/before-board-768.jpg",
+      "bytes": 56720,
+      "sha256": "459a830a0a6a1b1968a20ae4721a3c0f7f04c5fcab9c8a7e5b3342bf4a3be545",
+      "pixels": [
+        753,
+        1004
+      ]
+    },
+    {
+      "file": "docs/evidence/task-facts-clarity-2026-10-25/physician-full-card.jpg",
+      "bytes": 75584,
+      "sha256": "c0f616a5028fe3396c45871e67d9bfcdfe82532a0e7eee31499d56f3bd938577",
+      "pixels": [
+        1265,
+        712
+      ]
+    },
+    {
+      "file": "docs/evidence/task-facts-clarity-2026-10-25/physician-metric-scope.jpg",
+      "bytes": 80032,
+      "sha256": "da30a2fa391a63f93fed03d436386cc7407a93112a3703e8787cb2b81e6a9537",
+      "pixels": [
+        1265,
+        712
+      ]
+    }
+  ],
+  "qaData": "Read-only navigation/role switches and viewport changes. Existing task38/report8 used; no new task, verification, policy, clinical, point, preference or main-data writes.",
+  "limits": [
+    "Native before1280 label width66.78px broke Исполнитель into36px/two lines. Final labels are18px/one line on375/768/1280/1440, no horizontal overflow in all final observations.",
+    "One initial unscoped Исполнитель locator matched9 lazy task-detail terms and was corrected to the visible target card. No app defect inferred from that tooling mismatch.",
+    "Before375 screenshot shows some facts below the fold; before geometry is recorded separately. Final375 screenshot includes the actual visible facts.",
+    "No new full browser/WCAG/screen-reader, FPS or load acceptance."
+  ]
+}

@@ -1,0 +1,7 @@
+Browser tab: 5, Title: "Мой день · Clinical Compass", URL: "http://127.0.0.1:8782/?section=overview".
+The following is a diff from the previous accessibility tree with ~ and + representing changed and added elements, respectively. Removed elements are summarized by ID range.
+Removed element IDs: 36-141
+~			35 text Загружаем данные…
++		36 container
++			37 text Clinical Compass · учебный MVP Поддержка диалога между врачом и пациентом
+The focused UI element is 29 container compass-main

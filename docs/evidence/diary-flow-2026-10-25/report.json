@@ -1,0 +1,1042 @@
+{
+  "recordedAt": "2026-10-25T03:39:57.760853+00:00",
+  "status": "targeted diary flow verified; separate root transition defect remains open",
+  "changes": [
+    "Text is first; optional existing observations are progressively disclosed with retained values.",
+    "Invalid observation time reveals its controls and focuses the existing required input.",
+    "Saved result scrolls wholly above the mobile footer; errors use one inline alert and retain content."
+  ],
+  "impact": {
+    "runtimeFiles": [
+      "frontend/src/PatientDiary.tsx",
+      "frontend/src/workspace.css",
+      "frontend/src/participation-receipt.css"
+    ],
+    "data": "Same payload fields, defaults, endpoint, idempotency, privacy and awards. No backend/schema/rule change.",
+    "consumers": "PatientHome uses PatientDiary; DoctorPatients uses unchanged SharedDiary from the same module. Full frontend checks cover imports.",
+    "recovery": "Restore these three files from the bounded local42 snapshot and rebuild. No data rollback; not executed."
+  },
+  "verification": {
+    "targetedBefore": {
+      "passed": 1,
+      "failed": 4
+    },
+    "targetedAfter": {
+      "passed": 5,
+      "failed": 0,
+      "exitCode": 0
+    },
+    "frontend": {
+      "passed": 47,
+      "failed": 0,
+      "exitCode": 0,
+      "durationMs": 38463.3809,
+      "source": {
+        "file": "outputs/diary-flow-frontend-20261025.log",
+        "bytes": 6264,
+        "sha256": "69a479480ded9b4b663749fcbde6495f508789fd9c92d1819ef716fd17259238"
+      }
+    },
+    "buildAndTypes": {
+      "status": "pass",
+      "exitCode": 0,
+      "source": {
+        "file": "outputs/diary-flow-build-20261025.log",
+        "bytes": 2056,
+        "sha256": "fd37af3a8396b3d685faab2d0392ecd7bb4611f5e912436bff18d66961f6e22d"
+      }
+    },
+    "backend": "Unchanged; previous151/151 from the medication cycle retained, not rerun for these three UI files.",
+    "native": {
+      "before": {
+        "fieldsBeforeText": 4,
+        "overflow": false,
+        "saveTop": 1132.90625,
+        "scrollY": 0,
+        "shared": false,
+        "textTop": 819.34375,
+        "viewport": {
+          "height": 844,
+          "width": 375
+        }
+      },
+      "savedBefore": {
+        "confirmation": "Запись сохранена\n\nЭта запись остаётся личной. Поделиться с врачом можно позже.\n\n+3 балла за участие\n\nБаллы — за участие. Содержание ответа и самочувствие на награду не влияют.\n\nПо записи от 25 окт., 10:19\nМой прогресс",
+        "focus": "Запись сохранена",
+        "fullyVisible": false,
+        "overflow": false,
+        "rect": {
+          "bottom": 795.46875,
+          "height": 329.5625,
+          "left": 37,
+          "right": 323,
+          "top": 465.90625,
+          "width": 286,
+          "x": 37,
+          "y": 465.90625
+        },
+        "scrollY": 733,
+        "shared": false
+      },
+      "checks": [
+        {
+          "label": "short-form-375-initial",
+          "alerts": [],
+          "confirmation": null,
+          "confirmationFullyVisible": false,
+          "detailsExpanded": "false",
+          "firstControl": "TEXTAREA",
+          "focus": {
+            "label": "Помощь с разделомДневникЗаписать самочувствие своими словами1Создайте ",
+            "tag": "MAIN"
+          },
+          "observation": "2026-10-25T10:33",
+          "overflow": false,
+          "saveRect": {
+            "bottom": 739.84375,
+            "height": 44,
+            "left": 37,
+            "right": 180.5625,
+            "top": 695.84375,
+            "width": 143.5625,
+            "x": 37,
+            "y": 695.84375
+          },
+          "scrollY": 0,
+          "shared": false,
+          "text": "",
+          "textRect": {
+            "bottom": 450.28125,
+            "height": 122,
+            "left": 37,
+            "right": 323,
+            "top": 328.28125,
+            "width": 286,
+            "x": 37,
+            "y": 328.28125
+          },
+          "title": "Мой дневник",
+          "viewport": {
+            "height": 844,
+            "width": 375
+          }
+        },
+        {
+          "label": "invalid-hidden-time-revealed-native",
+          "alerts": [],
+          "confirmation": null,
+          "confirmationFullyVisible": false,
+          "detailsExpanded": "true",
+          "firstControl": "TEXTAREA",
+          "focus": {
+            "label": "",
+            "tag": "INPUT"
+          },
+          "observation": "2026-10-25T10:33",
+          "overflow": false,
+          "saveRect": {
+            "bottom": 997.90625,
+            "height": 44,
+            "left": 37,
+            "right": 180.5625,
+            "top": 953.90625,
+            "width": 143.5625,
+            "x": 37,
+            "y": 953.90625
+          },
+          "scrollY": 296,
+          "shared": false,
+          "text": "Учебная запись · короткая форма и проверка обязательного времени",
+          "textRect": {
+            "bottom": 154.28125,
+            "height": 122,
+            "left": 37,
+            "right": 323,
+            "top": 32.28125,
+            "width": 286,
+            "x": 37,
+            "y": 32.28125
+          },
+          "title": "Мой дневник",
+          "viewport": {
+            "height": 844,
+            "width": 375
+          }
+        },
+        {
+          "label": "invalid-hidden-time-native-keyboard-final",
+          "alerts": [],
+          "confirmation": null,
+          "confirmationFullyVisible": false,
+          "detailsExpanded": "true",
+          "firstControl": "TEXTAREA",
+          "focus": {
+            "label": "",
+            "tag": "INPUT"
+          },
+          "observation": "",
+          "overflow": false,
+          "saveRect": {
+            "bottom": 997.90625,
+            "height": 44,
+            "left": 37,
+            "right": 180.5625,
+            "top": 953.90625,
+            "width": 143.5625,
+            "x": 37,
+            "y": 953.90625
+          },
+          "scrollY": 296,
+          "shared": false,
+          "text": "Учебная запись · короткая форма и проверка обязательного времени",
+          "textRect": {
+            "bottom": 154.28125,
+            "height": 122,
+            "left": 37,
+            "right": 323,
+            "top": 32.28125,
+            "width": 286,
+            "x": 37,
+            "y": 32.28125
+          },
+          "title": "Мой дневник",
+          "viewport": {
+            "height": 844,
+            "width": 375
+          }
+        },
+        {
+          "label": "short-private-503",
+          "alerts": [
+            "Техническая проверка: сохранение временно недоступно."
+          ],
+          "confirmation": null,
+          "confirmationFullyVisible": false,
+          "detailsExpanded": "false",
+          "firstControl": "TEXTAREA",
+          "focus": {
+            "label": "Техническая проверка: сохранение временно недоступно.",
+            "tag": "DIV"
+          },
+          "observation": "2026-10-25T10:33",
+          "overflow": false,
+          "saveRect": {
+            "bottom": 532.625,
+            "height": 44,
+            "left": 37,
+            "right": 180.5625,
+            "top": 488.625,
+            "width": 143.5625,
+            "x": 37,
+            "y": 488.625
+          },
+          "scrollY": 296,
+          "shared": false,
+          "text": "Учебная запись · короткая форма и проверка обязательного времени",
+          "textRect": {
+            "bottom": 243.0625,
+            "height": 122,
+            "left": 37,
+            "right": 323,
+            "top": 121.0625,
+            "width": 286,
+            "x": 37,
+            "y": 121.0625
+          },
+          "title": "Мой дневник",
+          "viewport": {
+            "height": 844,
+            "width": 375
+          }
+        },
+        {
+          "label": "saved-confirmation-375-final",
+          "alerts": [],
+          "confirmation": "Запись сохранена\n\nЭта запись остаётся личной. Поделиться с врачом можно позже.\n\nСохранено без дополнительных баллов\n\nЗаписи и опросы остаются доступны. Баланс и условия начисления — в «Мой прогресс».\n\nПо записи от 25 окт., 10:36\nМой прогресс",
+          "confirmationFullyVisible": true,
+          "confirmationRect": {
+            "bottom": 754.40625,
+            "height": 380.5625,
+            "left": 37,
+            "right": 323,
+            "top": 373.84375,
+            "width": 286,
+            "x": 37,
+            "y": 373.84375
+          },
+          "detailsExpanded": "false",
+          "firstControl": "TEXTAREA",
+          "focus": {
+            "label": "Запись сохранена",
+            "tag": "H3"
+          },
+          "observation": "2026-10-25T10:36",
+          "overflow": false,
+          "saveRect": {
+            "bottom": 351.84375,
+            "height": 44,
+            "left": 37,
+            "right": 180.5625,
+            "top": 307.84375,
+            "width": 143.5625,
+            "x": 37,
+            "y": 307.84375
+          },
+          "scrollY": 388,
+          "shared": false,
+          "text": "",
+          "textRect": {
+            "bottom": 62.28125,
+            "height": 122,
+            "left": 37,
+            "right": 323,
+            "top": -59.71875,
+            "width": 286,
+            "x": 37,
+            "y": -59.71875
+          },
+          "title": "Мой дневник",
+          "viewport": {
+            "height": 844,
+            "width": 375
+          }
+        },
+        {
+          "label": "short-form-768-top",
+          "alerts": [],
+          "confirmation": "Запись сохранена\n\nЭта запись остаётся личной. Поделиться с врачом можно позже.\n\nСохранено без дополнительных баллов\n\nЗаписи и опросы остаются доступны. Баланс и условия начисления — в «Мой прогресс».\n\nПо записи от 25 окт., 10:36\nМой прогресс",
+          "confirmationFullyVisible": true,
+          "confirmationRect": {
+            "bottom": 927.640625,
+            "height": 245.578125,
+            "left": 37,
+            "right": 716,
+            "top": 682.0625,
+            "width": 679,
+            "x": 37,
+            "y": 682.0625
+          },
+          "detailsExpanded": "false",
+          "firstControl": "TEXTAREA",
+          "focus": {
+            "label": "Запись сохранена",
+            "tag": "H3"
+          },
+          "observation": "2026-10-25T10:36",
+          "overflow": false,
+          "saveRect": {
+            "bottom": 660.0625,
+            "height": 44,
+            "left": 37,
+            "right": 180.5625,
+            "top": 616.0625,
+            "width": 143.5625,
+            "x": 37,
+            "y": 616.0625
+          },
+          "scrollY": 0,
+          "shared": false,
+          "text": "",
+          "textRect": {
+            "bottom": 423.6875,
+            "height": 122,
+            "left": 37,
+            "right": 716,
+            "top": 301.6875,
+            "width": 679,
+            "x": 37,
+            "y": 301.6875
+          },
+          "title": "Мой дневник",
+          "viewport": {
+            "height": 1024,
+            "width": 768
+          }
+        },
+        {
+          "label": "observation-only-collapsed-before-submit",
+          "alerts": [],
+          "confirmation": null,
+          "confirmationFullyVisible": false,
+          "detailsExpanded": "false",
+          "firstControl": "TEXTAREA",
+          "focus": {
+            "label": "Добавить наблюдения или уточнить время",
+            "tag": "BUTTON"
+          },
+          "observation": "2026-10-25T10:36",
+          "overflow": false,
+          "saveRect": {
+            "bottom": 598.0625,
+            "height": 44,
+            "left": 37,
+            "right": 180.5625,
+            "top": 554.0625,
+            "width": 143.5625,
+            "x": 37,
+            "y": 554.0625
+          },
+          "scrollY": 62,
+          "shared": false,
+          "text": "",
+          "textRect": {
+            "bottom": 361.6875,
+            "height": 122,
+            "left": 37,
+            "right": 716,
+            "top": 239.6875,
+            "width": 679,
+            "x": 37,
+            "y": 239.6875
+          },
+          "title": "Мой дневник",
+          "viewport": {
+            "height": 1024,
+            "width": 768
+          }
+        },
+        {
+          "label": "observation-only-saved-768",
+          "alerts": [],
+          "confirmation": "Запись сохранена\n\nЭта запись остаётся личной. Поделиться с врачом можно позже.\n\nСохранено без дополнительных баллов\n\nЗаписи и опросы остаются доступны. Баланс и условия начисления — в «Мой прогресс».\n\nПо записи от 25 окт., 10:37\nМой прогресс",
+          "confirmationFullyVisible": true,
+          "confirmationRect": {
+            "bottom": 801.640625,
+            "height": 245.578125,
+            "left": 37,
+            "right": 716,
+            "top": 556.0625,
+            "width": 679,
+            "x": 37,
+            "y": 556.0625
+          },
+          "detailsExpanded": "false",
+          "firstControl": "TEXTAREA",
+          "focus": {
+            "label": "Запись сохранена",
+            "tag": "H3"
+          },
+          "observation": "2026-10-25T10:37",
+          "overflow": false,
+          "saveRect": {
+            "bottom": 534.0625,
+            "height": 44,
+            "left": 37,
+            "right": 180.5625,
+            "top": 490.0625,
+            "width": 143.5625,
+            "x": 37,
+            "y": 490.0625
+          },
+          "scrollY": 126,
+          "shared": false,
+          "text": "",
+          "textRect": {
+            "bottom": 297.6875,
+            "height": 122,
+            "left": 37,
+            "right": 716,
+            "top": 175.6875,
+            "width": 679,
+            "x": 37,
+            "y": 175.6875
+          },
+          "title": "Мой дневник",
+          "viewport": {
+            "height": 1024,
+            "width": 768
+          }
+        },
+        {
+          "label": "short-form-1440-top",
+          "alerts": [],
+          "confirmation": "Запись сохранена\n\nЭта запись остаётся личной. Поделиться с врачом можно позже.\n\nСохранено без дополнительных баллов\n\nЗаписи и опросы остаются доступны. Баланс и условия начисления — в «Мой прогресс».\n\nПо записи от 25 окт., 10:37\nМой прогресс",
+          "confirmationFullyVisible": true,
+          "confirmationRect": {
+            "bottom": 909.453125,
+            "height": 245.578125,
+            "left": 321,
+            "right": 1368,
+            "top": 663.875,
+            "width": 1047,
+            "x": 321,
+            "y": 663.875
+          },
+          "detailsExpanded": "false",
+          "firstControl": "TEXTAREA",
+          "focus": {
+            "label": "Запись сохранена",
+            "tag": "H3"
+          },
+          "observation": "2026-10-25T10:37",
+          "overflow": false,
+          "saveRect": {
+            "bottom": 641.875,
+            "height": 44,
+            "left": 321,
+            "right": 464.5625,
+            "top": 597.875,
+            "width": 143.5625,
+            "x": 321,
+            "y": 597.875
+          },
+          "scrollY": 0,
+          "shared": false,
+          "text": "",
+          "textRect": {
+            "bottom": 424.6875,
+            "height": 110,
+            "left": 321,
+            "right": 1368,
+            "top": 314.6875,
+            "width": 1047,
+            "x": 321,
+            "y": 314.6875
+          },
+          "title": "Мой дневник",
+          "viewport": {
+            "height": 1000,
+            "width": 1440
+          }
+        }
+      ],
+      "invalidKeyboard": {
+        "attribute": "",
+        "containsNewEntry": false,
+        "focusedTime": true,
+        "required": true,
+        "validationMessage": "Введите верное значение. Поле не заполнено или введена недействительная дата.",
+        "value": "",
+        "valueMissing": true
+      },
+      "observationOnly": {
+        "latestEntry": "Только мнеНаблюдение: 25 окт., 10:36 · итог дня · внесено 25 окт., 10:37\n\nНейтрально\n\nЧастично мешало\n\nПоделиться с врачом",
+        "shared": false
+      },
+      "progress": {
+        "balance": "110\nбаллов к обмену",
+        "overflow": false,
+        "title": "Мой прогресс"
+      },
+      "guard": {
+        "dialogOpen": false,
+        "focusedText": true,
+        "text": "Учебный черновик для проверки выхода"
+      },
+      "discard": {
+        "dialogOpen": false,
+        "title": "Моё расписание лекарств"
+      },
+      "navigationStuckBefore": {
+        "active": "ДневникЗаписать самочувствие своими словами",
+        "frames": [
+          {
+            "hidden": "true",
+            "location": "/?section=overview",
+            "opacity": "0"
+          },
+          {
+            "hidden": "true",
+            "opacity": "1"
+          }
+        ],
+        "heading": "Здравствуйте, Мария",
+        "title": "Дневник · Clinical Compass"
+      },
+      "console": []
+    },
+    "http": {
+      "base_url": "http://127.0.0.1:8780",
+      "scope": "HTTP bytes and MIME only; not browser layout/interactions",
+      "assets": [
+        {
+          "file": "AdminDashboard-BzGA8IlD.js",
+          "status": 200,
+          "bytes": 18451,
+          "sha256": "a91e3b46602eda45fd0cc9b67230d8574f31a8d80f37a6fc50522e765f37f5ad",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "CareWorkflow-CURbkBY5.js",
+          "status": 200,
+          "bytes": 26980,
+          "sha256": "d851d4b683bcd8f8ea98c8639d7b574d0aa9ac1e2a7925922d638b6bd7a542cc",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "Charts-DOUB2xRo.js",
+          "status": 200,
+          "bytes": 5476,
+          "sha256": "5193d3da5bbce99ca5f46509911ff6423c1f07155378188b18c5699502670344",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "DoctorDashboard-DaFN8l6h.js",
+          "status": 200,
+          "bytes": 18046,
+          "sha256": "ce3e2a82df71ea862ba42a93cd2d86304d1f46a2c1eedcbdf1dbb0c9f0dfd1b0",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "DoctorPatients-Dw8zFIAL.js",
+          "status": 200,
+          "bytes": 36363,
+          "sha256": "5055db4f8d4287f799fa2f8085f626d7b9b1a298d41cafe28909c2d2ee585a42",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "MedicationSchedule-C_cioHGn.css",
+          "status": 200,
+          "bytes": 2103,
+          "sha256": "3ecca9c112edd867ada5c834649a96069fb7decf7d1ea5da5aebe9da0ab28a4e",
+          "mime": "text/css; charset=utf-8"
+        },
+        {
+          "file": "MedicationSchedule-D-58hg1m.js",
+          "status": 200,
+          "bytes": 36031,
+          "sha256": "352504ec16a63931ad200027920850a8a3c5c370accb55d8652eaf16dcb6c7c1",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "Patient-B9xuvwdE.css",
+          "status": 200,
+          "bytes": 26258,
+          "sha256": "9160fbf594ce6238151f4e13f5a28e00c0e62184711079b09f25bbebeb327b0b",
+          "mime": "text/css; charset=utf-8"
+        },
+        {
+          "file": "Patient-BZ23x1iQ.js",
+          "status": 200,
+          "bytes": 66896,
+          "sha256": "beefbed7c1ceae721854f80f1e95c55e448162934372e13058d8a97cde0569f7",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "SurveyBuilder-7atnowSQ.js",
+          "status": 200,
+          "bytes": 25412,
+          "sha256": "2b1e3d99e631b0902872bce4cf10ac694611ace7a1c27b36cf794e5244aea81f",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "SurveyFields-BPYjic6G.js",
+          "status": 200,
+          "bytes": 3121,
+          "sha256": "eab8264e6ed33ead2f9e7b1135f8cfd8a4c03af538b74ac2ada198187217ca06",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "TaskBoard-BZUhXLh9.js",
+          "status": 200,
+          "bytes": 7839,
+          "sha256": "e75613f15e1f42df031198c33e92b64eab837dff2f35c5bc2de1b223436671d8",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "WorkflowMetrics-OfP0qCSQ.js",
+          "status": 200,
+          "bytes": 12440,
+          "sha256": "a029751273e5648b52c941177973ed80a708bb7f0b244166d5f106f7e820ba7c",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "chevron-right-DpF7fKjQ.js",
+          "status": 200,
+          "bytes": 159,
+          "sha256": "395edddfaeb4e0dc54ec4fbc9e10ae03f8b670247eeb0e3052f1d8e561e920e4",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "collection-COswcvyL.js",
+          "status": 200,
+          "bytes": 939,
+          "sha256": "b8f61ba215c319fcc2aaf6ce0fb3b26b182c049b9a0d9e4febe85703fe8000e4",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "index-C5Hp2A4k.css",
+          "status": 200,
+          "bytes": 113330,
+          "sha256": "5a8c15642e893a0b088c909b41d6a67408df3a9c1502d8c0b59c702e96cc0ecb",
+          "mime": "text/css; charset=utf-8"
+        },
+        {
+          "file": "index-DvNaS1Dx.js",
+          "status": 200,
+          "bytes": 387525,
+          "sha256": "75d544fd8c44d9a25e02fe504e52ca0a5cd952aee2c66b947b1b1b4fac234a92",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "patientProgress-Do0fObh9.js",
+          "status": 200,
+          "bytes": 1130,
+          "sha256": "611dafc1b1ad2ac66b0b04ac3852b8c0bf56b6f106882f460ee96efa5097a0b3",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "plus-CLtU-WhM.js",
+          "status": 200,
+          "bytes": 182,
+          "sha256": "ad1766d90d3a1a73239b1a118306c2ee0fbd033a8d2e9f79b432abf9ee57524f",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "send-ClmhGskS.js",
+          "status": 200,
+          "bytes": 652,
+          "sha256": "a7e3b6cb6bc3cba811246c263769cbb0b1e6f87711fdb9c7c0c30ddf183e5049",
+          "mime": "text/javascript; charset=utf-8"
+        }
+      ],
+      "health": {
+        "status": "ok",
+        "compass_db": true,
+        "mis_db": true,
+        "mode": "synthetic_demo"
+      },
+      "root_matches_dist": true,
+      "qa_health": {
+        "status": "ok",
+        "compass_db": true,
+        "mis_db": true,
+        "mode": "synthetic_demo"
+      }
+    },
+    "limitedSemantic": {
+      "recordedAt": "2026-10-25T03:39:55.837Z",
+      "engine": "axe-core 4.14.0",
+      "scope": "Semantic analysis of CUA-exported markup in JSDOM29.1.1 with local entry CSS. App scripts and external resources never execute; no actual-browser axe, layout, contrast, keyboard, motion or screen-reader pass.",
+      "source": "https://github.com/dequelabs/axe-core#supported-browsers",
+      "disabledRules": [
+        "color-contrast"
+      ],
+      "pages": [
+        {
+          "file": "diary-short-saved-mobile.html",
+          "sha256": "67b810017da98b4b94201af51fb55050f8e7de8d9bd94fb85a77679c9ca82fcf",
+          "title": "Дневник · Clinical Compass",
+          "violations": [],
+          "incomplete": [
+            {
+              "id": "label-content-name-mismatch",
+              "impact": "serious",
+              "description": "Ensure that elements labelled through their content must have their visible text as part of their accessible name",
+              "help": "Elements must have their visible text as part of their accessible name",
+              "helpUrl": "https://dequeuniversity.com/rules/axe/4.14/label-content-name-mismatch?application=axeAPI",
+              "nodes": [
+                {
+                  "target": [
+                    ".section-help-button"
+                  ],
+                  "failureSummary": "Fix all of the following:\n  Axe encountered an error; test the page for this type of problem manually",
+                  "html": "<button class=\"button ghost section-help-button\" aria-label=\"Помощь с разделом\" tabindex=\"0\">"
+                }
+              ]
+            },
+            {
+              "id": "landmark-one-main",
+              "impact": "moderate",
+              "description": "Ensure the document has a main landmark",
+              "help": "Document should have one main landmark",
+              "helpUrl": "https://dequeuniversity.com/rules/axe/4.14/landmark-one-main?application=axeAPI",
+              "nodes": [
+                {
+                  "target": [
+                    "html"
+                  ],
+                  "failureSummary": "Fix all of the following:\n  Axe encountered an error; test the page for this type of problem manually",
+                  "html": "<html lang=\"ru\">"
+                }
+              ]
+            },
+            {
+              "id": "page-has-heading-one",
+              "impact": "moderate",
+              "description": "Ensure that the page, or at least one of its frames contains a level-one heading",
+              "help": "Page should contain a level-one heading",
+              "helpUrl": "https://dequeuniversity.com/rules/axe/4.14/page-has-heading-one?application=axeAPI",
+              "nodes": [
+                {
+                  "target": [
+                    "html"
+                  ],
+                  "failureSummary": "Fix all of the following:\n  Axe encountered an error; test the page for this type of problem manually",
+                  "html": "<html lang=\"ru\">"
+                }
+              ]
+            }
+          ],
+          "passedRuleCount": 38,
+          "passedRuleIds": [
+            "aria-allowed-attr",
+            "aria-allowed-role",
+            "aria-conditional-attr",
+            "aria-deprecated-role",
+            "aria-hidden-body",
+            "aria-hidden-focus",
+            "aria-prohibited-attr",
+            "aria-required-attr",
+            "aria-roles",
+            "aria-valid-attr-value",
+            "aria-valid-attr",
+            "avoid-inline-spacing",
+            "button-name",
+            "bypass",
+            "document-title",
+            "duplicate-id-aria",
+            "empty-heading",
+            "form-field-multiple-labels",
+            "heading-order",
+            "html-has-lang",
+            "html-lang-valid",
+            "label-title-only",
+            "label",
+            "landmark-banner-is-top-level",
+            "landmark-contentinfo-is-top-level",
+            "landmark-main-is-top-level",
+            "landmark-no-duplicate-banner",
+            "landmark-no-duplicate-contentinfo",
+            "landmark-no-duplicate-main",
+            "landmark-unique",
+            "link-name",
+            "meta-viewport-large",
+            "meta-viewport",
+            "nested-interactive",
+            "region",
+            "summary-name",
+            "tabindex",
+            "target-size"
+          ],
+          "inapplicableRuleCount": 49,
+          "domWarnings": [
+            "Not implemented: HTMLCanvasElement's getContext() method: without installing the canvas npm package"
+          ]
+        },
+        {
+          "file": "diary-short-desktop.html",
+          "sha256": "5e338da41d807070fd0b790dcdb191e402b7ad69fc0bb12f68fc0959253847fd",
+          "title": "Дневник · Clinical Compass",
+          "violations": [],
+          "incomplete": [
+            {
+              "id": "label-content-name-mismatch",
+              "impact": "serious",
+              "description": "Ensure that elements labelled through their content must have their visible text as part of their accessible name",
+              "help": "Elements must have their visible text as part of their accessible name",
+              "helpUrl": "https://dequeuniversity.com/rules/axe/4.14/label-content-name-mismatch?application=axeAPI",
+              "nodes": [
+                {
+                  "target": [
+                    ".section-help-button"
+                  ],
+                  "failureSummary": "Fix all of the following:\n  Axe encountered an error; test the page for this type of problem manually",
+                  "html": "<button class=\"button ghost section-help-button\" aria-label=\"Помощь с разделом\" tabindex=\"0\">"
+                }
+              ]
+            },
+            {
+              "id": "landmark-one-main",
+              "impact": "moderate",
+              "description": "Ensure the document has a main landmark",
+              "help": "Document should have one main landmark",
+              "helpUrl": "https://dequeuniversity.com/rules/axe/4.14/landmark-one-main?application=axeAPI",
+              "nodes": [
+                {
+                  "target": [
+                    "html"
+                  ],
+                  "failureSummary": "Fix all of the following:\n  Axe encountered an error; test the page for this type of problem manually",
+                  "html": "<html lang=\"ru\">"
+                }
+              ]
+            },
+            {
+              "id": "page-has-heading-one",
+              "impact": "moderate",
+              "description": "Ensure that the page, or at least one of its frames contains a level-one heading",
+              "help": "Page should contain a level-one heading",
+              "helpUrl": "https://dequeuniversity.com/rules/axe/4.14/page-has-heading-one?application=axeAPI",
+              "nodes": [
+                {
+                  "target": [
+                    "html"
+                  ],
+                  "failureSummary": "Fix all of the following:\n  Axe encountered an error; test the page for this type of problem manually",
+                  "html": "<html lang=\"ru\">"
+                }
+              ]
+            }
+          ],
+          "passedRuleCount": 38,
+          "passedRuleIds": [
+            "aria-allowed-attr",
+            "aria-allowed-role",
+            "aria-conditional-attr",
+            "aria-deprecated-role",
+            "aria-hidden-body",
+            "aria-hidden-focus",
+            "aria-prohibited-attr",
+            "aria-required-attr",
+            "aria-roles",
+            "aria-valid-attr-value",
+            "aria-valid-attr",
+            "avoid-inline-spacing",
+            "button-name",
+            "bypass",
+            "document-title",
+            "duplicate-id-aria",
+            "empty-heading",
+            "form-field-multiple-labels",
+            "heading-order",
+            "html-has-lang",
+            "html-lang-valid",
+            "label-title-only",
+            "label",
+            "landmark-banner-is-top-level",
+            "landmark-contentinfo-is-top-level",
+            "landmark-main-is-top-level",
+            "landmark-no-duplicate-banner",
+            "landmark-no-duplicate-contentinfo",
+            "landmark-no-duplicate-main",
+            "landmark-unique",
+            "link-name",
+            "meta-viewport-large",
+            "meta-viewport",
+            "nested-interactive",
+            "region",
+            "summary-name",
+            "tabindex",
+            "target-size"
+          ],
+          "inapplicableRuleCount": 49,
+          "domWarnings": [
+            "Not implemented: HTMLCanvasElement's getContext() method: without installing the canvas npm package"
+          ]
+        }
+      ]
+    }
+  },
+  "sources": [
+    {
+      "file": "frontend/src/PatientDiary.tsx",
+      "bytes": 11139,
+      "sha256": "a5e4d45bb302a1572485b841ab60cb2107bd916d0401a237c0f68fd637170bc9"
+    },
+    {
+      "file": "frontend/src/workspace.css",
+      "bytes": 65191,
+      "sha256": "27ede1c65eaa84f0703627731dced10a45e148cd840b6944ae330853a6b704af"
+    },
+    {
+      "file": "frontend/src/participation-receipt.css",
+      "bytes": 2330,
+      "sha256": "6ddaa3aca5ff88875eadd3ec0bda7c79f78442506b9bf8fbaa81247a6417c461"
+    },
+    {
+      "file": "frontend/tests/diary-flow-interaction.test.mjs",
+      "bytes": 10424,
+      "sha256": "7d678822cc114e80df36b7305076794b290a8cc043fd33972f308ddf44eefa81"
+    }
+  ],
+  "diff": "--- local42/PatientDiary.tsx\n+++ current/frontend/src/PatientDiary.tsx\n@@ -3,6 +3,7 @@\n import { Badge, Button, Empty, ErrorBox, Heading, Loading, Section, date, type Notify } from \"./UI\";\n import { useUnsavedForm, type LeavePrompt } from \"./NavigationGuard\";\n import { ParticipationReceipt, type ParticipationConfirmation } from \"./ParticipationReceipt\";\n+import { Disclosure, useInteractionMotion } from \"./Interaction\";\n \n const diaryPrompt:LeavePrompt={eyebrow:\"Несохранённая запись\",title:\"Вернуться к записи дневника?\",message:\"Запись ещё не сохранена. При переходе без сохранения текущий текст и выбранные наблюдения будут потеряны.\",stayLabel:\"Продолжить запись\"};\n \n@@ -39,8 +40,15 @@\n   const [busy, setBusy] = useState(false);\n   const [saved,setSaved]=useState<(DiaryEntry&ParticipationConfirmation)|null>(null);\n   const [saveError,setSaveError]=useState(\"\");\n+  const [invalidReveal,setInvalidReveal]=useState(0);\n+  const {moving}=useInteractionMotion();\n+  const savedPanel=useRef<HTMLDivElement>(null);\n   const savedResult=useRef<HTMLHeadingElement>(null),errorResult=useRef<HTMLDivElement>(null);\n-  useEffect(()=>{if(saved)savedResult.current?.focus({preventScroll:true});},[saved?.id]);\n+  useEffect(()=>{\n+    if(!saved)return;\n+    savedResult.current?.focus({preventScroll:true});\n+    savedPanel.current?.scrollIntoView({block:\"nearest\",behavior:moving?\"smooth\":\"instant\"});\n+  },[saved?.id,moving]);\n   useEffect(()=>{if(saveError)errorResult.current?.querySelector<HTMLElement>('.error-box')?.focus();},[saveError]);\n   const textInput=useRef<HTMLTextAreaElement>(null);\n   const dirty=Boolean(text || shared || feeling || impact || kind!==\"moment\");\n@@ -59,7 +67,7 @@\n       const response=await send<DiaryEntry&ParticipationConfirmation>(\"/diary/entries\", {...data, client_request_id: request.current.id});\n       setSaved(response);\n       setText(\"\"); setShared(false); setFeeling(\"\"); setImpact(\"\"); setKind(\"moment\"); setObserved(nowLocal()); clearGuard(); request.current = {signature: \"\", id: \"\"}; entries.reload();\n-    } catch (failure) { const message=failure instanceof Error?failure.message:\"Не удалось сохранить запись\";setSaveError(message);notify(message,\"error\"); }\n+    } catch (failure) { const message=failure instanceof Error?failure.message:\"Не удалось сохранить запись\";setSaveError(message); }\n     finally { setBusy(false); }\n   }\n   async function sharing(entry: DiaryEntry) {\n@@ -74,23 +82,25 @@\n   return <>\n     <Heading eyebrow=\"По желанию\" title=\"Мой дневник\">Записывайте, как проходит день и что влияет на самочувствие. Заполнение необязательно.</Heading>\n     <Section title=\"Новая запись\">\n-      <form onSubmit={save}>\n+      <form className=\"diary-form\" onSubmit={save} onInvalidCapture={()=>setInvalidReveal(value=>value+1)}>\n         <div ref={errorResult}><ErrorBox message={saveError}/></div>\n         <fieldset className=\"form-fields\" disabled={busy} aria-busy={busy}>\n-        <div className=\"form-grid\"><label className=\"field\">Когда наблюдали?<input required type=\"datetime-local\" value={observed} onChange={e => setObserved(e.target.value)} /></label>\n-        <label className=\"field\">О чём запись?<select value={kind} onChange={e => setKind(e.target.value)}><option value=\"moment\">Состояние в этот момент</option><option value=\"day_summary\">Итог дня</option></select></label></div>\n-        <label className=\"field\">Как вы себя чувствовали? · необязательно<select value={feeling} onChange={e => setFeeling(e.target.value)}><option value=\"\">Не отмечаю</option>{Object.entries(feelings).map(([k,v]) => <option key={k} value={k}>{v}</option>)}</select></label>\n-        <label className=\"field\">Влияние на повседневные дела · необязательно<select value={impact} onChange={e => setImpact(e.target.value)}><option value=\"\">Не отмечаю</option>{Object.entries(impacts).map(([k,v]) => <option key={k} value={k}>{v}</option>)}</select></label>\n-        <p className=\"field-hint\">Свободное наблюдение, а не диагностическая шкала. Можно выбрать наблюдение или оставить только текст.</p>\n         <label className=\"field\">Что хотите сохранить?\n-          <textarea ref={textInput} rows={5} maxLength={4000} value={text} onChange={(e) => setText(e.target.value)} />\n+          <textarea ref={textInput} rows={4} maxLength={4000} placeholder=\"Можно всего несколько слов\" value={text} onChange={(e) => setText(e.target.value)} />\n         </label>\n         <label className=\"checkbox-label\"><input type=\"checkbox\" checked={shared} onChange={(e) => setShared(e.target.checked)} />Поделиться этой записью с лечащим врачом</label>\n         <p className=\"field-hint\">Без отметки запись видна только вам. Доступ можно изменить позже. Дневник не просматривается врачом круглосуточно.</p>\n+        <Disclosure title=\"Добавить наблюдения или уточнить время\" revealRequest={invalidReveal} focusTarget='input[type=\"datetime-local\"]'>\n+          <label className=\"field\">Как вы себя чувствовали? · необязательно<select value={feeling} onChange={e => setFeeling(e.target.value)}><option value=\"\">Не отмечаю</option>{Object.entries(feelings).map(([k,v]) => <option key={k} value={k}>{v}</option>)}</select></label>\n+          <label className=\"field\">Влияние на повседневные дела · необязательно<select value={impact} onChange={e => setImpact(e.target.value)}><option value=\"\">Не отмечаю</option>{Object.entries(impacts).map(([k,v]) => <option key={k} value={k}>{v}</option>)}</select></label>\n+          <div className=\"form-grid\"><label className=\"field\">Когда наблюдали?<input required type=\"datetime-local\" value={observed} onChange={e => setObserved(e.target.value)} /></label>\n+          <label className=\"field\">О чём запись?<select value={kind} onChange={e => setKind(e.target.value)}><option value=\"moment\">Состояние в этот момент</option><option value=\"day_summary\">Итог дня</option></select></label></div>\n+          <p className=\"field-hint\">Свободное наблюдение, а не диагностическая шкала. Можно выбрать наблюдение или оставить только текст.</p>\n+        </Disclosure>\n         <Button disabled={busy || (!text.trim() && !feeling && !impact)} type=\"submit\">{busy?\"Сохраняем…\":\"Сохранить запись\"}</Button>\n         </fieldset>\n       </form>\n-      {saved&&<div className=\"diary-saved-result\">\n+      {saved&&<div ref={savedPanel} className=\"diary-saved-result\">\n         <h3 ref={savedResult} tabIndex={-1}>Запись сохранена</h3><p>{saved.shared_with_doctor?\"Эта запись доступна лечащему врачу.\":\"Эта запись остаётся личной. Поделиться с врачом можно позже.\"}</p>\n         <ParticipationReceipt result={saved} progress={progress}/>\n       </div>}\n--- local42/workspace.css\n+++ current/frontend/src/workspace.css\n@@ -502,6 +502,8 @@\n .form-fields > .field-hint + .field { margin-top: var(--space-5); }\n .form-fields > .checkbox-label { min-height: 40px; padding: 8px 0; align-items: flex-start; font-size: var(--text-label); }\n .form-fields > .checkbox-label input { margin-top: 2px; }\n+.diary-form .disclosure { margin:12px 0 20px; border-top:1px solid var(--line); }\n+.diary-form .disclosure .field-hint { margin:0 0 16px; }\n .chat-panel .message-list { gap: 16px; padding: 4px 8px 24px; scrollbar-gutter: stable; max-height: clamp(220px,calc(100dvh - 520px),440px); }\n .chat-doctor { display: flex; align-items: flex-start; gap: 10px; }\n .chat-doctor .availability-dot { margin-top: 6px; }\n--- local42/participation-receipt.css\n+++ current/frontend/src/participation-receipt.css\n@@ -5,7 +5,7 @@\n .participation-receipt-copy > p,.thanks-card .participation-receipt .participation-receipt-copy > p { max-width:none; margin:7px 0 0; font-size:14px; line-height:1.7; color:var(--muted); }\n .participation-receipt-copy > small { display:block; margin-top:9px; color:var(--muted); font-size:12px; line-height:1.6; }\n .participation-receipt-copy > .button,.thanks-card .participation-receipt .button { min-height:44px; padding:10px 0 0; margin-top:6px; color:var(--ink); font-size:13px; }\n-.diary-saved-result { scroll-margin-top:90px; border-radius:14px; }\n+.diary-saved-result { scroll-margin:90px 0; border-radius:14px; }\n .diary-saved-result > h3:focus,.patient-success.thanks-card > h1:focus { outline:2px solid var(--signal-dark); outline-offset:4px; border-radius:4px; }\n .diary-saved-result > h3 { font-size:17px; line-height:1.5; margin:22px 0 6px; }\n .diary-saved-result > p { font-size:13px; line-height:1.7; color:var(--muted); margin:0; }\n",
+  "screenshots": [
+    {
+      "file": "docs/evidence/diary-flow-2026-10-25/confirmation-after-375.jpg",
+      "bytes": 33722,
+      "sha256": "b378f28ce35c4e49a30b360fe6dcacd0911880e29fbd9e75623ea9e7375223cd",
+      "pixels": [
+        360,
+        810
+      ]
+    },
+    {
+      "file": "docs/evidence/diary-flow-2026-10-25/confirmation-before-375.jpg",
+      "bytes": 32608,
+      "sha256": "8e2b56d1366ffff9242f322d2777b0393c88a00df4b027c51dbc1ae6ac68e7bc",
+      "pixels": [
+        360,
+        810
+      ]
+    },
+    {
+      "file": "docs/evidence/diary-flow-2026-10-25/error-375.jpg",
+      "bytes": 35210,
+      "sha256": "1d211ff17675cec292584c44dfffd35ac0b9f423ce0cae594a191802f04c74a6",
+      "pixels": [
+        360,
+        810
+      ]
+    },
+    {
+      "file": "docs/evidence/diary-flow-2026-10-25/form-after-1440.jpg",
+      "bytes": 93837,
+      "sha256": "9904f2cec74b5ca86fb5129ed5f4c7e86f3080aa35348be132b05cba1b75c953",
+      "pixels": [
+        1425,
+        990
+      ]
+    },
+    {
+      "file": "docs/evidence/diary-flow-2026-10-25/form-after-375.jpg",
+      "bytes": 30220,
+      "sha256": "ee302e7df01567a109156ae9eb28fe829c1cd9c593354b2a1a3ca73b64cd7bc7",
+      "pixels": [
+        360,
+        810
+      ]
+    },
+    {
+      "file": "docs/evidence/diary-flow-2026-10-25/form-after-768.jpg",
+      "bytes": 56300,
+      "sha256": "849c3d31f79efa545800e2791be5027a88f1f25369e288490b76d898999e2975",
+      "pixels": [
+        753,
+        1004
+      ]
+    },
+    {
+      "file": "docs/evidence/diary-flow-2026-10-25/form-before-375.jpg",
+      "bytes": 35487,
+      "sha256": "bdc0458b6648a70287b349e3c45ae975683252dacce758eb73845068db9af521",
+      "pixels": [
+        360,
+        810
+      ]
+    },
+    {
+      "file": "docs/evidence/diary-flow-2026-10-25/invalid-time-375.jpg",
+      "bytes": 36790,
+      "sha256": "6d2ed7bd152d49d3ac97a155b53a74c42a5797d810f4ea1f737e201862861820",
+      "pixels": [
+        360,
+        810
+      ]
+    },
+    {
+      "file": "docs/evidence/diary-flow-2026-10-25/navigation-stuck-before.jpg",
+      "bytes": 31554,
+      "sha256": "49e476eed7b3e267150910953878ec038244b8a2a724e88dd8c91b399c354567",
+      "pixels": [
+        1265,
+        712
+      ]
+    },
+    {
+      "file": "docs/evidence/diary-flow-2026-10-25/observation-only-768.jpg",
+      "bytes": 55613,
+      "sha256": "e2caf248b9f5c0c50e6fd38176bad1530d1559d665f01f02c9c4f050015f00d7",
+      "pixels": [
+        753,
+        1004
+      ]
+    }
+  ],
+  "limits": [
+    "CUA datetime-local fill cleared DOM without updating React state; those preliminary observations are not final native validation evidence. Control+A/Backspace produced a real keyboard clear with empty value attribute, validation error and no submitted entry.",
+    "The rapid post-login blank-page reproduction is captured in navigationStuckBefore/navigation-stuck-before.jpg and remains a separate required repair; steady-state diary/progress transitions passed.",
+    "No new full browser/WCAG, screen reader, pixel baseline, WebVitals/FPS or load maximum pass. Local markup checks are limited JSDOM evidence.",
+    "Synthetic QA only: two additional private diary entries with zero awards, balance110 unchanged. Main patient data not written. No Git publication."
+  ]
+}

@@ -1,0 +1,660 @@
+{
+  "recordedAt": "2026-10-25T05:06:54.399687+00:00",
+  "status": "shared chat error recovery and respectful success focus verified",
+  "changes": [
+    "Sending failures are inline, focused and linked to the retained form; text/support flag and unchanged retry identity survive.",
+    "Editing clears the previous error. Successful sending restores the composer only when no later intentional control focus took precedence."
+  ],
+  "scope": "One runtime component and three actual-component regressions. Channel, support-event rules, API payload/idempotency, backend, permissions and medical/reward rules unchanged.",
+  "verification": {
+    "native": {
+      "before": {
+        "alerts": [
+          {
+            "focused": false,
+            "inChat": false,
+            "text": "Техническая проверка: сохранение временно недоступно."
+          }
+        ],
+        "focus": "BODY",
+        "messages": 2,
+        "overflow": false,
+        "support": true,
+        "text": "QA: проверка восстановления отправки. Не клиническое обращение."
+      },
+      "checks": [
+        {
+          "alerts": [
+            {
+              "focused": true,
+              "inComposer": true,
+              "rect": {
+                "bottom": 346.96875,
+                "height": 70.78125,
+                "left": 37,
+                "right": 323,
+                "top": 276.1875,
+                "width": 286,
+                "x": 37,
+                "y": 276.1875
+              },
+              "text": "Техническая проверка: сохранение временно недоступно."
+            }
+          ],
+          "errorDescription": "_r_2_",
+          "errorId": "_r_2_",
+          "focus": {
+            "label": null,
+            "tag": "DIV"
+          },
+          "lastMessage": "Пациент19 окт., 00:39Не до конца понимаю, что делать между приёмами.Сохранено",
+          "messages": 2,
+          "overflow": false,
+          "support": true,
+          "text": "QA: проверка восстановления отправки. Не клиническое обращение.",
+          "title": "Написать врачу",
+          "viewport": {
+            "height": 844,
+            "width": 375
+          },
+          "label": "patient-error-mobile"
+        },
+        {
+          "alerts": [
+            {
+              "focused": false,
+              "inComposer": true,
+              "rect": {
+                "bottom": 346.96875,
+                "height": 70.78125,
+                "left": 37,
+                "right": 323,
+                "top": 276.1875,
+                "width": 286,
+                "x": 37,
+                "y": 276.1875
+              },
+              "text": "Техническая проверка: сохранение временно недоступно."
+            }
+          ],
+          "errorDescription": "_r_2_",
+          "errorId": "_r_2_",
+          "focus": {
+            "label": "Текст сообщения",
+            "tag": "TEXTAREA"
+          },
+          "lastMessage": "Пациент19 окт., 00:39Не до конца понимаю, что делать между приёмами.Сохранено",
+          "messages": 2,
+          "overflow": false,
+          "support": true,
+          "text": "QA: проверка восстановления отправки. Не клиническое обращение.",
+          "title": "Написать врачу",
+          "viewport": {
+            "height": 844,
+            "width": 375
+          },
+          "label": "patient-guard-stay-mobile"
+        },
+        {
+          "alerts": [],
+          "errorDescription": null,
+          "focus": {
+            "label": null,
+            "tag": "BODY"
+          },
+          "lastMessage": "Пациент25 окт., 11:59QA: проверка восстановления отправки. Не клиническое обращение.Пациент попросил поддержкуСохранено",
+          "messages": 3,
+          "overflow": false,
+          "support": false,
+          "text": "",
+          "title": "Написать врачу",
+          "viewport": {
+            "height": 844,
+            "width": 375
+          },
+          "label": "patient-retry-saved-mobile"
+        },
+        {
+          "alerts": [],
+          "errorDescription": null,
+          "focus": {
+            "label": "Текст сообщения",
+            "tag": "TEXTAREA"
+          },
+          "lastMessage": "Пациент25 окт., 12:02QA: проверка возврата курсора после сохранения.Сохранено",
+          "messages": 4,
+          "overflow": false,
+          "support": false,
+          "text": "",
+          "title": "Написать врачу",
+          "viewport": {
+            "height": 844,
+            "width": 375
+          },
+          "label": "patient-saved-focus-mobile-final"
+        },
+        {
+          "alerts": [],
+          "errorDescription": null,
+          "focus": {
+            "label": "История переписки",
+            "tag": "DIV"
+          },
+          "lastMessage": "Пациент25 окт., 12:02QA: проверка возврата курсора после сохранения.Сохранено",
+          "messages": 4,
+          "overflow": false,
+          "support": false,
+          "text": "QA: проверка выбранного фокуса при задержке отправки.",
+          "title": "Написать врачу",
+          "viewport": {
+            "height": 844,
+            "width": 375
+          },
+          "label": "patient-delayed-other-focus-pending"
+        },
+        {
+          "alerts": [],
+          "errorDescription": null,
+          "focus": {
+            "label": "История переписки",
+            "tag": "DIV"
+          },
+          "lastMessage": "Пациент25 окт., 12:02QA: проверка выбранного фокуса при задержке отправки.Сохранено",
+          "messages": 5,
+          "overflow": false,
+          "support": false,
+          "text": "",
+          "title": "Написать врачу",
+          "viewport": {
+            "height": 844,
+            "width": 375
+          },
+          "label": "patient-delayed-other-focus-saved-final"
+        },
+        {
+          "alerts": [
+            {
+              "focused": true,
+              "inComposer": true,
+              "rect": {
+                "bottom": 511.859375,
+                "height": 48.390625,
+                "left": 321,
+                "right": 884,
+                "top": 463.46875,
+                "width": 563,
+                "x": 321,
+                "y": 463.46875
+              },
+              "text": "Техническая проверка: сохранение временно недоступно."
+            }
+          ],
+          "errorDescription": "_r_l_",
+          "errorId": "_r_l_",
+          "focus": {
+            "label": null,
+            "tag": "DIV"
+          },
+          "lastMessage": "Пациент25 окт., 12:02QA: проверка выбранного фокуса при задержке отправки.СохраненоНаблюдение к сообщению",
+          "messages": 5,
+          "overflow": false,
+          "text": "QA: ответ врача для проверки формы, без медицинской рекомендации.",
+          "title": "Мария Иванова",
+          "viewport": {
+            "height": 720,
+            "width": 1280
+          },
+          "label": "doctor-error-desktop-final"
+        },
+        {
+          "alerts": [],
+          "errorDescription": null,
+          "focus": {
+            "label": "Текст сообщения",
+            "tag": "TEXTAREA"
+          },
+          "lastMessage": "Пациент25 окт., 12:02QA: проверка выбранного фокуса при задержке отправки.СохраненоНаблюдение к сообщению",
+          "messages": 5,
+          "overflow": false,
+          "text": "QA: уточнённый ответ врача для проверки формы, без медицинской рекомендации.",
+          "title": "Мария Иванова",
+          "viewport": {
+            "height": 720,
+            "width": 1280
+          },
+          "label": "doctor-edit-clears-error-desktop-final"
+        },
+        {
+          "alerts": [],
+          "errorDescription": null,
+          "focus": {
+            "label": "Текст сообщения",
+            "tag": "TEXTAREA"
+          },
+          "lastMessage": "Врач25 окт., 12:03QA: уточнённый ответ врача для проверки формы, без медицинской рекомендации.СохраненоНаблюдение к сообщению",
+          "messages": 6,
+          "overflow": false,
+          "text": "",
+          "title": "Мария Иванова",
+          "viewport": {
+            "height": 720,
+            "width": 1280
+          },
+          "label": "doctor-retry-saved-desktop-final"
+        },
+        {
+          "alerts": [],
+          "errorDescription": null,
+          "focus": {
+            "label": "Текст сообщения",
+            "tag": "TEXTAREA"
+          },
+          "lastMessage": "Врач25 окт., 12:03QA: уточнённый ответ врача для проверки формы, без медицинской рекомендации.СохраненоНаблюдение к сообщению",
+          "messages": 6,
+          "overflow": false,
+          "text": "",
+          "title": "Мария Иванова",
+          "viewport": {
+            "height": 1024,
+            "width": 768
+          },
+          "label": "doctor-saved-tablet-final"
+        }
+      ],
+      "console": [],
+      "phases": "First three checks show the inline-error fix before success-focus restoration: the third confirms BODY focus after success. Final-suffixed checks verify success focus, deliberate later focus and doctor failure/edit/retry on final source. Synthetic QA message count2→6; three patient messages(one support flag), one doctor reply. No actual external channel used."
+    },
+    "frontend": {
+      "passed": 57,
+      "durationMs": 60032.6283,
+      "exitCode": 0,
+      "source": {
+        "file": "outputs/chat-recovery-frontend-20261025.log",
+        "bytes": 8057,
+        "sha256": "3f51c781e663f496e62a4b8e12dc61776f5ed9220c0e3e675d1a38bd523bb93f"
+      }
+    },
+    "regression": {
+      "inlineRed": "0pass/2fail at missing local alert",
+      "focusRed": "1pass/2fail at missing successful composer focus",
+      "green": "3/3",
+      "fixtureCorrection": "First green used impossible saved status for a Telegram-channel fixture. Corrected to messaging service queued contract and its existing queue label, without app change for that fixture gap."
+    },
+    "buildAndTypes": {
+      "exitCode": 0,
+      "source": {
+        "file": "outputs/chat-recovery-build-20261025.log",
+        "bytes": 2056,
+        "sha256": "948a21fb4a7fa8d34b5521151aeada54f1e3018d5f3a422cb4650144a7632e4a"
+      }
+    },
+    "http": {
+      "base_url": "http://127.0.0.1:8780",
+      "scope": "HTTP bytes and MIME only; not browser layout/interactions",
+      "assets": [
+        {
+          "file": "AdminDashboard-C3WT3H6n.js",
+          "status": 200,
+          "bytes": 18580,
+          "sha256": "1e317938e1d1048e4bf2e78c79784b07adcc987f04407cfed4fcffdad2a86e88",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "CareWorkflow-BSzfvMd1.js",
+          "status": 200,
+          "bytes": 26980,
+          "sha256": "5025aa7fd2e1da7507ea9c5903f51daa13524fdc655571597254b71adecb8bfe",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "Charts-CY4-e91R.js",
+          "status": 200,
+          "bytes": 5476,
+          "sha256": "1d53f886c33a81d3c29f5af88f56008e68bb99aefd6d6949a6305bbb6dc93f95",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "DoctorDashboard-B1b3Q-9-.js",
+          "status": 200,
+          "bytes": 18046,
+          "sha256": "7031fe6e5c57d0dae2a37d4e259e57000362de35c52041a4c4acfaf25cfb3d24",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "DoctorPatients-dvaQK8_S.js",
+          "status": 200,
+          "bytes": 36363,
+          "sha256": "6c595ebba680f653f55cf06e5dd374f772d6e6ad8b03aca2c0bb44305370cac9",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "MedicationSchedule-C_cioHGn.css",
+          "status": 200,
+          "bytes": 2103,
+          "sha256": "3ecca9c112edd867ada5c834649a96069fb7decf7d1ea5da5aebe9da0ab28a4e",
+          "mime": "text/css; charset=utf-8"
+        },
+        {
+          "file": "MedicationSchedule-Dvm8EC6B.js",
+          "status": 200,
+          "bytes": 36954,
+          "sha256": "246811bee647bab3e39ac1c66255ecbebcd05d3b642db10355d33dcbb1afc9b5",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "Patient-5_3bF8UV.js",
+          "status": 200,
+          "bytes": 66896,
+          "sha256": "579bbb15db4d10c36395128ee53ee3f3f2325c04ca933487db7a993bd46dc5fc",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "Patient-B9xuvwdE.css",
+          "status": 200,
+          "bytes": 26258,
+          "sha256": "9160fbf594ce6238151f4e13f5a28e00c0e62184711079b09f25bbebeb327b0b",
+          "mime": "text/css; charset=utf-8"
+        },
+        {
+          "file": "SurveyBuilder-OvQWcJPA.js",
+          "status": 200,
+          "bytes": 25412,
+          "sha256": "f44b0cc86e626123ebe1ddbd3ce148124496a3ceb2dd44aa8d2836ddcbe48474",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "SurveyFields-CwJzTio4.js",
+          "status": 200,
+          "bytes": 3121,
+          "sha256": "4c5f380df72897f7964b0a95d0e59d6d0126f4a25cd54448a44dfa592244f13b",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "TaskBoard-C4HfWNS9.js",
+          "status": 200,
+          "bytes": 7839,
+          "sha256": "f306628a700e122892f4ffa8fe9873ac6587bb6a9d1d70128da9f7ec147a807b",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "WorkflowMetrics-mb5Xw6aG.js",
+          "status": 200,
+          "bytes": 12440,
+          "sha256": "9e6b215cbb20e9b8aedd71df1d57ea4fb8f181af841d62469072055fd89cd9f8",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "chevron-right-0KQKtUiS.js",
+          "status": 200,
+          "bytes": 159,
+          "sha256": "0833e9413b94d75c7b67c2b8cd50b6b044da94ec8cdc3bd8baa8e960d3d5ac4f",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "collection-COswcvyL.js",
+          "status": 200,
+          "bytes": 939,
+          "sha256": "b8f61ba215c319fcc2aaf6ce0fb3b26b182c049b9a0d9e4febe85703fe8000e4",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "index-BJrhIZ7R.css",
+          "status": 200,
+          "bytes": 113810,
+          "sha256": "e351c86a387f1283379c88703fc001aceeb5c2c2ee05417a8b95e45823e80f86",
+          "mime": "text/css; charset=utf-8"
+        },
+        {
+          "file": "index-ConI82xp.js",
+          "status": 200,
+          "bytes": 390678,
+          "sha256": "22064eb800e34b3e6f440e2b2989430190ecfb54b2d3e8dd92a4b4d23d69cb8d",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "patientProgress-Do0fObh9.js",
+          "status": 200,
+          "bytes": 1130,
+          "sha256": "611dafc1b1ad2ac66b0b04ac3852b8c0bf56b6f106882f460ee96efa5097a0b3",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "plus-CgvKM_-d.js",
+          "status": 200,
+          "bytes": 182,
+          "sha256": "61908a999ab85c3437d6315d7f794d40b4f0673fbcbc4b30bac60cb78db085a1",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "send-BMORTzX8.js",
+          "status": 200,
+          "bytes": 652,
+          "sha256": "0867b421f97f51395a7cd32b81da8070bf43b43d517b7255f9504ca7530e1b77",
+          "mime": "text/javascript; charset=utf-8"
+        }
+      ],
+      "health": {
+        "status": "ok",
+        "compass_db": true,
+        "mis_db": true,
+        "mode": "synthetic_demo"
+      },
+      "root_matches_dist": true,
+      "qa_health": {
+        "status": "ok",
+        "compass_db": true,
+        "mis_db": true,
+        "mode": "synthetic_demo"
+      }
+    },
+    "semantic": {
+      "recordedAt": "2026-10-25T05:05:52.725Z",
+      "engine": "axe-core 4.14.0",
+      "scope": "Semantic analysis of CUA-exported markup in JSDOM29.1.1 with local entry CSS. App scripts and external resources never execute; no actual-browser axe, layout, contrast, keyboard, motion or screen-reader pass.",
+      "source": "https://github.com/dequelabs/axe-core#supported-browsers",
+      "disabledRules": [
+        "color-contrast"
+      ],
+      "pages": [
+        {
+          "file": "chat-recovery-doctor.html",
+          "sha256": "26a39c95f5148147acc382ad42a027846a927bc1249c609feda0eebbe12f8bf6",
+          "title": "Диалог с пациентом · Clinical Compass",
+          "violations": [],
+          "incomplete": [
+            {
+              "id": "label-content-name-mismatch",
+              "impact": "serious",
+              "description": "Ensure that elements labelled through their content must have their visible text as part of their accessible name",
+              "help": "Elements must have their visible text as part of their accessible name",
+              "helpUrl": "https://dequeuniversity.com/rules/axe/4.14/label-content-name-mismatch?application=axeAPI",
+              "nodes": [
+                {
+                  "target": [
+                    ".inbox-counter"
+                  ],
+                  "failureSummary": "Fix all of the following:\n  Axe encountered an error; test the page for this type of problem manually",
+                  "html": "<button class=\"inbox-counter has-events\" title=\"Ещё не показаны в очереди: 5\" aria-label=\"Открыть события: 11\">"
+                }
+              ]
+            },
+            {
+              "id": "landmark-one-main",
+              "impact": "moderate",
+              "description": "Ensure the document has a main landmark",
+              "help": "Document should have one main landmark",
+              "helpUrl": "https://dequeuniversity.com/rules/axe/4.14/landmark-one-main?application=axeAPI",
+              "nodes": [
+                {
+                  "target": [
+                    "html"
+                  ],
+                  "failureSummary": "Fix all of the following:\n  Axe encountered an error; test the page for this type of problem manually",
+                  "html": "<html lang=\"ru\">"
+                }
+              ]
+            },
+            {
+              "id": "page-has-heading-one",
+              "impact": "moderate",
+              "description": "Ensure that the page, or at least one of its frames contains a level-one heading",
+              "help": "Page should contain a level-one heading",
+              "helpUrl": "https://dequeuniversity.com/rules/axe/4.14/page-has-heading-one?application=axeAPI",
+              "nodes": [
+                {
+                  "target": [
+                    "html"
+                  ],
+                  "failureSummary": "Fix all of the following:\n  Axe encountered an error; test the page for this type of problem manually",
+                  "html": "<html lang=\"ru\">"
+                }
+              ]
+            }
+          ],
+          "passedRuleCount": 41,
+          "passedRuleIds": [
+            "aria-allowed-attr",
+            "aria-allowed-role",
+            "aria-conditional-attr",
+            "aria-deprecated-role",
+            "aria-hidden-body",
+            "aria-hidden-focus",
+            "aria-prohibited-attr",
+            "aria-required-attr",
+            "aria-required-children",
+            "aria-required-parent",
+            "aria-roles",
+            "aria-valid-attr-value",
+            "aria-valid-attr",
+            "avoid-inline-spacing",
+            "button-name",
+            "bypass",
+            "document-title",
+            "duplicate-id-aria",
+            "empty-heading",
+            "form-field-multiple-labels",
+            "heading-order",
+            "html-has-lang",
+            "html-lang-valid",
+            "label-title-only",
+            "label",
+            "landmark-banner-is-top-level",
+            "landmark-contentinfo-is-top-level",
+            "landmark-main-is-top-level",
+            "landmark-no-duplicate-banner",
+            "landmark-no-duplicate-contentinfo",
+            "landmark-no-duplicate-main",
+            "landmark-unique",
+            "link-name",
+            "meta-viewport-large",
+            "meta-viewport",
+            "nested-interactive",
+            "region",
+            "select-name",
+            "summary-name",
+            "tabindex",
+            "target-size"
+          ],
+          "inapplicableRuleCount": 46,
+          "domWarnings": [
+            "Not implemented: HTMLCanvasElement's getContext() method: without installing the canvas npm package"
+          ]
+        }
+      ]
+    },
+    "backend": "Unchanged; last151/151 retained, not rerun."
+  },
+  "sources": [
+    {
+      "file": "frontend/src/Chat.tsx",
+      "bytes": 10365,
+      "sha256": "0a8ccc2e6f841c2dfeee4c6f1f16e193069b2d6108cd8291c2b616e0d474940e"
+    },
+    {
+      "file": "frontend/tests/chat-recovery-interaction.test.mjs",
+      "bytes": 7445,
+      "sha256": "262475f9bf9df65174810095b7144ee521f788e54ebc3f2afb8c543af2b91927"
+    }
+  ],
+  "diff": "--- local54/Chat.tsx\n+++ current/frontend/src/Chat.tsx\n@@ -1,4 +1,4 @@\n-import { useEffect, useRef, useState, type FormEvent } from \"react\";\n+import { useEffect, useId, useRef, useState, type FormEvent } from \"react\";\n import { Send, MessageCircle } from \"lucide-react\";\n import { send, useApi, type ChatMessage } from \"./api\";\n import {\n@@ -39,7 +39,17 @@\n   const requests = useApi<{message_id:number; text:string; created_at:string; status:string; acknowledged_at:string|null}[]>(\n     role === \"patient\" ? `/patients/${patientId}/support-requests` : null, 5000);\n   const [busy, setBusy] = useState(false);\n+  const [sendError,setSendError] = useState(\"\");\n+  const errorResult=useRef<HTMLDivElement>(null),errorId=useId();\n+  useEffect(()=>{if(sendError)errorResult.current?.querySelector<HTMLElement>('.error-box')?.focus();},[sendError]);\n   const composer=useRef<HTMLTextAreaElement>(null);\n+  const sendButton=useRef<HTMLButtonElement>(null),resumeComposer=useRef(false);\n+  useEffect(()=>{\n+    if(busy||!resumeComposer.current)return;\n+    resumeComposer.current=false;\n+    const active=document.activeElement;\n+    if(active===document.body||active===sendButton.current||active===composer.current)composer.current?.focus({preventScroll:true});\n+  },[busy]);\n   const {clear:clearGuard} = useUnsavedForm({dirty:Boolean(text || supportRequested),pending:busy,prompt:messagePrompt,scope,focus:()=>composer.current?.focus()});\n   const list = useRef<HTMLDivElement>(null);\n   const lastMessage = useRef<number | null>(null);\n@@ -67,7 +77,8 @@\n     const signature = JSON.stringify([text,supportRequested]);\n     if (request.current.text !== signature || !request.current.id)\n       request.current = { text:signature, id: crypto.randomUUID() };\n-    setBusy(true);\n+    resumeComposer.current=document.activeElement===composer.current||document.activeElement===sendButton.current;\n+    setSendError(\"\");setBusy(true);\n     try {\n       await send(`/conversations/${patientId}/messages`, {\n         text,\n@@ -84,10 +95,8 @@\n       requests.reload();\n       if (supportRequested) notify(\"Запрос поддержки сохранён. Он появится в очереди лечащего врача; ответ не мгновенный.\");\n     } catch (error) {\n-      notify(\n-        error instanceof Error ? error.message : \"Сообщение не отправлено\",\n-        \"error\",\n-      );\n+      resumeComposer.current=false;\n+      setSendError(error instanceof Error ? error.message : \"Сообщение не отправлено\");\n     } finally {\n       setBusy(false);\n     }\n@@ -150,8 +159,9 @@\n       </div>\n       {(messages.data?.length??0)>=100&&<p className=\"field-hint\">Показаны последние 100 сообщений диалога.</p>}\n       <form onSubmit={submit}>\n-      <fieldset className=\"form-fields\" disabled={busy} aria-busy={busy}>\n-      {role === \"patient\" && <label className=\"support-request-choice\"><input type=\"checkbox\" checked={supportRequested} onChange={e => setSupportRequested(e.target.checked)}/><span>Мне нужна поддержка по этому сообщению<small>Создаст отдельное событие лечащему врачу. Здесь нет экстренной или круглосуточной службы.</small></span></label>}\n+      <div ref={errorResult} id={errorId}><ErrorBox message={sendError}/></div>\n+      <fieldset className=\"form-fields\" disabled={busy} aria-busy={busy} aria-describedby={sendError?errorId:undefined}>\n+      {role === \"patient\" && <label className=\"support-request-choice\"><input type=\"checkbox\" checked={supportRequested} onChange={e => {setSendError(\"\");setSupportRequested(e.target.checked);}}/><span>Мне нужна поддержка по этому сообщению<small>Создаст отдельное событие лечащему врачу. Здесь нет экстренной или круглосуточной службы.</small></span></label>}\n       <div className=\"message-compose\">\n         <textarea\n           ref={composer}\n@@ -159,11 +169,12 @@\n           maxLength={4096}\n           rows={2}\n           value={text}\n-          onChange={(e) => setText(e.target.value)}\n+          onChange={(e) => {setSendError(\"\");setText(e.target.value);}}\n           placeholder=\"Написать сообщение…\"\n           required\n         />\n         <Button\n+          ref={sendButton}\n           aria-label=\"Отправить сообщение\"\n           type=\"submit\"\n           disabled={busy || !text.trim()}\n",
+  "screenshots": [
+    {
+      "file": "docs/evidence/chat-recovery-2026-10-25/doctor-error-desktop.jpg",
+      "bytes": 76211,
+      "sha256": "23486adad6f7ae3b9b0ddac3a6b1ca33e0457a9e66029c867f39309ae1bc3c12",
+      "pixels": [
+        1265,
+        712
+      ]
+    },
+    {
+      "file": "docs/evidence/chat-recovery-2026-10-25/doctor-saved-desktop.jpg",
+      "bytes": 74611,
+      "sha256": "d10e54454391f091a9fa6e03c92bdff09d5314931b2592321ee9721d1d73b9c7",
+      "pixels": [
+        1265,
+        712
+      ]
+    },
+    {
+      "file": "docs/evidence/chat-recovery-2026-10-25/doctor-saved-tablet.jpg",
+      "bytes": 63982,
+      "sha256": "2105a341bdcf430b3afa16754663874131fda0fdfb587d1d663f3b9c133afd21",
+      "pixels": [
+        753,
+        1004
+      ]
+    },
+    {
+      "file": "docs/evidence/chat-recovery-2026-10-25/patient-chosen-focus-mobile.jpg",
+      "bytes": 33918,
+      "sha256": "968afd34db7e6b32e7173c3fc784cbe40dd3f7f910e153dc17bf12e239d4e051",
+      "pixels": [
+        360,
+        810
+      ]
+    },
+    {
+      "file": "docs/evidence/chat-recovery-2026-10-25/patient-error-before.jpg",
+      "bytes": 68530,
+      "sha256": "7b640fc5525bb0b8c5ff6db0617b6cfecc555d39167e2cf2be31ccaeea1110ec",
+      "pixels": [
+        1265,
+        712
+      ]
+    },
+    {
+      "file": "docs/evidence/chat-recovery-2026-10-25/patient-error-mobile.jpg",
+      "bytes": 38839,
+      "sha256": "88ef982ccb31726447d90c4ba559aa3a294c813ccb18c66bbc3346ed6666077c",
+      "pixels": [
+        360,
+        810
+      ]
+    },
+    {
+      "file": "docs/evidence/chat-recovery-2026-10-25/patient-saved-focus-mobile.jpg",
+      "bytes": 31162,
+      "sha256": "966d9af2f1b4ac59d8f0774ad67508d1da3db30c6a5ae93cdad428499f9b9f12",
+      "pixels": [
+        360,
+        810
+      ]
+    },
+    {
+      "file": "docs/evidence/chat-recovery-2026-10-25/patient-saved-mobile.jpg",
+      "bytes": 31678,
+      "sha256": "c3d4e7ca653c881a29b22b23a0c843357dd18f81117f22dd39944d1bcfec75e0",
+      "pixels": [
+        360,
+        810
+      ]
+    }
+  ],
+  "qaData": "Synthetic QA only:3 patient messages(one explicit support request) and1 doctor message; conversation2 messages2→6. Main demo and real external channels untouched.",
+  "limits": [
+    "First3 native states and patient-saved-mobile.jpg precede the success-focus improvement; they document the unchanged inline-error/guard behavior and the separately confirmed BODY-focus defect. Final-suffixed observations cover final source.",
+    "One JSDOM/axe clinician snapshot:0violations/3incomplete,1virtual warning. No full browser/WCAG, screen-reader, visual-baseline, FPS, load or clinical acceptance.",
+    "The delayed native test chose the history focus, without deliberately scrolling to an older position; scroll-intent continuity is the next hypothesis, not a proven pass."
+  ]
+}

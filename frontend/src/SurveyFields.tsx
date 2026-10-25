@@ -132,7 +132,7 @@ export function AnswerSummary({
         return (
           <div key={q.id} data-question={q.id} className={highlightQuestion===q.id?"answer-highlight":undefined} tabIndex={highlightQuestion===q.id?-1:undefined} role={highlightQuestion===q.id?"group":undefined} aria-labelledby={highlightQuestion===q.id?`${summaryId}-${index}`:undefined}>
             <dt id={`${summaryId}-${index}`}>{q.prompt}</dt>
-            <dd>{answer}</dd>
+            <dd>{answer}{q.kind==="scale"&&typeof value==="number"&&<> <span className="answer-scale-range">Шкала от {q.minimum} до {q.maximum}</span></>}</dd>
           </div>
         );
       })}

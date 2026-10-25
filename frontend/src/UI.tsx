@@ -114,17 +114,20 @@ export function Heading({
   title,
   children,
   action,
+  level = 1,
 }: {
   eyebrow?: string;
   title: string;
   children?: ReactNode;
   action?: ReactNode;
+  level?: 1 | 2;
 }) {
+  const Title = level === 1 ? "h1" : "h2";
   return (
-    <div className="page-heading">
+    <div className={`page-heading${level === 2 ? " subsection-heading" : ""}`}>
       <div>
         {eyebrow && <p className="eyebrow">{eyebrow}</p>}
-        <h1>{title}</h1>
+        <Title>{title}</Title>
         {children && <p className="lede">{children}</p>}
       </div>
       {action}

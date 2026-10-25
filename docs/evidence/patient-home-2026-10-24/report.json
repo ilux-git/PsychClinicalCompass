@@ -1,0 +1,307 @@
+{
+  "recorded_at_utc": "2026-10-24T12:36:15.651977+00:00",
+  "base_commit": "9e811153db907b8b6748f5667e901897a1b9a0ab",
+  "branch": "agent/retention-mvp",
+  "uncommitted_at_capture": true,
+  "synthetic_only": true,
+  "contract": "docs/PATIENT_HOME_PLAN.md; own facts, voluntary next step, separated symptoms and participation, transparent DEMO exchange",
+  "targetViewports": [
+    "375x844",
+    "768x1024",
+    "1440x1000"
+  ],
+  "source_hashes": {
+    ".github/workflows/checks.yml": "95c593bbb8b5d7c1cdefcaf3de46fe7554345d228f6b3173057da1b554ba9ddb",
+    "app/modules/care/router.py": "02c6e875442959aa887c8ea67226b02bc877620625879bdd8c48c9cd5b38306a",
+    "app/modules/care/schemas.py": "f2bd460d36f9f34adcd901214faf33caefb884686ee02cebc46b89b016d70d15",
+    "frontend/index.html": "e3e086ab60d4205742e59a449957efc5f18d3df4bd43a352a462d591761f2775",
+    "frontend/package-lock.json": "3d31ec33e3e68239b3edcaaec37bb77798fa8bdb427cd9541bebb2c7b9b0e4cc",
+    "frontend/package.json": "6ce7eaf0fd77f65e42221a09c142e396e8c8df9bced32c69eaff2321979963ac",
+    "frontend/src/AdminDashboard.tsx": "25a6ef6ee39288a8be54fa0d29321ac8744eef6cb8ba7857c1ab6c6169f309e6",
+    "frontend/src/App.tsx": "201b3f295798063c87cc0bd07d716018670fda5bbe9873576f64e9ae5b37959c",
+    "frontend/src/AssessmentHistory.tsx": "82b6aec9b1a920d4fb391082fbfae86167d0e539c4e1c7f72b04d1bc391cb784",
+    "frontend/src/CareWorkflow.tsx": "438a8d472a4ea240df66c4a6650f7c9b9f564b530ef83241f33fdced23d5a778",
+    "frontend/src/Charts.tsx": "402338c017130073d5898af3b6391a9e4f2c2c1f3d10d7b7decb86db9b2bd045",
+    "frontend/src/Chat.tsx": "77c113d19027edc2f3328551b538bd99bcd8e0dea21e17c1c5d0c17ce77d47d1",
+    "frontend/src/CollectionMetrics.tsx": "4846c3dfc28d6d8b4383cc10ca6dd4869973bf5a41127577d24f38b25122ec1d",
+    "frontend/src/DoctorDashboard.tsx": "4c8235adc5829b7ae7fb0c13b23ab4897db6c04759bcb3bc6d0a108bcc65cbff",
+    "frontend/src/DoctorInbox.tsx": "506389cebf95de9bc0cf3384d9755dc3df20f67c82eba31eb1ccd663c23c3f20",
+    "frontend/src/DoctorPatients.tsx": "d7f299da54718907c9f8daf750659673444658cad7a8c84c87bae2c21ca70216",
+    "frontend/src/EventAction.tsx": "4d4e4ba1453c965f5e71a7c3c119cde7af06b14c835deb002ec7f6e9cafb93ba",
+    "frontend/src/Interaction.tsx": "818a5cbf31e684bee3c3d2c5911d5f02d1b915f38d9a249d21c473601e5de3e7",
+    "frontend/src/MedicationEditor.tsx": "e8c0820c7bad846215b447136c2aac630f8ed7b65c81e8d4bdf0c2fb19ba0d85",
+    "frontend/src/MedicationSchedule.tsx": "5d0e8412859baa5a22272d099818ee279339b2ae88b50ca2d009893eec5e240d",
+    "frontend/src/MotivationAdvice.tsx": "5728ea4d941570f44c543ae4cf7b71b355bebdc95309634be64f6c09e738d88b",
+    "frontend/src/NavigationGuard.tsx": "3995456dab40867cb71192670f1b77cf313d88e622d70d1b1c9b7e3cf1d49bb3",
+    "frontend/src/ParticipationPoints.tsx": "3b329a8bbeb3e3610d6db31381467a8184c5de8a1f99fea63ff68635668eb9db",
+    "frontend/src/Patient.tsx": "fdca800d22a2e46d398e33169a85eaeff486ada222ae75547d007dba5485751f",
+    "frontend/src/PatientDiary.tsx": "355726524b83d83b2df934b6e44b086f359f0f314de7d02aba6614f4bc97a7cd",
+    "frontend/src/PatientJourney.tsx": "65c27cd954234136e21778d312f8b0f0e60a2fc4576fbf475f62d55f8584e965",
+    "frontend/src/PatientOverview.tsx": "b02788bdaafce0d43100e1d65fcfb54c86f7d37950493e3d1e32562f6485c905",
+    "frontend/src/PatientSurvey.tsx": "a76b9aed6ef00cc060df19d47544389948f534d669db5133466f2be9780da61b",
+    "frontend/src/PrivacySettings.tsx": "6dc8107b4d51f41f1e31a95b3ab7da4f8e04cf70216a833d89914ea9d522ef68",
+    "frontend/src/RoleGuide.tsx": "be8bc19839ac4b87e363de1faefec7a5ac53d2d12bacacec045dd48dccba4b2d",
+    "frontend/src/SectionBoundary.tsx": "e8c126e1b70ad1d18b816f9fa514ca06f03451312bebc44ac1f99c768e5a8b4a",
+    "frontend/src/SurveyBuilder.tsx": "3d4c7f9e0df0afb7d88425fefd06e8d463b7d78dffbeb2a5de47645fe5991822",
+    "frontend/src/SurveyFields.tsx": "b02b59bccc679d8b37c6ac7d1ed793e62ddda376407061ea3d84d68affe170eb",
+    "frontend/src/TaskBoard.tsx": "e48f311937b285fff9914d18386cf10589fe52230ee46034bd5bd3740340060d",
+    "frontend/src/UI.tsx": "066c884290d259fbe60e5c0703fbe8196ebb2b444c3e1bdd17478a9cd862de94",
+    "frontend/src/ViewState.tsx": "659918998b7b4d2d715f8d2ee9e8bd01478e8208b428a7f4f1c3aa88dd1fa642",
+    "frontend/src/WorkflowMetrics.tsx": "ee85b15c661b04a5fbc63c80390e1899bc16863ff229a4d722f1aa285b7c0620",
+    "frontend/src/WorkspaceHome.tsx": "00eaa3b672c0a8261c3c206f16aaed7f5fe21806499d0373ac2a7b6be06bf62a",
+    "frontend/src/api.ts": "daff13cab54b73d7c76018c0c236d76e05cda4d0f98cf7ab13ebf983ae49e8ed",
+    "frontend/src/collection.ts": "2788d784703ac9525700eccd009e94f186eac37ffa9329af3901d334d96bd05c",
+    "frontend/src/main.tsx": "9204fd5a9b66b7c367022685e566bc05bce4a94add23cfb6f7bbd9e26d8e72ed",
+    "frontend/src/navigation.ts": "c8bdf6687cbc9cef8752dfb80639ba78d2056f7753cff0c6a7eb9dbcb0b499ac",
+    "frontend/src/patient-home.css": "37063492fd8a0f536280f04f79026448f0d04e145c5dcf479138f1581bb0f3eb",
+    "frontend/src/patientProgress.ts": "6726564ac644030d1753277bd2aafe259323102e874fc7ac335c2913c5f9f722",
+    "frontend/src/routes.ts": "552d4f4ca09a60f9256595dad5f514542b5f5bd0ec8b2df9ddf490ac59db2edc",
+    "frontend/src/styles.css": "1218715b861b26f719231895400a4e019fd2c6703f19af2e0d375580808da7e6",
+    "frontend/src/supportTemplate.ts": "b97398f683b2344ad95722d4d097159b58f2a76f073b84d0e93709842de9fb1d",
+    "frontend/src/vite-env.d.ts": "65996936fbb042915f7b74a200fcdde7e410f32a669b1ab9597cfaa4b0faddb5",
+    "frontend/src/workspace.css": "4856a24695ed7e9a06c320c4256a69d8866af00b02ccb04f2b4c69575ec68a0a",
+    "frontend/tests/navigation.test.mjs": "decb47513864db904750140ac70d3869b6eb1a3fa11202fbc504c27492fb6d26",
+    "frontend/tests/patient-progress.test.mjs": "6c87173b486df421c799060b66a702b6fd02406eec5bf2d50f26ee93105c4389",
+    "frontend/tsconfig.json": "9e0d4f6f69107f9fdef169fdef36dbb4eedd893d9f3a1fe3c317e79c6ce6f6a6",
+    "frontend/vite.config.ts": "0006f111fc111c02e76866fe22fdb9715bc66e0cd242c66724be2a5237287c6f",
+    "tests/test_patient_progress.py": "7c6b7118e129012a6aa0b803e9067a1a5b98ef04ba15302a8510d1dfe654b2d8"
+  },
+  "source_fingerprint": "18032343929f4f28da89e29ccf48170bbe26ce2050dd7d39387865ee56d59d7b",
+  "accessibility": {
+    "status": "partial",
+    "evidence": "Manual visible focus, labels, 44px primary targets, neutral empty states, text contrast >=4.87 and progress fill 3.80. Native dialog default Cancel, Escape, inline error focus, pending navigation recovery and diary draft return verified.",
+    "not_run": [
+      "axe audit",
+      "screen reader",
+      "OS reduced-motion emulation",
+      "complete keyboard focus-trap cycle"
+    ]
+  },
+  "responsive": {
+    "status": "pass",
+    "evidence": "Rendered at requested viewport overrides 375x844,768x1024,1440x1000; actual captured client pixels are separately listed in artifacts. No horizontal page overflow; primary action visible on phone."
+  },
+  "contentStates": {
+    "loading": {
+      "status": "pass",
+      "evidence": "Controlled 3s read delay: loading AX captured in loading.txt; after-delay.jpg is a loaded view, not proof of a loading skeleton."
+    },
+    "empty": {
+      "status": "pass",
+      "evidence": "Empty assignments/assessments show optional diary and honest absence of measurements; no invented zero scores. empty.jpg."
+    },
+    "error": {
+      "status": "pass",
+      "evidence": "Read 503 and coupon write 503 preserve available facts, offer retry. Retry uses same idempotency key, succeeds once. coupon-failure.jpg."
+    },
+    "partial": {
+      "status": "pass",
+      "evidence": "Unavailable care source yields unknown visits, never zero attendance; separate points failure retains previous balance with stale warning and usable action/charts. partial.jpg."
+    },
+    "success": {
+      "status": "pass",
+      "evidence": "Synthetic patient2 private diary102->105, reserve100 leaves5 while earned105/map persist, cancellation restores105. Delayed submit plus Back stays on current route; completion focuses coupons. coupon-success.jpg."
+    },
+    "permission": {
+      "status": "pass",
+      "evidence": "Controlled403 clears previously displayed points/care facts; actual doctor/admin/coordinator403 and anonymous401 verified via HTTP. permission.jpg."
+    }
+  },
+  "renderedEvidence": [
+    {
+      "viewport": "375x844",
+      "artifact": "mobile.jpg",
+      "observation": "Final built CSS, synthetic patient2 home, balance105, map mode, clear next action."
+    },
+    {
+      "viewport": "768x1024",
+      "artifact": "tablet.jpg",
+      "observation": "Final built CSS, synthetic patient2 home, balance105, map mode, clear next action."
+    },
+    {
+      "viewport": "1440x1000",
+      "artifact": "desktop.jpg",
+      "observation": "Final built CSS, synthetic patient2 home, balance105, map mode, clear next action."
+    }
+  ],
+  "artifacts": {
+    "after-delay.jpg": {
+      "sha256": "5f6821801d3e1aa13577bfe8f1988d228cba10eb0de3f167fd8fd0618de6bd31",
+      "pixels": [
+        1425,
+        990
+      ]
+    },
+    "calm.jpg": {
+      "sha256": "ee3216f89d6bc3d4a9e413b6ac11ca96494976f3e571fdf1cdac5ce08d07aa45",
+      "pixels": [
+        1425,
+        990
+      ]
+    },
+    "care-and-state.jpg": {
+      "sha256": "1856343b9be3c0f4022af5cef5b8b8fc4ec5e03b7165e1d2593b7801bc1b6b26",
+      "pixels": [
+        1425,
+        990
+      ]
+    },
+    "coupon-failure.jpg": {
+      "sha256": "4a6a59823a34e446e4f0393394a8cb29031dee3e92ebb7aa42e50f99a19ef378",
+      "pixels": [
+        1425,
+        990
+      ]
+    },
+    "coupon-success.jpg": {
+      "sha256": "52603ec1f22c1f74055c179756cda5e52a2cdfada41741c1e7ec19c4b82bbd04",
+      "pixels": [
+        1425,
+        990
+      ]
+    },
+    "desktop.jpg": {
+      "sha256": "55cbb46df0327fbd8f9ad7b0769632d9e8d75e44aaf5cf47afe20ca30721ad18",
+      "pixels": [
+        1425,
+        990
+      ]
+    },
+    "empty.jpg": {
+      "sha256": "328bd60490737b0e97e7a8f47ed7d55d41a3325e2d514554084a9d37fc0ca03b",
+      "pixels": [
+        1425,
+        990
+      ]
+    },
+    "mobile.jpg": {
+      "sha256": "133f1bc6bb76b9dbba85b03b366a7cdef925c25235ff05ed55fb3afa1608f01e",
+      "pixels": [
+        360,
+        810
+      ]
+    },
+    "partial.jpg": {
+      "sha256": "a826716b90355f9900a1c4541e73a8e6bf9cc64e6b19919451177dd963e6c8d5",
+      "pixels": [
+        1425,
+        990
+      ]
+    },
+    "permission.jpg": {
+      "sha256": "2f42801b073196a529d784493212400ab5febf33cf06b9975593447499e36671",
+      "pixels": [
+        1425,
+        990
+      ]
+    },
+    "tablet.jpg": {
+      "sha256": "956e2f8594267661b17468a669e7fca88048439bf08c141e652b1fe0b0f85e6f",
+      "pixels": [
+        753,
+        1004
+      ]
+    }
+  },
+  "artifact_limits": "Primary three viewport screenshots use final build. Failure/empty/calm/coupon screenshots record prior cosmetic iterations in same task; behavior was verified but images are not a historical visual regression baseline.",
+  "checks": {
+    "backend": {
+      "tests": 136,
+      "passed": 136,
+      "failures": 0,
+      "errors": 0,
+      "skips": 0,
+      "seconds": 89.6,
+      "log": "outputs/patient-home-full-pytest-20261024.xml"
+    },
+    "frontend_models": {
+      "tests": 16,
+      "passed": 16,
+      "navigation": 11,
+      "patient_progress": 5,
+      "log": "outputs/patient-home-models-20261024.tap"
+    },
+    "typescript_vite": {
+      "status": "pass",
+      "main_js_kb": 484.47,
+      "patient_js_kb": 57.25,
+      "log": "outputs/patient-home-build-20261024.log"
+    },
+    "http": {
+      "base": "http://127.0.0.1:8780",
+      "synthetic": true,
+      "checks": [
+        {
+          "asset": "/assets/index-B7hLf-er.js",
+          "status": 200
+        },
+        {
+          "asset": "/assets/index-B5hhB_8v.css",
+          "status": 200
+        },
+        {
+          "account": "patient1",
+          "progress_status": 200,
+          "visit_rows_in_snapshot": 0,
+          "private_fields_absent": true,
+          "query_cannot_select_another_patient": true
+        },
+        {
+          "account": "patient2",
+          "progress_status": 200,
+          "visit_rows_in_snapshot": 1,
+          "private_fields_absent": true,
+          "query_cannot_select_another_patient": true
+        },
+        {
+          "role": "doctor",
+          "progress_status": 403
+        },
+        {
+          "role": "admin",
+          "progress_status": 403
+        },
+        {
+          "role": "coordinator",
+          "progress_status": 403
+        },
+        {
+          "anonymous_status": 401
+        }
+      ],
+      "health": {
+        "status": "ok",
+        "compass_db": true,
+        "mis_db": true,
+        "mode": "synthetic_demo"
+      }
+    }
+  },
+  "finish_gate": {
+    "status": "incomplete",
+    "reason": "Full accessibility evidence unavailable; strict checker must not be reported as passed.",
+    "checker": {
+      "command": "node .codex/skills/frontend-design-direction/scripts/check-evidence.js docs/evidence/patient-home-2026-10-24/report.json",
+      "exit_code": 1,
+      "output": "accessibility needs a passing observation",
+      "interpretation": "Expected incomplete gate, not a passed accessibility audit."
+    }
+  },
+  "not_run": [
+    "GitHub CI on uncommitted changes",
+    "Core Web Vitals",
+    "1000 concurrent users for this snapshot",
+    "full other-role navigation acceptance",
+    "clinical efficacy or real coupon redemption"
+  ],
+  "runtime": {
+    "main": "http://127.0.0.1:8780/",
+    "main_and_postgres_left_running": true,
+    "qa_database": "compass_ui_flow_qa",
+    "qa_mode_restored": "normal",
+    "qa_server_stopped": true,
+    "temporary_qa_tab_closed": true,
+    "viewport_override_reset": true,
+    "external_telegram_delivery": false
+  }
+}

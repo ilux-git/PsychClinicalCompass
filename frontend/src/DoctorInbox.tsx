@@ -130,7 +130,7 @@ export function DoctorInbox({ openPatient }: { openPatient: (id: number,returnKe
   useReturnFocus("events",Boolean(data||error));
   return (
     <>
-      <Heading eyebrow="Работа с событиями" title="События моих пациентов" action={<Button variant="secondary" onClick={() => { setPages([]); reload(); }}>Обновить очередь</Button>}>
+      <Heading eyebrow="Работа с событиями" title="События и обращения" action={<Button variant="secondary" onClick={() => { setPages([]); reload(); }}>Обновить очередь</Button>}>
         Открытые сигналы из всех карточек. Принятие в работу и клиническое решение врач фиксирует отдельно.
       </Heading>
       <ErrorBox message={error ? `Данные очереди могли устареть. ${error}` : ""} retry={reload} />

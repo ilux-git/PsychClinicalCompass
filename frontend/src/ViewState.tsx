@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useLayoutEffect, useRef, useState, type MutableRefObject, type ReactNode } from "react";
+import { createContext, useCallback, useContext, useEffect, useLayoutEffect, useRef, useState, type MutableRefObject, type ReactNode } from "react";
 
 export type ReturnPoint={scope:string;key:string};
 export type PatientAnswerTarget={assignmentId:number;submissionId:number;questionId:string};
@@ -16,6 +16,14 @@ export function useViewState<T>(key:string,initial:T) {
   const [value,setValue]=useState<T>(()=>values?.current.has(key)?values.current.get(key) as T:initial);
   useEffect(()=>{values?.current.set(key,value);},[key,value,values]);
   return [value,setValue] as const;
+}
+
+/** Prepare UI-only filters before navigation unmounts the source page. Not a live state bus. */
+export function usePrepareViewState() {
+  const values=useContext(Context)?.values;
+  return useCallback((entries:Record<string,unknown>)=>{
+    for(const [key,value] of Object.entries(entries))values?.current.set(key,value);
+  },[values]);
 }
 
 /** Restore the source control after its fresh, authorized list has rendered. */

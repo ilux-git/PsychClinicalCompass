@@ -1,0 +1,375 @@
+{
+  "before": {
+    "active": "ДневникЗаписать самочувствие своими словами",
+    "frames": [
+      {
+        "hidden": "true",
+        "location": "/?section=overview",
+        "opacity": "0"
+      },
+      {
+        "hidden": "true",
+        "opacity": "1"
+      }
+    ],
+    "heading": "Здравствуйте, Мария",
+    "title": "Дневник · Clinical Compass"
+  },
+  "checks": [
+    {
+      "label": "patient-immediate-after-login",
+      "focus": {
+        "id": "compass-main",
+        "label": null,
+        "tag": "MAIN"
+      },
+      "heading": "Мой дневник",
+      "overflow": false,
+      "rootAnimation": "route-enter",
+      "rootCount": 1,
+      "rootDuration": "0.2s",
+      "rootHidden": null,
+      "rootOpacity": "0.996692",
+      "route": "/?section=diary",
+      "title": "Дневник · Clinical Compass",
+      "viewport": {
+        "height": 720,
+        "width": 1280
+      }
+    },
+    {
+      "label": "patient-fast-medications-1",
+      "focus": {
+        "id": "compass-main",
+        "label": null,
+        "tag": "MAIN"
+      },
+      "heading": "Моё расписание лекарств",
+      "overflow": false,
+      "rootAnimation": "route-enter",
+      "rootCount": 1,
+      "rootDuration": "0.2s",
+      "rootHidden": null,
+      "rootOpacity": "0.996782",
+      "route": "/?section=medications",
+      "title": "Лекарства · Clinical Compass",
+      "viewport": {
+        "height": 720,
+        "width": 1280
+      }
+    },
+    {
+      "label": "patient-fast-home-1",
+      "focus": {
+        "id": "compass-main",
+        "label": null,
+        "tag": "MAIN"
+      },
+      "heading": "Здравствуйте, Мария",
+      "overflow": false,
+      "rootAnimation": "route-enter",
+      "rootCount": 1,
+      "rootDuration": "0.2s",
+      "rootHidden": null,
+      "rootOpacity": "0.999925",
+      "route": "/?section=overview",
+      "title": "Мой день · Clinical Compass",
+      "viewport": {
+        "height": 720,
+        "width": 1280
+      }
+    },
+    {
+      "label": "patient-fast-diary-2",
+      "focus": {
+        "id": "compass-main",
+        "label": null,
+        "tag": "MAIN"
+      },
+      "heading": "Мой дневник",
+      "overflow": false,
+      "rootAnimation": "route-enter",
+      "rootCount": 1,
+      "rootDuration": "0.2s",
+      "rootHidden": null,
+      "rootOpacity": "1",
+      "route": "/?section=diary",
+      "title": "Дневник · Clinical Compass",
+      "viewport": {
+        "height": 720,
+        "width": 1280
+      }
+    },
+    {
+      "label": "patient-fast-medications-2",
+      "focus": {
+        "id": "compass-main",
+        "label": null,
+        "tag": "MAIN"
+      },
+      "heading": "Моё расписание лекарств",
+      "overflow": false,
+      "rootAnimation": "route-enter",
+      "rootCount": 1,
+      "rootDuration": "0.2s",
+      "rootHidden": null,
+      "rootOpacity": "0.999055",
+      "route": "/?section=medications",
+      "title": "Лекарства · Clinical Compass",
+      "viewport": {
+        "height": 720,
+        "width": 1280
+      }
+    },
+    {
+      "label": "patient-fast-home-2",
+      "focus": {
+        "id": "compass-main",
+        "label": null,
+        "tag": "MAIN"
+      },
+      "heading": "Здравствуйте, Мария",
+      "overflow": false,
+      "rootAnimation": "route-enter",
+      "rootCount": 1,
+      "rootDuration": "0.2s",
+      "rootHidden": null,
+      "rootOpacity": "0.999556",
+      "route": "/?section=overview",
+      "title": "Мой день · Clinical Compass",
+      "viewport": {
+        "height": 720,
+        "width": 1280
+      }
+    },
+    {
+      "label": "patient-mobile-guard-discard",
+      "focus": {
+        "id": "compass-main",
+        "label": null,
+        "tag": "MAIN"
+      },
+      "heading": "Опросы врача",
+      "overflow": false,
+      "rootAnimation": "route-enter",
+      "rootCount": 1,
+      "rootDuration": "0.2s",
+      "rootHidden": null,
+      "rootOpacity": "0.990008",
+      "route": "/?section=surveys",
+      "title": "Опросы врача · Clinical Compass",
+      "viewport": {
+        "height": 844,
+        "width": 375
+      }
+    },
+    {
+      "label": "doctor-immediate-analytics-after-login",
+      "focus": {
+        "id": "compass-main",
+        "label": null,
+        "tag": "MAIN"
+      },
+      "heading": "Аналитика сопровождения",
+      "overflow": false,
+      "rootAnimation": "route-enter",
+      "rootCount": 1,
+      "rootDuration": "0.2s",
+      "rootHidden": null,
+      "rootOpacity": "1",
+      "route": "/?section=overview",
+      "title": "Аналитика сопровождения · Clinical Compass",
+      "viewport": {
+        "height": 720,
+        "width": 1280
+      }
+    },
+    {
+      "label": "doctor-exact-source-return",
+      "focus": {
+        "id": "",
+        "label": "Открыть ответ: Иван Петров",
+        "tag": "BUTTON"
+      },
+      "heading": "Аналитика сопровождения",
+      "overflow": false,
+      "rootAnimation": "route-enter",
+      "rootCount": 1,
+      "rootDuration": "0.2s",
+      "rootHidden": null,
+      "rootOpacity": "1",
+      "route": "/?section=overview",
+      "title": "Аналитика сопровождения · Clinical Compass",
+      "viewport": {
+        "height": 720,
+        "width": 1280
+      }
+    },
+    {
+      "label": "admin-immediate-barriers-after-login",
+      "focus": {
+        "id": "compass-main",
+        "label": null,
+        "tag": "MAIN"
+      },
+      "heading": "Причины затруднений",
+      "overflow": false,
+      "rootAnimation": "route-enter",
+      "rootCount": 1,
+      "rootDuration": "0.2s",
+      "rootHidden": null,
+      "rootOpacity": "0.999815",
+      "route": "/?section=barriers",
+      "title": "Причины затруднений · Clinical Compass",
+      "viewport": {
+        "height": 720,
+        "width": 1280
+      }
+    },
+    {
+      "label": "admin-sources-after-barriers",
+      "focus": {
+        "id": "compass-main",
+        "label": null,
+        "tag": "MAIN"
+      },
+      "heading": "Данные и приватность",
+      "overflow": false,
+      "rootAnimation": "route-enter",
+      "rootCount": 1,
+      "rootDuration": "0.2s",
+      "rootHidden": null,
+      "rootOpacity": "0.996563",
+      "route": "/?section=sources",
+      "title": "Данные и приватность · Clinical Compass",
+      "viewport": {
+        "height": 720,
+        "width": 1280
+      }
+    },
+    {
+      "label": "coordinator-after-login",
+      "focus": {
+        "id": "compass-main",
+        "label": null,
+        "tag": "MAIN"
+      },
+      "heading": "Мои задачи",
+      "overflow": false,
+      "rootAnimation": "route-enter",
+      "rootCount": 1,
+      "rootDuration": "0.2s",
+      "rootHidden": null,
+      "rootOpacity": "1",
+      "route": "/?section=overview",
+      "title": "Мои задачи · Clinical Compass",
+      "viewport": {
+        "height": 720,
+        "width": 1280
+      }
+    },
+    {
+      "label": "coordinator-768",
+      "focus": {
+        "id": "compass-main",
+        "label": null,
+        "tag": "MAIN"
+      },
+      "heading": "Мои задачи",
+      "overflow": false,
+      "rootAnimation": "route-enter",
+      "rootCount": 1,
+      "rootDuration": "0.2s",
+      "rootHidden": null,
+      "rootOpacity": "1",
+      "route": "/?section=overview",
+      "title": "Мои задачи · Clinical Compass",
+      "viewport": {
+        "height": 1024,
+        "width": 768
+      }
+    },
+    {
+      "label": "patient-diary-1440",
+      "focus": {
+        "id": "compass-main",
+        "label": null,
+        "tag": "MAIN"
+      },
+      "heading": "Мой дневник",
+      "overflow": false,
+      "rootAnimation": "route-enter",
+      "rootCount": 1,
+      "rootDuration": "0.2s",
+      "rootHidden": null,
+      "rootOpacity": "1",
+      "route": "/?section=diary",
+      "title": "Дневник · Clinical Compass",
+      "viewport": {
+        "height": 1000,
+        "width": 1440
+      }
+    },
+    {
+      "label": "coordinator-768-final",
+      "focus": {
+        "id": "compass-main",
+        "label": null,
+        "tag": "MAIN"
+      },
+      "heading": "Мои задачи",
+      "overflow": false,
+      "rootAnimation": "route-enter",
+      "rootCount": 1,
+      "rootDuration": "0.2s",
+      "rootHidden": null,
+      "rootOpacity": "1",
+      "route": "/?section=overview",
+      "title": "Мои задачи · Clinical Compass",
+      "viewport": {
+        "height": 1024,
+        "width": 768
+      }
+    },
+    {
+      "label": "patient-repeated-immediate-login-final",
+      "focus": {
+        "id": "compass-main",
+        "label": null,
+        "tag": "MAIN"
+      },
+      "heading": "Мой дневник",
+      "overflow": false,
+      "rootAnimation": "route-enter",
+      "rootCount": 1,
+      "rootDuration": "0.2s",
+      "rootHidden": null,
+      "rootOpacity": "1",
+      "route": "/?section=diary",
+      "title": "Дневник · Clinical Compass",
+      "viewport": {
+        "height": 720,
+        "width": 1280
+      }
+    }
+  ],
+  "guard": {
+    "focusText": true,
+    "route": "/?section=diary",
+    "text": "Учебный черновик · переходы страниц"
+  },
+  "source": {
+    "focusedAnswer": true,
+    "highlight": "Что важно знать вашему врачу?После смены сложно приехать, а расходы оказались выше ожидаемых.",
+    "title": "Иван Петров"
+  },
+  "returned": {
+    "count": 19,
+    "expanded": "true",
+    "focusKey": "analytics-quote-1-details"
+  },
+  "console": [],
+  "excludedVisuals": [
+    "coordinator-768 was captured in the same call as viewport set; overwritten with coordinator-768-final after a separate call. One post-reset logout click failed at tool coordinate mapping before action; fresh state retry succeeded."
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "alerts": [
+    {
+      "focused": false,
+      "inChat": false,
+      "text": "Техническая проверка: сохранение временно недоступно."
+    }
+  ],
+  "focus": "BODY",
+  "messages": 2,
+  "overflow": false,
+  "support": true,
+  "text": "QA: проверка восстановления отправки. Не клиническое обращение."
+}

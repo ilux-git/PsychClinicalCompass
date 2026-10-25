@@ -1,0 +1,708 @@
+{
+  "recordedAt": "2026-10-25T01:23:23.400532+00:00",
+  "status": "targeted-local-cycle-verified; overall acceptance remains partial",
+  "scope": "CUA/IAB on isolated synthetic QA8782; doctor feedback375/768/1440 and existing-source navigation.",
+  "changes": [
+    "Show five initial quotes and reveal the remaining returned quotes, preserving expansion on return.",
+    "Display existing survey title above the question; distinguish source context without inferring medical meaning.",
+    "Use Russian decimal punctuation for collection percentages; values, cohorts and unknown states unchanged."
+  ],
+  "checks": [
+    {
+      "scenario": "expanded-desktop",
+      "observed": {
+        "buttonTop": 478.125,
+        "count": 19,
+        "expanded": "true",
+        "firstExtraTop": 542.125,
+        "focused": "button secondary quote-more",
+        "openingRate": "22,7% от назначений",
+        "overflow": false
+      }
+    },
+    {
+      "scenario": "extra-quote-exact-answer",
+      "observed": {
+        "focusIsHighlight": true,
+        "highlight": "Что важно знать вашему врачу?\nПосле смены сложно приехать, а расходы оказались выше ожидаемых.",
+        "title": "Иван Петров"
+      }
+    },
+    {
+      "scenario": "return-to-extra-quote-desktop",
+      "observed": {
+        "button": {
+          "bottom": 514.5625,
+          "height": 44,
+          "left": 938.078125,
+          "right": 1368,
+          "top": 470.5625,
+          "width": 429.921875,
+          "x": 938.078125,
+          "y": 470.5625
+        },
+        "count": 19,
+        "expanded": "true",
+        "key": "analytics-quote-1-details",
+        "scrollY": 2184
+      }
+    },
+    {
+      "scenario": "phone-first-fold",
+      "observed": {
+        "expanded": "true",
+        "overflow": false,
+        "quoteCount": 19,
+        "scrollY": 0,
+        "width": 375
+      }
+    },
+    {
+      "scenario": "phone-collapse",
+      "observed": {
+        "buttonTop": 400.015625,
+        "count": 5,
+        "expanded": "false",
+        "focused": "button secondary quote-more"
+      }
+    },
+    {
+      "scenario": "phone-native-enter-expand",
+      "observed": {
+        "buttonHeight": 44,
+        "buttonTop": 400.015625,
+        "count": 19,
+        "expanded": "true",
+        "firstExtraTop": 464.015625,
+        "focused": "button secondary quote-more",
+        "footer": 777,
+        "overflow": false
+      }
+    },
+    {
+      "scenario": "phone-exact-answer",
+      "observed": {
+        "focused": true,
+        "footer": 777,
+        "highlight": "Что важно знать вашему врачу?\nПосле смены сложно приехать, а расходы оказались выше ожидаемых.",
+        "overflow": false,
+        "rect": {
+          "bottom": 539.9375,
+          "height": 145.265625,
+          "left": 37,
+          "right": 323,
+          "top": 394.671875,
+          "width": 286,
+          "x": 37,
+          "y": 394.671875
+        }
+      }
+    },
+    {
+      "scenario": "return-to-extra-quote-phone",
+      "observed": {
+        "button": {
+          "bottom": 436.546875,
+          "height": 44,
+          "left": 37,
+          "right": 323,
+          "top": 392.546875,
+          "width": 286,
+          "x": 37,
+          "y": 392.546875
+        },
+        "count": 19,
+        "expanded": "true",
+        "footer": 777,
+        "key": "analytics-quote-1-details",
+        "overflow": false,
+        "scrollY": 4314
+      }
+    },
+    {
+      "scenario": "tablet-first-fold",
+      "observed": {
+        "count": 5,
+        "expanded": "false",
+        "overflow": false,
+        "scrollY": 0,
+        "width": 768
+      }
+    },
+    {
+      "scenario": "tablet-voice-layout",
+      "observed": {
+        "overflow": false,
+        "questionFont": "12px",
+        "sourceFont": "12px",
+        "targetMinimum": 44,
+        "titleCount": 5
+      },
+      "note": "Heading click used only to position the viewport for inspection; no application auto-scroll claim."
+    },
+    {
+      "scenario": "browser-back-tablet",
+      "observed": {
+        "button": {
+          "bottom": 526.953125,
+          "height": 44,
+          "left": 37,
+          "right": 347,
+          "top": 482.953125,
+          "width": 310,
+          "x": 37,
+          "y": 482.953125
+        },
+        "count": 19,
+        "expanded": "true",
+        "footer": 957,
+        "key": "analytics-quote-1-details",
+        "width": 768
+      }
+    },
+    {
+      "scenario": "desktop-first-fold-current",
+      "observed": {
+        "expanded": "true",
+        "overflow": false,
+        "quotes": 19,
+        "scrollY": 0,
+        "width": 1440
+      }
+    }
+  ],
+  "frontend": {
+    "passed": 33,
+    "failed": 0,
+    "durationMs": 17300.2027,
+    "componentRegression": "Valid fixture reproduced missing more-answers control before implementation; now passes exact IDs and expansion on remount.",
+    "buildAndTypes": "pass",
+    "coverage": "not measured",
+    "entry": {
+      "file": "frontend/dist/assets/index-BUZiLrK0.js",
+      "bytes": 385227,
+      "sha256": "e0fcec0b9dba5d493ff75c50979b7e0a0fba7105eb28e3744b637a8b632f611b"
+    },
+    "testLog": {
+      "file": "outputs/doctor-feedback-frontend-20261025.log",
+      "bytes": 4070,
+      "sha256": "6d71efb6cd2f30577861ac3704312c7001c17b480f7222271df4f3076127ee81"
+    }
+  },
+  "sources": [
+    {
+      "file": "frontend/src/DoctorDashboard.tsx",
+      "bytes": 19322,
+      "sha256": "2655cdb466809062cab400f78db722a60be7692b467179305ca26b4ed88b6c29"
+    },
+    {
+      "file": "frontend/src/api.ts",
+      "bytes": 9424,
+      "sha256": "78432d3b0746d42c435e36f3caa5266b9c83f6d8bc0ab35f61287dea73769501"
+    },
+    {
+      "file": "frontend/src/CollectionMetrics.tsx",
+      "bytes": 3723,
+      "sha256": "0e86dd70057146ef501ad7dac31a3abab69da37fb5813d81ed38dca86f20074e"
+    },
+    {
+      "file": "frontend/src/Charts.tsx",
+      "bytes": 6366,
+      "sha256": "e06513e0b2635905e42651ec00a41accc9eb9da3f9b22098f2538bf258d8f864"
+    },
+    {
+      "file": "frontend/src/workspace.css",
+      "bytes": 63441,
+      "sha256": "f2a80e080778be2650438b2aab9db097a761d7adabdb6b030fc71c8d4d9bd156"
+    },
+    {
+      "file": "frontend/tests/doctor-feedback-interaction.test.mjs",
+      "bytes": 4776,
+      "sha256": "317f35226a17ec91e4ad179cdd70bac42c460433c389c2d0f7292b9e23086373"
+    }
+  ],
+  "semantic": {
+    "recordedAt": "2026-10-25T01:19:16.026Z",
+    "engine": "axe-core 4.14.0",
+    "scope": "Semantic analysis of CUA-exported markup in JSDOM29.1.1 with local entry CSS. App scripts and external resources never execute; no actual-browser axe, layout, contrast, keyboard, motion or screen-reader pass.",
+    "source": "https://github.com/dequelabs/axe-core#supported-browsers",
+    "disabledRules": [
+      "color-contrast"
+    ],
+    "pages": [
+      {
+        "file": "doctor-feedback-collapsed-latest.html",
+        "sha256": "0bfc7ba6d54ef64d4253fe57c6f3387911b8574abf5160c11e5e57ce1cbeeea5",
+        "title": "Аналитика сопровождения · Clinical Compass",
+        "violations": [],
+        "incomplete": [
+          {
+            "id": "label-content-name-mismatch",
+            "impact": "serious",
+            "description": "Ensure that elements labelled through their content must have their visible text as part of their accessible name",
+            "help": "Elements must have their visible text as part of their accessible name",
+            "helpUrl": "https://dequeuniversity.com/rules/axe/4.14/label-content-name-mismatch?application=axeAPI",
+            "nodes": [
+              {
+                "target": [
+                  ".inbox-counter"
+                ],
+                "failureSummary": "Fix all of the following:\n  Axe encountered an error; test the page for this type of problem manually",
+                "html": "<button class=\"inbox-counter has-events\" title=\"Ещё не показаны в очереди: 5\" aria-label=\"Открыть события: 11\">"
+              }
+            ]
+          },
+          {
+            "id": "landmark-one-main",
+            "impact": "moderate",
+            "description": "Ensure the document has a main landmark",
+            "help": "Document should have one main landmark",
+            "helpUrl": "https://dequeuniversity.com/rules/axe/4.14/landmark-one-main?application=axeAPI",
+            "nodes": [
+              {
+                "target": [
+                  "html"
+                ],
+                "failureSummary": "Fix all of the following:\n  Axe encountered an error; test the page for this type of problem manually",
+                "html": "<html lang=\"ru\">"
+              }
+            ]
+          },
+          {
+            "id": "page-has-heading-one",
+            "impact": "moderate",
+            "description": "Ensure that the page, or at least one of its frames contains a level-one heading",
+            "help": "Page should contain a level-one heading",
+            "helpUrl": "https://dequeuniversity.com/rules/axe/4.14/page-has-heading-one?application=axeAPI",
+            "nodes": [
+              {
+                "target": [
+                  "html"
+                ],
+                "failureSummary": "Fix all of the following:\n  Axe encountered an error; test the page for this type of problem manually",
+                "html": "<html lang=\"ru\">"
+              }
+            ]
+          }
+        ],
+        "passedRuleCount": 47,
+        "passedRuleIds": [
+          "aria-allowed-attr",
+          "aria-allowed-role",
+          "aria-conditional-attr",
+          "aria-deprecated-role",
+          "aria-hidden-body",
+          "aria-hidden-focus",
+          "aria-prohibited-attr",
+          "aria-required-attr",
+          "aria-required-children",
+          "aria-required-parent",
+          "aria-roles",
+          "aria-valid-attr-value",
+          "aria-valid-attr",
+          "avoid-inline-spacing",
+          "button-name",
+          "bypass",
+          "definition-list",
+          "dlitem",
+          "document-title",
+          "duplicate-id-aria",
+          "empty-heading",
+          "empty-table-header",
+          "form-field-multiple-labels",
+          "heading-order",
+          "html-has-lang",
+          "html-lang-valid",
+          "label-title-only",
+          "label",
+          "landmark-banner-is-top-level",
+          "landmark-contentinfo-is-top-level",
+          "landmark-main-is-top-level",
+          "landmark-no-duplicate-banner",
+          "landmark-no-duplicate-contentinfo",
+          "landmark-no-duplicate-main",
+          "landmark-unique",
+          "link-name",
+          "meta-viewport-large",
+          "meta-viewport",
+          "nested-interactive",
+          "region",
+          "select-name",
+          "summary-name",
+          "tabindex",
+          "table-duplicate-name",
+          "target-size",
+          "td-headers-attr",
+          "th-has-data-cells"
+        ],
+        "inapplicableRuleCount": 40,
+        "domWarnings": [
+          "Not implemented: HTMLCanvasElement's getContext() method: without installing the canvas npm package"
+        ]
+      },
+      {
+        "file": "doctor-feedback-expanded-latest.html",
+        "sha256": "2ea96037ec51ebb233e5ce1ee46eefdca85959b64fb982c24eb6bec706e29115",
+        "title": "Аналитика сопровождения · Clinical Compass",
+        "violations": [],
+        "incomplete": [
+          {
+            "id": "label-content-name-mismatch",
+            "impact": "serious",
+            "description": "Ensure that elements labelled through their content must have their visible text as part of their accessible name",
+            "help": "Elements must have their visible text as part of their accessible name",
+            "helpUrl": "https://dequeuniversity.com/rules/axe/4.14/label-content-name-mismatch?application=axeAPI",
+            "nodes": [
+              {
+                "target": [
+                  ".inbox-counter"
+                ],
+                "failureSummary": "Fix all of the following:\n  Axe encountered an error; test the page for this type of problem manually",
+                "html": "<button class=\"inbox-counter has-events\" title=\"Ещё не показаны в очереди: 5\" aria-label=\"Открыть события: 11\">"
+              }
+            ]
+          },
+          {
+            "id": "landmark-one-main",
+            "impact": "moderate",
+            "description": "Ensure the document has a main landmark",
+            "help": "Document should have one main landmark",
+            "helpUrl": "https://dequeuniversity.com/rules/axe/4.14/landmark-one-main?application=axeAPI",
+            "nodes": [
+              {
+                "target": [
+                  "html"
+                ],
+                "failureSummary": "Fix all of the following:\n  Axe encountered an error; test the page for this type of problem manually",
+                "html": "<html lang=\"ru\">"
+              }
+            ]
+          },
+          {
+            "id": "page-has-heading-one",
+            "impact": "moderate",
+            "description": "Ensure that the page, or at least one of its frames contains a level-one heading",
+            "help": "Page should contain a level-one heading",
+            "helpUrl": "https://dequeuniversity.com/rules/axe/4.14/page-has-heading-one?application=axeAPI",
+            "nodes": [
+              {
+                "target": [
+                  "html"
+                ],
+                "failureSummary": "Fix all of the following:\n  Axe encountered an error; test the page for this type of problem manually",
+                "html": "<html lang=\"ru\">"
+              }
+            ]
+          }
+        ],
+        "passedRuleCount": 47,
+        "passedRuleIds": [
+          "aria-allowed-attr",
+          "aria-allowed-role",
+          "aria-conditional-attr",
+          "aria-deprecated-role",
+          "aria-hidden-body",
+          "aria-hidden-focus",
+          "aria-prohibited-attr",
+          "aria-required-attr",
+          "aria-required-children",
+          "aria-required-parent",
+          "aria-roles",
+          "aria-valid-attr-value",
+          "aria-valid-attr",
+          "avoid-inline-spacing",
+          "button-name",
+          "bypass",
+          "definition-list",
+          "dlitem",
+          "document-title",
+          "duplicate-id-aria",
+          "empty-heading",
+          "empty-table-header",
+          "form-field-multiple-labels",
+          "heading-order",
+          "html-has-lang",
+          "html-lang-valid",
+          "label-title-only",
+          "label",
+          "landmark-banner-is-top-level",
+          "landmark-contentinfo-is-top-level",
+          "landmark-main-is-top-level",
+          "landmark-no-duplicate-banner",
+          "landmark-no-duplicate-contentinfo",
+          "landmark-no-duplicate-main",
+          "landmark-unique",
+          "link-name",
+          "meta-viewport-large",
+          "meta-viewport",
+          "nested-interactive",
+          "region",
+          "select-name",
+          "summary-name",
+          "tabindex",
+          "table-duplicate-name",
+          "target-size",
+          "td-headers-attr",
+          "th-has-data-cells"
+        ],
+        "inapplicableRuleCount": 40,
+        "domWarnings": [
+          "Not implemented: HTMLCanvasElement's getContext() method: without installing the canvas npm package"
+        ]
+      }
+    ]
+  },
+  "http": {
+    "base_url": "http://127.0.0.1:8780",
+    "scope": "HTTP bytes and MIME only; not browser layout/interactions",
+    "assets": [
+      {
+        "file": "AdminDashboard-B591o9pb.js",
+        "status": 200,
+        "bytes": 18451,
+        "sha256": "89d2ea58551555dc0d00e2ff7bd64dbff495c18a195387d1754d47c10aee3cc2",
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "file": "CareWorkflow-BimDqz39.js",
+        "status": 200,
+        "bytes": 26982,
+        "sha256": "e9a42843a1b44b832c9f074ee6f24ebfb4d534bea78bae700ec199056e823bac",
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "file": "Charts-D7VeaGiH.js",
+        "status": 200,
+        "bytes": 5476,
+        "sha256": "460f36dca434e1ef31f5d3f68a15bee3a265151b14a34bba41adea8b1b005a07",
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "file": "DoctorDashboard-FfI3l-ou.js",
+        "status": 200,
+        "bytes": 18046,
+        "sha256": "1682535b4641274e1df8ca936bfb8392f97ce8d1e92cd751400cb7b4cf04a608",
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "file": "DoctorPatients-CCXxAxj7.js",
+        "status": 200,
+        "bytes": 36365,
+        "sha256": "6099d00d723bb09e1f73806418a7921a0d56b3562a8263933d260a4fe845c44d",
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "file": "MedicationSchedule-B7SnSs9A.js",
+        "status": 200,
+        "bytes": 33991,
+        "sha256": "0f3b0cab07ee08c9c36a7d30f4be24d057b6db0fb968d6c74c100749ae122f36",
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "file": "MedicationSchedule-BGXX_mka.css",
+        "status": 200,
+        "bytes": 2105,
+        "sha256": "c20413094ff3583bb21b006cdc48aba46037576c0d732dce5ed4bb1689d2d580",
+        "mime": "text/css; charset=utf-8"
+      },
+      {
+        "file": "Patient-04W__GON.js",
+        "status": 200,
+        "bytes": 67166,
+        "sha256": "6c489a13005c3351f53655b737663c3e1c586dfc41405714437dd149f3485e3d",
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "file": "Patient-B9xuvwdE.css",
+        "status": 200,
+        "bytes": 26258,
+        "sha256": "9160fbf594ce6238151f4e13f5a28e00c0e62184711079b09f25bbebeb327b0b",
+        "mime": "text/css; charset=utf-8"
+      },
+      {
+        "file": "SurveyBuilder-Deq93_jG.js",
+        "status": 200,
+        "bytes": 25412,
+        "sha256": "ee16700aeb87903b89724b92f661c3ab0d7517fa611a8cdae4c188c8b6f5eeba",
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "file": "SurveyFields-B452uiux.js",
+        "status": 200,
+        "bytes": 3121,
+        "sha256": "3887f00cce4508594705bbe7d3cac5e5d51e223061ac2c2350a81e2a904ddad1",
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "file": "TaskBoard-BFiQxxlN.js",
+        "status": 200,
+        "bytes": 7834,
+        "sha256": "de85a6f1fa33d2a31c929514e4ca590a67d79580cd38731d9bcf1d729aeab4d2",
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "file": "WorkflowMetrics-BhIAXbYB.js",
+        "status": 200,
+        "bytes": 12440,
+        "sha256": "d64f7f82434b4608954ff87c275959b5849b078ae633d26734eb678b92b137c5",
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "file": "chevron-right-BAA5ZMnT.js",
+        "status": 200,
+        "bytes": 159,
+        "sha256": "8ef3f16896e69e26d35973d7df9c21c379e3ab6c236813168426d42c1409b8bf",
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "file": "collection-COswcvyL.js",
+        "status": 200,
+        "bytes": 939,
+        "sha256": "b8f61ba215c319fcc2aaf6ce0fb3b26b182c049b9a0d9e4febe85703fe8000e4",
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "file": "index-BP3BRvUB.css",
+        "status": 200,
+        "bytes": 111738,
+        "sha256": "f245489252b0913dc860283952e05a779006b505a1465dd9b5adcd27d518f924",
+        "mime": "text/css; charset=utf-8"
+      },
+      {
+        "file": "index-BUZiLrK0.js",
+        "status": 200,
+        "bytes": 385227,
+        "sha256": "e0fcec0b9dba5d493ff75c50979b7e0a0fba7105eb28e3744b637a8b632f611b",
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "file": "patientProgress-Do0fObh9.js",
+        "status": 200,
+        "bytes": 1130,
+        "sha256": "611dafc1b1ad2ac66b0b04ac3852b8c0bf56b6f106882f460ee96efa5097a0b3",
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "file": "plus-Di5Zakz8.js",
+        "status": 200,
+        "bytes": 182,
+        "sha256": "7d17e83603ee28247d431c6d9607370900f9ce5e45980c4438544dbf5785bbf9",
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "file": "send-GXMFeNTO.js",
+        "status": 200,
+        "bytes": 652,
+        "sha256": "22e5308fd43d54daf9349cc81d300f9306fad10c9b664568476644634cb97465",
+        "mime": "text/javascript; charset=utf-8"
+      }
+    ],
+    "health": {
+      "status": "ok",
+      "compass_db": true,
+      "mis_db": true,
+      "mode": "synthetic_demo"
+    },
+    "root_matches_dist": true,
+    "qa_health": {
+      "status": "ok",
+      "compass_db": true,
+      "mis_db": true,
+      "mode": "synthetic_demo"
+    }
+  },
+  "screenshots": [
+    {
+      "file": "docs/evidence/doctor-feedback-2026-10-25/exact-answer-1440.jpg",
+      "bytes": 106845,
+      "sha256": "85583405d4757a8ae9f751a1b9c74b9327d29d8b1f7ad5e9e02e5504da019f5f",
+      "pixels": [
+        1425,
+        990
+      ]
+    },
+    {
+      "file": "docs/evidence/doctor-feedback-2026-10-25/exact-answer-375.jpg",
+      "bytes": 35359,
+      "sha256": "512818377f793b32f56a8ce90d0cf3300819afd01b4476806f82a16a175ef490",
+      "pixels": [
+        360,
+        810
+      ]
+    },
+    {
+      "file": "docs/evidence/doctor-feedback-2026-10-25/expanded-1440.jpg",
+      "bytes": 115486,
+      "sha256": "b3082e8d67c650323efcd29d03ace2aaf2300638ecc2729fdc507a63f0e4daef",
+      "pixels": [
+        1425,
+        990
+      ]
+    },
+    {
+      "file": "docs/evidence/doctor-feedback-2026-10-25/expanded-375.jpg",
+      "bytes": 45875,
+      "sha256": "88575b298bd9f21be087408f03d9289768b2b1b029bcbf90934c641fae51eb0b",
+      "pixels": [
+        360,
+        810
+      ]
+    },
+    {
+      "file": "docs/evidence/doctor-feedback-2026-10-25/overview-first-fold-1440.jpg",
+      "bytes": 117255,
+      "sha256": "b6702096a1d23ec716fc6e3537ee103b32ba45be0413ed4d95c2aceb1b746283",
+      "pixels": [
+        1425,
+        990
+      ]
+    },
+    {
+      "file": "docs/evidence/doctor-feedback-2026-10-25/overview-first-fold-375.jpg",
+      "bytes": 34630,
+      "sha256": "73f5f128564d0b8086fcdaa3059debf0d481def8a5fe11fee3693d4d896325e8",
+      "pixels": [
+        360,
+        810
+      ]
+    },
+    {
+      "file": "docs/evidence/doctor-feedback-2026-10-25/overview-first-fold-768.jpg",
+      "bytes": 61577,
+      "sha256": "9000f7cea3ba419d1fa361dead2798c010741e8cd08900713e0100befc46b538",
+      "pixels": [
+        753,
+        1004
+      ]
+    },
+    {
+      "file": "docs/evidence/doctor-feedback-2026-10-25/return-to-source-375.jpg",
+      "bytes": 34406,
+      "sha256": "c987d0ab4b639471a4b6e1a324c4e7498c8dabe1a3b4d0fe15910553e008c266",
+      "pixels": [
+        360,
+        810
+      ]
+    },
+    {
+      "file": "docs/evidence/doctor-feedback-2026-10-25/voice-sources-768.jpg",
+      "bytes": 70428,
+      "sha256": "b0b905eca31a89ca2efa7d447fce9508c58479c19575f572ebb309665f3387b8",
+      "pixels": [
+        753,
+        1004
+      ]
+    }
+  ],
+  "console": {
+    "warnOrErrorCount": 0,
+    "scope": "Latest40 records queried in the own tab."
+  },
+  "limits": [
+    "Existing engagement API returns at most20 recent free answers from assignments created in the selected period; this is not all historical answers or a new category drill-down.",
+    "No new endpoint, query, role permission, clinical rule, reward rate or persisted clinical write in this cycle.",
+    "Axe/JSDOM:0 detected violations,6 incomplete retained. No full browser/WCAG or screen-reader pass.",
+    "No pixel baseline, FPS, Web Vitals or system reduced-motion measurement. Existing500ms maximum load gate remains unmet.",
+    "Viewport positioning via locator clicks was used for screenshots only, not as proof of app-initiated scrolling. No Git publication."
+  ]
+}

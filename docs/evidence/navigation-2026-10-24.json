@@ -1,0 +1,173 @@
+{
+  "recorded_at_utc": "2026-10-24T11:01:56.475817+00:00",
+  "base_commit": "9e811153db907b8b6748f5667e901897a1b9a0ab",
+  "branch": "agent/retention-mvp",
+  "uncommitted_at_capture": true,
+  "contract": "docs/NAVIGATION_REWORK.md: first-time role navigation, clear next action, stable forms, contextual help, account-scoped URL/history.",
+  "targetViewports": [
+    "375x844",
+    "768x1024",
+    "1440x1000"
+  ],
+  "source_fingerprint": "50a13095302a3ac600bdd69dee730988d0483eac4273edd0ed3f42a57cf4ef42",
+  "source_hashes": {
+    ".github/workflows/checks.yml": "6d7329427871c4e8997431d9eee9f761be6c8bcc6b1e6317da1594bf6cb2d5f0",
+    "frontend/index.html": "e3e086ab60d4205742e59a449957efc5f18d3df4bd43a352a462d591761f2775",
+    "frontend/package-lock.json": "3d31ec33e3e68239b3edcaaec37bb77798fa8bdb427cd9541bebb2c7b9b0e4cc",
+    "frontend/package.json": "309160877ddd781edd0cf687baaf8a7cf41910a4b05c43de360ae44e62bcd044",
+    "frontend/src/AdminDashboard.tsx": "25a6ef6ee39288a8be54fa0d29321ac8744eef6cb8ba7857c1ab6c6169f309e6",
+    "frontend/src/api.ts": "daff13cab54b73d7c76018c0c236d76e05cda4d0f98cf7ab13ebf983ae49e8ed",
+    "frontend/src/App.tsx": "201b3f295798063c87cc0bd07d716018670fda5bbe9873576f64e9ae5b37959c",
+    "frontend/src/AssessmentHistory.tsx": "82b6aec9b1a920d4fb391082fbfae86167d0e539c4e1c7f72b04d1bc391cb784",
+    "frontend/src/CareWorkflow.tsx": "7fdb7d0765662a924672f8bfccd7d28f9651b90acd22b93dec939b76d08e74a0",
+    "frontend/src/Charts.tsx": "402338c017130073d5898af3b6391a9e4f2c2c1f3d10d7b7decb86db9b2bd045",
+    "frontend/src/Chat.tsx": "77c113d19027edc2f3328551b538bd99bcd8e0dea21e17c1c5d0c17ce77d47d1",
+    "frontend/src/collection.ts": "2788d784703ac9525700eccd009e94f186eac37ffa9329af3901d334d96bd05c",
+    "frontend/src/CollectionMetrics.tsx": "4846c3dfc28d6d8b4383cc10ca6dd4869973bf5a41127577d24f38b25122ec1d",
+    "frontend/src/DoctorDashboard.tsx": "4c8235adc5829b7ae7fb0c13b23ab4897db6c04759bcb3bc6d0a108bcc65cbff",
+    "frontend/src/DoctorInbox.tsx": "506389cebf95de9bc0cf3384d9755dc3df20f67c82eba31eb1ccd663c23c3f20",
+    "frontend/src/DoctorPatients.tsx": "d7f299da54718907c9f8daf750659673444658cad7a8c84c87bae2c21ca70216",
+    "frontend/src/EventAction.tsx": "4d4e4ba1453c965f5e71a7c3c119cde7af06b14c835deb002ec7f6e9cafb93ba",
+    "frontend/src/Interaction.tsx": "818a5cbf31e684bee3c3d2c5911d5f02d1b915f38d9a249d21c473601e5de3e7",
+    "frontend/src/main.tsx": "9204fd5a9b66b7c367022685e566bc05bce4a94add23cfb6f7bbd9e26d8e72ed",
+    "frontend/src/MedicationEditor.tsx": "e8c0820c7bad846215b447136c2aac630f8ed7b65c81e8d4bdf0c2fb19ba0d85",
+    "frontend/src/MedicationSchedule.tsx": "5d0e8412859baa5a22272d099818ee279339b2ae88b50ca2d009893eec5e240d",
+    "frontend/src/navigation.ts": "c3c568651ce33dc8ff3196815094936e2daee2246d871253330a0bc84feefac2",
+    "frontend/src/NavigationGuard.tsx": "badae4baa4ad4a505d57b7980b26498c878e4f72029f19736d534854da0b96a4",
+    "frontend/src/ParticipationPoints.tsx": "3b329a8bbeb3e3610d6db31381467a8184c5de8a1f99fea63ff68635668eb9db",
+    "frontend/src/Patient.tsx": "650b84c8f42c32b23a578b678d1465a6e194b32ac295ee7ee670f99947103d81",
+    "frontend/src/PatientDiary.tsx": "355726524b83d83b2df934b6e44b086f359f0f314de7d02aba6614f4bc97a7cd",
+    "frontend/src/PatientJourney.tsx": "f36fba6b2d8ec731d3c91208b0ae534ebdd8754c1d4b3cb2651e14a2aa7510d7",
+    "frontend/src/PatientSurvey.tsx": "a76b9aed6ef00cc060df19d47544389948f534d669db5133466f2be9780da61b",
+    "frontend/src/PrivacySettings.tsx": "6dc8107b4d51f41f1e31a95b3ab7da4f8e04cf70216a833d89914ea9d522ef68",
+    "frontend/src/RoleGuide.tsx": "be8bc19839ac4b87e363de1faefec7a5ac53d2d12bacacec045dd48dccba4b2d",
+    "frontend/src/routes.ts": "552d4f4ca09a60f9256595dad5f514542b5f5bd0ec8b2df9ddf490ac59db2edc",
+    "frontend/src/SectionBoundary.tsx": "e8c126e1b70ad1d18b816f9fa514ca06f03451312bebc44ac1f99c768e5a8b4a",
+    "frontend/src/styles.css": "1218715b861b26f719231895400a4e019fd2c6703f19af2e0d375580808da7e6",
+    "frontend/src/supportTemplate.ts": "b97398f683b2344ad95722d4d097159b58f2a76f073b84d0e93709842de9fb1d",
+    "frontend/src/SurveyBuilder.tsx": "3d4c7f9e0df0afb7d88425fefd06e8d463b7d78dffbeb2a5de47645fe5991822",
+    "frontend/src/SurveyFields.tsx": "b02b59bccc679d8b37c6ac7d1ed793e62ddda376407061ea3d84d68affe170eb",
+    "frontend/src/TaskBoard.tsx": "e48f311937b285fff9914d18386cf10589fe52230ee46034bd5bd3740340060d",
+    "frontend/src/UI.tsx": "066c884290d259fbe60e5c0703fbe8196ebb2b444c3e1bdd17478a9cd862de94",
+    "frontend/src/ViewState.tsx": "659918998b7b4d2d715f8d2ee9e8bd01478e8208b428a7f4f1c3aa88dd1fa642",
+    "frontend/src/vite-env.d.ts": "65996936fbb042915f7b74a200fcdde7e410f32a669b1ab9597cfaa4b0faddb5",
+    "frontend/src/WorkflowMetrics.tsx": "ee85b15c661b04a5fbc63c80390e1899bc16863ff229a4d722f1aa285b7c0620",
+    "frontend/src/workspace.css": "4856a24695ed7e9a06c320c4256a69d8866af00b02ccb04f2b4c69575ec68a0a",
+    "frontend/src/WorkspaceHome.tsx": "00eaa3b672c0a8261c3c206f16aaed7f5fe21806499d0373ac2a7b6be06bf62a",
+    "frontend/tests/navigation.test.mjs": "decb47513864db904750140ac70d3869b6eb1a3fa11202fbc504c27492fb6d26",
+    "frontend/tsconfig.json": "9e0d4f6f69107f9fdef169fdef36dbb4eedd893d9f3a1fe3c317e79c6ce6f6a6",
+    "frontend/vite.config.ts": "0006f111fc111c02e76866fe22fdb9715bc66e0cd242c66724be2a5237287c6f"
+  },
+  "verification": {
+    "typescript_vite": "passed",
+    "history_model_tests": {
+      "passed": 11,
+      "failed": 0,
+      "boundary": "Fake History adapter; not browser/React E2E",
+      "tap_sha256": "405e8dba9332d1e25c40c1bea75667e48e9dc92ad863390731715969c1c6dfdd"
+    },
+    "current_assets": {
+      "/assets/index-BLwF5Fj1.js": {
+        "sha256": "b1f5b890dc3a1e041bff39e8cf04189ff2a07d911ef427a086e3175bb0f4929d",
+        "bytes": 496465
+      },
+      "/assets/index-B5hhB_8v.css": {
+        "sha256": "b5aff40071942bbc5815d6de1b5981dd471d73bc4be0278272316f8d0e046b14",
+        "bytes": 95419
+      }
+    },
+    "http": {
+      "health": {
+        "status": "ok",
+        "compass_db": true,
+        "mis_db": true,
+        "mode": "synthetic_demo"
+      },
+      "ui_http": 200,
+      "current_assets": [
+        "/assets/index-BLwF5Fj1.js",
+        "/assets/index-B5hhB_8v.css"
+      ],
+      "deep_link_html": {
+        "/?section=home": 200,
+        "/?section=patients&patient=6&tab=care": 200,
+        "/?section=surveys&assignment=1": 200,
+        "/?section=barriers": 200
+      },
+      "roles": {
+        "doctor": {
+          "directory": 200,
+          "own_directory_total": 8
+        },
+        "doctor2": {
+          "directory": 200,
+          "own_directory_total": 2
+        },
+        "patient1": {
+          "own_assignments": 200,
+          "directory": 403,
+          "clinic": 403
+        },
+        "admin": {
+          "clinic": 200,
+          "directory": 403,
+          "patient_card": 403
+        },
+        "coordinator": {
+          "assigned_tasks": 200,
+          "patient_card": 403,
+          "clinic": 403
+        }
+      },
+      "physician_directory_intersection": 0,
+      "boundary": "HTTP/static delivery and existing API roles only. Does not test React rendering, navigation clicks, CSS, focus, modal or responsive layout."
+    },
+    "backend": "Unchanged from published 9e81115; full backend suite not rerun for frontend-only work.",
+    "diff_check": "passed",
+    "ci": "Navigation command added to frontend job, not pushed/run on GitHub in this iteration."
+  },
+  "accessibility": {
+    "status": "blocked",
+    "reason": "The existing browser error-page is blocked by URL policy; user was asked to reopen the allowed HTTP app. No alternate browser, raw CDP or other workaround was used."
+  },
+  "responsive": {
+    "status": "blocked",
+    "reason": "The existing browser error-page is blocked by URL policy; user was asked to reopen the allowed HTTP app. No alternate browser, raw CDP or other workaround was used."
+  },
+  "contentStates": {
+    "loading": {
+      "status": "blocked",
+      "reason": "New rendered navigation state not exercised in an allowed browser page."
+    },
+    "empty": {
+      "status": "blocked",
+      "reason": "New rendered navigation state not exercised in an allowed browser page."
+    },
+    "error": {
+      "status": "blocked",
+      "reason": "New rendered navigation state not exercised in an allowed browser page."
+    },
+    "partial": {
+      "status": "blocked",
+      "reason": "New rendered navigation state not exercised in an allowed browser page."
+    },
+    "success": {
+      "status": "blocked",
+      "reason": "New rendered navigation state not exercised in an allowed browser page."
+    },
+    "permission": {
+      "status": "blocked",
+      "reason": "New rendered navigation state not exercised in an allowed browser page."
+    }
+  },
+  "renderedEvidence": [],
+  "rendered_gate": "NOT PASSED; source/build/model and HTTP checks cannot pass the rendered finish gate.",
+  "remaining": [
+    "Four roles: first steps and consistency of page labels.",
+    "Keyboard, focus return, modal help, drawer and fixed bottom navigation at all target viewports.",
+    "Real Back/Forward, cancellation/save/pending with physician note, diary, chat and survey draft.",
+    "Refresh card/tab/assignment, exact source and filter return, account change, two-session survey update without input loss."
+  ],
+  "business_questions": "No new product/clinical decisions needed for implemented navigation.",
+  "publication": "Local only; no commit/push requested for this iteration."
+}

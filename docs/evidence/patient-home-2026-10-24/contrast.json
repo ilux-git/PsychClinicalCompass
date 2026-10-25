@@ -1,0 +1,90 @@
+[
+  {
+    "background": [
+      248,
+      250,
+      242
+    ],
+    "color": "rgb(101, 113, 91)",
+    "contrast": 4.91,
+    "font": "12px",
+    "selector": ".patient-reward-principle"
+  },
+  {
+    "background": [
+      248,
+      250,
+      242
+    ],
+    "color": "rgb(103, 113, 92)",
+    "contrast": 4.87,
+    "font": "12px",
+    "selector": ".patient-demo-note"
+  },
+  {
+    "background": [
+      255,
+      255,
+      255
+    ],
+    "color": "rgb(81, 117, 109)",
+    "contrast": 5.1,
+    "font": "12px",
+    "selector": ".patient-step-origin"
+  },
+  {
+    "background": [
+      255,
+      255,
+      255
+    ],
+    "color": "rgb(97, 114, 128)",
+    "contrast": 4.97,
+    "font": "13px",
+    "selector": ".patient-next-caption"
+  },
+  {
+    "background": [
+      248,
+      250,
+      242
+    ],
+    "color": "rgb(83, 105, 76)",
+    "contrast": 5.71,
+    "font": "14px",
+    "selector": ".patient-discount-goal p"
+  },
+  {
+    "background": [
+      244,
+      246,
+      248
+    ],
+    "color": "rgb(79, 105, 112)",
+    "contrast": 5.4,
+    "font": "13px",
+    "selector": ".patient-care-status"
+  },
+  {
+    "background": [
+      255,
+      255,
+      255
+    ],
+    "color": "rgb(97, 114, 128)",
+    "contrast": 4.97,
+    "font": "14px",
+    "selector": ".patient-state-intro"
+  },
+  {
+    "background": [
+      255,
+      255,
+      255
+    ],
+    "color": "rgb(97, 114, 128)",
+    "contrast": 4.97,
+    "font": "12px",
+    "selector": ".care-source-note"
+  }
+]

@@ -1,0 +1,655 @@
+{
+  "recorded_at": "2026-10-24T22:15:29.534Z",
+  "browser": "CUA / in-app browser 2",
+  "base_url": "http://127.0.0.1:8782/",
+  "data_scope": "Isolated compass_ui_flow_qa; all people and actions synthetic; no external delivery or real MIS write",
+  "viewports": [
+    "375x844",
+    "768x1024",
+    "1440x1000"
+  ],
+  "journeys": {
+    "patient_modes": {
+      "map": true,
+      "rhythm_day_selection": true,
+      "calm": true,
+      "calm_persisted_after_reload": true,
+      "balance_preserved": 105
+    },
+    "map_selection": {
+      "current": "Маяк · 100",
+      "future_detail": "Новый горизонт · 250",
+      "future_selection_does_not_advance": true
+    },
+    "demo_coupon": {
+      "before": 105,
+      "reserved": 100,
+      "after_issue": 5,
+      "after_cancel": 105,
+      "map_unlocked_places_preserved": true
+    },
+    "survey": {
+      "survey_id": 9,
+      "questions": 3,
+      "answered": [
+        1,
+        3
+      ],
+      "skipped": [
+        2
+      ],
+      "receipt_points": 3,
+      "balance_before": 5,
+      "balance_after": 8,
+      "skipped_shown_as": "Нет ответа",
+      "exact_question_focus_and_return": true
+    },
+    "diary": {
+      "personal": true,
+      "receipt_points": 0,
+      "no_invented_cap_reason": true,
+      "new_draft_clears_previous_receipt": true,
+      "leave_guard_preserves_text_and_focus": true
+    },
+    "care": {
+      "task_with_dates": 37,
+      "due_local": "2026-10-26 10:30",
+      "follow_up_local": "2026-10-27 10:30",
+      "dates_preserved_after_keyboard_input": true,
+      "fill_only_datetime_not_accepted_as_app_defect": true,
+      "coordinator_task": 36,
+      "coordinator_open_to_in_progress_to_done": true,
+      "physician_verification": "unknown",
+      "doctor_analytics": {
+        "tasks": 37,
+        "done": 36,
+        "checked": 9,
+        "awaiting": 27,
+        "unknown_after_check": 7
+      },
+      "russian_percentage_rendered": true
+    },
+    "administrator": {
+      "all_sections_navigated": true,
+      "patient_names_quotes_and_cards_absent": true,
+      "privacy_modes_tested": [
+        1,
+        5,
+        null
+      ],
+      "restored_minimum": 1,
+      "restored_policy_version": 9,
+      "hidden_values_are_not_zero": true,
+      "setup_action_gap_px": 24,
+      "final_care_counts": {
+        "tasks": 37,
+        "done": 36,
+        "checked": 9,
+        "awaiting": 27
+      }
+    },
+    "doctor2": {
+      "own_patients": 2,
+      "foreign_card_patient1_denied": true,
+      "foreign_name_not_shown": true,
+      "clinical_form_fields_on_denial": 0,
+      "no_infinite_loading": true,
+      "return_to_own_list": true,
+      "zero_tasks_label": "Незавершённых действий нет"
+    }
+  },
+  "keyboard": {
+    "coupon_tab_and_shift_tab_wrap": true,
+    "escape_and_trigger_focus_return": true,
+    "help_dialog_tab_wrap": true,
+    "leave_guard_tab_wrap": true,
+    "mobile_menu_tab_wrap": true,
+    "source_question_focus": true,
+    "doctor_note_first_character_retains_textarea": true,
+    "doctor_note_category_keyboard_retains_select": true,
+    "collapsed_note_reopens_after_cancelled_back": true,
+    "doctor_note_focus_after_cancel": "note-text",
+    "native_back_forward_real_card": true,
+    "remove_source_returns_to_note": true
+  },
+  "mobile_primary_action": {
+    "viewport": "375x844",
+    "button_top": 663.15625,
+    "button_bottom": 713.15625,
+    "navigation_top": 777,
+    "fully_visible": true
+  },
+  "rhythm_day_controls": {
+    "count": 7,
+    "min_width": 65.5,
+    "min_height": 107.390625
+  },
+  "contrast": {
+    "doctor_feedback": {
+      "checked": 186,
+      "failures": []
+    },
+    "doctor_actions": {
+      "checked": 43,
+      "failures": []
+    },
+    "patient_home": {
+      "checked": 70,
+      "failures": []
+    },
+    "patient_chart_svg": {
+      "checked": 14,
+      "failures": []
+    },
+    "patient_map": {
+      "checked": 131,
+      "failures": []
+    },
+    "scope": "Computed solid-background text pairs only; hidden/inert/disabled excluded; no full WCAG or screen-reader claim",
+    "administrator": {
+      "checked": 62,
+      "failures": []
+    },
+    "patient_calm": {
+      "checked": 112,
+      "failures": []
+    }
+  },
+  "current_patient_console": [],
+  "limitations": [
+    "No agreed visual-regression baseline",
+    "No axe or screen-reader pass",
+    "Reduced-motion implementation inspected; browser emulation unavailable",
+    "Core Web Vitals and frame pacing not measured"
+  ],
+  "updated_at": "2026-10-24T22:41:00.875Z",
+  "doctor_note_spacing": {
+    "save_gap_px": 24,
+    "source_font_px": 13,
+    "source_remove_target": [
+      44,
+      44
+    ],
+    "panel_scroll_equals_width": true
+  },
+  "current_patient_console_final": [],
+  "expected_failure_modes": [
+    "QA home-care-fail:503",
+    "QA points-fail:503",
+    "QA home-denied:403",
+    "Real second-physician foreign-card denial"
+  ],
+  "note_source_and_bundle_followup": {
+    "recorded_at": "2026-10-24T23:29:17.930164+00:00",
+    "note_source_guard": {
+      "red_failed": 1,
+      "green_passed": 5,
+      "browser": "CUA/IAB isolated8782,1280x720",
+      "observed": [
+        "Cancel retains original source and text and focuses note-text",
+        "Confirm clears old text and category before opening new source",
+        "The new draft blocks navigation and survives cancellation",
+        "Saved notes count remains1; verification drafts discarded without saving"
+      ],
+      "scope": "Sourced unsaved notes only; explicitly unlinking or initially linking a manual note preserves the chosen behavior"
+    },
+    "initial_bundle": {
+      "before": {
+        "file": "index-CFMSWbXX.js",
+        "bytes": 499876,
+        "gzip_bytes": 150552,
+        "sha256": "2c4acdcfe9ee1d6b3a40a4f96173eb247422af5da014383e543e7bf56c1610d9"
+      },
+      "after": {
+        "file": "index-CC5F7A93.js",
+        "bytes": 385235,
+        "gzip_bytes": 122278,
+        "sha256": "79e3755f9252ae9e1a504295db421c1793d1fec5d6473c99f373083d6d42a7d7"
+      },
+      "bytes_reduction_percent": 22.93,
+      "gzip_reduction_percent": 18.78,
+      "scope": "Physician card and task board load through existing Suspense/SectionBoundary; build bytes, not a measured startup-time, Web Vitals, FPS or API-latency improvement"
+    },
+    "bundle_browser_smoke": {
+      "doctor": "Directory reload preserves authorized8patients and return focus; work board opens",
+      "patient": "Home and My Progress load, balance105 unchanged, no alert",
+      "coordinator": "Own organizational board loads,8done, no clinical cards",
+      "administrator": "Overview loads, no patient links or alert;27awaiting checks",
+      "console_warnings_errors": 0,
+      "scope": "1280x720 smoke after code splitting; earlier375/768/1440 evidence remains separate"
+    },
+    "source_hashes": {
+      "frontend/src/App.tsx": "f65c0019100a4bf22f4900055c6eb1434424ca8865d3a050a8ab18ddb5a42987",
+      "frontend/src/DoctorPatients.tsx": "98c653561f8ac638b095338601e91d3dda5de8c6ce458ad42da175523b643dde",
+      "frontend/tests/doctor-note-interaction.test.mjs": "f10b92f884198fd723552c75c141c4e64c2dd0de926771a8071c70656e9a2fab"
+    }
+  },
+  "semantic_audit_and_login_palette": {
+    "recorded_at": "2026-10-24T23:29:17.407266+00:00",
+    "engine": "axe-core 4.14.0",
+    "scope": "Semantic analysis of CUA-exported markup in JSDOM29.1.1 with local entry CSS. App scripts and external resources never execute; no actual-browser axe, layout, contrast, keyboard, motion or screen-reader pass.",
+    "source": "https://github.com/dequelabs/axe-core#supported-browsers",
+    "disabled_rules": [
+      "color-contrast"
+    ],
+    "before": {
+      "administrator_definition_list": {
+        "impact": "serious",
+        "rule": "definition-list",
+        "nodes": 1
+      },
+      "login_landmark": {
+        "impact": "moderate",
+        "rule": "region",
+        "nodes": 12
+      }
+    },
+    "after": [
+      {
+        "fixture": "admin-overview.html",
+        "sha256": "c153ecdeede14c89949962f4c4aefa78e53544db524190b98822888fb3e8daab",
+        "title": "Обзор клиники · Clinical Compass",
+        "violations": 0,
+        "incomplete_rule_ids": [
+          "label-content-name-mismatch",
+          "landmark-one-main",
+          "page-has-heading-one"
+        ],
+        "passed_rule_ids": [
+          "aria-allowed-attr",
+          "aria-conditional-attr",
+          "aria-hidden-body",
+          "aria-hidden-focus",
+          "aria-prohibited-attr",
+          "aria-valid-attr-value",
+          "aria-valid-attr",
+          "avoid-inline-spacing",
+          "button-name",
+          "bypass",
+          "definition-list",
+          "dlitem",
+          "document-title",
+          "duplicate-id-aria",
+          "empty-heading",
+          "heading-order",
+          "html-has-lang",
+          "html-lang-valid",
+          "landmark-banner-is-top-level",
+          "landmark-contentinfo-is-top-level",
+          "landmark-main-is-top-level",
+          "landmark-no-duplicate-banner",
+          "landmark-no-duplicate-contentinfo",
+          "landmark-no-duplicate-main",
+          "landmark-unique",
+          "link-name",
+          "meta-viewport-large",
+          "meta-viewport",
+          "nested-interactive",
+          "region",
+          "summary-name",
+          "tabindex",
+          "target-size"
+        ],
+        "dom_warnings": [
+          "Not implemented: HTMLCanvasElement's getContext() method: without installing the canvas npm package"
+        ]
+      },
+      {
+        "fixture": "doctor-home.html",
+        "sha256": "a856bf2a274c69e6f4b8d4bb3dc877d9092c80986c1504f7893306fa10b45f04",
+        "title": "Главная · Clinical Compass",
+        "violations": 0,
+        "incomplete_rule_ids": [
+          "label-content-name-mismatch",
+          "landmark-one-main",
+          "page-has-heading-one"
+        ],
+        "passed_rule_ids": [
+          "aria-allowed-attr",
+          "aria-conditional-attr",
+          "aria-hidden-body",
+          "aria-hidden-focus",
+          "aria-prohibited-attr",
+          "aria-valid-attr-value",
+          "aria-valid-attr",
+          "avoid-inline-spacing",
+          "button-name",
+          "bypass",
+          "definition-list",
+          "dlitem",
+          "document-title",
+          "duplicate-id-aria",
+          "empty-heading",
+          "form-field-multiple-labels",
+          "heading-order",
+          "html-has-lang",
+          "html-lang-valid",
+          "label-title-only",
+          "landmark-banner-is-top-level",
+          "landmark-contentinfo-is-top-level",
+          "landmark-main-is-top-level",
+          "landmark-no-duplicate-banner",
+          "landmark-no-duplicate-contentinfo",
+          "landmark-no-duplicate-main",
+          "landmark-unique",
+          "link-name",
+          "list",
+          "listitem",
+          "meta-viewport-large",
+          "meta-viewport",
+          "nested-interactive",
+          "region",
+          "select-name",
+          "summary-name",
+          "tabindex",
+          "target-size"
+        ],
+        "dom_warnings": [
+          "Not implemented: HTMLCanvasElement's getContext() method: without installing the canvas npm package"
+        ]
+      },
+      {
+        "fixture": "doctor-note.html",
+        "sha256": "fe95a90a712358e69433f456a824c286fa4e6c7e0c9c8a5f14b609d50bfa2202",
+        "title": "Опросы и ответы · Clinical Compass",
+        "violations": 0,
+        "incomplete_rule_ids": [
+          "label-content-name-mismatch",
+          "landmark-one-main",
+          "page-has-heading-one"
+        ],
+        "passed_rule_ids": [
+          "aria-allowed-attr",
+          "aria-allowed-role",
+          "aria-conditional-attr",
+          "aria-deprecated-role",
+          "aria-hidden-body",
+          "aria-hidden-focus",
+          "aria-prohibited-attr",
+          "aria-required-attr",
+          "aria-required-children",
+          "aria-required-parent",
+          "aria-roles",
+          "aria-valid-attr-value",
+          "aria-valid-attr",
+          "avoid-inline-spacing",
+          "button-name",
+          "bypass",
+          "definition-list",
+          "dlitem",
+          "document-title",
+          "duplicate-id-aria",
+          "empty-heading",
+          "form-field-multiple-labels",
+          "heading-order",
+          "html-has-lang",
+          "html-lang-valid",
+          "label-title-only",
+          "label",
+          "landmark-banner-is-top-level",
+          "landmark-contentinfo-is-top-level",
+          "landmark-main-is-top-level",
+          "landmark-no-duplicate-banner",
+          "landmark-no-duplicate-contentinfo",
+          "landmark-no-duplicate-main",
+          "landmark-unique",
+          "link-name",
+          "meta-viewport-large",
+          "meta-viewport",
+          "nested-interactive",
+          "region",
+          "select-name",
+          "summary-name",
+          "tabindex",
+          "target-size"
+        ],
+        "dom_warnings": [
+          "Not implemented: HTMLCanvasElement's getContext() method: without installing the canvas npm package"
+        ]
+      },
+      {
+        "fixture": "patient-home.html",
+        "sha256": "5a95c462e152888ebab8ff5eed7c92c9024a4c8835ee11164227a91d8f94d5a7",
+        "title": "Мой день · Clinical Compass",
+        "violations": 0,
+        "incomplete_rule_ids": [
+          "label-content-name-mismatch",
+          "landmark-one-main",
+          "page-has-heading-one"
+        ],
+        "passed_rule_ids": [
+          "aria-allowed-attr",
+          "aria-allowed-role",
+          "aria-conditional-attr",
+          "aria-deprecated-role",
+          "aria-hidden-body",
+          "aria-hidden-focus",
+          "aria-prohibited-attr",
+          "aria-required-attr",
+          "aria-roles",
+          "aria-valid-attr-value",
+          "aria-valid-attr",
+          "avoid-inline-spacing",
+          "button-name",
+          "bypass",
+          "definition-list",
+          "dlitem",
+          "document-title",
+          "duplicate-id-aria",
+          "empty-heading",
+          "form-field-multiple-labels",
+          "heading-order",
+          "html-has-lang",
+          "html-lang-valid",
+          "label-title-only",
+          "landmark-banner-is-top-level",
+          "landmark-contentinfo-is-top-level",
+          "landmark-main-is-top-level",
+          "landmark-no-duplicate-banner",
+          "landmark-no-duplicate-contentinfo",
+          "landmark-no-duplicate-main",
+          "landmark-unique",
+          "link-name",
+          "meta-viewport-large",
+          "meta-viewport",
+          "nested-interactive",
+          "region",
+          "select-name",
+          "summary-name",
+          "svg-img-alt",
+          "tabindex",
+          "target-size"
+        ],
+        "dom_warnings": [
+          "Not implemented: HTMLCanvasElement's getContext() method: without installing the canvas npm package"
+        ]
+      },
+      {
+        "fixture": "patient-diary.html",
+        "sha256": "2774f56c40f46282f6bc7c76714440f003c6f0bc30c8fbdfd86360d238cf4563",
+        "title": "Дневник · Clinical Compass",
+        "violations": 0,
+        "incomplete_rule_ids": [
+          "label-content-name-mismatch",
+          "landmark-one-main",
+          "page-has-heading-one"
+        ],
+        "passed_rule_ids": [
+          "aria-allowed-attr",
+          "aria-conditional-attr",
+          "aria-hidden-body",
+          "aria-hidden-focus",
+          "aria-prohibited-attr",
+          "aria-valid-attr-value",
+          "aria-valid-attr",
+          "avoid-inline-spacing",
+          "button-name",
+          "bypass",
+          "document-title",
+          "duplicate-id-aria",
+          "empty-heading",
+          "form-field-multiple-labels",
+          "heading-order",
+          "html-has-lang",
+          "html-lang-valid",
+          "label-title-only",
+          "label",
+          "landmark-banner-is-top-level",
+          "landmark-contentinfo-is-top-level",
+          "landmark-main-is-top-level",
+          "landmark-no-duplicate-banner",
+          "landmark-no-duplicate-contentinfo",
+          "landmark-no-duplicate-main",
+          "landmark-unique",
+          "link-name",
+          "meta-viewport-large",
+          "meta-viewport",
+          "nested-interactive",
+          "region",
+          "select-name",
+          "summary-name",
+          "tabindex",
+          "target-size"
+        ],
+        "dom_warnings": [
+          "Not implemented: HTMLCanvasElement's getContext() method: without installing the canvas npm package"
+        ]
+      },
+      {
+        "fixture": "coordinator-board.html",
+        "sha256": "bfd9f0a1c58799cba10c85d016a32fa7f54cbebcb8ad039df781cf67f770514b",
+        "title": "Мои задачи · Clinical Compass",
+        "violations": 0,
+        "incomplete_rule_ids": [
+          "label-content-name-mismatch",
+          "landmark-one-main",
+          "page-has-heading-one"
+        ],
+        "passed_rule_ids": [
+          "aria-allowed-attr",
+          "aria-allowed-role",
+          "aria-conditional-attr",
+          "aria-deprecated-role",
+          "aria-hidden-body",
+          "aria-hidden-focus",
+          "aria-prohibited-attr",
+          "aria-required-attr",
+          "aria-roles",
+          "aria-valid-attr-value",
+          "aria-valid-attr",
+          "avoid-inline-spacing",
+          "button-name",
+          "bypass",
+          "document-title",
+          "duplicate-id-aria",
+          "empty-heading",
+          "form-field-multiple-labels",
+          "heading-order",
+          "html-has-lang",
+          "html-lang-valid",
+          "label-title-only",
+          "label",
+          "landmark-banner-is-top-level",
+          "landmark-contentinfo-is-top-level",
+          "landmark-main-is-top-level",
+          "landmark-no-duplicate-banner",
+          "landmark-no-duplicate-contentinfo",
+          "landmark-no-duplicate-main",
+          "landmark-unique",
+          "link-name",
+          "meta-viewport-large",
+          "meta-viewport",
+          "nested-interactive",
+          "region",
+          "tabindex",
+          "target-size"
+        ],
+        "dom_warnings": [
+          "Not implemented: HTMLCanvasElement's getContext() method: without installing the canvas npm package"
+        ]
+      },
+      {
+        "fixture": "login.html",
+        "sha256": "845ecde3c536b40aff380218f987e8dd916a59a6bfa2d8a19a0707315db0d1f5",
+        "title": "Вход · Clinical Compass",
+        "violations": 0,
+        "incomplete_rule_ids": [
+          "landmark-one-main",
+          "page-has-heading-one"
+        ],
+        "passed_rule_ids": [
+          "aria-hidden-body",
+          "aria-hidden-focus",
+          "autocomplete-valid",
+          "button-name",
+          "bypass",
+          "document-title",
+          "duplicate-id-aria",
+          "empty-heading",
+          "form-field-multiple-labels",
+          "heading-order",
+          "html-has-lang",
+          "html-lang-valid",
+          "label-title-only",
+          "label",
+          "landmark-main-is-top-level",
+          "landmark-no-duplicate-main",
+          "landmark-unique",
+          "link-name",
+          "meta-viewport-large",
+          "meta-viewport",
+          "nested-interactive",
+          "region",
+          "select-name",
+          "tabindex",
+          "target-size"
+        ],
+        "dom_warnings": []
+      }
+    ],
+    "actual_browser": {
+      "tool": "CUA/IAB",
+      "viewport": {
+        "width": 1280,
+        "height": 720
+      },
+      "administrator_summary": [
+        1,
+        0,
+        27
+      ],
+      "physician_summary": [
+        1,
+        27,
+        9
+      ],
+      "patient_summary": {
+        "known_visits": 1,
+        "next_date": "not specified",
+        "surveys_sent": 5
+      },
+      "definition_paragraphs_outside_dd": 0,
+      "caption_fonts": {
+        "administrator": "13px",
+        "patient": "12px"
+      },
+      "login": {
+        "main_count": 1,
+        "form_inside_main": true,
+        "solid_background_text_pairs": 15,
+        "contrast_failures": 0
+      }
+    },
+    "manual_scope": "Main landmarks, visible h1 and Help label/name were observed through CUA/DOM separately; this does not turn axe incomplete results into a pass. Canvas/font APIs are unavailable in the virtual DOM.",
+    "verdict": "Partial semantic evidence only; full actual-browser axe, screen-reader, reduced-motion and visual-regression acceptance remain open.",
+    "source_hashes": {
+      "frontend/src/App.tsx": "f65c0019100a4bf22f4900055c6eb1434424ca8865d3a050a8ab18ddb5a42987",
+      "frontend/src/AdminDashboard.tsx": "f9d4d9e511681a747fb47a81a37a88b4eecc3a9c38db26b29dabe05ece36fa37",
+      "frontend/src/WorkspaceHome.tsx": "6afc7f6f8bf5c11962a6959b9db61a7b4897c334c707cc7be0a20422dbf34d14",
+      "frontend/src/PatientOverview.tsx": "ff7155e31a12ae662d5c44677784bc55689a0e425abd80ae77310bc1af5234cf",
+      "frontend/src/workspace.css": "fe93fd179811f33cd3e4155976e66fdb97beac5acf7f0f2e2ea3cd8b725fe6e0",
+      "frontend/src/brand-theme.css": "0cb9c86f03a67a487e0f140d75125a82d5aee3e0a558fe6f604ac363538746fd",
+      "frontend/src/patient-home.css": "67fae39f0dcbb672a008a001530bd81239456f84e4e69ad585d015de774b8788"
+    }
+  }
+}

@@ -1,0 +1,857 @@
+{
+  "status": "recorded; see report.json for accepted and excluded evidence",
+  "geometry": [
+    {
+      "balance": "105",
+      "balanceControl": {
+        "bottom": 513.96875,
+        "height": 87,
+        "width": 225.171875,
+        "x": 33,
+        "y": 426.96875
+      },
+      "bottomNav": 777,
+      "calm": false,
+      "labelInName": true,
+      "map": {
+        "bottom": 731.75,
+        "height": 116.796875,
+        "width": 292,
+        "x": 34,
+        "y": 614.953125
+      },
+      "mapTargets": {
+        "count": 5,
+        "height": 88.1875,
+        "width": 268
+      },
+      "mode": "map",
+      "modeControl": {
+        "bottom": 359.78125,
+        "height": 76.5,
+        "width": 277,
+        "x": 33,
+        "y": 283.28125
+      },
+      "next": "Вы здесь · МаякДо «Новый горизонт» ещё 145 баллов",
+      "overflow": false,
+      "progressBars": 1,
+      "rhythmTargets": null,
+      "scrollY": 0,
+      "total": "105 баллов за всё время",
+      "viewport": {
+        "height": 844,
+        "width": 375
+      },
+      "wallet": {
+        "bottom": 1991.21875,
+        "height": 255.578125,
+        "width": 294,
+        "x": 33,
+        "y": 1735.640625
+      }
+    },
+    {
+      "balance": "105",
+      "balanceControl": {
+        "bottom": 367.6875,
+        "height": 105,
+        "width": 153.046875,
+        "x": 556.953125,
+        "y": 262.6875
+      },
+      "bottomNav": 957,
+      "calm": false,
+      "labelInName": true,
+      "map": {
+        "bottom": 728.171875,
+        "height": 266,
+        "width": 665,
+        "x": 44,
+        "y": 462.171875
+      },
+      "mapTargets": {
+        "count": 5,
+        "height": 96,
+        "width": 199
+      },
+      "mode": "map",
+      "modeControl": {
+        "bottom": 339.1875,
+        "height": 76.5,
+        "width": 277,
+        "x": 43,
+        "y": 262.6875
+      },
+      "next": "Вы здесь · МаякДо «Новый горизонт» ещё 145 баллов",
+      "overflow": false,
+      "progressBars": 1,
+      "rhythmTargets": null,
+      "scrollY": 0,
+      "total": "105 баллов за всё время",
+      "viewport": {
+        "height": 1024,
+        "width": 768
+      },
+      "wallet": {
+        "bottom": 1526.234375,
+        "height": 212.6875,
+        "width": 667,
+        "x": 43,
+        "y": 1313.546875
+      }
+    },
+    {
+      "balance": "105",
+      "balanceControl": {
+        "bottom": 373.1875,
+        "height": 105,
+        "width": 153.046875,
+        "x": 1212.953125,
+        "y": 268.1875
+      },
+      "bottomNav": null,
+      "calm": false,
+      "labelInName": true,
+      "map": {
+        "bottom": 778.015625,
+        "height": 302.796875,
+        "width": 757,
+        "x": 324,
+        "y": 475.21875
+      },
+      "mapTargets": {
+        "count": 5,
+        "height": 96,
+        "width": 233.65625
+      },
+      "mode": "map",
+      "modeControl": {
+        "bottom": 342.6875,
+        "height": 74.5,
+        "width": 346.3125,
+        "x": 323,
+        "y": 268.1875
+      },
+      "next": "Вы здесь · МаякДо «Новый горизонт» ещё 145 баллов",
+      "overflow": false,
+      "progressBars": 1,
+      "rhythmTargets": null,
+      "scrollY": 0,
+      "total": "105 баллов за всё время",
+      "viewport": {
+        "height": 1000,
+        "width": 1440
+      },
+      "wallet": {
+        "bottom": 679,
+        "height": 255.578125,
+        "width": 260,
+        "x": 1106,
+        "y": 423.421875
+      }
+    },
+    {
+      "balance": "105",
+      "balanceControl": {
+        "bottom": 366.1875,
+        "height": 98,
+        "width": 149.046875,
+        "x": 1216.953125,
+        "y": 268.1875
+      },
+      "bottomNav": null,
+      "calm": false,
+      "labelInName": true,
+      "map": null,
+      "mapTargets": null,
+      "mode": "rhythm",
+      "modeControl": {
+        "bottom": 342.6875,
+        "height": 74.5,
+        "width": 251,
+        "x": 323,
+        "y": 268.1875
+      },
+      "overflow": false,
+      "progressBars": 1,
+      "rhythmTargets": {
+        "count": 7,
+        "height": 107.390625,
+        "width": 141
+      },
+      "scrollY": 0,
+      "viewport": {
+        "height": 1000,
+        "width": 1440
+      },
+      "wallet": {
+        "bottom": 973.921875,
+        "height": 212.6875,
+        "width": 1043,
+        "x": 323,
+        "y": 761.234375
+      }
+    },
+    {
+      "balance": "105",
+      "balanceControl": {
+        "bottom": -484.3125,
+        "height": 98,
+        "width": 149.046875,
+        "x": 560.953125,
+        "y": -582.3125
+      },
+      "bottomNav": 957,
+      "calm": false,
+      "labelInName": true,
+      "map": null,
+      "mapTargets": null,
+      "mode": "rhythm",
+      "modeControl": {
+        "bottom": -505.8125,
+        "height": 76.5,
+        "width": 360,
+        "x": 43,
+        "y": -582.3125
+      },
+      "overflow": false,
+      "progressBars": 1,
+      "rhythmTargets": {
+        "count": 7,
+        "height": 107.390625,
+        "width": 87.28125
+      },
+      "scrollY": 845,
+      "viewport": {
+        "height": 1024,
+        "width": 768
+      },
+      "wallet": {
+        "bottom": 145.8125,
+        "height": 212.6875,
+        "width": 667,
+        "x": 43,
+        "y": -66.875
+      }
+    },
+    {
+      "balance": "105",
+      "balanceControl": {
+        "bottom": -504.828125,
+        "height": 80,
+        "width": 221.171875,
+        "x": 33,
+        "y": -584.828125
+      },
+      "bottomNav": 777,
+      "calm": false,
+      "labelInName": true,
+      "map": null,
+      "mapTargets": null,
+      "mode": "rhythm",
+      "modeControl": {
+        "bottom": -650.21875,
+        "height": 76.5,
+        "width": 294,
+        "x": 33,
+        "y": -726.71875
+      },
+      "overflow": false,
+      "progressBars": 1,
+      "rhythmTargets": {
+        "count": 7,
+        "height": 107.390625,
+        "width": 65.5
+      },
+      "scrollY": 1010,
+      "viewport": {
+        "height": 844,
+        "width": 375
+      },
+      "wallet": {
+        "bottom": 309.875,
+        "height": 255.578125,
+        "width": 294,
+        "x": 33,
+        "y": 54.296875
+      }
+    },
+    {
+      "balance": "105",
+      "balanceControl": {
+        "bottom": 71.1875,
+        "height": 98,
+        "width": 149.046875,
+        "x": 1216.953125,
+        "y": -26.8125
+      },
+      "bottomNav": null,
+      "calm": false,
+      "labelInName": true,
+      "map": null,
+      "mapTargets": null,
+      "mode": "rhythm",
+      "modeControl": {
+        "bottom": 47.6875,
+        "height": 74.5,
+        "width": 360,
+        "x": 323,
+        "y": -26.8125
+      },
+      "overflow": false,
+      "progressBars": 1,
+      "rhythmTargets": {
+        "count": 7,
+        "height": 107.390625,
+        "width": 141
+      },
+      "scrollY": 295,
+      "viewport": {
+        "height": 1000,
+        "width": 1440
+      },
+      "wallet": {
+        "bottom": 678.921875,
+        "height": 212.6875,
+        "width": 1043,
+        "x": 323,
+        "y": 466.234375
+      }
+    },
+    {
+      "balance": "105",
+      "balanceControl": {
+        "bottom": 366.1875,
+        "height": 98,
+        "width": 149.046875,
+        "x": 1216.953125,
+        "y": 268.1875
+      },
+      "bottomNav": null,
+      "calm": false,
+      "labelInName": true,
+      "map": null,
+      "mapTargets": null,
+      "mode": "rhythm",
+      "modeControl": {
+        "bottom": 342.6875,
+        "height": 74.5,
+        "width": 360,
+        "x": 323,
+        "y": 268.1875
+      },
+      "overflow": false,
+      "progressBars": 1,
+      "rhythmTargets": {
+        "count": 7,
+        "height": 107.390625,
+        "width": 141
+      },
+      "scrollY": 0,
+      "viewport": {
+        "height": 1000,
+        "width": 1440
+      },
+      "wallet": {
+        "bottom": 973.921875,
+        "height": 212.6875,
+        "width": 1043,
+        "x": 323,
+        "y": 761.234375
+      }
+    },
+    {
+      "balance": "105",
+      "balanceControl": {
+        "bottom": 360.6875,
+        "height": 98,
+        "width": 149.046875,
+        "x": 560.953125,
+        "y": 262.6875
+      },
+      "bottomNav": 957,
+      "calm": false,
+      "labelInName": true,
+      "map": null,
+      "mapTargets": null,
+      "mode": "rhythm",
+      "modeControl": {
+        "bottom": 339.1875,
+        "height": 76.5,
+        "width": 360,
+        "x": 43,
+        "y": 262.6875
+      },
+      "overflow": false,
+      "progressBars": 1,
+      "rhythmTargets": {
+        "count": 7,
+        "height": 107.390625,
+        "width": 87.28125
+      },
+      "scrollY": 0,
+      "viewport": {
+        "height": 1024,
+        "width": 768
+      },
+      "wallet": {
+        "bottom": 990.8125,
+        "height": 212.6875,
+        "width": 667,
+        "x": 43,
+        "y": 778.125
+      }
+    },
+    {
+      "balance": "105",
+      "balanceControl": {
+        "bottom": 505.171875,
+        "height": 80,
+        "width": 221.171875,
+        "x": 33,
+        "y": 425.171875
+      },
+      "bottomNav": 777,
+      "calm": false,
+      "labelInName": true,
+      "map": null,
+      "mapTargets": null,
+      "mode": "rhythm",
+      "modeControl": {
+        "bottom": 359.78125,
+        "height": 76.5,
+        "width": 294,
+        "x": 33,
+        "y": 283.28125
+      },
+      "overflow": false,
+      "progressBars": 1,
+      "rhythmTargets": {
+        "count": 7,
+        "height": 107.390625,
+        "width": 65.5
+      },
+      "scrollY": 0,
+      "viewport": {
+        "height": 844,
+        "width": 375
+      },
+      "wallet": {
+        "bottom": 1319.875,
+        "height": 255.578125,
+        "width": 294,
+        "x": 33,
+        "y": 1064.296875
+      }
+    },
+    {
+      "balance": "105",
+      "balanceControl": {
+        "bottom": 366.1875,
+        "height": 98,
+        "width": 149.046875,
+        "x": 1216.953125,
+        "y": 268.1875
+      },
+      "bottomNav": null,
+      "calm": true,
+      "labelInName": true,
+      "map": null,
+      "mapTargets": null,
+      "mode": "calm",
+      "modeControl": {
+        "bottom": 342.6875,
+        "height": 74.5,
+        "width": 360,
+        "x": 323,
+        "y": 268.1875
+      },
+      "overflow": false,
+      "progressBars": 0,
+      "rhythmTargets": null,
+      "scrollY": 0,
+      "viewport": {
+        "height": 1000,
+        "width": 1440
+      },
+      "wallet": {
+        "bottom": 827.71875,
+        "height": 196.6875,
+        "width": 1043,
+        "x": 323,
+        "y": 631.03125
+      }
+    },
+    {
+      "balance": "105",
+      "balanceControl": {
+        "bottom": 360.6875,
+        "height": 98,
+        "width": 149.046875,
+        "x": 560.953125,
+        "y": 262.6875
+      },
+      "bottomNav": 957,
+      "calm": true,
+      "labelInName": true,
+      "map": null,
+      "mapTargets": null,
+      "mode": "calm",
+      "modeControl": {
+        "bottom": 339.1875,
+        "height": 76.5,
+        "width": 360,
+        "x": 43,
+        "y": 262.6875
+      },
+      "overflow": false,
+      "progressBars": 0,
+      "rhythmTargets": null,
+      "scrollY": 0,
+      "viewport": {
+        "height": 1024,
+        "width": 768
+      },
+      "wallet": {
+        "bottom": 824.21875,
+        "height": 196.6875,
+        "width": 667,
+        "x": 43,
+        "y": 627.53125
+      }
+    },
+    {
+      "balance": "105",
+      "balanceControl": {
+        "bottom": 505.171875,
+        "height": 80,
+        "width": 221.171875,
+        "x": 33,
+        "y": 425.171875
+      },
+      "bottomNav": 777,
+      "calm": true,
+      "labelInName": true,
+      "map": null,
+      "mapTargets": null,
+      "mode": "calm",
+      "modeControl": {
+        "bottom": 359.78125,
+        "height": 76.5,
+        "width": 294,
+        "x": 33,
+        "y": 283.28125
+      },
+      "overflow": false,
+      "progressBars": 0,
+      "rhythmTargets": null,
+      "scrollY": 0,
+      "viewport": {
+        "height": 844,
+        "width": 375
+      },
+      "wallet": {
+        "bottom": 1051.46875,
+        "height": 239.578125,
+        "width": 294,
+        "x": 33,
+        "y": 811.890625
+      }
+    },
+    {
+      "balance": "105",
+      "balanceControl": {
+        "bottom": 513.96875,
+        "height": 87,
+        "width": 225.171875,
+        "x": 33,
+        "y": 426.96875
+      },
+      "bottomNav": 777,
+      "calm": false,
+      "labelInName": true,
+      "map": {
+        "bottom": 731.75,
+        "height": 116.796875,
+        "width": 292,
+        "x": 34,
+        "y": 614.953125
+      },
+      "mapTargets": {
+        "count": 5,
+        "height": 88.1875,
+        "width": 268
+      },
+      "mode": "map",
+      "modeControl": {
+        "bottom": 359.78125,
+        "height": 76.5,
+        "width": 294,
+        "x": 33,
+        "y": 283.28125
+      },
+      "next": "Вы здесь · МаякДо «Новый горизонт» ещё 145 баллов",
+      "overflow": false,
+      "progressBars": 1,
+      "rhythmTargets": null,
+      "scrollY": 0,
+      "total": "105 баллов за всё время",
+      "viewport": {
+        "height": 844,
+        "width": 375
+      },
+      "wallet": {
+        "bottom": 1991.21875,
+        "height": 255.578125,
+        "width": 294,
+        "x": 33,
+        "y": 1735.640625
+      }
+    },
+    {
+      "balance": "105",
+      "balanceControl": {
+        "bottom": 367.6875,
+        "height": 105,
+        "width": 153.046875,
+        "x": 556.953125,
+        "y": 262.6875
+      },
+      "bottomNav": 957,
+      "calm": false,
+      "labelInName": true,
+      "map": {
+        "bottom": 728.171875,
+        "height": 266,
+        "width": 665,
+        "x": 44,
+        "y": 462.171875
+      },
+      "mapTargets": {
+        "count": 5,
+        "height": 96,
+        "width": 199
+      },
+      "mode": "map",
+      "modeControl": {
+        "bottom": 339.1875,
+        "height": 76.5,
+        "width": 360,
+        "x": 43,
+        "y": 262.6875
+      },
+      "next": "Вы здесь · МаякДо «Новый горизонт» ещё 145 баллов",
+      "overflow": false,
+      "progressBars": 1,
+      "rhythmTargets": null,
+      "scrollY": 0,
+      "total": "105 баллов за всё время",
+      "viewport": {
+        "height": 1024,
+        "width": 768
+      },
+      "wallet": {
+        "bottom": 1526.234375,
+        "height": 212.6875,
+        "width": 667,
+        "x": 43,
+        "y": 1313.546875
+      }
+    },
+    {
+      "balance": "105",
+      "balanceControl": {
+        "bottom": 373.1875,
+        "height": 105,
+        "width": 153.046875,
+        "x": 1212.953125,
+        "y": 268.1875
+      },
+      "bottomNav": null,
+      "calm": false,
+      "labelInName": true,
+      "map": {
+        "bottom": 778.015625,
+        "height": 302.796875,
+        "width": 757,
+        "x": 324,
+        "y": 475.21875
+      },
+      "mapTargets": {
+        "count": 5,
+        "height": 96,
+        "width": 233.65625
+      },
+      "mode": "map",
+      "modeControl": {
+        "bottom": 342.6875,
+        "height": 74.5,
+        "width": 360,
+        "x": 323,
+        "y": 268.1875
+      },
+      "next": "Вы здесь · МаякДо «Новый горизонт» ещё 145 баллов",
+      "overflow": false,
+      "progressBars": 1,
+      "rhythmTargets": null,
+      "scrollY": 0,
+      "total": "105 баллов за всё время",
+      "viewport": {
+        "height": 1000,
+        "width": 1440
+      },
+      "wallet": {
+        "bottom": 679,
+        "height": 255.578125,
+        "width": 260,
+        "x": 1106,
+        "y": 423.421875
+      }
+    }
+  ],
+  "interactions": [
+    {
+      "scenario": "keyboard-mode-before-focus-fix",
+      "observed": {
+        "focus": "BODY",
+        "mode": "rhythm",
+        "selected": "rhythm"
+      },
+      "result": "reproduced lost focus after native ArrowDown"
+    },
+    {
+      "scenario": "keyboard-mode-after-focus-fix",
+      "observed": {
+        "focus": "SELECT",
+        "mode": "map",
+        "modeFocused": true
+      }
+    },
+    {
+      "scenario": "mode-save-with-intentional-focus-change",
+      "controlledWriteDelaySeconds": 4,
+      "before": {
+        "name": "Каталог тестовых скидок",
+        "pending": true,
+        "role": "region"
+      },
+      "after": {
+        "mode": "rhythm",
+        "modeFocused": false,
+        "name": "Каталог тестовых скидок",
+        "role": "region"
+      },
+      "note": "The3s locator observation timed out while the intentional4s write delay was active; final UI inspected separately after completion"
+    },
+    {
+      "scenario": "rhythm-day-selection",
+      "observed": {
+        "bottomNav": 777,
+        "detail": "19 октября\n1 учтённое действие · 3 балла участия",
+        "detailTop": 594.734375,
+        "scrollY": 290
+      }
+    },
+    {
+      "scenario": "navigation-during-mode-write",
+      "controlledWriteDelaySeconds": 4,
+      "before": {
+        "dialogOpen": true,
+        "dialogTitle": "Дождитесь результата",
+        "mode": "rhythm",
+        "page": "Мой прогресс"
+      },
+      "after": {
+        "dialogOpen": false,
+        "focus": "SELECT",
+        "mode": "calm",
+        "modeFocused": true,
+        "page": "Мой прогресс"
+      }
+    },
+    {
+      "scenario": "phone-balance-to-catalog",
+      "observed": {
+        "balance": "105",
+        "focusName": "Каталог тестовых скидок",
+        "focusRole": "region",
+        "top": 79.859375
+      }
+    },
+    {
+      "scenario": "future-place-preserves-current-and-balance",
+      "observed": {
+        "balance": "105",
+        "current": "Маяк",
+        "selected": "Новый горизонт",
+        "total": "105 баллов за всё время"
+      }
+    },
+    {
+      "scenario": "catalog-return-to-start",
+      "observed": {
+        "balance": "105",
+        "focus": "compass-main",
+        "page": "Мой прогресс",
+        "selected": "Новый горизонт",
+        "titleTop": 126
+      }
+    },
+    {
+      "scenario": "home-focus-check-interrupted-by-auth-expiry",
+      "observed": "App returned to login and cleared the patient workspace; home-mode check had not run"
+    },
+    {
+      "scenario": "home-mode-keyboard-focus",
+      "rhythm": {
+        "focus": "SELECT",
+        "mode": "rhythm",
+        "modeFocused": true
+      },
+      "map": {
+        "focus": "SELECT",
+        "mode": "map",
+        "modeFocused": true
+      }
+    },
+    {
+      "case": "home-mode-failed-save",
+      "checkedAt": "2026-10-25T00:47:06.660Z",
+      "observed": {
+        "alerts": [
+          "Техническая проверка: сохранение временно недоступно."
+        ],
+        "focused": true,
+        "mode": "map",
+        "selected": "map"
+      },
+      "note": "Controlled QA 503; no successful preference write; normal server mode restored before inspection."
+    },
+    {
+      "case": "phone-balance-catalog-return",
+      "checkedAt": "2026-10-25T00:47:30.670Z",
+      "catalog": {
+        "back": {
+          "bottom": 207.046875,
+          "height": 44,
+          "top": 163.046875,
+          "width": 101.109375
+        },
+        "balance": "105",
+        "catalogTop": 79.859375,
+        "focused": "Каталог тестовых скидок",
+        "overflow": false,
+        "scrollY": 3106
+      },
+      "returned": {
+        "balance": "105",
+        "focused": "compass-main",
+        "h1": 116,
+        "mode": "map",
+        "overflow": false,
+        "scrollY": 0
+      }
+    }
+  ]
+}

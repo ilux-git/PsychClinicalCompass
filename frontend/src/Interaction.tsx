@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useId, useRef, useState, type ReactNode } from "react";
+import { useEffect, useId, useRef, useState, type KeyboardEvent, type ReactNode } from "react";
 import { AnimatePresence, domAnimation, LazyMotion, m, MotionConfig, useIsPresent, useReducedMotion } from "motion/react";
 import { ChevronDown, ChevronUp } from "lucide-react";
 
@@ -15,12 +15,36 @@ export function shouldAnimate(prefersReduced: boolean | null) {
   return !prefersReduced;
 }
 
+/** Keep keyboard navigation inside a native modal, including while controls change. */
+export function keepDialogFocus(event: KeyboardEvent<HTMLDialogElement>) {
+  if (event.key !== "Tab" || !event.currentTarget.open) return;
+  const dialog = event.currentTarget;
+  const controls = [...dialog.querySelectorAll<HTMLElement>('button:not(:disabled),a[href],input:not(:disabled),select:not(:disabled),textarea:not(:disabled),[tabindex]:not([tabindex="-1"])')]
+    .filter(control => control.tabIndex >= 0 && !control.closest('[inert],[hidden],[aria-hidden="true"]') && control.getClientRects().length > 0);
+  const first = controls[0], last = controls.at(-1);
+  if (!first || document.activeElement === dialog || (event.shiftKey ? document.activeElement === first : document.activeElement === last)) {
+    event.preventDefault();
+    (event.shiftKey ? last : first)?.focus();
+  }
+}
+
 export function useInteractionMotion() {
   const reduced = useReducedMotion();
   return {
     moving: shouldAnimate(reduced),
     transition: { duration: reduced ? motionTokens.duration.instant : motionTokens.duration.normal, ease: motionTokens.easing.smooth },
   };
+}
+
+/** A disabled native select loses focus; preserve a later deliberate focus change. */
+export function usePendingSelectFocus(pending:boolean) {
+  const ref=useRef<HTMLSelectElement>(null),restore=useRef(false);
+  useEffect(()=>{
+    if(pending||!restore.current)return;
+    restore.current=false;
+    if(document.activeElement===document.body||document.activeElement===ref.current)ref.current?.focus({preventScroll:true});
+  },[pending]);
+  return {ref,remember:()=>{restore.current=document.activeElement===ref.current;}};
 }
 
 export function InteractionProvider({ children }: { children: ReactNode }) {
@@ -39,17 +63,25 @@ export function ContentFrame({ children, className = "" }: { children: ReactNode
 }
 
 /** Keep the child mounted when collapsed so reopening does not discard a form. */
-export function Disclosure({ title, children, lazy=false, reveal=false }: { title: string; children: ReactNode; lazy?:boolean;reveal?:boolean }) {
-  const [open, setOpen] = useState(reveal);
-  const [started,setStarted]=useState(!lazy||reveal);
+export function Disclosure({ title, children, lazy=false, reveal=false, revealRequest=0, focusTarget }: { title: string; children: ReactNode; lazy?:boolean;reveal?:boolean;revealRequest?:number;focusTarget?:string }) {
+  const [open, setOpen] = useState(reveal||revealRequest>0);
+  const [started,setStarted]=useState(!lazy||reveal||revealRequest>0);
   const content=useRef<HTMLDivElement>(null);
   const id = useId();
   const { moving, transition } = useInteractionMotion();
   useEffect(()=>{
-    if(!reveal)return;
+    if(!reveal&&!revealRequest)return;
     setStarted(true);setOpen(true);
-  },[reveal]);
-  useEffect(()=>{if(reveal&&open)content.current?.querySelector<HTMLElement>('textarea,input,select')?.focus();},[reveal,open]);
+  },[reveal,revealRequest]);
+  useEffect(()=>{
+    if((!reveal&&!revealRequest)||!open)return;
+    const visible=(element:HTMLElement)=>!element.closest("[inert]")&&!element.matches(":disabled");
+    const preferred=focusTarget?content.current?.querySelector<HTMLElement>(focusTarget):null;
+    const control=preferred&&visible(preferred)?preferred:[...content.current?.querySelectorAll<HTMLElement>("textarea,input,select")??[]].find(visible);
+    const fallback=[...content.current?.querySelectorAll<HTMLElement>('[tabindex="-1"]')??[]].find(visible);
+    const button=[...content.current?.querySelectorAll<HTMLElement>("button")??[]].find(visible);
+    (control??fallback??button)?.focus();
+  },[reveal,revealRequest,open,focusTarget]);
   return <div className="disclosure">
     <button type="button" className="disclosure-trigger" aria-expanded={open} aria-controls={id} onClick={() => {setStarted(true);setOpen(value => !value);}}>
       <span>{title}</span><m.span aria-hidden="true" animate={{ rotate: moving && open ? 180 : 0 }} transition={transition}>{open&&!moving?<ChevronUp size={17}/>:<ChevronDown size={17}/>}</m.span>
