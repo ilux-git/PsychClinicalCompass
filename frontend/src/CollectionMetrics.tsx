@@ -14,8 +14,8 @@ export function CollectionMetrics({data}: {data: CollectionData}) {
       <HorizontalBars title="Прохождение назначенных опросов" rows={[{label:"Назначено",value:journey.assigned},{label:"Открытие зафиксировано",value:journey.opened},{label:"Завершено после открытия",value:journey.completed_after_open}]} unit="опросов" caption="Старые завершения без зафиксированного открытия показаны отдельно ниже. Назначение не доказывает доставку."/>
       <div className="collection-grid">
         <article className="collection-card"><h3>Назначены</h3><strong>{journey.assigned}</strong><p>Опрос доступен в кабинете</p></article>
-        <article className="collection-card"><h3>Открытие зафиксировано</h3><strong>{journey.opened}</strong><p>{journey.opening_rate_percent === null ? "Нет назначений" : `${journey.opening_rate_percent}% от назначений`}</p></article>
-        <article className="collection-card"><h3>Завершены после открытия</h3><strong>{journey.completed_after_open}</strong><p>{journey.completion_after_open_percent === null ? "Нет измеренных открытий" : `${journey.completion_after_open_percent}% от открытий`}</p></article>
+        <article className="collection-card"><h3>Открытие зафиксировано</h3><strong>{journey.opened}</strong><p>{journey.opening_rate_percent === null ? "Нет назначений" : `${journey.opening_rate_percent.toLocaleString("ru-RU")}% от назначений`}</p></article>
+        <article className="collection-card"><h3>Завершены после открытия</h3><strong>{journey.completed_after_open}</strong><p>{journey.completion_after_open_percent === null ? "Нет измеренных открытий" : `${journey.completion_after_open_percent.toLocaleString("ru-RU")}% от открытий`}</p></article>
         <article className="collection-card"><h3>Открыты, пока без ответа</h3><strong>{journey.opened_not_completed}</strong><p>Причина не установлена</p></article>
       </div>
       <dl className="inbox-times">

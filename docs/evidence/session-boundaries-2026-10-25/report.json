@@ -1,0 +1,374 @@
+{
+  "recordedAt": "2026-10-25T02:42:14.722240+00:00",
+  "status": "targeted-client-boundaries-verified; overall acceptance remains partial",
+  "changes": [
+    "401 still rejects its request; only a response for the current captured bearer requests global sign-out.",
+    "Workspace notifications accept only their captured user ID and role, preventing another user seeing old results."
+  ],
+  "impact": {
+    "base": "Last verified local34 snapshot and work/session-boundary-baseline hashes; not HEAD-only attribution.",
+    "runtimeFiles": [
+      "frontend/src/api.ts",
+      "frontend/src/App.tsx"
+    ],
+    "dependencyEvidence": "rg -l [quote]./api[quote] frontend/src -g *.ts -g *.tsx; includes type-only imports",
+    "directConsumers": [
+      "frontend/src/AdminDashboard.tsx",
+      "frontend/src/AssessmentHistory.tsx",
+      "frontend/src/App.tsx",
+      "frontend/src/CareWorkflow.tsx",
+      "frontend/src/Chat.tsx",
+      "frontend/src/Patient.tsx",
+      "frontend/src/DoctorInbox.tsx",
+      "frontend/src/ParticipationPoints.tsx",
+      "frontend/src/MotivationAdvice.tsx",
+      "frontend/src/EventAction.tsx",
+      "frontend/src/DoctorPatients.tsx",
+      "frontend/src/CollectionMetrics.tsx",
+      "frontend/src/PatientJourney.tsx",
+      "frontend/src/DoctorDashboard.tsx",
+      "frontend/src/MedicationEditor.tsx",
+      "frontend/src/PatientDiary.tsx",
+      "frontend/src/MedicationSchedule.tsx",
+      "frontend/src/PatientOverview.tsx",
+      "frontend/src/patientProgress.ts",
+      "frontend/src/PatientSurvey.tsx",
+      "frontend/src/PrivacySettings.tsx",
+      "frontend/src/RoleGuide.tsx",
+      "frontend/src/supportTemplate.ts",
+      "frontend/src/SurveyBuilder.tsx",
+      "frontend/src/SurveyFields.tsx",
+      "frontend/src/TaskBoard.tsx",
+      "frontend/src/WorkspaceHome.tsx",
+      "frontend/src/WorkflowMetrics.tsx"
+    ],
+    "expiryEventConsumer": "Workspace logout listener; no other Authorization producers found in frontend/src.",
+    "data": "No schema, clinical data format, migration, persistent cache, endpoint, bearer format, role permission or backend change.",
+    "compatibility": "Frontend-only asset update; same requests and error statuses accepted by the existing backend.",
+    "recovery": "Revert the two client guards to the verified local snapshot and rebuild frontend; no data rollback or irreversible effect. No rollback executed."
+  },
+  "verification": {
+    "targetedBefore": {
+      "passed": 2,
+      "failed": 2,
+      "source": {
+        "file": "outputs/session-boundaries-red-20261025.log",
+        "bytes": 2218,
+        "sha256": "8ae9492dc179207f1b7e4570f8c3518957fb6b56d1317aa94b0fdf20b5b42838"
+      }
+    },
+    "targetedAfter": {
+      "passed": 4,
+      "failed": 0,
+      "exitCode": 0,
+      "source": {
+        "file": "outputs/session-boundaries-green-20261025.log",
+        "bytes": 703,
+        "sha256": "ef2a6b853141be294a2685242ea139c0050d250e71ac6f3e335af1cac82855ef"
+      }
+    },
+    "testIds": [
+      "AUTH-STALE-401",
+      "AUTH-CURRENT-401",
+      "AUTH-FORBIDDEN-403",
+      "ACTOR-NOTICE"
+    ],
+    "suite": {
+      "passed": 38,
+      "failed": 0,
+      "durationMs": 25771.972,
+      "exitCode": 0,
+      "source": {
+        "file": "outputs/session-boundaries-frontend-20261025.log",
+        "bytes": 4949,
+        "sha256": "3806bccf9a1d4890815af911fd4ec72f0f56de9e6e64169e1971c11beaca0d6f"
+      }
+    },
+    "buildAndTypes": {
+      "status": "pass",
+      "exitCode": 0
+    },
+    "native": {
+      "status": "native sign-in smoke and current notice observed",
+      "checks": [
+        {
+          "scenario": "current-patient-success-notice",
+          "observed": {
+            "focused": true,
+            "messages": [
+              "Вид прогресса сохранён"
+            ],
+            "mode": "rhythm"
+          },
+          "restored": {
+            "balance": "105",
+            "focused": true,
+            "mode": "map"
+          }
+        },
+        {
+          "scenario": "admin-sign-in-smoke",
+          "observed": {
+            "overflow": false,
+            "patientCardLinks": 0,
+            "role": "Администратор",
+            "title": "Обзор клиники"
+          }
+        },
+        {
+          "scenario": "coordinator-sign-in-smoke",
+          "observed": {
+            "availabilityControls": 0,
+            "overflow": false,
+            "role": "Координатор",
+            "title": "Мои задачи"
+          }
+        },
+        {
+          "scenario": "doctor-sign-in-smoke",
+          "observed": {
+            "availability": "available",
+            "overflow": false,
+            "role": "Врач",
+            "title": "Что сейчас требует внимания?"
+          }
+        }
+      ]
+    },
+    "http": {
+      "base_url": "http://127.0.0.1:8780",
+      "scope": "HTTP bytes and MIME only; not browser layout/interactions",
+      "assets": [
+        {
+          "file": "AdminDashboard-uxWcfro-.js",
+          "status": 200,
+          "bytes": 18451,
+          "sha256": "dc070ed4ca08c271a0b72001cb8c0730b7cf5b82688e07148756a45b8b287ecb",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "CareWorkflow-DUSpHBKk.js",
+          "status": 200,
+          "bytes": 26980,
+          "sha256": "d8d071770a7c2e3a1d4badbb82191c69ee724cdb1cd41db1ba6005e5de5ca177",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "Charts-C5KOfyr4.js",
+          "status": 200,
+          "bytes": 5476,
+          "sha256": "09e4da1c3d5eeb5c8cef9bdb8bdd8f5df8d113ab800003c43ed859dab00b516f",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "DoctorDashboard-CY6yXJTz.js",
+          "status": 200,
+          "bytes": 18046,
+          "sha256": "bafdcbd4243db04ef5a1ce7029377080971c38cdc4677b2824eb2b7b6179a22c",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "DoctorPatients-DCEJ4DJS.js",
+          "status": 200,
+          "bytes": 36363,
+          "sha256": "9bedba83dbdc3d2b1fa4cbbc0899914ccd4ccf6a2399269bacbf36e1ab255b10",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "MedicationSchedule-BGXX_mka.css",
+          "status": 200,
+          "bytes": 2105,
+          "sha256": "c20413094ff3583bb21b006cdc48aba46037576c0d732dce5ed4bb1689d2d580",
+          "mime": "text/css; charset=utf-8"
+        },
+        {
+          "file": "MedicationSchedule-P449eGLB.js",
+          "status": 200,
+          "bytes": 33991,
+          "sha256": "d767b06a8c9af7fb6a4ffd595742fda746543d1d2ea24daf9440287857431658",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "Patient-B9xuvwdE.css",
+          "status": 200,
+          "bytes": 26258,
+          "sha256": "9160fbf594ce6238151f4e13f5a28e00c0e62184711079b09f25bbebeb327b0b",
+          "mime": "text/css; charset=utf-8"
+        },
+        {
+          "file": "Patient-ZhqtSCR4.js",
+          "status": 200,
+          "bytes": 66870,
+          "sha256": "854bb34129fcd542cc269be7d484d5d54788ac6f2cdaf82eeb43d5ff52ba312d",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "SurveyBuilder-BMh2VgRS.js",
+          "status": 200,
+          "bytes": 25412,
+          "sha256": "db6f4e4bd35580be235a92607dabf9849e035675a9ca9011bfc76ae487817c10",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "SurveyFields-CuLwXpan.js",
+          "status": 200,
+          "bytes": 3121,
+          "sha256": "b90c7543e6f050eaa06dd2a17d98f3df17c8a63db62f1b6ce21d2d9d890c7b46",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "TaskBoard-BRxbXnSv.js",
+          "status": 200,
+          "bytes": 7839,
+          "sha256": "baa38da6acf630c8507f7db0d9f429b87cb5275e08c09fa9d3b07068ddc2afe7",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "WorkflowMetrics-BwTvPI2G.js",
+          "status": 200,
+          "bytes": 12440,
+          "sha256": "4e3ad76b4576543ad31cec11f6fa3d4e005ebacb85a5c9c6f82c52eb2aab598f",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "chevron-right-Bjy3Fr9N.js",
+          "status": 200,
+          "bytes": 159,
+          "sha256": "e9b1ae23e6fd54c58b9fed0c3a84d0a6b7437f285334b8ad9ed76bcee4067926",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "collection-COswcvyL.js",
+          "status": 200,
+          "bytes": 939,
+          "sha256": "b8f61ba215c319fcc2aaf6ce0fb3b26b182c049b9a0d9e4febe85703fe8000e4",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "index-C7z8f5BC.css",
+          "status": 200,
+          "bytes": 112939,
+          "sha256": "5140d50040cca8a8e380725d1e33ba9253057a513473a5997bdc5f57ccb105ea",
+          "mime": "text/css; charset=utf-8"
+        },
+        {
+          "file": "index-D3DEpDud.js",
+          "status": 200,
+          "bytes": 386884,
+          "sha256": "a77c9e3a95512747d233e6d97dddbea7cebdefeb5d8011986382e0ef7cde8016",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "patientProgress-Do0fObh9.js",
+          "status": 200,
+          "bytes": 1130,
+          "sha256": "611dafc1b1ad2ac66b0b04ac3852b8c0bf56b6f106882f460ee96efa5097a0b3",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "plus-DU1Ev1vY.js",
+          "status": 200,
+          "bytes": 182,
+          "sha256": "c1c87d9815bf20477801741d64eae153c868c60750a2e8d4d6fdf777e521b406",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "send-CLPVOjXA.js",
+          "status": 200,
+          "bytes": 652,
+          "sha256": "5bbc004048abadccc736900f5ee532cf6e5ed2e29ad4e8abd01851148bb3c0e2",
+          "mime": "text/javascript; charset=utf-8"
+        }
+      ],
+      "health": {
+        "status": "ok",
+        "compass_db": true,
+        "mis_db": true,
+        "mode": "synthetic_demo"
+      },
+      "root_matches_dist": true,
+      "qa_health": {
+        "status": "ok",
+        "compass_db": true,
+        "mis_db": true,
+        "mode": "synthetic_demo"
+      }
+    },
+    "backendSuite": "Not rerun: neither backend nor wire requests/error contracts changed. Previous141+10 snapshot remains separately scoped.",
+    "console": {
+      "warnOrErrorCount": 0,
+      "scope": "Latest40 records queried after four-role sign-in smoke."
+    }
+  },
+  "sources": [
+    {
+      "file": "frontend/src/api.ts",
+      "bytes": 9477,
+      "sha256": "89576b274bc14b52c37ab96d88df12e5f0d30256133665f2d163cf75cc46d483"
+    },
+    {
+      "file": "frontend/src/App.tsx",
+      "bytes": 31331,
+      "sha256": "49a13a0fe294e5fef6782fb627673ba1a7f1a31b13876acf01860bb2599f559f"
+    },
+    {
+      "file": "frontend/tests/session-boundaries.test.mjs",
+      "bytes": 7065,
+      "sha256": "9e4a837a32798e468cd905824aca71ac2536cf4f15b386ab95d2b35a8e56142f"
+    }
+  ],
+  "beforeSources": [
+    {
+      "file": "work/session-boundary-baseline/api.ts",
+      "bytes": 9424,
+      "sha256": "78432d3b0746d42c435e36f3caa5266b9c83f6d8bc0ab35f61287dea73769501"
+    },
+    {
+      "file": "work/session-boundary-baseline/App.tsx",
+      "bytes": 31205,
+      "sha256": "694c1b3d3ae9b9b1086ac6fd71f395b3ccf3c452d20ccba99399e4910454c15e"
+    }
+  ],
+  "diff": "--- verified34/api.ts\n+++ current/api.ts\n@@ -41,7 +41,7 @@\n     } catch {\n       /* A transport error may not contain JSON. */\n     }\n-    if (response.status === 401)\n+    if (response.status === 401 && sessionStorage.getItem(\"compass-token\") === token)\n       window.dispatchEvent(new Event(\"compass-auth-expired\"));\n     throw new ApiError(response.status, message);\n   }\n--- verified34/App.tsx\n+++ current/App.tsx\n@@ -284,8 +284,11 @@\n     return()=>{cancelAnimationFrame(frame);document.removeEventListener('keydown',onKey);media.removeEventListener('change',onResize);document.body.style.overflow=overflow;if(previous?.isConnected)previous.focus({preventScroll:true});};\n   },[menuOpen]);\n   const notify: Notify = useCallback(\n-    (message, kind = \"success\") => setNotice({ message, kind }),\n-    [],\n+    (message, kind = \"success\") => {\n+      if(currentUser.current?.id!==user?.id||currentUser.current?.role!==user?.role)return;\n+      setNotice({ message, kind });\n+    },\n+    [user?.id,user?.role],\n   );\n   useEffect(() => {\n     if (!notice || notice.kind !== \"success\") return;\n",
+  "entry": {
+    "file": "frontend/dist/assets/index-D3DEpDud.js",
+    "bytes": 386884,
+    "sha256": "a77c9e3a95512747d233e6d97dddbea7cebdefeb5d8011986382e0ef7cde8016"
+  },
+  "screenshots": [
+    {
+      "file": "docs/evidence/session-boundaries-2026-10-25/admin-current-session.jpg",
+      "bytes": 73727,
+      "sha256": "08d43ff7d4f4c13c1865879a8ebe393c097e2c33d58237181d0cfd1840479a7e",
+      "pixels": [
+        1265,
+        712
+      ]
+    },
+    {
+      "file": "docs/evidence/session-boundaries-2026-10-25/coordinator-current-session.jpg",
+      "bytes": 56590,
+      "sha256": "3355e7e7fa201ed8547a6a944b310d90a98f27c96a1473a28768e49b0f78c96c",
+      "pixels": [
+        1265,
+        712
+      ]
+    },
+    {
+      "file": "docs/evidence/session-boundaries-2026-10-25/patient-current-session.jpg",
+      "bytes": 79781,
+      "sha256": "677438c7c5df50fff2b6604429ba8392fcb1ae2edb9e3ffd8004585802588648",
+      "pixels": [
+        1265,
+        712
+      ]
+    }
+  ],
+  "limits": [
+    "The deferred401 and old-note reproductions use the actual API/Workspace in JSDOM with closed fake transport; they are not native network-expiry injections or backend-authorization tests.",
+    "The first DOM-node assertion hit formatter allocation limits; it was replaced with a boolean assertion before recording the valid2-failure baseline. No application-memory defect claimed.",
+    "Live smoke covers patient current-success notification and restored preference, plus admin/coordinator/doctor sign-in; no clinical write during live smoke.",
+    "No new full browser/WCAG, screen reader, pixel baseline, FPS, Web Vitals or load maximum pass. Existing500ms maximum remains unmet.",
+    "Current session transport and production/pilot security decisions unchanged; no general security-certification claim. No Git publication."
+  ]
+}

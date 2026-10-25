@@ -1,3 +1,4 @@
+from datetime import datetime
 from typing import Literal
 from uuid import UUID
 
@@ -17,3 +18,25 @@ class TreatmentWrite(BaseModel):
         if self.reason_category is not None and self.status != "refused":
             raise ValueError("Категория причины указывается только для подтверждённого отказа")
         return self
+
+
+class PatientTreatmentProgress(BaseModel):
+    status: Literal["unknown", "in_progress", "completed", "refused"]
+    recorded_at: datetime | None
+
+
+class PatientVisitProgress(BaseModel):
+    status: str
+    source: str
+    synthetic: bool
+    source_as_of: str | None
+    known_completed_count: int | None
+    latest_completed_at: datetime | None
+    next_scheduled_at: datetime | None
+    has_undated_visits: bool
+
+
+class PatientCareProgress(BaseModel):
+    as_of: datetime
+    treatment: PatientTreatmentProgress
+    visits: PatientVisitProgress

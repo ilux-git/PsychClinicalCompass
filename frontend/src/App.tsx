@@ -1,4 +1,4 @@
-import { Fragment, lazy, Suspense, useCallback, useEffect, useRef, useState, type FormEvent } from "react";
+import { Fragment, lazy, Suspense, useCallback, useEffect, useId, useLayoutEffect, useRef, useState, type CSSProperties, type FormEvent } from "react";
 import {
   Activity,
   LayoutDashboard,
@@ -17,6 +17,9 @@ import {
   Bell,
   BookOpen,
   Pill,
+  House,
+  ListTodo,
+  CircleHelp,
 } from "lucide-react";
 import { api, send, type User } from "./api";
 import {
@@ -28,47 +31,24 @@ import {
   availability,
   type Notify,
 } from "./UI";
-import { DoctorPatients } from "./DoctorPatients";
 import { DoctorInbox, DoctorInboxNotice } from "./DoctorInbox";
-import { TaskBoard } from "./TaskBoard";
 import { RoleGuide } from "./RoleGuide";
 import { NavigationGuard, useNavigationGuard } from "./NavigationGuard";
-import { AnimatePresence, ContentFrame, m, motionTokens, useInteractionMotion } from "./Interaction";
+import { AnimatePresence, m, motionTokens, useInteractionMotion, usePendingSelectFocus } from "./Interaction";
 import { SectionBoundary } from "./SectionBoundary";
 import { ViewStateProvider, type PatientAnswerTarget, type ReturnPoint } from "./ViewState";
+import { cardSections, defaultView, navigationFor, patientSurveyGuide, sectionFor, type NavItem, type CardTab } from "./navigation";
+import { WorkspaceHome } from "./WorkspaceHome";
+import { createWorkspaceHistory, pageRoute, routeHref, type RouteContext, type WorkspaceRoute } from "./routes";
 
 const DoctorDashboard = lazy(() => import("./DoctorDashboard").then(module => ({default:module.DoctorDashboard})));
 const SurveyBuilder = lazy(() => import("./SurveyBuilder").then(module => ({default:module.SurveyBuilder})));
 const PatientHome = lazy(() => import("./Patient").then(module => ({default:module.PatientHome})));
 const AdminDashboard = lazy(() => import("./AdminDashboard").then(module => ({default:module.AdminDashboard})));
+const DoctorPatients = lazy(() => import("./DoctorPatients").then(module => ({default:module.DoctorPatients})));
+const TaskBoard = lazy(() => import("./TaskBoard").then(module => ({default:module.TaskBoard})));
 
-const doctorNav = [
-  { id: "patients", title: "Мои пациенты", icon: Users },
-  { id: "events", title: "События пациентов", icon: Bell },
-  { id: "tasks", title: "Задачи пациентов", icon: ClipboardList },
-  { id: "overview", title: "Аналитика сопровождения", icon: LayoutDashboard },
-  { id: "state", title: "Состояние пациентов", icon: Activity },
-  { id: "surveys", title: "Мои опросы", icon: ClipboardList },
-  { id: "telegram", title: "Telegram · симулятор", icon: MessageCircle },
-];
-const patientNav = [
-  { id: "overview", title: "Мой день", icon: HeartHandshake },
-  { id: "surveys", title: "Мои опросы", icon: ClipboardList },
-  { id: "state", title: "Моё состояние", icon: Activity },
-  { id: "diary", title: "Мой дневник", icon: BookOpen },
-  { id: "medications", title: "Расписание лекарств", icon: Pill },
-  { id: "adherence", title: "Как получается", icon: HeartHandshake },
-  { id: "chat", title: "Диалог с врачом", icon: MessageCircle },
-  { id: "journey", title: "Маршрут и скидки", icon: Sparkles },
-  { id: "telegram", title: "Telegram · симулятор", icon: Activity },
-];
-const adminNav = [
-  {id:"overview",title:"Охват и опросы",icon:LayoutDashboard},
-  {id:"barriers",title:"Барьеры и обратная связь",icon:HeartHandshake},
-  {id:"actions",title:"Действия и исходы",icon:Activity},
-  {id:"sources",title:"Источники и защита",icon:ShieldCheck},
-];
-const coordinatorNav = [{id: "overview", title: "Мои задачи", icon: ClipboardList}];
+const navIcons:Record<string,typeof Users>={home:House,users:Users,bell:Bell,tasks:ListTodo,surveys:ClipboardList,chart:LayoutDashboard,activity:Activity,chat:MessageCircle,heart:HeartHandshake,sparkles:Sparkles,book:BookOpen,pill:Pill,shield:ShieldCheck};
 
 function Login({ onLogin }: { onLogin: (user: User) => void }) {
   const [username, setUsername] = useState("doctor");
@@ -108,7 +88,7 @@ function Login({ onLogin }: { onLogin: (user: User) => void }) {
     );
   }
   return (
-    <div className="login-page">
+    <main className="login-page">
       <div className="login-story">
         <a href="/" className="brand">
           <span className="brand-mark">
@@ -209,7 +189,7 @@ function Login({ onLogin }: { onLogin: (user: User) => void }) {
           </p>
         </form>
       </div>
-    </div>
+    </main>
   );
 }
 
@@ -217,6 +197,12 @@ function Workspace() {
   const guard = useNavigationGuard();
   const { moving, transition } = useInteractionMotion();
   const [user, setUser] = useState<User | null>(null);
+  const currentUser=useRef(user);currentUser.current=user;
+  const [availabilityPending,setAvailabilityPending]=useState<{doctorId:number;value:string}|null>(null);
+  const [availabilityError,setAvailabilityError]=useState<{doctorId:number;message:string}|null>(null);
+  const availabilityBusy=Boolean(user&&availabilityPending?.doctorId===user.id);
+  const availabilityFocus=usePendingSelectFocus(availabilityBusy),availabilityId=useId();
+  useEffect(()=>setAvailabilityError(null),[user?.id]);
   const [booting, setBooting] = useState(
     Boolean(sessionStorage.getItem("compass-token")),
   );
@@ -225,7 +211,9 @@ function Workspace() {
   const [inboxRevision, setInboxRevision] = useState(0);
   const [newSurvey, setNewSurvey] = useState(false);
   const [selectedPatient, setSelectedPatient] = useState<number | null>(null);
-  const [patientEntry,setPatientEntry] = useState<"feedback"|"events"|"care">("feedback");
+  const [patientEntry,setPatientEntry] = useState<CardTab>("feedback");
+  const [selectedAssignment,setSelectedAssignment]=useState<number|null>(null);
+  const navigationView=user?.role==="patient"&&selectedAssignment!==null?"surveys":view;
   const [patientOrigin,setPatientOrigin]=useState<{view:string;label:string;key:string}|null>(null);
   const [patientAnswer,setPatientAnswer]=useState<PatientAnswerTarget|null>(null);
   const [returnPoint,setReturnPoint]=useState<ReturnPoint|null>(null);
@@ -236,7 +224,63 @@ function Workspace() {
   } | null>(null);
   const [menuOpen, setMenuOpen] = useState(false);
   const sidebar = useRef<HTMLElement>(null);
+  const primaryNavigation = useRef<HTMLElement>(null);
   const [guideStart, setGuideStart] = useState(0);
+  const historyNavigation=useRef<ReturnType<typeof createWorkspaceHistory>|null>(null);
+  const locationSnapshot=useRef<{route:WorkspaceRoute;context:RouteContext}|null>(null);
+  const applyLocation=useRef<(route:WorkspaceRoute,context:RouteContext)=>void>(()=>{});
+  applyLocation.current=(next,context)=>{
+    const previous=locationSnapshot.current;
+    const origin=previous?.context.origin;
+    const returned=context.returnPoint??(origin&&origin.view===next.view&&next.patientId===null?{scope:origin.view,key:origin.key}:null);
+    locationSnapshot.current={route:next,context};
+    setView(next.view);setSelectedPatient(next.patientId);setPatientEntry(next.cardTab);setSelectedAssignment(next.assignmentId);
+    setPatientOrigin(context.origin?{...context.origin,label:`К разделу «${sectionFor(user?.role??"doctor",context.origin.view).title}»`}:null);
+    setPatientAnswer(context.answer??null);setReturnPoint(returned);setMenuOpen(false);setNewSurvey(false);
+    const pageChanged=!previous||previous.route.view!==next.view||previous.route.patientId!==next.patientId||previous.route.assignmentId!==next.assignmentId;
+    if(previous&&previous.route.view!==next.view)setNavigationRevision(value=>value+1);
+    if(pageChanged){window.scrollTo(0,0);requestAnimationFrame(()=>{
+      const active=document.activeElement,main=document.getElementById("compass-main");
+      if(active&&active!==main&&active.closest("[data-page-location]")?.getAttribute("data-page-location")===routeHref(next))return;
+      main?.focus({preventScroll:true});
+    });}
+  };
+  useEffect(()=>{
+    if(!user)return;
+    const controller=createWorkspaceHistory({role:user.role,owner:user.id,approve:(action,target)=>{
+      setMenuOpen(false);
+      const current=locationSnapshot.current?.route;
+      if(current&&current.patientId!==null&&current.patientId===target.patientId&&current.view===target.view)guard.runFor(action,"patient-card-tab");else guard.run(action);
+    },apply:(route,context)=>applyLocation.current(route,context),port:{
+      href:()=>window.location.href,state:()=>window.history.state,
+      push:(state,href)=>window.history.pushState(state,"",href),replace:(state,href)=>window.history.replaceState(state,"",href),
+      go:delta=>window.history.go(delta),listen:callback=>{window.addEventListener("popstate",callback);return()=>window.removeEventListener("popstate",callback);},
+    }});
+    historyNavigation.current=controller;
+    return()=>{controller.dispose();historyNavigation.current=null;};
+  },[user?.id,user?.role,guard.run,guard.runFor]);
+  useEffect(()=>{
+    const title=!user?"Вход":selectedPatient!==null?cardSections[patientEntry].title:selectedAssignment!==null?"Ответ на опрос":sectionFor(user.role,view).title;
+    document.title=`${title} · Clinical Compass`;
+  },[user?.role,view,selectedPatient,patientEntry,selectedAssignment]);
+  useLayoutEffect(()=>{
+    const nav=primaryNavigation.current;
+    if(!nav)return;
+    const revealCurrent=()=>{
+      const selected=nav.querySelector<HTMLElement>('a[aria-current="page"]');
+      if(!selected||!nav.clientHeight)return;
+      const focused=document.activeElement;
+      if(focused&&nav.contains(focused)&&focused!==selected)return;
+      const viewport=nav.getBoundingClientRect(),item=selected.getBoundingClientRect();
+      const delta=item.top<viewport.top?item.top-viewport.top-8:item.bottom>viewport.bottom?item.bottom-viewport.bottom+8:0;
+      if(delta)nav.scrollTo({top:nav.scrollTop+delta,behavior:moving?"smooth":"instant"});
+    };
+    revealCurrent();
+    const observer=typeof ResizeObserver==="undefined"?null:new ResizeObserver(revealCurrent);
+    observer?.observe(nav);
+    window.addEventListener("resize",revealCurrent);
+    return()=>{observer?.disconnect();window.removeEventListener("resize",revealCurrent);};
+  },[user?.id,user?.role,navigationView,menuOpen,moving]);
   useEffect(()=>{
     if(!menuOpen)return;
     const media=window.matchMedia("(max-width: 780px)");
@@ -244,7 +288,7 @@ function Workspace() {
     const previous=document.activeElement as HTMLElement|null;
     const overflow=document.body.style.overflow;
     document.body.style.overflow="hidden";
-    const focusable=()=>Array.from(sidebar.current?.querySelectorAll<HTMLElement>('a[href],button:not(:disabled)')??[]).filter(element=>element.getClientRects().length);
+    const focusable=()=>Array.from(sidebar.current?.querySelectorAll<HTMLElement>('a[href],button:not(:disabled),select:not(:disabled)')??[]).filter(element=>element.getClientRects().length);
     const frame=requestAnimationFrame(()=>focusable()[0]?.focus());
     const onKey=(event:KeyboardEvent)=>{
       if(document.querySelector('dialog[open]'))return;
@@ -260,8 +304,11 @@ function Workspace() {
     return()=>{cancelAnimationFrame(frame);document.removeEventListener('keydown',onKey);media.removeEventListener('change',onResize);document.body.style.overflow=overflow;if(previous?.isConnected)previous.focus({preventScroll:true});};
   },[menuOpen]);
   const notify: Notify = useCallback(
-    (message, kind = "success") => setNotice({ message, kind }),
-    [],
+    (message, kind = "success") => {
+      if(currentUser.current?.id!==user?.id||currentUser.current?.role!==user?.role)return;
+      setNotice({ message, kind });
+    },
+    [user?.id,user?.role],
   );
   useEffect(() => {
     if (!notice || notice.kind !== "success") return;
@@ -269,11 +316,14 @@ function Workspace() {
     return () => clearTimeout(timer);
   }, [notice]);
   const logout = useCallback(() => {
+    historyNavigation.current?.dispose();historyNavigation.current=null;locationSnapshot.current=null;
+    window.history.replaceState(null,"",window.location.pathname);
     sessionStorage.removeItem("compass-token");
     setUser(null);
     setView("overview");
     setSelectedPatient(null);
     setPatientEntry("feedback");
+    setSelectedAssignment(null);
     setPatientOrigin(null);setReturnPoint(null);setPatientAnswer(null);
     setNotice(null);
     setGuideStart(0);
@@ -284,7 +334,7 @@ function Workspace() {
     if (sessionStorage.getItem("compass-token"))
       api<User>("/auth/me")
         .then((data) => {
-          if (active) {setUser(data); setView(data.role === "doctor" ? "patients" : "overview");}
+          if (active) {setUser(data); setView(defaultView(data.role));}
         })
         .catch(() => {
           if (active) logout();
@@ -301,45 +351,55 @@ function Workspace() {
   function navigate(next: string,after?:()=>void) {
     setMenuOpen(false);
     guard.run(() => {
-    window.scrollTo(0,0);
-    setView(next);
-    setNavigationRevision(value=>value+1);
+    if(!user)return;
+    historyNavigation.current?.push(pageRoute(user.role,next));
+    if(next===view)setNavigationRevision(value=>value+1);
     if (next === "events") setInboxRevision((value) => value + 1);
-    setSelectedPatient(null);
-    setPatientEntry("feedback");
-    setPatientOrigin(null);setReturnPoint(null);setPatientAnswer(null);
-    setMenuOpen(false);
     setNewSurvey(false);
     after?.();
     });
   }
-  function openPatient(id:number,options:{entry?:"feedback"|"events"|"care";returnKey?:string;answerTarget?:PatientAnswerTarget}={}) {
+  function openPatient(id:number,options:{entry?:CardTab;returnKey?:string;answerTarget?:PatientAnswerTarget}={}) {
     setMenuOpen(false);
     guard.run(()=>{
-      const labels:Record<string,string>={overview:"К аналитике сопровождения",events:"К событиям пациентов",tasks:"К задачам пациентов"};
-      setPatientOrigin(labels[view]?{view,label:labels[view],key:options.returnKey??""}:null);
-      setPatientAnswer(options.answerTarget??null);
-      setReturnPoint(null);window.scrollTo(0,0);setSelectedPatient(id);setPatientEntry(options.entry??"feedback");setView("patients");setMenuOpen(false);
+      if(!user)return;
+      const targetView=["patients","state","telegram"].includes(view)?view:"patients";
+      const target={...pageRoute(user.role,targetView),patientId:id,cardTab:options.entry??(targetView==="state"?"clinical":targetView==="telegram"?"chat":"feedback") as CardTab};
+      historyNavigation.current?.push(target,{origin:["overview","events","tasks"].includes(view)?{view,key:options.returnKey??""}:undefined,answer:options.answerTarget});
     });
   }
   function returnFromPatient() {
-    setSelectedPatient(null);
-    if(patientOrigin){setReturnPoint({scope:patientOrigin.view,key:patientOrigin.key});setView(patientOrigin.view);setNavigationRevision(value=>value+1);}
-    else if(selectedPatient!==null)setReturnPoint({scope:view,key:`directory-${selectedPatient}`});
-    setPatientOrigin(null);
-    setPatientAnswer(null);
+    if(!user)return;
+    const target=patientOrigin?.view??view;
+    historyNavigation.current?.push(pageRoute(user.role,target),{returnPoint:{scope:target,key:patientOrigin?.key??`directory-${selectedPatient}`}});
+  }
+  function changePatientTab(tab:CardTab) {
+    const snapshot=locationSnapshot.current;
+    if(snapshot)historyNavigation.current?.push({...snapshot.route,cardTab:tab},snapshot.context);
+  }
+  function selectAssignment(id:number) {
+    setMenuOpen(false);
+    guard.run(()=>{const snapshot=locationSnapshot.current;if(snapshot)historyNavigation.current?.push({...snapshot.route,assignmentId:id},snapshot.context);});
   }
   async function changeAvailability(value: string) {
+    if(!user||user.role!=="doctor"||availabilityBusy)return;
+    const doctorId=user.id;
+    availabilityFocus.remember();
+    setAvailabilityPending({doctorId,value});setAvailabilityError(null);
     try {
       await send("/doctors/me/availability", { availability: value }, "PATCH");
       setUser((current) =>
-        current ? { ...current, availability: value } : current,
+        current?.id===doctorId&&current.role==="doctor" ? { ...current, availability: value } : current,
       );
     } catch (error) {
-      notify(
-        error instanceof Error ? error.message : "Не удалось обновить статус",
-        "error",
-      );
+      if(currentUser.current?.id===doctorId&&currentUser.current.role==="doctor") {
+        const message=error instanceof Error?error.message:"Не удалось обновить статус";
+        setAvailabilityError({doctorId,message});
+        const control=availabilityFocus.ref.current;
+        if(!control||!control.getClientRects().length||control.closest('[inert]')||getComputedStyle(control).visibility==="hidden")notify(message,"error");
+      }
+    } finally {
+      setAvailabilityPending(current=>current?.doctorId===doctorId?null:current);
     }
   }
   if (booting)
@@ -348,26 +408,30 @@ function Workspace() {
         <Loading />
       </div>
     );
-  if (!user) return <Login onLogin={value => {setUser(value); setView(value.role === "doctor" ? "patients" : "overview");}} />;
-  const nav =
-    user.role === "doctor"
-      ? doctorNav
-      : user.role === "patient"
-        ? patientNav
-        : user.role === "coordinator" ? coordinatorNav : adminNav;
-  const navSections:Record<string,string> = user.role === "doctor" ? {patients:"Рабочий день",overview:"Наблюдение",surveys:"Инструменты",telegram:"Демонстрация"} : user.role === "patient" ? {overview:"Между встречами",journey:"Участие",telegram:"Демонстрация"} : {};
+  if (!user) return <Login onLogin={value => {setUser(value); setView(defaultView(value.role));}} />;
+  const nav=navigationFor(user.role);
+  const currentSection=sectionFor(user.role,navigationView);
+  const primaryNav=nav.filter(item=>!item.secondary);
+  const secondaryNav=nav.filter(item=>item.secondary);
+  const quickNav=user.role==="doctor"?[["home","Главная"],["patients","Пациенты"],["events","События"],["tasks","План"]]:user.role==="patient"?[["overview","Мой день"],["surveys","Опросы"],["diary","Дневник"],["chat","Врачу"]]:user.role==="admin"?[["overview","Обзор"],["barriers","Барьеры"],["actions","Действия"],["sources","Данные"]]:[];
+  function navControl(item:NavItem) {
+    const Icon=navIcons[item.icon];
+    return <a href={routeHref(pageRoute(user!.role,item.id))} className={navigationView===item.id?"active":""} aria-current={navigationView===item.id?"page":undefined} onClick={event=>{if(!event.metaKey&&!event.ctrlKey&&!event.shiftKey&&!event.altKey&&event.button===0){event.preventDefault();navigate(item.id);}}}>
+      <Icon size={19}/><span className="nav-item-copy"><strong>{item.title}</strong><small>{item.description}</small></span>{navigationView===item.id&&<i/>}
+    </a>;
+  }
   return (
-    <ViewStateProvider key={user.id} returnPoint={returnPoint} restored={restored}><div
+    <ViewStateProvider key={`${user.id}-${user.role}`} returnPoint={returnPoint} restored={restored}><div
       className={`app-shell ${user.role === "patient" ? "patient-shell" : ""}`}
     >
-      <a className="skip-link" href="#compass-main">Перейти к содержимому</a>
+      <a className="skip-link" href="#compass-main" onClick={event=>{event.preventDefault();document.getElementById("compass-main")?.focus();document.getElementById("compass-main")?.scrollIntoView({block:"start"});}}>Перейти к содержимому</a>
       <aside ref={sidebar} className={`sidebar ${menuOpen ? "open" : ""}`} role={menuOpen?"dialog":undefined} aria-modal={menuOpen||undefined} aria-label="Меню кабинета">
         <a
           href="/"
           className="brand"
           onClick={(event) => {
             event.preventDefault();
-            navigate(user.role === "doctor" ? "patients" : "overview");
+            navigate(defaultView(user.role));
           }}
         >
           <span className="brand-mark">
@@ -384,21 +448,13 @@ function Workspace() {
               ? "Моё пространство"
               : user.role === "coordinator" ? "Координатор" : "Администратор"}
         </div><button type="button" className="icon-button drawer-close" aria-label="Закрыть навигацию" onClick={()=>setMenuOpen(false)}><X size={18}/></button></div>
-        <nav aria-label="Главная навигация">
-          {nav.map((item) => <Fragment key={item.id}>
-            {navSections[item.id]&&<p className="nav-section-label">{navSections[item.id]}</p>}
-            <button
-              key={item.id}
-              className={view === item.id ? "active" : ""}
-              aria-current={view === item.id ? "page" : undefined}
-              onClick={() => navigate(item.id)}
-            >
-              <item.icon size={19} />
-              <span>{item.title}</span>
-              {view === item.id && <i />}
-            </button>
+        <nav ref={primaryNavigation} aria-label="Главная навигация">
+          {primaryNav.map((item,index)=><Fragment key={item.id}>
+            {item.group&&primaryNav[index-1]?.group!==item.group&&<p className="nav-section-label">{item.group}</p>}
+            {navControl(item)}
           </Fragment>)}
         </nav>
+        {secondaryNav.length>0&&<details className="demo-navigation" key={view==="telegram"?"active-demo":"demo"} open={view==="telegram"||undefined}><summary>Демонстрация</summary><div>{secondaryNav.map(item=><Fragment key={item.id}>{navControl(item)}</Fragment>)}</div></details>}
         <div className="sidebar-support">
           <span className="support-icon">
             <HeartHandshake size={25} />
@@ -414,6 +470,15 @@ function Workspace() {
               : user.role === "admin" ? "Охват и препятствия без персональных данных." : user.role === "coordinator" ? "Назначенные организационные задачи и выполненные действия." : "Расскажите, какая поддержка нужна именно вам."}
           </p>
         </div>
+        {user.role==="doctor"&&<div className="availability-select sidebar-availability" aria-busy={availabilityBusy}>
+          <div className="availability-heading"><label htmlFor={availabilityId}>Доступность врача</label><span role="status">{availabilityBusy?"Сохраняем…":""}</span></div>
+          <div className="availability-field"><span className={`availability-dot ${availabilityBusy?"pending":user.availability==="available"?"online":""}`} aria-hidden="true"/>
+            <select id={availabilityId} ref={availabilityFocus.ref} value={availabilityPending?.doctorId===user.id?availabilityPending.value:user.availability} disabled={availabilityBusy} aria-invalid={availabilityError?.doctorId===user.id||undefined} aria-describedby={availabilityError?.doctorId===user.id?`${availabilityId}-error`:undefined} onChange={event=>changeAvailability(event.target.value)}>
+              {Object.entries(availability).map(([value,title])=><option key={value} value={value}>{title}</option>)}
+            </select>
+          </div>
+          {availabilityError?.doctorId===user.id&&<p id={`${availabilityId}-error`} className="availability-error" role="alert">Изменение не подтверждено. {availabilityError.message} Выберите статус ещё раз, чтобы повторить.</p>}
+        </div>}
         <div className="sidebar-profile">
           <Avatar name={user.display_name} small />
           <div>
@@ -449,40 +514,15 @@ function Workspace() {
           >
             <Menu size={22} />
           </button>
-          <span className="mobile-brand">Compass</span>
-          <span className="breadcrumb">
-            {user.role === "doctor"
-              ? "Кабинет врача"
-              : user.role === "patient"
-                ? "Мой кабинет"
-                : user.role === "coordinator" ? "Кабинет координатора" : "Управление"}
-            <span>/</span>
-            <strong>
-              {nav.find((item) => item.id === view)?.title ?? "Доступ"}
-            </strong>
-          </span>
+          <span className="mobile-brand">{selectedPatient!==null?cardSections[patientEntry].title:selectedAssignment!==null?"Ответ на опрос":currentSection.title}</span>
+          <nav className="breadcrumb" aria-label="Путь к странице">
+            {navigationView!==defaultView(user.role)?<><button onClick={()=>navigate(defaultView(user.role))}>Главная</button><span aria-hidden="true">/</span></>:null}
+            {selectedPatient!==null||selectedAssignment!==null?<><button onClick={()=>navigate(navigationView)}>{currentSection.title}</button><span aria-hidden="true">/</span><strong aria-current="page">{selectedPatient!==null?cardSections[patientEntry].title:"Ответ на опрос"}</strong></>:<strong aria-current="page">{currentSection.title}</strong>}
+          </nav>
           <div className="topbar-actions">
             {user.role === "doctor" && <DoctorInboxNotice key={user.id} open={() => navigate("events")} />}
-            <Button variant="ghost" onClick={() => guard.run(() => {navigate(user.role === "doctor" ? "patients" : "overview"); setGuideStart(v => v+1); setMenuOpen(false);})}><BookOpen size={16}/> Как пользоваться</Button>
+            <Button variant="ghost" className="section-help-button" aria-label="Помощь с разделом" onClick={()=>setGuideStart(value=>value+1)}><CircleHelp size={18}/><span>Помощь</span></Button>
             <Badge tone="purple">Демо · синтетические данные</Badge>
-            {user.role === "doctor" && (
-              <label className="availability-select">
-                <span
-                  className={`availability-dot ${user.availability === "available" ? "online" : ""}`}
-                />
-                <span className="sr-only">Доступность врача</span>
-                <select
-                  value={user.availability}
-                  onChange={(e) => changeAvailability(e.target.value)}
-                >
-                  {Object.entries(availability).map(([value, title]) => (
-                    <option key={value} value={value}>
-                      {title}
-                    </option>
-                  ))}
-                </select>
-              </label>
-            )}
           </div>
         </header>
         <main className="main-content" id="compass-main" tabIndex={-1} key={user.id}>
@@ -509,12 +549,17 @@ function Workspace() {
               </button>
             </m.div>
           )}</AnimatePresence>
-          <RoleGuide key={user.id} user={user} navigate={navigate} startSignal={guideStart}/>
-          <AnimatePresence mode="wait" initial={false}><ContentFrame key={`${view}-${navigationRevision}`}>
+          <RoleGuide key={user.id} user={user} view={navigationView} navigate={navigate} startSignal={guideStart} context={user.role==="patient"&&selectedAssignment!==null?patientSurveyGuide:user.role==="doctor"&&selectedPatient!==null?cardSections[patientEntry]:undefined}/>
+          <div key={`${view}-${navigationRevision}`} className="content-frame route-frame" style={{
+            "--route-duration":`${transition.duration}s`,
+            "--route-distance":`${moving?motionTokens.distance.small:0}px`,
+            "--route-ease":`cubic-bezier(${motionTokens.easing.smooth.join(",")})`,
+          } as CSSProperties}>
+          <div className="route-page" data-page-location={routeHref(locationSnapshot.current?.route??pageRoute(user.role,view))}>
           <SectionBoundary key={`${user.id}-${view}`} refresh={()=>guard.run(()=>window.location.reload())}>
           <Suspense fallback={<div className="route-loading"><Loading/></div>}>
           {user.role === "doctor" ? (
-            view === "overview" ? (
+            view === "home" ? <WorkspaceHome navigate={navigate}/> : view === "overview" ? (
               <DoctorDashboard
                 openPatient={(id,key,answerTarget)=>openPatient(id,{returnKey:key,answerTarget})}
                 createSurvey={() => navigate("surveys",()=>setNewSurvey(true))}
@@ -529,19 +574,20 @@ function Workspace() {
               <DoctorPatients
                 key={view}
                 selected={selectedPatient}
-                onSelect={setSelectedPatient}
+                onSelect={id=>id===null?returnFromPatient():openPatient(id)}
                 back={returnFromPatient}
                 backLabel={patientOrigin?.label}
                 scope={view}
                 initialAnswer={patientAnswer??undefined}
                 notify={notify}
                 simulated={view === "telegram"}
-                initialTab={view === "state" ? "clinical" : patientEntry}
+                initialTab={patientEntry}
+                onTabChange={changePatientTab}
                 openTasks={() => navigate("tasks")}
               />
             )
           ) : user.role === "patient" ? (
-            <PatientHome key={view} user={user} view={view} notify={notify} navigate={navigate}/>
+            <PatientHome key={view} user={user} view={view} notify={notify} navigate={navigate} assignmentId={selectedAssignment} selectAssignment={selectAssignment}/>
           ) : user.role === "coordinator" ? (
             <TaskBoard operational notify={notify} />
           ) : (
@@ -549,12 +595,20 @@ function Workspace() {
           )}
           </Suspense>
           </SectionBoundary>
-          </ContentFrame></AnimatePresence>
+          </div>
+          </div>
         </main>
         <footer className="app-footer">
           Clinical Compass · учебный MVP{" "}
           <span>Поддержка диалога между врачом и пациентом</span>
         </footer>
+        {quickNav.length>0&&<nav className="mobile-navigation" aria-label="Быстрые переходы">
+          {quickNav.map(([id,label])=>{
+            const item=sectionFor(user.role,id),Icon=navIcons[item.icon];
+            return <a key={id} href={routeHref(pageRoute(user.role,id))} aria-label={item.title} aria-current={navigationView===id?"page":undefined} className={navigationView===id?"active":""} onClick={event=>{if(!event.metaKey&&!event.ctrlKey&&!event.shiftKey&&!event.altKey&&event.button===0){event.preventDefault();navigate(id);}}}><Icon size={20}/><span>{label}</span></a>;
+          })}
+          {user.role!=="admin"&&<button type="button" className={!quickNav.some(([id])=>id===navigationView)?"active":""} aria-label="Все разделы кабинета" aria-expanded={menuOpen} onClick={()=>setMenuOpen(true)}><Menu size={20}/><span>Ещё</span></button>}
+        </nav>}
       </div>
     </div></ViewStateProvider>
   );

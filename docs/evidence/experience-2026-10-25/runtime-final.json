@@ -1,0 +1,22 @@
+{
+  "main_url": "http://127.0.0.1:8780/",
+  "health": {
+    "status": "ok",
+    "compass_db": true,
+    "mis_db": true,
+    "mode": "synthetic_demo"
+  },
+  "closed_temporary_ports": [
+    8782,
+    8791,
+    8810,
+    8811,
+    8812,
+    8813,
+    8814,
+    8815,
+    8816,
+    8817
+  ],
+  "git_publication": false
+}

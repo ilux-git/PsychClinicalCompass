@@ -1,0 +1,192 @@
+{
+  "before": {
+    "patient": {
+      "actions": [
+        {
+          "background": "rgba(0, 0, 0, 0)",
+          "class": "disclosure-trigger",
+          "color": "rgb(44, 112, 101)",
+          "rect": {
+            "bottom": 577.875,
+            "height": 44,
+            "left": 321,
+            "right": 1208,
+            "top": 533.875,
+            "width": 887,
+            "x": 321,
+            "y": 533.875
+          },
+          "text": "Добавить наблюдения или уточнить время"
+        }
+      ],
+      "tokens": {
+        "ink": "#18191a",
+        "signalDark": "#a52e1c"
+      }
+    },
+    "doctor": [
+      {
+        "class": "text-link",
+        "color": "rgb(24, 25, 26)",
+        "fontSize": "13px",
+        "rect": {
+          "bottom": 340.59375,
+          "height": 40,
+          "left": 879.96875,
+          "right": 962.328125,
+          "top": 300.59375,
+          "width": 82.359375,
+          "x": 879.96875,
+          "y": 300.59375
+        },
+        "text": "За всё время"
+      },
+      {
+        "class": "button ghost ",
+        "color": "rgb(165, 46, 28)",
+        "fontSize": "13px",
+        "rect": {
+          "bottom": 1975.78125,
+          "height": 44,
+          "left": 616.078125,
+          "right": 777.515625,
+          "top": 1931.78125,
+          "width": 161.4375,
+          "x": 616.078125,
+          "y": 1931.78125
+        },
+        "text": "Уточнить опросом"
+      },
+      {
+        "class": "disclosure-trigger",
+        "color": "rgb(44, 112, 101)",
+        "fontSize": "13px",
+        "rect": {
+          "bottom": 2037.78125,
+          "height": 44,
+          "left": 321,
+          "right": 777.515625,
+          "top": 1993.78125,
+          "width": 456.515625,
+          "x": 321,
+          "y": 1993.78125
+        },
+        "text": "Показать распределения ответов · 3"
+      }
+    ],
+    "back": {
+      "color": "rgb(165, 46, 28)",
+      "fontSize": "13px",
+      "rect": {
+        "bottom": -518,
+        "height": 40,
+        "left": 296,
+        "right": 576.0625,
+        "top": -558,
+        "width": 280.0625,
+        "x": 296,
+        "y": -558
+      },
+      "text": " К разделу «Аналитика сопровождения»"
+    },
+    "spacing": {
+      "button": {
+        "bottom": 172.5625,
+        "height": 44,
+        "left": 956,
+        "right": 1210,
+        "top": 128.5625,
+        "width": 254,
+        "x": 956,
+        "y": 128.5625
+      },
+      "gap": 0,
+      "previous": {
+        "rect": {
+          "bottom": 128.5625,
+          "height": 38.375,
+          "left": 956,
+          "right": 1210,
+          "top": 90.1875,
+          "width": 254,
+          "x": 956,
+          "y": 90.1875
+        },
+        "tag": "P",
+        "text": "Приватный раздел врача. Пациент его не видит."
+      },
+      "wrapperClass": "panel "
+    },
+    "statuses": [
+      {
+        "background": "rgb(232, 243, 235)",
+        "class": "badge good",
+        "color": "rgb(39, 101, 74)",
+        "text": "Ответ получен"
+      },
+      {
+        "background": "rgb(232, 243, 235)",
+        "class": "badge good",
+        "color": "rgb(39, 101, 74)",
+        "text": "Ответ получен"
+      }
+    ]
+  },
+  "after": {
+    "doctor": {
+      "actionColor": "rgb(165, 46, 28)",
+      "backHeight": 44,
+      "gap": 12,
+      "height": 44,
+      "outline": {
+        "color": "rgb(165, 46, 28)",
+        "width": "3px"
+      },
+      "overflow": false,
+      "statuses": [
+        {
+          "background": "rgb(232, 243, 235)",
+          "class": "badge good",
+          "color": "rgb(39, 101, 74)",
+          "text": "Ответ получен"
+        },
+        {
+          "background": "rgb(232, 243, 235)",
+          "class": "badge good",
+          "color": "rgb(39, 101, 74)",
+          "text": "Ответ получен"
+        }
+      ]
+    },
+    "period": {
+      "background": "rgb(246, 244, 239)",
+      "color": "rgb(165, 46, 28)",
+      "contrast": 6.352673741508717,
+      "fontSize": "13px",
+      "height": 44,
+      "outlineColor": "rgb(165, 46, 28)",
+      "outlineWidth": "3px",
+      "text": "За всё время"
+    },
+    "patient": {
+      "background": "rgb(255, 255, 255)",
+      "color": "rgb(165, 46, 28)",
+      "contrast": 6.982699981397574,
+      "fontSize": "13px",
+      "height": 63,
+      "outlineColor": "rgb(165, 46, 28)",
+      "outlineWidth": "3px",
+      "text": "Добавить наблюдения или уточнить время"
+    },
+    "doctorKeyboard": {
+      "emptyText": "",
+      "expanded": "true",
+      "focusTag": "SELECT"
+    },
+    "patientKeyboard": {
+      "expanded": "true",
+      "tag": "SELECT"
+    }
+  },
+  "console": []
+}

@@ -1,0 +1,1348 @@
+{
+  "recordedAt": "2026-10-25T00:50:28.473619+00:00",
+  "status": "targeted-local-cycle-verified; overall acceptance remains partial",
+  "url": "http://127.0.0.1:8782/",
+  "mainUrl": "http://127.0.0.1:8780/",
+  "scope": "CUA/IAB; isolated synthetic QA data. No clinical rules, reward rates or real discounts changed.",
+  "changes": [
+    "Map is the primary visual; separate wallet; redundant game progress bar removed.",
+    "Stable mode selector width and accessible balance-to-catalogue-to-start path.",
+    "Native select focus survives save/failure without overriding a later deliberate focus change."
+  ],
+  "matrix": [
+    {
+      "observationIndex": 12,
+      "screenshot": "calm-375.jpg",
+      "balance": "105",
+      "balanceControl": {
+        "bottom": 505.171875,
+        "height": 80,
+        "width": 221.171875,
+        "x": 33,
+        "y": 425.171875
+      },
+      "bottomNav": 777,
+      "calm": true,
+      "labelInName": true,
+      "map": null,
+      "mapTargets": null,
+      "mode": "calm",
+      "modeControl": {
+        "bottom": 359.78125,
+        "height": 76.5,
+        "width": 294,
+        "x": 33,
+        "y": 283.28125
+      },
+      "overflow": false,
+      "progressBars": 0,
+      "rhythmTargets": null,
+      "scrollY": 0,
+      "viewport": {
+        "height": 844,
+        "width": 375
+      },
+      "wallet": {
+        "bottom": 1051.46875,
+        "height": 239.578125,
+        "width": 294,
+        "x": 33,
+        "y": 811.890625
+      }
+    },
+    {
+      "observationIndex": 11,
+      "screenshot": "calm-768.jpg",
+      "balance": "105",
+      "balanceControl": {
+        "bottom": 360.6875,
+        "height": 98,
+        "width": 149.046875,
+        "x": 560.953125,
+        "y": 262.6875
+      },
+      "bottomNav": 957,
+      "calm": true,
+      "labelInName": true,
+      "map": null,
+      "mapTargets": null,
+      "mode": "calm",
+      "modeControl": {
+        "bottom": 339.1875,
+        "height": 76.5,
+        "width": 360,
+        "x": 43,
+        "y": 262.6875
+      },
+      "overflow": false,
+      "progressBars": 0,
+      "rhythmTargets": null,
+      "scrollY": 0,
+      "viewport": {
+        "height": 1024,
+        "width": 768
+      },
+      "wallet": {
+        "bottom": 824.21875,
+        "height": 196.6875,
+        "width": 667,
+        "x": 43,
+        "y": 627.53125
+      }
+    },
+    {
+      "observationIndex": 10,
+      "screenshot": "calm-1440.jpg",
+      "balance": "105",
+      "balanceControl": {
+        "bottom": 366.1875,
+        "height": 98,
+        "width": 149.046875,
+        "x": 1216.953125,
+        "y": 268.1875
+      },
+      "bottomNav": null,
+      "calm": true,
+      "labelInName": true,
+      "map": null,
+      "mapTargets": null,
+      "mode": "calm",
+      "modeControl": {
+        "bottom": 342.6875,
+        "height": 74.5,
+        "width": 360,
+        "x": 323,
+        "y": 268.1875
+      },
+      "overflow": false,
+      "progressBars": 0,
+      "rhythmTargets": null,
+      "scrollY": 0,
+      "viewport": {
+        "height": 1000,
+        "width": 1440
+      },
+      "wallet": {
+        "bottom": 827.71875,
+        "height": 196.6875,
+        "width": 1043,
+        "x": 323,
+        "y": 631.03125
+      }
+    },
+    {
+      "observationIndex": 13,
+      "screenshot": "map-375.jpg",
+      "balance": "105",
+      "balanceControl": {
+        "bottom": 513.96875,
+        "height": 87,
+        "width": 225.171875,
+        "x": 33,
+        "y": 426.96875
+      },
+      "bottomNav": 777,
+      "calm": false,
+      "labelInName": true,
+      "map": {
+        "bottom": 731.75,
+        "height": 116.796875,
+        "width": 292,
+        "x": 34,
+        "y": 614.953125
+      },
+      "mapTargets": {
+        "count": 5,
+        "height": 88.1875,
+        "width": 268
+      },
+      "mode": "map",
+      "modeControl": {
+        "bottom": 359.78125,
+        "height": 76.5,
+        "width": 294,
+        "x": 33,
+        "y": 283.28125
+      },
+      "next": "Вы здесь · МаякДо «Новый горизонт» ещё 145 баллов",
+      "overflow": false,
+      "progressBars": 1,
+      "rhythmTargets": null,
+      "scrollY": 0,
+      "total": "105 баллов за всё время",
+      "viewport": {
+        "height": 844,
+        "width": 375
+      },
+      "wallet": {
+        "bottom": 1991.21875,
+        "height": 255.578125,
+        "width": 294,
+        "x": 33,
+        "y": 1735.640625
+      }
+    },
+    {
+      "observationIndex": 14,
+      "screenshot": "map-768.jpg",
+      "balance": "105",
+      "balanceControl": {
+        "bottom": 367.6875,
+        "height": 105,
+        "width": 153.046875,
+        "x": 556.953125,
+        "y": 262.6875
+      },
+      "bottomNav": 957,
+      "calm": false,
+      "labelInName": true,
+      "map": {
+        "bottom": 728.171875,
+        "height": 266,
+        "width": 665,
+        "x": 44,
+        "y": 462.171875
+      },
+      "mapTargets": {
+        "count": 5,
+        "height": 96,
+        "width": 199
+      },
+      "mode": "map",
+      "modeControl": {
+        "bottom": 339.1875,
+        "height": 76.5,
+        "width": 360,
+        "x": 43,
+        "y": 262.6875
+      },
+      "next": "Вы здесь · МаякДо «Новый горизонт» ещё 145 баллов",
+      "overflow": false,
+      "progressBars": 1,
+      "rhythmTargets": null,
+      "scrollY": 0,
+      "total": "105 баллов за всё время",
+      "viewport": {
+        "height": 1024,
+        "width": 768
+      },
+      "wallet": {
+        "bottom": 1526.234375,
+        "height": 212.6875,
+        "width": 667,
+        "x": 43,
+        "y": 1313.546875
+      }
+    },
+    {
+      "observationIndex": 15,
+      "screenshot": "map-1440.jpg",
+      "balance": "105",
+      "balanceControl": {
+        "bottom": 373.1875,
+        "height": 105,
+        "width": 153.046875,
+        "x": 1212.953125,
+        "y": 268.1875
+      },
+      "bottomNav": null,
+      "calm": false,
+      "labelInName": true,
+      "map": {
+        "bottom": 778.015625,
+        "height": 302.796875,
+        "width": 757,
+        "x": 324,
+        "y": 475.21875
+      },
+      "mapTargets": {
+        "count": 5,
+        "height": 96,
+        "width": 233.65625
+      },
+      "mode": "map",
+      "modeControl": {
+        "bottom": 342.6875,
+        "height": 74.5,
+        "width": 360,
+        "x": 323,
+        "y": 268.1875
+      },
+      "next": "Вы здесь · МаякДо «Новый горизонт» ещё 145 баллов",
+      "overflow": false,
+      "progressBars": 1,
+      "rhythmTargets": null,
+      "scrollY": 0,
+      "total": "105 баллов за всё время",
+      "viewport": {
+        "height": 1000,
+        "width": 1440
+      },
+      "wallet": {
+        "bottom": 679,
+        "height": 255.578125,
+        "width": 260,
+        "x": 1106,
+        "y": 423.421875
+      }
+    },
+    {
+      "observationIndex": 9,
+      "screenshot": "rhythm-375.jpg",
+      "balance": "105",
+      "balanceControl": {
+        "bottom": 505.171875,
+        "height": 80,
+        "width": 221.171875,
+        "x": 33,
+        "y": 425.171875
+      },
+      "bottomNav": 777,
+      "calm": false,
+      "labelInName": true,
+      "map": null,
+      "mapTargets": null,
+      "mode": "rhythm",
+      "modeControl": {
+        "bottom": 359.78125,
+        "height": 76.5,
+        "width": 294,
+        "x": 33,
+        "y": 283.28125
+      },
+      "overflow": false,
+      "progressBars": 1,
+      "rhythmTargets": {
+        "count": 7,
+        "height": 107.390625,
+        "width": 65.5
+      },
+      "scrollY": 0,
+      "viewport": {
+        "height": 844,
+        "width": 375
+      },
+      "wallet": {
+        "bottom": 1319.875,
+        "height": 255.578125,
+        "width": 294,
+        "x": 33,
+        "y": 1064.296875
+      }
+    },
+    {
+      "observationIndex": 8,
+      "screenshot": "rhythm-768.jpg",
+      "balance": "105",
+      "balanceControl": {
+        "bottom": 360.6875,
+        "height": 98,
+        "width": 149.046875,
+        "x": 560.953125,
+        "y": 262.6875
+      },
+      "bottomNav": 957,
+      "calm": false,
+      "labelInName": true,
+      "map": null,
+      "mapTargets": null,
+      "mode": "rhythm",
+      "modeControl": {
+        "bottom": 339.1875,
+        "height": 76.5,
+        "width": 360,
+        "x": 43,
+        "y": 262.6875
+      },
+      "overflow": false,
+      "progressBars": 1,
+      "rhythmTargets": {
+        "count": 7,
+        "height": 107.390625,
+        "width": 87.28125
+      },
+      "scrollY": 0,
+      "viewport": {
+        "height": 1024,
+        "width": 768
+      },
+      "wallet": {
+        "bottom": 990.8125,
+        "height": 212.6875,
+        "width": 667,
+        "x": 43,
+        "y": 778.125
+      }
+    },
+    {
+      "observationIndex": 7,
+      "screenshot": "rhythm-1440.jpg",
+      "balance": "105",
+      "balanceControl": {
+        "bottom": 366.1875,
+        "height": 98,
+        "width": 149.046875,
+        "x": 1216.953125,
+        "y": 268.1875
+      },
+      "bottomNav": null,
+      "calm": false,
+      "labelInName": true,
+      "map": null,
+      "mapTargets": null,
+      "mode": "rhythm",
+      "modeControl": {
+        "bottom": 342.6875,
+        "height": 74.5,
+        "width": 360,
+        "x": 323,
+        "y": 268.1875
+      },
+      "overflow": false,
+      "progressBars": 1,
+      "rhythmTargets": {
+        "count": 7,
+        "height": 107.390625,
+        "width": 141
+      },
+      "scrollY": 0,
+      "viewport": {
+        "height": 1000,
+        "width": 1440
+      },
+      "wallet": {
+        "bottom": 973.921875,
+        "height": 212.6875,
+        "width": 1043,
+        "x": 323,
+        "y": 761.234375
+      }
+    }
+  ],
+  "excludedGeometry": [
+    {
+      "observationIndex": 4,
+      "reason": "mid smooth-scroll; not first-fold evidence",
+      "scrollY": 845
+    },
+    {
+      "observationIndex": 5,
+      "reason": "mid smooth-scroll; not first-fold evidence",
+      "scrollY": 1010
+    },
+    {
+      "observationIndex": 6,
+      "reason": "mid smooth-scroll; not first-fold evidence",
+      "scrollY": 295
+    }
+  ],
+  "supersededGeometry": [
+    0,
+    1,
+    2,
+    3
+  ],
+  "interactions": [
+    {
+      "scenario": "keyboard-mode-before-focus-fix",
+      "observed": {
+        "focus": "BODY",
+        "mode": "rhythm",
+        "selected": "rhythm"
+      },
+      "result": "reproduced lost focus after native ArrowDown"
+    },
+    {
+      "scenario": "keyboard-mode-after-focus-fix",
+      "observed": {
+        "focus": "SELECT",
+        "mode": "map",
+        "modeFocused": true
+      }
+    },
+    {
+      "scenario": "mode-save-with-intentional-focus-change",
+      "controlledWriteDelaySeconds": 4,
+      "before": {
+        "name": "Каталог тестовых скидок",
+        "pending": true,
+        "role": "region"
+      },
+      "after": {
+        "mode": "rhythm",
+        "modeFocused": false,
+        "name": "Каталог тестовых скидок",
+        "role": "region"
+      },
+      "note": "The3s locator observation timed out while the intentional4s write delay was active; final UI inspected separately after completion"
+    },
+    {
+      "scenario": "rhythm-day-selection",
+      "observed": {
+        "bottomNav": 777,
+        "detail": "19 октября\n1 учтённое действие · 3 балла участия",
+        "detailTop": 594.734375,
+        "scrollY": 290
+      }
+    },
+    {
+      "scenario": "navigation-during-mode-write",
+      "controlledWriteDelaySeconds": 4,
+      "before": {
+        "dialogOpen": true,
+        "dialogTitle": "Дождитесь результата",
+        "mode": "rhythm",
+        "page": "Мой прогресс"
+      },
+      "after": {
+        "dialogOpen": false,
+        "focus": "SELECT",
+        "mode": "calm",
+        "modeFocused": true,
+        "page": "Мой прогресс"
+      }
+    },
+    {
+      "scenario": "phone-balance-to-catalog",
+      "observed": {
+        "balance": "105",
+        "focusName": "Каталог тестовых скидок",
+        "focusRole": "region",
+        "top": 79.859375
+      }
+    },
+    {
+      "scenario": "future-place-preserves-current-and-balance",
+      "observed": {
+        "balance": "105",
+        "current": "Маяк",
+        "selected": "Новый горизонт",
+        "total": "105 баллов за всё время"
+      }
+    },
+    {
+      "scenario": "catalog-return-to-start",
+      "observed": {
+        "balance": "105",
+        "focus": "compass-main",
+        "page": "Мой прогресс",
+        "selected": "Новый горизонт",
+        "titleTop": 126
+      }
+    },
+    {
+      "scenario": "home-focus-check-interrupted-by-auth-expiry",
+      "observed": "App returned to login and cleared the patient workspace; home-mode check had not run"
+    },
+    {
+      "scenario": "home-mode-keyboard-focus",
+      "rhythm": {
+        "focus": "SELECT",
+        "mode": "rhythm",
+        "modeFocused": true
+      },
+      "map": {
+        "focus": "SELECT",
+        "mode": "map",
+        "modeFocused": true
+      }
+    },
+    {
+      "case": "home-mode-failed-save",
+      "checkedAt": "2026-10-25T00:47:06.660Z",
+      "observed": {
+        "alerts": [
+          "Техническая проверка: сохранение временно недоступно."
+        ],
+        "focused": true,
+        "mode": "map",
+        "selected": "map"
+      },
+      "note": "Controlled QA 503; no successful preference write; normal server mode restored before inspection."
+    },
+    {
+      "case": "phone-balance-catalog-return",
+      "checkedAt": "2026-10-25T00:47:30.670Z",
+      "catalog": {
+        "back": {
+          "bottom": 207.046875,
+          "height": 44,
+          "top": 163.046875,
+          "width": 101.109375
+        },
+        "balance": "105",
+        "catalogTop": 79.859375,
+        "focused": "Каталог тестовых скидок",
+        "overflow": false,
+        "scrollY": 3106
+      },
+      "returned": {
+        "balance": "105",
+        "focused": "compass-main",
+        "h1": 116,
+        "mode": "map",
+        "overflow": false,
+        "scrollY": 0
+      }
+    }
+  ],
+  "console": {
+    "observedWarningsOrErrors": 0,
+    "scope": "Latest 40 warn/error records queried in own tab; not a network success claim. Controlled 503 and delayed-write tests were intentional."
+  },
+  "frontend": {
+    "passed": 30,
+    "failed": 0,
+    "durationMs": 10692.1692,
+    "typecheck": "pass",
+    "build": "pass",
+    "testLog": {
+      "file": "outputs/journey-layout-frontend-20261025.log",
+      "bytes": 3565,
+      "sha256": "21de9079764e8377b349d343532e874ecea37005de87f5f1ccf274e999f7c0e7"
+    },
+    "coverage": "not measured",
+    "separateLint": "not configured",
+    "entry": {
+      "file": "frontend/dist/assets/index-Ccsb-6zc.js",
+      "bytes": 385235,
+      "sha256": "9d0a92da927f68ddca8f986a2b36bc03a4e739beccc97e847c0f0ad45a6ed8c6"
+    }
+  },
+  "http": {
+    "base_url": "http://127.0.0.1:8780",
+    "scope": "HTTP bytes and MIME only; not browser layout/interactions",
+    "assets": [
+      {
+        "file": "AdminDashboard-_3HGokBp.js",
+        "status": 200,
+        "bytes": 18451,
+        "sha256": "69b3d5a7e423f75d5a48ead4dc0f5f5b549edf63b2d4fed5f7ece5a63c2382ce",
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "file": "CareWorkflow-D6M4hhOu.js",
+        "status": 200,
+        "bytes": 26982,
+        "sha256": "7f8c57f7485a8a8edf152219456efa123737b42889edaf210125bd9e4b04e9d2",
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "file": "Charts-C35bHXfv.js",
+        "status": 200,
+        "bytes": 5452,
+        "sha256": "8cd6aef8f74a4c25d56dd58498d7c1572c1b0b443756971fec763c4da84309bd",
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "file": "DoctorDashboard-nxHFr9_O.js",
+        "status": 200,
+        "bytes": 16936,
+        "sha256": "57ddedb61c99aa953fe7f5f5b8d38feba1245affcf0f48688bb02e985123fb93",
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "file": "DoctorPatients-DqjmpYPt.js",
+        "status": 200,
+        "bytes": 36365,
+        "sha256": "dcec1436ce9d45f98adabfadcf36738d001d7b9765230463391a10432da7d9e5",
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "file": "MedicationSchedule-BGXX_mka.css",
+        "status": 200,
+        "bytes": 2105,
+        "sha256": "c20413094ff3583bb21b006cdc48aba46037576c0d732dce5ed4bb1689d2d580",
+        "mime": "text/css; charset=utf-8"
+      },
+      {
+        "file": "MedicationSchedule-vMtBlmhr.js",
+        "status": 200,
+        "bytes": 33991,
+        "sha256": "4d025203d06dd9027e455f2b7b2c304f548ce6b2d09cb707be06dd79474c61c5",
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "file": "Patient-Bu5fcoSr.css",
+        "status": 200,
+        "bytes": 27478,
+        "sha256": "e33bcc43ccff95239e5d626f0e699c8d14afb45b22f34ececac9dce96bba95b9",
+        "mime": "text/css; charset=utf-8"
+      },
+      {
+        "file": "Patient-CbG3To76.js",
+        "status": 200,
+        "bytes": 66982,
+        "sha256": "13887ca92c67fc29b19cad14ac3242d9bb7bdfdaf89d9198330928a6bfc26532",
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "file": "SurveyBuilder-Gg30UVfG.js",
+        "status": 200,
+        "bytes": 25412,
+        "sha256": "fbb97dacb36af7626bb3ca4e26791e241732ab10b20f4f5b7c16ac3a40d18f1c",
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "file": "SurveyFields-OwFHeoc3.js",
+        "status": 200,
+        "bytes": 3121,
+        "sha256": "46dfc466f09ecc3e64ce0c5421ead9d58175324ee916ba381c2c81c4db69bc4e",
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "file": "TaskBoard-DvQVL7gw.js",
+        "status": 200,
+        "bytes": 7844,
+        "sha256": "dfe1869db6e9ee88a062a938d077a06707c4f90cb9c92011f7323b465c27ab1c",
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "file": "WorkflowMetrics-BwxKEX8w.js",
+        "status": 200,
+        "bytes": 12440,
+        "sha256": "ab6a8260701e0e96feb9eb03f766ed75447e0eea94ca0e127f99ec14df34a58f",
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "file": "chevron-right-DzF0wAuv.js",
+        "status": 200,
+        "bytes": 159,
+        "sha256": "598de29fca140c0197bb487a2b30d60a0fde8bbbece4e1a5ee0308684054bb1a",
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "file": "collection-COswcvyL.js",
+        "status": 200,
+        "bytes": 939,
+        "sha256": "b8f61ba215c319fcc2aaf6ce0fb3b26b182c049b9a0d9e4febe85703fe8000e4",
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "file": "index-BmeH5jpM.css",
+        "status": 200,
+        "bytes": 111027,
+        "sha256": "16990d16539c3bfdc103558c1ff574634da3ed71e1051355eca32191003ecc45",
+        "mime": "text/css; charset=utf-8"
+      },
+      {
+        "file": "index-Ccsb-6zc.js",
+        "status": 200,
+        "bytes": 385235,
+        "sha256": "9d0a92da927f68ddca8f986a2b36bc03a4e739beccc97e847c0f0ad45a6ed8c6",
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "file": "patientProgress-Do0fObh9.js",
+        "status": 200,
+        "bytes": 1130,
+        "sha256": "611dafc1b1ad2ac66b0b04ac3852b8c0bf56b6f106882f460ee96efa5097a0b3",
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "file": "plus-D4ikVQ4D.js",
+        "status": 200,
+        "bytes": 182,
+        "sha256": "0a58ab039dde4e96def1432619c50d1351ea57117fd19167bf2609ccf553c87c",
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "file": "send-Db5dz9X9.js",
+        "status": 200,
+        "bytes": 652,
+        "sha256": "a99847247efdcafeb40aa99eafcb5e9fa29a28c7d5f617c9f536d1d64e47305b",
+        "mime": "text/javascript; charset=utf-8"
+      }
+    ],
+    "health": {
+      "status": "ok",
+      "compass_db": true,
+      "mis_db": true,
+      "mode": "synthetic_demo"
+    },
+    "root_matches_dist": true,
+    "qa_health": {
+      "status": "ok",
+      "compass_db": true,
+      "mis_db": true,
+      "mode": "synthetic_demo"
+    }
+  },
+  "semantic": {
+    "recordedAt": "2026-10-25T00:48:29.550Z",
+    "engine": "axe-core 4.14.0",
+    "scope": "Semantic analysis of CUA-exported markup in JSDOM29.1.1 with local entry CSS. App scripts and external resources never execute; no actual-browser axe, layout, contrast, keyboard, motion or screen-reader pass.",
+    "source": "https://github.com/dequelabs/axe-core#supported-browsers",
+    "disabledRules": [
+      "color-contrast"
+    ],
+    "pages": [
+      {
+        "file": "journey-map.html",
+        "sha256": "bf4b0364afb07a9bedaaed5fcdf7656a254e8ce16fb585d1df4c57e73c46cf63",
+        "title": "Мой прогресс · Clinical Compass",
+        "violations": [],
+        "incomplete": [
+          {
+            "id": "label-content-name-mismatch",
+            "impact": "serious",
+            "description": "Ensure that elements labelled through their content must have their visible text as part of their accessible name",
+            "help": "Elements must have their visible text as part of their accessible name",
+            "helpUrl": "https://dequeuniversity.com/rules/axe/4.14/label-content-name-mismatch?application=axeAPI",
+            "nodes": [
+              {
+                "target": [
+                  ".section-help-button"
+                ],
+                "failureSummary": "Fix all of the following:\n  Axe encountered an error; test the page for this type of problem manually",
+                "html": "<button class=\"button ghost section-help-button\" aria-label=\"Помощь с разделом\" tabindex=\"0\">"
+              }
+            ]
+          },
+          {
+            "id": "landmark-one-main",
+            "impact": "moderate",
+            "description": "Ensure the document has a main landmark",
+            "help": "Document should have one main landmark",
+            "helpUrl": "https://dequeuniversity.com/rules/axe/4.14/landmark-one-main?application=axeAPI",
+            "nodes": [
+              {
+                "target": [
+                  "html"
+                ],
+                "failureSummary": "Fix all of the following:\n  Axe encountered an error; test the page for this type of problem manually",
+                "html": "<html lang=\"ru\">"
+              }
+            ]
+          },
+          {
+            "id": "page-has-heading-one",
+            "impact": "moderate",
+            "description": "Ensure that the page, or at least one of its frames contains a level-one heading",
+            "help": "Page should contain a level-one heading",
+            "helpUrl": "https://dequeuniversity.com/rules/axe/4.14/page-has-heading-one?application=axeAPI",
+            "nodes": [
+              {
+                "target": [
+                  "html"
+                ],
+                "failureSummary": "Fix all of the following:\n  Axe encountered an error; test the page for this type of problem manually",
+                "html": "<html lang=\"ru\">"
+              }
+            ]
+          }
+        ],
+        "passedRuleCount": 40,
+        "passedRuleIds": [
+          "aria-allowed-attr",
+          "aria-allowed-role",
+          "aria-conditional-attr",
+          "aria-deprecated-role",
+          "aria-hidden-body",
+          "aria-hidden-focus",
+          "aria-prohibited-attr",
+          "aria-required-attr",
+          "aria-roles",
+          "aria-valid-attr-value",
+          "aria-valid-attr",
+          "avoid-inline-spacing",
+          "button-name",
+          "bypass",
+          "document-title",
+          "duplicate-id-aria",
+          "empty-heading",
+          "form-field-multiple-labels",
+          "heading-order",
+          "html-has-lang",
+          "html-lang-valid",
+          "label-title-only",
+          "landmark-banner-is-top-level",
+          "landmark-contentinfo-is-top-level",
+          "landmark-main-is-top-level",
+          "landmark-no-duplicate-banner",
+          "landmark-no-duplicate-contentinfo",
+          "landmark-no-duplicate-main",
+          "landmark-unique",
+          "link-name",
+          "list",
+          "listitem",
+          "meta-viewport-large",
+          "meta-viewport",
+          "nested-interactive",
+          "region",
+          "select-name",
+          "summary-name",
+          "tabindex",
+          "target-size"
+        ],
+        "inapplicableRuleCount": 47,
+        "domWarnings": [
+          "Not implemented: HTMLCanvasElement's getContext() method: without installing the canvas npm package"
+        ]
+      },
+      {
+        "file": "journey-rhythm.html",
+        "sha256": "2ba874208d8f98e6d6b1ce9ebea03d1440c705635e582ed4844dc7f36bcfcfcd",
+        "title": "Мой прогресс · Clinical Compass",
+        "violations": [],
+        "incomplete": [
+          {
+            "id": "label-content-name-mismatch",
+            "impact": "serious",
+            "description": "Ensure that elements labelled through their content must have their visible text as part of their accessible name",
+            "help": "Elements must have their visible text as part of their accessible name",
+            "helpUrl": "https://dequeuniversity.com/rules/axe/4.14/label-content-name-mismatch?application=axeAPI",
+            "nodes": [
+              {
+                "target": [
+                  ".section-help-button"
+                ],
+                "failureSummary": "Fix all of the following:\n  Axe encountered an error; test the page for this type of problem manually",
+                "html": "<button class=\"button ghost section-help-button\" aria-label=\"Помощь с разделом\" tabindex=\"0\">"
+              }
+            ]
+          },
+          {
+            "id": "landmark-one-main",
+            "impact": "moderate",
+            "description": "Ensure the document has a main landmark",
+            "help": "Document should have one main landmark",
+            "helpUrl": "https://dequeuniversity.com/rules/axe/4.14/landmark-one-main?application=axeAPI",
+            "nodes": [
+              {
+                "target": [
+                  "html"
+                ],
+                "failureSummary": "Fix all of the following:\n  Axe encountered an error; test the page for this type of problem manually",
+                "html": "<html lang=\"ru\">"
+              }
+            ]
+          },
+          {
+            "id": "page-has-heading-one",
+            "impact": "moderate",
+            "description": "Ensure that the page, or at least one of its frames contains a level-one heading",
+            "help": "Page should contain a level-one heading",
+            "helpUrl": "https://dequeuniversity.com/rules/axe/4.14/page-has-heading-one?application=axeAPI",
+            "nodes": [
+              {
+                "target": [
+                  "html"
+                ],
+                "failureSummary": "Fix all of the following:\n  Axe encountered an error; test the page for this type of problem manually",
+                "html": "<html lang=\"ru\">"
+              }
+            ]
+          }
+        ],
+        "passedRuleCount": 38,
+        "passedRuleIds": [
+          "aria-allowed-attr",
+          "aria-allowed-role",
+          "aria-conditional-attr",
+          "aria-deprecated-role",
+          "aria-hidden-body",
+          "aria-hidden-focus",
+          "aria-prohibited-attr",
+          "aria-required-attr",
+          "aria-roles",
+          "aria-valid-attr-value",
+          "aria-valid-attr",
+          "avoid-inline-spacing",
+          "button-name",
+          "bypass",
+          "document-title",
+          "duplicate-id-aria",
+          "empty-heading",
+          "form-field-multiple-labels",
+          "heading-order",
+          "html-has-lang",
+          "html-lang-valid",
+          "label-title-only",
+          "landmark-banner-is-top-level",
+          "landmark-contentinfo-is-top-level",
+          "landmark-main-is-top-level",
+          "landmark-no-duplicate-banner",
+          "landmark-no-duplicate-contentinfo",
+          "landmark-no-duplicate-main",
+          "landmark-unique",
+          "link-name",
+          "meta-viewport-large",
+          "meta-viewport",
+          "nested-interactive",
+          "region",
+          "select-name",
+          "summary-name",
+          "tabindex",
+          "target-size"
+        ],
+        "inapplicableRuleCount": 49,
+        "domWarnings": [
+          "Not implemented: HTMLCanvasElement's getContext() method: without installing the canvas npm package"
+        ]
+      },
+      {
+        "file": "journey-calm.html",
+        "sha256": "4ab7570326c29b8ff852309f0eb51c192ec1b96c3aa2ff77177c5acbe8d6b469",
+        "title": "Мой прогресс · Clinical Compass",
+        "violations": [],
+        "incomplete": [
+          {
+            "id": "label-content-name-mismatch",
+            "impact": "serious",
+            "description": "Ensure that elements labelled through their content must have their visible text as part of their accessible name",
+            "help": "Elements must have their visible text as part of their accessible name",
+            "helpUrl": "https://dequeuniversity.com/rules/axe/4.14/label-content-name-mismatch?application=axeAPI",
+            "nodes": [
+              {
+                "target": [
+                  ".section-help-button"
+                ],
+                "failureSummary": "Fix all of the following:\n  Axe encountered an error; test the page for this type of problem manually",
+                "html": "<button class=\"button ghost section-help-button\" aria-label=\"Помощь с разделом\" tabindex=\"0\">"
+              }
+            ]
+          },
+          {
+            "id": "landmark-one-main",
+            "impact": "moderate",
+            "description": "Ensure the document has a main landmark",
+            "help": "Document should have one main landmark",
+            "helpUrl": "https://dequeuniversity.com/rules/axe/4.14/landmark-one-main?application=axeAPI",
+            "nodes": [
+              {
+                "target": [
+                  "html"
+                ],
+                "failureSummary": "Fix all of the following:\n  Axe encountered an error; test the page for this type of problem manually",
+                "html": "<html lang=\"ru\">"
+              }
+            ]
+          },
+          {
+            "id": "page-has-heading-one",
+            "impact": "moderate",
+            "description": "Ensure that the page, or at least one of its frames contains a level-one heading",
+            "help": "Page should contain a level-one heading",
+            "helpUrl": "https://dequeuniversity.com/rules/axe/4.14/page-has-heading-one?application=axeAPI",
+            "nodes": [
+              {
+                "target": [
+                  "html"
+                ],
+                "failureSummary": "Fix all of the following:\n  Axe encountered an error; test the page for this type of problem manually",
+                "html": "<html lang=\"ru\">"
+              }
+            ]
+          }
+        ],
+        "passedRuleCount": 38,
+        "passedRuleIds": [
+          "aria-allowed-attr",
+          "aria-allowed-role",
+          "aria-conditional-attr",
+          "aria-deprecated-role",
+          "aria-hidden-body",
+          "aria-hidden-focus",
+          "aria-prohibited-attr",
+          "aria-required-attr",
+          "aria-roles",
+          "aria-valid-attr-value",
+          "aria-valid-attr",
+          "avoid-inline-spacing",
+          "button-name",
+          "bypass",
+          "document-title",
+          "duplicate-id-aria",
+          "empty-heading",
+          "form-field-multiple-labels",
+          "heading-order",
+          "html-has-lang",
+          "html-lang-valid",
+          "label-title-only",
+          "landmark-banner-is-top-level",
+          "landmark-contentinfo-is-top-level",
+          "landmark-main-is-top-level",
+          "landmark-no-duplicate-banner",
+          "landmark-no-duplicate-contentinfo",
+          "landmark-no-duplicate-main",
+          "landmark-unique",
+          "link-name",
+          "meta-viewport-large",
+          "meta-viewport",
+          "nested-interactive",
+          "region",
+          "select-name",
+          "summary-name",
+          "tabindex",
+          "target-size"
+        ],
+        "inapplicableRuleCount": 49,
+        "domWarnings": [
+          "Not implemented: HTMLCanvasElement's getContext() method: without installing the canvas npm package"
+        ]
+      },
+      {
+        "file": "patient-home-latest.html",
+        "sha256": "2f6a2479fcdb422cb236df49ce90526c8f4209173f68d9be165ae09fc6c85f45",
+        "title": "Мой день · Clinical Compass",
+        "violations": [],
+        "incomplete": [
+          {
+            "id": "label-content-name-mismatch",
+            "impact": "serious",
+            "description": "Ensure that elements labelled through their content must have their visible text as part of their accessible name",
+            "help": "Elements must have their visible text as part of their accessible name",
+            "helpUrl": "https://dequeuniversity.com/rules/axe/4.14/label-content-name-mismatch?application=axeAPI",
+            "nodes": [
+              {
+                "target": [
+                  ".section-help-button"
+                ],
+                "failureSummary": "Fix all of the following:\n  Axe encountered an error; test the page for this type of problem manually",
+                "html": "<button class=\"button ghost section-help-button\" aria-label=\"Помощь с разделом\" tabindex=\"0\">"
+              }
+            ]
+          },
+          {
+            "id": "landmark-one-main",
+            "impact": "moderate",
+            "description": "Ensure the document has a main landmark",
+            "help": "Document should have one main landmark",
+            "helpUrl": "https://dequeuniversity.com/rules/axe/4.14/landmark-one-main?application=axeAPI",
+            "nodes": [
+              {
+                "target": [
+                  "html"
+                ],
+                "failureSummary": "Fix all of the following:\n  Axe encountered an error; test the page for this type of problem manually",
+                "html": "<html lang=\"ru\">"
+              }
+            ]
+          },
+          {
+            "id": "page-has-heading-one",
+            "impact": "moderate",
+            "description": "Ensure that the page, or at least one of its frames contains a level-one heading",
+            "help": "Page should contain a level-one heading",
+            "helpUrl": "https://dequeuniversity.com/rules/axe/4.14/page-has-heading-one?application=axeAPI",
+            "nodes": [
+              {
+                "target": [
+                  "html"
+                ],
+                "failureSummary": "Fix all of the following:\n  Axe encountered an error; test the page for this type of problem manually",
+                "html": "<html lang=\"ru\">"
+              }
+            ]
+          }
+        ],
+        "passedRuleCount": 41,
+        "passedRuleIds": [
+          "aria-allowed-attr",
+          "aria-allowed-role",
+          "aria-conditional-attr",
+          "aria-deprecated-role",
+          "aria-hidden-body",
+          "aria-hidden-focus",
+          "aria-prohibited-attr",
+          "aria-required-attr",
+          "aria-roles",
+          "aria-valid-attr-value",
+          "aria-valid-attr",
+          "avoid-inline-spacing",
+          "button-name",
+          "bypass",
+          "definition-list",
+          "dlitem",
+          "document-title",
+          "duplicate-id-aria",
+          "empty-heading",
+          "form-field-multiple-labels",
+          "heading-order",
+          "html-has-lang",
+          "html-lang-valid",
+          "label-title-only",
+          "landmark-banner-is-top-level",
+          "landmark-contentinfo-is-top-level",
+          "landmark-main-is-top-level",
+          "landmark-no-duplicate-banner",
+          "landmark-no-duplicate-contentinfo",
+          "landmark-no-duplicate-main",
+          "landmark-unique",
+          "link-name",
+          "meta-viewport-large",
+          "meta-viewport",
+          "nested-interactive",
+          "region",
+          "select-name",
+          "summary-name",
+          "svg-img-alt",
+          "tabindex",
+          "target-size"
+        ],
+        "inapplicableRuleCount": 46,
+        "domWarnings": [
+          "Not implemented: HTMLCanvasElement's getContext() method: without installing the canvas npm package"
+        ]
+      }
+    ]
+  },
+  "sources": [
+    {
+      "file": "frontend/src/PatientJourney.tsx",
+      "bytes": 20460,
+      "sha256": "bf87a7dec79452f74d277bd3c6dc31ec54c3255f108de3841e7a38115425207f"
+    },
+    {
+      "file": "frontend/src/PatientAdventure.tsx",
+      "bytes": 12481,
+      "sha256": "5da32a1cee3d9c309c0078998e71ac467296c3a83b3f13d5a55b5ff9166b628b"
+    },
+    {
+      "file": "frontend/src/patient-adventure.css",
+      "bytes": 16114,
+      "sha256": "3bdcce4483d5fc60ac15452898a9e523ec444f656cb1e2b8ce0c9dd1b35f923d"
+    },
+    {
+      "file": "frontend/src/PatientOverview.tsx",
+      "bytes": 19127,
+      "sha256": "ff7155e31a12ae662d5c44677784bc55689a0e425abd80ae77310bc1af5234cf"
+    },
+    {
+      "file": "frontend/src/patient-home.css",
+      "bytes": 15117,
+      "sha256": "67fae39f0dcbb672a008a001530bd81239456f84e4e69ad585d015de774b8788"
+    },
+    {
+      "file": "frontend/package.json",
+      "bytes": 1276,
+      "sha256": "0a532f5bc58a04db9bbd1f65f5b572f450ad36be59b7d9bf836c21bb1c95b98a"
+    },
+    {
+      "file": "frontend/package-lock.json",
+      "bytes": 69706,
+      "sha256": "bd6b6e3218344d066c857f0e8435d991641c66b79902eac9f0ca3a42cfe4f78e"
+    }
+  ],
+  "screenshots": [
+    {
+      "file": "docs/evidence/journey-layout-2026-10-25/calm-375.jpg",
+      "bytes": 38547,
+      "sha256": "eb1a9b7917e6ef46fa7f42667f2e4cc557288159264abe5bab3f3b50719e1717",
+      "pixels": [
+        360,
+        810
+      ],
+      "savedAt": "2026-10-25T00:25:01.977722+00:00"
+    },
+    {
+      "file": "docs/evidence/journey-layout-2026-10-25/calm-768.jpg",
+      "bytes": 59631,
+      "sha256": "8f9b22af794c01f4d23d2f10b52786c59d1bb39c388ccf54438c21aecf054971",
+      "pixels": [
+        753,
+        1004
+      ],
+      "savedAt": "2026-10-25T00:23:17.153413+00:00"
+    },
+    {
+      "file": "docs/evidence/journey-layout-2026-10-25/calm-1440.jpg",
+      "bytes": 97484,
+      "sha256": "7c09c050f798905d7a80d9f677c98127784f212fbe1ea8e0cd554a826014b23c",
+      "pixels": [
+        1425,
+        990
+      ],
+      "savedAt": "2026-10-25T00:19:40.340626+00:00"
+    },
+    {
+      "file": "docs/evidence/journey-layout-2026-10-25/map-375.jpg",
+      "bytes": 36246,
+      "sha256": "8256f6e8cfaaa0b905f3fc35d9abb35e6a10a1fa838e8cf805c5cee4a0d53d79",
+      "pixels": [
+        360,
+        810
+      ],
+      "savedAt": "2026-10-25T00:28:59.187989+00:00"
+    },
+    {
+      "file": "docs/evidence/journey-layout-2026-10-25/map-768.jpg",
+      "bytes": 61961,
+      "sha256": "e252f0eabef03f8c0fb0abfe97dbb845b2c9e8093d8825582ba2f743973f8eb6",
+      "pixels": [
+        753,
+        1004
+      ],
+      "savedAt": "2026-10-25T00:35:23.460380+00:00"
+    },
+    {
+      "file": "docs/evidence/journey-layout-2026-10-25/map-1440.jpg",
+      "bytes": 104665,
+      "sha256": "8ebc981536c93bff5efe4d9ca48df7e51528575fe9b0923610fbedcef191c466",
+      "pixels": [
+        1425,
+        990
+      ],
+      "savedAt": "2026-10-25T00:37:46.525041+00:00"
+    },
+    {
+      "file": "docs/evidence/journey-layout-2026-10-25/rhythm-375.jpg",
+      "bytes": 35684,
+      "sha256": "b4cd1b5882e7cf479b4452dfd963e5171eb676f101d777b7110852123d530ffc",
+      "pixels": [
+        360,
+        810
+      ],
+      "savedAt": "2026-10-25T00:13:51.728765+00:00"
+    },
+    {
+      "file": "docs/evidence/journey-layout-2026-10-25/rhythm-768.jpg",
+      "bytes": 63383,
+      "sha256": "4fa29197cd10bf43444e6e9b5b790ea2996a365a827be5c14964c71a71b250c7",
+      "pixels": [
+        753,
+        1004
+      ],
+      "savedAt": "2026-10-25T00:11:06.230556+00:00"
+    },
+    {
+      "file": "docs/evidence/journey-layout-2026-10-25/rhythm-1440.jpg",
+      "bytes": 99800,
+      "sha256": "8481475df8b464fa73587b5354315e40d3c85d6c51aee1e8ddfb2f4f5da39f0b",
+      "pixels": [
+        1425,
+        990
+      ],
+      "savedAt": "2026-10-25T00:09:50.360007+00:00"
+    },
+    {
+      "file": "docs/evidence/journey-layout-2026-10-25/catalog-from-balance-375.jpg",
+      "bytes": 37961,
+      "sha256": "da7dd5430b74a71b6a9ce208fb31aae7dd15bae8d128d7cb6a64ffc332edc519",
+      "pixels": [
+        360,
+        810
+      ],
+      "savedAt": "2026-10-25T00:47:21.169296+00:00"
+    },
+    {
+      "file": "docs/evidence/journey-layout-2026-10-25/future-place-1440.jpg",
+      "bytes": 100124,
+      "sha256": "bad23237ecf5888a8e1bf3f6f1b2463b387a626d4db22406a83d6242ffe0753b",
+      "pixels": [
+        1425,
+        990
+      ],
+      "savedAt": "2026-10-25T00:37:46.894860+00:00"
+    }
+  ],
+  "limits": [
+    "No established pixel baseline: visual regression is inconclusive.",
+    "JSDOM semantic audit: 0 detected violations, 12 incomplete outcomes retained. No full browser axe/WCAG or screen-reader pass.",
+    "Screenshot export pixels may differ from CSS viewport; geometry uses actual DOM CSS pixels.",
+    "CUA locator clicks may scroll controls into view; day-detail visibility does not prove app-initiated scrolling.",
+    "No Web Vitals, FPS or system reduced-motion measurement. Existing maximum 500ms load gate remains unmet.",
+    "Catalogue desktop screenshot from an earlier substep is retained as raw material, excluded from final curated images."
+  ]
+}

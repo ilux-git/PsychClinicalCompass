@@ -1,0 +1,435 @@
+{
+  "recordedAt": "2026-10-25T04:13:05.204820+00:00",
+  "status": "targeted CSS palette/target/focus checks verified; overall accessibility remains partial",
+  "changes": [
+    "Ordinary disclosure and text-link actions use team Signal Dark.",
+    "Back and period-reset targets increased40→44px; existing13px typography retained.",
+    "12px separation after panel hints keeps3px keyboard focus ring away from adjacent text."
+  ],
+  "scope": "Three CSS files only. No JS, layout hierarchy, data, role, medical, award or API change; measured green status colors unchanged.",
+  "verification": {
+    "native": {
+      "before": {
+        "patient": {
+          "actions": [
+            {
+              "background": "rgba(0, 0, 0, 0)",
+              "class": "disclosure-trigger",
+              "color": "rgb(44, 112, 101)",
+              "rect": {
+                "bottom": 577.875,
+                "height": 44,
+                "left": 321,
+                "right": 1208,
+                "top": 533.875,
+                "width": 887,
+                "x": 321,
+                "y": 533.875
+              },
+              "text": "Добавить наблюдения или уточнить время"
+            }
+          ],
+          "tokens": {
+            "ink": "#18191a",
+            "signalDark": "#a52e1c"
+          }
+        },
+        "doctor": [
+          {
+            "class": "text-link",
+            "color": "rgb(24, 25, 26)",
+            "fontSize": "13px",
+            "rect": {
+              "bottom": 340.59375,
+              "height": 40,
+              "left": 879.96875,
+              "right": 962.328125,
+              "top": 300.59375,
+              "width": 82.359375,
+              "x": 879.96875,
+              "y": 300.59375
+            },
+            "text": "За всё время"
+          },
+          {
+            "class": "button ghost ",
+            "color": "rgb(165, 46, 28)",
+            "fontSize": "13px",
+            "rect": {
+              "bottom": 1975.78125,
+              "height": 44,
+              "left": 616.078125,
+              "right": 777.515625,
+              "top": 1931.78125,
+              "width": 161.4375,
+              "x": 616.078125,
+              "y": 1931.78125
+            },
+            "text": "Уточнить опросом"
+          },
+          {
+            "class": "disclosure-trigger",
+            "color": "rgb(44, 112, 101)",
+            "fontSize": "13px",
+            "rect": {
+              "bottom": 2037.78125,
+              "height": 44,
+              "left": 321,
+              "right": 777.515625,
+              "top": 1993.78125,
+              "width": 456.515625,
+              "x": 321,
+              "y": 1993.78125
+            },
+            "text": "Показать распределения ответов · 3"
+          }
+        ],
+        "back": {
+          "color": "rgb(165, 46, 28)",
+          "fontSize": "13px",
+          "rect": {
+            "bottom": -518,
+            "height": 40,
+            "left": 296,
+            "right": 576.0625,
+            "top": -558,
+            "width": 280.0625,
+            "x": 296,
+            "y": -558
+          },
+          "text": " К разделу «Аналитика сопровождения»"
+        },
+        "spacing": {
+          "button": {
+            "bottom": 172.5625,
+            "height": 44,
+            "left": 956,
+            "right": 1210,
+            "top": 128.5625,
+            "width": 254,
+            "x": 956,
+            "y": 128.5625
+          },
+          "gap": 0,
+          "previous": {
+            "rect": {
+              "bottom": 128.5625,
+              "height": 38.375,
+              "left": 956,
+              "right": 1210,
+              "top": 90.1875,
+              "width": 254,
+              "x": 956,
+              "y": 90.1875
+            },
+            "tag": "P",
+            "text": "Приватный раздел врача. Пациент его не видит."
+          },
+          "wrapperClass": "panel "
+        },
+        "statuses": [
+          {
+            "background": "rgb(232, 243, 235)",
+            "class": "badge good",
+            "color": "rgb(39, 101, 74)",
+            "text": "Ответ получен"
+          },
+          {
+            "background": "rgb(232, 243, 235)",
+            "class": "badge good",
+            "color": "rgb(39, 101, 74)",
+            "text": "Ответ получен"
+          }
+        ]
+      },
+      "after": {
+        "doctor": {
+          "actionColor": "rgb(165, 46, 28)",
+          "backHeight": 44,
+          "gap": 12,
+          "height": 44,
+          "outline": {
+            "color": "rgb(165, 46, 28)",
+            "width": "3px"
+          },
+          "overflow": false,
+          "statuses": [
+            {
+              "background": "rgb(232, 243, 235)",
+              "class": "badge good",
+              "color": "rgb(39, 101, 74)",
+              "text": "Ответ получен"
+            },
+            {
+              "background": "rgb(232, 243, 235)",
+              "class": "badge good",
+              "color": "rgb(39, 101, 74)",
+              "text": "Ответ получен"
+            }
+          ]
+        },
+        "period": {
+          "background": "rgb(246, 244, 239)",
+          "color": "rgb(165, 46, 28)",
+          "contrast": 6.352673741508717,
+          "fontSize": "13px",
+          "height": 44,
+          "outlineColor": "rgb(165, 46, 28)",
+          "outlineWidth": "3px",
+          "text": "За всё время"
+        },
+        "patient": {
+          "background": "rgb(255, 255, 255)",
+          "color": "rgb(165, 46, 28)",
+          "contrast": 6.982699981397574,
+          "fontSize": "13px",
+          "height": 63,
+          "outlineColor": "rgb(165, 46, 28)",
+          "outlineWidth": "3px",
+          "text": "Добавить наблюдения или уточнить время"
+        },
+        "doctorKeyboard": {
+          "emptyText": "",
+          "expanded": "true",
+          "focusTag": "SELECT"
+        },
+        "patientKeyboard": {
+          "expanded": "true",
+          "tag": "SELECT"
+        }
+      },
+      "console": []
+    },
+    "buildAndTypes": {
+      "status": "pass",
+      "exitCode": 0,
+      "source": {
+        "file": "outputs/action-style-build-20261025.log",
+        "bytes": 2056,
+        "sha256": "d7b81e8ca418d0ab9f5821102ad1a24a7a6d31043991fe15d52203809e1291eb"
+      }
+    },
+    "functionalSuite": "Last48/48 retained; no new behavior or mirrored CSS tests, no duplicate full-suite run for this CSS-only patch.",
+    "backend": "Previous151/151 unchanged, not rerun.",
+    "http": {
+      "base_url": "http://127.0.0.1:8780",
+      "scope": "HTTP bytes and MIME only; not browser layout/interactions",
+      "assets": [
+        {
+          "file": "AdminDashboard-CZzCBF6Z.js",
+          "status": 200,
+          "bytes": 18451,
+          "sha256": "4021337350b54355dea6d716bfd445284a8fa99e41289dc9ddcce014c1dec699",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "CareWorkflow-BHvyCnZc.js",
+          "status": 200,
+          "bytes": 26980,
+          "sha256": "b9f6e9f3ea65308fc509d6f74ccde5ee230d1e94cbfac7bd2ca71b9ccd73b0e8",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "Charts-DacNhlkU.js",
+          "status": 200,
+          "bytes": 5476,
+          "sha256": "083a9b75f0aeb78110f67548346e594f94ac591ec99ae6c529b1b7fce9002f96",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "DoctorDashboard-CwI4BoSV.js",
+          "status": 200,
+          "bytes": 18046,
+          "sha256": "93bf24f8c8d334688d6c6330b9573514c672b92b84b42404f4d1d7738895ee58",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "DoctorPatients-BIgws5KF.js",
+          "status": 200,
+          "bytes": 36363,
+          "sha256": "b0b3aee1bbb9733ed44c332fc60d1fc5d582890276ffd903b067786966928711",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "MedicationSchedule-C_cioHGn.css",
+          "status": 200,
+          "bytes": 2103,
+          "sha256": "3ecca9c112edd867ada5c834649a96069fb7decf7d1ea5da5aebe9da0ab28a4e",
+          "mime": "text/css; charset=utf-8"
+        },
+        {
+          "file": "MedicationSchedule-UAFkSun5.js",
+          "status": 200,
+          "bytes": 36031,
+          "sha256": "6effbd34d2e81164059be23a363d39a252d44495ba3dc779da9be976c68214ab",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "Patient-B9xuvwdE.css",
+          "status": 200,
+          "bytes": 26258,
+          "sha256": "9160fbf594ce6238151f4e13f5a28e00c0e62184711079b09f25bbebeb327b0b",
+          "mime": "text/css; charset=utf-8"
+        },
+        {
+          "file": "Patient-DXtWs1Pl.js",
+          "status": 200,
+          "bytes": 66896,
+          "sha256": "3226c94670ca6454d7087cf43fffa22904ba6673e774d977c781190891c5b3ee",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "SurveyBuilder-CCnb2Lns.js",
+          "status": 200,
+          "bytes": 25412,
+          "sha256": "86e58bd6b9aac93a51a16343ec520cb6c919e8c2e3d55f82e1c7576761a3b335",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "SurveyFields-dZehys-o.js",
+          "status": 200,
+          "bytes": 3121,
+          "sha256": "4b20e2709bc5372915c2ad1bf487d9f90c57f7e21bedb41ab719f55efaf5091b",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "TaskBoard-BbP3kEYF.js",
+          "status": 200,
+          "bytes": 7839,
+          "sha256": "5771930c9c9f0b9576c8b34aa6ebf68c05393782d90e1db71db314a454885410",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "WorkflowMetrics-CR7BTs2k.js",
+          "status": 200,
+          "bytes": 12440,
+          "sha256": "0fe096a1088377aa597517839b42af0eaf68dd6b7dac80fb450f106bf46d5327",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "chevron-right-CjDjba7x.js",
+          "status": 200,
+          "bytes": 159,
+          "sha256": "0486bb46599664cece41218daac7fc33b021dc38dc8416bc274c6817171df04e",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "collection-COswcvyL.js",
+          "status": 200,
+          "bytes": 939,
+          "sha256": "b8f61ba215c319fcc2aaf6ce0fb3b26b182c049b9a0d9e4febe85703fe8000e4",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "index-DUFVNW79.js",
+          "status": 200,
+          "bytes": 387672,
+          "sha256": "885285067fecc75a883dcdb5c235b2e70bc5c94b651c8db905ca6902eb474d5f",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "index-u7huL7qS.css",
+          "status": 200,
+          "bytes": 113680,
+          "sha256": "f0d2d849849c05f5597af452482e40529b1aece3b31167a55a9ec2b7d610eab0",
+          "mime": "text/css; charset=utf-8"
+        },
+        {
+          "file": "patientProgress-Do0fObh9.js",
+          "status": 200,
+          "bytes": 1130,
+          "sha256": "611dafc1b1ad2ac66b0b04ac3852b8c0bf56b6f106882f460ee96efa5097a0b3",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "plus-C0EKj8hA.js",
+          "status": 200,
+          "bytes": 182,
+          "sha256": "fb315445ac1faa041ad1d09605b86e1594a33ff10b03d812e1a60d1984c3f77f",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "send-DGovFnX2.js",
+          "status": 200,
+          "bytes": 652,
+          "sha256": "86b1043479a2048e9c4d23ea1a3e3099e1dbcbc936ed12716a46b32703738c76",
+          "mime": "text/javascript; charset=utf-8"
+        }
+      ],
+      "health": {
+        "status": "ok",
+        "compass_db": true,
+        "mis_db": true,
+        "mode": "synthetic_demo"
+      },
+      "root_matches_dist": true,
+      "qa_health": {
+        "status": "ok",
+        "compass_db": true,
+        "mis_db": true,
+        "mode": "synthetic_demo"
+      }
+    }
+  },
+  "sources": [
+    {
+      "file": "frontend/src/brand-theme.css",
+      "bytes": 6890,
+      "sha256": "cabd88a243b02054e984f8fb1f1ced9daf3ba9012b42c8487ec696c84af39a2f"
+    },
+    {
+      "file": "frontend/src/styles.css",
+      "bytes": 66017,
+      "sha256": "019ce015502f9ccc421909f9bc0fcdffaddb3c2250b6ad59df02f4d8d8440e7c"
+    },
+    {
+      "file": "frontend/src/workspace.css",
+      "bytes": 65560,
+      "sha256": "68f48056307440cabdffbfd1bcebd26704af63937ab07db96454e076335fedd9"
+    }
+  ],
+  "diff": "--- local48/brand-theme.css\n+++ current/frontend/src/brand-theme.css\n@@ -5,7 +5,7 @@\n .button.primary:hover:not(:disabled) { background:#333536; border-color:#333536; }\n .button.secondary { color:var(--ink); border-color:var(--line); }\n .button.secondary:hover:not(:disabled) { background:var(--paper); border-color:var(--muted); }\n-.button.ghost,.back-link,.skip-link { color:var(--signal-dark); }\n+.button.ghost,.back-link,.skip-link,.text-link,.disclosure-trigger { color:var(--signal-dark); }\n .button.ghost:hover:not(:disabled) { background:var(--signal-soft); }\n button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible { outline-color:var(--signal-dark); }\n input:not([type=\"checkbox\"],[type=\"radio\"]),select,textarea { border-color:#858681; color:var(--ink); background:var(--surface); }\n--- local48/styles.css\n+++ current/frontend/src/styles.css\n@@ -695,7 +695,7 @@\n .period-toolbar > .text-link {\n   margin-left: 4px;\n   font-size: var(--text-label, 13px);\n-  min-height: 40px;\n+  min-height: 44px;\n }\n .metric-grid {\n   display: grid;\n--- local48/workspace.css\n+++ current/frontend/src/workspace.css\n@@ -82,6 +82,7 @@\n .disclosure-grid { display: grid; margin-inline: -3px; }\n .disclosure-reveal { overflow: hidden; min-height: 0; }\n .disclosure-content { padding: var(--space-2) 3px 0; }\n+.panel > .field-hint + .disclosure { margin-top:var(--space-3); }\n details > summary { min-height: 40px; padding-block: 10px; }\n .disclosure-reveal .field { margin-top: var(--space-4); }\n .board-card .section-heading { gap: 8px; }\n@@ -194,7 +195,7 @@\n .toast { position: fixed; top: auto; right: 26px; bottom: 24px; z-index: 60; width: max-content; max-width: min(520px,calc(100vw - 32px)); margin: 0; box-shadow: 0 8px 30px #1b354326; border-radius: 12px; background: #fff; }\n .toast.success { border-color: #a9cfc1; color: #245d4c; }\n .avatar { color: #316b68; background: #e6f0ef; }\n-.back-link { min-height: 40px; font-size: 13px; margin-bottom: 12px; color: #32736f; }\n+.back-link { min-height: 44px; font-size: 13px; margin-bottom: 12px; color: #32736f; }\n .patient-heading { padding-bottom: 20px; margin-bottom: 8px; }\n .patient-heading h1 { font-size: 28px; }\n .patient-heading .avatar { width: 56px; height: 56px; font-size: 20px; border-radius: 14px; }\n",
+  "screenshots": [
+    {
+      "file": "docs/evidence/action-style-2026-10-25/doctor-card-after.jpg",
+      "bytes": 82968,
+      "sha256": "217d97265c4a33c1f19d0326cf8a53f521fa8bb14d20db1f8d67478df87d3c5e",
+      "pixels": [
+        1265,
+        712
+      ]
+    },
+    {
+      "file": "docs/evidence/action-style-2026-10-25/doctor-card-before.jpg",
+      "bytes": 78575,
+      "sha256": "79975905a53f77eb20bac1f4b2d3111f5233e26846ee729d3c0a97d8a7c60b72",
+      "pixels": [
+        1265,
+        712
+      ]
+    },
+    {
+      "file": "docs/evidence/action-style-2026-10-25/doctor-period-after.jpg",
+      "bytes": 77779,
+      "sha256": "00ab512d2a1ab43eacdc3c2aeca8ffd97aa5ff88acfe359de8f84fd9878e5519",
+      "pixels": [
+        1265,
+        712
+      ]
+    },
+    {
+      "file": "docs/evidence/action-style-2026-10-25/patient-diary-375.jpg",
+      "bytes": 30412,
+      "sha256": "afb052cf72944809d1965afef6d29847a00cdb1a5a705d42df9d1ca79ec8729e",
+      "pixels": [
+        360,
+        810
+      ]
+    }
+  ],
+  "limits": [
+    "Two solid-background computed-color ratios only (Paper6.35:1, White6.98:1), not a pixel/anti-aliasing, full-browser axe/WCAG or screen-reader acceptance.",
+    "Status comparison covers the two rendered green reply badges in the synthetic clinician card, not every status in the product.",
+    "Keyboard open/Tab/close and visible focus checked without writing notes or changing diary values. No medical, real-clinic, load, Git or external change."
+  ]
+}

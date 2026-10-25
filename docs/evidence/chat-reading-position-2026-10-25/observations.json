@@ -1,0 +1,176 @@
+{
+  "before": {
+    "duringSend": {
+      "clientHeight": 220,
+      "draft": "QA: проверка сохранения места чтения при отправке.",
+      "focus": "История переписки",
+      "messages": 6,
+      "scrollHeight": 1169,
+      "scrollTop": 530,
+      "submitDisabled": true
+    },
+    "afterSave": {
+      "clientHeight": 220,
+      "draft": "",
+      "focus": "История переписки",
+      "messages": 7,
+      "newMessages": null,
+      "scrollHeight": 1346,
+      "scrollTop": 1126,
+      "submitDisabled": true,
+      "busy": false
+    }
+  },
+  "showLatestFocusBefore": {
+    "label": null,
+    "tag": "BODY"
+  },
+  "checks": [
+    {
+      "busy": true,
+      "clientHeight": 220,
+      "draft": "QA: сохранение места чтения после исправления.",
+      "focus": "История переписки",
+      "messages": 7,
+      "newMessages": null,
+      "overflow": false,
+      "scrollHeight": 1346,
+      "scrollTop": 937,
+      "viewport": {
+        "height": 720,
+        "width": 1280
+      },
+      "label": "doctor-reading-during-send"
+    },
+    {
+      "busy": false,
+      "clientHeight": 220,
+      "draft": "",
+      "focus": "История переписки",
+      "messages": 8,
+      "newMessages": "Новые сообщения · Показать",
+      "overflow": false,
+      "scrollHeight": 1523,
+      "scrollTop": 0,
+      "viewport": {
+        "height": 720,
+        "width": 1280
+      },
+      "label": "doctor-reading-preserved-after-save"
+    },
+    {
+      "busy": false,
+      "clientHeight": 220,
+      "draft": "",
+      "focus": null,
+      "messages": 8,
+      "newMessages": null,
+      "overflow": false,
+      "scrollHeight": 1523,
+      "scrollTop": 1303,
+      "viewport": {
+        "height": 720,
+        "width": 1280
+      },
+      "label": "doctor-show-latest-after-click-before-focus-fix"
+    },
+    {
+      "busy": true,
+      "clientHeight": 220,
+      "draft": "QA: проверка перехода к новым сообщениям и фокуса.",
+      "focus": "История переписки",
+      "messages": 8,
+      "newMessages": null,
+      "overflow": false,
+      "scrollHeight": 1523,
+      "scrollTop": 1068,
+      "viewport": {
+        "height": 720,
+        "width": 1280
+      },
+      "label": "doctor-reading-pending-final"
+    },
+    {
+      "busy": false,
+      "clientHeight": 220,
+      "draft": "",
+      "focus": "История переписки",
+      "messages": 9,
+      "newMessages": "Новые сообщения · Показать",
+      "overflow": false,
+      "scrollHeight": 1701,
+      "scrollTop": 0,
+      "viewport": {
+        "height": 720,
+        "width": 1280
+      },
+      "label": "doctor-reading-preserved-final"
+    },
+    {
+      "busy": false,
+      "clientHeight": 220,
+      "draft": "",
+      "focus": "История переписки",
+      "messages": 9,
+      "newMessages": null,
+      "overflow": false,
+      "scrollHeight": 1701,
+      "scrollTop": 1481,
+      "viewport": {
+        "height": 720,
+        "width": 1280
+      },
+      "label": "doctor-show-latest-focus-final"
+    },
+    {
+      "busy": true,
+      "clientHeight": 294,
+      "draft": "QA: чтение истории пациентом при ожидании отправки.",
+      "focus": "История переписки",
+      "messages": 9,
+      "newMessages": null,
+      "overflow": false,
+      "scrollHeight": 1476,
+      "scrollTop": 911,
+      "viewport": {
+        "height": 844,
+        "width": 375
+      },
+      "label": "patient-reading-pending-mobile-final"
+    },
+    {
+      "busy": false,
+      "clientHeight": 294,
+      "draft": "",
+      "focus": "История переписки",
+      "messages": 10,
+      "newMessages": "Новые сообщения · Показать",
+      "overflow": false,
+      "scrollHeight": 1629,
+      "scrollTop": 0,
+      "viewport": {
+        "height": 844,
+        "width": 375
+      },
+      "label": "patient-reading-preserved-mobile-final"
+    },
+    {
+      "busy": false,
+      "clientHeight": 294,
+      "draft": "",
+      "focus": "История переписки",
+      "messages": 10,
+      "newMessages": null,
+      "overflow": false,
+      "scrollHeight": 1629,
+      "scrollTop": 1335,
+      "viewport": {
+        "height": 844,
+        "width": 375
+      },
+      "label": "patient-show-latest-focus-mobile-final"
+    }
+  ],
+  "console": [],
+  "phases": "First3 rows precede explicit Show-latest focus restoration;6 final rows cover doctor1280 and patient375 on final source. Native Home sampled during scroll animation; only post-save0 readings are treated as settled. No failure-branch auto-follow change: scroll revision is compared only after a successful send."
+}

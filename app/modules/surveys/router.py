@@ -6,6 +6,7 @@ from sqlalchemy import literal, select
 from app.api.deps import CompassSession, CurrentUser, require_role
 from app.modules.access.models import User, UserRole
 from app.modules.audit.service import record_event
+from app.modules.adherence.rewards import participation_receipt
 from app.modules.patients.models import Patient
 from app.modules.surveys.models import Survey, SurveyAssignment, SurveySubmission, SurveyDraft
 from app.modules.surveys.schemas import AssignSurvey, SubmitSurvey, SurveyWrite, SaveSurveyDraft
@@ -111,9 +112,11 @@ async def open_assignment(assignment_id: int, session: CompassSession, patient: 
 async def submit(assignment_id: int, payload: SubmitSurvey, session: CompassSession, patient: User = PatientUser) -> dict:
     response, replayed = await submit_assignment(session, patient, assignment_id, payload.answers,
                                                 payload.expected_draft_revision)
+    receipt = await participation_receipt(session, response.patient_id, "survey", f"survey_submission:{response.id}")
     await session.commit()
     return {"id": response.id, "assignment_id": response.assignment_id, "created_at": response.created_at,
-            "replayed": replayed, "message": "Спасибо! Ваши ответы сохранены и доступны лечащему врачу."}
+            "replayed": replayed, "participation": receipt,
+            "message": "Спасибо! Ваши ответы сохранены и доступны лечащему врачу."}
 
 
 @router.get("/survey-assignments/{assignment_id}/draft")

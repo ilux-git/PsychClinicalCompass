@@ -1,0 +1,45 @@
+{
+  "headings": [
+    {
+      "font": "24px",
+      "lineHeight": "30px",
+      "tag": "H2",
+      "text": "Лекарства"
+    },
+    {
+      "font": "28px",
+      "lineHeight": "35px",
+      "tag": "H1",
+      "text": "Анна Лебедева"
+    },
+    {
+      "font": "28px",
+      "lineHeight": "35px",
+      "tag": "H1",
+      "text": "Расписание и самоотчёты пациента"
+    },
+    {
+      "font": "18px",
+      "lineHeight": "25.2px",
+      "tag": "H2",
+      "text": "Расписание на день"
+    },
+    {
+      "font": "18px",
+      "lineHeight": "25.2px",
+      "tag": "H2",
+      "text": "Рабочие заметки"
+    },
+    {
+      "font": "18px",
+      "lineHeight": "25.2px",
+      "tag": "H2",
+      "text": "Следующий шаг"
+    }
+  ],
+  "overflow": false,
+  "viewport": {
+    "height": 720,
+    "width": 1280
+  }
+}

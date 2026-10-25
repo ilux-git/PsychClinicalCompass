@@ -1,0 +1,498 @@
+{
+  "before": {
+    "fieldsBeforeText": 4,
+    "overflow": false,
+    "saveTop": 1132.90625,
+    "scrollY": 0,
+    "shared": false,
+    "textTop": 819.34375,
+    "viewport": {
+      "height": 844,
+      "width": 375
+    }
+  },
+  "savedBefore": {
+    "confirmation": "Запись сохранена\n\nЭта запись остаётся личной. Поделиться с врачом можно позже.\n\n+3 балла за участие\n\nБаллы — за участие. Содержание ответа и самочувствие на награду не влияют.\n\nПо записи от 25 окт., 10:19\nМой прогресс",
+    "focus": "Запись сохранена",
+    "fullyVisible": false,
+    "overflow": false,
+    "rect": {
+      "bottom": 795.46875,
+      "height": 329.5625,
+      "left": 37,
+      "right": 323,
+      "top": 465.90625,
+      "width": 286,
+      "x": 37,
+      "y": 465.90625
+    },
+    "scrollY": 733,
+    "shared": false
+  },
+  "checks": [
+    {
+      "label": "short-form-375-initial",
+      "alerts": [],
+      "confirmation": null,
+      "confirmationFullyVisible": false,
+      "detailsExpanded": "false",
+      "firstControl": "TEXTAREA",
+      "focus": {
+        "label": "Помощь с разделомДневникЗаписать самочувствие своими словами1Создайте ",
+        "tag": "MAIN"
+      },
+      "observation": "2026-10-25T10:33",
+      "overflow": false,
+      "saveRect": {
+        "bottom": 739.84375,
+        "height": 44,
+        "left": 37,
+        "right": 180.5625,
+        "top": 695.84375,
+        "width": 143.5625,
+        "x": 37,
+        "y": 695.84375
+      },
+      "scrollY": 0,
+      "shared": false,
+      "text": "",
+      "textRect": {
+        "bottom": 450.28125,
+        "height": 122,
+        "left": 37,
+        "right": 323,
+        "top": 328.28125,
+        "width": 286,
+        "x": 37,
+        "y": 328.28125
+      },
+      "title": "Мой дневник",
+      "viewport": {
+        "height": 844,
+        "width": 375
+      }
+    },
+    {
+      "label": "invalid-hidden-time-revealed-native",
+      "alerts": [],
+      "confirmation": null,
+      "confirmationFullyVisible": false,
+      "detailsExpanded": "true",
+      "firstControl": "TEXTAREA",
+      "focus": {
+        "label": "",
+        "tag": "INPUT"
+      },
+      "observation": "2026-10-25T10:33",
+      "overflow": false,
+      "saveRect": {
+        "bottom": 997.90625,
+        "height": 44,
+        "left": 37,
+        "right": 180.5625,
+        "top": 953.90625,
+        "width": 143.5625,
+        "x": 37,
+        "y": 953.90625
+      },
+      "scrollY": 296,
+      "shared": false,
+      "text": "Учебная запись · короткая форма и проверка обязательного времени",
+      "textRect": {
+        "bottom": 154.28125,
+        "height": 122,
+        "left": 37,
+        "right": 323,
+        "top": 32.28125,
+        "width": 286,
+        "x": 37,
+        "y": 32.28125
+      },
+      "title": "Мой дневник",
+      "viewport": {
+        "height": 844,
+        "width": 375
+      }
+    },
+    {
+      "label": "invalid-hidden-time-native-keyboard-final",
+      "alerts": [],
+      "confirmation": null,
+      "confirmationFullyVisible": false,
+      "detailsExpanded": "true",
+      "firstControl": "TEXTAREA",
+      "focus": {
+        "label": "",
+        "tag": "INPUT"
+      },
+      "observation": "",
+      "overflow": false,
+      "saveRect": {
+        "bottom": 997.90625,
+        "height": 44,
+        "left": 37,
+        "right": 180.5625,
+        "top": 953.90625,
+        "width": 143.5625,
+        "x": 37,
+        "y": 953.90625
+      },
+      "scrollY": 296,
+      "shared": false,
+      "text": "Учебная запись · короткая форма и проверка обязательного времени",
+      "textRect": {
+        "bottom": 154.28125,
+        "height": 122,
+        "left": 37,
+        "right": 323,
+        "top": 32.28125,
+        "width": 286,
+        "x": 37,
+        "y": 32.28125
+      },
+      "title": "Мой дневник",
+      "viewport": {
+        "height": 844,
+        "width": 375
+      }
+    },
+    {
+      "label": "short-private-503",
+      "alerts": [
+        "Техническая проверка: сохранение временно недоступно."
+      ],
+      "confirmation": null,
+      "confirmationFullyVisible": false,
+      "detailsExpanded": "false",
+      "firstControl": "TEXTAREA",
+      "focus": {
+        "label": "Техническая проверка: сохранение временно недоступно.",
+        "tag": "DIV"
+      },
+      "observation": "2026-10-25T10:33",
+      "overflow": false,
+      "saveRect": {
+        "bottom": 532.625,
+        "height": 44,
+        "left": 37,
+        "right": 180.5625,
+        "top": 488.625,
+        "width": 143.5625,
+        "x": 37,
+        "y": 488.625
+      },
+      "scrollY": 296,
+      "shared": false,
+      "text": "Учебная запись · короткая форма и проверка обязательного времени",
+      "textRect": {
+        "bottom": 243.0625,
+        "height": 122,
+        "left": 37,
+        "right": 323,
+        "top": 121.0625,
+        "width": 286,
+        "x": 37,
+        "y": 121.0625
+      },
+      "title": "Мой дневник",
+      "viewport": {
+        "height": 844,
+        "width": 375
+      }
+    },
+    {
+      "label": "saved-confirmation-375-final",
+      "alerts": [],
+      "confirmation": "Запись сохранена\n\nЭта запись остаётся личной. Поделиться с врачом можно позже.\n\nСохранено без дополнительных баллов\n\nЗаписи и опросы остаются доступны. Баланс и условия начисления — в «Мой прогресс».\n\nПо записи от 25 окт., 10:36\nМой прогресс",
+      "confirmationFullyVisible": true,
+      "confirmationRect": {
+        "bottom": 754.40625,
+        "height": 380.5625,
+        "left": 37,
+        "right": 323,
+        "top": 373.84375,
+        "width": 286,
+        "x": 37,
+        "y": 373.84375
+      },
+      "detailsExpanded": "false",
+      "firstControl": "TEXTAREA",
+      "focus": {
+        "label": "Запись сохранена",
+        "tag": "H3"
+      },
+      "observation": "2026-10-25T10:36",
+      "overflow": false,
+      "saveRect": {
+        "bottom": 351.84375,
+        "height": 44,
+        "left": 37,
+        "right": 180.5625,
+        "top": 307.84375,
+        "width": 143.5625,
+        "x": 37,
+        "y": 307.84375
+      },
+      "scrollY": 388,
+      "shared": false,
+      "text": "",
+      "textRect": {
+        "bottom": 62.28125,
+        "height": 122,
+        "left": 37,
+        "right": 323,
+        "top": -59.71875,
+        "width": 286,
+        "x": 37,
+        "y": -59.71875
+      },
+      "title": "Мой дневник",
+      "viewport": {
+        "height": 844,
+        "width": 375
+      }
+    },
+    {
+      "label": "short-form-768-top",
+      "alerts": [],
+      "confirmation": "Запись сохранена\n\nЭта запись остаётся личной. Поделиться с врачом можно позже.\n\nСохранено без дополнительных баллов\n\nЗаписи и опросы остаются доступны. Баланс и условия начисления — в «Мой прогресс».\n\nПо записи от 25 окт., 10:36\nМой прогресс",
+      "confirmationFullyVisible": true,
+      "confirmationRect": {
+        "bottom": 927.640625,
+        "height": 245.578125,
+        "left": 37,
+        "right": 716,
+        "top": 682.0625,
+        "width": 679,
+        "x": 37,
+        "y": 682.0625
+      },
+      "detailsExpanded": "false",
+      "firstControl": "TEXTAREA",
+      "focus": {
+        "label": "Запись сохранена",
+        "tag": "H3"
+      },
+      "observation": "2026-10-25T10:36",
+      "overflow": false,
+      "saveRect": {
+        "bottom": 660.0625,
+        "height": 44,
+        "left": 37,
+        "right": 180.5625,
+        "top": 616.0625,
+        "width": 143.5625,
+        "x": 37,
+        "y": 616.0625
+      },
+      "scrollY": 0,
+      "shared": false,
+      "text": "",
+      "textRect": {
+        "bottom": 423.6875,
+        "height": 122,
+        "left": 37,
+        "right": 716,
+        "top": 301.6875,
+        "width": 679,
+        "x": 37,
+        "y": 301.6875
+      },
+      "title": "Мой дневник",
+      "viewport": {
+        "height": 1024,
+        "width": 768
+      }
+    },
+    {
+      "label": "observation-only-collapsed-before-submit",
+      "alerts": [],
+      "confirmation": null,
+      "confirmationFullyVisible": false,
+      "detailsExpanded": "false",
+      "firstControl": "TEXTAREA",
+      "focus": {
+        "label": "Добавить наблюдения или уточнить время",
+        "tag": "BUTTON"
+      },
+      "observation": "2026-10-25T10:36",
+      "overflow": false,
+      "saveRect": {
+        "bottom": 598.0625,
+        "height": 44,
+        "left": 37,
+        "right": 180.5625,
+        "top": 554.0625,
+        "width": 143.5625,
+        "x": 37,
+        "y": 554.0625
+      },
+      "scrollY": 62,
+      "shared": false,
+      "text": "",
+      "textRect": {
+        "bottom": 361.6875,
+        "height": 122,
+        "left": 37,
+        "right": 716,
+        "top": 239.6875,
+        "width": 679,
+        "x": 37,
+        "y": 239.6875
+      },
+      "title": "Мой дневник",
+      "viewport": {
+        "height": 1024,
+        "width": 768
+      }
+    },
+    {
+      "label": "observation-only-saved-768",
+      "alerts": [],
+      "confirmation": "Запись сохранена\n\nЭта запись остаётся личной. Поделиться с врачом можно позже.\n\nСохранено без дополнительных баллов\n\nЗаписи и опросы остаются доступны. Баланс и условия начисления — в «Мой прогресс».\n\nПо записи от 25 окт., 10:37\nМой прогресс",
+      "confirmationFullyVisible": true,
+      "confirmationRect": {
+        "bottom": 801.640625,
+        "height": 245.578125,
+        "left": 37,
+        "right": 716,
+        "top": 556.0625,
+        "width": 679,
+        "x": 37,
+        "y": 556.0625
+      },
+      "detailsExpanded": "false",
+      "firstControl": "TEXTAREA",
+      "focus": {
+        "label": "Запись сохранена",
+        "tag": "H3"
+      },
+      "observation": "2026-10-25T10:37",
+      "overflow": false,
+      "saveRect": {
+        "bottom": 534.0625,
+        "height": 44,
+        "left": 37,
+        "right": 180.5625,
+        "top": 490.0625,
+        "width": 143.5625,
+        "x": 37,
+        "y": 490.0625
+      },
+      "scrollY": 126,
+      "shared": false,
+      "text": "",
+      "textRect": {
+        "bottom": 297.6875,
+        "height": 122,
+        "left": 37,
+        "right": 716,
+        "top": 175.6875,
+        "width": 679,
+        "x": 37,
+        "y": 175.6875
+      },
+      "title": "Мой дневник",
+      "viewport": {
+        "height": 1024,
+        "width": 768
+      }
+    },
+    {
+      "label": "short-form-1440-top",
+      "alerts": [],
+      "confirmation": "Запись сохранена\n\nЭта запись остаётся личной. Поделиться с врачом можно позже.\n\nСохранено без дополнительных баллов\n\nЗаписи и опросы остаются доступны. Баланс и условия начисления — в «Мой прогресс».\n\nПо записи от 25 окт., 10:37\nМой прогресс",
+      "confirmationFullyVisible": true,
+      "confirmationRect": {
+        "bottom": 909.453125,
+        "height": 245.578125,
+        "left": 321,
+        "right": 1368,
+        "top": 663.875,
+        "width": 1047,
+        "x": 321,
+        "y": 663.875
+      },
+      "detailsExpanded": "false",
+      "firstControl": "TEXTAREA",
+      "focus": {
+        "label": "Запись сохранена",
+        "tag": "H3"
+      },
+      "observation": "2026-10-25T10:37",
+      "overflow": false,
+      "saveRect": {
+        "bottom": 641.875,
+        "height": 44,
+        "left": 321,
+        "right": 464.5625,
+        "top": 597.875,
+        "width": 143.5625,
+        "x": 321,
+        "y": 597.875
+      },
+      "scrollY": 0,
+      "shared": false,
+      "text": "",
+      "textRect": {
+        "bottom": 424.6875,
+        "height": 110,
+        "left": 321,
+        "right": 1368,
+        "top": 314.6875,
+        "width": 1047,
+        "x": 321,
+        "y": 314.6875
+      },
+      "title": "Мой дневник",
+      "viewport": {
+        "height": 1000,
+        "width": 1440
+      }
+    }
+  ],
+  "invalidKeyboard": {
+    "attribute": "",
+    "containsNewEntry": false,
+    "focusedTime": true,
+    "required": true,
+    "validationMessage": "Введите верное значение. Поле не заполнено или введена недействительная дата.",
+    "value": "",
+    "valueMissing": true
+  },
+  "observationOnly": {
+    "latestEntry": "Только мнеНаблюдение: 25 окт., 10:36 · итог дня · внесено 25 окт., 10:37\n\nНейтрально\n\nЧастично мешало\n\nПоделиться с врачом",
+    "shared": false
+  },
+  "progress": {
+    "balance": "110\nбаллов к обмену",
+    "overflow": false,
+    "title": "Мой прогресс"
+  },
+  "guard": {
+    "dialogOpen": false,
+    "focusedText": true,
+    "text": "Учебный черновик для проверки выхода"
+  },
+  "discard": {
+    "dialogOpen": false,
+    "title": "Моё расписание лекарств"
+  },
+  "navigationStuckBefore": {
+    "active": "ДневникЗаписать самочувствие своими словами",
+    "frames": [
+      {
+        "hidden": "true",
+        "location": "/?section=overview",
+        "opacity": "0"
+      },
+      {
+        "hidden": "true",
+        "opacity": "1"
+      }
+    ],
+    "heading": "Здравствуйте, Мария",
+    "title": "Дневник · Clinical Compass"
+  },
+  "console": []
+}

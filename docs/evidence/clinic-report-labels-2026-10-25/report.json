@@ -1,0 +1,563 @@
+{
+  "recordedAt": "2026-10-25T04:52:53.606874+00:00",
+  "status": "readable administrative question-version labels and heading actions verified",
+  "changes": [
+    "Technical S/V/Q reference moved out of the heading and rendered as existing survey/version/question ordinals in Russian. Question groups remain separate.",
+    "All three existing Heading action buttons have44px minimum target and13px type across responsive breakpoints."
+  ],
+  "scope": "Two runtime files; aggregate data, group-protection policy, access, API requests, clinical and reward rules unchanged.",
+  "verification": {
+    "native": {
+      "before": {
+        "headings": [
+          "Заинтересованность · готовность прикладывать усилия · S6/V1/Q1",
+          "Лояльность · доверие подходу · S6/V1/Q2",
+          "Лояльность · доверие подходу · S6/V1/Q3",
+          "Ограничения и препятствия · S6/V1/Q4",
+          "Организованность · выполнение рекомендаций · S6/V1/Q5"
+        ],
+        "overflow": false,
+        "refresh": [
+          {
+            "font": "11px",
+            "height": 35
+          }
+        ],
+        "viewport": {
+          "height": 844,
+          "width": 375
+        }
+      },
+      "checks": [
+        {
+          "clinicalLinks": [],
+          "headingButtons": [
+            {
+              "font": "11px",
+              "height": 44,
+              "label": "Обновить сводку",
+              "width": 111.640625
+            }
+          ],
+          "headings": [
+            "Заинтересованность · готовность прикладывать усилия",
+            "Лояльность · доверие подходу",
+            "Лояльность · доверие подходу",
+            "Ограничения и препятствия",
+            "Организованность · выполнение рекомендаций"
+          ],
+          "overflow": false,
+          "privacyNote": "Обезличенная сводка · минимальная группа: 1",
+          "references": [
+            "Опрос 6 · Версия 1 · Вопрос 1",
+            "Опрос 6 · Версия 1 · Вопрос 2",
+            "Опрос 6 · Версия 1 · Вопрос 3",
+            "Опрос 6 · Версия 1 · Вопрос 4",
+            "Опрос 6 · Версия 1 · Вопрос 5"
+          ],
+          "title": "Причины затруднений",
+          "viewport": {
+            "height": 844,
+            "width": 375
+          },
+          "label": "admin-barriers-mobile"
+        },
+        {
+          "clinicalLinks": [],
+          "headingButtons": [
+            {
+              "font": "13px",
+              "height": 44,
+              "label": "Обновить сводку",
+              "width": 139.9375
+            }
+          ],
+          "headings": [
+            "Заинтересованность · готовность прикладывать усилия",
+            "Лояльность · доверие подходу",
+            "Лояльность · доверие подходу",
+            "Ограничения и препятствия",
+            "Организованность · выполнение рекомендаций"
+          ],
+          "overflow": false,
+          "privacyNote": "Обезличенная сводка · минимальная группа: 1",
+          "references": [
+            "Опрос 6 · Версия 1 · Вопрос 1",
+            "Опрос 6 · Версия 1 · Вопрос 2",
+            "Опрос 6 · Версия 1 · Вопрос 3",
+            "Опрос 6 · Версия 1 · Вопрос 4",
+            "Опрос 6 · Версия 1 · Вопрос 5"
+          ],
+          "title": "Причины затруднений",
+          "viewport": {
+            "height": 1000,
+            "width": 1440
+          },
+          "label": "admin-barriers-desktop"
+        },
+        {
+          "clinicalLinks": [],
+          "headingButtons": [
+            {
+              "font": "10px",
+              "height": 44,
+              "label": "Обновить сводку",
+              "width": 103.484375
+            }
+          ],
+          "headings": [
+            "Заинтересованность · готовность прикладывать усилия",
+            "Лояльность · доверие подходу",
+            "Лояльность · доверие подходу",
+            "Ограничения и препятствия",
+            "Организованность · выполнение рекомендаций"
+          ],
+          "overflow": false,
+          "privacyNote": "Обезличенная сводка · минимальная группа: 1",
+          "references": [
+            "Опрос 6 · Версия 1 · Вопрос 1",
+            "Опрос 6 · Версия 1 · Вопрос 2",
+            "Опрос 6 · Версия 1 · Вопрос 3",
+            "Опрос 6 · Версия 1 · Вопрос 4",
+            "Опрос 6 · Версия 1 · Вопрос 5"
+          ],
+          "title": "Причины затруднений",
+          "viewport": {
+            "height": 1024,
+            "width": 768
+          },
+          "label": "admin-barriers-tablet-refreshed"
+        },
+        {
+          "clinicalLinks": [],
+          "headingButtons": [
+            {
+              "font": "13px",
+              "height": 44,
+              "label": "Обновить сводку",
+              "width": 127.9375
+            }
+          ],
+          "headings": [],
+          "overflow": false,
+          "privacyNote": "Обезличенная сводка · минимальная группа: 1",
+          "references": [],
+          "title": "Действия и результаты",
+          "viewport": {
+            "height": 1024,
+            "width": 768
+          },
+          "label": "admin-actions-tablet-final"
+        },
+        {
+          "clinicalLinks": [],
+          "headingButtons": [
+            {
+              "font": "13px",
+              "height": 44,
+              "label": "Обновить сводку",
+              "width": 127.9375
+            }
+          ],
+          "headings": [
+            "Заинтересованность · готовность прикладывать усилия",
+            "Лояльность · доверие подходу",
+            "Лояльность · доверие подходу",
+            "Ограничения и препятствия",
+            "Организованность · выполнение рекомендаций"
+          ],
+          "overflow": false,
+          "privacyNote": "Обезличенная сводка · минимальная группа: 1",
+          "references": [
+            "Опрос 6 · Версия 1 · Вопрос 1",
+            "Опрос 6 · Версия 1 · Вопрос 2",
+            "Опрос 6 · Версия 1 · Вопрос 3",
+            "Опрос 6 · Версия 1 · Вопрос 4",
+            "Опрос 6 · Версия 1 · Вопрос 5"
+          ],
+          "title": "Причины затруднений",
+          "viewport": {
+            "height": 1024,
+            "width": 768
+          },
+          "label": "admin-barriers-tablet-final"
+        },
+        {
+          "clinicalLinks": [],
+          "headingButtons": [
+            {
+              "font": "13px",
+              "height": 44,
+              "label": "Обновить сводку",
+              "width": 127.9375
+            }
+          ],
+          "headings": [
+            "Заинтересованность · готовность прикладывать усилия",
+            "Лояльность · доверие подходу",
+            "Лояльность · доверие подходу",
+            "Ограничения и препятствия",
+            "Организованность · выполнение рекомендаций"
+          ],
+          "overflow": false,
+          "privacyNote": "Обезличенная сводка · минимальная группа: 1",
+          "references": [
+            "Опрос 6 · Версия 1 · Вопрос 1",
+            "Опрос 6 · Версия 1 · Вопрос 2",
+            "Опрос 6 · Версия 1 · Вопрос 3",
+            "Опрос 6 · Версия 1 · Вопрос 4",
+            "Опрос 6 · Версия 1 · Вопрос 5"
+          ],
+          "title": "Причины затруднений",
+          "viewport": {
+            "height": 844,
+            "width": 375
+          },
+          "label": "admin-barriers-mobile-final"
+        },
+        {
+          "clinicalLinks": [],
+          "headingButtons": [
+            {
+              "font": "13px",
+              "height": 44,
+              "label": "Обновить сводку",
+              "width": 139.9375
+            }
+          ],
+          "headings": [
+            "Заинтересованность · готовность прикладывать усилия",
+            "Лояльность · доверие подходу",
+            "Лояльность · доверие подходу",
+            "Ограничения и препятствия",
+            "Организованность · выполнение рекомендаций"
+          ],
+          "overflow": false,
+          "privacyNote": "Обезличенная сводка · минимальная группа: 1",
+          "references": [
+            "Опрос 6 · Версия 1 · Вопрос 1",
+            "Опрос 6 · Версия 1 · Вопрос 2",
+            "Опрос 6 · Версия 1 · Вопрос 3",
+            "Опрос 6 · Версия 1 · Вопрос 4",
+            "Опрос 6 · Версия 1 · Вопрос 5"
+          ],
+          "title": "Причины затруднений",
+          "viewport": {
+            "height": 1000,
+            "width": 1440
+          },
+          "label": "admin-barriers-desktop-final"
+        },
+        {
+          "clinicalLinks": [],
+          "headingButtons": [
+            {
+              "font": "13px",
+              "height": 44,
+              "label": "Обновить очередь",
+              "width": 137.421875
+            }
+          ],
+          "headings": [],
+          "overflow": false,
+          "references": [],
+          "title": "События и обращения",
+          "viewport": {
+            "height": 844,
+            "width": 375
+          },
+          "label": "doctor-inbox-mobile-final"
+        },
+        {
+          "clinicalLinks": [],
+          "headingButtons": [
+            {
+              "font": "13px",
+              "height": 44,
+              "label": "Добавить свою позицию",
+              "width": 176.609375
+            }
+          ],
+          "headings": [
+            "Учебная позиция · UI-проверка · архив",
+            "Учебная позиция QA · проверка формы · архив"
+          ],
+          "overflow": false,
+          "references": [],
+          "title": "Моё расписание лекарств",
+          "viewport": {
+            "height": 844,
+            "width": 375
+          },
+          "label": "patient-medications-mobile-final"
+        }
+      ],
+      "console": [],
+      "notes": "First three after states precede the final CSS font13px normalization; final-suffixed observations and overwritten after screenshots verify final CSS. Administrator privacy settings were not edited; no clinical decision, message or patient report was explicitly submitted."
+    },
+    "acceptedFinalStates": 6,
+    "rawStates": 9,
+    "frontend": {
+      "passed": 54,
+      "durationMs": 53679.5876,
+      "exitCode": 0,
+      "source": {
+        "file": "outputs/clinic-labels-frontend-20261025.log",
+        "bytes": 7533,
+        "sha256": "bd4c2fdfd9662b41c52fe208cf9f12331b4c6f3f369964d9806b94176f82dcc7"
+      }
+    },
+    "regression": {
+      "red": "1pass/1fail at readable-reference assertion",
+      "green": "2/2",
+      "fixtureCorrection": "The first green attempt used an invalid loyalty dimension key in the fixture. Corrected to the existing approach_trust contract; preserved fixture-failure log. No app change for that gap."
+    },
+    "buildAndTypes": {
+      "exitCode": 0,
+      "source": {
+        "file": "outputs/clinic-labels-build-20261025.log",
+        "bytes": 2056,
+        "sha256": "bc8aff88c31cd70db3005e5ec9436c290b75c8c67deed3de24bd32c5f7e6a206"
+      }
+    },
+    "http": {
+      "base_url": "http://127.0.0.1:8780",
+      "scope": "HTTP bytes and MIME only; not browser layout/interactions",
+      "assets": [
+        {
+          "file": "AdminDashboard-Bw8w8mSE.js",
+          "status": 200,
+          "bytes": 18580,
+          "sha256": "8b25ff51d39baf3f63576332d3f4ce30a48a067bf80790ca5297d02889573149",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "CareWorkflow-uGvYSzKs.js",
+          "status": 200,
+          "bytes": 26980,
+          "sha256": "444b9cecb5dfffc1ca6a81defef55777066a8163c9752aa444fd8b3de45d92ac",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "Charts-CX2fYIbf.js",
+          "status": 200,
+          "bytes": 5476,
+          "sha256": "8fb02adda83231213c6e13cac18c2154fa2d701e10f37228cd36c2c223264370",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "DoctorDashboard-ztfm1xuM.js",
+          "status": 200,
+          "bytes": 18046,
+          "sha256": "4cd613dbf7ab3aaf751f061fbf1a34404613007e72e255840285afce70e89233",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "DoctorPatients-CYG9uZFO.js",
+          "status": 200,
+          "bytes": 36363,
+          "sha256": "f247c6c764e4f62c777c87a6a4d5db508995be39602f6d07e44c1bd548d1c02d",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "MedicationSchedule-C_cioHGn.css",
+          "status": 200,
+          "bytes": 2103,
+          "sha256": "3ecca9c112edd867ada5c834649a96069fb7decf7d1ea5da5aebe9da0ab28a4e",
+          "mime": "text/css; charset=utf-8"
+        },
+        {
+          "file": "MedicationSchedule-DELsQGOc.js",
+          "status": 200,
+          "bytes": 36375,
+          "sha256": "d32648a9dfbd5691f240219366eb15a5a1d8fa8fbbd0ed3ce2de80b443344d4d",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "Patient-B9xuvwdE.css",
+          "status": 200,
+          "bytes": 26258,
+          "sha256": "9160fbf594ce6238151f4e13f5a28e00c0e62184711079b09f25bbebeb327b0b",
+          "mime": "text/css; charset=utf-8"
+        },
+        {
+          "file": "Patient-gOZUzCvZ.js",
+          "status": 200,
+          "bytes": 66896,
+          "sha256": "ba2175c27917be2fccbda2b6953dab95860257bae95776f59f0b8db081dce983",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "SurveyBuilder-CNMXVQVq.js",
+          "status": 200,
+          "bytes": 25412,
+          "sha256": "0aeb7bbce5abc9efd1a1032ec33426d1393be77d128da1b8ba38b0e7d663d5bd",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "SurveyFields-l1vVaLEi.js",
+          "status": 200,
+          "bytes": 3121,
+          "sha256": "77e86919d9967330db7f76290b26cabd4fb154b4d386fcd4bb1d5126d1f9be6f",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "TaskBoard-lHs1zZvJ.js",
+          "status": 200,
+          "bytes": 7839,
+          "sha256": "f036c2d7bf5f363413f4d57c64430897eff2aac7bcaf0a5f78b60694609b7fb5",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "WorkflowMetrics-BZxGqyo4.js",
+          "status": 200,
+          "bytes": 12440,
+          "sha256": "565104137c28d917487a58daae694f00ef03eba4749ee7f7c7a7e77c6d7e88e1",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "chevron-right-Bxjddoeb.js",
+          "status": 200,
+          "bytes": 159,
+          "sha256": "988c4af6ea530f96ef598a6492d51de47c2d973791e9d685b72fab4d3bf5f0f2",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "collection-COswcvyL.js",
+          "status": 200,
+          "bytes": 939,
+          "sha256": "b8f61ba215c319fcc2aaf6ce0fb3b26b182c049b9a0d9e4febe85703fe8000e4",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "index-BJrhIZ7R.css",
+          "status": 200,
+          "bytes": 113810,
+          "sha256": "e351c86a387f1283379c88703fc001aceeb5c2c2ee05417a8b95e45823e80f86",
+          "mime": "text/css; charset=utf-8"
+        },
+        {
+          "file": "index-ClXRXqfj.js",
+          "status": 200,
+          "bytes": 390678,
+          "sha256": "5185f05424317d2ad6c52d005f18a26d4b8aeddb26f802543059c0572df0989c",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "patientProgress-Do0fObh9.js",
+          "status": 200,
+          "bytes": 1130,
+          "sha256": "611dafc1b1ad2ac66b0b04ac3852b8c0bf56b6f106882f460ee96efa5097a0b3",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "plus-Dn8XTqUJ.js",
+          "status": 200,
+          "bytes": 182,
+          "sha256": "df38eb544716f41f30a6cd58411bd03a595c3d47ffa34a5f77c889795e08c167",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "send-CJQKmizD.js",
+          "status": 200,
+          "bytes": 652,
+          "sha256": "761cec65dd6311fa5c941307b261f16df1ae156578e804323f03a472ac45e563",
+          "mime": "text/javascript; charset=utf-8"
+        }
+      ],
+      "health": {
+        "status": "ok",
+        "compass_db": true,
+        "mis_db": true,
+        "mode": "synthetic_demo"
+      },
+      "root_matches_dist": true,
+      "qa_health": {
+        "status": "ok",
+        "compass_db": true,
+        "mis_db": true,
+        "mode": "synthetic_demo"
+      }
+    },
+    "backend": "Unchanged, previous151/151 retained; not rerun."
+  },
+  "sources": [
+    {
+      "file": "frontend/src/AdminDashboard.tsx",
+      "bytes": 15569,
+      "sha256": "7d5d40ae618d78c29f1f1edc24163ac9f9849fbba8bcc1fffe4e9d3b04452af3"
+    },
+    {
+      "file": "frontend/src/workspace.css",
+      "bytes": 65737,
+      "sha256": "7ff56aa9ae8a15e7104283f9a8753713f440df95a28b58501f2bcd7d85a50db5"
+    },
+    {
+      "file": "frontend/tests/clinic-report-interaction.test.mjs",
+      "bytes": 5258,
+      "sha256": "fa064c4cf9f9e029e12220fca9ce4b9cc9a87d8110ca9121e208aac78448f071"
+    }
+  ],
+  "diff": "--- local52/AdminDashboard.tsx\n+++ current/frontend/src/AdminDashboard.tsx\n@@ -100,7 +100,8 @@\n         {!d.distributions.length && <Empty title={d.status === \"privacy_not_configured\" ? \"Ожидается настройка групп\" : d.distributions_suppressed ? \"Распределения скрыты правилами групп\" : \"Размеченных ответов пока нет\"} />}\n         {d.distributions.length > 0 && d.distributions_suppressed && <p className=\"muted\">Часть распределений скрыта правилами групп.</p>}\n         {d.distributions.map((item) => <article className=\"diary-entry\" key={item.reference}>\n-          <h3>{dimensionLabels[item.dimension]} · {item.reference}</h3>\n+          <h3>{dimensionLabels[item.dimension]}</h3>\n+          <p className=\"field-hint\">{item.reference.replace(/^S(\\d+)\\/V(\\d+)\\/Q(\\d+)$/, \"Опрос $1 · Версия $2 · Вопрос $3\")}</p>\n           {item.values ? <><p>Ответивших: {item.values.responding_patients}</p>\n             {item.kind !== \"text\" && <HorizontalBars title=\"Распределение ответов\" unit=\"ответов\" rows={item.values.options.map(option => ({label:`${item.kind === \"scale\" ? \"Значение\" : \"Вариант\"} ${option.value}`,value:option.count}))}/>}\n             {item.kind === \"text\" && <p className=\"muted\">Тексты ответов в административной сводке не раскрываются.</p>}\n--- local52/workspace.css\n+++ current/frontend/src/workspace.css\n@@ -185,6 +185,7 @@\n .sidebar-availability .availability-error { margin:4px 0 0; color:var(--signal-soft); font-size:12px; line-height:1.6; }\n .main-content,.patient-shell .main-content { padding: 30px 32px; max-width: 1500px; }\n .page-heading { margin-bottom: 24px; }\n+.page-heading > .button { min-height:44px; font-size:13px; line-height:1.5; }\n .page-heading.subsection-heading h2 { font-size:22px; line-height:1.35; letter-spacing:-.35px; }\n .patient-shell .page-heading { margin-bottom: 24px; }\n .patient-shell .page-heading h1 { font-size: 28px; }\n",
+  "screenshots": [
+    {
+      "file": "docs/evidence/clinic-report-labels-2026-10-25/doctor-header-mobile.jpg",
+      "bytes": 36472,
+      "sha256": "82cdd2f9d45fd2430593d267fafd9152ca4ce61da4e480de1a38bdb522728262",
+      "pixels": [
+        360,
+        810
+      ]
+    },
+    {
+      "file": "docs/evidence/clinic-report-labels-2026-10-25/header-after-mobile.jpg",
+      "bytes": 37585,
+      "sha256": "a9402ccdfc54a6ac0bc38fcfe4b892fbd865ff61d58ea5978d31373cca1a05c5",
+      "pixels": [
+        360,
+        810
+      ]
+    },
+    {
+      "file": "docs/evidence/clinic-report-labels-2026-10-25/patient-header-mobile.jpg",
+      "bytes": 36678,
+      "sha256": "543bfbe73ad089d0404260583321b9b583d1e16527235afba165064f1c2b1545",
+      "pixels": [
+        360,
+        810
+      ]
+    },
+    {
+      "file": "docs/evidence/clinic-report-labels-2026-10-25/versions-after-desktop.jpg",
+      "bytes": 83300,
+      "sha256": "e50cbcdb6ddd8508956a5db1be5b56e7fe7488bfc7480a45e81cb2ba1bc5d0f5",
+      "pixels": [
+        1425,
+        990
+      ]
+    },
+    {
+      "file": "docs/evidence/clinic-report-labels-2026-10-25/versions-after-mobile.jpg",
+      "bytes": 34482,
+      "sha256": "b316c47d084fa067e0fed874f68539ed2779cc5d5527b1ca9123f7c86f17aca6",
+      "pixels": [
+        360,
+        810
+      ]
+    },
+    {
+      "file": "docs/evidence/clinic-report-labels-2026-10-25/versions-before-mobile.jpg",
+      "bytes": 34359,
+      "sha256": "d7f86724efa134f7a615cb1d2ae0aed20678ca89787d78ae8e4cc3efb7f08dae",
+      "pixels": [
+        360,
+        810
+      ]
+    }
+  ],
+  "limits": [
+    "Full54 behavior suite precedes only the final CSS font normalization; final types/build and six native states cover final CSS. No mirrored CSS tests or duplicate full-suite run.",
+    "Aggregate-only closed-transport regression covers separate question groups and stale-refresh/error/retry; native checks did not simulate a clinic endpoint failure.",
+    "No new full-browser axe/WCAG, screen-reader, motion/FPS, load, real-clinic, Git or external-write acceptance. Existing QA min-group1 is not a real-pilot privacy approval."
+  ]
+}

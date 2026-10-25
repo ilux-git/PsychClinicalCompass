@@ -5,7 +5,7 @@ export function CoverageGrid({rows}: {rows:{label:string;responded:number|null;a
   return <div className="coverage-grid">{rows.map(row=><article className="coverage-cell" key={row.label}>
     <h3>{row.label}</h3><div className="coverage-value"><strong>{row.responded === null ? "Скрыто" : row.responded}</strong>{row.assigned !== null&&<span>из {row.assigned}</span>}</div>
     <div className={`coverage-track ${row.percent === null?"unknown":""}`} aria-hidden="true">{row.percent !== null&&<i style={{width:`${Math.max(0,Math.min(100,row.percent))}%`}}/>}</div>
-    <p>{row.percent === null?row.responded === null?"Защищено правилами групп":"Нет назначенных вопросов":`${row.percent}% ответили на вопросы`}</p>
+    <p>{row.percent === null?row.responded === null?"Защищено правилами групп":"Нет назначенных вопросов":`${row.percent.toLocaleString("ru-RU")}% ответили на вопросы`}</p>
     {row.note&&<small>{row.note}</small>}
   </article>)}</div>;
 }

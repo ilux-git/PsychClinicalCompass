@@ -1,0 +1,1392 @@
+{
+  "recordedAt": "2026-10-25T07:48:55.410510+00:00",
+  "status": "Consistent self-report reading hierarchy in clinician feedback and patient history",
+  "scope": "Four CSS rules in one file, no behavior, requests, fields, statuses, clinical thresholds or permissions changed.",
+  "changes": [
+    "Recommendation title12→16px for both readers; clinician quote12→14px/Ink. Patient body stays14px with consistent line height.",
+    "Date remains12px, patient status label11→12px, neutral separators use Line. Status wording and semantic colors unchanged."
+  ],
+  "sources": [
+    {
+      "file": "frontend/src/workspace.css",
+      "bytes": 68591,
+      "sha256": "b64d1d13aeabca8a62312a30c78b8a9dd3e5f82695ce665aacccde3754452091"
+    }
+  ],
+  "diff": "--- local71/workspace.css\n+++ current/frontend/src/workspace.css\n@@ -396,6 +396,10 @@\n .patient-form .lede { font-size: 14px; color: var(--muted); line-height: 1.7; }\n .self-report-form .field { font-size: var(--text-label); }\n .adherence-report:focus { outline: 2px solid var(--signal-dark); outline-offset: 4px; }\n+.adherence-report { border-color: var(--line); }\n+.adherence-report h3 { font-size: 16px; line-height: 1.45; }\n+.adherence-report p,.adherence-report blockquote { font-size: var(--text-body); line-height: 1.65; color: var(--ink); }\n+.adherence-report > .badge { font-size: var(--text-caption); }\n .survey-form-meta { display: flex; gap: 14px; align-items: center; justify-content: space-between; flex-wrap: wrap; font-size: 12px; color: var(--muted); }\n .draft-disclosure { display: flex; align-items: flex-start; gap: 10px; padding: 14px 16px; margin: 24px 0; background: #edf5f2; border-radius: 9px; font-size: 13px; line-height: 1.6; color: #49685e; }\n .draft-disclosure > svg { flex-shrink: 0; margin-top: 2px; }\n",
+  "verification": {
+    "before": [
+      {
+        "card": {
+          "bottom": 484.890625,
+          "height": 142.78125,
+          "left": 321,
+          "right": 884,
+          "top": 342.109375,
+          "width": 563,
+          "x": 321,
+          "y": 342.109375
+        },
+        "elements": [
+          {
+            "bounds": {
+              "bottom": 369.296875,
+              "height": 19.1875,
+              "left": 321,
+              "right": 617.59375,
+              "top": 350.109375,
+              "width": 296.59375,
+              "x": 321,
+              "y": 350.109375
+            },
+            "className": "",
+            "color": "rgb(24, 25, 26)",
+            "font": "12px",
+            "lineHeight": "19.2px",
+            "tag": "H3",
+            "text": "QA: проверка намеренного фокуса при ожидании"
+          },
+          {
+            "bounds": {
+              "bottom": 373.09375,
+              "height": 26.796875,
+              "left": 772.5,
+              "right": 884,
+              "top": 346.296875,
+              "width": 111.5,
+              "x": 772.5,
+              "y": 346.296875
+            },
+            "className": "badge muted",
+            "color": "rgb(89, 91, 90)",
+            "font": "12px",
+            "lineHeight": "16.8px",
+            "tag": "SPAN",
+            "text": "Не могу оценить"
+          },
+          {
+            "bounds": {
+              "bottom": 410.890625,
+              "height": 21.59375,
+              "left": 321,
+              "right": 884,
+              "top": 389.296875,
+              "width": 563,
+              "x": 321,
+              "y": 389.296875
+            },
+            "className": "",
+            "color": "rgb(116, 103, 126)",
+            "font": "12px",
+            "lineHeight": "21.6px",
+            "tag": "BLOCKQUOTE",
+            "text": "«QA: тест задержки и помощи, не клинический ответ.»"
+          },
+          {
+            "bounds": {
+              "bottom": 453.890625,
+              "height": 18,
+              "left": 321,
+              "right": 497.125,
+              "top": 435.890625,
+              "width": 176.125,
+              "x": 321,
+              "y": 435.890625
+            },
+            "className": "muted",
+            "color": "rgb(89, 91, 90)",
+            "font": "12px",
+            "lineHeight": "18px",
+            "tag": "SMALL",
+            "text": "25 окт., 13:54 · со слов пациента"
+          },
+          {
+            "bounds": {
+              "bottom": 466.890625,
+              "height": 44,
+              "left": 539.1875,
+              "right": 664.421875,
+              "top": 422.890625,
+              "width": 125.234375,
+              "x": 539.1875,
+              "y": 422.890625
+            },
+            "className": "button ghost ",
+            "color": "rgb(165, 46, 28)",
+            "font": "13px",
+            "lineHeight": "19.5px",
+            "tag": "BUTTON",
+            "text": "Заметка к ответу"
+          },
+          {
+            "bounds": {
+              "bottom": 466.890625,
+              "height": 44,
+              "left": 706.484375,
+              "right": 884,
+              "top": 422.890625,
+              "width": 177.515625,
+              "x": 706.484375,
+              "y": 422.890625
+            },
+            "className": "button secondary ",
+            "color": "rgb(24, 25, 26)",
+            "font": "13px",
+            "lineHeight": "19.5px",
+            "tag": "BUTTON",
+            "text": " Запланировать шаг"
+          }
+        ],
+        "overflow": false,
+        "stage": "before-physician-1280",
+        "viewport": [
+          1280,
+          720
+        ]
+      },
+      {
+        "card": {
+          "bottom": 696.796875,
+          "height": 302.359375,
+          "left": 37,
+          "right": 323,
+          "top": 394.4375,
+          "width": 286,
+          "x": 37,
+          "y": 394.4375
+        },
+        "elements": [
+          {
+            "bounds": {
+              "bottom": 440.8125,
+              "height": 38.375,
+              "left": 37,
+              "right": 323,
+              "top": 402.4375,
+              "width": 286,
+              "x": 37,
+              "y": 402.4375
+            },
+            "className": "",
+            "color": "rgb(24, 25, 26)",
+            "font": "12px",
+            "lineHeight": "19.2px",
+            "tag": "H3",
+            "text": "QA: проверка намеренного фокуса при ожидании"
+          },
+          {
+            "bounds": {
+              "bottom": 485.609375,
+              "height": 26.796875,
+              "left": 37,
+              "right": 148.5,
+              "top": 458.8125,
+              "width": 111.5,
+              "x": 37,
+              "y": 458.8125
+            },
+            "className": "badge muted",
+            "color": "rgb(89, 91, 90)",
+            "font": "12px",
+            "lineHeight": "16.8px",
+            "tag": "SPAN",
+            "text": "Не могу оценить"
+          },
+          {
+            "bounds": {
+              "bottom": 540.796875,
+              "height": 43.1875,
+              "left": 37,
+              "right": 323,
+              "top": 497.609375,
+              "width": 286,
+              "x": 37,
+              "y": 497.609375
+            },
+            "className": "",
+            "color": "rgb(116, 103, 126)",
+            "font": "12px",
+            "lineHeight": "21.6px",
+            "tag": "BLOCKQUOTE",
+            "text": "«QA: тест задержки и помощи, не клинический ответ.»"
+          },
+          {
+            "bounds": {
+              "bottom": 570.796875,
+              "height": 18,
+              "left": 37,
+              "right": 213.125,
+              "top": 552.796875,
+              "width": 176.125,
+              "x": 37,
+              "y": 552.796875
+            },
+            "className": "muted",
+            "color": "rgb(89, 91, 90)",
+            "font": "12px",
+            "lineHeight": "18px",
+            "tag": "SMALL",
+            "text": "25 окт., 13:54 · со слов пациента"
+          },
+          {
+            "bounds": {
+              "bottom": 624.796875,
+              "height": 44,
+              "left": 37,
+              "right": 162.234375,
+              "top": 580.796875,
+              "width": 125.234375,
+              "x": 37,
+              "y": 580.796875
+            },
+            "className": "button ghost ",
+            "color": "rgb(165, 46, 28)",
+            "font": "13px",
+            "lineHeight": "19.5px",
+            "tag": "BUTTON",
+            "text": "Заметка к ответу"
+          },
+          {
+            "bounds": {
+              "bottom": 678.796875,
+              "height": 44,
+              "left": 37,
+              "right": 214.515625,
+              "top": 634.796875,
+              "width": 177.515625,
+              "x": 37,
+              "y": 634.796875
+            },
+            "className": "button secondary ",
+            "color": "rgb(24, 25, 26)",
+            "font": "13px",
+            "lineHeight": "19.5px",
+            "tag": "BUTTON",
+            "text": " Запланировать шаг"
+          }
+        ],
+        "overflow": false,
+        "stage": "before-physician-375",
+        "viewport": [
+          375,
+          844
+        ]
+      },
+      {
+        "card": {
+          "bottom": 454.65625,
+          "height": 137.375,
+          "left": 321,
+          "right": 1208,
+          "top": 317.28125,
+          "width": 887,
+          "x": 321,
+          "y": 317.28125
+        },
+        "elements": [
+          {
+            "bounds": {
+              "bottom": 342.671875,
+              "height": 25.390625,
+              "left": 321,
+              "right": 424.546875,
+              "top": 317.28125,
+              "width": 103.546875,
+              "x": 321,
+              "y": 317.28125
+            },
+            "className": "badge muted",
+            "color": "rgb(89, 91, 90)",
+            "font": "11px",
+            "lineHeight": "15.4px",
+            "tag": "SPAN",
+            "text": "Не могу оценить"
+          },
+          {
+            "bounds": {
+              "bottom": 369.859375,
+              "height": 19.1875,
+              "left": 321,
+              "right": 1208,
+              "top": 350.671875,
+              "width": 887,
+              "x": 321,
+              "y": 350.671875
+            },
+            "className": "",
+            "color": "rgb(24, 25, 26)",
+            "font": "12px",
+            "lineHeight": "19.2px",
+            "tag": "H3",
+            "text": "QA: проверка намеренного фокуса при ожидании"
+          },
+          {
+            "bounds": {
+              "bottom": 401.65625,
+              "height": 23.796875,
+              "left": 321,
+              "right": 1208,
+              "top": 377.859375,
+              "width": 887,
+              "x": 321,
+              "y": 377.859375
+            },
+            "className": "preserve",
+            "color": "rgb(24, 25, 26)",
+            "font": "14px",
+            "lineHeight": "23.8px",
+            "tag": "P",
+            "text": "QA: тест задержки и помощи, не клинический ответ."
+          },
+          {
+            "bounds": {
+              "bottom": 434.65625,
+              "height": 16,
+              "left": 321,
+              "right": 392.109375,
+              "top": 418.65625,
+              "width": 71.109375,
+              "x": 321,
+              "y": 418.65625
+            },
+            "className": "muted",
+            "color": "rgb(89, 91, 90)",
+            "font": "12px",
+            "lineHeight": "18px",
+            "tag": "SMALL",
+            "text": "25 окт., 13:54"
+          }
+        ],
+        "overflow": false,
+        "stage": "before-patient-1280",
+        "viewport": [
+          1280,
+          720
+        ]
+      },
+      {
+        "card": {
+          "bottom": 549.734375,
+          "height": 180.359375,
+          "left": 37,
+          "right": 323,
+          "top": 369.375,
+          "width": 286,
+          "x": 37,
+          "y": 369.375
+        },
+        "elements": [
+          {
+            "bounds": {
+              "bottom": 394.765625,
+              "height": 25.390625,
+              "left": 37,
+              "right": 140.546875,
+              "top": 369.375,
+              "width": 103.546875,
+              "x": 37,
+              "y": 369.375
+            },
+            "className": "badge muted",
+            "color": "rgb(89, 91, 90)",
+            "font": "11px",
+            "lineHeight": "15.4px",
+            "tag": "SPAN",
+            "text": "Не могу оценить"
+          },
+          {
+            "bounds": {
+              "bottom": 441.140625,
+              "height": 38.375,
+              "left": 37,
+              "right": 323,
+              "top": 402.765625,
+              "width": 286,
+              "x": 37,
+              "y": 402.765625
+            },
+            "className": "",
+            "color": "rgb(24, 25, 26)",
+            "font": "12px",
+            "lineHeight": "19.2px",
+            "tag": "H3",
+            "text": "QA: проверка намеренного фокуса при ожидании"
+          },
+          {
+            "bounds": {
+              "bottom": 496.734375,
+              "height": 47.59375,
+              "left": 37,
+              "right": 323,
+              "top": 449.140625,
+              "width": 286,
+              "x": 37,
+              "y": 449.140625
+            },
+            "className": "preserve",
+            "color": "rgb(24, 25, 26)",
+            "font": "14px",
+            "lineHeight": "23.8px",
+            "tag": "P",
+            "text": "QA: тест задержки и помощи, не клинический ответ."
+          },
+          {
+            "bounds": {
+              "bottom": 529.734375,
+              "height": 16,
+              "left": 37,
+              "right": 108.109375,
+              "top": 513.734375,
+              "width": 71.109375,
+              "x": 37,
+              "y": 513.734375
+            },
+            "className": "muted",
+            "color": "rgb(89, 91, 90)",
+            "font": "12px",
+            "lineHeight": "18px",
+            "tag": "SMALL",
+            "text": "25 окт., 13:54"
+          }
+        ],
+        "overflow": false,
+        "stage": "before-patient-375",
+        "viewport": [
+          375,
+          844
+        ]
+      }
+    ],
+    "after": {
+      "checks": [
+        {
+          "card": {
+            "bottom": 552.734375,
+            "height": 188.359375,
+            "left": 37,
+            "right": 323,
+            "top": 364.375,
+            "width": 286,
+            "x": 37,
+            "y": 364.375
+          },
+          "elements": [
+            {
+              "bounds": {
+                "bottom": 391.171875,
+                "height": 26.796875,
+                "left": 37,
+                "right": 148.5,
+                "top": 364.375,
+                "width": 111.5,
+                "x": 37,
+                "y": 364.375
+              },
+              "className": "badge muted",
+              "color": "rgb(89, 91, 90)",
+              "font": "12px",
+              "lineHeight": "16.8px",
+              "tag": "SPAN",
+              "text": "Не могу оценить"
+            },
+            {
+              "bounds": {
+                "bottom": 445.546875,
+                "height": 46.375,
+                "left": 37,
+                "right": 323,
+                "top": 399.171875,
+                "width": 286,
+                "x": 37,
+                "y": 399.171875
+              },
+              "className": "",
+              "color": "rgb(24, 25, 26)",
+              "font": "16px",
+              "lineHeight": "23.2px",
+              "tag": "H3",
+              "text": "QA: проверка намеренного фокуса при ожидании"
+            },
+            {
+              "bounds": {
+                "bottom": 499.734375,
+                "height": 46.1875,
+                "left": 37,
+                "right": 323,
+                "top": 453.546875,
+                "width": 286,
+                "x": 37,
+                "y": 453.546875
+              },
+              "className": "preserve",
+              "color": "rgb(24, 25, 26)",
+              "font": "14px",
+              "lineHeight": "23.1px",
+              "tag": "P",
+              "text": "QA: тест задержки и помощи, не клинический ответ."
+            },
+            {
+              "bounds": {
+                "bottom": 532.734375,
+                "height": 16,
+                "left": 37,
+                "right": 108.109375,
+                "top": 516.734375,
+                "width": 71.109375,
+                "x": 37,
+                "y": 516.734375
+              },
+              "className": "muted",
+              "color": "rgb(89, 91, 90)",
+              "font": "12px",
+              "lineHeight": "18px",
+              "tag": "SMALL",
+              "text": "25 окт., 13:54"
+            }
+          ],
+          "overflow": false,
+          "stage": "after-patient-375",
+          "viewport": [
+            375,
+            844
+          ]
+        },
+        {
+          "card": {
+            "bottom": 473.359375,
+            "height": 142.078125,
+            "left": 37,
+            "right": 716,
+            "top": 331.28125,
+            "width": 679,
+            "x": 37,
+            "y": 331.28125
+          },
+          "elements": [
+            {
+              "bounds": {
+                "bottom": 358.078125,
+                "height": 26.796875,
+                "left": 37,
+                "right": 148.5,
+                "top": 331.28125,
+                "width": 111.5,
+                "x": 37,
+                "y": 331.28125
+              },
+              "className": "badge muted",
+              "color": "rgb(89, 91, 90)",
+              "font": "12px",
+              "lineHeight": "16.8px",
+              "tag": "SPAN",
+              "text": "Не могу оценить"
+            },
+            {
+              "bounds": {
+                "bottom": 389.265625,
+                "height": 23.1875,
+                "left": 37,
+                "right": 716,
+                "top": 366.078125,
+                "width": 679,
+                "x": 37,
+                "y": 366.078125
+              },
+              "className": "",
+              "color": "rgb(24, 25, 26)",
+              "font": "16px",
+              "lineHeight": "23.2px",
+              "tag": "H3",
+              "text": "QA: проверка намеренного фокуса при ожидании"
+            },
+            {
+              "bounds": {
+                "bottom": 420.359375,
+                "height": 23.09375,
+                "left": 37,
+                "right": 716,
+                "top": 397.265625,
+                "width": 679,
+                "x": 37,
+                "y": 397.265625
+              },
+              "className": "preserve",
+              "color": "rgb(24, 25, 26)",
+              "font": "14px",
+              "lineHeight": "23.1px",
+              "tag": "P",
+              "text": "QA: тест задержки и помощи, не клинический ответ."
+            },
+            {
+              "bounds": {
+                "bottom": 453.359375,
+                "height": 16,
+                "left": 37,
+                "right": 108.109375,
+                "top": 437.359375,
+                "width": 71.109375,
+                "x": 37,
+                "y": 437.359375
+              },
+              "className": "muted",
+              "color": "rgb(89, 91, 90)",
+              "font": "12px",
+              "lineHeight": "18px",
+              "tag": "SMALL",
+              "text": "25 окт., 13:54"
+            }
+          ],
+          "overflow": false,
+          "stage": "after-patient-768",
+          "viewport": [
+            768,
+            1024
+          ]
+        },
+        {
+          "card": {
+            "bottom": 479.359375,
+            "height": 142.078125,
+            "left": 321,
+            "right": 1368,
+            "top": 337.28125,
+            "width": 1047,
+            "x": 321,
+            "y": 337.28125
+          },
+          "elements": [
+            {
+              "bounds": {
+                "bottom": 364.078125,
+                "height": 26.796875,
+                "left": 321,
+                "right": 432.5,
+                "top": 337.28125,
+                "width": 111.5,
+                "x": 321,
+                "y": 337.28125
+              },
+              "className": "badge muted",
+              "color": "rgb(89, 91, 90)",
+              "font": "12px",
+              "lineHeight": "16.8px",
+              "tag": "SPAN",
+              "text": "Не могу оценить"
+            },
+            {
+              "bounds": {
+                "bottom": 395.265625,
+                "height": 23.1875,
+                "left": 321,
+                "right": 1368,
+                "top": 372.078125,
+                "width": 1047,
+                "x": 321,
+                "y": 372.078125
+              },
+              "className": "",
+              "color": "rgb(24, 25, 26)",
+              "font": "16px",
+              "lineHeight": "23.2px",
+              "tag": "H3",
+              "text": "QA: проверка намеренного фокуса при ожидании"
+            },
+            {
+              "bounds": {
+                "bottom": 426.359375,
+                "height": 23.09375,
+                "left": 321,
+                "right": 1368,
+                "top": 403.265625,
+                "width": 1047,
+                "x": 321,
+                "y": 403.265625
+              },
+              "className": "preserve",
+              "color": "rgb(24, 25, 26)",
+              "font": "14px",
+              "lineHeight": "23.1px",
+              "tag": "P",
+              "text": "QA: тест задержки и помощи, не клинический ответ."
+            },
+            {
+              "bounds": {
+                "bottom": 459.359375,
+                "height": 16,
+                "left": 321,
+                "right": 392.109375,
+                "top": 443.359375,
+                "width": 71.109375,
+                "x": 321,
+                "y": 443.359375
+              },
+              "className": "muted",
+              "color": "rgb(89, 91, 90)",
+              "font": "12px",
+              "lineHeight": "18px",
+              "tag": "SMALL",
+              "text": "25 окт., 13:54"
+            }
+          ],
+          "overflow": false,
+          "stage": "after-patient-1440",
+          "viewport": [
+            1440,
+            1000
+          ]
+        },
+        {
+          "card": {
+            "bottom": 628.640625,
+            "height": 148.28125,
+            "left": 321,
+            "right": 1044,
+            "top": 480.359375,
+            "width": 723,
+            "x": 321,
+            "y": 480.359375
+          },
+          "elements": [
+            {
+              "bounds": {
+                "bottom": 511.546875,
+                "height": 23.1875,
+                "left": 321,
+                "right": 716.453125,
+                "top": 488.359375,
+                "width": 395.453125,
+                "x": 321,
+                "y": 488.359375
+              },
+              "className": "",
+              "color": "rgb(24, 25, 26)",
+              "font": "16px",
+              "lineHeight": "23.2px",
+              "tag": "H3",
+              "text": "QA: проверка намеренного фокуса при ожидании"
+            },
+            {
+              "bounds": {
+                "bottom": 513.34375,
+                "height": 26.796875,
+                "left": 932.5,
+                "right": 1044,
+                "top": 486.546875,
+                "width": 111.5,
+                "x": 932.5,
+                "y": 486.546875
+              },
+              "className": "badge muted",
+              "color": "rgb(89, 91, 90)",
+              "font": "12px",
+              "lineHeight": "16.8px",
+              "tag": "SPAN",
+              "text": "Не могу оценить"
+            },
+            {
+              "bounds": {
+                "bottom": 554.640625,
+                "height": 23.09375,
+                "left": 321,
+                "right": 1044,
+                "top": 531.546875,
+                "width": 723,
+                "x": 321,
+                "y": 531.546875
+              },
+              "className": "",
+              "color": "rgb(24, 25, 26)",
+              "font": "14px",
+              "lineHeight": "23.1px",
+              "tag": "BLOCKQUOTE",
+              "text": "«QA: тест задержки и помощи, не клинический ответ.»"
+            },
+            {
+              "bounds": {
+                "bottom": 597.640625,
+                "height": 18,
+                "left": 321,
+                "right": 497.125,
+                "top": 579.640625,
+                "width": 176.125,
+                "x": 321,
+                "y": 579.640625
+              },
+              "className": "muted",
+              "color": "rgb(89, 91, 90)",
+              "font": "12px",
+              "lineHeight": "18px",
+              "tag": "SMALL",
+              "text": "25 окт., 13:54 · со слов пациента"
+            },
+            {
+              "bounds": {
+                "bottom": 610.640625,
+                "height": 44,
+                "left": 619.1875,
+                "right": 744.421875,
+                "top": 566.640625,
+                "width": 125.234375,
+                "x": 619.1875,
+                "y": 566.640625
+              },
+              "className": "button ghost ",
+              "color": "rgb(165, 46, 28)",
+              "font": "13px",
+              "lineHeight": "19.5px",
+              "tag": "BUTTON",
+              "text": "Заметка к ответу"
+            },
+            {
+              "bounds": {
+                "bottom": 610.640625,
+                "height": 44,
+                "left": 866.484375,
+                "right": 1044,
+                "top": 566.640625,
+                "width": 177.515625,
+                "x": 866.484375,
+                "y": 566.640625
+              },
+              "className": "button secondary ",
+              "color": "rgb(24, 25, 26)",
+              "font": "13px",
+              "lineHeight": "19.5px",
+              "tag": "BUTTON",
+              "text": " Запланировать шаг"
+            }
+          ],
+          "overflow": false,
+          "stage": "after-physician-1440",
+          "viewport": [
+            1440,
+            1000
+          ]
+        },
+        {
+          "card": {
+            "bottom": 606.640625,
+            "height": 148.28125,
+            "left": 37,
+            "right": 716,
+            "top": 458.359375,
+            "width": 679,
+            "x": 37,
+            "y": 458.359375
+          },
+          "elements": [
+            {
+              "bounds": {
+                "bottom": 489.546875,
+                "height": 23.1875,
+                "left": 37,
+                "right": 432.453125,
+                "top": 466.359375,
+                "width": 395.453125,
+                "x": 37,
+                "y": 466.359375
+              },
+              "className": "",
+              "color": "rgb(24, 25, 26)",
+              "font": "16px",
+              "lineHeight": "23.2px",
+              "tag": "H3",
+              "text": "QA: проверка намеренного фокуса при ожидании"
+            },
+            {
+              "bounds": {
+                "bottom": 491.34375,
+                "height": 26.796875,
+                "left": 604.5,
+                "right": 716,
+                "top": 464.546875,
+                "width": 111.5,
+                "x": 604.5,
+                "y": 464.546875
+              },
+              "className": "badge muted",
+              "color": "rgb(89, 91, 90)",
+              "font": "12px",
+              "lineHeight": "16.8px",
+              "tag": "SPAN",
+              "text": "Не могу оценить"
+            },
+            {
+              "bounds": {
+                "bottom": 532.640625,
+                "height": 23.09375,
+                "left": 37,
+                "right": 716,
+                "top": 509.546875,
+                "width": 679,
+                "x": 37,
+                "y": 509.546875
+              },
+              "className": "",
+              "color": "rgb(24, 25, 26)",
+              "font": "14px",
+              "lineHeight": "23.1px",
+              "tag": "BLOCKQUOTE",
+              "text": "«QA: тест задержки и помощи, не клинический ответ.»"
+            },
+            {
+              "bounds": {
+                "bottom": 575.640625,
+                "height": 18,
+                "left": 37,
+                "right": 213.125,
+                "top": 557.640625,
+                "width": 176.125,
+                "x": 37,
+                "y": 557.640625
+              },
+              "className": "muted",
+              "color": "rgb(89, 91, 90)",
+              "font": "12px",
+              "lineHeight": "18px",
+              "tag": "SMALL",
+              "text": "25 окт., 13:54 · со слов пациента"
+            },
+            {
+              "bounds": {
+                "bottom": 588.640625,
+                "height": 44,
+                "left": 313.1875,
+                "right": 438.421875,
+                "top": 544.640625,
+                "width": 125.234375,
+                "x": 313.1875,
+                "y": 544.640625
+              },
+              "className": "button ghost ",
+              "color": "rgb(165, 46, 28)",
+              "font": "13px",
+              "lineHeight": "19.5px",
+              "tag": "BUTTON",
+              "text": "Заметка к ответу"
+            },
+            {
+              "bounds": {
+                "bottom": 588.640625,
+                "height": 44,
+                "left": 538.484375,
+                "right": 716,
+                "top": 544.640625,
+                "width": 177.515625,
+                "x": 538.484375,
+                "y": 544.640625
+              },
+              "className": "button secondary ",
+              "color": "rgb(24, 25, 26)",
+              "font": "13px",
+              "lineHeight": "19.5px",
+              "tag": "BUTTON",
+              "text": " Запланировать шаг"
+            }
+          ],
+          "overflow": false,
+          "stage": "after-physician-768",
+          "viewport": [
+            768,
+            1024
+          ]
+        },
+        {
+          "card": {
+            "bottom": 703.796875,
+            "height": 313.359375,
+            "left": 37,
+            "right": 323,
+            "top": 390.4375,
+            "width": 286,
+            "x": 37,
+            "y": 390.4375
+          },
+          "elements": [
+            {
+              "bounds": {
+                "bottom": 444.8125,
+                "height": 46.375,
+                "left": 37,
+                "right": 323,
+                "top": 398.4375,
+                "width": 286,
+                "x": 37,
+                "y": 398.4375
+              },
+              "className": "",
+              "color": "rgb(24, 25, 26)",
+              "font": "16px",
+              "lineHeight": "23.2px",
+              "tag": "H3",
+              "text": "QA: проверка намеренного фокуса при ожидании"
+            },
+            {
+              "bounds": {
+                "bottom": 489.609375,
+                "height": 26.796875,
+                "left": 37,
+                "right": 148.5,
+                "top": 462.8125,
+                "width": 111.5,
+                "x": 37,
+                "y": 462.8125
+              },
+              "className": "badge muted",
+              "color": "rgb(89, 91, 90)",
+              "font": "12px",
+              "lineHeight": "16.8px",
+              "tag": "SPAN",
+              "text": "Не могу оценить"
+            },
+            {
+              "bounds": {
+                "bottom": 547.796875,
+                "height": 46.1875,
+                "left": 37,
+                "right": 323,
+                "top": 501.609375,
+                "width": 286,
+                "x": 37,
+                "y": 501.609375
+              },
+              "className": "",
+              "color": "rgb(24, 25, 26)",
+              "font": "14px",
+              "lineHeight": "23.1px",
+              "tag": "BLOCKQUOTE",
+              "text": "«QA: тест задержки и помощи, не клинический ответ.»"
+            },
+            {
+              "bounds": {
+                "bottom": 577.796875,
+                "height": 18,
+                "left": 37,
+                "right": 213.125,
+                "top": 559.796875,
+                "width": 176.125,
+                "x": 37,
+                "y": 559.796875
+              },
+              "className": "muted",
+              "color": "rgb(89, 91, 90)",
+              "font": "12px",
+              "lineHeight": "18px",
+              "tag": "SMALL",
+              "text": "25 окт., 13:54 · со слов пациента"
+            },
+            {
+              "bounds": {
+                "bottom": 631.796875,
+                "height": 44,
+                "left": 37,
+                "right": 162.234375,
+                "top": 587.796875,
+                "width": 125.234375,
+                "x": 37,
+                "y": 587.796875
+              },
+              "className": "button ghost ",
+              "color": "rgb(165, 46, 28)",
+              "font": "13px",
+              "lineHeight": "19.5px",
+              "tag": "BUTTON",
+              "text": "Заметка к ответу"
+            },
+            {
+              "bounds": {
+                "bottom": 685.796875,
+                "height": 44,
+                "left": 37,
+                "right": 214.515625,
+                "top": 641.796875,
+                "width": 177.515625,
+                "x": 37,
+                "y": 641.796875
+              },
+              "className": "button secondary ",
+              "color": "rgb(24, 25, 26)",
+              "font": "13px",
+              "lineHeight": "19.5px",
+              "tag": "BUTTON",
+              "text": " Запланировать шаг"
+            }
+          ],
+          "overflow": false,
+          "stage": "after-physician-375",
+          "viewport": [
+            375,
+            844
+          ]
+        }
+      ],
+      "console": []
+    },
+    "buildAndTypes": {
+      "exitCode": 0,
+      "source": {
+        "file": "outputs/self-report-reading-build-20261025.log",
+        "bytes": 2056,
+        "sha256": "3369cefaa6d34a934f06b999dfe43d909c7b56704ccce22874def428bc059fdb"
+      }
+    },
+    "http": {
+      "base_url": "http://127.0.0.1:8780",
+      "scope": "HTTP bytes and MIME only; not browser layout/interactions",
+      "assets": [
+        {
+          "file": "AdminDashboard-Bun9Xt0a.js",
+          "status": 200,
+          "bytes": 18580,
+          "sha256": "c81b7ea25c4d8fd1b81d6dc444cb633c5a410e9ead974643641b9c56b130f11f",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "CareWorkflow-WQeWReUy.js",
+          "status": 200,
+          "bytes": 26980,
+          "sha256": "9e5a286f3709d202634c10c188fb0d7bbb280802d1b8109d4af6d8e58b45f5ca",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "Charts-Bn7KCJI8.js",
+          "status": 200,
+          "bytes": 5476,
+          "sha256": "2481acadca62ad67b506887d523bee31ba6e2dfbf8c78f142095c07b4becd366",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "DoctorDashboard-Bu10g4h2.js",
+          "status": 200,
+          "bytes": 18046,
+          "sha256": "75b789a1b40fda83fd9445e2718741d2e4783ac58fa0b554ef0569e24f786f7b",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "DoctorPatients-Bkzs3BZ8.js",
+          "status": 200,
+          "bytes": 37144,
+          "sha256": "0f300013bbaa1f93e07df1169085a94578108fc5886595c32e1b9c2c91141961",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "MedicationSchedule-C_K6AhA_.js",
+          "status": 200,
+          "bytes": 37054,
+          "sha256": "bb92e7b37093c40c7991a156c81b622014688a8bc989eb76d8dc4ba90717b2f5",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "MedicationSchedule-C_cioHGn.css",
+          "status": 200,
+          "bytes": 2103,
+          "sha256": "3ecca9c112edd867ada5c834649a96069fb7decf7d1ea5da5aebe9da0ab28a4e",
+          "mime": "text/css; charset=utf-8"
+        },
+        {
+          "file": "Patient-B9xuvwdE.css",
+          "status": 200,
+          "bytes": 26258,
+          "sha256": "9160fbf594ce6238151f4e13f5a28e00c0e62184711079b09f25bbebeb327b0b",
+          "mime": "text/css; charset=utf-8"
+        },
+        {
+          "file": "Patient-BDWtuS-y.js",
+          "status": 200,
+          "bytes": 67631,
+          "sha256": "fe8138c757e9b70087818b4a89f9f6ce42cc5f2b5451474d23e3c743a30c6680",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "SurveyBuilder-C4k5aSUz.js",
+          "status": 200,
+          "bytes": 25412,
+          "sha256": "15b4ccfe7ce5b46f0731fdcae96803246c3d8de24e085d9178a0b00ea79fa3e0",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "SurveyFields-aSLwz93R.js",
+          "status": 200,
+          "bytes": 3313,
+          "sha256": "cff94597904a50ea769a4f21a8ef8147456316b5d33aff59a4f93e63b52c2ac6",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "TaskBoard-BYAYaHpm.js",
+          "status": 200,
+          "bytes": 7839,
+          "sha256": "db0e2f5b45043bdb6e5b87f54330dcfa46bcca8f684cf57ea36aa2df0a7c54e1",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "WorkflowMetrics-1ejHtKHV.js",
+          "status": 200,
+          "bytes": 12483,
+          "sha256": "85c347fb27ed968ac65b05daea0e81002b3cc7fe7b3f2b17dc5ffb24834570d7",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "chevron-right-DWZGCf3F.js",
+          "status": 200,
+          "bytes": 159,
+          "sha256": "5bd7d111c9713c633918ebb6172da9731088b400793b4cf5b0bf10e5c608e39d",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "collection-COswcvyL.js",
+          "status": 200,
+          "bytes": 939,
+          "sha256": "b8f61ba215c319fcc2aaf6ce0fb3b26b182c049b9a0d9e4febe85703fe8000e4",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "index-Bl9HGA7j.js",
+          "status": 200,
+          "bytes": 391449,
+          "sha256": "18431ddc9d7cfb093157936c9e6b7d272b58dc8f845883018d318e86e4b95fe5",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "index-CLZkfnVt.css",
+          "status": 200,
+          "bytes": 117182,
+          "sha256": "78cee634ed5a08112274fcba8178f8509266de321c0f4f393338a317b5be9738",
+          "mime": "text/css; charset=utf-8"
+        },
+        {
+          "file": "patientProgress-Do0fObh9.js",
+          "status": 200,
+          "bytes": 1130,
+          "sha256": "611dafc1b1ad2ac66b0b04ac3852b8c0bf56b6f106882f460ee96efa5097a0b3",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "plus-D7NQDiOd.js",
+          "status": 200,
+          "bytes": 182,
+          "sha256": "bd9ef1b140214ad827b060d33e61cffc17892ed275a379790ec97166f76d06ef",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "send-KZV5oNjA.js",
+          "status": 200,
+          "bytes": 652,
+          "sha256": "b9c77f2e031c0601bc120cd1230a02fabcee2f5cc9e70872ee154cc5af5c58e8",
+          "mime": "text/javascript; charset=utf-8"
+        }
+      ],
+      "health": {
+        "status": "ok",
+        "compass_db": true,
+        "mis_db": true,
+        "mode": "synthetic_demo"
+      },
+      "root_matches_dist": true,
+      "qa_health": {
+        "status": "ok",
+        "compass_db": true,
+        "mis_db": true,
+        "mode": "synthetic_demo"
+      }
+    },
+    "functionalBaseline": "71/71 frontend and151/151 backend retained, not rerun for CSS-only change."
+  },
+  "screenshots": [
+    {
+      "file": "docs/evidence/self-report-reading-2026-10-25/after-patient-1440.jpg",
+      "bytes": 94779,
+      "sha256": "27971e611ff2abb285f632efaca9c0f5c94bd8cfbe9270155fc6db255121acb3",
+      "pixels": [
+        1425,
+        990
+      ]
+    },
+    {
+      "file": "docs/evidence/self-report-reading-2026-10-25/after-patient-375.jpg",
+      "bytes": 36852,
+      "sha256": "068135b4968ab98b25d24217c8edd7769baadc331154f2bdaf8a9fec91173d3c",
+      "pixels": [
+        360,
+        810
+      ]
+    },
+    {
+      "file": "docs/evidence/self-report-reading-2026-10-25/after-patient-768.jpg",
+      "bytes": 63878,
+      "sha256": "9e8fc967f2ac1510ee31567e3fe27d850da8dff0b5d7dce2fbb6f1a42cb6cee6",
+      "pixels": [
+        753,
+        1004
+      ]
+    },
+    {
+      "file": "docs/evidence/self-report-reading-2026-10-25/after-physician-1440.jpg",
+      "bytes": 118512,
+      "sha256": "6a20f28942a064ba359e2a699c235cde35bc364920fc91c479d793c9204e4c16",
+      "pixels": [
+        1425,
+        990
+      ]
+    },
+    {
+      "file": "docs/evidence/self-report-reading-2026-10-25/after-physician-375.jpg",
+      "bytes": 34584,
+      "sha256": "2f0563995463bd0c1d551a41ceb9bf2d7a6bcc5f9f2ea0c49d4903bd730f3038",
+      "pixels": [
+        360,
+        810
+      ]
+    },
+    {
+      "file": "docs/evidence/self-report-reading-2026-10-25/after-physician-768.jpg",
+      "bytes": 70888,
+      "sha256": "c92ff7b1df92d785bbaddfff3a5d94b7066282c540158b4e26737c15554262f4",
+      "pixels": [
+        753,
+        1004
+      ]
+    },
+    {
+      "file": "docs/evidence/self-report-reading-2026-10-25/before-patient-1280.jpg",
+      "bytes": 67655,
+      "sha256": "4d5611042347232e9025ee7d5e82d2929c3245fc857df9d43b1a60055b743832",
+      "pixels": [
+        1265,
+        712
+      ]
+    },
+    {
+      "file": "docs/evidence/self-report-reading-2026-10-25/before-patient-375.jpg",
+      "bytes": 34431,
+      "sha256": "3f7ac4ab919266d16dffcea4d94c841ec86e5b12cd981ed68f0efb0540733548",
+      "pixels": [
+        360,
+        810
+      ]
+    },
+    {
+      "file": "docs/evidence/self-report-reading-2026-10-25/before-physician-1280.jpg",
+      "bytes": 79501,
+      "sha256": "62682aeff0fc408859470c672a41a0bf722af69143155e2a6334515dcc5f8d62",
+      "pixels": [
+        1265,
+        712
+      ]
+    },
+    {
+      "file": "docs/evidence/self-report-reading-2026-10-25/before-physician-375.jpg",
+      "bytes": 31534,
+      "sha256": "26ddf9dc529a56058e1aced8356efa119bcc1026284cfa57afd133e8f08887d9",
+      "pixels": [
+        360,
+        810
+      ]
+    }
+  ],
+  "qaData": "Read-only role/navigation/viewport switches. Existing patient2 report8 and prior history displayed; no note, survey, report, task, policy, preference, reward or main-data write.",
+  "limits": [
+    "Four before observations375/1280 and six final observations375/768/1440 across patient and doctor. All final reading text is unchanged, no horizontal overflow; clinician actions remain44px.",
+    "Clicking the visible recommendation title focuses its existing focusable article; the focus outline in some screenshots is an interaction state, not a risk/status indicator.",
+    "No new full browser/WCAG, screen-reader, pixel-regression baseline, FPS or load acceptance."
+  ]
+}

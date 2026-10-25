@@ -1,0 +1,139 @@
+{
+  "recorded_at_utc": "2026-10-24T12:42:33.208591+00:00",
+  "source_filename": "Запись встречи 24.10.2026 14_33_41.mp4",
+  "source_sha256": "45d6921630191d12c118e3b541e3be7d1ef551a4921852b2bf314559d82435c4",
+  "source_bytes": 104441221,
+  "duration_seconds": 789.522,
+  "decoded_audio_seconds": 789.504,
+  "local_only": true,
+  "complete_audio_asr": true,
+  "asr_model": "faster-whisper-small",
+  "asr_segments": 28,
+  "all_segments_read": true,
+  "first_segment_start": 0.0,
+  "last_segment_end": 789.35,
+  "targeted_second_pass": [
+    {
+      "label": "discount-scope",
+      "start": 134,
+      "end": 208
+    },
+    {
+      "label": "coordinator",
+      "start": 270,
+      "end": 301
+    },
+    {
+      "label": "requirements",
+      "start": 314,
+      "end": 382
+    },
+    {
+      "label": "banner-pitch",
+      "start": 531,
+      "end": 583
+    },
+    {
+      "label": "focus-and-ui",
+      "start": 625,
+      "end": 701
+    }
+  ],
+  "visual_samples": {
+    "interval_seconds": 30,
+    "sample_seconds": [
+      0,
+      30,
+      60,
+      90,
+      120,
+      150,
+      180,
+      210,
+      240,
+      270,
+      300,
+      330,
+      360,
+      390,
+      420,
+      450,
+      480,
+      510,
+      540,
+      570,
+      600,
+      630,
+      660,
+      690,
+      720,
+      750,
+      780,
+      788
+    ],
+    "frames": 28,
+    "method": "selected frame after seek; not continuous playback"
+  },
+  "visual_samples_reviewed": 28,
+  "contact_sheets_reviewed": [
+    "contact-1.jpg",
+    "contact-2.jpg"
+  ],
+  "full_size_rechecks_seconds": [
+    270,
+    510,
+    570
+  ],
+  "raw_artifact_hashes": {
+    "contact-1.jpg": "11c5dab2f8896fcb17c755dc1dd8fe29a0aa44e7e39f79fad9bad6cdedd3dea5",
+    "contact-2.jpg": "0edef9b80eb8ffe939084a3f427f2769dd5ac2fb9a9f2cd280722177a1e99fdb",
+    "frame-00000.jpg": "042b772b8380b16ad275f5dd0f54476d22618ac60fe7652bd46bca1733d11d2d",
+    "frame-00030.jpg": "829ca41d8cb6e53dbd73c03c92c8b5a203023f59ef3adaf5c33a1b8781e8dbf8",
+    "frame-00060.jpg": "f6614e04b9f3b1957997228ec746d5ca414ae0f1614da21e0cb9096184bc1b52",
+    "frame-00090.jpg": "b30d30cd1de575dff9a867fe58958e55b550dd2f9ec0b4520720e598d6cfc452",
+    "frame-00120.jpg": "4e1fbc8e428d25ee4719725252dcdb3bbcadaefd0d2c730b624b39ee6d520d50",
+    "frame-00150.jpg": "c78646f2a09d0d732a11ba8252feb1946a164585ff6e5212df0d26a27d7dac65",
+    "frame-00180.jpg": "fea3b0bbc1677302dc86a7986ce4e54e529229c95a08a0b2a2b75a70c6fa3f52",
+    "frame-00210.jpg": "427d606e02921fbdb672e296032f89ee20f0abfb0a09dc8b99a3c442ae8184a5",
+    "frame-00240.jpg": "493577bfff1d51bbb362f8bbc7b96ff8f6604e9e46344fffb5632a5f01593f63",
+    "frame-00270.jpg": "678bc9e138a0da6ad57373ca6a98d23bfc9a6679d5980f10dd17797348e01430",
+    "frame-00300.jpg": "49b854efd57bedb5989beddf6a6c8720676e81625f8b7083c0f2b32cb4da194b",
+    "frame-00330.jpg": "dd47f6c042b0726ddc9b2f2274c92a3a1cac5087d10585baa2cc55b56afb4dc3",
+    "frame-00360.jpg": "517d7501a92dc04e69e505654363888aa6d2d6f91644974bb86f1d0c02697102",
+    "frame-00390.jpg": "98b42c0d38ffac778e945f4cccaab83c8b4389a1f374e57601553e05d2fd1e85",
+    "frame-00420.jpg": "075c2a4a40bc85d87e498919ae40258d6203d8dca764d5e0c20c283de96b4b6a",
+    "frame-00450.jpg": "b249d1816c6098dd33d3898ff19a37cba4db2054b9a0f167dbd34f15e096f672",
+    "frame-00480.jpg": "f0225c4f488e4dcb0000303abab99414fb23fa82c9813a7201982baa7e7e440a",
+    "frame-00510.jpg": "00a1935fc84495dd83956aca7bbeac6511602732f261bd9667c8a0bd6b14f3c6",
+    "frame-00540.jpg": "32638dbb089bdc9f59fea6f7ec7361be02d0ebe6077c914a7826fbf4b13ac95e",
+    "frame-00570.jpg": "c54b98f5acdd2f4fde7de9cd424b9c3215bf21e2165d7c01bbabd0a3c043026c",
+    "frame-00600.jpg": "65c923a089026d35b6d8d6d7eb9bd662403952aefdfb82924b403f8471d15d89",
+    "frame-00630.jpg": "b60e21301cdae447c585f8540cf275cdda5550ce5ec066a036762b770d0acff7",
+    "frame-00660.jpg": "e0c674b6e355da85f7fa6a3b312517cd16be48866a12a414136fa2024ff22c0e",
+    "frame-00690.jpg": "6b23a8c182578e9488e9e5576a3618acc3aa4ccf82012897b4f88c0c7afb154a",
+    "frame-00720.jpg": "77da1f8c1315d9f2cfd17ea1248daba0969a44bafed8d8f70a113f3dba135586",
+    "frame-00750.jpg": "95084e903c2ee539b097ee824010714a9e23c33be231d91920f549b9d4c9a85c",
+    "frame-00780.jpg": "a130370f694df07043ae3554ac2755305fccfc3d06f6d95d044f0d05aeae7e19",
+    "frame-00788.jpg": "61e22d4cd0600b80f18878aed4e2731dd7d1df38bfdab7b41ef4c09ac435484e",
+    "targeted-recheck.json": "8be474a8eedcecf8d533526ccd51653bee656c1e5ec22a723ba4bcb4e11b1123",
+    "transcript.json": "422c02e735bbc8ba6abc040d31a1f018609307a250672d3b57664981c91d6ce0",
+    "transcript.txt": "c3d92723547f46ee58ef2b979cd4e570f35b2287d9ef1f3a400d4a49a7de509b",
+    "visual-index.json": "181096d0cea40213a181e21e6bd4688d908af40c6b978ff2071df61458633be2"
+  },
+  "raw_artifact_directory": "outputs/meeting-2026-10-24 (ignored; not included with curated report)",
+  "base_commit": "9e811153db907b8b6748f5667e901897a1b9a0ab",
+  "uncommitted_code_compared": true,
+  "requirements_source": {
+    "filename": "Задача.txt",
+    "sha256": "07c5bb4b3df289a556d9a85f3be7b4186c93789fcb16f932e74c89ddc505f066"
+  },
+  "deliverable": "docs/MEETING_REVIEW_2026-10-24.md",
+  "limits": [
+    "ASR is not word-by-word manual listening verification",
+    "Sampled video, not continuous manual playback of every frame",
+    "No reliable speaker diarization",
+    "No official contest regulation supplied",
+    "Code comparison and earlier test evidence, not a new clinical or legal acceptance",
+    "Plan only; no new app feature, permission, deployment or Git publication from meeting contents"
+  ]
+}

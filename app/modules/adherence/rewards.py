@@ -133,6 +133,15 @@ async def grant_points(session, patient_id, kind, source_key, actor_id, effort_u
     return points
 
 
+async def participation_receipt(session, patient_id, kind, source_key):
+    """Read the existing award; legacy sources without a ledger row stay unknown."""
+    row = await session.scalar(select(ParticipationAward).where(
+        ParticipationAward.patient_id == patient_id, ParticipationAward.kind == kind,
+        ParticipationAward.source_key == source_key))
+    return {"points": row.points, "policy_version": row.policy_version,
+            "recorded_at": row.created_at} if row is not None else None
+
+
 router = APIRouter(tags=["participation points"])
 
 

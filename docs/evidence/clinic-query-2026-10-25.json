@@ -1,0 +1,42 @@
+{
+  "recorded_at": "2026-10-24T21:26:22.270169+00:00",
+  "scope": "Complete public clinic reports, frozen time, isolated 1000-patient load DB; privacy minima1/5",
+  "equal": true,
+  "canonical_summary_sha256": "7fee551b071c08513db1d5603fd228fb9671983248e6f90d4257a391e9181d5d",
+  "frozen_at": "2026-10-24T21:03:18.127230+00:00",
+  "before_timings_ms": {
+    "1": [
+      234.461,
+      190.908,
+      168.444
+    ],
+    "5": [
+      168.132,
+      174.554,
+      179.532
+    ]
+  },
+  "after_timings_ms": {
+    "1": [
+      227.181,
+      160.31,
+      155.78
+    ],
+    "5": [
+      155.941,
+      160.156,
+      166.559
+    ]
+  },
+  "before_file_sha256": "d5ab4b654b5c8ec4e68272c1a2feb526f9a3402818336e170458cfcc0548434e",
+  "after_file_sha256": "064fabe46f6571d970af93f2ce71bf0f8447f9b26238804fa4b23cc49a41a878",
+  "change": "Fetch immutable published Survey definitions once per unique ID, preserving original inner/outer join cardinality and all aggregate/suppression code",
+  "backend_tests": {
+    "tests": 141,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "seconds": 79.882
+  },
+  "limit": "Direct-read timing samples are not a concurrency acceptance run; current max500ms remains unmet"
+}

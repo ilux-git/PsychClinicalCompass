@@ -1,0 +1,47 @@
+{
+  "status": "native sign-in smoke and current notice observed",
+  "checks": [
+    {
+      "scenario": "current-patient-success-notice",
+      "observed": {
+        "focused": true,
+        "messages": [
+          "Вид прогресса сохранён"
+        ],
+        "mode": "rhythm"
+      },
+      "restored": {
+        "balance": "105",
+        "focused": true,
+        "mode": "map"
+      }
+    },
+    {
+      "scenario": "admin-sign-in-smoke",
+      "observed": {
+        "overflow": false,
+        "patientCardLinks": 0,
+        "role": "Администратор",
+        "title": "Обзор клиники"
+      }
+    },
+    {
+      "scenario": "coordinator-sign-in-smoke",
+      "observed": {
+        "availabilityControls": 0,
+        "overflow": false,
+        "role": "Координатор",
+        "title": "Мои задачи"
+      }
+    },
+    {
+      "scenario": "doctor-sign-in-smoke",
+      "observed": {
+        "availability": "available",
+        "overflow": false,
+        "role": "Врач",
+        "title": "Что сейчас требует внимания?"
+      }
+    }
+  ]
+}

@@ -1,0 +1,24 @@
+.participation-receipt { display:flex; gap:14px; text-align:left; padding:20px; margin:22px 0; background:var(--paper); border:1px solid var(--line); border-radius:16px; color:var(--ink); }
+.participation-receipt-icon { width:42px; height:42px; display:grid; place-items:center; flex-shrink:0; border:1px solid #edc4b7; border-radius:13px; background:var(--signal-soft); color:var(--signal-dark); }
+.participation-receipt-copy { min-width:0; flex:1; }
+.participation-receipt-copy > strong { font-size:18px; line-height:1.5; font-weight:600; }
+.participation-receipt-copy > p,.thanks-card .participation-receipt .participation-receipt-copy > p { max-width:none; margin:7px 0 0; font-size:14px; line-height:1.7; color:var(--muted); }
+.participation-receipt-copy > small { display:block; margin-top:9px; color:var(--muted); font-size:12px; line-height:1.6; }
+.participation-receipt-copy > .button,.thanks-card .participation-receipt .button { min-height:44px; padding:10px 0 0; margin-top:6px; color:var(--ink); font-size:13px; }
+.diary-saved-result { scroll-margin:90px 0; border-radius:14px; }
+.diary-saved-result > h3:focus,.patient-success.thanks-card > h1:focus { outline:2px solid var(--signal-dark); outline-offset:4px; border-radius:4px; }
+.diary-saved-result > h3 { font-size:17px; line-height:1.5; margin:22px 0 6px; }
+.diary-saved-result > p { font-size:13px; line-height:1.7; color:var(--muted); margin:0; }
+.diary-saved-result .participation-receipt { margin-top:14px; }
+.thanks-card .participation-receipt { width:100%; max-width:540px; margin-inline:auto; }
+.patient-success.thanks-card { padding:36px; }
+.patient-success.thanks-card .celebration { width:64px; height:64px; margin-bottom:22px; border-radius:20px; background:var(--signal-soft); color:var(--signal-dark); }
+.patient-success.thanks-card > h1 { color:var(--ink); font-size:28px; line-height:1.4; }
+.patient-success.thanks-card > p:not(.eyebrow) { color:var(--muted); font-size:14px; line-height:1.7; }
+.patient-success.thanks-card > .button { margin-top:18px; min-height:46px; }
+@media (max-width:700px) {
+  .patient-success.thanks-card { padding:28px 20px; }
+  .patient-success.thanks-card > h1 { font-size:24px; }
+  .participation-receipt { padding:16px; gap:12px; }
+  .participation-receipt-copy > strong { font-size:17px; }
+}

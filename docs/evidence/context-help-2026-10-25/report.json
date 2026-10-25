@@ -1,0 +1,516 @@
+{
+  "recordedAt": "2026-10-25T04:36:54.794974+00:00",
+  "status": "contextual help verified for six clinician-card tabs and generic roster fallback",
+  "scope": "Three runtime files and one actual Workspace regression; no CSS, API, medical, permission or reward-rule change.",
+  "changes": [
+    "Card help uses the active tab title, existing description and three operational steps.",
+    "Only an open doctor card overrides generic section help; roster and other roles retain existing help.",
+    "Dialog behavior, storage, history and focus implementation unchanged."
+  ],
+  "verification": {
+    "native": {
+      "before": {
+        "breadcrumb": "Главная\n/\nПациенты\n/\nЛекарства",
+        "helpText": "ПОМОЩЬ С РАЗДЕЛОМ\n\nПациенты\n\nКарточки, ответы и переписка\n\n1\n\nНайдите пациента по имени и откройте карточку.\n\n2\n\nВыберите вкладку: ответы, план, события, лекарства, диалог или состояние.\n\n3\n\nИз конкретного ответа или события можно создать связанное действие.\n\nПонятно\nНа главную",
+        "helpTitle": "Пациенты",
+        "selectedTab": "Расписание лекарств"
+      },
+      "checks": [
+        {
+          "label": "medications-context-desktop",
+          "description": "Посмотрите назначения и самоотчёты пациента. Назначения клиники здесь доступны для чтения; отметки пациента не доказывают приём препарата.",
+          "focusLabel": "Закрыть помощь",
+          "helpTitle": "Лекарства",
+          "overflow": false,
+          "rect": {
+            "bottom": 585.171875,
+            "height": 450.34375,
+            "left": 352.5,
+            "right": 912.5,
+            "top": 134.828125,
+            "width": 560,
+            "x": 352.5,
+            "y": 134.828125
+          },
+          "selectedTab": "Расписание лекарств",
+          "steps": [
+            "Выберите день и сопоставьте расписание с самоотчётами пациента.",
+            "Назначения МИС и личные позиции здесь доступны для чтения. Отсутствие отметки не доказывает пропуск.",
+            "Из сохранённого самоотчёта можно назначить следующий шаг, если требуется поддержка пациента."
+          ],
+          "viewport": {
+            "height": 720,
+            "width": 1280
+          }
+        },
+        {
+          "label": "feedback-context-desktop",
+          "description": "Посмотрите, что сообщает пациент. Здесь можно назначить опубликованный опрос и перейти от конкретного ответа к следующему действию.",
+          "focusLabel": "Закрыть помощь",
+          "helpTitle": "Опросы и ответы",
+          "overflow": false,
+          "rect": {
+            "bottom": 594.0625,
+            "height": 468.125,
+            "left": 352.5,
+            "right": 912.5,
+            "top": 125.9375,
+            "width": 560,
+            "x": 352.5,
+            "y": 125.9375
+          },
+          "selectedTab": "Обратная связь",
+          "steps": [
+            "Посмотрите полученные ответы. Новый опрос можно назначить из опубликованной библиотеки.",
+            "У нужного ответа выберите «Заметка к ответу» или «Запланировать шаг».",
+            "Заметка остаётся приватной для врача. Выполненное действие и проверку результата фиксируйте отдельно в плане."
+          ],
+          "viewport": {
+            "height": 720,
+            "width": 1280
+          }
+        },
+        {
+          "label": "care-context-desktop",
+          "description": "Назначьте действие себе или координатору, сохраните выполненную работу и отдельно проверьте результат.",
+          "focusLabel": "Закрыть помощь",
+          "helpTitle": "План и задачи",
+          "overflow": false,
+          "rect": {
+            "bottom": 594.0625,
+            "height": 468.125,
+            "left": 352.5,
+            "right": 912.5,
+            "top": 125.9375,
+            "width": 560,
+            "x": 352.5,
+            "y": 125.9375
+          },
+          "selectedTab": "План и задачи",
+          "steps": [
+            "Откройте задачу или создайте следующий шаг с понятным исполнителем и сроком.",
+            "Примите задачу в работу и сохраните фактически выполненное действие.",
+            "Отдельно проверьте результат. Завершение действия не означает, что затруднение пациента решено."
+          ],
+          "viewport": {
+            "height": 720,
+            "width": 1280
+          }
+        },
+        {
+          "label": "events-context-desktop",
+          "description": "Откройте источник события, примите его в работу и сохраните решение или связанное действие.",
+          "focusLabel": "Закрыть помощь",
+          "helpTitle": "События и обращения",
+          "overflow": false,
+          "rect": {
+            "bottom": 585.171875,
+            "height": 450.34375,
+            "left": 352.5,
+            "right": 912.5,
+            "top": 134.828125,
+            "width": 560,
+            "x": 352.5,
+            "y": 134.828125
+          },
+          "selectedTab": "События",
+          "steps": [
+            "Посмотрите событие и сведения, на основании которых оно появилось.",
+            "При необходимости примите его в работу и сохраните решение или связанный шаг.",
+            "Выполненное действие и его результат учитываются отдельно. Сигнал сам по себе не является диагнозом."
+          ],
+          "viewport": {
+            "height": 720,
+            "width": 1280
+          }
+        },
+        {
+          "label": "chat-context-desktop",
+          "description": "Прочитайте сообщение и ответьте пациенту. Просьба о поддержке и выполненное действие учитываются отдельно.",
+          "focusLabel": "Закрыть помощь",
+          "helpTitle": "Диалог с пациентом",
+          "overflow": false,
+          "rect": {
+            "bottom": 576.28125,
+            "height": 432.5625,
+            "left": 352.5,
+            "right": 912.5,
+            "top": 143.71875,
+            "width": 560,
+            "x": 352.5,
+            "y": 143.71875
+          },
+          "selectedTab": "Диалог",
+          "steps": [
+            "Прочитайте переписку и при необходимости ответьте пациенту.",
+            "Сообщение можно связать с приватной заметкой врача.",
+            "Если требуется действие, зафиксируйте его в «Плане и задачах». Отправка сообщения не подтверждает решение затруднения."
+          ],
+          "viewport": {
+            "height": 720,
+            "width": 1280
+          }
+        },
+        {
+          "label": "clinical-context-desktop",
+          "description": "Сопоставьте сохранённые измерения и ответы. Ниже — сведения из учебной клинической базы; отсутствующие наблюдения не равны нулю.",
+          "focusLabel": "Закрыть помощь",
+          "helpTitle": "История состояния",
+          "overflow": false,
+          "rect": {
+            "bottom": 594.0625,
+            "height": 468.125,
+            "left": 352.5,
+            "right": 912.5,
+            "top": 125.9375,
+            "width": 560,
+            "x": 352.5,
+            "y": 125.9375
+          },
+          "selectedTab": "История состояния",
+          "steps": [
+            "Сопоставьте даты, шкалы и версии измерений. Отсутствующий ответ не равен нулевому результату.",
+            "В дневнике доступны только записи, которыми пациент поделился с лечащим врачом.",
+            "Сведения из учебной МИС показаны ниже для чтения. Изменение назначения в МИС отсюда не выполняется."
+          ],
+          "viewport": {
+            "height": 720,
+            "width": 1280
+          }
+        },
+        {
+          "label": "medications-context-mobile",
+          "description": "Посмотрите назначения и самоотчёты пациента. Назначения клиники здесь доступны для чтения; отметки пациента не доказывают приём препарата.",
+          "focusLabel": "Закрыть помощь",
+          "helpTitle": "Лекарства",
+          "overflow": false,
+          "rect": {
+            "bottom": 734.421875,
+            "height": 624.859375,
+            "left": 17,
+            "right": 343,
+            "top": 109.5625,
+            "width": 326,
+            "x": 17,
+            "y": 109.5625
+          },
+          "selectedTab": "Расписание лекарств",
+          "steps": [
+            "Выберите день и сопоставьте расписание с самоотчётами пациента.",
+            "Назначения МИС и личные позиции здесь доступны для чтения. Отсутствие отметки не доказывает пропуск.",
+            "Из сохранённого самоотчёта можно назначить следующий шаг, если требуется поддержка пациента."
+          ],
+          "viewport": {
+            "height": 844,
+            "width": 375
+          }
+        },
+        {
+          "label": "patient-list-general-fallback",
+          "description": "Карточки, ответы и переписка",
+          "focusLabel": "Закрыть помощь",
+          "helpTitle": "Пациенты",
+          "overflow": false,
+          "rect": {
+            "bottom": 565.078125,
+            "height": 410.171875,
+            "left": 352.5,
+            "right": 912.5,
+            "top": 154.90625,
+            "width": 560,
+            "x": 352.5,
+            "y": 154.90625
+          },
+          "steps": [
+            "Найдите пациента по имени и откройте карточку.",
+            "Выберите вкладку: ответы, план, события, лекарства, диалог или состояние.",
+            "Из конкретного ответа или события можно создать связанное действие."
+          ],
+          "viewport": {
+            "height": 720,
+            "width": 1280
+          }
+        }
+      ],
+      "returnFocus": {
+        "focus": "Помощь с разделом",
+        "open": false
+      },
+      "mobileTrap": {
+        "last": "На главную",
+        "first": "Закрыть помощь",
+        "closed": {
+          "focus": "Помощь с разделом",
+          "open": false
+        }
+      },
+      "console": []
+    },
+    "frontend": {
+      "passed": 49,
+      "durationMs": 48157.9744,
+      "exitCode": 0,
+      "source": {
+        "file": "outputs/context-help-frontend-20261025.log",
+        "bytes": 6697,
+        "sha256": "782bbe273c337ff025ec103e4250a2983326536cefe42955155b81797fd10726"
+      }
+    },
+    "regression": {
+      "validRed": {
+        "file": "outputs/context-help-red-20261025.log",
+        "bytes": 1267,
+        "sha256": "bbf69722737ceb8cbf0a8e1d4d923199ce996422f7f357ef912ce4171613bf9e"
+      },
+      "green": {
+        "file": "outputs/context-help-green-20261025.log",
+        "bytes": 437,
+        "sha256": "9bae66a2fb6492aaf603c7400f11f46afc84cbc85969e22ade1d0fba26f79a32"
+      },
+      "fixtureCorrection": "An unlisted legitimate GET /analytics/care was added as an exact intentional503 fixture. No wildcard writes or app change for that fixture failure."
+    },
+    "buildAndTypes": {
+      "exitCode": 0,
+      "source": {
+        "file": "outputs/context-help-build-20261025.log",
+        "bytes": 2056,
+        "sha256": "0f2ba4b07d5649b57cf647d267649fb15fa44357a4afc0ac54b33c96833d3959"
+      }
+    },
+    "http": {
+      "base_url": "http://127.0.0.1:8780",
+      "scope": "HTTP bytes and MIME only; not browser layout/interactions",
+      "assets": [
+        {
+          "file": "AdminDashboard-BdmxG0gP.js",
+          "status": 200,
+          "bytes": 18451,
+          "sha256": "46ebff902fdfc2b0e073340c5c2023e12abad64a0ded970bbb5e8abacc557789",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "CareWorkflow-DBPG8Xut.js",
+          "status": 200,
+          "bytes": 26980,
+          "sha256": "6dc35a502e9d818b924ae4cf0a88a5af778a1cdf146016609fda841bddd6386b",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "Charts-BlRgWkmN.js",
+          "status": 200,
+          "bytes": 5476,
+          "sha256": "1a87b709140ab8f0950560a2a2472e42e943a1170ed70554b46f30aa1fa7ad01",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "DoctorDashboard-B-MB9L2x.js",
+          "status": 200,
+          "bytes": 18046,
+          "sha256": "d77bdb2d989efd27b3c674141316c7ec02fc003dc7b31049e53bc34b67da476a",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "DoctorPatients-BpR-vcHC.js",
+          "status": 200,
+          "bytes": 36363,
+          "sha256": "83b07b8081516a9cd3bdac64c9a43fbfa65b916638d9cd7495677d5cf22943f6",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "MedicationSchedule-2g4qys13.js",
+          "status": 200,
+          "bytes": 36031,
+          "sha256": "b8e74e145440566f9799bf43bcdcb7ba251bb97cffc54393a9f4c60b3ef379ed",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "MedicationSchedule-C_cioHGn.css",
+          "status": 200,
+          "bytes": 2103,
+          "sha256": "3ecca9c112edd867ada5c834649a96069fb7decf7d1ea5da5aebe9da0ab28a4e",
+          "mime": "text/css; charset=utf-8"
+        },
+        {
+          "file": "Patient-B9xuvwdE.css",
+          "status": 200,
+          "bytes": 26258,
+          "sha256": "9160fbf594ce6238151f4e13f5a28e00c0e62184711079b09f25bbebeb327b0b",
+          "mime": "text/css; charset=utf-8"
+        },
+        {
+          "file": "Patient-CZRW5drs.js",
+          "status": 200,
+          "bytes": 66896,
+          "sha256": "ddcc312f3a7034fff0f717dc1b0c73b9e84674bdde58bceb67bc7a003645acd9",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "SurveyBuilder-CXAbTnq-.js",
+          "status": 200,
+          "bytes": 25412,
+          "sha256": "9ce3603d43b1690aaaabc80a79688b9ecd3502dae1274f1d1262ac8e7f1daad4",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "SurveyFields-Cz88WdqF.js",
+          "status": 200,
+          "bytes": 3121,
+          "sha256": "1bf51fcec9c8884730facafebf35699f82baeaef87f0a68891afc6361775ba8f",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "TaskBoard-rgfspx0D.js",
+          "status": 200,
+          "bytes": 7839,
+          "sha256": "4ce730267f153f23c0504853ef4f5115565f89626d8b78415af0a8431ea3d3e0",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "WorkflowMetrics-C1ID5eIy.js",
+          "status": 200,
+          "bytes": 12440,
+          "sha256": "ec6e2d08d02da9dc87752587186ea591047c16489bce12067ccc6727001dc313",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "chevron-right-C33oTcOI.js",
+          "status": 200,
+          "bytes": 159,
+          "sha256": "23793242e8ab34dac8b49f516f8b0277ffc585751094f8927f31f9b93ebe638b",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "collection-COswcvyL.js",
+          "status": 200,
+          "bytes": 939,
+          "sha256": "b8f61ba215c319fcc2aaf6ce0fb3b26b182c049b9a0d9e4febe85703fe8000e4",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "index-DbBd2WCn.js",
+          "status": 200,
+          "bytes": 390624,
+          "sha256": "d3b67cdf763aca2dc23f4690cbe773d40fc3d1daabf571e2955881cb291d62d5",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "index-u7huL7qS.css",
+          "status": 200,
+          "bytes": 113680,
+          "sha256": "f0d2d849849c05f5597af452482e40529b1aece3b31167a55a9ec2b7d610eab0",
+          "mime": "text/css; charset=utf-8"
+        },
+        {
+          "file": "patientProgress-Do0fObh9.js",
+          "status": 200,
+          "bytes": 1130,
+          "sha256": "611dafc1b1ad2ac66b0b04ac3852b8c0bf56b6f106882f460ee96efa5097a0b3",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "plus-uG9cesV0.js",
+          "status": 200,
+          "bytes": 182,
+          "sha256": "33dd23f0e6c3f16120a712cc3f203d1f95b10bc1eac4c6e5fa40747bca401967",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "send-ft-5FfzV.js",
+          "status": 200,
+          "bytes": 652,
+          "sha256": "fa9a95e42a640e7a22a4a61e199fde6862aaf644195463c5762ff42b2027218c",
+          "mime": "text/javascript; charset=utf-8"
+        }
+      ],
+      "health": {
+        "status": "ok",
+        "compass_db": true,
+        "mis_db": true,
+        "mode": "synthetic_demo"
+      },
+      "root_matches_dist": true,
+      "qa_health": {
+        "status": "ok",
+        "compass_db": true,
+        "mis_db": true,
+        "mode": "synthetic_demo"
+      }
+    },
+    "backend": "Previous151/151 retained; unchanged and not rerun."
+  },
+  "sources": [
+    {
+      "file": "frontend/src/App.tsx",
+      "bytes": 32740,
+      "sha256": "07508eadd7a8cc9fe4e5ba8b4ebbd198aeee6c806b3ef286227039575f944496"
+    },
+    {
+      "file": "frontend/src/RoleGuide.tsx",
+      "bytes": 2994,
+      "sha256": "bdccfb1b0009aefb1476cc36bce97c69c52f5e8d7d668eaf0460d531a2af1d1c"
+    },
+    {
+      "file": "frontend/src/navigation.ts",
+      "bytes": 17518,
+      "sha256": "2991b27c1d83e7a3f1a8f68f4ad79f404586060482e144350d91aff96167c1f6"
+    },
+    {
+      "file": "frontend/tests/context-help-interaction.test.mjs",
+      "bytes": 5793,
+      "sha256": "874d16dd9f5e2f0ad7951d8def4a94016159c00370c0ba3005cf92782b337f7a"
+    }
+  ],
+  "diff": "--- local49-before/App.tsx\n+++ current/frontend/src/App.tsx\n@@ -548,7 +548,7 @@\n               </button>\n             </m.div>\n           )}</AnimatePresence>\n-          <RoleGuide key={user.id} user={user} view={view} navigate={navigate} startSignal={guideStart}/>\n+          <RoleGuide key={user.id} user={user} view={view} navigate={navigate} startSignal={guideStart} context={user.role===\"doctor\"&&selectedPatient!==null?cardSections[patientEntry]:undefined}/>\n           <div key={`${view}-${navigationRevision}`} className=\"content-frame route-frame\" style={{\n             \"--route-duration\":`${transition.duration}s`,\n             \"--route-distance\":`${moving?motionTokens.distance.small:0}px`,\n--- local49-before/RoleGuide.tsx\n+++ current/frontend/src/RoleGuide.tsx\n@@ -3,15 +3,15 @@\n import type { User } from \"./api\";\n import { Button } from \"./UI\";\n import { keepDialogFocus } from \"./Interaction\";\n-import { defaultView, sectionFor } from \"./navigation\";\n+import { defaultView, sectionFor, type GuideSection } from \"./navigation\";\n \n-export function RoleGuide({user,view,navigate,startSignal}:{user:User;view:string;navigate:(view:string)=>void;startSignal:number}) {\n+export function RoleGuide({user,view,navigate,startSignal,context}:{user:User;view:string;navigate:(view:string)=>void;startSignal:number;context?:GuideSection}) {\n   const storageKey=`compass-guide-v2-${user.id}-${user.role}`;\n   const [hidden,setHidden]=useState(()=>{try{return localStorage.getItem(storageKey)===\"seen\";}catch{return false;}});\n   const [open,setOpen]=useState(false);\n   const dialog=useRef<HTMLDialogElement>(null);\n   const previousFocus=useRef<HTMLElement|null>(null);\n-  const section=sectionFor(user.role,view);\n+  const section=context??sectionFor(user.role,view);\n   useEffect(()=>{if(startSignal)setOpen(true);},[startSignal]);\n   useEffect(()=>{const closeForHistory=()=>setOpen(false);window.addEventListener(\"popstate\",closeForHistory);return()=>window.removeEventListener(\"popstate\",closeForHistory);},[]);\n   useEffect(()=>{\n--- local49-before/navigation.ts\n+++ current/frontend/src/navigation.ts\n@@ -1,12 +1,37 @@\n export type CardTab = \"feedback\" | \"care\" | \"events\" | \"medications\" | \"chat\" | \"clinical\";\n export type NavItem = {id:string; title:string; description:string; group:string; icon:string; steps:string[]; secondary?:boolean};\n-export const cardSections:Record<CardTab,{title:string;description:string}>={\n-  feedback:{title:\"Опросы и ответы\",description:\"Посмотрите, что сообщает пациент. Здесь можно назначить опубликованный опрос и перейти от конкретного ответа к следующему действию.\"},\n-  care:{title:\"План и задачи\",description:\"Назначьте действие себе или координатору, сохраните выполненную работу и отдельно проверьте результат.\"},\n-  events:{title:\"События и обращения\",description:\"Откройте источник события, примите его в работу и сохраните решение или связанное действие.\"},\n-  medications:{title:\"Лекарства\",description:\"Посмотрите назначения и самоотчёты пациента. Назначения клиники здесь доступны для чтения; отметки пациента не доказывают приём препарата.\"},\n-  chat:{title:\"Диалог с пациентом\",description:\"Прочитайте сообщение и ответьте пациенту. Просьба о поддержке и выполненное действие учитываются отдельно.\"},\n-  clinical:{title:\"История состояния\",description:\"Сопоставьте сохранённые измерения и ответы. Ниже — сведения из учебной клинической базы; отсутствующие наблюдения не равны нулю.\"},\n+export type GuideSection = Pick<NavItem,\"title\"|\"description\"|\"steps\">;\n+export const cardSections:Record<CardTab,GuideSection>={\n+  feedback:{title:\"Опросы и ответы\",description:\"Посмотрите, что сообщает пациент. Здесь можно назначить опубликованный опрос и перейти от конкретного ответа к следующему действию.\",steps:[\n+    \"Посмотрите полученные ответы. Новый опрос можно назначить из опубликованной библиотеки.\",\n+    \"У нужного ответа выберите «Заметка к ответу» или «Запланировать шаг».\",\n+    \"Заметка остаётся приватной для врача. Выполненное действие и проверку результата фиксируйте отдельно в плане.\",\n+  ]},\n+  care:{title:\"План и задачи\",description:\"Назначьте действие себе или координатору, сохраните выполненную работу и отдельно проверьте результат.\",steps:[\n+    \"Откройте задачу или создайте следующий шаг с понятным исполнителем и сроком.\",\n+    \"Примите задачу в работу и сохраните фактически выполненное действие.\",\n+    \"Отдельно проверьте результат. Завершение действия не означает, что затруднение пациента решено.\",\n+  ]},\n+  events:{title:\"События и обращения\",description:\"Откройте источник события, примите его в работу и сохраните решение или связанное действие.\",steps:[\n+    \"Посмотрите событие и сведения, на основании которых оно появилось.\",\n+    \"При необходимости примите его в работу и сохраните решение или связанный шаг.\",\n+    \"Выполненное действие и его результат учитываются отдельно. Сигнал сам по себе не является диагнозом.\",\n+  ]},\n+  medications:{title:\"Лекарства\",description:\"Посмотрите назначения и самоотчёты пациента. Назначения клиники здесь доступны для чтения; отметки пациента не доказывают приём препарата.\",steps:[\n+    \"Выберите день и сопоставьте расписание с самоотчётами пациента.\",\n+    \"Назначения МИС и личные позиции здесь доступны для чтения. Отсутствие отметки не доказывает пропуск.\",\n+    \"Из сохранённого самоотчёта можно назначить следующий шаг, если требуется поддержка пациента.\",\n+  ]},\n+  chat:{title:\"Диалог с пациентом\",description:\"Прочитайте сообщение и ответьте пациенту. Просьба о поддержке и выполненное действие учитываются отдельно.\",steps:[\n+    \"Прочитайте переписку и при необходимости ответьте пациенту.\",\n+    \"Сообщение можно связать с приватной заметкой врача.\",\n+    \"Если требуется действие, зафиксируйте его в «Плане и задачах». Отправка сообщения не подтверждает решение затруднения.\",\n+  ]},\n+  clinical:{title:\"История состояния\",description:\"Сопоставьте сохранённые измерения и ответы. Ниже — сведения из учебной клинической базы; отсутствующие наблюдения не равны нулю.\",steps:[\n+    \"Сопоставьте даты, шкалы и версии измерений. Отсутствующий ответ не равен нулевому результату.\",\n+    \"В дневнике доступны только записи, которыми пациент поделился с лечащим врачом.\",\n+    \"Сведения из учебной МИС показаны ниже для чтения. Изменение назначения в МИС отсюда не выполняется.\",\n+  ]},\n };\n \n const doctor:NavItem[] = [\n",
+  "screenshots": [
+    {
+      "file": "docs/evidence/context-help-2026-10-25/clinical-after.jpg",
+      "bytes": 73775,
+      "sha256": "00ba4a4f3b7f7ee18ef3c861fded4c51177163482243052d52e805d26e4e0471",
+      "pixels": [
+        1265,
+        712
+      ]
+    },
+    {
+      "file": "docs/evidence/context-help-2026-10-25/medications-after.jpg",
+      "bytes": 73536,
+      "sha256": "9f85074fad5cc639973686e2e67af2b9909e93e0bf38bbc91261630d0b46313f",
+      "pixels": [
+        1265,
+        712
+      ]
+    },
+    {
+      "file": "docs/evidence/context-help-2026-10-25/medications-before.jpg",
+      "bytes": 64840,
+      "sha256": "8d07109ae90a04c8221fb49b036491b48667cc6f25f347a83686424e204d12a6",
+      "pixels": [
+        1265,
+        712
+      ]
+    },
+    {
+      "file": "docs/evidence/context-help-2026-10-25/medications-mobile.jpg",
+      "bytes": 34932,
+      "sha256": "c80b7e18d8ae513f0d751d4c4e2ebf8344a14561d8369d5f5eb4f2aea407dd3d",
+      "pixels": [
+        360,
+        810
+      ]
+    },
+    {
+      "file": "docs/evidence/context-help-2026-10-25/patient-list-help.jpg",
+      "bytes": 62321,
+      "sha256": "b831ebe1eec6bccbeafed30a1cccfb20f541e0eaf0782abd78563565e68ad49a",
+      "pixels": [
+        1265,
+        712
+      ]
+    }
+  ],
+  "limits": [
+    "Synthetic local QA only. No message, note, task or prescription was explicitly submitted in help checks.",
+    "Native focus containment/Escape/return checked; no full browser axe, WCAG, screen-reader, FPS or load acceptance.",
+    "Extra bootstrap analytics read in fixture is not evidence of a visible production flicker."
+  ]
+}

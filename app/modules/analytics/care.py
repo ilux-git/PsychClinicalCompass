@@ -62,6 +62,8 @@ async def workflow_metrics(session, patients, *, assignment_rows=None):
     for t in tasks:
         groups[f"task:{t.status}"].add(t.patient_id)
         groups[f"verified:{t.verification_status}"].add(t.patient_id)
+        if t.status == "done":
+            groups["task_awaiting_check" if t.verification_status == "pending" else "task_checked"].add(t.patient_id)
         if t.source_type != "manual": groups["task_linked"].add(t.patient_id)
         if t.follow_up_at is None: groups["task_no_followup"].add(t.patient_id)
     groups["followup_due"] = {t.patient_id for t in followups}

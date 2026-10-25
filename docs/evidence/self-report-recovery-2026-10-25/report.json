@@ -1,0 +1,621 @@
+{
+  "recordedAt": "2026-10-25T06:57:31.608725+00:00",
+  "status": "Self-report failure, explicit retry and success focus verified",
+  "changes": [
+    "The form retains a single local error, focuses it and describes the fields; editing clears the old error. Answers and unchanged request identity survive repeated failures.",
+    "A successful response targets its exact saved article in history after reload. Focus deliberately moved outside the form during the request is respected.",
+    "Scoped field labels now use13px/Ink; optional caption belongs to its question line. New saved-history articles have labelled focus targets."
+  ],
+  "scope": "Three frontend runtime files plus three actual-PatientHome regressions. Existing endpoints, payloads, manual confirmation, unknown status, authorization, rewards and clinical policy unchanged.",
+  "sources": [
+    {
+      "file": "frontend/src/Patient.tsx",
+      "bytes": 17781,
+      "sha256": "f20f42719c1adb04a394c95b89ad19226bf638f25ad2c975b538422186278b9f"
+    },
+    {
+      "file": "frontend/src/workspace.css",
+      "bytes": 67836,
+      "sha256": "2ffc1a12703b515d0c97c7060c083726deb7be5a48c1480d0ab44a61886f891c"
+    },
+    {
+      "file": "frontend/src/brand-theme.css",
+      "bytes": 8004,
+      "sha256": "1e6891b5aae184f11eca1d448f999bca32ed8c5584236226e354c8e80de24203"
+    },
+    {
+      "file": "frontend/tests/self-report-recovery-interaction.test.mjs",
+      "bytes": 8677,
+      "sha256": "f7d7b57d66d6d7eaccd63aa5663aafbb1b4b35b2a9e7de5ff4528dbaefc344fb"
+    }
+  ],
+  "diff": "--- local66/Patient.tsx\n+++ current/frontend/src/Patient.tsx\n@@ -1,4 +1,4 @@\n-import { useRef, useState, type FormEvent } from \"react\";\n+import { useEffect, useId, useRef, useState, type FormEvent } from \"react\";\n import {\n   Check,\n   ChevronRight,\n@@ -60,6 +60,16 @@\n   const [status, setStatus] = useState(\"\");\n   const [reason, setReason] = useState(\"\");\n   const [busy, setBusy] = useState(false);\n+  const [saveError,setSaveError]=useState(\"\");\n+  const [savedId,setSavedId]=useState<number|null>(null);\n+  const errorId=useId(),errorResult=useRef<HTMLDivElement>(null);\n+  const reportForm=useRef<HTMLFormElement>(null),savedResult=useRef<HTMLElement>(null),returnFocus=useRef(false);\n+  useEffect(()=>{if(saveError)errorResult.current?.querySelector<HTMLElement>('.error-box')?.focus();},[saveError]);\n+  useEffect(()=>{\n+    if(savedId===null||!savedResult.current)return;\n+    if(returnFocus.current&&(document.activeElement===document.body||reportForm.current?.contains(document.activeElement)))savedResult.current.focus();\n+    returnFocus.current=false;\n+  },[savedId,reports.data]);\n   const {clear}=useUnsavedForm({dirty:Boolean(recommendation || status || reason),pending:busy,prompt:selfReportPrompt});\n   const request = useRef({ signature: \"\", id: \"\" });\n   async function submit(event: FormEvent) {\n@@ -67,14 +77,15 @@\n     const signature = JSON.stringify([recommendation, status, reason]);\n     if (signature !== request.current.signature)\n       request.current = { signature, id: crypto.randomUUID() };\n-    setBusy(true);\n+    setSaveError(\"\");setSavedId(null);setBusy(true);\n     try {\n-      await send(\"/adherence/reports\", {\n+      const response=await send<Adherence>(\"/adherence/reports\", {\n         recommendation,\n         status,\n         reason,\n         client_request_id: request.current.id,\n       });\n+      returnFocus.current=true;setSavedId(response.id);\n       setRecommendation(\"\");\n       setStatus(\"\");\n       setReason(\"\");\n@@ -83,10 +94,7 @@\n       reports.reload();\n       notify(\"Спасибо! Врач увидит, какая поддержка вам нужна.\");\n     } catch (error) {\n-      notify(\n-        error instanceof Error ? error.message : \"Не удалось сохранить\",\n-        \"error\",\n-      );\n+      setSaveError(error instanceof Error ? error.message : \"Не удалось сохранить самоотчёт\");\n     } finally {\n       setBusy(false);\n     }\n@@ -97,15 +105,16 @@\n         Расскажите, что получается с рекомендациями врача и что мешает.\n       </Heading>\n       <Section title=\"Мой самоотчёт\">\n-        <form onSubmit={submit} className=\"self-report-form\">\n-          <fieldset className=\"form-fields\" disabled={busy} aria-busy={busy}>\n+        <form ref={reportForm} onSubmit={submit} className=\"self-report-form\">\n+          <div ref={errorResult} id={errorId}><ErrorBox message={saveError}/></div>\n+          <fieldset className=\"form-fields\" disabled={busy} aria-busy={busy} aria-describedby={saveError?errorId:undefined}>\n           <label className=\"field\">\n             О какой рекомендации расскажете?\n             <input\n               required\n               maxLength={300}\n               value={recommendation}\n-              onChange={(e) => setRecommendation(e.target.value)}\n+              onChange={(e) => {setSaveError(\"\");setSavedId(null);setRecommendation(e.target.value);}}\n               placeholder=\"Например, вести дневник самочувствия\"\n             />\n           </label>\n@@ -122,19 +131,18 @@\n                   required\n                   value={key}\n                   checked={status === key}\n-                  onChange={() => setStatus(key)}\n+                  onChange={() => {setSaveError(\"\");setSavedId(null);setStatus(key);}}\n                 />\n                 {label}\n               </label>\n             ))}\n           </fieldset>\n           <label className=\"field\">\n-            Что помогло или помешало?{\" \"}\n-            <span className=\"optional\">Необязательно</span>\n+            <span>Что помогло или помешало? <span className=\"optional\">Необязательно</span></span>\n             <textarea\n               value={reason}\n               maxLength={2000}\n-              onChange={(e) => setReason(e.target.value)}\n+              onChange={(e) => {setSaveError(\"\");setSavedId(null);setReason(e.target.value);}}\n               rows={4}\n               placeholder=\"Можно написать своими словами. Например, было трудно найти время.\"\n             />\n@@ -160,9 +168,9 @@\n           </Empty>\n         ) : (\n           reports.data.reports.map((report) => (\n-            <article className=\"adherence-report\" key={report.id}>\n+            <article className=\"adherence-report\" key={report.id} ref={report.id===savedId?savedResult:undefined} tabIndex={-1} aria-labelledby={`${errorId}-report-${report.id}`}>\n               <Badge tone=\"muted\">{adherenceLabels[report.status]}</Badge>\n-              <h3>{report.recommendation}</h3>\n+              <h3 id={`${errorId}-report-${report.id}`}>{report.recommendation}</h3>\n               {report.reason && <p className=\"preserve\">{report.reason}</p>}\n               <small className=\"muted\">{date(report.created_at)}</small>\n             </article>\n--- local66/workspace.css\n+++ current/frontend/src/workspace.css\n@@ -392,6 +392,8 @@\n .patient-form { max-width: 820px; margin: 0 auto 24px; }\n .patient-form h1 { font-size: 26px; line-height: 1.35; margin: 20px 0 12px; color: var(--ink); }\n .patient-form .lede { font-size: 14px; color: var(--muted); line-height: 1.7; }\n+.self-report-form .field { font-size: var(--text-label); }\n+.adherence-report:focus { outline: 2px solid var(--signal-dark); outline-offset: 4px; }\n .survey-form-meta { display: flex; gap: 14px; align-items: center; justify-content: space-between; flex-wrap: wrap; font-size: 12px; color: var(--muted); }\n .draft-disclosure { display: flex; align-items: flex-start; gap: 10px; padding: 14px 16px; margin: 24px 0; background: #edf5f2; border-radius: 9px; font-size: 13px; line-height: 1.6; color: #49685e; }\n .draft-disclosure > svg { flex-shrink: 0; margin-top: 2px; }\n--- local66/brand-theme.css\n+++ current/frontend/src/brand-theme.css\n@@ -47,6 +47,7 @@\n .answer-option { color:var(--ink); }\n .answer-option:hover:not(:has(:disabled)) { background:var(--paper); border-color:var(--muted); }\n .answer-option.checked,.answer-option.checked:hover { background:var(--signal-soft); border-color:var(--signal-dark); color:var(--ink); }\n+.self-report-form .field { color:var(--ink); }\n .workspace-start { background:var(--surface); border-color:var(--line); border-left:4px solid var(--signal); }\n .workspace-start-icon,.navigation-welcome > svg,.workspace-shortcut > svg { color:var(--signal-dark); border-color:var(--line); }\n .workspace-start p:not(.eyebrow),.navigation-welcome p,.workspace-path p,.workspace-shortcut small,.card-section-purpose { color:var(--muted); }\n",
+  "verification": {
+    "regression": {
+      "localErrorRed": "0/2, missing local alert",
+      "localErrorGreen": "2/2",
+      "focusRedValid": "2pass/1fail, Boolean mismatch at saved article focus",
+      "focusGreen": "3/3,8268.9156ms"
+    },
+    "frontend": {
+      "passed": 69,
+      "durationMs": 83285.3334,
+      "exitCode": 0,
+      "source": {
+        "file": "outputs/self-report-final-frontend-20261025.log",
+        "bytes": 10070,
+        "sha256": "5449eb4e1075c4c2d6649b7f3c7f0d80e6e6d2f9bf8851bab78ac50469cb4836"
+      }
+    },
+    "buildAndTypes": {
+      "exitCode": 0,
+      "source": {
+        "file": "outputs/self-report-final-build-20261025.log",
+        "bytes": 2056,
+        "sha256": "85b828700a039a04baafbbfc5f89d87831f5a05f1d39bf831bb11b1ea632f093"
+      }
+    },
+    "http": {
+      "base_url": "http://127.0.0.1:8780",
+      "scope": "HTTP bytes and MIME only; not browser layout/interactions",
+      "assets": [
+        {
+          "file": "AdminDashboard-ClfWEJEp.js",
+          "status": 200,
+          "bytes": 18580,
+          "sha256": "a6026483d7cb35cf4ee6f544b594fa127f369ecd77d3339455179a105e342f93",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "CareWorkflow-bq7C_XC0.js",
+          "status": 200,
+          "bytes": 26980,
+          "sha256": "46b91ff522cae9a2afb1fe8e476fc6d92819f979821bef237ee8899163c51d1c",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "Charts-DJfbo2y7.js",
+          "status": 200,
+          "bytes": 5476,
+          "sha256": "f89365e70088b8e9505cdbe762c38d1388c133ee47942fe141fae17a400cbab8",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "DoctorDashboard-BGu9k2Um.js",
+          "status": 200,
+          "bytes": 18046,
+          "sha256": "249cf1d1145387ed8a21ec0e5c6f530ab42e84b6710873cef8a2de8100cf2c68",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "DoctorPatients-DD4rMmb7.js",
+          "status": 200,
+          "bytes": 36909,
+          "sha256": "18dae0dbb0a8f3034947e6177b62197f68203b01eaba50aef94b0472c779ce53",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "MedicationSchedule-BoCLoz97.js",
+          "status": 200,
+          "bytes": 37054,
+          "sha256": "4bdbf6bd20132b37df314b805f0add0ff718032109509df0049d3163d45a54e9",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "MedicationSchedule-C_cioHGn.css",
+          "status": 200,
+          "bytes": 2103,
+          "sha256": "3ecca9c112edd867ada5c834649a96069fb7decf7d1ea5da5aebe9da0ab28a4e",
+          "mime": "text/css; charset=utf-8"
+        },
+        {
+          "file": "Patient-B9xuvwdE.css",
+          "status": 200,
+          "bytes": 26258,
+          "sha256": "9160fbf594ce6238151f4e13f5a28e00c0e62184711079b09f25bbebeb327b0b",
+          "mime": "text/css; charset=utf-8"
+        },
+        {
+          "file": "Patient-CZRLqFVs.js",
+          "status": 200,
+          "bytes": 67631,
+          "sha256": "0d5d5cd14eaaa2ca4c9ca34f5cddbb2dbbbaf52c3d9a161c6900173ef4f07bab",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "SurveyBuilder-DTtGuOIn.js",
+          "status": 200,
+          "bytes": 25412,
+          "sha256": "6f5cb5d617ff2c4671107ff9fd26b879dbd03e212499328522f58150872b646f",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "SurveyFields-J8_F-X0P.js",
+          "status": 200,
+          "bytes": 3313,
+          "sha256": "843df88438f701528257421f15d76309f89af6a3e5ab86cbced060aeff2994e5",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "TaskBoard-BxV6XMPQ.js",
+          "status": 200,
+          "bytes": 7839,
+          "sha256": "901766baf1f65a2f972dbfc6f51ad5ebad6172d2f853d1f63fcc10838909e93a",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "WorkflowMetrics-DpKXShq7.js",
+          "status": 200,
+          "bytes": 12440,
+          "sha256": "e104e4390816e2c5892dbc7ff6368ae0bc6acc67c1822c6fc54a5c648aa8fe25",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "chevron-right-vTpgFYFZ.js",
+          "status": 200,
+          "bytes": 159,
+          "sha256": "6855025deaec958611d149fa7ad5d953c35ff63f7dc2cf974764e7f91a7317ad",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "collection-COswcvyL.js",
+          "status": 200,
+          "bytes": 939,
+          "sha256": "b8f61ba215c319fcc2aaf6ce0fb3b26b182c049b9a0d9e4febe85703fe8000e4",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "index-CUQ8imIo.js",
+          "status": 200,
+          "bytes": 391449,
+          "sha256": "a034bf9ee1c067889de2a4de756b989a5d4bd77b948b8e2b3d2e28344edbbfd9",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "index-hziYp_35.css",
+          "status": 200,
+          "bytes": 116516,
+          "sha256": "544eccc9f6ea453244e154dcc1315f712c09e7743b1f9d950c6d38a512bd0689",
+          "mime": "text/css; charset=utf-8"
+        },
+        {
+          "file": "patientProgress-Do0fObh9.js",
+          "status": 200,
+          "bytes": 1130,
+          "sha256": "611dafc1b1ad2ac66b0b04ac3852b8c0bf56b6f106882f460ee96efa5097a0b3",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "plus-CvlUBtO_.js",
+          "status": 200,
+          "bytes": 182,
+          "sha256": "ce7fbe0ea6873655132de3f4be308a1db154d719d81172ef9a72a2f2744e50f7",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "send-Dmo761qz.js",
+          "status": 200,
+          "bytes": 652,
+          "sha256": "bded32628cee95fd68840aa75918f527ff0925478253a952f8ab8a63c7d60feb",
+          "mime": "text/javascript; charset=utf-8"
+        }
+      ],
+      "health": {
+        "status": "ok",
+        "compass_db": true,
+        "mis_db": true,
+        "mode": "synthetic_demo"
+      },
+      "root_matches_dist": true,
+      "qa_health": {
+        "status": "ok",
+        "compass_db": true,
+        "mis_db": true,
+        "mode": "synthetic_demo"
+      }
+    },
+    "native": {
+      "before": {
+        "alerts": [
+          {
+            "focused": false,
+            "local": false,
+            "text": "Техническая проверка: сохранение временно недоступно."
+          }
+        ],
+        "checked": [
+          {
+            "label": "Не могу оценить",
+            "value": "unknown"
+          }
+        ],
+        "fields": [
+          "QA: проверка сообщения об ошибке. Не клинический ответ."
+        ],
+        "focus": {
+          "tag": "BODY",
+          "text": "\n    Перейти к содержимомуclinicalcompassМоё пространствоМой деньШаги, самочувствие и баллыНа каждый"
+        },
+        "labels": [
+          {
+            "color": "rgb(121, 98, 135)",
+            "font": "12px",
+            "text": "О какой рекомендации расскажете?"
+          },
+          {
+            "color": "rgb(121, 98, 135)",
+            "font": "12px",
+            "text": "Что помогло или помешало?"
+          }
+        ],
+        "fieldValues": [
+          "QA: проверка сохранения самоотчёта интерфейса",
+          "QA: проверка сообщения об ошибке. Не клинический ответ."
+        ]
+      },
+      "checks": [
+        {
+          "alerts": [
+            {
+              "focused": true,
+              "local": true,
+              "text": "Техническая проверка: сохранение временно недоступно."
+            }
+          ],
+          "checked": [
+            "unknown"
+          ],
+          "focus": "error-box",
+          "labels": [
+            {
+              "color": "rgb(24, 25, 26)",
+              "font": "13px"
+            },
+            {
+              "color": "rgb(24, 25, 26)",
+              "font": "13px"
+            }
+          ],
+          "overflow": false,
+          "stage": "mobile-error",
+          "values": [
+            "QA: проверка сохранения самоотчёта интерфейса",
+            "QA: проверка сообщения об ошибке. Не клинический ответ."
+          ],
+          "viewport": [
+            375,
+            844
+          ]
+        },
+        {
+          "checked": [
+            "unknown"
+          ],
+          "error": "Техническая проверка: сохранение временно недоступно.",
+          "stage": "mobile-guard-stay",
+          "url": "http://127.0.0.1:8782/?section=adherence",
+          "values": [
+            "QA: проверка сохранения самоотчёта интерфейса",
+            "QA: проверка сообщения об ошибке. Не клинический ответ."
+          ]
+        },
+        {
+          "checked": 0,
+          "focus": {
+            "tag": "BODY",
+            "text": "\n    Перейти к содержимомуclinicalcompassМоё пространствоМой деньШаги, самочувствие и баллыНа каждый"
+          },
+          "localError": false,
+          "reports": [
+            {
+              "reason": "QA: проверка сообщения об ошибке. Не клинический ответ.",
+              "status": "Не могу оценить",
+              "title": "QA: проверка сохранения самоотчёта интерфейса"
+            },
+            {
+              "reason": "Не до конца понимаю, что делать между приёмами.",
+              "status": "Не получилось",
+              "title": "Согласованный план между визитами"
+            }
+          ],
+          "stage": "mobile-success",
+          "values": [
+            "",
+            ""
+          ]
+        },
+        {
+          "bounds": {
+            "bottom": 709.546875,
+            "height": 161.171875,
+            "left": 37,
+            "right": 323,
+            "top": 548.375,
+            "width": 286,
+            "x": 37,
+            "y": 548.375
+          },
+          "checked": 0,
+          "focus": {
+            "className": "adherence-report",
+            "label": "_r_1_-report-7",
+            "tag": "ARTICLE",
+            "text": "Не могу оценитьQA: подтверждение сохранённого самоотчётаQA: проверка фокуса подтверждения, не клинический ответ.25 окт., 13:52"
+          },
+          "footer": {
+            "bottom": 844,
+            "height": 67,
+            "left": 0,
+            "right": 360,
+            "top": 777,
+            "width": 360,
+            "x": 0,
+            "y": 777
+          },
+          "overflow": false,
+          "reports": 3,
+          "stage": "mobile-success-final",
+          "values": [
+            "",
+            ""
+          ]
+        },
+        {
+          "busy": "true",
+          "dialogTitle": "Выполнение рекомендаций",
+          "focus": "Закрыть помощь",
+          "stage": "tablet-pending-help",
+          "viewport": [
+            768,
+            1024
+          ]
+        },
+        {
+          "busy": "false",
+          "dialogOpen": true,
+          "focus": "Закрыть помощь",
+          "newReport": "Не могу оценитьQA: проверка намеренного фокуса при ожиданииQA: тест задержки и помощи, не клинический ответ.25 окт., 13:54",
+          "overflow": false,
+          "stage": "tablet-delayed-saved-help"
+        },
+        {
+          "focus": "Помощь с разделом",
+          "reports": 4,
+          "stage": "tablet-help-closed",
+          "values": [
+            "",
+            ""
+          ]
+        },
+        {
+          "labels": [
+            {
+              "color": "rgb(24, 25, 26)",
+              "font": "13px"
+            },
+            {
+              "color": "rgb(24, 25, 26)",
+              "font": "13px"
+            }
+          ],
+          "overflow": false,
+          "reports": [
+            {
+              "id": "_r_8_-report-8",
+              "status": "Не могу оценить",
+              "title": "QA: проверка намеренного фокуса при ожидании"
+            },
+            {
+              "id": "_r_8_-report-7",
+              "status": "Не могу оценить",
+              "title": "QA: подтверждение сохранённого самоотчёта"
+            },
+            {
+              "id": "_r_8_-report-6",
+              "status": "Не могу оценить",
+              "title": "QA: проверка сохранения самоотчёта интерфейса"
+            },
+            {
+              "id": "_r_8_-report-2",
+              "status": "Не получилось",
+              "title": "Согласованный план между визитами"
+            }
+          ],
+          "stage": "mobile-history-recovered",
+          "viewport": [
+            375,
+            844
+          ]
+        }
+      ],
+      "console": [],
+      "tooling": "Tab3 CDP mouse/screenshot timeouts did not affect DOM/keyboard result. Owned stale tab3 closed; new hidden tab4 rebound in the same browser2. Fresh keyboard/mouse/screenshots worked. Final automatic mobile focus proved by DOM/AX, its screenshot timed out; later recovered history screenshot is not claimed as automatic-focus evidence."
+    },
+    "semantic": {
+      "recordedAt": "2026-10-25T06:55:53.286Z",
+      "engine": "axe-core 4.14.0",
+      "scope": "Semantic analysis of CUA-exported markup in JSDOM29.1.1 with local entry CSS. App scripts and external resources never execute; no actual-browser axe, layout, contrast, keyboard, motion or screen-reader pass.",
+      "source": "https://github.com/dequelabs/axe-core#supported-browsers",
+      "disabledRules": [
+        "color-contrast"
+      ],
+      "pages": [
+        {
+          "file": "self-report-final-mobile.html",
+          "sha256": "5c5b96bd46abf2fe7ec165d93b5fcf6e6777dc755df85932b4dd8e4c252a1807",
+          "title": "Выполнение рекомендаций · Clinical Compass",
+          "violations": [],
+          "incomplete": [
+            {
+              "id": "label-content-name-mismatch",
+              "impact": "serious",
+              "description": "Ensure that elements labelled through their content must have their visible text as part of their accessible name",
+              "help": "Elements must have their visible text as part of their accessible name",
+              "helpUrl": "https://dequeuniversity.com/rules/axe/4.14/label-content-name-mismatch?application=axeAPI",
+              "nodes": [
+                {
+                  "target": [
+                    ".section-help-button"
+                  ],
+                  "failureSummary": "Fix all of the following:\n  Axe encountered an error; test the page for this type of problem manually",
+                  "html": "<button class=\"button ghost section-help-button\" aria-label=\"Помощь с разделом\" tabindex=\"0\">"
+                }
+              ]
+            },
+            {
+              "id": "landmark-one-main",
+              "impact": "moderate",
+              "description": "Ensure the document has a main landmark",
+              "help": "Document should have one main landmark",
+              "helpUrl": "https://dequeuniversity.com/rules/axe/4.14/landmark-one-main?application=axeAPI",
+              "nodes": [
+                {
+                  "target": [
+                    "html"
+                  ],
+                  "failureSummary": "Fix all of the following:\n  Axe encountered an error; test the page for this type of problem manually",
+                  "html": "<html lang=\"ru\">"
+                }
+              ]
+            },
+            {
+              "id": "page-has-heading-one",
+              "impact": "moderate",
+              "description": "Ensure that the page, or at least one of its frames contains a level-one heading",
+              "help": "Page should contain a level-one heading",
+              "helpUrl": "https://dequeuniversity.com/rules/axe/4.14/page-has-heading-one?application=axeAPI",
+              "nodes": [
+                {
+                  "target": [
+                    "html"
+                  ],
+                  "failureSummary": "Fix all of the following:\n  Axe encountered an error; test the page for this type of problem manually",
+                  "html": "<html lang=\"ru\">"
+                }
+              ]
+            }
+          ],
+          "passedRuleCount": 38,
+          "passedRuleIds": [
+            "aria-allowed-attr",
+            "aria-allowed-role",
+            "aria-conditional-attr",
+            "aria-deprecated-role",
+            "aria-hidden-body",
+            "aria-hidden-focus",
+            "aria-prohibited-attr",
+            "aria-required-attr",
+            "aria-roles",
+            "aria-valid-attr-value",
+            "aria-valid-attr",
+            "avoid-inline-spacing",
+            "button-name",
+            "bypass",
+            "document-title",
+            "duplicate-id-aria",
+            "empty-heading",
+            "form-field-multiple-labels",
+            "heading-order",
+            "html-has-lang",
+            "html-lang-valid",
+            "label-title-only",
+            "label",
+            "landmark-banner-is-top-level",
+            "landmark-contentinfo-is-top-level",
+            "landmark-main-is-top-level",
+            "landmark-no-duplicate-banner",
+            "landmark-no-duplicate-contentinfo",
+            "landmark-no-duplicate-main",
+            "landmark-unique",
+            "link-name",
+            "meta-viewport-large",
+            "meta-viewport",
+            "nested-interactive",
+            "region",
+            "summary-name",
+            "tabindex",
+            "target-size"
+          ],
+          "inapplicableRuleCount": 49,
+          "domWarnings": [
+            "Not implemented: HTMLCanvasElement's getContext() method: without installing the canvas npm package"
+          ]
+        }
+      ]
+    },
+    "backend": "Unchanged; previous151/151 retained, not rerun."
+  },
+  "screenshots": [
+    {
+      "file": "docs/evidence/self-report-recovery-2026-10-25/before-error.jpg",
+      "bytes": 61107,
+      "sha256": "c26d7367ad70c73628500d847ef1f5ff7b3e55e17f9754abccaa4ea4f1aa48a9",
+      "pixels": [
+        1265,
+        712
+      ]
+    },
+    {
+      "file": "docs/evidence/self-report-recovery-2026-10-25/mobile-error.jpg",
+      "bytes": 35960,
+      "sha256": "52136b1c224488147c72402c9b151f9b4813c19dcbc6f3e119f82e6cd78950c4",
+      "pixels": [
+        360,
+        810
+      ]
+    },
+    {
+      "file": "docs/evidence/self-report-recovery-2026-10-25/mobile-history-final.jpg",
+      "bytes": 32700,
+      "sha256": "ae4202fcce9b693a07d2ed746e90c38c46bd75fe799e982381cc1c60474b1c27",
+      "pixels": [
+        360,
+        810
+      ]
+    },
+    {
+      "file": "docs/evidence/self-report-recovery-2026-10-25/mobile-success.jpg",
+      "bytes": 32538,
+      "sha256": "071644d8006a265a3c4eb7ec9ee1e137760a7181b9409d644a127e9c9910d6f1",
+      "pixels": [
+        360,
+        810
+      ]
+    },
+    {
+      "file": "docs/evidence/self-report-recovery-2026-10-25/recovered-history-desktop.jpg",
+      "bytes": 65134,
+      "sha256": "e9b1dd28838646c0525ac39413d183722a2f9b8b7b42bce61fa7c34055cf93af",
+      "pixels": [
+        1265,
+        712
+      ]
+    },
+    {
+      "file": "docs/evidence/self-report-recovery-2026-10-25/tablet-delayed-help-final.jpg",
+      "bytes": 54491,
+      "sha256": "ec9d24edb62baafd995e99b9576716df69b64dd355927f863f9a40002ca338bf",
+      "pixels": [
+        753,
+        1004
+      ]
+    },
+    {
+      "file": "docs/evidence/self-report-recovery-2026-10-25/tablet-history-final.jpg",
+      "bytes": 54679,
+      "sha256": "7e49260d8d3174e5fd349f5723df34a4f2c29520d4d15672f98574e85344c9e7",
+      "pixels": [
+        753,
+        1004
+      ]
+    }
+  ],
+  "qaData": "Exactly three synthetic unknown-status reports6/7/8, patient2, QA database only. Two failures before implementation, one after local-error fix, one successful unchanged retry, one final default-focus submission, one4s delayed submission while help has focus. No treatment decisions, task writes, real delivery, new points or main-data writes.",
+  "limits": [
+    "The first native success and mobile-success.jpg predate the focus addition; final automatic mobile focus is proved by DOM/AX and geometry, not its timed-out screenshot. Final recovered screenshots cover the saved history and delayed help.",
+    "One preliminary focus RED used an expensive DOM-node assertion formatter and failed with Array buffer allocation; excluded. Boolean assertion valid RED reproduced the intended focus failure, then passed.",
+    "Old QA tab3 mouse/screenshot CDP timeouts resolved by a fresh hidden tab4 in existing browser2. DOM/keyboard submission succeeded before recovery. No app code was changed to address tool timeouts.",
+    "One captured-markup axe/JSDOM check:0violations,3incomplete,1virtual warning. Not full browser/WCAG/screen-reader/FPS/load acceptance.",
+    "Native tablet-success toast overlaps the mobile navigation. Separate next CSS task; not fixed in this snapshot."
+  ]
+}

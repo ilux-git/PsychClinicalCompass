@@ -1,4 +1,4 @@
-import { useEffect, useLayoutEffect, useRef, useState, type FormEvent } from "react";
+import { useEffect, useId, useLayoutEffect, useRef, useState, type FormEvent } from "react";
 import {
   ArrowLeft,
   Search,
@@ -40,12 +40,13 @@ import { Chat } from "./Chat";
 import { AssessmentHistory } from "./AssessmentHistory";
 import { dimensionLabels, type Dimension } from "./collection";
 import { SharedDiary } from "./PatientDiary";
-import { CareWorkflow, treatmentLabels } from "./CareWorkflow";
+import { CareWorkflow, treatmentLabels, type CareSource, type CareTask } from "./CareWorkflow";
 import { MedicationSchedule } from "./MedicationSchedule";
 import { EventAction } from "./EventAction";
 import { AnimatePresence, ContentFrame, Disclosure } from "./Interaction";
 import { useNavigationGuard, useUnsavedForm, type LeavePrompt } from "./NavigationGuard";
 import { useReturnFocus, useViewState, type PatientAnswerTarget } from "./ViewState";
+import { cardSections, type CardTab } from "./navigation";
 
 const notePrompt:LeavePrompt={eyebrow:"Рабочая заметка врача",title:"Продолжить приватную заметку?",message:"Заметка ещё не сохранена. При выходе из карточки текущий ввод будет потерян. Пациент эту форму не видит.",stayLabel:"Продолжить заметку"};
 const decisionPrompt:LeavePrompt={eyebrow:"Комментарий к событию",title:"Продолжить врачебную оценку?",message:"Комментарий ещё не сохранён. Переход без сохранения удалит ввод. Подтверждение или отклонение оценки выполняется только отдельной кнопкой врача.",stayLabel:"Продолжить оценку"};
@@ -53,7 +54,7 @@ const clearCommentPrompt:LeavePrompt={eyebrow:"Несохранённый ком
 const quickAssignmentPrompt:LeavePrompt={eyebrow:"Назначение опроса",title:"Остаться в карточке пациента?",message:"Опрос выбран, но ещё не назначен. При выходе из карточки выбор будет сброшен. Отправка пациенту выполняется только кнопкой «Назначить».",stayLabel:"Остаться в карточке"};
 const cardTabScope="patient-card-tab";
 
-type Source = { type: string; id: number; label: string };
+type Source = CareSource;
 
 function AlertItem({
   alert,
@@ -213,14 +214,16 @@ function PatientCard({
   simulated = false,
   initialTab = "feedback",
   initialAnswer,
+  onTabChange,
 }: {
   patientId: number;
   back: () => void;
   backLabel?:string;
   notify: Notify;
   simulated?: boolean;
-  initialTab?: "feedback" | "clinical" | "events" | "care";
+  initialTab?: CardTab;
   initialAnswer?:PatientAnswerTarget;
+  onTabChange?:(tab:CardTab)=>void;
 }) {
   const card = useApi<Card>(`/patients/${patientId}`, 15000);
   const assignments = useApi<Assignment[]>(
@@ -238,33 +241,83 @@ function PatientCard({
   );
   const alerts = useApi<Alert[]>(`/alerts?patient_id=${patientId}`, 15000);
   const surveys = useApi<Survey[]>("/surveys");
-  const [tab, setTab] = useState(simulated ? "chat" : initialTab);
+  const [tab, setTab] = useState<CardTab>(initialTab);
+  useLayoutEffect(()=>setTab(initialTab),[initialTab]);
   const [noteText, setNoteText] = useState("");
+  const [noteRevealRequest,setNoteRevealRequest]=useState(0);
   const [noteDimension, setNoteDimension] = useState<Dimension | "">("");
+  const [noteError,setNoteError]=useState("");
+  const noteErrorId=useId();
   const [source, setSource] = useState<Source | null>(null);
   const [taskSource,setTaskSource]=useState<Source|null>(null);
+  const [sourceAssigned,setSourceAssigned]=useState(false);
+  const [sourceRequest,setSourceRequest]=useState(0);
+  const [highlightedSource,setHighlightedSource]=useState<Source|null>(null);
+  const pendingSourceFocus=useRef<string|null>(null);
   const [busy, setBusy] = useState(false);
   const [surveyId, setSurveyId] = useState("");
+  const [assignError,setAssignError]=useState("");
+  const assignErrorResult=useRef<HTMLDivElement>(null),assignErrorId=useId();
+  const selectedSurvey=surveys.data?.find(survey=>String(survey.id)===surveyId);
+  const assignSelectionId=`${assignErrorId}-selection`;
+  useEffect(()=>{if(assignError)assignErrorResult.current?.querySelector<HTMLElement>('.error-box')?.focus();},[assignError]);
   const cardContent=useRef<HTMLDivElement>(null);
   const [locatedAnswer,setLocatedAnswer]=useState("");
   const guard=useNavigationGuard();
-  const {clear:clearNote}=useUnsavedForm({dirty:Boolean(card.data&&(noteText||noteDimension)),pending:busy,prompt:notePrompt});
+  function focusNote() {
+    setNoteRevealRequest(value=>value+1);
+  }
+  const {clear:clearNote,confirm:confirmNote}=useUnsavedForm({dirty:Boolean(card.data&&(noteText||noteDimension)),pending:busy,prompt:notePrompt,focus:noteText||noteDimension?focusNote:undefined});
   const {clear:clearAssignment}=useUnsavedForm({dirty:Boolean(card.data&&surveyId),pending:busy,prompt:quickAssignmentPrompt,focus:()=>document.getElementById("quick-survey")?.focus()});
   const unavailable=card.errorStatus===403||card.errorStatus===404;
   useEffect(()=>{
     if(!unavailable)return;
-    setNoteText("");setNoteDimension("");setSurveyId("");setSource(null);setTaskSource(null);
+    setNoteText("");setNoteDimension("");setNoteError("");setSurveyId("");setAssignError("");setSource(null);setTaskSource(null);setHighlightedSource(null);pendingSourceFocus.current=null;setSourceAssigned(false);
     clearNote();clearAssignment();
   },[unavailable,clearNote,clearAssignment]);
-  function changeTab(next:string) {if(next!==tab)guard.runFor(()=>setTab(next),cardTabScope);}
+  useEffect(()=>{
+    if(!source)return;
+    setNoteRevealRequest(value=>value+1);
+  },[source]);
+  function selectNoteSource(value:Source) {
+    if(source&&(source.type!==value.type||source.id!==value.id)&&(noteText||noteDimension)) {
+      confirmNote(()=>{setNoteText("");setNoteDimension("");setNoteError("");setSource(value);},{
+        eyebrow:"Несохранённая заметка",
+        title:"Сменить источник заметки?",
+        message:"Текущая заметка ещё не сохранена. При смене источника её текст и выбранное направление будут очищены. Можно вернуться, сохранить заметку и затем выбрать другой ответ.",
+        stayLabel:"Продолжить текущую заметку",
+        discardLabel:"Сменить источник без сохранения",
+      });
+      return;
+    }
+    setNoteError("");setSource(value);
+  }
+  function changeTab(next:CardTab) {if(next!==tab)guard.runFor(()=>{setTab(next);onTabChange?.(next);},cardTabScope);}
   function startTask(value:Source) {
-    if(tab==="care" && taskSource?.type===value.type && taskSource.id===value.id){document.getElementById("task-title")?.focus();return;}
-    guard.runFor(()=>{setTaskSource(value);setTab("care");},cardTabScope);
+    guard.runFor(()=>{setTaskSource(value);setSourceAssigned(false);setSourceRequest(value=>value+1);setTab("care");onTabChange?.("care");},cardTabScope);
+  }
+  function resolveCareSource(task:CareTask):Source|null {
+    if(task.source_type==="survey_submission") {
+      const row=assignments.data?.find(item=>item.submission?.id===task.source_id);
+      return row?.submission?{type:"survey_submission",id:row.submission.id,label:row.survey.title,occurredAt:row.submission.created_at,questions:row.survey.questions,answers:row.submission.answers}:null;
+    }
+    if(task.source_type==="adherence_report") {
+      const row=adherence.data?.reports.find(item=>item.id===task.source_id);
+      return row?{type:"adherence_report",id:row.id,label:row.recommendation,detail:row.reason,occurredAt:row.created_at}:null;
+    }
+    return null;
+  }
+  function showCareSource(value:Source) {
+    guard.runFor(()=>{pendingSourceFocus.current=`${value.type}:${value.id}`;setHighlightedSource({...value});setTab("feedback");onTabChange?.("feedback");},cardTabScope);
+  }
+  function focusCareSource(element:HTMLElement|null) {
+    if(!element||element.dataset.careSource!==pendingSourceFocus.current||element.closest("[inert]"))return;
+    pendingSourceFocus.current=null;element.focus({preventScroll:true});element.scrollIntoView({block:"center",behavior:"auto"});
   }
   const assignRequest = useRef({ surveyId: "", id: "" });
   async function addNote(event: FormEvent) {
     event.preventDefault();
-    setBusy(true);
+    setNoteError("");setBusy(true);
     try {
       await send(`/patients/${patientId}/notes`, {
         text: noteText,
@@ -279,10 +332,8 @@ function PatientCard({
       notes.reload();
       notify("Приватная заметка сохранена");
     } catch (error) {
-      notify(
-        error instanceof Error ? error.message : "Не удалось сохранить заметку",
-        "error",
-      );
+      setNoteError(error instanceof Error ? error.message : "Не удалось сохранить заметку");
+      setNoteRevealRequest(value=>value+1);
     } finally {
       setBusy(false);
     }
@@ -291,7 +342,7 @@ function PatientCard({
     if (!surveyId) return;
     if (assignRequest.current.surveyId !== surveyId)
       assignRequest.current = { surveyId, id: crypto.randomUUID() };
-    setBusy(true);
+    setAssignError("");setBusy(true);
     try {
       await send(`/surveys/${surveyId}/assign`, {
         patient_ids: [patientId],
@@ -303,10 +354,7 @@ function PatientCard({
       assignments.reload();
       notify("Опрос назначен пациенту");
     } catch (error) {
-      notify(
-        error instanceof Error ? error.message : "Не удалось назначить опрос",
-        "error",
-      );
+      setAssignError(error instanceof Error ? error.message : "Не удалось назначить опрос");
     } finally {
       setBusy(false);
     }
@@ -360,7 +408,7 @@ function PatientCard({
                   ["events", "События"],
                   ["medications", "Расписание лекарств"],
                   ["chat", simulated ? "Telegram · симулятор" : "Диалог"],
-                  ["clinical", "Состояние и данные МИС"],
+                  ["clinical", "История состояния"],
                 ].map(([key, label]) => (
                   <button
                     role="tab"
@@ -368,24 +416,26 @@ function PatientCard({
                     tabIndex={tab === key ? 0 : -1}
                     className={tab === key ? "active" : ""}
                     key={key}
-                    onClick={() => changeTab(key)}
+                    onClick={() => changeTab(key as CardTab)}
                     onKeyDown={event => {
-                      const keys=["feedback","care","events","medications","chat","clinical"];
-                      const current=keys.indexOf(key);
+                      const keys:CardTab[]=["feedback","care","events","medications","chat","clinical"];
+                      const current=keys.indexOf(key as CardTab);
                       const next=event.key === "ArrowRight" ? (current+1)%keys.length : event.key === "ArrowLeft" ? (current+keys.length-1)%keys.length : event.key === "Home" ? 0 : event.key === "End" ? keys.length-1 : null;
-                      if(next !== null){event.preventDefault();const tabs=event.currentTarget.parentElement;guard.runFor(()=>{setTab(keys[next]);tabs?.querySelectorAll<HTMLButtonElement>('button[role="tab"]')[next]?.focus();},cardTabScope);}
+                      if(next !== null){event.preventDefault();const tabs=event.currentTarget.parentElement;guard.runFor(()=>{setTab(keys[next]);onTabChange?.(keys[next]);tabs?.querySelectorAll<HTMLButtonElement>('button[role="tab"]')[next]?.focus();},cardTabScope);}
                     }}
                   >
                     {label}
                   </button>
                 ))}
               </div>
+              <p className="card-section-purpose" role="status">{cardSections[tab].description}</p>
               <AnimatePresence mode="wait" initial={false}><ContentFrame key={tab}>
-              {tab === "care" && <CareWorkflow key={`${taskSource?.type}-${taskSource?.id}`} patientId={patientId} source={taskSource} notify={notify} scope={cardTabScope} />}
+              {tab === "care" && <CareWorkflow key={`${taskSource?.type}-${taskSource?.id}-${sourceRequest}`} patientId={patientId} source={taskSource} notify={notify} scope={cardTabScope} resolveSource={resolveCareSource} openSource={showCareSource} composeRequested={!sourceAssigned} onCreated={()=>setSourceAssigned(true)} />}
               {tab === "medications" && <MedicationSchedule patientId={patientId} notify={notify} readOnly onSource={startTask} />}
               {tab === "feedback" && (
                 <>
                   <Section
+                    className="survey-results-panel"
                     title="Опросы и ответы"
                     aside={
                       <Badge>
@@ -404,15 +454,18 @@ function PatientCard({
                     />
                     {initialAnswer&&answerAssignment&&<div className="answer-source-context"><FileText size={18}/><span>В карточке выделен ответ, выбранный в аналитике.</span><Button variant="ghost" onClick={focusSelectedAnswer}>Показать выбранный ответ</Button></div>}
                     {initialAnswer&&assignments.data&&!answerAssignment&&<p className="subtle-notice" role="status">Выбранный ответ не найден в доступных назначениях. Можно повторить загрузку или вернуться в аналитику.</p>}
+                    <div ref={assignErrorResult} id={assignErrorId}><ErrorBox message={assignError}/></div>
+                    {selectedSurvey&&<p className="field-hint" id={assignSelectionId}>Выбран опрос «{selectedSurvey.title}». Версия {selectedSurvey.version}. Вопросов: {selectedSurvey.questions.length}.</p>}
                     <div className="quick-assign">
                       <label className="sr-only" htmlFor="quick-survey">
                         Опрос для назначения
                       </label>
                       <select
                         id="quick-survey"
+                        aria-describedby={[assignError&&assignErrorId,selectedSurvey&&assignSelectionId].filter(Boolean).join(" ")||undefined}
                         disabled={busy}
                         value={surveyId}
-                        onChange={(e) => setSurveyId(e.target.value)}
+                        onChange={(e) => {setAssignError("");setSurveyId(e.target.value);}}
                       >
                         <option value="">Выберите опубликованный опрос</option>
                         {surveys.data
@@ -436,31 +489,28 @@ function PatientCard({
                     ) : (
                       [...assignments.data].sort((a,b)=>Date.parse(b.submission?.created_at ?? b.first_opened_at ?? b.created_at)-Date.parse(a.submission?.created_at ?? a.first_opened_at ?? a.created_at) || b.id-a.id).map((assignment) => (
                         <article
-                          className="assignment-result"
+                          className={`assignment-result ${highlightedSource?.type==="survey_submission"&&highlightedSource.id===assignment.submission?.id?"care-source-highlight":""}`}
+                          ref={focusCareSource}
+                          data-care-source={assignment.submission?`survey_submission:${assignment.submission.id}`:undefined}
                           data-assignment-id={assignment.id}
-                          tabIndex={assignment.id===answerAssignment?.id?-1:undefined}
+                          tabIndex={-1}
                           key={assignment.id}
                         >
-                          <div className="section-heading">
-                            <h3>{assignment.survey.title}</h3>
-                            <Badge
-                              tone={assignment.submission ? "good" : "muted"}
-                            >
-                              {assignment.submission
-                                ? "Ответ получен"
-                                : "Ждём ответа"}
-                            </Badge>
-                            {assignment.id===answerAssignment?.id&&<Badge tone="purple">Из аналитики</Badge>}
-                          </div>
-                          <p className="field-hint">
-                            Версия {assignment.survey.version} · назначен{" "}
-                            {date(assignment.created_at)}
-                            {assignment.first_opened_at ? ` · открыт ${date(assignment.first_opened_at)}` : " · время открытия неизвестно"}
-                            {assignment.submission ? ` · завершён ${date(assignment.submission.created_at)}` : ""}
-                            {assignment.due_at
-                              ? ` · срок ${date(assignment.due_at)}`
-                              : ""}
-                          </p>
+                          <header className="assignment-result-heading">
+                            <div>
+                              <h3>{assignment.survey.title}</h3>
+                              <p className="assignment-result-meta">{assignment.submission?`Ответ от ${date(assignment.submission.created_at)}`:`Назначен ${date(assignment.created_at)}`}<span aria-hidden="true"> · </span>Версия {assignment.survey.version}</p>
+                            </div>
+                            <div className="assignment-result-status"><Badge tone={assignment.submission?"good":"muted"}>{assignment.submission?"Ответ получен":"Ждём ответа"}</Badge>{assignment.id===answerAssignment?.id&&<Badge tone="purple">Из аналитики</Badge>}</div>
+                          </header>
+                          <div className="assignment-timing"><Disclosure title="Даты и прохождение">
+                            <dl>
+                              <div><dt>Назначен</dt><dd>{date(assignment.created_at)}</dd></div>
+                              <div><dt>Первое открытие</dt><dd>{assignment.first_opened_at?date(assignment.first_opened_at):"Время неизвестно"}</dd></div>
+                              <div><dt>Ответ получен</dt><dd>{assignment.submission?date(assignment.submission.created_at):"Пока нет ответа"}</dd></div>
+                              <div><dt>Срок ответа</dt><dd>{assignment.due_at?date(assignment.due_at):"Не задан"}</dd></div>
+                            </dl>
+                          </Disclosure></div>
                           {assignment.submission && (
                             <>
                               <AnswerSummary
@@ -468,20 +518,10 @@ function PatientCard({
                                 answers={assignment.submission.answers}
                                 highlightQuestion={assignment.id===answerAssignment?.id?initialAnswer?.questionId:undefined}
                               />
-                              <div className="button-row"><Button
-                                variant="ghost"
-                                onClick={() => {
-                                  setSource({
-                                    type: "survey_submission",
-                                    id: assignment.submission!.id,
-                                    label: assignment.survey.title,
-                                  });
-                                  document.getElementById("note-text")?.focus();
-                                }}
-                              >
-                                <FileText size={15} /> Заметка к ответу
-                              </Button>
-                              <Button variant="secondary" onClick={()=>startTask({type:"survey_submission",id:assignment.submission!.id,label:assignment.survey.title})}><Plus size={15}/> Запланировать шаг</Button></div>
+                              <div className="assignment-actions">
+                                <Button variant="secondary" onClick={()=>startTask({type:"survey_submission",id:assignment.submission!.id,label:assignment.survey.title,occurredAt:assignment.submission!.created_at,questions:assignment.survey.questions,answers:assignment.submission!.answers})}><Plus size={17}/> Запланировать шаг</Button>
+                                <Button variant="ghost" onClick={()=>selectNoteSource({type:"survey_submission",id:assignment.submission!.id,label:assignment.survey.title})}><FileText size={17}/> Заметка к ответу</Button>
+                              </div>
                             </>
                           )}
                         </article>
@@ -504,7 +544,7 @@ function PatientCard({
                       </Empty>
                     ) : (
                       adherence.data.reports.map((report) => (
-                        <article className="adherence-report" key={report.id}>
+                        <article className={`adherence-report ${highlightedSource?.type==="adherence_report"&&highlightedSource.id===report.id?"care-source-highlight":""}`} key={report.id} ref={focusCareSource} data-care-source={`adherence_report:${report.id}`} tabIndex={-1}>
                           <div className="section-heading">
                             <h3>{report.recommendation}</h3>
                             <Badge
@@ -525,16 +565,16 @@ function PatientCard({
                             <Button
                               variant="ghost"
                               onClick={() => {
-                                setSource({
+                                selectNoteSource({
                                   type: "adherence_report",
                                   id: report.id,
                                   label: report.recommendation,
                                 });
-                                document.getElementById("note-text")?.focus();
                               }}
                             >
                               Заметка к ответу
                             </Button>
+                            <Button variant="secondary" onClick={()=>startTask({type:"adherence_report",id:report.id,label:report.recommendation,detail:report.reason,occurredAt:report.created_at})}><Plus size={15}/> Запланировать шаг</Button>
                           </div>
                         </article>
                       ))
@@ -558,8 +598,7 @@ function PatientCard({
                     simulated={simulated}
                     notify={notify}
                     onObservation={(message) => {
-                      setSource({type: "message", id: message.id, label: `Сообщение от ${date(message.created_at)}`});
-                      document.getElementById("note-text")?.focus();
+                      selectNoteSource({type: "message", id: message.id, label: `Сообщение от ${date(message.created_at)}`});
                     }}
                   />
                 </Section>
@@ -647,12 +686,13 @@ function PatientCard({
                 <p className="field-hint">
                   Приватный раздел врача. Пациент его не видит.
                 </p>
-                <p className="field-hint">Наблюдение хранится отдельно от самоотчёта и не исправляет ответы пациента или баллы шкал.</p>
                 <ErrorBox message={notes.error} retry={notes.reload} />
-                <form onSubmit={addNote}>
-                  <fieldset className="form-fields" disabled={busy} aria-busy={busy}>
+                <Disclosure title="Добавить приватную заметку" revealRequest={noteRevealRequest} focusTarget=".error-box,textarea">
+                <form className="private-note-form" onSubmit={addNote}>
+                  <div id={noteErrorId}><ErrorBox message={noteError}/></div>
+                  <fieldset className="form-fields" disabled={busy} aria-busy={busy} aria-describedby={noteError?noteErrorId:undefined}>
                   <label className="field">Направление наблюдения
-                    <select value={noteDimension} onChange={(e) => setNoteDimension(e.target.value as Dimension | "")}>
+                    <select value={noteDimension} onChange={(e) => {setNoteError("");setNoteDimension(e.target.value as Dimension | "");}}>
                       <option value="">Общая заметка</option>
                       {Object.entries(dimensionLabels).map(([code, label]) => <option key={code} value={code}>{label}</option>)}
                     </select>
@@ -663,25 +703,25 @@ function PatientCard({
                       <button
                         type="button"
                         aria-label="Убрать связь с ответом"
-                        onClick={() => setSource(null)}
+                        onClick={() => {setNoteError("");setSource(null);focusNote();}}
                       >
                         ×
                       </button>
                     </div>
                   )}
-                  {source && <Button type="button" variant="secondary" onClick={() => startTask(source)}>Создать задачу по этому источнику</Button>}
-                  <label className="sr-only" htmlFor="note-text">
+                  {source && <Button type="button" variant="secondary" onClick={() => startTask(source)}>Запланировать шаг</Button>}
+                  <label className="field" htmlFor="note-text">
                     Текст приватной заметки
-                  </label>
                   <textarea
                     id="note-text"
                     rows={3}
                     maxLength={4000}
                     value={noteText}
-                    onChange={(e) => setNoteText(e.target.value)}
+                    onChange={(e) => {setNoteError("");setNoteText(e.target.value);}}
                     placeholder="Что важно уточнить или обсудить…"
                     required
                   />
+                  </label>
                   <Button
                     variant="secondary"
                     type="submit"
@@ -691,6 +731,8 @@ function PatientCard({
                   </Button>
                   </fieldset>
                 </form>
+                </Disclosure>
+                <Disclosure title={`Сохранённые заметки (${notes.data?.length??"…"})`}>
                 <div className="notes-list">
                   {notes.data?.map((note) => (
                     <article key={note.id}>
@@ -706,14 +748,15 @@ function PatientCard({
                     </article>
                   ))}
                 </div>
+                </Disclosure>
               </Section>
-              <Section
+              {tab!=="care"&&<Section
                 title="Следующий шаг"
                 aside={<Clock3 size={17} className="muted" />}
               >
                 <p className="field-hint">Назначьте исполнителя, сохраните действие и отдельно проверьте результат.</p>
                 <Button variant="secondary" onClick={() => changeTab("care")}>Открыть план и задачи</Button>
-              </Section>
+              </Section>}
             </aside>
           </div>
         </>
@@ -733,15 +776,17 @@ export function DoctorPatients({
   backLabel,
   scope="patients",
   initialAnswer,
+  onTabChange,
 }: {
   selected: number | null;
   onSelect: (id: number | null) => void;
   notify: Notify;
   simulated?: boolean;
-  initialTab?: "feedback" | "clinical" | "events" | "care";
+  initialTab?: CardTab;
   openTasks?: () => void;
   back?:()=>void;backLabel?:string;scope?:string;
   initialAnswer?:PatientAnswerTarget;
+  onTabChange?:(tab:CardTab)=>void;
 }) {
   const [query, setQuery] = useViewState(`${scope}-search-input`,"");
   const [search,setSearch] = useViewState(`${scope}-search`,"");
@@ -758,10 +803,11 @@ export function DoctorPatients({
         key={`${selected}-${simulated}`}
         patientId={selected}
         back={back??(()=>onSelect(null))}
-        backLabel={backLabel}
+        backLabel={backLabel??(scope==="state"?"К динамике состояния":scope==="telegram"?"К списку симулятора":"К списку пациентов")}
         notify={notify}
         simulated={simulated}
         initialTab={initialTab}
+        onTabChange={onTabChange}
         initialAnswer={initialAnswer}
       />
     );
@@ -769,7 +815,7 @@ export function DoctorPatients({
   const filtered = page?.items;
   return (
     <>
-      <Heading eyebrow="Люди, которым вы помогаете" title={initialTab === "clinical" ? "Состояние пациентов" : "Мои пациенты"}>
+      <Heading eyebrow="Люди, которым вы помогаете" title={scope === "state" ? "Динамика состояния" : "Пациенты"}>
         {initialTab === "clinical" ? "Выберите пациента, чтобы открыть PHQ-9, GAD-7 и сохранённые ответы по пунктам." : "Опросы, самоотчёты и переписка в одной карточке."}
       </Heading>
       <div className="board-toolbar"><div className="search-field">

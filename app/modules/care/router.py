@@ -1,3 +1,5 @@
+from datetime import datetime, timezone
+
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy import select
 
@@ -5,13 +7,65 @@ from app.api.deps import CompassSession, patient_for_user, require_role
 from app.modules.access.models import User, UserRole
 from app.modules.audit.service import record_event
 from app.modules.care.models import TreatmentStatusChange
-from app.modules.care.schemas import TreatmentWrite
+from app.modules.care.schemas import PatientCareProgress, TreatmentWrite
 from app.modules.care.categories import REFUSAL_CATEGORIES
 from app.modules.integration.synthetic import linked_snapshot
 from app.modules.patients.models import Patient
 
 router = APIRouter(tags=["care"])
 Doctor = Depends(require_role([UserRole.doctor]))
+
+
+def visit_progress(source: dict, now: datetime) -> dict:
+    """Only explicit visit facts; a missing/past scheduled time is not attendance."""
+    def timestamp(value):
+        if not isinstance(value, str):
+            return None
+        try:
+            parsed = datetime.fromisoformat(value.replace("Z", "+00:00"))
+        except ValueError:
+            return None
+        return parsed if parsed.tzinfo is not None else None
+
+    data = source.get("data")
+    available = source.get("status") == "available" and isinstance(data, dict) and isinstance(data.get("visits"), list)
+    visits = data["visits"] if available else []
+    completed, scheduled = [], []
+    undated = False
+    for visit in visits:
+        if visit.get("status") == "attended":
+            at = timestamp(visit.get("occurred_at"))
+            if at is not None and at <= now:
+                completed.append(at)
+            else:
+                undated = True
+        elif visit.get("status") == "scheduled":
+            at = timestamp(visit.get("scheduled_at"))
+            if at is None:
+                undated = True
+            elif at > now:
+                scheduled.append(at)
+    return {"status": source.get("status", "unavailable") if available or source.get("status") != "available" else "unavailable", "source": source.get("source", "synthetic_mis_json"),
+            "synthetic": source.get("synthetic", True), "source_as_of": source.get("as_of"),
+            "known_completed_count": len(completed) if available else None,
+            "latest_completed_at": max(completed) if completed else None,
+            "next_scheduled_at": min(scheduled) if scheduled else None,
+            "has_undated_visits": undated}
+
+
+@router.get("/participation/care-progress", response_model=PatientCareProgress)
+async def patient_care_progress(session: CompassSession,
+                                user: User = Depends(require_role([UserRole.patient]))):
+    patient = await session.scalar(select(Patient).where(Patient.user_id == user.id))
+    if patient is None:
+        raise HTTPException(403, "Учётная запись не связана с пациентом")
+    latest = await session.scalar(select(TreatmentStatusChange).where(
+        TreatmentStatusChange.patient_id == patient.id).order_by(TreatmentStatusChange.id.desc()).limit(1))
+    now = datetime.now(timezone.utc)
+    return {"as_of": now,
+            "treatment": {"status": latest.status if latest else "unknown",
+                          "recorded_at": latest.created_at if latest else None},
+            "visits": visit_progress(await linked_snapshot(session, patient), now)}
 
 
 def status_read(row):

@@ -1,0 +1,32 @@
+{
+  "form": {
+    "fieldsBeforeText": 4,
+    "overflow": false,
+    "saveTop": 1132.90625,
+    "scrollY": 0,
+    "shared": false,
+    "textTop": 819.34375,
+    "viewport": {
+      "height": 844,
+      "width": 375
+    }
+  },
+  "saved": {
+    "confirmation": "Запись сохранена\n\nЭта запись остаётся личной. Поделиться с врачом можно позже.\n\n+3 балла за участие\n\nБаллы — за участие. Содержание ответа и самочувствие на награду не влияют.\n\nПо записи от 25 окт., 10:19\nМой прогресс",
+    "focus": "Запись сохранена",
+    "fullyVisible": false,
+    "overflow": false,
+    "rect": {
+      "bottom": 795.46875,
+      "height": 329.5625,
+      "left": 37,
+      "right": 323,
+      "top": 465.90625,
+      "width": 286,
+      "x": 37,
+      "y": 465.90625
+    },
+    "scrollY": 733,
+    "shared": false
+  }
+}

@@ -1,0 +1,318 @@
+{
+  "status": "verification complete; report/docs pending; QA normal; doctors available; patient2 map; viewport reset",
+  "checks": [
+    {
+      "scenario": "mobile-control-before",
+      "observed": {
+        "controls": [
+          {
+            "display": "none",
+            "height": 0,
+            "value": "available"
+          }
+        ],
+        "menuOpen": true,
+        "width": 375
+      },
+      "result": "Own doctor availability control is unavailable even with the mobile menu open."
+    },
+    {
+      "scenario": "original-doctor-statuses",
+      "doctor1": {
+        "name": "Анна Сергеевна",
+        "options": [
+          {
+            "label": "На связи",
+            "value": "available"
+          },
+          {
+            "label": "Занят",
+            "value": "busy"
+          },
+          {
+            "label": "Недоступен",
+            "value": "offline"
+          },
+          {
+            "label": "В отпуске",
+            "value": "on_leave"
+          }
+        ],
+        "value": "available"
+      },
+      "doctor2": {
+        "name": "Михаил Андреевич",
+        "value": "available"
+      },
+      "chosenTestValue": "busy"
+    },
+    {
+      "scenario": "old-response-cross-account-before-fix",
+      "stage": "new-doctor-before-response",
+      "elapsedMs": 595,
+      "observed": {
+        "name": "Михаил Андреевич",
+        "value": "available"
+      }
+    },
+    {
+      "scenario": "old-response-cross-account-before-fix",
+      "stage": "after-old-response",
+      "observed": {
+        "name": "Михаил Андреевич",
+        "value": "busy"
+      },
+      "result": "Doctor1 response changed the local status shown for Doctor2. Backend Doctor2 was not written by this interaction."
+    },
+    {
+      "scenario": "before-fix-cleanup",
+      "doctor2Reloaded": {
+        "name": "Михаил Андреевич",
+        "value": "available"
+      },
+      "doctor1BeforeRestore": {
+        "name": "Анна Сергеевна",
+        "value": "busy"
+      },
+      "doctor1Restored": {
+        "name": "Анна Сергеевна",
+        "value": "available"
+      },
+      "qaMode": "normal"
+    },
+    {
+      "scenario": "mobile-control-after",
+      "observed": {
+        "count": 1,
+        "fontSize": "16px",
+        "menuOpen": false,
+        "overflow": false,
+        "profile": {
+          "bottom": 844,
+          "height": 77,
+          "left": -236,
+          "right": -14,
+          "top": 767,
+          "width": 222,
+          "x": -236,
+          "y": 767
+        },
+        "rect": {
+          "bottom": 755,
+          "height": 45,
+          "left": -220,
+          "right": -131,
+          "top": 710,
+          "width": 89,
+          "x": -220,
+          "y": 710
+        },
+        "value": "available",
+        "width": 375
+      }
+    },
+    {
+      "scenario": "mobile-control-after-width-fix",
+      "observed": {
+        "fontSize": "16px",
+        "menuOpen": true,
+        "overflow": false,
+        "profileBottom": 844,
+        "rect": {
+          "bottom": 755,
+          "height": 45,
+          "left": 30,
+          "right": 220,
+          "top": 710,
+          "width": 190,
+          "x": 30,
+          "y": 710
+        },
+        "value": "available",
+        "width": 375
+      }
+    },
+    {
+      "scenario": "mobile-failed-save-503",
+      "observed": {
+        "describedBy": "_r_0_-error",
+        "disabled": false,
+        "error": "Изменение не подтверждено. Техническая проверка: сохранение временно недоступно. Выберите статус ещё раз, чтобы повторить.",
+        "errorRect": {
+          "bottom": 755,
+          "height": 95.9375,
+          "left": 30,
+          "right": 220,
+          "top": 659.0625,
+          "width": 190,
+          "x": 30,
+          "y": 659.0625
+        },
+        "focused": true,
+        "menuOpen": true,
+        "overflow": false,
+        "profileBottom": 844,
+        "value": "available"
+      },
+      "qaModeRestored": "normal"
+    },
+    {
+      "scenario": "mobile-native-success-and-restore",
+      "busy": {
+        "error": null,
+        "focused": true,
+        "value": "busy"
+      },
+      "available": {
+        "error": null,
+        "focused": true,
+        "value": "available"
+      }
+    },
+    {
+      "scenario": "mobile-tab-cycle-and-escape",
+      "wrap": {
+        "tag": "A",
+        "text": "clinicalcompass"
+      },
+      "reverse": {
+        "label": "Выйти"
+      },
+      "backToSelect": {
+        "isAvailability": true
+      },
+      "escape": {
+        "focused": "Открыть меню",
+        "menuOpen": false
+      }
+    },
+    {
+      "scenario": "old-response-cross-account-after-fix",
+      "stage": "new-doctor-before-response",
+      "elapsedMs": 639,
+      "pendingForDoctor1": {
+        "disabled": true,
+        "pending": "Сохраняем…",
+        "value": "busy"
+      },
+      "doctor2": {
+        "disabled": false,
+        "name": "Михаил Андреевич",
+        "pending": "",
+        "value": "available"
+      }
+    },
+    {
+      "scenario": "old-response-cross-account-after-fix",
+      "stage": "after-four-second-response",
+      "elapsedMs": 62741,
+      "doctor2": {
+        "disabled": false,
+        "name": "Михаил Андреевич",
+        "pending": "",
+        "value": "available"
+      }
+    },
+    {
+      "scenario": "after-fix-durable-cleanup",
+      "doctor1SavedBeforeRestore": {
+        "name": "Анна Сергеевна",
+        "value": "busy"
+      },
+      "doctor1Restored": {
+        "focused": true,
+        "name": "Анна Сергеевна",
+        "value": "available"
+      },
+      "doctor2After": {
+        "disabled": false,
+        "name": "Михаил Андреевич",
+        "pending": "",
+        "value": "available"
+      },
+      "qaMode": "normal"
+    },
+    {
+      "scenario": "short-desktop-profile",
+      "observed": {
+        "control": {
+          "bottom": 631,
+          "height": 44,
+          "left": 30,
+          "right": 234,
+          "top": 587,
+          "width": 204,
+          "x": 30,
+          "y": 587
+        },
+        "overflow": false,
+        "profileBottom": 720,
+        "value": "available",
+        "viewport": {
+          "height": 720,
+          "width": 1280
+        }
+      }
+    },
+    {
+      "scenario": "tablet-profile-current",
+      "observed": {
+        "control": {
+          "bottom": 935,
+          "height": 45,
+          "left": 30,
+          "right": 220,
+          "top": 890,
+          "width": 190,
+          "x": 30,
+          "y": 890
+        },
+        "menuOpen": true,
+        "overflow": false,
+        "profileBottom": 1024,
+        "scrollbar": "rgb(147, 149, 143) rgb(24, 25, 26)",
+        "value": "available",
+        "viewport": {
+          "height": 1024,
+          "width": 768
+        }
+      }
+    },
+    {
+      "scenario": "short-desktop-current",
+      "observed": {
+        "control": {
+          "bottom": 631,
+          "height": 44,
+          "left": 30,
+          "right": 234,
+          "top": 587,
+          "width": 204,
+          "x": 30,
+          "y": 587
+        },
+        "overflow": false,
+        "profileBottom": 720,
+        "scrollbar": "rgb(147, 149, 143) rgb(24, 25, 26)",
+        "themeColor": "#F6F4EF",
+        "viewport": {
+          "height": 720,
+          "width": 1280
+        }
+      }
+    },
+    {
+      "scenario": "shared-focus-hook-patient-regression",
+      "rhythm": {
+        "focused": true,
+        "mode": "rhythm"
+      },
+      "map": {
+        "balance": "105",
+        "doctorOnlyControls": 0,
+        "focused": true,
+        "mode": "map"
+      }
+    }
+  ]
+}

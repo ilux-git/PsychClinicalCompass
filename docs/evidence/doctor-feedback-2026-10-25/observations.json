@@ -1,0 +1,167 @@
+{
+  "status": "recorded",
+  "checks": [
+    {
+      "scenario": "expanded-desktop",
+      "observed": {
+        "buttonTop": 478.125,
+        "count": 19,
+        "expanded": "true",
+        "firstExtraTop": 542.125,
+        "focused": "button secondary quote-more",
+        "openingRate": "22,7% от назначений",
+        "overflow": false
+      }
+    },
+    {
+      "scenario": "extra-quote-exact-answer",
+      "observed": {
+        "focusIsHighlight": true,
+        "highlight": "Что важно знать вашему врачу?\nПосле смены сложно приехать, а расходы оказались выше ожидаемых.",
+        "title": "Иван Петров"
+      }
+    },
+    {
+      "scenario": "return-to-extra-quote-desktop",
+      "observed": {
+        "button": {
+          "bottom": 514.5625,
+          "height": 44,
+          "left": 938.078125,
+          "right": 1368,
+          "top": 470.5625,
+          "width": 429.921875,
+          "x": 938.078125,
+          "y": 470.5625
+        },
+        "count": 19,
+        "expanded": "true",
+        "key": "analytics-quote-1-details",
+        "scrollY": 2184
+      }
+    },
+    {
+      "scenario": "phone-first-fold",
+      "observed": {
+        "expanded": "true",
+        "overflow": false,
+        "quoteCount": 19,
+        "scrollY": 0,
+        "width": 375
+      }
+    },
+    {
+      "scenario": "phone-collapse",
+      "observed": {
+        "buttonTop": 400.015625,
+        "count": 5,
+        "expanded": "false",
+        "focused": "button secondary quote-more"
+      }
+    },
+    {
+      "scenario": "phone-native-enter-expand",
+      "observed": {
+        "buttonHeight": 44,
+        "buttonTop": 400.015625,
+        "count": 19,
+        "expanded": "true",
+        "firstExtraTop": 464.015625,
+        "focused": "button secondary quote-more",
+        "footer": 777,
+        "overflow": false
+      }
+    },
+    {
+      "scenario": "phone-exact-answer",
+      "observed": {
+        "focused": true,
+        "footer": 777,
+        "highlight": "Что важно знать вашему врачу?\nПосле смены сложно приехать, а расходы оказались выше ожидаемых.",
+        "overflow": false,
+        "rect": {
+          "bottom": 539.9375,
+          "height": 145.265625,
+          "left": 37,
+          "right": 323,
+          "top": 394.671875,
+          "width": 286,
+          "x": 37,
+          "y": 394.671875
+        }
+      }
+    },
+    {
+      "scenario": "return-to-extra-quote-phone",
+      "observed": {
+        "button": {
+          "bottom": 436.546875,
+          "height": 44,
+          "left": 37,
+          "right": 323,
+          "top": 392.546875,
+          "width": 286,
+          "x": 37,
+          "y": 392.546875
+        },
+        "count": 19,
+        "expanded": "true",
+        "footer": 777,
+        "key": "analytics-quote-1-details",
+        "overflow": false,
+        "scrollY": 4314
+      }
+    },
+    {
+      "scenario": "tablet-first-fold",
+      "observed": {
+        "count": 5,
+        "expanded": "false",
+        "overflow": false,
+        "scrollY": 0,
+        "width": 768
+      }
+    },
+    {
+      "scenario": "tablet-voice-layout",
+      "observed": {
+        "overflow": false,
+        "questionFont": "12px",
+        "sourceFont": "12px",
+        "targetMinimum": 44,
+        "titleCount": 5
+      },
+      "note": "Heading click used only to position the viewport for inspection; no application auto-scroll claim."
+    },
+    {
+      "scenario": "browser-back-tablet",
+      "observed": {
+        "button": {
+          "bottom": 526.953125,
+          "height": 44,
+          "left": 37,
+          "right": 347,
+          "top": 482.953125,
+          "width": 310,
+          "x": 37,
+          "y": 482.953125
+        },
+        "count": 19,
+        "expanded": "true",
+        "footer": 957,
+        "key": "analytics-quote-1-details",
+        "width": 768
+      }
+    },
+    {
+      "scenario": "desktop-first-fold-current",
+      "observed": {
+        "expanded": "true",
+        "overflow": false,
+        "quotes": 19,
+        "scrollY": 0,
+        "width": 1440
+      }
+    }
+  ]
+}

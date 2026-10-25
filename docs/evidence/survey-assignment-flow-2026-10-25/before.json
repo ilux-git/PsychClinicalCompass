@@ -1,0 +1,13 @@
+{
+  "alerts": [
+    {
+      "focused": false,
+      "insideAssignment": false,
+      "text": "Техническая проверка: сохранение временно недоступно."
+    }
+  ],
+  "count": 5,
+  "focus": "BODY",
+  "overflow": false,
+  "selected": "Что мешает выполнять рекомендации? · v1"
+}

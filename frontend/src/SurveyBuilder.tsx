@@ -29,7 +29,7 @@ import {
 } from "./UI";
 import { SurveyFields } from "./SurveyFields";
 import { barrierLabels, dimensionLabels, type Dimension, type BarrierCategory } from "./collection";
-import { supportTemplate } from "./supportTemplate";
+import { experienceTemplate, supportTemplate } from "./supportTemplate";
 import { Disclosure } from "./Interaction";
 import { useNavigationGuard, useUnsavedForm, type LeavePrompt } from "./NavigationGuard";
 
@@ -221,7 +221,7 @@ export function SurveyBuilder({
     <fieldset ref={builderRef} className="survey-builder" disabled={busy} aria-busy={busy} aria-label="Конструктор и назначение опросов">
       <Heading
         eyebrow="Вопросы, которые помогают понять пациента"
-        title="Мои опросы"
+        title="Опросы для пациентов"
         action={
           <Button
             onClick={() => guard.run(()=>selectDraft(newDraft()))}
@@ -233,10 +233,12 @@ export function SurveyBuilder({
         Свои вопросы, понятные ответы и история каждой опубликованной версии.
       </Heading>
       <div className="builder-save-error"><ErrorBox message={saveError||(Object.keys(fieldErrors).length?"Заполните отмеченные поля. Опрос пока не сохранён.":"")}/></div>
-      <div className="template-explainer"><Disclosure title="Общая анкета сопровождения · предложенный шаблон C1–C7">
-        <p>Одинаковые короткие вопросы помогают сравнивать ответы на одну версию: понятен ли план, подходит ли помощь, что мешает и нужен ли следующий шаг. Свои опросы врача остаются доступными.</p>
-        <p className="field-hint">Шаблон C1–C7 — предложение. Он не назначается автоматически, не заменяет PHQ-9/GAD-7 и не вычисляет общий балл «лояльности». Перед публикацией уточните конкретную рекомендацию и период. Частоту назначений определяет врач.</p>
-        <Button variant="secondary" disabled={busy} onClick={() => guard.run(()=>selectDraft(supportTemplate()))}>Открыть предложенный шаблон C1–C7 как черновик</Button>
+      <div className="template-explainer"><Disclosure title="Начать с редактируемого шаблона">
+        <h3>Как получается следовать плану</h3><p>Понятен ли план, подходит ли помощь, что мешает и нужен ли следующий шаг. Перед публикацией уточните конкретную рекомендацию и период.</p>
+        <Button variant="secondary" disabled={busy} onClick={() => guard.run(()=>selectDraft(supportTemplate()))}>Открыть анкету сопровождения</Button>
+        <h3 className="template-next-title">Опыт использования приложения</h3><p>Понятность и польза приложения, предложения пациента. Эти ответы отделены от доверия к лечению и не дают медицинского балла.</p>
+        <Button variant="secondary" disabled={busy} onClick={() => guard.run(()=>selectDraft(experienceTemplate()))}>Открыть опрос об удобстве</Button>
+        <p className="field-hint">Оба шаблона можно изменить. Сохранение, публикация и назначение выполняются отдельно; автоматической рассылки нет. Это авторские вопросы, а не диагностические шкалы.</p>
       </Disclosure></div>
       <ErrorBox
         message={library.error || patients.error}

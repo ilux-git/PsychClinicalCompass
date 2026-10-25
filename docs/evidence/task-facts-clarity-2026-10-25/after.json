@@ -1,0 +1,371 @@
+{
+  "facts": [
+    {
+      "card": {
+        "bottom": 862.15625,
+        "height": 520.5625,
+        "left": 1056.328125,
+        "right": 1375.984375,
+        "top": 341.59375,
+        "width": 319.65625,
+        "x": 1056.328125,
+        "y": 341.59375
+      },
+      "grid": "135.828px 135.828px",
+      "labels": [
+        {
+          "box": {
+            "bottom": 551.984375,
+            "height": 18,
+            "left": 1073.328125,
+            "right": 1209.15625,
+            "top": 533.984375,
+            "width": 135.828125,
+            "x": 1073.328125,
+            "y": 533.984375
+          },
+          "font": "12px",
+          "lineHeight": "18px",
+          "text": "Исполнитель"
+        },
+        {
+          "box": {
+            "bottom": 551.984375,
+            "height": 18,
+            "left": 1223.15625,
+            "right": 1358.984375,
+            "top": 533.984375,
+            "width": 135.828125,
+            "x": 1223.15625,
+            "y": 533.984375
+          },
+          "font": "12px",
+          "lineHeight": "18px",
+          "text": "Срок действия"
+        },
+        {
+          "box": {
+            "bottom": 608.78125,
+            "height": 18,
+            "left": 1073.328125,
+            "right": 1358.984375,
+            "top": 590.78125,
+            "width": 285.65625,
+            "x": 1073.328125,
+            "y": 590.78125
+          },
+          "font": "12px",
+          "lineHeight": "18px",
+          "text": "Проверка результата"
+        }
+      ],
+      "overflow": false,
+      "stage": "after-board-1440",
+      "viewport": [
+        1440,
+        1000
+      ]
+    },
+    {
+      "card": {
+        "bottom": 884.65625,
+        "height": 543.0625,
+        "left": 949.65625,
+        "right": 1216,
+        "top": 341.59375,
+        "width": 266.34375,
+        "x": 949.65625,
+        "y": 341.59375
+      },
+      "grid": "109.172px 109.172px",
+      "labels": [
+        {
+          "box": {
+            "bottom": 574.484375,
+            "height": 18,
+            "left": 966.65625,
+            "right": 1075.828125,
+            "top": 556.484375,
+            "width": 109.171875,
+            "x": 966.65625,
+            "y": 556.484375
+          },
+          "font": "12px",
+          "lineHeight": "18px",
+          "text": "Исполнитель"
+        },
+        {
+          "box": {
+            "bottom": 574.484375,
+            "height": 18,
+            "left": 1089.828125,
+            "right": 1199,
+            "top": 556.484375,
+            "width": 109.171875,
+            "x": 1089.828125,
+            "y": 556.484375
+          },
+          "font": "12px",
+          "lineHeight": "18px",
+          "text": "Срок действия"
+        },
+        {
+          "box": {
+            "bottom": 631.28125,
+            "height": 18,
+            "left": 966.65625,
+            "right": 1199,
+            "top": 613.28125,
+            "width": 232.34375,
+            "x": 966.65625,
+            "y": 613.28125
+          },
+          "font": "12px",
+          "lineHeight": "18px",
+          "text": "Проверка результата"
+        }
+      ],
+      "overflow": false,
+      "stage": "after-board-1280",
+      "viewport": [
+        1280,
+        900
+      ]
+    },
+    {
+      "card": {
+        "bottom": 1003.84375,
+        "height": 450.46875,
+        "left": 33,
+        "right": 720,
+        "top": 553.375,
+        "width": 687,
+        "x": 33,
+        "y": 553.375
+      },
+      "grid": "319.5px 319.5px",
+      "labels": [
+        {
+          "box": {
+            "bottom": 741.265625,
+            "height": 18,
+            "left": 50,
+            "right": 369.5,
+            "top": 723.265625,
+            "width": 319.5,
+            "x": 50,
+            "y": 723.265625
+          },
+          "font": "12px",
+          "lineHeight": "18px",
+          "text": "Исполнитель"
+        },
+        {
+          "box": {
+            "bottom": 741.265625,
+            "height": 18,
+            "left": 383.5,
+            "right": 703,
+            "top": 723.265625,
+            "width": 319.5,
+            "x": 383.5,
+            "y": 723.265625
+          },
+          "font": "12px",
+          "lineHeight": "18px",
+          "text": "Срок действия"
+        },
+        {
+          "box": {
+            "bottom": 798.0625,
+            "height": 18,
+            "left": 50,
+            "right": 703,
+            "top": 780.0625,
+            "width": 653,
+            "x": 50,
+            "y": 780.0625
+          },
+          "font": "12px",
+          "lineHeight": "18px",
+          "text": "Проверка результата"
+        }
+      ],
+      "overflow": false,
+      "stage": "after-board-768",
+      "viewport": [
+        768,
+        1024
+      ]
+    },
+    {
+      "card": {
+        "bottom": 903.03125,
+        "height": 543.0625,
+        "left": 33,
+        "right": 327,
+        "top": 359.96875,
+        "width": 294,
+        "x": 33,
+        "y": 359.96875
+      },
+      "grid": "123px 123px",
+      "labels": [
+        {
+          "box": {
+            "bottom": 592.859375,
+            "height": 18,
+            "left": 50,
+            "right": 173,
+            "top": 574.859375,
+            "width": 123,
+            "x": 50,
+            "y": 574.859375
+          },
+          "font": "12px",
+          "lineHeight": "18px",
+          "text": "Исполнитель"
+        },
+        {
+          "box": {
+            "bottom": 592.859375,
+            "height": 18,
+            "left": 187,
+            "right": 310,
+            "top": 574.859375,
+            "width": 123,
+            "x": 187,
+            "y": 574.859375
+          },
+          "font": "12px",
+          "lineHeight": "18px",
+          "text": "Срок действия"
+        },
+        {
+          "box": {
+            "bottom": 649.65625,
+            "height": 18,
+            "left": 50,
+            "right": 310,
+            "top": 631.65625,
+            "width": 260,
+            "x": 50,
+            "y": 631.65625
+          },
+          "font": "12px",
+          "lineHeight": "18px",
+          "text": "Проверка результата"
+        }
+      ],
+      "overflow": false,
+      "stage": "after-board-375",
+      "viewport": [
+        375,
+        844
+      ]
+    }
+  ],
+  "fullCard": {
+    "grid": "163px 163px 163px",
+    "insideBoard": false,
+    "labels": [
+      {
+        "box": {
+          "bottom": 409.46875,
+          "height": 18,
+          "left": 342,
+          "right": 505,
+          "top": 391.46875,
+          "width": 163,
+          "x": 342,
+          "y": 391.46875
+        },
+        "text": "Исполнитель"
+      },
+      {
+        "box": {
+          "bottom": 409.46875,
+          "height": 18,
+          "left": 521,
+          "right": 684,
+          "top": 391.46875,
+          "width": 163,
+          "x": 521,
+          "y": 391.46875
+        },
+        "text": "Срок действия"
+      },
+      {
+        "box": {
+          "bottom": 409.46875,
+          "height": 18,
+          "left": 700,
+          "right": 863,
+          "top": 391.46875,
+          "width": 163,
+          "x": 700,
+          "y": 391.46875
+        },
+        "text": "Проверка результата"
+      }
+    ],
+    "overflow": false,
+    "stage": "physician-full-card"
+  },
+  "metrics": [
+    {
+      "metrics": [
+        {
+          "label": "Связаны с источником",
+          "value": "13 из 38 задач"
+        },
+        {
+          "label": "Ждут проверки врача",
+          "value": "27 из 37 выполненных"
+        },
+        {
+          "label": "Результат проверен",
+          "value": "10 из 37 выполненных"
+        }
+      ],
+      "overflow": false,
+      "stage": "physician-metric-scope",
+      "text": "Проверены к текущему моменту: 2 / 3 (66,7%). Среди задач с наступившим сроком проверки. Без даты проверки: 33 из всех 38 задач. Показатель не измеряет соблюдение срока.",
+      "viewport": [
+        1280,
+        720
+      ]
+    },
+    {
+      "bounds": {
+        "bottom": 477.390625,
+        "height": 110.46875,
+        "left": 37,
+        "right": 323,
+        "top": 366.921875,
+        "width": 286,
+        "x": 37,
+        "y": 366.921875
+      },
+      "hasName": false,
+      "overflow": false,
+      "stage": "admin-metric-mobile",
+      "text": "Проверены к текущему моменту: 2 / 3 (66,7%). Среди задач с наступившим сроком проверки. Без даты проверки: 33 из всех 38 задач. Показатель не измеряет соблюдение срока.",
+      "viewport": [
+        375,
+        844
+      ]
+    },
+    {
+      "overflow": false,
+      "stage": "admin-metric-tablet",
+      "text": "Проверены к текущему моменту: 2 / 3 (66,7%). Среди задач с наступившим сроком проверки. Без даты проверки: 33 из всех 38 задач. Показатель не измеряет соблюдение срока.",
+      "viewport": [
+        768,
+        1024
+      ]
+    }
+  ],
+  "console": [],
+  "notes": "One initial unscoped text locator matched9 terms across lazy task details; corrected by the visible target card. It was a test locator issue, not an application defect."
+}

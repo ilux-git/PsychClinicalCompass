@@ -1,0 +1,490 @@
+{
+  "recorded_at": "2026-10-24T23:31:35.994844+00:00",
+  "status": "rendered-review-completed-with-accessibility-limitations",
+  "contract": "../../EXPERIENCE_REFINEMENT.md; team input ../../TEAM_VISION_2026-10-25.md",
+  "contractDetails": {
+    "document": "../../EXPERIENCE_REFINEMENT.md",
+    "team_input": "../../TEAM_VISION_2026-10-25.md",
+    "surfaces": [
+      "patient home/progress/rewards",
+      "doctor survey responses/home",
+      "editable survey templates",
+      "administrator aggregates/privacy",
+      "coordinator assigned organization tasks"
+    ],
+    "primary_action": "Patient sees one next action and a confirmed participation receipt; physician can act on a source and check the outcome",
+    "hierarchy": "Care facts, symptoms, participation map, and spendable balance remain distinct"
+  },
+  "targetViewports": [
+    "375x844",
+    "768x1024",
+    "1440x1000"
+  ],
+  "accessibility": {
+    "status": "partial",
+    "evidence": "Real keyboard/modal/menu/source/Back-focus and scoped solid-background text checks passed. Seven CUA-exported fixtures have0axe semantic violations in JSDOM, with20incomplete results retained; see semantic-checks.json. No actual-browser axe, screen-reader or reduced-motion emulation pass."
+  },
+  "responsive": {
+    "status": "pass",
+    "evidence": "375x844,768x1024,1440x1000 CSS viewports observed through DOM and screenshots. Tested patient/physician/coordinator/admin surfaces have no document horizontal overflow; day targets>=65.5x107.39 and main action44+."
+  },
+  "contentStates": {
+    "loading": {
+      "status": "pass",
+      "evidence": "patient-loading-1440.jpg: bounded3s QA delay shows loading without zero values."
+    },
+    "empty": {
+      "status": "pass",
+      "evidence": "patient-empty-375.jpg: actual empty assessment history explains missing!=zero."
+    },
+    "error": {
+      "status": "pass",
+      "evidence": "patient-error-375.jpg:503balance error with retry and alternative routes; normal retry restores balance8."
+    },
+    "partial": {
+      "status": "pass",
+      "evidence": "patient-partial-1440.jpg: care503 leaves independently known surveys/measurements available; retry restores care."
+    },
+    "success": {
+      "status": "pass",
+      "evidence": "survey-receipt-375.jpg and manual-checks.json: submit/receipt3points, diary0receipt, coupon reserve/cancel and action/check/analytics."
+    },
+    "permission": {
+      "status": "pass",
+      "evidence": "doctor-denied-1440.jpg and patient-permission-375.jpg: real foreign-card denial plus controlled403; no private fields/fake zeros."
+    }
+  },
+  "renderedEvidence": [
+    {
+      "viewport": "375x844",
+      "artifact": "patient-home-375.jpg",
+      "observation": "Short first action is fully above the bottom navigation; no horizontal overflow.",
+      "exported_pixels": [
+        360,
+        810
+      ],
+      "sha256": "09ea4e1f2113899f0f5641166e4aa0d74a706589dd4e2560fb0159a34ca393b8",
+      "captured_at": "2026-10-24T22:09:41.385729+00:00"
+    },
+    {
+      "viewport": "768x1024",
+      "artifact": "patient-home-768.jpg",
+      "observation": "Compact balance preview and full first action; no horizontal overflow.",
+      "exported_pixels": [
+        753,
+        1004
+      ],
+      "sha256": "c41f6b1e9630f71c325fb5e88195115d3947921b488350b4b9c95ed1447807b3",
+      "captured_at": "2026-10-24T22:40:23.796073+00:00"
+    },
+    {
+      "viewport": "1440x1000",
+      "artifact": "patient-home-1440-preview.jpg",
+      "observation": "Care action and spendable balance/map shown side by side.",
+      "exported_pixels": [
+        1425,
+        990
+      ],
+      "sha256": "7c2d03acfbaa4afd2a8fa228d9ff61db2abcd40abcc7fa81c7e6fe9d87433c13",
+      "captured_at": "2026-10-24T22:37:41.594198+00:00"
+    },
+    {
+      "viewport": "375x844",
+      "artifact": "patient-map-detail-375.jpg",
+      "observation": "Spendable balance and original map artwork; milestone controls continue below.",
+      "exported_pixels": [
+        360,
+        810
+      ],
+      "sha256": "2e29a928edfcc9da873b1018df049c855c3a373072620fa01ec382e9f26b6f85",
+      "captured_at": "2026-10-24T22:14:05.214545+00:00"
+    },
+    {
+      "viewport": "768x1024",
+      "artifact": "patient-progress-768.jpg",
+      "observation": "Map and semantic milestone controls adapt to tablet width.",
+      "exported_pixels": [
+        753,
+        1004
+      ],
+      "sha256": "ff5bcbecbf9a3d55a8579677c9e0fbf1fc094ffc413fa4adcff40b3265659c14",
+      "captured_at": "2026-10-24T22:14:11.096961+00:00"
+    },
+    {
+      "viewport": "1440x1000",
+      "artifact": "patient-progress-1440.jpg",
+      "observation": "Five milestone controls; current place and selected explanation remain distinct.",
+      "exported_pixels": [
+        1425,
+        990
+      ],
+      "sha256": "1a0389f421fb70e10ba1fbc9f90f6a594630f45a58c067d32cd50da1e843e3f5",
+      "captured_at": "2026-10-24T22:14:19.619980+00:00"
+    },
+    {
+      "viewport": "375x844",
+      "artifact": "patient-rhythm-375.jpg",
+      "observation": "Seven day controls wrap4+3; selected day shows2actions/3points.",
+      "exported_pixels": [
+        360,
+        810
+      ],
+      "sha256": "a51d03b2da46219c8502fdf146ca19b05e7f046f0f30face3c48d139f3cc2cd6",
+      "captured_at": "2026-10-24T22:13:23.466096+00:00"
+    },
+    {
+      "viewport": "768x1024",
+      "artifact": "patient-rhythm-768.jpg",
+      "observation": "Seven day controls fit one row and reveal the selected day.",
+      "exported_pixels": [
+        753,
+        1004
+      ],
+      "sha256": "22f8c9bde4861530bb34214eead0f470af318a95ccebe2b2ef2a62cb3cf81a00",
+      "captured_at": "2026-10-24T22:13:11.447048+00:00"
+    },
+    {
+      "viewport": "375x844",
+      "artifact": "patient-calm-375.jpg",
+      "observation": "Calm mode keeps balance/discount access and omits game map/progress bars.",
+      "exported_pixels": [
+        360,
+        810
+      ],
+      "sha256": "d7d8ecdc945b192e5dbb9461e6b9b35478bfd66ea39096dd52e7ea370bf9bfd1",
+      "captured_at": "2026-10-24T22:12:41.050061+00:00"
+    },
+    {
+      "viewport": "768x1024",
+      "artifact": "patient-calm-768.jpg",
+      "observation": "Separate calm composition; mode persisted after reload.",
+      "exported_pixels": [
+        753,
+        1004
+      ],
+      "sha256": "52c00679862d47e3a12e97466d097ae459fd8553d01e041a784ee5f891082fa2",
+      "captured_at": "2026-10-24T22:12:55.057400+00:00"
+    },
+    {
+      "viewport": "375x844",
+      "artifact": "doctor-exact-source-375.jpg",
+      "observation": "Exact question has focus; skipped question is not converted to zero.",
+      "exported_pixels": [
+        360,
+        810
+      ],
+      "sha256": "ed205397c28ceb0cc930b999466f7d47393161ef632eb36ded69e3f44107b34a",
+      "captured_at": "2026-10-24T22:04:30.274815+00:00"
+    },
+    {
+      "viewport": "768x1024",
+      "artifact": "doctor-exact-source-768.jpg",
+      "observation": "Question/answer pairs fit two columns; selected question remains visible.",
+      "exported_pixels": [
+        753,
+        1004
+      ],
+      "sha256": "023d2b6eff59fe7faed1238afabaca6cbacff8c0dc1b0c74b96c2b5ea6fd27bd",
+      "captured_at": "2026-10-24T22:05:12.201028+00:00"
+    },
+    {
+      "viewport": "1440x1000",
+      "artifact": "doctor-exact-source-1440.jpg",
+      "observation": "Response source is highlighted independently of private physician notes.",
+      "exported_pixels": [
+        1425,
+        990
+      ],
+      "sha256": "202e6a24de34469d07b3eb6af17f79b8f642ff0c2a86d74bafecbe040c2906c7",
+      "captured_at": "2026-10-24T22:04:49.989558+00:00"
+    },
+    {
+      "viewport": "1440x1000",
+      "artifact": "doctor-note-return-1440.jpg",
+      "observation": "Native Back cancellation reopens a collapsed draft and focuses textarea.",
+      "exported_pixels": [
+        1425,
+        990
+      ],
+      "sha256": "b4cff7a52744f62a31ca2947bae2441d3422e1cb2a5d70e2db362b6f8165785e",
+      "captured_at": "2026-10-24T22:33:38.836860+00:00"
+    },
+    {
+      "viewport": "1440x1000",
+      "artifact": "doctor-note-source-1440.jpg",
+      "observation": "Readable wrapped source,44px removal target,24px gap before note save.",
+      "exported_pixels": [
+        1425,
+        990
+      ],
+      "sha256": "5bdfdb6562dfd38814673a475cf0406aeb11564ce0ace5353dacca5f6f8997bb",
+      "captured_at": "2026-10-24T22:36:10.615358+00:00"
+    },
+    {
+      "viewport": "1280x720",
+      "artifact": "doctor-note-source-confirm-desktop.jpg",
+      "observation": "Changing the source of an unsaved sourced note requires explicit confirmation; cancel preserves the original source and text.",
+      "exported_pixels": [
+        1265,
+        712
+      ],
+      "sha256": "b040c875610322e3fb9b58b108f042b31e40cafd871164c152afa01657e4f79e",
+      "captured_at": "2026-10-24T23:06:11.790858+00:00"
+    },
+    {
+      "viewport": "1280x720",
+      "artifact": "doctor-note-source-switched-desktop.jpg",
+      "observation": "Confirmed source change clears the old draft; a new draft remains protected against navigation.",
+      "exported_pixels": [
+        1265,
+        712
+      ],
+      "sha256": "3c6089658dfaa0e8cf5083cea2bb690dd86cf46d01b184fcba9d3ed70ae108f6",
+      "captured_at": "2026-10-24T23:08:54.877136+00:00"
+    },
+    {
+      "viewport": "1280x720",
+      "artifact": "patient-progress-split-1280.jpg",
+      "observation": "Patient progress and balance105 load after splitting the physician card and task board out of the initial bundle; no new visual-regression claim.",
+      "exported_pixels": [
+        1265,
+        712
+      ],
+      "sha256": "5324646d51a6ce89504113d3ed1a1043ae8434cd94be6953f35826421ba02f34",
+      "captured_at": "2026-10-24T23:12:42.714687+00:00"
+    },
+    {
+      "viewport": "1280x720",
+      "artifact": "admin-semantic-1280.jpg",
+      "observation": "Metric captions belong to their definition values; summary1/0/27 and13px captions remain readable.",
+      "exported_pixels": [
+        1265,
+        712
+      ],
+      "sha256": "abd64d8f77b94e469ae0ad475dd1f72d19a2a57c1a3abee489148f0cef29ee51",
+      "captured_at": "2026-10-24T23:20:52.085567+00:00"
+    },
+    {
+      "viewport": "1280x720",
+      "artifact": "login-semantic-1280.jpg",
+      "observation": "Login now has one main landmark and the team Paper/Ink/Signal palette;15 computed text pairs pass the scoped contrast check.",
+      "exported_pixels": [
+        1265,
+        712
+      ],
+      "sha256": "09e11af3d89d7a725a827d6269117dbb2639b871c217d5e5f42ae64a15f94fb2",
+      "captured_at": "2026-10-24T23:26:37.772946+00:00"
+    },
+    {
+      "viewport": "1440x1000",
+      "artifact": "doctor-denied-1440.jpg",
+      "observation": "Real second-physician foreign-card denial: no patient name, fields or infinite loader.",
+      "exported_pixels": [
+        1440,
+        1000
+      ],
+      "sha256": "930ff252c88943da6e8e8878941086df3c3391c4dd4e5a772751758ad469fbdb",
+      "captured_at": "2026-10-24T22:17:10.618499+00:00"
+    },
+    {
+      "viewport": "375x844",
+      "artifact": "doctor-check-375.jpg",
+      "observation": "A physician records unknown separately from task completion.",
+      "exported_pixels": [
+        360,
+        810
+      ],
+      "sha256": "3db4acd44961767ccddb0e6677142d45243b379eaf86004df32c8f0e5715e248",
+      "captured_at": "2026-10-24T21:59:22.421271+00:00"
+    },
+    {
+      "viewport": "375x844",
+      "artifact": "coordinator-375.jpg",
+      "observation": "Completed organizational action directs the next result check to physician.",
+      "exported_pixels": [
+        360,
+        810
+      ],
+      "sha256": "f779da94de658908caee1e2153fc6b425c6a0373d1a3d9ac8af24edeab23303e",
+      "captured_at": "2026-10-24T21:51:43.287303+00:00"
+    },
+    {
+      "viewport": "768x1024",
+      "artifact": "coordinator-768.jpg",
+      "observation": "Stage tabs and own organizational tasks fit tablet; no clinical source fields.",
+      "exported_pixels": [
+        753,
+        1004
+      ],
+      "sha256": "e11f3e46500bc96f583d9138de3c7d7f0eead7f415d32d0aa960f50d94bee527",
+      "captured_at": "2026-10-24T21:52:14.174359+00:00"
+    },
+    {
+      "viewport": "1440x1000",
+      "artifact": "coordinator-1440.jpg",
+      "observation": "Own-stage chart, search and organizational board; search focus later aligned to Signal.",
+      "exported_pixels": [
+        1425,
+        990
+      ],
+      "sha256": "6ab42510c9f8b62812c2e557bae4fa120d7b52cce0264de1b1096094422c245c",
+      "captured_at": "2026-10-24T21:52:00.928293+00:00"
+    },
+    {
+      "viewport": "1440x1000",
+      "artifact": "admin-overview-1440.jpg",
+      "observation": "Current refusal/support/check backlog overview;27of36actions awaiting check.",
+      "exported_pixels": [
+        1425,
+        990
+      ],
+      "sha256": "521c8c07322b445fc0b648e7e22ac8720b68b55a580f4d7e65f2ae88a72ddac0",
+      "captured_at": "2026-10-24T22:16:10.505794+00:00"
+    },
+    {
+      "viewport": "1440x1000",
+      "artifact": "admin-actions-1440.jpg",
+      "observation": "37tasks,36done,9checked; unknown-after-check is separate from27not-checked.",
+      "exported_pixels": [
+        1425,
+        990
+      ],
+      "sha256": "51444f63eff0b7f0ba80e8bc43bb4c122c63c97c5ddd4d72a0fd08d26c9e2b9c",
+      "captured_at": "2026-10-24T22:16:17.713824+00:00"
+    },
+    {
+      "viewport": "375x844",
+      "artifact": "admin-protected-375.jpg",
+      "observation": "Small-group policy hides values rather than showing zero.",
+      "exported_pixels": [
+        360,
+        810
+      ],
+      "sha256": "42d7a16188cffb07dd3b3732dd5a212e668c238040e668f4cbe18701a85f1a9d",
+      "captured_at": "2026-10-24T21:58:11.195392+00:00"
+    },
+    {
+      "viewport": "768x1024",
+      "artifact": "admin-protected-768.jpg",
+      "observation": "Suppressed summary remains readable and exposes no patient list.",
+      "exported_pixels": [
+        753,
+        1004
+      ],
+      "sha256": "2cf036bca2d7380e95aabb7c9e8ce02a9d233161057f23911c97a8c54b7c763f",
+      "captured_at": "2026-10-24T21:58:06.026832+00:00"
+    },
+    {
+      "viewport": "768x1024",
+      "artifact": "admin-unconfigured-768.jpg",
+      "observation": "Explicit setup action and24px gap; no numeric values before policy setup.",
+      "exported_pixels": [
+        753,
+        1004
+      ],
+      "sha256": "6d55f0c1812ce4fbb705834fbc572ec3e476e38919572a93c7fc6ff9e5d4a43d",
+      "captured_at": "2026-10-24T21:57:53.569327+00:00"
+    },
+    {
+      "viewport": "1440x1000",
+      "artifact": "patient-loading-1440.jpg",
+      "observation": "Real loading indicator during bounded QA delay; no fabricated values.",
+      "exported_pixels": [
+        1440,
+        1000
+      ],
+      "sha256": "d7cccada575e4c8b0b7231e439f8df35616148fa8d2e0ba9cb83a1d085894199",
+      "captured_at": "2026-10-24T21:45:51.489358+00:00"
+    },
+    {
+      "viewport": "375x844",
+      "artifact": "patient-empty-375.jpg",
+      "observation": "Empty assessment history is explained and never shown as a zero score.",
+      "exported_pixels": [
+        375,
+        844
+      ],
+      "sha256": "6d824699841347204c376b1fca3afcb1bd1fad6cc8259d74d7b5825ec7268763",
+      "captured_at": "2026-10-24T21:50:49.954097+00:00"
+    },
+    {
+      "viewport": "375x844",
+      "artifact": "patient-error-375.jpg",
+      "observation": "Balance error retains page title, retry and alternative routes;14px readable message.",
+      "exported_pixels": [
+        375,
+        844
+      ],
+      "sha256": "7790ae9fea3c8051a8f04acc348e92616ac961a521699b1d957aaec372c9cb0c",
+      "captured_at": "2026-10-24T21:49:02.493670+00:00"
+    },
+    {
+      "viewport": "1440x1000",
+      "artifact": "patient-partial-1440.jpg",
+      "observation": "Unavailable visits/care are distinct from known surveys and scale history; retry restores care.",
+      "exported_pixels": [
+        1425,
+        990
+      ],
+      "sha256": "1ed9a946c091cec9e16ca72edf968781bfb6e4de586b183963284442bfe4fa8a",
+      "captured_at": "2026-10-24T22:39:14.994606+00:00"
+    },
+    {
+      "viewport": "375x844",
+      "artifact": "patient-permission-375.jpg",
+      "observation": "Denied care/balance data stay absent; reward header has20px error gap.",
+      "exported_pixels": [
+        360,
+        810
+      ],
+      "sha256": "61ab9680c835766aec8e91fa261fabe6be138d0f80885f15d56e1ade9480b062",
+      "captured_at": "2026-10-24T21:50:30.669266+00:00"
+    },
+    {
+      "viewport": "375x844",
+      "artifact": "survey-receipt-375.jpg",
+      "observation": "Successful submission of two optional answers gives actual+3receipt and progress route.",
+      "exported_pixels": [
+        360,
+        810
+      ],
+      "sha256": "37730ff48d7f70001d66bc59bf493b7d04ad56734da236de0289029a087bc82d",
+      "captured_at": "2026-10-24T21:44:40.211210+00:00"
+    }
+  ],
+  "graphicEvidence": [
+    {
+      "artifact": "atlas-artwork.png",
+      "observation": "Original decorative SVG rasterized locally and visually inspected. This is standalone art, not an application screenshot or proof of responsive layout."
+    }
+  ],
+  "technicalEvidence": "technical-checks.json",
+  "semantic_checks": {
+    "atlas_boundaries": 11,
+    "milestone_controls": 5,
+    "receipt_cases": 5,
+    "mode_cases": 4,
+    "scope": "Server-rendered cases plus real browser journeys; see manual-checks.json for observed actions and limitations"
+  },
+  "browser_limitation": null,
+  "remaining": [
+    "Full accessibility audit including screen reader/axe",
+    "Agreed visual regression baseline",
+    "Reduced-motion emulation and frame-pacing/Core Web Vitals measurements",
+    "U09:1000concurrent/max500ms remains unresolved"
+  ],
+  "git": "Local uncommitted changes; no new commit or push requested",
+  "browser": {
+    "tool": "CUA / IAB",
+    "target": "isolated localhost8782",
+    "temporary_tab": "closed",
+    "viewport_override": "reset",
+    "capture_note": "Viewport strings are measured CSS dimensions. Exported JPEG sizes are recorded separately; no exact-pixel regression claim. Frames were collected during the iterative review."
+  },
+  "manualEvidence": "manual-checks.json",
+  "visualRegression": {
+    "status": "inconclusive",
+    "reason": "No agreed baseline for this new palette/composition; no pixel comparison performed."
+  },
+  "verdict": "INCONCLUSIVE for full accessibility/visual-regression acceptance; listed functional journeys passed"
+}

@@ -8,7 +8,7 @@ from app.modules.adherence.models import AdherenceReport, DiaryEntry
 from app.modules.adherence.schemas import AdherenceWrite, DiarySharing, DiaryWrite
 from app.modules.audit.service import record_event
 from app.modules.patients.models import Patient
-from app.modules.adherence.rewards import grant_points
+from app.modules.adherence.rewards import grant_points, participation_receipt
 
 router = APIRouter(tags=["adherence"])
 
@@ -76,8 +76,9 @@ async def create_diary_entry(payload: DiaryWrite, session: CompassSession,
         record_event(session, user.id, patient.id, "diary.created", "diary_entry", row.id,
                      {"shared_with_doctor": row.shared_with_doctor})
         await grant_points(session, patient.id, "diary", f"diary:{row.id}", user.id)
+    receipt = await participation_receipt(session, patient.id, "diary", f"diary:{row.id}")
     await session.commit()
-    return {**diary_read(row), "replayed": replayed}
+    return {**diary_read(row), "replayed": replayed, "participation": receipt}
 
 
 @router.get("/patients/{patient_id}/diary")

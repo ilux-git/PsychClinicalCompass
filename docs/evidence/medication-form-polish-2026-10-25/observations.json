@@ -1,0 +1,492 @@
+{
+  "headingBefore": {
+    "headings": [
+      {
+        "font": "24px",
+        "lineHeight": "30px",
+        "tag": "H2",
+        "text": "Лекарства"
+      },
+      {
+        "font": "28px",
+        "lineHeight": "35px",
+        "tag": "H1",
+        "text": "Анна Лебедева"
+      },
+      {
+        "font": "28px",
+        "lineHeight": "35px",
+        "tag": "H1",
+        "text": "Расписание и самоотчёты пациента"
+      },
+      {
+        "font": "18px",
+        "lineHeight": "25.2px",
+        "tag": "H2",
+        "text": "Расписание на день"
+      },
+      {
+        "font": "18px",
+        "lineHeight": "25.2px",
+        "tag": "H2",
+        "text": "Рабочие заметки"
+      },
+      {
+        "font": "18px",
+        "lineHeight": "25.2px",
+        "tag": "H2",
+        "text": "Следующий шаг"
+      }
+    ],
+    "overflow": false,
+    "viewport": {
+      "height": 720,
+      "width": 1280
+    }
+  },
+  "errorBefore": {
+    "alerts": [
+      {
+        "focused": false,
+        "insideForm": false,
+        "text": "Техническая проверка: сохранение временно недоступно."
+      }
+    ],
+    "editorOpen": true,
+    "focus": {
+      "tag": "BODY",
+      "text": "\n    Перейти к содержимомуclinicalcompassМоё пространствоМой деньШаги, самочувствие и баллыНа каждый"
+    },
+    "overflow": false,
+    "values": [
+      {
+        "label": "Название",
+        "value": "Учебная позиция QA · проверка формы"
+      },
+      {
+        "label": "Своё описание / инструкция · необязательно",
+        "value": ""
+      },
+      {
+        "label": "Расписание своими словамиСинтетический пример личного учёта, без назначения.",
+        "value": "Синтетический пример личного учёта, без назначения."
+      },
+      {
+        "label": "Тип учётаДни недели и фиксированное времяПо потребности · описаниеПроизвольное расписание · описание",
+        "value": "description"
+      },
+      {
+        "label": "С даты",
+        "value": "2026-10-25"
+      },
+      {
+        "label": "По дату · необязательно",
+        "value": ""
+      },
+      {
+        "label": "Часовой поясОпределён по устройству. Например, Asia/Novosibirsk. Время расписания считается в этом поясе.",
+        "value": "Asia/Novosibirsk"
+      }
+    ]
+  },
+  "checks": [
+    {
+      "alerts": [
+        {
+          "focused": true,
+          "insideForm": true,
+          "rect": {
+            "bottom": 457.3125,
+            "height": 70.78125,
+            "left": 37,
+            "right": 323,
+            "top": 386.53125,
+            "width": 286,
+            "x": 37,
+            "y": 386.53125
+          },
+          "text": "Техническая проверка: сохранение временно недоступно."
+        }
+      ],
+      "editorOpen": true,
+      "errorDescription": "_r_2_",
+      "errorId": "_r_2_",
+      "focusTag": "DIV",
+      "headings": [
+        {
+          "font": "26px",
+          "tag": "H1",
+          "text": "Моё расписание лекарств"
+        },
+        {
+          "font": "18px",
+          "tag": "H2",
+          "text": "Добавить свою позицию"
+        },
+        {
+          "font": "18px",
+          "tag": "H2",
+          "text": "Расписание на день"
+        }
+      ],
+      "name": "Учебная позиция QA · проверка формы",
+      "overflow": false,
+      "schedule": "Синтетический пример личного учёта, без назначения.",
+      "viewport": {
+        "height": 844,
+        "width": 375
+      },
+      "label": "create-error-mobile"
+    },
+    {
+      "alerts": [
+        {
+          "focused": false,
+          "insideForm": true,
+          "rect": {
+            "bottom": 351.3125,
+            "height": 70.78125,
+            "left": 37,
+            "right": 323,
+            "top": 280.53125,
+            "width": 286,
+            "x": 37,
+            "y": 280.53125
+          },
+          "text": "Техническая проверка: сохранение временно недоступно."
+        }
+      ],
+      "editorOpen": true,
+      "errorDescription": "_r_2_",
+      "errorId": "_r_2_",
+      "focusTag": "INPUT",
+      "headings": [
+        {
+          "font": "26px",
+          "tag": "H1",
+          "text": "Моё расписание лекарств"
+        },
+        {
+          "font": "18px",
+          "tag": "H2",
+          "text": "Добавить свою позицию"
+        },
+        {
+          "font": "18px",
+          "tag": "H2",
+          "text": "Расписание на день"
+        }
+      ],
+      "name": "Учебная позиция QA · проверка формы",
+      "overflow": false,
+      "schedule": "Синтетический пример личного учёта, без назначения.",
+      "viewport": {
+        "height": 844,
+        "width": 375
+      },
+      "label": "failed-create-guard-stay"
+    },
+    {
+      "alerts": [],
+      "editorOpen": false,
+      "focusTag": "H2",
+      "headings": [
+        {
+          "font": "26px",
+          "tag": "H1",
+          "text": "Моё расписание лекарств"
+        },
+        {
+          "font": "18px",
+          "tag": "H2",
+          "text": "Расписание сохранено"
+        },
+        {
+          "font": "18px",
+          "tag": "H2",
+          "text": "Расписание на день"
+        }
+      ],
+      "overflow": false,
+      "saved": "Расписание сохраненоЛичная запись обновлена. Назначение в МИС не менялось.Сохранено без дополнительных балловЗаписи и опросы остаются доступны. Баланс и условия начисления — в «Мой прогресс».По записи от 25 окт., 11:41Мой прогресс",
+      "viewport": {
+        "height": 844,
+        "width": 375
+      },
+      "label": "create-retry-saved-mobile"
+    },
+    {
+      "alerts": [
+        {
+          "focused": true,
+          "insideForm": true,
+          "rect": {
+            "bottom": 411.546875,
+            "height": 48.390625,
+            "left": 37,
+            "right": 716,
+            "top": 363.15625,
+            "width": 679,
+            "x": 37,
+            "y": 363.15625
+          },
+          "text": "Техническая проверка: сохранение временно недоступно."
+        }
+      ],
+      "editorOpen": true,
+      "errorDescription": "_r_6_",
+      "errorId": "_r_6_",
+      "focusTag": "DIV",
+      "headings": [
+        {
+          "font": "26px",
+          "tag": "H1",
+          "text": "Моё расписание лекарств"
+        },
+        {
+          "font": "18px",
+          "tag": "H2",
+          "text": "Изменить личную позицию"
+        },
+        {
+          "font": "18px",
+          "tag": "H2",
+          "text": "Расписание на день"
+        }
+      ],
+      "name": "Учебная позиция QA · проверка формы",
+      "overflow": false,
+      "schedule": "Синтетический пример личного учёта, без назначения. Проверка редактирования.",
+      "viewport": {
+        "height": 1024,
+        "width": 768
+      },
+      "label": "edit-error-tablet"
+    },
+    {
+      "alerts": [],
+      "editorOpen": true,
+      "errorDescription": null,
+      "focusTag": "TEXTAREA",
+      "headings": [
+        {
+          "font": "26px",
+          "tag": "H1",
+          "text": "Моё расписание лекарств"
+        },
+        {
+          "font": "18px",
+          "tag": "H2",
+          "text": "Изменить личную позицию"
+        },
+        {
+          "font": "18px",
+          "tag": "H2",
+          "text": "Расписание на день"
+        }
+      ],
+      "name": "Учебная позиция QA · проверка формы",
+      "overflow": false,
+      "schedule": "Синтетический пример личного учёта, без назначения. Проверка редактирования.",
+      "viewport": {
+        "height": 1024,
+        "width": 768
+      },
+      "label": "edit-change-clears-error-tablet"
+    },
+    {
+      "alerts": [],
+      "editorOpen": false,
+      "focusTag": "H2",
+      "headings": [
+        {
+          "font": "26px",
+          "tag": "H1",
+          "text": "Моё расписание лекарств"
+        },
+        {
+          "font": "18px",
+          "tag": "H2",
+          "text": "Расписание сохранено"
+        },
+        {
+          "font": "18px",
+          "tag": "H2",
+          "text": "Расписание на день"
+        }
+      ],
+      "overflow": false,
+      "saved": "Расписание сохраненоЛичная запись обновлена. Назначение в МИС не менялось.Сохранено без дополнительных балловЗаписи и опросы остаются доступны. Баланс и условия начисления — в «Мой прогресс».По записи от 25 окт., 11:41Мой прогресс",
+      "viewport": {
+        "height": 1024,
+        "width": 768
+      },
+      "label": "edit-retry-saved-tablet"
+    },
+    {
+      "alerts": [],
+      "editorOpen": false,
+      "focusTag": "BUTTON",
+      "headings": [
+        {
+          "font": "28px",
+          "tag": "H1",
+          "text": "Анна Лебедева"
+        },
+        {
+          "font": "22px",
+          "tag": "H2",
+          "text": "Расписание и самоотчёты пациента"
+        },
+        {
+          "font": "18px",
+          "tag": "H2",
+          "text": "Расписание на день"
+        },
+        {
+          "font": "18px",
+          "tag": "H2",
+          "text": "Рабочие заметки"
+        },
+        {
+          "font": "18px",
+          "tag": "H2",
+          "text": "Следующий шаг"
+        }
+      ],
+      "overflow": false,
+      "viewport": {
+        "height": 720,
+        "width": 1280
+      },
+      "label": "doctor-heading-desktop"
+    },
+    {
+      "alerts": [],
+      "editorOpen": false,
+      "focusTag": "BUTTON",
+      "headings": [
+        {
+          "font": "28px",
+          "tag": "H1",
+          "text": "Анна Лебедева"
+        },
+        {
+          "font": "22px",
+          "tag": "H2",
+          "text": "Расписание и самоотчёты пациента"
+        },
+        {
+          "font": "18px",
+          "tag": "H2",
+          "text": "Расписание на день"
+        },
+        {
+          "font": "18px",
+          "tag": "H2",
+          "text": "Рабочие заметки"
+        },
+        {
+          "font": "18px",
+          "tag": "H2",
+          "text": "Следующий шаг"
+        }
+      ],
+      "overflow": false,
+      "viewport": {
+        "height": 844,
+        "width": 375
+      },
+      "label": "doctor-heading-mobile"
+    },
+    {
+      "alerts": [],
+      "editorOpen": false,
+      "focusTag": "MAIN",
+      "headings": [
+        {
+          "font": "28px",
+          "tag": "H1",
+          "text": "Анна Лебедева"
+        },
+        {
+          "font": "22px",
+          "tag": "H2",
+          "text": "Расписание и самоотчёты пациента"
+        },
+        {
+          "font": "18px",
+          "tag": "H2",
+          "text": "Расписание на день"
+        },
+        {
+          "font": "18px",
+          "tag": "H2",
+          "text": "Рабочие заметки"
+        },
+        {
+          "font": "18px",
+          "tag": "H2",
+          "text": "Следующий шаг"
+        }
+      ],
+      "overflow": false,
+      "viewport": {
+        "height": 720,
+        "width": 1280
+      },
+      "label": "doctor-heading-desktop-final"
+    },
+    {
+      "alerts": [],
+      "editorOpen": false,
+      "focusTag": "MAIN",
+      "headings": [
+        {
+          "font": "28px",
+          "tag": "H1",
+          "text": "Анна Лебедева"
+        },
+        {
+          "font": "22px",
+          "tag": "H2",
+          "text": "Расписание и самоотчёты пациента"
+        },
+        {
+          "font": "18px",
+          "tag": "H2",
+          "text": "Расписание на день"
+        },
+        {
+          "font": "18px",
+          "tag": "H2",
+          "text": "Рабочие заметки"
+        },
+        {
+          "font": "18px",
+          "tag": "H2",
+          "text": "Следующий шаг"
+        }
+      ],
+      "overflow": false,
+      "viewport": {
+        "height": 844,
+        "width": 375
+      },
+      "label": "doctor-heading-mobile-final"
+    }
+  ],
+  "progress": {
+    "balances": [
+      "Скидка на приём · демо5%Баллов достаточно для тестового купона110 баллов доступно · для обмена нужно 100 балловПосмотреть тестовые скидки"
+    ],
+    "overflow": false,
+    "pointsText": [
+      "110",
+      "110 баллов за всё время"
+    ],
+    "title": "Мой прогресс"
+  },
+  "console": [],
+  "excluded": "First before-heading measurement was captured during the old feedback tab exit; replaced after waiting for the medication heading. Earlier after-heading photos replaced after shortening the repeated clinician-only copy."
+}

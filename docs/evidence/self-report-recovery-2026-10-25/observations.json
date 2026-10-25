@@ -1,0 +1,217 @@
+{
+  "before": {
+    "alerts": [
+      {
+        "focused": false,
+        "local": false,
+        "text": "Техническая проверка: сохранение временно недоступно."
+      }
+    ],
+    "checked": [
+      {
+        "label": "Не могу оценить",
+        "value": "unknown"
+      }
+    ],
+    "fields": [
+      "QA: проверка сообщения об ошибке. Не клинический ответ."
+    ],
+    "focus": {
+      "tag": "BODY",
+      "text": "\n    Перейти к содержимомуclinicalcompassМоё пространствоМой деньШаги, самочувствие и баллыНа каждый"
+    },
+    "labels": [
+      {
+        "color": "rgb(121, 98, 135)",
+        "font": "12px",
+        "text": "О какой рекомендации расскажете?"
+      },
+      {
+        "color": "rgb(121, 98, 135)",
+        "font": "12px",
+        "text": "Что помогло или помешало?"
+      }
+    ],
+    "fieldValues": [
+      "QA: проверка сохранения самоотчёта интерфейса",
+      "QA: проверка сообщения об ошибке. Не клинический ответ."
+    ]
+  },
+  "checks": [
+    {
+      "alerts": [
+        {
+          "focused": true,
+          "local": true,
+          "text": "Техническая проверка: сохранение временно недоступно."
+        }
+      ],
+      "checked": [
+        "unknown"
+      ],
+      "focus": "error-box",
+      "labels": [
+        {
+          "color": "rgb(24, 25, 26)",
+          "font": "13px"
+        },
+        {
+          "color": "rgb(24, 25, 26)",
+          "font": "13px"
+        }
+      ],
+      "overflow": false,
+      "stage": "mobile-error",
+      "values": [
+        "QA: проверка сохранения самоотчёта интерфейса",
+        "QA: проверка сообщения об ошибке. Не клинический ответ."
+      ],
+      "viewport": [
+        375,
+        844
+      ]
+    },
+    {
+      "checked": [
+        "unknown"
+      ],
+      "error": "Техническая проверка: сохранение временно недоступно.",
+      "stage": "mobile-guard-stay",
+      "url": "http://127.0.0.1:8782/?section=adherence",
+      "values": [
+        "QA: проверка сохранения самоотчёта интерфейса",
+        "QA: проверка сообщения об ошибке. Не клинический ответ."
+      ]
+    },
+    {
+      "checked": 0,
+      "focus": {
+        "tag": "BODY",
+        "text": "\n    Перейти к содержимомуclinicalcompassМоё пространствоМой деньШаги, самочувствие и баллыНа каждый"
+      },
+      "localError": false,
+      "reports": [
+        {
+          "reason": "QA: проверка сообщения об ошибке. Не клинический ответ.",
+          "status": "Не могу оценить",
+          "title": "QA: проверка сохранения самоотчёта интерфейса"
+        },
+        {
+          "reason": "Не до конца понимаю, что делать между приёмами.",
+          "status": "Не получилось",
+          "title": "Согласованный план между визитами"
+        }
+      ],
+      "stage": "mobile-success",
+      "values": [
+        "",
+        ""
+      ]
+    },
+    {
+      "bounds": {
+        "bottom": 709.546875,
+        "height": 161.171875,
+        "left": 37,
+        "right": 323,
+        "top": 548.375,
+        "width": 286,
+        "x": 37,
+        "y": 548.375
+      },
+      "checked": 0,
+      "focus": {
+        "className": "adherence-report",
+        "label": "_r_1_-report-7",
+        "tag": "ARTICLE",
+        "text": "Не могу оценитьQA: подтверждение сохранённого самоотчётаQA: проверка фокуса подтверждения, не клинический ответ.25 окт., 13:52"
+      },
+      "footer": {
+        "bottom": 844,
+        "height": 67,
+        "left": 0,
+        "right": 360,
+        "top": 777,
+        "width": 360,
+        "x": 0,
+        "y": 777
+      },
+      "overflow": false,
+      "reports": 3,
+      "stage": "mobile-success-final",
+      "values": [
+        "",
+        ""
+      ]
+    },
+    {
+      "busy": "true",
+      "dialogTitle": "Выполнение рекомендаций",
+      "focus": "Закрыть помощь",
+      "stage": "tablet-pending-help",
+      "viewport": [
+        768,
+        1024
+      ]
+    },
+    {
+      "busy": "false",
+      "dialogOpen": true,
+      "focus": "Закрыть помощь",
+      "newReport": "Не могу оценитьQA: проверка намеренного фокуса при ожиданииQA: тест задержки и помощи, не клинический ответ.25 окт., 13:54",
+      "overflow": false,
+      "stage": "tablet-delayed-saved-help"
+    },
+    {
+      "focus": "Помощь с разделом",
+      "reports": 4,
+      "stage": "tablet-help-closed",
+      "values": [
+        "",
+        ""
+      ]
+    },
+    {
+      "labels": [
+        {
+          "color": "rgb(24, 25, 26)",
+          "font": "13px"
+        },
+        {
+          "color": "rgb(24, 25, 26)",
+          "font": "13px"
+        }
+      ],
+      "overflow": false,
+      "reports": [
+        {
+          "id": "_r_8_-report-8",
+          "status": "Не могу оценить",
+          "title": "QA: проверка намеренного фокуса при ожидании"
+        },
+        {
+          "id": "_r_8_-report-7",
+          "status": "Не могу оценить",
+          "title": "QA: подтверждение сохранённого самоотчёта"
+        },
+        {
+          "id": "_r_8_-report-6",
+          "status": "Не могу оценить",
+          "title": "QA: проверка сохранения самоотчёта интерфейса"
+        },
+        {
+          "id": "_r_8_-report-2",
+          "status": "Не получилось",
+          "title": "Согласованный план между визитами"
+        }
+      ],
+      "stage": "mobile-history-recovered",
+      "viewport": [
+        375,
+        844
+      ]
+    }
+  ],
+  "console": [],
+  "tooling": "Tab3 CDP mouse/screenshot timeouts did not affect DOM/keyboard result. Owned stale tab3 closed; new hidden tab4 rebound in the same browser2. Fresh keyboard/mouse/screenshots worked. Final automatic mobile focus proved by DOM/AX, its screenshot timed out; later recovered history screenshot is not claimed as automatic-focus evidence."
+}

@@ -7,6 +7,8 @@ from sqlalchemy import func, select
 
 from app.modules.analytics.privacy import PrivacyPolicyChange
 from app.modules.surveys.models import SurveyAssignment, SurveySubmission
+from app.modules.notes.models import DoctorTask
+from app.modules.patients.models import Patient
 
 
 async def test_admin_can_version_privacy_without_getting_clinical_access(client, headers, database):
@@ -69,3 +71,34 @@ async def test_mutually_exclusive_answers_cannot_mix_absence_with_barrier(client
     a = (await client.post(f"/surveys/{survey['id']}/assign",headers=headers("doctor"),json={"patient_ids":[1],"client_request_id":str(uuid4())})).json()["assignment_ids"][0]
     assert (await client.post(f"/survey-assignments/{a}/submit",headers=headers("patient1"),json={"answers":{"barrier":["time","none"]}})).status_code == 422
     assert (await client.post(f"/survey-assignments/{a}/submit",headers=headers("patient1"),json={"answers":{"barrier":["none"]}})).status_code == 200
+
+
+async def test_admin_hides_small_group_awaiting_check_even_when_all_task_marginals_are_safe(client, headers, database, monkeypatch):
+    # Isolate this counter from unrelated one-person synthetic MIS groups.
+    monkeypatch.setattr("app.modules.analytics.care.patient_snapshot", lambda _: {"data": None})
+    policy = (await client.get("/admin/privacy-policy", headers=headers("admin"))).json()
+    response = await client.put("/admin/privacy-policy", headers=headers("admin"), json={
+        "min_group_size": 2, "reason": "Synthetic privacy regression", "expected_revision": policy["revision"],
+        "client_request_id": str(uuid4())})
+    assert response.status_code == 200
+    async with database() as session:
+        patients = (await session.scalars(select(Patient))).all()
+        for patient in patients:
+            for status, verification in (("open", "pending"), ("done", "resolved")):
+                session.add(DoctorTask(patient_id=patient.id, doctor_id=patient.doctor_id,
+                    assigned_to_id=patient.doctor_id, title="Private synthetic task", status=status,
+                    verification_status=verification, action_result="Synthetic action" if status == "done" else ""))
+        await session.commit()
+    safe = (await client.get("/analytics/clinic", headers=headers("admin"))).json()["workflow"]
+    assert not safe["suppressed"] and safe["values"]["tasks"]["action_done"] == 3
+    async with database() as session:
+        patient = await session.get(Patient, 1)
+        session.add(DoctorTask(patient_id=patient.id, doctor_id=patient.doctor_id,
+            assigned_to_id=patient.doctor_id, title="Private pending result", status="done",
+            action_result="Synthetic action", verification_status="pending"))
+        await session.commit()
+    # open, done, pending, resolved all have three contributors, but done+pending has only one.
+    hidden = (await client.get("/analytics/clinic", headers=headers("admin"))).json()["workflow"]
+    assert hidden["suppressed"] and hidden["values"] is None
+    own = (await client.get("/analytics/care", headers=headers("doctor"))).json()["tasks"]
+    assert own["action_done"] == 3 and own["verification"]["resolved"] == 2

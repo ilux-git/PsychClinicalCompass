@@ -1,0 +1,1040 @@
+{
+  "recordedAt": "2026-10-25T01:04:31.596610+00:00",
+  "scope": "Native CUA/IAB clicks and keys, synthetic isolated QA8782. Only patient atlas UI and component tests changed.",
+  "status": "targeted-local-cycle-verified; overall acceptance remains partial",
+  "changes": [
+    "Five real HTML buttons replace decorative-only map markers in the full atlas.",
+    "The selected-place explanation follows the map directly and scrolls into view only on explicit selection.",
+    "No duplicate below-map controls; compact previews remain decorative. Existing point thresholds and balances preserved."
+  ],
+  "layouts": [
+    {
+      "balance": "105",
+      "controls": [
+        {
+          "current": null,
+          "label": "Отправная точка · 0 баллов · Открыто",
+          "rect": {
+            "bottom": 735.734375,
+            "height": 44,
+            "left": 42.796875,
+            "right": 86.796875,
+            "top": 691.734375,
+            "width": 44,
+            "x": 42.796875,
+            "y": 691.734375
+          },
+          "selected": "false"
+        },
+        {
+          "current": null,
+          "label": "Тихая поляна · 25 баллов · Открыто",
+          "rect": {
+            "bottom": 716.53125,
+            "height": 44,
+            "left": 101.1875,
+            "right": 145.1875,
+            "top": 672.53125,
+            "width": 44,
+            "x": 101.1875,
+            "y": 672.53125
+          },
+          "selected": "false"
+        },
+        {
+          "current": null,
+          "label": "Мост наблюдений · 50 баллов · Открыто",
+          "rect": {
+            "bottom": 730.53125,
+            "height": 44,
+            "left": 158,
+            "right": 202,
+            "top": 686.53125,
+            "width": 44,
+            "x": 158,
+            "y": 686.53125
+          },
+          "selected": "false"
+        },
+        {
+          "current": "step",
+          "label": "Маяк · 100 баллов · Вы здесь",
+          "rect": {
+            "bottom": 704.140625,
+            "height": 44,
+            "left": 214.796875,
+            "right": 258.796875,
+            "top": 660.140625,
+            "width": 44,
+            "x": 214.796875,
+            "y": 660.140625
+          },
+          "selected": "true"
+        },
+        {
+          "current": null,
+          "label": "Новый горизонт · 250 баллов · Впереди",
+          "rect": {
+            "bottom": 714.9375,
+            "height": 44,
+            "left": 271.1875,
+            "right": 315.1875,
+            "top": 670.9375,
+            "width": 44,
+            "x": 271.1875,
+            "y": 670.9375
+          },
+          "selected": "false"
+        }
+      ],
+      "detail": {
+        "bottom": 1054.921875,
+        "height": 190,
+        "left": 54,
+        "right": 306,
+        "top": 864.921875,
+        "width": 252,
+        "x": 54,
+        "y": 864.921875
+      },
+      "detailTitle": "Маяк",
+      "figure": {
+        "bottom": 1157.09375,
+        "height": 619.125,
+        "left": 33,
+        "right": 327,
+        "top": 537.96875,
+        "width": 294,
+        "x": 33,
+        "y": 537.96875
+      },
+      "footer": 777,
+      "overflow": false,
+      "overlaps": [],
+      "scene": {
+        "bottom": 754.140625,
+        "height": 112,
+        "left": 40,
+        "right": 320,
+        "top": 642.140625,
+        "width": 280,
+        "x": 40,
+        "y": 642.140625
+      },
+      "scrollY": 0,
+      "total": "105 баллов за всё время",
+      "viewport": {
+        "height": 844,
+        "width": 375
+      }
+    },
+    {
+      "balance": "105",
+      "controls": [
+        {
+          "current": null,
+          "label": "Отправная точка · 0 баллов · Открыто",
+          "rect": {
+            "bottom": 678.9140625,
+            "height": 45.171875,
+            "left": 85.2421875,
+            "right": 130.4140625,
+            "top": 633.7421875,
+            "width": 45.171875,
+            "x": 85.2421875,
+            "y": 633.7421875
+          },
+          "selected": "false"
+        },
+        {
+          "current": null,
+          "label": "Тихая поляна · 25 баллов · Открыто",
+          "rect": {
+            "bottom": 634.1328125,
+            "height": 45.171875,
+            "left": 221.4453125,
+            "right": 266.6171875,
+            "top": 588.9609375,
+            "width": 45.171875,
+            "x": 221.4453125,
+            "y": 588.9609375
+          },
+          "selected": "false"
+        },
+        {
+          "current": null,
+          "label": "Мост наблюдений · 50 баллов · Открыто",
+          "rect": {
+            "bottom": 666.7890625,
+            "height": 45.171875,
+            "left": 353.9140625,
+            "right": 399.0859375,
+            "top": 621.6171875,
+            "width": 45.171875,
+            "x": 353.9140625,
+            "y": 621.6171875
+          },
+          "selected": "false"
+        },
+        {
+          "current": "step",
+          "label": "Маяк · 100 баллов · Вы здесь",
+          "rect": {
+            "bottom": 605.2265625,
+            "height": 45.171875,
+            "left": 486.3671875,
+            "right": 531.5390625,
+            "top": 560.0546875,
+            "width": 45.171875,
+            "x": 486.3671875,
+            "y": 560.0546875
+          },
+          "selected": "true"
+        },
+        {
+          "current": null,
+          "label": "Новый горизонт · 250 баллов · Впереди",
+          "rect": {
+            "bottom": 630.3984375,
+            "height": 45.171875,
+            "left": 617.8984375,
+            "right": 663.0703125,
+            "top": 585.2265625,
+            "width": 45.171875,
+            "x": 617.8984375,
+            "y": 585.2265625
+          },
+          "selected": "false"
+        }
+      ],
+      "detail": {
+        "bottom": 976.53125,
+        "height": 140,
+        "left": 66,
+        "right": 687,
+        "top": 836.53125,
+        "width": 621,
+        "x": 66,
+        "y": 836.53125
+      },
+      "detailTitle": "Маяк",
+      "figure": {
+        "bottom": 1037.921875,
+        "height": 627.546875,
+        "left": 43,
+        "right": 710,
+        "top": 410.375,
+        "width": 667,
+        "x": 43,
+        "y": 410.375
+      },
+      "footer": 957,
+      "overflow": false,
+      "overlaps": [],
+      "scene": {
+        "bottom": 750.546875,
+        "height": 261.1875,
+        "left": 50,
+        "right": 703,
+        "top": 489.359375,
+        "width": 653,
+        "x": 50,
+        "y": 489.359375
+      },
+      "scrollY": 0,
+      "total": "105 баллов за всё время",
+      "viewport": {
+        "height": 1024,
+        "width": 768
+      }
+    },
+    {
+      "balance": "105",
+      "controls": [
+        {
+          "current": null,
+          "label": "Отправная точка · 0 баллов · Открыто",
+          "rect": {
+            "bottom": 720.90625,
+            "height": 56,
+            "left": 367.984375,
+            "right": 423.984375,
+            "top": 664.90625,
+            "width": 56,
+            "x": 367.984375,
+            "y": 664.90625
+          },
+          "selected": "false"
+        },
+        {
+          "current": null,
+          "label": "Тихая поляна · 25 баллов · Открыто",
+          "rect": {
+            "bottom": 669.8125,
+            "height": 56,
+            "left": 523.359375,
+            "right": 579.359375,
+            "top": 613.8125,
+            "width": 56,
+            "x": 523.359375,
+            "y": 613.8125
+          },
+          "selected": "false"
+        },
+        {
+          "current": null,
+          "label": "Мост наблюдений · 50 баллов · Открыто",
+          "rect": {
+            "bottom": 707.0625,
+            "height": 56,
+            "left": 674.5,
+            "right": 730.5,
+            "top": 651.0625,
+            "width": 56,
+            "x": 674.5,
+            "y": 651.0625
+          },
+          "selected": "false"
+        },
+        {
+          "current": "step",
+          "label": "Маяк · 100 баллов · Вы здесь",
+          "rect": {
+            "bottom": 636.828125,
+            "height": 56,
+            "left": 825.625,
+            "right": 881.625,
+            "top": 580.828125,
+            "width": 56,
+            "x": 825.625,
+            "y": 580.828125
+          },
+          "selected": "true"
+        },
+        {
+          "current": null,
+          "label": "Новый горизонт · 250 баллов · Впереди",
+          "rect": {
+            "bottom": 665.5625,
+            "height": 56,
+            "left": 975.6875,
+            "right": 1031.6875,
+            "top": 609.5625,
+            "width": 56,
+            "x": 975.6875,
+            "y": 609.5625
+          },
+          "selected": "false"
+        }
+      ],
+      "detail": {
+        "bottom": 1026.390625,
+        "height": 140,
+        "left": 346,
+        "right": 1059,
+        "top": 886.390625,
+        "width": 713,
+        "x": 346,
+        "y": 886.390625
+      },
+      "detailTitle": "Маяк",
+      "figure": {
+        "bottom": 1087.78125,
+        "height": 664.359375,
+        "left": 323,
+        "right": 1082,
+        "top": 423.421875,
+        "width": 759,
+        "x": 323,
+        "y": 423.421875
+      },
+      "footer": null,
+      "overflow": false,
+      "overlaps": [],
+      "scene": {
+        "bottom": 800.40625,
+        "height": 298,
+        "left": 330,
+        "right": 1075,
+        "top": 502.40625,
+        "width": 745,
+        "x": 330,
+        "y": 502.40625
+      },
+      "scrollY": 0,
+      "total": "105 баллов за всё время",
+      "viewport": {
+        "height": 1000,
+        "width": 1440
+      }
+    },
+    {
+      "balance": "105",
+      "controls": [
+        {
+          "current": null,
+          "label": "Отправная точка · 0 баллов · Открыто",
+          "rect": {
+            "bottom": 779.453125,
+            "height": 44,
+            "left": 40,
+            "right": 84,
+            "top": 735.453125,
+            "width": 44,
+            "x": 40,
+            "y": 735.453125
+          },
+          "selected": "false"
+        },
+        {
+          "current": null,
+          "label": "Тихая поляна · 25 баллов · Открыто",
+          "rect": {
+            "bottom": 764.015625,
+            "height": 44,
+            "left": 84.84375,
+            "right": 128.84375,
+            "top": 720.015625,
+            "width": 44,
+            "x": 84.84375,
+            "y": 720.015625
+          },
+          "selected": "false"
+        },
+        {
+          "current": null,
+          "label": "Мост наблюдений · 50 баллов · Открыто",
+          "rect": {
+            "bottom": 775.265625,
+            "height": 44,
+            "left": 130.5,
+            "right": 174.5,
+            "top": 731.265625,
+            "width": 44,
+            "x": 130.5,
+            "y": 731.265625
+          },
+          "selected": "false"
+        },
+        {
+          "current": "step",
+          "label": "Маяк · 100 баллов · Вы здесь",
+          "rect": {
+            "bottom": 754.0625,
+            "height": 44,
+            "left": 176.140625,
+            "right": 220.140625,
+            "top": 710.0625,
+            "width": 44,
+            "x": 176.140625,
+            "y": 710.0625
+          },
+          "selected": "true"
+        },
+        {
+          "current": null,
+          "label": "Новый горизонт · 250 баллов · Впереди",
+          "rect": {
+            "bottom": 762.734375,
+            "height": 44,
+            "left": 221,
+            "right": 265,
+            "top": 718.734375,
+            "width": 44,
+            "x": 221,
+            "y": 718.734375
+          },
+          "selected": "false"
+        }
+      ],
+      "detail": {
+        "bottom": 1100.1875,
+        "height": 199.484375,
+        "left": 54,
+        "right": 251,
+        "top": 900.703125,
+        "width": 197,
+        "x": 54,
+        "y": 900.703125
+      },
+      "detailTitle": "Маяк",
+      "figure": {
+        "bottom": 1202.359375,
+        "height": 606.609375,
+        "left": 33,
+        "right": 272,
+        "top": 595.75,
+        "width": 239,
+        "x": 33,
+        "y": 595.75
+      },
+      "footer": 762.625,
+      "overflow": false,
+      "overlaps": [],
+      "scene": {
+        "bottom": 789.921875,
+        "height": 90,
+        "left": 40,
+        "right": 265,
+        "top": 699.921875,
+        "width": 225,
+        "x": 40,
+        "y": 699.921875
+      },
+      "scrollY": 0,
+      "total": "105 баллов за всё время",
+      "viewport": {
+        "height": 844,
+        "width": 320
+      }
+    }
+  ],
+  "interactions": [
+    {
+      "scenario": "visible-marker-before",
+      "coordinate": [
+        60,
+        690
+      ],
+      "before": {
+        "detailTop": 1419.46875,
+        "firstButton": 862.53125,
+        "scrollY": 0,
+        "selected": "Маяк",
+        "svg": {
+          "height": 116.796875,
+          "width": 292,
+          "x": 34,
+          "y": 614.953125
+        }
+      },
+      "after": {
+        "detailTop": 1419.46875,
+        "oldBelowMapButtons": 5,
+        "scrollY": 0,
+        "selected": "Маяк"
+      },
+      "result": "No response to a native click on the visible marker; actual buttons and explanation were below the fold."
+    },
+    {
+      "scenario": "phone-native-marker-tap",
+      "coordinate": [
+        65,
+        714
+      ],
+      "before": {
+        "point": {
+          "bottom": 735.734375,
+          "height": 44,
+          "left": 42.796875,
+          "right": 86.796875,
+          "top": 691.734375,
+          "width": 44,
+          "x": 42.796875,
+          "y": 691.734375
+        },
+        "scrollY": 0,
+        "selected": "Маяк"
+      },
+      "after": {
+        "balance": "105",
+        "current": "Маяк · 100 баллов · Вы здесь",
+        "detail": {
+          "bottom": 753.921875,
+          "height": 190,
+          "left": 54,
+          "right": 306,
+          "top": 563.921875,
+          "width": 252,
+          "x": 54,
+          "y": 563.921875
+        },
+        "focused": "Отправная точка · 0 баллов · Открыто",
+        "nav": [
+          {
+            "className": "",
+            "top": 128
+          },
+          {
+            "className": "breadcrumb",
+            "top": 0
+          },
+          {
+            "className": "mobile-navigation",
+            "top": 777
+          }
+        ],
+        "scrollY": 301,
+        "selected": "Отправная точка"
+      }
+    },
+    {
+      "scenario": "phone-future-native-marker-tap",
+      "coordinate": [
+        293,
+        392
+      ],
+      "after": {
+        "balance": "105",
+        "current": "Маяк · 100 баллов · Вы здесь",
+        "detailBottom": 754.203125,
+        "focused": "Новый горизонт · 250 баллов · Впереди",
+        "footer": 777,
+        "scrollY": 334,
+        "selected": "Новый горизонт",
+        "total": "105 баллов за всё время"
+      }
+    },
+    {
+      "scenario": "native-shift-tab-enter",
+      "before": {
+        "focused": "Маяк · 100 баллов · Вы здесь",
+        "selected": "Новый горизонт"
+      },
+      "after": {
+        "current": "Маяк · 100 баллов · Вы здесь",
+        "focused": "Маяк · 100 баллов · Вы здесь",
+        "pressed": "true",
+        "selected": "Маяк"
+      }
+    },
+    {
+      "scenario": "home-preview-mobile",
+      "observed": {
+        "mapControlCount": 0,
+        "mode": "map",
+        "nestedButtons": 0,
+        "overflow": false,
+        "previewMarkers": 5,
+        "width": 375
+      }
+    },
+    {
+      "scenario": "home-preview-desktop",
+      "observed": {
+        "mapControlCount": 0,
+        "mode": "map",
+        "nestedButtons": 0,
+        "overflow": false,
+        "previewMarkers": 5,
+        "width": 1440
+      }
+    }
+  ],
+  "comparison375": {
+    "oldDetailTop": 1419.46875,
+    "newDetailTop": 864.921875,
+    "closerByCssPixels": 554.546875,
+    "sameInitialSelection": "Маяк",
+    "oldMarkerTap": "no response",
+    "newMarkerTap": "changes selection and reveals full explanation"
+  },
+  "frontend": {
+    "passed": 32,
+    "failed": 0,
+    "durationMs": 13972.593,
+    "regression": "New marker interaction failed before implementation; compact-preview test passed. Both pass after implementation.",
+    "buildAndTypes": "pass",
+    "coverage": "not measured",
+    "entry": {
+      "file": "frontend/dist/assets/index-Ckbw-_Lz.js",
+      "bytes": 385227,
+      "sha256": "141891cf887f54f8639090eba10a57cda0fd2eb6116b58d84825828c854e1a2e"
+    },
+    "testLog": {
+      "file": "outputs/atlas-tap-frontend-20261025.log",
+      "bytes": 3753,
+      "sha256": "ec9bb542e791e68615ea92b2432ba1a31804d13d8099691f6f11e12111d54c15"
+    }
+  },
+  "sources": [
+    {
+      "file": "frontend/src/PatientAdventure.tsx",
+      "bytes": 12948,
+      "sha256": "81d713faa6341c82783134174db60421cea79e2092ade1f5069ccd99aa0b6538"
+    },
+    {
+      "file": "frontend/src/patient-adventure.css",
+      "bytes": 14649,
+      "sha256": "dec758de5dbe070b5cef81f535a825d3e1d3180f8a49aa4aa33a8635388bee98"
+    },
+    {
+      "file": "frontend/tests/atlas-interaction.test.mjs",
+      "bytes": 3170,
+      "sha256": "a38455ff545c233a359a4d74e5a491c87a35d75af92831864e657949690d613c"
+    }
+  ],
+  "semantic": {
+    "recordedAt": "2026-10-25T01:03:06.218Z",
+    "engine": "axe-core 4.14.0",
+    "scope": "Semantic analysis of CUA-exported markup in JSDOM29.1.1 with local entry CSS. App scripts and external resources never execute; no actual-browser axe, layout, contrast, keyboard, motion or screen-reader pass.",
+    "source": "https://github.com/dequelabs/axe-core#supported-browsers",
+    "disabledRules": [
+      "color-contrast"
+    ],
+    "pages": [
+      {
+        "file": "atlas-controls-latest.html",
+        "sha256": "84c1f10ede3c11c85e635435a83deae2705e8c0bff159cbed781b1efd7430f62",
+        "title": "Мой прогресс · Clinical Compass",
+        "violations": [],
+        "incomplete": [
+          {
+            "id": "label-content-name-mismatch",
+            "impact": "serious",
+            "description": "Ensure that elements labelled through their content must have their visible text as part of their accessible name",
+            "help": "Elements must have their visible text as part of their accessible name",
+            "helpUrl": "https://dequeuniversity.com/rules/axe/4.14/label-content-name-mismatch?application=axeAPI",
+            "nodes": [
+              {
+                "target": [
+                  ".section-help-button"
+                ],
+                "failureSummary": "Fix all of the following:\n  Axe encountered an error; test the page for this type of problem manually",
+                "html": "<button class=\"button ghost section-help-button\" aria-label=\"Помощь с разделом\" tabindex=\"0\">"
+              }
+            ]
+          },
+          {
+            "id": "landmark-one-main",
+            "impact": "moderate",
+            "description": "Ensure the document has a main landmark",
+            "help": "Document should have one main landmark",
+            "helpUrl": "https://dequeuniversity.com/rules/axe/4.14/landmark-one-main?application=axeAPI",
+            "nodes": [
+              {
+                "target": [
+                  "html"
+                ],
+                "failureSummary": "Fix all of the following:\n  Axe encountered an error; test the page for this type of problem manually",
+                "html": "<html lang=\"ru\">"
+              }
+            ]
+          },
+          {
+            "id": "page-has-heading-one",
+            "impact": "moderate",
+            "description": "Ensure that the page, or at least one of its frames contains a level-one heading",
+            "help": "Page should contain a level-one heading",
+            "helpUrl": "https://dequeuniversity.com/rules/axe/4.14/page-has-heading-one?application=axeAPI",
+            "nodes": [
+              {
+                "target": [
+                  "html"
+                ],
+                "failureSummary": "Fix all of the following:\n  Axe encountered an error; test the page for this type of problem manually",
+                "html": "<html lang=\"ru\">"
+              }
+            ]
+          }
+        ],
+        "passedRuleCount": 38,
+        "passedRuleIds": [
+          "aria-allowed-attr",
+          "aria-allowed-role",
+          "aria-conditional-attr",
+          "aria-deprecated-role",
+          "aria-hidden-body",
+          "aria-hidden-focus",
+          "aria-prohibited-attr",
+          "aria-required-attr",
+          "aria-roles",
+          "aria-valid-attr-value",
+          "aria-valid-attr",
+          "avoid-inline-spacing",
+          "button-name",
+          "bypass",
+          "document-title",
+          "duplicate-id-aria",
+          "empty-heading",
+          "form-field-multiple-labels",
+          "heading-order",
+          "html-has-lang",
+          "html-lang-valid",
+          "label-title-only",
+          "landmark-banner-is-top-level",
+          "landmark-contentinfo-is-top-level",
+          "landmark-main-is-top-level",
+          "landmark-no-duplicate-banner",
+          "landmark-no-duplicate-contentinfo",
+          "landmark-no-duplicate-main",
+          "landmark-unique",
+          "link-name",
+          "meta-viewport-large",
+          "meta-viewport",
+          "nested-interactive",
+          "region",
+          "select-name",
+          "summary-name",
+          "tabindex",
+          "target-size"
+        ],
+        "inapplicableRuleCount": 49,
+        "domWarnings": [
+          "Not implemented: HTMLCanvasElement's getContext() method: without installing the canvas npm package"
+        ]
+      }
+    ]
+  },
+  "http": {
+    "base_url": "http://127.0.0.1:8780",
+    "scope": "HTTP bytes and MIME only; not browser layout/interactions",
+    "assets": [
+      {
+        "file": "AdminDashboard-DkMp_ffD.js",
+        "status": 200,
+        "bytes": 18451,
+        "sha256": "2b4a4da0c319a020ec6ef88967caaddeff47b9e22d43bce7d9809fcdc1e52dec",
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "file": "CareWorkflow-BUQs4_6b.js",
+        "status": 200,
+        "bytes": 26982,
+        "sha256": "94d89516a7a8e38109d9bf73ca2d223da0a2739052d6c7c5d8865830bee4b638",
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "file": "Charts-DQ5IDx0s.js",
+        "status": 200,
+        "bytes": 5452,
+        "sha256": "b23d3ef46a7a20505a4af88e8c896ebdbdac22b2d8390ff402033f235f04106b",
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "file": "DoctorDashboard-CzPp6SVE.js",
+        "status": 200,
+        "bytes": 16936,
+        "sha256": "c91e6e47edc2df52b490c4abcd814f083e24bd905955d08ba97d081c87a096e0",
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "file": "DoctorPatients-ctqrLdND.js",
+        "status": 200,
+        "bytes": 36365,
+        "sha256": "7bdc5fed4e12f4bc7de121b3f26c71b3f3d78b1a5b1d9c0e6802c9bc546e97b4",
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "file": "MedicationSchedule-BGXX_mka.css",
+        "status": 200,
+        "bytes": 2105,
+        "sha256": "c20413094ff3583bb21b006cdc48aba46037576c0d732dce5ed4bb1689d2d580",
+        "mime": "text/css; charset=utf-8"
+      },
+      {
+        "file": "MedicationSchedule-DVe2HvNg.js",
+        "status": 200,
+        "bytes": 33991,
+        "sha256": "aab3d01b43841ee8555b09ca11bf1c83ca8848ff6525dbf15d83f2bb9614b48d",
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "file": "Patient-B9xuvwdE.css",
+        "status": 200,
+        "bytes": 26258,
+        "sha256": "9160fbf594ce6238151f4e13f5a28e00c0e62184711079b09f25bbebeb327b0b",
+        "mime": "text/css; charset=utf-8"
+      },
+      {
+        "file": "Patient-DVCg95x5.js",
+        "status": 200,
+        "bytes": 67166,
+        "sha256": "fbba794d2aff753019968314906640ef03515943070dafe8783dc9dc0c5ec4aa",
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "file": "SurveyBuilder-C7gbaTDg.js",
+        "status": 200,
+        "bytes": 25412,
+        "sha256": "969b27516fe3d1d21408adf929cba4df9e86bf96bcd351cdf954c432a8671869",
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "file": "SurveyFields-BJg22Rj_.js",
+        "status": 200,
+        "bytes": 3121,
+        "sha256": "9c69abea6bc5788e162dc7479390e3c923f8da23dd8ffd20cc157b406403d979",
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "file": "TaskBoard-KXUaixqm.js",
+        "status": 200,
+        "bytes": 7834,
+        "sha256": "bd5126a8240698eaa952e53653eaaa57ef88771f9dfbb54d781b092cefd82d13",
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "file": "WorkflowMetrics-l9ujc4GH.js",
+        "status": 200,
+        "bytes": 12440,
+        "sha256": "75961ea84d2f7c921c781b132abaed0d20afd3d0d00cffc3fbae7e386d7b373b",
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "file": "chevron-right--2UZQ6ov.js",
+        "status": 200,
+        "bytes": 159,
+        "sha256": "797ed55fc5c7e2fec7b1a04953555e0f87a981c7006d46281be1cc198b657d11",
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "file": "collection-COswcvyL.js",
+        "status": 200,
+        "bytes": 939,
+        "sha256": "b8f61ba215c319fcc2aaf6ce0fb3b26b182c049b9a0d9e4febe85703fe8000e4",
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "file": "index-BmeH5jpM.css",
+        "status": 200,
+        "bytes": 111027,
+        "sha256": "16990d16539c3bfdc103558c1ff574634da3ed71e1051355eca32191003ecc45",
+        "mime": "text/css; charset=utf-8"
+      },
+      {
+        "file": "index-Ckbw-_Lz.js",
+        "status": 200,
+        "bytes": 385227,
+        "sha256": "141891cf887f54f8639090eba10a57cda0fd2eb6116b58d84825828c854e1a2e",
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "file": "patientProgress-Do0fObh9.js",
+        "status": 200,
+        "bytes": 1130,
+        "sha256": "611dafc1b1ad2ac66b0b04ac3852b8c0bf56b6f106882f460ee96efa5097a0b3",
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "file": "plus-DroQ2U9x.js",
+        "status": 200,
+        "bytes": 182,
+        "sha256": "ffecc4a42efbedad712570ec91e67e61dc8cc45240e09a0a829b146f500aa01e",
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "file": "send-4RXqATFN.js",
+        "status": 200,
+        "bytes": 652,
+        "sha256": "7ceb6622fca47fa97e297363187351e48e7f598de9b78db3e0bfe1ac3c1e93fb",
+        "mime": "text/javascript; charset=utf-8"
+      }
+    ],
+    "health": {
+      "status": "ok",
+      "compass_db": true,
+      "mis_db": true,
+      "mode": "synthetic_demo"
+    },
+    "root_matches_dist": true,
+    "qa_health": {
+      "status": "ok",
+      "compass_db": true,
+      "mis_db": true,
+      "mode": "synthetic_demo"
+    }
+  },
+  "screenshots": [
+    {
+      "file": "docs/evidence/atlas-controls-2026-10-25/home-preview-1440.jpg",
+      "bytes": 112071,
+      "sha256": "a7370dc189794b269eff8f3e85d241e3fde6cb281c9874aee171f5a1caaa6196",
+      "pixels": [
+        1425,
+        990
+      ],
+      "stage": "after"
+    },
+    {
+      "file": "docs/evidence/atlas-controls-2026-10-25/home-preview-375.jpg",
+      "bytes": 37113,
+      "sha256": "2eda75324880a4d177bec2ab2ac7a300a1d2a799edaa83c28a811591ac348006",
+      "pixels": [
+        360,
+        810
+      ],
+      "stage": "after"
+    },
+    {
+      "file": "docs/evidence/atlas-controls-2026-10-25/map-decorative-before-375.jpg",
+      "bytes": 36231,
+      "sha256": "1876f0f5eb7dbf0632b8021f113e1b8f8ec53ae8d1718ae3fe29c2c0da89e10e",
+      "pixels": [
+        360,
+        810
+      ],
+      "stage": "before"
+    },
+    {
+      "file": "docs/evidence/atlas-controls-2026-10-25/map-first-fold-1440.jpg",
+      "bytes": 104930,
+      "sha256": "403fa0771cae760100391d73448858473fe78d1de1d547ae57512651e0f7a2a2",
+      "pixels": [
+        1425,
+        990
+      ],
+      "stage": "after"
+    },
+    {
+      "file": "docs/evidence/atlas-controls-2026-10-25/map-first-fold-320.jpg",
+      "bytes": 33685,
+      "sha256": "2e13e08402df6471d31bf1cb1d88abb2f0361fbcc149511c48920bb3ffb4121d",
+      "pixels": [
+        305,
+        804
+      ],
+      "stage": "after"
+    },
+    {
+      "file": "docs/evidence/atlas-controls-2026-10-25/map-first-fold-375.jpg",
+      "bytes": 37622,
+      "sha256": "d7ba60f8c59c598bbf75908f48b82d319bbf0cf9f4be564857490a29ba3ed82a",
+      "pixels": [
+        360,
+        810
+      ],
+      "stage": "after"
+    },
+    {
+      "file": "docs/evidence/atlas-controls-2026-10-25/map-first-fold-768.jpg",
+      "bytes": 62918,
+      "sha256": "5c3992ed02014d11d028bbbc005d6c958e3c2cbeefa32d6d7e0ab702c83a004f",
+      "pixels": [
+        753,
+        1004
+      ],
+      "stage": "after"
+    },
+    {
+      "file": "docs/evidence/atlas-controls-2026-10-25/marker-first-after-375.jpg",
+      "bytes": 35055,
+      "sha256": "bd63f89eab852489ffa3b91f0c73ba6716bc1783390eeb0eb9a72cb6013900a9",
+      "pixels": [
+        360,
+        810
+      ],
+      "stage": "after"
+    },
+    {
+      "file": "docs/evidence/atlas-controls-2026-10-25/marker-future-after-375.jpg",
+      "bytes": 37961,
+      "sha256": "a2e00bbba8ae6e52d27ad0491ea87f12cf728915c36d83af4ab3784a27c1f7f2",
+      "pixels": [
+        360,
+        810
+      ],
+      "stage": "after"
+    }
+  ],
+  "console": {
+    "warnOrErrorCount": 0,
+    "scope": "Latest 40 records queried in the own tab after the checks."
+  },
+  "limits": [
+    "On320px the whole scene is not above the fixed footer; it remains normally scrollable. No horizontal overflow or overlapping controls detected.",
+    "Axe/JSDOM:0 detected violations,3 incomplete outcomes retained; no full browser/WCAG or screen-reader pass.",
+    "No pixel baseline, FPS, system reduced-motion or Web Vitals measurement. Existing500ms maximum load gate remains unmet.",
+    "No medical rules, reward rates, real coupons, APIs or access rights changed. No Git publication."
+  ]
+}

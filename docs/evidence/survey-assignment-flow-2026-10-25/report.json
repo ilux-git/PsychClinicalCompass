@@ -1,0 +1,670 @@
+{
+  "recordedAt": "2026-10-25T06:21:08.620230+00:00",
+  "status": "assignment, private pause/resume and explicit patient submission verified",
+  "changes": [
+    "Clinician assignment error is local, focused and described by the selected control; unchanged repeated requests preserve identity. Changing a template clears its previous error.",
+    "Full selected title/version/question count is readable outside the truncated native select; selection itself performs no assignment.",
+    "Draft and submit failure retain the existing local error instead of duplicating it in a global notification."
+  ],
+  "scope": "Two frontend runtime files and four actual-component regressions. No schema, API, scope, medical, question, reward-policy or real-delivery change.",
+  "verification": {
+    "native": {
+      "before": {
+        "alerts": [
+          {
+            "focused": false,
+            "insideAssignment": false,
+            "text": "Техническая проверка: сохранение временно недоступно."
+          }
+        ],
+        "count": 5,
+        "focus": "BODY",
+        "overflow": false,
+        "selected": "Что мешает выполнять рекомендации? · v1"
+      },
+      "doctorChecks": [
+        {
+          "alerts": [
+            {
+              "focused": true,
+              "local": true,
+              "rect": {
+                "bottom": 398.75,
+                "height": 70.78125,
+                "left": 37,
+                "right": 323,
+                "top": 327.96875,
+                "width": 286,
+                "x": 37,
+                "y": 327.96875
+              },
+              "text": "Техническая проверка: сохранение временно недоступно."
+            }
+          ],
+          "assignmentIds": [
+            "4",
+            "3",
+            "24",
+            "23",
+            "22"
+          ],
+          "description": "_r_1_",
+          "errorId": "_r_1_",
+          "focus": {
+            "label": null,
+            "tag": "DIV"
+          },
+          "overflow": false,
+          "selected": "Что мешает выполнять рекомендации? · v1",
+          "title": "Мария Иванова",
+          "viewport": {
+            "height": 844,
+            "width": 375
+          },
+          "label": "doctor-assignment-error-mobile"
+        },
+        {
+          "alerts": [],
+          "assignmentIds": [
+            "30",
+            "4",
+            "3",
+            "24",
+            "23",
+            "22"
+          ],
+          "description": null,
+          "focus": {
+            "label": null,
+            "tag": "BODY"
+          },
+          "overflow": false,
+          "selected": "Выберите опубликованный опрос",
+          "title": "Мария Иванова",
+          "viewport": {
+            "height": 844,
+            "width": 375
+          },
+          "label": "doctor-assignment-created-mobile"
+        }
+      ],
+      "selectedTemplate": {
+        "assignmentIds": [
+          "30",
+          "4",
+          "3",
+          "24",
+          "23",
+          "22"
+        ],
+        "describedBy": "_r_1_-selection",
+        "overflow": false,
+        "text": "Выбран опрос «Что мешает выполнять рекомендации?». Версия 1. Вопросов: 2.",
+        "viewport": {
+          "height": 844,
+          "width": 375
+        }
+      },
+      "required": {
+        "alerts": [
+          "Выберите хотя бы один вариант ответа."
+        ],
+        "checked": 0,
+        "focus": {
+          "tag": "INPUT",
+          "type": "checkbox"
+        },
+        "overflow": false
+      },
+      "helpBefore": {
+        "helpText": "Помощь с разделомМой деньШаги, самочувствие и баллы1Начните с одного доступного действия или выберите другое. Дневник добровольный.2Смотрите сведения о встречах и сохранённые измерения отдельно от прогресса участия.3В блоке баллов можно открыть тестовые скидки и выбрать спокойный вид. При затруднении напишите врачу.Понятно",
+        "helpTitle": "Мой день",
+        "page": "Что мешает выполнять рекомендации?"
+      },
+      "draftFailureBeforeFix": {
+        "alerts": [
+          {
+            "focused": false,
+            "local": false,
+            "text": "Техническая проверка: сохранение временно недоступно."
+          },
+          {
+            "focused": true,
+            "local": true,
+            "text": "Техническая проверка: сохранение временно недоступно."
+          }
+        ],
+        "checked": [
+          "Не всё понятно"
+        ],
+        "overflow": false,
+        "privacy": "Можно сделать паузу. Черновик виден только вам. Врач получит ответы после отправки.",
+        "text": "QA: проверка паузы и возврата к приватному черновику. Не клинический ответ.",
+        "thanks": false
+      },
+      "paused": {
+        "alerts": [],
+        "overflow": false,
+        "pendingButtons": [
+          "2 вопр.Черновик · продолжитьЧто мешает выполнять рекомендации?Синтетический пример обратной связи. Не диагностическая шкала.Можно ответить в удобное время"
+        ],
+        "title": "Опросы врача",
+        "url": "/?section=surveys"
+      },
+      "privateDraftDoctor": {
+        "assignmentIds": [
+          "30",
+          "4",
+          "3",
+          "24",
+          "23",
+          "22"
+        ],
+        "containsDraftText": false,
+        "hasAnswerSummary": false,
+        "title": "Мария Иванова",
+        "waiting": true
+      },
+      "resumeHero": {
+        "activeNav": [
+          "Мой день"
+        ],
+        "hero": [
+          "Продолжить опрос",
+          "Выбрать другое действие",
+          "Опрос врача",
+          "Записать самочувствие",
+          "Моё расписание",
+          "Все опросы",
+          "Написать"
+        ],
+        "title": "Здравствуйте, Мария"
+      },
+      "resumed": {
+        "checked": [
+          "Не всё понятно"
+        ],
+        "notice": "Продолжаем черновик от 25 окт., 12:54. Черновик виден только вам. Врач получит ответы после отправки.",
+        "overflow": false,
+        "text": "QA: проверка паузы и возврата к приватному черновику. Не клинический ответ.",
+        "title": "Что мешает выполнять рекомендации?"
+      },
+      "submitFailureAfterFix": {
+        "alerts": [
+          {
+            "focused": true,
+            "local": true,
+            "text": "Техническая проверка: сохранение временно недоступно."
+          }
+        ],
+        "checked": [
+          "Не всё понятно"
+        ],
+        "overflow": false,
+        "text": "QA: проверка паузы и возврата к приватному черновику. Не клинический ответ.",
+        "thanks": false
+      },
+      "submitted": {
+        "alerts": [],
+        "focus": "Спасибо за ваш ответ",
+        "overflow": false,
+        "receipt": "Ответы отправленыСпасибо за ваш ответОтветы доступны вашему врачу. Любой честный ответ полезен.+3 балла за участиеБаллы — за участие. Содержание ответа и самочувствие на награду не влияют.По записи от 25 окт., 13:10Мой прогрессК опросам врача ",
+        "title": "Спасибо за ваш ответ"
+      },
+      "thanksGeometry": {
+        "actions": [
+          {
+            "rect": {
+              "bottom": 604.0625,
+              "height": 44,
+              "left": 108,
+              "right": 221.59375,
+              "top": 560.0625,
+              "width": 113.59375,
+              "x": 108,
+              "y": 560.0625
+            },
+            "text": "Мой прогресс"
+          },
+          {
+            "rect": {
+              "bottom": 707.0625,
+              "height": 46,
+              "left": 98.265625,
+              "right": 261.734375,
+              "top": 661.0625,
+              "width": 163.46875,
+              "x": 98.265625,
+              "y": 661.0625
+            },
+            "text": "К опросам врача "
+          }
+        ],
+        "bottomNavigation": 777,
+        "card": {
+          "bottom": 736.0625,
+          "height": 637.0625,
+          "left": 16,
+          "right": 344,
+          "top": 99,
+          "width": 328,
+          "x": 16,
+          "y": 99
+        },
+        "frames": [
+          {
+            "opacity": "1",
+            "transform": "none"
+          },
+          {
+            "opacity": "1",
+            "transform": "none"
+          },
+          {
+            "opacity": "1",
+            "transform": "none"
+          }
+        ]
+      },
+      "progress": {
+        "overflow": false,
+        "title": "Мой прогресс",
+        "totals": [
+          "113",
+          "113 баллов за всё время"
+        ],
+        "wallet": [
+          "Скидка на приём · демо5%Баллов достаточно для тестового купона113 баллов доступно · для обмена нужно 100 балловПосмотреть тестовые скидки"
+        ]
+      },
+      "received": {
+        "answers": [
+          {
+            "answer": "Не всё понятно",
+            "question": "Что сейчас мешает выполнять согласованные рекомендации?"
+          },
+          {
+            "answer": "QA: проверка паузы и возврата к приватному черновику. Не клинический ответ.",
+            "question": "Что важно знать вашему врачу?"
+          }
+        ],
+        "hasDraftMarker": true,
+        "overflow": false,
+        "received": true,
+        "title": "Мария Иванова"
+      },
+      "admin": {
+        "containsAnswerText": false,
+        "containsPatientName": false,
+        "overflow": false,
+        "patientLinks": [],
+        "privacy": "Обезличенная сводка · минимальная группа: 1",
+        "title": "Причины затруднений"
+      },
+      "console": [],
+      "notes": "Exactly one new QA assignment30(patient2), private draft revision1, then one submission and actual+3points:110→113. Template preview was discarded without a second assignment. First doctor error/created states predate only the selected-title caption. Two tooling selector mistakes were excluded: menu title Мой день used as h1 instead of greeting; pre-draft Ответить врачу used instead of actual Продолжить опрос. Both corrected from live UI without app changes. Help still incorrectly describes Мой день inside the form; next independent task."
+    },
+    "frontend": {
+      "passed": 64,
+      "durationMs": 72812.565,
+      "exitCode": 0,
+      "source": {
+        "file": "outputs/survey-assignment-frontend-20261025.log",
+        "bytes": 9227,
+        "sha256": "e1c5e5931acddf6c842cbfd9b2e4dc64c773159ad18dbc9b75b257fc46eb7339"
+      }
+    },
+    "regression": {
+      "assignmentErrorRed": "0/2",
+      "selectedLabelRed": "1pass/1fail",
+      "assignmentGreen": "2/2 including two identical failures before success and changed-template manual approval",
+      "patientDuplicateRed": "0/2 at extra global notification",
+      "patientGreen": "2/2; draft/submit retain answers and revision"
+    },
+    "buildAndTypes": {
+      "exitCode": 0,
+      "source": {
+        "file": "outputs/survey-assignment-build-20261025.log",
+        "bytes": 2056,
+        "sha256": "bba462ad25b744882b0587e4fca2f4e7877540296725d71c19836a4b957f11fa"
+      }
+    },
+    "http": {
+      "base_url": "http://127.0.0.1:8780",
+      "scope": "HTTP bytes and MIME only; not browser layout/interactions",
+      "assets": [
+        {
+          "file": "AdminDashboard-DrtjxEEh.js",
+          "status": 200,
+          "bytes": 18580,
+          "sha256": "876989b36c6293c336ba6c97acbb18be7242159ee0f8b847dfe9b2d15130a5dc",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "CareWorkflow-BQBnP4cH.js",
+          "status": 200,
+          "bytes": 26980,
+          "sha256": "033d94a75592d7fcc6723795b98662196a9ab50fe91af3151ad6ff11d9ef2fdf",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "Charts-DnZk77XJ.js",
+          "status": 200,
+          "bytes": 5476,
+          "sha256": "303b945be45f6cce2b158ac427a170e99d1eeda9ccd3a6be31ed1db1bae18dd2",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "DoctorDashboard-Mg89bwhA.js",
+          "status": 200,
+          "bytes": 18046,
+          "sha256": "1536a15f8643d78c335ee93f4bbf8dac807050a9b756d0bf3caee2d12d1fa1d1",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "DoctorPatients-DH91H6rl.js",
+          "status": 200,
+          "bytes": 36909,
+          "sha256": "87275eda45f8b05a7815499c4f587d4606b72316e0d3ea9b6f9d990c6c1fceb5",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "MedicationSchedule-CGWuEF5p.js",
+          "status": 200,
+          "bytes": 37054,
+          "sha256": "10b8446be31c4d95f90a8ac5fd922fa19f984060478e4759f48a8380fafbbd3e",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "MedicationSchedule-C_cioHGn.css",
+          "status": 200,
+          "bytes": 2103,
+          "sha256": "3ecca9c112edd867ada5c834649a96069fb7decf7d1ea5da5aebe9da0ab28a4e",
+          "mime": "text/css; charset=utf-8"
+        },
+        {
+          "file": "Patient-B9xuvwdE.css",
+          "status": 200,
+          "bytes": 26258,
+          "sha256": "9160fbf594ce6238151f4e13f5a28e00c0e62184711079b09f25bbebeb327b0b",
+          "mime": "text/css; charset=utf-8"
+        },
+        {
+          "file": "Patient-DFEjx-PK.js",
+          "status": 200,
+          "bytes": 66883,
+          "sha256": "cf0b803d3294d7ae7315826f4fbf43069ebf7d4c2f3e60e3fcedb2c57dc96818",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "SurveyBuilder-D5SSTBaK.js",
+          "status": 200,
+          "bytes": 25412,
+          "sha256": "4f42460aecd11d5cda124133eb3a5347993f1d43acad3d2c567cf8c593e9cf9c",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "SurveyFields-Bc7DmPX9.js",
+          "status": 200,
+          "bytes": 3313,
+          "sha256": "821bff4516c4589b1b8929f07265a07a71746b6e2eaeac261333c9064e19018f",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "TaskBoard-DO5kcprQ.js",
+          "status": 200,
+          "bytes": 7839,
+          "sha256": "15c60737e0c18dae38412ded4f414247fcdb6621673a3c0a26dc6e75a31364cc",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "WorkflowMetrics-DD9fGIRc.js",
+          "status": 200,
+          "bytes": 12440,
+          "sha256": "e47917e784bd0acb8707f8d191d87bbd97d17ba29afdbf0b2bd5cd3255aae491",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "chevron-right-DLq_NSAF.js",
+          "status": 200,
+          "bytes": 159,
+          "sha256": "32e1c4929485c1600455c425930c478351940d16b5a74f5e76f47c52273a66d8",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "collection-COswcvyL.js",
+          "status": 200,
+          "bytes": 939,
+          "sha256": "b8f61ba215c319fcc2aaf6ce0fb3b26b182c049b9a0d9e4febe85703fe8000e4",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "index-2W71qcJT.js",
+          "status": 200,
+          "bytes": 390678,
+          "sha256": "87987a57f9db1fb95e62b27f328f340a59b827a14221e3c2f7078d3b613315d1",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "index-B163C92B.css",
+          "status": 200,
+          "bytes": 113957,
+          "sha256": "04fe5344a6808cec8526cfda5c8845f287bb3d22bbe9b877555b045b233a8676",
+          "mime": "text/css; charset=utf-8"
+        },
+        {
+          "file": "patientProgress-Do0fObh9.js",
+          "status": 200,
+          "bytes": 1130,
+          "sha256": "611dafc1b1ad2ac66b0b04ac3852b8c0bf56b6f106882f460ee96efa5097a0b3",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "plus-DVDmiyGd.js",
+          "status": 200,
+          "bytes": 182,
+          "sha256": "3a53b79a44022627309f2758eebdb309570a53f14216477a7d8b2d46b2b6bcf8",
+          "mime": "text/javascript; charset=utf-8"
+        },
+        {
+          "file": "send-C9Ekxg4q.js",
+          "status": 200,
+          "bytes": 652,
+          "sha256": "3d7ec23d34c3a4489b306ebf186e677aca40ea7d19e05ebf4ff6e996c1d2f3c7",
+          "mime": "text/javascript; charset=utf-8"
+        }
+      ],
+      "health": {
+        "status": "ok",
+        "compass_db": true,
+        "mis_db": true,
+        "mode": "synthetic_demo"
+      },
+      "root_matches_dist": true,
+      "qa_health": {
+        "status": "ok",
+        "compass_db": true,
+        "mis_db": true,
+        "mode": "synthetic_demo"
+      }
+    },
+    "backend": "Unchanged,last151/151 retained; not rerun."
+  },
+  "sources": [
+    {
+      "file": "frontend/src/DoctorPatients.tsx",
+      "bytes": 48972,
+      "sha256": "0c22146772e6c2ded4d9559afa17e3d91c86ff35dafc8b24c95596f5ab1f1cb2"
+    },
+    {
+      "file": "frontend/src/PatientSurvey.tsx",
+      "bytes": 10679,
+      "sha256": "6f08db92c2ebcfa58f25b66467a7adc4329ca4d5babe1ed6acf4d231c1f2c13f"
+    },
+    {
+      "file": "frontend/tests/survey-assignment-interaction.test.mjs",
+      "bytes": 8054,
+      "sha256": "c08dda91f26d699c43837dcddf0e5ac2896833642ca2d626a5faf14cc2ec7ebb"
+    },
+    {
+      "file": "frontend/tests/patient-survey-recovery-interaction.test.mjs",
+      "bytes": 5938,
+      "sha256": "31a743e5953959b74728b68a438b649098daa6be30970c6edbc80a7574e872c9"
+    }
+  ],
+  "diff": "--- local60/DoctorPatients.tsx\n+++ current/frontend/src/DoctorPatients.tsx\n@@ -1,4 +1,4 @@\n-import { useEffect, useLayoutEffect, useRef, useState, type FormEvent } from \"react\";\n+import { useEffect, useId, useLayoutEffect, useRef, useState, type FormEvent } from \"react\";\n import {\n   ArrowLeft,\n   Search,\n@@ -254,6 +254,11 @@\n   const pendingSourceFocus=useRef<string|null>(null);\n   const [busy, setBusy] = useState(false);\n   const [surveyId, setSurveyId] = useState(\"\");\n+  const [assignError,setAssignError]=useState(\"\");\n+  const assignErrorResult=useRef<HTMLDivElement>(null),assignErrorId=useId();\n+  const selectedSurvey=surveys.data?.find(survey=>String(survey.id)===surveyId);\n+  const assignSelectionId=`${assignErrorId}-selection`;\n+  useEffect(()=>{if(assignError)assignErrorResult.current?.querySelector<HTMLElement>('.error-box')?.focus();},[assignError]);\n   const cardContent=useRef<HTMLDivElement>(null);\n   const [locatedAnswer,setLocatedAnswer]=useState(\"\");\n   const guard=useNavigationGuard();\n@@ -265,7 +270,7 @@\n   const unavailable=card.errorStatus===403||card.errorStatus===404;\n   useEffect(()=>{\n     if(!unavailable)return;\n-    setNoteText(\"\");setNoteDimension(\"\");setSurveyId(\"\");setSource(null);setTaskSource(null);setHighlightedSource(null);pendingSourceFocus.current=null;setSourceAssigned(false);\n+    setNoteText(\"\");setNoteDimension(\"\");setSurveyId(\"\");setAssignError(\"\");setSource(null);setTaskSource(null);setHighlightedSource(null);pendingSourceFocus.current=null;setSourceAssigned(false);\n     clearNote();clearAssignment();\n   },[unavailable,clearNote,clearAssignment]);\n   useEffect(()=>{\n@@ -337,7 +342,7 @@\n     if (!surveyId) return;\n     if (assignRequest.current.surveyId !== surveyId)\n       assignRequest.current = { surveyId, id: crypto.randomUUID() };\n-    setBusy(true);\n+    setAssignError(\"\");setBusy(true);\n     try {\n       await send(`/surveys/${surveyId}/assign`, {\n         patient_ids: [patientId],\n@@ -349,10 +354,7 @@\n       assignments.reload();\n       notify(\"Опрос назначен пациенту\");\n     } catch (error) {\n-      notify(\n-        error instanceof Error ? error.message : \"Не удалось назначить опрос\",\n-        \"error\",\n-      );\n+      setAssignError(error instanceof Error ? error.message : \"Не удалось назначить опрос\");\n     } finally {\n       setBusy(false);\n     }\n@@ -452,15 +454,18 @@\n                     />\n                     {initialAnswer&&answerAssignment&&<div className=\"answer-source-context\"><FileText size={18}/><span>В карточке выделен ответ, выбранный в аналитике.</span><Button variant=\"ghost\" onClick={focusSelectedAnswer}>Показать выбранный ответ</Button></div>}\n                     {initialAnswer&&assignments.data&&!answerAssignment&&<p className=\"subtle-notice\" role=\"status\">Выбранный ответ не найден в доступных назначениях. Можно повторить загрузку или вернуться в аналитику.</p>}\n+                    <div ref={assignErrorResult} id={assignErrorId}><ErrorBox message={assignError}/></div>\n+                    {selectedSurvey&&<p className=\"field-hint\" id={assignSelectionId}>Выбран опрос «{selectedSurvey.title}». Версия {selectedSurvey.version}. Вопросов: {selectedSurvey.questions.length}.</p>}\n                     <div className=\"quick-assign\">\n                       <label className=\"sr-only\" htmlFor=\"quick-survey\">\n                         Опрос для назначения\n                       </label>\n                       <select\n                         id=\"quick-survey\"\n+                        aria-describedby={[assignError&&assignErrorId,selectedSurvey&&assignSelectionId].filter(Boolean).join(\" \")||undefined}\n                         disabled={busy}\n                         value={surveyId}\n-                        onChange={(e) => setSurveyId(e.target.value)}\n+                        onChange={(e) => {setAssignError(\"\");setSurveyId(e.target.value);}}\n                       >\n                         <option value=\"\">Выберите опубликованный опрос</option>\n                         {surveys.data\n--- local60/PatientSurvey.tsx\n+++ current/frontend/src/PatientSurvey.tsx\n@@ -67,7 +67,6 @@\n   function failed(error:unknown) {\n     const text=error instanceof Error ? error.message : \"Не удалось сохранить ответы\";\n     setDraftError(text); if(error instanceof ApiError && error.status===409)setConflict(true);\n-    notify(text,\"error\");\n   }\n   async function saveDraft(close=true) {\n     if(!draft || action || conflict)return false;\n",
+  "screenshots": [
+    {
+      "file": "docs/evidence/survey-assignment-flow-2026-10-25/admin-no-answer-text.jpg",
+      "bytes": 81089,
+      "sha256": "c161bbac004cc4c87e54d962d18c1f9dff887efa330d65bd505c24f56990eb88",
+      "pixels": [
+        1265,
+        712
+      ]
+    },
+    {
+      "file": "docs/evidence/survey-assignment-flow-2026-10-25/assignment-created-mobile.jpg",
+      "bytes": 31727,
+      "sha256": "c6eeea3cbce9754a58eee63c51ad8807882392fb7a9c53915add81b0d6c966be",
+      "pixels": [
+        360,
+        810
+      ]
+    },
+    {
+      "file": "docs/evidence/survey-assignment-flow-2026-10-25/assignment-error-before.jpg",
+      "bytes": 81554,
+      "sha256": "6bb9dc6440dc10d70782d9f4777a09d04e4e77413c2428f046864c1a8eedae76",
+      "pixels": [
+        1265,
+        712
+      ]
+    },
+    {
+      "file": "docs/evidence/survey-assignment-flow-2026-10-25/assignment-error-mobile.jpg",
+      "bytes": 33660,
+      "sha256": "9a7bc24a1f8076fcf8ceea7501927784a13917b7d48d4a100ef0bcf1ac4db026",
+      "pixels": [
+        360,
+        810
+      ]
+    },
+    {
+      "file": "docs/evidence/survey-assignment-flow-2026-10-25/doctor-private-draft-not-shown.jpg",
+      "bytes": 76055,
+      "sha256": "c84557f4f4c5afed4d83d704f95ade2c852b1c16f138452aeec874ff6265b69c",
+      "pixels": [
+        1265,
+        712
+      ]
+    },
+    {
+      "file": "docs/evidence/survey-assignment-flow-2026-10-25/doctor-received-survey.jpg",
+      "bytes": 77115,
+      "sha256": "5b1d103d0e80f536f9f2708e791b9942dc9e72777d616d357a1f00c4dfda9021",
+      "pixels": [
+        1265,
+        712
+      ]
+    },
+    {
+      "file": "docs/evidence/survey-assignment-flow-2026-10-25/patient-draft-error-mobile.jpg",
+      "bytes": 35637,
+      "sha256": "377a830cebde418dba3c38d2eb94e60a1184bc21595e8a5db8db6256b09ac019",
+      "pixels": [
+        360,
+        810
+      ]
+    },
+    {
+      "file": "docs/evidence/survey-assignment-flow-2026-10-25/patient-draft-resumed-mobile.jpg",
+      "bytes": 32604,
+      "sha256": "dabd2e18589e4d6f2b2959912a47040784da694cf72affe97ac9d6c31f953abd",
+      "pixels": [
+        360,
+        810
+      ]
+    },
+    {
+      "file": "docs/evidence/survey-assignment-flow-2026-10-25/patient-filled-before-draft-mobile.jpg",
+      "bytes": 35810,
+      "sha256": "b027225c4dd0717a5d1676e110773a007ef1c0539500748638966e399af5ebc0",
+      "pixels": [
+        360,
+        810
+      ]
+    },
+    {
+      "file": "docs/evidence/survey-assignment-flow-2026-10-25/patient-home-new-survey-mobile.jpg",
+      "bytes": 36825,
+      "sha256": "7b1c78fd6c17f036694dfc15aa8ecacd15004424ece7905c02e3ae8d279218cf",
+      "pixels": [
+        360,
+        810
+      ]
+    },
+    {
+      "file": "docs/evidence/survey-assignment-flow-2026-10-25/patient-paused-mobile.jpg",
+      "bytes": 30908,
+      "sha256": "113379975d284ba7e9fc38d9b0628e09dabe0d8dfea45accbda18c5e163fc71a",
+      "pixels": [
+        360,
+        810
+      ]
+    },
+    {
+      "file": "docs/evidence/survey-assignment-flow-2026-10-25/patient-progress-after-survey-mobile.jpg",
+      "bytes": 37525,
+      "sha256": "34904cbdc12ab40c815d74dc1642a6272ff15e873c749b1afefe1271e51cd39d",
+      "pixels": [
+        360,
+        810
+      ]
+    },
+    {
+      "file": "docs/evidence/survey-assignment-flow-2026-10-25/patient-submit-error-mobile.jpg",
+      "bytes": 36227,
+      "sha256": "d6cf59ccb7de63ce6f0c545f972583b058dfbb32430d296ee608a128a462e15b",
+      "pixels": [
+        360,
+        810
+      ]
+    },
+    {
+      "file": "docs/evidence/survey-assignment-flow-2026-10-25/patient-submitted-mobile.jpg",
+      "bytes": 28808,
+      "sha256": "ca1de5474a8fa4a1675c12a7dda0c525beef30d4740081f57758e7d4e13cd784",
+      "pixels": [
+        360,
+        810
+      ]
+    },
+    {
+      "file": "docs/evidence/survey-assignment-flow-2026-10-25/patient-survey-help-before.jpg",
+      "bytes": 30736,
+      "sha256": "02125545dbd0ddb435e4f9b5751e0d475c62c723e557e5e75a89658242705654",
+      "pixels": [
+        360,
+        810
+      ]
+    },
+    {
+      "file": "docs/evidence/survey-assignment-flow-2026-10-25/selected-template-mobile.jpg",
+      "bytes": 33656,
+      "sha256": "67407f208173a51b2594fe9c65abfbc818c6f2fcb0df761720bcb3cd1fe559fe",
+      "pixels": [
+        360,
+        810
+      ]
+    }
+  ],
+  "qaData": "Exactly one QA assignment30 for patient2:existing published non-medical template; one draft revision1, one submission, actual3points and balance110→113. Main demo data untouched.",
+  "limits": [
+    "Doctor draft privacy and admin no-text observations verify rendered UI; they do not replace backend scope tests or real-pilot privacy approval. Existing QA min-group1 unchanged.",
+    "Doctor error/created observations precede only the selected-title caption; native selected-template snapshot verifies final caption. Initial draft error documents duplicate alerts before the one-line patient fix; final submit error is single.",
+    "Two tooling no-match errors came from expecting the menu title as h1 and using the pre-draft CTA after a draft existed. Corrected from live UI; no app defect inferred.",
+    "Patient form help and selected navigation still describe the parent overview when opened from home. This confirmed UX issue is the next independent task, not a user decision blocker.",
+    "No new full browser/WCAG, screen-reader, FPS, load or clinical acceptance."
+  ]
+}
