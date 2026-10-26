@@ -1,0 +1,19 @@
+.coordination-settings { max-width: 880px; line-height: 1.65; }
+.coordination-settings > p { margin-block: 16px; }
+.coordination-settings > .field { margin-block: 24px; }
+.coordination-settings .button-row { margin-block: 24px 8px; }
+.coordination-status { margin-block: 20px 0; line-height: 1.65; }
+.coordination-status:focus { outline: none; }
+.coordination-recent { display: grid; gap: 16px; padding-inline-start: 20px; }
+.coordination-recent li > span { display: block; color: var(--muted); font-size: 13px; }
+.coordination-intro { max-width: 78ch; line-height: 1.65; margin-bottom: 24px; color: var(--muted); }
+.coordination-notice-list { display: grid; gap: 24px; margin-block: 24px; }
+.coordination-notice .section-heading { align-items: flex-start; flex-wrap: wrap; gap: 12px; }
+.coordination-notice h2 { margin: 0; font-size: 20px; line-height: 1.4; }
+.coordination-notice > p { margin-block: 20px; max-width: 82ch; line-height: 1.65; }
+.coordination-facts { display: grid; grid-template-columns: repeat(auto-fit,minmax(min(100%,220px),1fr)); gap: 20px 24px; margin-block: 24px; }
+.coordination-facts dt { font-size: 13px; color: var(--muted); margin-bottom: 8px; }
+.coordination-facts dd { margin: 0; line-height: 1.6; overflow-wrap: anywhere; }
+.coordination-settings-panel { margin-top: 28px; }
+.coordination-shortcut { display: flex; justify-content: flex-end; margin-block: 0 20px; }
+@media(max-width:600px) { .coordination-notice .button { width: 100%; white-space: normal; text-align: center; } }

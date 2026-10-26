@@ -1,0 +1,223 @@
+{
+  "dataset_version": "synthetic-clinical/1",
+  "fixture_sha256": "c85797532fb13c0fa9d206a7fe21457ab1c73dde641398a6b0bd089671ac6057",
+  "synthetic": true,
+  "applied": true,
+  "created_results": 21,
+  "would_create_results": 21,
+  "replayed_results": 0,
+  "plan": [
+    {
+      "mis_id": 1,
+      "patient_id": 1,
+      "instrument_key": "phq_panic_cr456_3_g3_v1",
+      "action": "create",
+      "expected_score": null,
+      "assignment_id": 28,
+      "result_id": 1
+    },
+    {
+      "mis_id": 1,
+      "patient_id": 1,
+      "instrument_key": "phq9_zolotareva_2023_v1",
+      "action": "create",
+      "expected_score": 12,
+      "assignment_id": 29,
+      "result_id": 2
+    },
+    {
+      "mis_id": 1,
+      "patient_id": 1,
+      "instrument_key": "gad7_cr457_3_g2_v1",
+      "action": "create",
+      "expected_score": 8,
+      "assignment_id": 30,
+      "result_id": 3
+    },
+    {
+      "mis_id": 2,
+      "patient_id": 2,
+      "instrument_key": "phq_panic_cr456_3_g3_v1",
+      "action": "create",
+      "expected_score": null,
+      "assignment_id": 31,
+      "result_id": 4
+    },
+    {
+      "mis_id": 2,
+      "patient_id": 2,
+      "instrument_key": "phq9_zolotareva_2023_v1",
+      "action": "create",
+      "expected_score": 8,
+      "assignment_id": 32,
+      "result_id": 5
+    },
+    {
+      "mis_id": 2,
+      "patient_id": 2,
+      "instrument_key": "gad7_cr457_3_g2_v1",
+      "action": "create",
+      "expected_score": 18,
+      "assignment_id": 33,
+      "result_id": 6
+    },
+    {
+      "mis_id": 3,
+      "patient_id": 3,
+      "instrument_key": "phq_panic_cr456_3_g3_v1",
+      "action": "create",
+      "expected_score": null,
+      "assignment_id": 34,
+      "result_id": 7
+    },
+    {
+      "mis_id": 3,
+      "patient_id": 3,
+      "instrument_key": "phq9_zolotareva_2023_v1",
+      "action": "create",
+      "expected_score": 7,
+      "assignment_id": 35,
+      "result_id": 8
+    },
+    {
+      "mis_id": 3,
+      "patient_id": 3,
+      "instrument_key": "gad7_cr457_3_g2_v1",
+      "action": "create",
+      "expected_score": 6,
+      "assignment_id": 36,
+      "result_id": 9
+    },
+    {
+      "mis_id": 4,
+      "patient_id": 4,
+      "instrument_key": "phq_panic_cr456_3_g3_v1",
+      "action": "create",
+      "expected_score": null,
+      "assignment_id": 37,
+      "result_id": 10
+    },
+    {
+      "mis_id": 4,
+      "patient_id": 4,
+      "instrument_key": "phq9_zolotareva_2023_v1",
+      "action": "create",
+      "expected_score": 11,
+      "assignment_id": 38,
+      "result_id": 11
+    },
+    {
+      "mis_id": 4,
+      "patient_id": 4,
+      "instrument_key": "gad7_cr457_3_g2_v1",
+      "action": "create",
+      "expected_score": 8,
+      "assignment_id": 39,
+      "result_id": 12
+    },
+    {
+      "mis_id": 5,
+      "patient_id": 5,
+      "instrument_key": "phq_panic_cr456_3_g3_v1",
+      "action": "create",
+      "expected_score": null,
+      "assignment_id": 40,
+      "result_id": 13
+    },
+    {
+      "mis_id": 5,
+      "patient_id": 5,
+      "instrument_key": "phq9_zolotareva_2023_v1",
+      "action": "create",
+      "expected_score": 0,
+      "assignment_id": 41,
+      "result_id": 14
+    },
+    {
+      "mis_id": 5,
+      "patient_id": 5,
+      "instrument_key": "gad7_cr457_3_g2_v1",
+      "action": "create",
+      "expected_score": 4,
+      "assignment_id": 42,
+      "result_id": 15
+    },
+    {
+      "mis_id": 6,
+      "patient_id": 6,
+      "action": "skip",
+      "reason": "care_completed"
+    },
+    {
+      "mis_id": 7,
+      "patient_id": 7,
+      "action": "skip",
+      "reason": "care_refused"
+    },
+    {
+      "mis_id": 8,
+      "patient_id": 8,
+      "action": "skip",
+      "reason": "care_unknown"
+    },
+    {
+      "mis_id": 9,
+      "patient_id": 9,
+      "instrument_key": "phq_panic_cr456_3_g3_v1",
+      "action": "create",
+      "expected_score": null,
+      "assignment_id": 43,
+      "result_id": 16
+    },
+    {
+      "mis_id": 9,
+      "patient_id": 9,
+      "instrument_key": "phq9_zolotareva_2023_v1",
+      "action": "create",
+      "expected_score": 14,
+      "assignment_id": 44,
+      "result_id": 17
+    },
+    {
+      "mis_id": 9,
+      "patient_id": 9,
+      "instrument_key": "gad7_cr457_3_g2_v1",
+      "action": "create",
+      "expected_score": 12,
+      "assignment_id": 45,
+      "result_id": 18
+    },
+    {
+      "mis_id": 10,
+      "patient_id": 10,
+      "instrument_key": "phq_panic_cr456_3_g3_v1",
+      "action": "create",
+      "expected_score": null,
+      "assignment_id": 46,
+      "result_id": 19
+    },
+    {
+      "mis_id": 10,
+      "patient_id": 10,
+      "instrument_key": "phq9_zolotareva_2023_v1",
+      "action": "create",
+      "expected_score": 17,
+      "assignment_id": 47,
+      "result_id": 20
+    },
+    {
+      "mis_id": 10,
+      "patient_id": 10,
+      "instrument_key": "gad7_cr457_3_g2_v1",
+      "action": "create",
+      "expected_score": 16,
+      "assignment_id": 48,
+      "result_id": 21
+    }
+  ],
+  "limitations": [
+    "Current generated examples, not actual observations or historical trends.",
+    "Opening time stays unknown; generation latency is not patient completion time.",
+    "No baseline, physician decision, contact, clinical task completion or MIS write is generated."
+  ]
+}

@@ -15,13 +15,14 @@ from app.modules.audit.service import record_event
 from app.modules.patients.models import Patient
 
 POLICY_VERSION = "demo-effort-v1"
+CLINICAL_POLICY_VERSION = "demo-clinical-completion-v1"
 CATALOG_VERSION = "demo-visit-discounts-v1"
 OFFERS = {
     "visit_5": {"title": "Скидка 5% на приём врача", "points": 100, "discount_percent": 5},
     "visit_10": {"title": "Скидка 10% на приём врача", "points": 250, "discount_percent": 10},
 }
 RULES = {
-    "survey": {"label": "Опросы", "daily_cap": 30, "description": "1 балл за заполненный пункт, 2 за текстовый пункт авторской формы; до 30 в день"},
+    "survey": {"label": "Опросы", "daily_cap": 30, "description": "Авторские формы: 1 балл за пункт, 2 за текстовый. Клинические: по числу пунктов полного бланка, независимо от ответов и ветки. Всего до 30 в день"},
     "medication": {"label": "Ведение расписания лекарств", "daily_cap": 2, "description": "2 балла за ведение расписания или явную отметку; один раз в день независимо от числа лекарств и приёмов"},
     "diary": {"label": "Дневник состояния", "daily_cap": 3, "description": "3 балла за запись, один раз в день; личная и общая запись равноправны"},
 }
@@ -113,7 +114,7 @@ def coupon_read(row):
             "created_at": row.created_at, "cancelled_at": row.cancelled_at, "simulated": True}
 
 
-async def grant_points(session, patient_id, kind, source_key, actor_id, effort_units=1):
+async def grant_points(session, patient_id, kind, source_key, actor_id, effort_units=1, *, policy_version=POLICY_VERSION):
     # One lock also serializes different action types and concurrent source requests.
     await session.scalar(select(Patient).where(Patient.id == patient_id).with_for_update())
     previous = await session.scalar(select(ParticipationAward).where(ParticipationAward.patient_id == patient_id,
@@ -126,10 +127,10 @@ async def grant_points(session, patient_id, kind, source_key, actor_id, effort_u
     wanted = effort_units if kind == "survey" else RULES[kind]["daily_cap"]
     points = max(0, min(wanted, RULES[kind]["daily_cap"] - used))
     row = ParticipationAward(patient_id=patient_id, kind=kind, source_key=source_key,
-        policy_version=POLICY_VERSION, points=points, day=day)
+        policy_version=policy_version, points=points, day=day)
     session.add(row); await session.flush()
     record_event(session, actor_id, patient_id, "participation.recorded", "participation_award", row.id,
-                 {"kind": kind, "points": points, "policy_version": POLICY_VERSION})
+                 {"kind": kind, "points": points, "policy_version": policy_version})
     return points
 
 

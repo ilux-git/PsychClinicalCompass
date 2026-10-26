@@ -73,7 +73,10 @@ async def workflow_metrics(session, patients, *, assignment_rows=None):
     support_rows = (await session.execute(select(Message.patient_id, Message.created_at.label("message_created_at"),
         Alert.id.label("alert_id"), Alert.acknowledged_at).outerjoin(
         Alert, Alert.message_id == Message.id).where(Message.patient_id.in_(ids), Message.support_requested.is_(True)))).all()
-    support_alert_ids = [row.alert_id for row in support_rows if row.alert_id is not None]
+    # Keep the same patient/message scope in SQL instead of expanding every
+    # historical alert ID into a separate bound parameter.
+    support_alert_ids = select(Alert.id).join(Message, Message.id == Alert.message_id).where(
+        Message.patient_id.in_(ids), Message.support_requested.is_(True))
     planned, replies = set(), {}
     for alert_id, reply_at in (await session.execute(select(AlertHandling.alert_id, Message.created_at).outerjoin(
         Message, Message.id == AlertHandling.reply_message_id).where(AlertHandling.alert_id.in_(support_alert_ids)))).all():

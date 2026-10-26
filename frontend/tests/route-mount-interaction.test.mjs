@@ -34,7 +34,7 @@ after(async()=>{await server?.close();dom?.window.close();});
 test("route content mounts without animation callbacks while a draft still requires an explicit decision",async()=>{
   unexpected=[];sessionStorage.clear();localStorage.clear();
   const patient={id:3,display_name:"Мария Тестовая",role:"patient",patient_id:2,availability:"available"};
-  const unavailable=new Set(["/survey-assignments","/participation/me","/patients/2","/participation/points","/participation/care-progress","/patients/2/assessments"]);
+  const unavailable=new Set(["/survey-assignments","/participation/me","/patients/2","/participation/points","/participation/care-progress","/patients/2/assessments","/patients/2/clinical-results"]);
   globalThis.fetch=async(path,options={})=>{
     const method=options.method??"GET";
     if(path==="/auth/login"&&method==="POST")return Response.json({access_token:"fixture-patient2",user:patient});
@@ -47,10 +47,10 @@ test("route content mounts without animation callbacks while a draft still requi
   const user=userEvent.setup({document:dom.window.document});
   await user.selectOptions(screen.getByRole("combobox",{name:"Демонстрационная роль"}),"patient2");
   await user.click(screen.getByRole("button",{name:"Войти",exact:true}));
-  await screen.findByRole("heading",{name:"Здравствуйте, Мария"});
+  await screen.findByRole("heading",{name:"Мой день",exact:true});
   await user.click(screen.getByRole("link",{name:/^Дневник\s*Записать/}));
   assert.equal(Boolean(screen.queryByRole("heading",{name:"Мой дневник"})),true,"The newly selected route cannot wait for a frame or exit animation");
-  assert.equal(Boolean(screen.queryByRole("heading",{name:"Здравствуйте, Мария"})),false);
+  assert.equal(Boolean(screen.queryByRole("heading",{name:"Мой день",exact:true})),false);
   assert.equal(dom.window.location.search,"?section=diary");
   await user.type(screen.getByRole("textbox",{name:"Что хотите сохранить?"}),"Учебный черновик");
   await user.click(screen.getByRole("link",{name:/^Лекарства\s*Расписание/}));

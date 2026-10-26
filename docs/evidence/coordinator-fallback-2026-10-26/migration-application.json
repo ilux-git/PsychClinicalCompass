@@ -1,0 +1,30 @@
+[
+  {
+    "database": "compass_dev",
+    "revision": "t38_coordinator_fallback",
+    "immutable_history_preserved": true,
+    "verified_existing_rows": {
+      "questionnaire_responses": 30,
+      "survey_submissions": 16,
+      "clinical_results": 0,
+      "emr_demo_documents": 0,
+      "emr_demo_receipts": 0
+    },
+    "clinical_data_reset": false,
+    "mis_modified": false
+  },
+  {
+    "database": "compass_ui_flow_qa",
+    "revision": "t38_coordinator_fallback",
+    "immutable_history_preserved": true,
+    "verified_existing_rows": {
+      "questionnaire_responses": 30,
+      "survey_submissions": 23,
+      "clinical_results": 4,
+      "emr_demo_documents": 1,
+      "emr_demo_receipts": 1
+    },
+    "clinical_data_reset": false,
+    "mis_modified": false
+  }
+]

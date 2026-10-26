@@ -1,0 +1,80 @@
+{
+  "checked_at": "2026-10-25T21:27:10.245994+00:00",
+  "stage": "doctor-accepted",
+  "read_only": true,
+  "databases": [
+    {
+      "database": "compass_dev",
+      "revision": "t38_coordinator_fallback",
+      "clinical_results": 0,
+      "routes": 0,
+      "notices": 0,
+      "violations": {
+        "result_submission_patient_mismatch": 0,
+        "baseline_source_mismatch": 0,
+        "clinical_alert_source_mismatch": 0,
+        "alert_without_decision": 0,
+        "flagged_result_without_outbox": 0,
+        "processed_clinical_event_without_alert": 0,
+        "closed_clinical_alert_without_action": 0,
+        "closed_clinical_alert_without_decision": 0,
+        "notice_patient_mismatch": 0,
+        "notice_source_not_urgent_clinical": 0,
+        "notice_recipient_not_coordinator": 0,
+        "route_role_mismatch": 0
+      },
+      "pending_or_failed_events": 0
+    },
+    {
+      "database": "compass_ui_flow_qa",
+      "revision": "t38_coordinator_fallback",
+      "clinical_results": 5,
+      "routes": 1,
+      "notices": 1,
+      "violations": {
+        "result_submission_patient_mismatch": 0,
+        "baseline_source_mismatch": 0,
+        "clinical_alert_source_mismatch": 0,
+        "alert_without_decision": 0,
+        "flagged_result_without_outbox": 0,
+        "processed_clinical_event_without_alert": 0,
+        "closed_clinical_alert_without_action": 0,
+        "closed_clinical_alert_without_decision": 0,
+        "notice_patient_mismatch": 0,
+        "notice_source_not_urgent_clinical": 0,
+        "notice_recipient_not_coordinator": 0,
+        "route_role_mismatch": 0
+      },
+      "pending_or_failed_events": 0,
+      "fixture": [
+        {
+          "id": 1,
+          "patient_id": 8,
+          "coordinator_id": 14,
+          "reason": "doctor_unavailable",
+          "created_at": "2026-10-25 21:23:58.691528+00:00",
+          "coordinator_acknowledged_at": "2026-10-25 21:25:26.291962+00:00",
+          "alert_id": 19,
+          "alert_status": "acknowledged",
+          "doctor_acknowledged_at": "2026-10-25 21:26:55.003836+00:00",
+          "acknowledgement_due_at": "2026-10-25 23:23:58.677271+00:00",
+          "decision_status": "pending_review"
+        }
+      ],
+      "routing_audits": [
+        {
+          "event_type": "coordination.route_changed",
+          "count": 1
+        },
+        {
+          "event_type": "coordination.urgent_acknowledged",
+          "count": 1
+        },
+        {
+          "event_type": "coordination.urgent_routed",
+          "count": 1
+        }
+      ]
+    }
+  ]
+}

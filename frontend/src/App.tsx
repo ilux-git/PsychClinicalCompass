@@ -39,6 +39,9 @@ import { SectionBoundary } from "./SectionBoundary";
 import { ViewStateProvider, type PatientAnswerTarget, type ReturnPoint } from "./ViewState";
 import { cardSections, defaultView, navigationFor, patientSurveyGuide, sectionFor, type NavItem, type CardTab } from "./navigation";
 import { WorkspaceHome } from "./WorkspaceHome";
+import { CoordinatorNotices } from "./CoordinatorFallback";
+import { BrandIdentity, productName } from "./Brand";
+import anatomy from "./assets/limbus-anatomy.jpg";
 import { createWorkspaceHistory, pageRoute, routeHref, type RouteContext, type WorkspaceRoute } from "./routes";
 
 const DoctorDashboard = lazy(() => import("./DoctorDashboard").then(module => ({default:module.DoctorDashboard})));
@@ -50,7 +53,7 @@ const TaskBoard = lazy(() => import("./TaskBoard").then(module => ({default:modu
 
 const navIcons:Record<string,typeof Users>={home:House,users:Users,bell:Bell,tasks:ListTodo,surveys:ClipboardList,chart:LayoutDashboard,activity:Activity,chat:MessageCircle,heart:HeartHandshake,sparkles:Sparkles,book:BookOpen,pill:Pill,shield:ShieldCheck};
 
-function Login({ onLogin }: { onLogin: (user: User) => void }) {
+function Login({ onLogin, sessionMessage }: { onLogin: (user: User) => void; sessionMessage: string }) {
   const [username, setUsername] = useState("doctor");
   const [password, setPassword] = useState("doctor-pass-123");
   const [busy, setBusy] = useState(false);
@@ -91,51 +94,19 @@ function Login({ onLogin }: { onLogin: (user: User) => void }) {
     <main className="login-page">
       <div className="login-story">
         <a href="/" className="brand">
-          <span className="brand-mark">
-            <Activity size={24} />
-          </span>
-          <span>
-            clinical<span className="brand-light">compass</span>
-          </span>
+          <BrandIdentity/>
         </a>
         <div className="login-story-main">
-          <Badge tone="purple">Сопровождение между визитами</Badge>
-          <h1>
-            Ближе к пациенту.
-            <br />
-            <span>Понятнее, что мешает.</span>
-          </h1>
-          <p>
-            Услышать обратную связь, заметить сложности и подобрать следующий
-            шаг вместе с пациентом.
-          </p>
-          <div className="story-visual" aria-hidden="true">
-            <div className="orbit orbit-one" />
-            <div className="orbit orbit-two" />
-            <div className="story-heart">
-              <HeartHandshake size={74} strokeWidth={1.25} />
-            </div>
-            <div className="story-pill pill-one">
-              <MessageCircle size={17} /> Голос пациента
-            </div>
-            <div className="story-pill pill-two">
-              <Sparkles size={17} /> Маленькие шаги
-            </div>
-            <div className="story-pill pill-three">
-              <CheckCircle2 size={17} /> Обратная связь врачу
-            </div>
-          </div>
+          <h1>Сопровождение пациентов</h1>
+          <figure className="limbus-anatomy" aria-hidden="true"><img src={anatomy} width="736" height="1308" decoding="async" alt=""/></figure>
         </div>
-        <p className="login-footer">
-          <ShieldCheck size={16} /> Учебный стенд · только синтетические данные
-        </p>
       </div>
       <div className="login-form-side">
         <form className="login-form" onSubmit={login}>
-          <p className="eyebrow">Добро пожаловать</p>
-          <h2>Войти в Compass</h2>
+          <p className="eyebrow">Демонстрационный стенд</p>
+          <h2>Войти в {productName}</h2>
           <p className="muted">
-            Выберите роль для демонстрации или введите данные учётной записи.
+            Только синтетические пациенты. Не вводите данные реальных людей. Выберите роль или введите данные демонстрационной учётной записи.
           </p>
           <label className="field">
             Демонстрационная роль
@@ -145,11 +116,6 @@ function Login({ onLogin }: { onLogin: (user: User) => void }) {
               {Array.from({ length: 10 }, (_, i) => (
                 <option key={i} value={`patient${i + 1}`}>
                   Пациент {i + 1}
-                  {i === 5
-                    ? " · ждёт ответов"
-                    : i === 7
-                      ? " · пока без назначений"
-                      : ""}
                 </option>
               ))}
               <option value="admin">
@@ -179,12 +145,13 @@ function Login({ onLogin }: { onLogin: (user: User) => void }) {
             />
           </label>
           <ErrorBox message={error} />
+          {sessionMessage && <p className="field-hint" role="status">{sessionMessage}</p>}
           <Button disabled={busy} type="submit">
             {busy ? "Входим…" : "Войти"}
             <ArrowRight size={17} />
           </Button>
           <p className="field-hint">
-            Доступны только ваши пациенты и ответы. Кабинет администратора не
+            Доступны только Ваши пациенты и ответы. Кабинет администратора не
             открывает медицинские карточки.
           </p>
         </form>
@@ -197,6 +164,8 @@ function Workspace() {
   const guard = useNavigationGuard();
   const { moving, transition } = useInteractionMotion();
   const [user, setUser] = useState<User | null>(null);
+  const sessionEpoch = useRef(0);
+  const [sessionMessage, setSessionMessage] = useState("");
   const currentUser=useRef(user);currentUser.current=user;
   const [availabilityPending,setAvailabilityPending]=useState<{doctorId:number;value:string}|null>(null);
   const [availabilityError,setAvailabilityError]=useState<{doctorId:number;message:string}|null>(null);
@@ -261,7 +230,7 @@ function Workspace() {
   },[user?.id,user?.role,guard.run,guard.runFor]);
   useEffect(()=>{
     const title=!user?"Вход":selectedPatient!==null?cardSections[patientEntry].title:selectedAssignment!==null?"Ответ на опрос":sectionFor(user.role,view).title;
-    document.title=`${title} · Clinical Compass`;
+    document.title=`${title} · ${productName}`;
   },[user?.role,view,selectedPatient,patientEntry,selectedAssignment]);
   useLayoutEffect(()=>{
     const nav=primaryNavigation.current;
@@ -316,6 +285,8 @@ function Workspace() {
     return () => clearTimeout(timer);
   }, [notice]);
   const logout = useCallback(() => {
+    sessionEpoch.current += 1;
+    setSessionMessage("");
     historyNavigation.current?.dispose();historyNavigation.current=null;locationSnapshot.current=null;
     window.history.replaceState(null,"",window.location.pathname);
     sessionStorage.removeItem("compass-token");
@@ -329,6 +300,22 @@ function Workspace() {
     setGuideStart(0);
     setMenuOpen(false);
   }, []);
+  function signOut() {
+    const token = sessionStorage.getItem("compass-token");
+    // Start while api() can still capture this credential. Local exit never waits for transport.
+    const request = token ? api<{revoked:boolean}>("/auth/logout", {method:"POST"}) : null;
+    logout();
+    if (!request) return;
+    const exitEpoch = sessionEpoch.current;
+    const stillSignedOut = () => sessionEpoch.current === exitEpoch && !sessionStorage.getItem("compass-token");
+    setSessionMessage("Вы вышли на этом устройстве. Завершаем сессию…");
+    void request.then(result => {
+      if (result.revoked !== true) throw new Error("Revocation was not confirmed");
+      if (stillSignedOut()) setSessionMessage("Вы вышли из учётной записи.");
+    }).catch(() => {
+      if (stillSignedOut()) setSessionMessage("Вы вышли на этом устройстве. Завершение сессии на сервере не подтверждено.");
+    });
+  }
   useEffect(() => {
     let active = true;
     if (sessionStorage.getItem("compass-token"))
@@ -408,12 +395,12 @@ function Workspace() {
         <Loading />
       </div>
     );
-  if (!user) return <Login onLogin={value => {setUser(value); setView(defaultView(value.role));}} />;
+  if (!user) return <Login sessionMessage={sessionMessage} onLogin={value => {sessionEpoch.current += 1; setSessionMessage(""); setUser(value); setView(defaultView(value.role));}} />;
   const nav=navigationFor(user.role);
   const currentSection=sectionFor(user.role,navigationView);
   const primaryNav=nav.filter(item=>!item.secondary);
   const secondaryNav=nav.filter(item=>item.secondary);
-  const quickNav=user.role==="doctor"?[["home","Главная"],["patients","Пациенты"],["events","События"],["tasks","План"]]:user.role==="patient"?[["overview","Мой день"],["surveys","Опросы"],["diary","Дневник"],["chat","Врачу"]]:user.role==="admin"?[["overview","Обзор"],["barriers","Барьеры"],["actions","Действия"],["sources","Данные"]]:[];
+  const quickNav=user.role==="doctor"?[["home","Главная"],["patients","Пациенты"],["events","События"],["tasks","План"]]:user.role==="patient"?[["overview","Мой день"],["surveys","Опросы"],["diary","Дневник"],["chat","Врачу"]]:user.role==="admin"?[["overview","Обзор"],["barriers","Затруднения"],["actions","Действия"],["sources","Данные"]]:[];
   function navControl(item:NavItem) {
     const Icon=navIcons[item.icon];
     return <a href={routeHref(pageRoute(user!.role,item.id))} className={navigationView===item.id?"active":""} aria-current={navigationView===item.id?"page":undefined} onClick={event=>{if(!event.metaKey&&!event.ctrlKey&&!event.shiftKey&&!event.altKey&&event.button===0){event.preventDefault();navigate(item.id);}}}>
@@ -434,18 +421,13 @@ function Workspace() {
             navigate(defaultView(user.role));
           }}
         >
-          <span className="brand-mark">
-            <Activity size={23} />
-          </span>
-          <span>
-            clinical<span className="brand-light">compass</span>
-          </span>
+          <BrandIdentity/>
         </a>
         <div className="workspace-heading"><div className="workspace-label">
           {user.role === "doctor"
-            ? "Пространство врача"
+                ? "Кабинет врача"
             : user.role === "patient"
-              ? "Моё пространство"
+              ? "Кабинет пациента"
               : user.role === "coordinator" ? "Координатор" : "Администратор"}
         </div><button type="button" className="icon-button drawer-close" aria-label="Закрыть навигацию" onClick={()=>setMenuOpen(false)}><X size={18}/></button></div>
         <nav ref={primaryNavigation} aria-label="Главная навигация">
@@ -455,21 +437,6 @@ function Workspace() {
           </Fragment>)}
         </nav>
         {secondaryNav.length>0&&<details className="demo-navigation" key={view==="telegram"?"active-demo":"demo"} open={view==="telegram"||undefined}><summary>Демонстрация</summary><div>{secondaryNav.map(item=><Fragment key={item.id}>{navControl(item)}</Fragment>)}</div></details>}
-        <div className="sidebar-support">
-          <span className="support-icon">
-            <HeartHandshake size={25} />
-          </span>
-          <strong>
-            {user.role === "doctor"
-              ? "За цифрами — человек"
-              : user.role === "admin" ? "Общая картина клиники" : user.role === "coordinator" ? "Помочь со следующим шагом" : "Каждый ответ важен"}
-          </strong>
-          <p>
-            {user.role === "doctor"
-              ? "Обратная связь помогает начать нужный разговор."
-              : user.role === "admin" ? "Охват и препятствия без персональных данных." : user.role === "coordinator" ? "Назначенные организационные задачи и выполненные действия." : "Расскажите, какая поддержка нужна именно вам."}
-          </p>
-        </div>
         {user.role==="doctor"&&<div className="availability-select sidebar-availability" aria-busy={availabilityBusy}>
           <div className="availability-heading"><label htmlFor={availabilityId}>Доступность врача</label><span role="status">{availabilityBusy?"Сохраняем…":""}</span></div>
           <div className="availability-field"><span className={`availability-dot ${availabilityBusy?"pending":user.availability==="available"?"online":""}`} aria-hidden="true"/>
@@ -491,7 +458,7 @@ function Workspace() {
                   : user.role === "coordinator" ? "Координатор" : "Администратор"}
             </small>
           </div>
-          <button className="icon-button" onClick={() => {setMenuOpen(false);guard.run(logout);}} aria-label="Выйти">
+          <button className="icon-button" onClick={() => {setMenuOpen(false);guard.run(signOut);}} aria-label="Выйти">
             <LogOut size={18} />
           </button>
         </div>
@@ -522,7 +489,7 @@ function Workspace() {
           <div className="topbar-actions">
             {user.role === "doctor" && <DoctorInboxNotice key={user.id} open={() => navigate("events")} />}
             <Button variant="ghost" className="section-help-button" aria-label="Помощь с разделом" onClick={()=>setGuideStart(value=>value+1)}><CircleHelp size={18}/><span>Помощь</span></Button>
-            <Badge tone="purple">Демо · синтетические данные</Badge>
+            <Badge tone="muted">Демо</Badge>
           </div>
         </header>
         <main className="main-content" id="compass-main" tabIndex={-1} key={user.id}>
@@ -563,6 +530,7 @@ function Workspace() {
               <DoctorDashboard
                 openPatient={(id,key,answerTarget)=>openPatient(id,{returnKey:key,answerTarget})}
                 createSurvey={() => navigate("surveys",()=>setNewSurvey(true))}
+                openClinicalHistory={() => navigate("state")}
               />
             ) : view === "tasks" ? (
               <TaskBoard notify={notify} choosePatient={() => navigate("patients")} openPatient={(id,key)=>openPatient(id,{entry:"care",returnKey:key})} />
@@ -583,13 +551,14 @@ function Workspace() {
                 simulated={view === "telegram"}
                 initialTab={patientEntry}
                 onTabChange={changePatientTab}
+                openClinicalLibrary={()=>navigate("surveys")}
                 openTasks={() => navigate("tasks")}
               />
             )
           ) : user.role === "patient" ? (
             <PatientHome key={view} user={user} view={view} notify={notify} navigate={navigate} assignmentId={selectedAssignment} selectAssignment={selectAssignment}/>
           ) : user.role === "coordinator" ? (
-            <TaskBoard operational notify={notify} />
+            view==="urgent"?<CoordinatorNotices/>:<><div className="coordination-shortcut"><Button variant="secondary" onClick={()=>navigate("urgent")}>Срочные уведомления <ArrowRight size={17}/></Button></div><TaskBoard operational notify={notify}/></>
           ) : (
             <AdminDashboard view={view} navigate={navigate}/>
           )}
@@ -599,8 +568,7 @@ function Workspace() {
           </div>
         </main>
         <footer className="app-footer">
-          Clinical Compass · учебный MVP{" "}
-          <span>Поддержка диалога между врачом и пациентом</span>
+          {productName}
         </footer>
         {quickNav.length>0&&<nav className="mobile-navigation" aria-label="Быстрые переходы">
           {quickNav.map(([id,label])=>{

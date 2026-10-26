@@ -1,0 +1,79 @@
+{
+  "migration_sha256": "0a9ecf4993ff2d0fc49e2a14bb2f5cce4b78a9bab265e0f663300017460988d5",
+  "databases": [
+    {
+      "kind": "main",
+      "source_database": "compass_dev",
+      "snapshot_data_match": true,
+      "archive_sha256": "b1b131f628dcdfbb72a4abbf221d945291198690dfaa884d499699ab0614352c",
+      "backup_seconds": 0.308,
+      "restore_seconds": 0.635,
+      "actions": [
+        {
+          "command": "upgrade t38_coordinator_fallback",
+          "exit_code": 0,
+          "expected_success": true
+        },
+        {
+          "command": "downgrade s37_clinical_review",
+          "exit_code": 0,
+          "expected_success": true
+        },
+        {
+          "command": "upgrade t38_coordinator_fallback",
+          "exit_code": 0,
+          "expected_success": true
+        },
+        {
+          "command": "downgrade s37_clinical_review",
+          "exit_code": 1,
+          "expected_success": false
+        },
+        {
+          "command": "downgrade s37_clinical_review",
+          "exit_code": 1,
+          "expected_success": false
+        }
+      ],
+      "immutable_history_preserved": true,
+      "source_modified": false
+    },
+    {
+      "kind": "qa",
+      "source_database": "compass_ui_flow_qa",
+      "snapshot_data_match": true,
+      "archive_sha256": "ab99cce8468e209efe8bbba3ba0093df857464809aadf02339289f078a75efdb",
+      "backup_seconds": 0.249,
+      "restore_seconds": 0.6,
+      "actions": [
+        {
+          "command": "upgrade t38_coordinator_fallback",
+          "exit_code": 0,
+          "expected_success": true
+        },
+        {
+          "command": "downgrade s37_clinical_review",
+          "exit_code": 0,
+          "expected_success": true
+        },
+        {
+          "command": "upgrade t38_coordinator_fallback",
+          "exit_code": 0,
+          "expected_success": true
+        },
+        {
+          "command": "downgrade s37_clinical_review",
+          "exit_code": 1,
+          "expected_success": false
+        },
+        {
+          "command": "downgrade s37_clinical_review",
+          "exit_code": 1,
+          "expected_success": false
+        }
+      ],
+      "immutable_history_preserved": true,
+      "source_modified": false
+    }
+  ]
+}

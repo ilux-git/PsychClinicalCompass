@@ -13,7 +13,7 @@ os.environ.setdefault("REDIS_URL", "redis://127.0.0.1:6379/0")
 
 from app.core.security import create_access_token, hash_password
 from app.db.base import Base
-from app.db.session import async_session_compass, engine_compass, engine_mis
+from app.db.session import async_session_compass, engine_compass, engine_mis, engine_read_audit
 from app.main import app
 from app.modules.access.models import User, UserRole
 from app.modules.patients.models import Patient, PatientMapping
@@ -31,6 +31,7 @@ async def database():
         await connection.run_sync(Base.metadata.drop_all)
         await connection.run_sync(Base.metadata.create_all)
     yield async_session_compass
+    await engine_read_audit.dispose()
     await engine_compass.dispose()
     await engine_mis.dispose()
 

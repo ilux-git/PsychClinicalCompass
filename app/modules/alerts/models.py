@@ -10,15 +10,17 @@ from app.db.base import Base
 class Alert(Base):
     __tablename__ = "alerts"
     __table_args__ = (CheckConstraint(
-        "(source_kind = 'assessment' AND assessment_id IS NOT NULL AND message_id IS NULL) OR "
-        "(source_kind = 'support_request' AND message_id IS NOT NULL AND assessment_id IS NULL)",
+        "(source_kind = 'assessment' AND assessment_id IS NOT NULL AND message_id IS NULL AND clinical_result_id IS NULL) OR "
+        "(source_kind = 'support_request' AND message_id IS NOT NULL AND assessment_id IS NULL AND clinical_result_id IS NULL) OR "
+        "(source_kind = 'clinical_assessment' AND clinical_result_id IS NOT NULL AND assessment_id IS NULL AND message_id IS NULL)",
         name="ck_alert_source"),)
 
     id: Mapped[int] = mapped_column(primary_key=True)
     patient_id: Mapped[int] = mapped_column(ForeignKey("patients.id"), nullable=False, index=True)
     source_event_id: Mapped[int] = mapped_column(ForeignKey("outbox_events.id"), unique=True, nullable=False)
     assessment_id: Mapped[int | None] = mapped_column(ForeignKey("questionnaire_responses.id"))
-    message_id: Mapped[int | None] = mapped_column(ForeignKey("messages.id"))
+    message_id: Mapped[int | None] = mapped_column(ForeignKey("messages.id"), index=True)
+    clinical_result_id: Mapped[int | None] = mapped_column(ForeignKey("clinical_results.id"))
     source_kind: Mapped[str] = mapped_column(String(24), nullable=False, default="assessment", server_default="assessment")
     rule_id: Mapped[str] = mapped_column(String(80), nullable=False)
     rule_version: Mapped[str] = mapped_column(String(32), nullable=False)
@@ -27,6 +29,8 @@ class Alert(Base):
     status: Mapped[str] = mapped_column(String(24), nullable=False, default="created")
     acknowledged_by: Mapped[int | None] = mapped_column(ForeignKey("users.id"))
     acknowledged_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+    acknowledgement_due_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+    action_due_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
     closed_by: Mapped[int | None] = mapped_column(ForeignKey("users.id"))
     closed_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())

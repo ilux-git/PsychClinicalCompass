@@ -1,0 +1,46 @@
+{
+  "checked_at": "2026-10-26T04:25:53.492Z",
+  "main_origin": "http://127.0.0.1:8780",
+  "qa_origin": "http://127.0.0.1:8782",
+  "patient": {
+    "canonical_PHQ9": 0,
+    "canonical_GAD7": 4,
+    "legacy_separate": true,
+    "widths_checked": [
+      1440,
+      375
+    ],
+    "overflow": false
+  },
+  "doctor": {
+    "own_cohort": 8,
+    "observed_per_edition": 5,
+    "PHQ9_median": 8,
+    "GAD7_median": 8,
+    "completed": 30,
+    "assigned": 35,
+    "timing_generated_excluded": 15,
+    "timing_eligible": 15
+  },
+  "admin": {
+    "patient_card_links": 0,
+    "example_patient_names_visible": false,
+    "timing_generated_excluded": 21,
+    "timing_eligible": 16,
+    "assignment_median_hours": 69
+  },
+  "coordinator": {
+    "qa_patient_id": 8,
+    "history": "physician acknowledged",
+    "clinical_card_links": 0,
+    "medical_answers_visible": false,
+    "viewport_width": 1280,
+    "dom_client_width": 1265,
+    "overflow": false
+  },
+  "console_errors": {
+    "main": [],
+    "qa": []
+  },
+  "boundary": "Native smoke of unchanged UI against updated APIs; not a repeat of all 125 frontend interaction tests. No new clinical answers, decisions or tasks were written."
+}

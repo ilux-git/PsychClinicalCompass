@@ -1,0 +1,29 @@
+{
+  "applied_at": "2026-10-26T04:18:41.895026+00:00",
+  "kind": "main",
+  "database": "compass_dev",
+  "port": 55432,
+  "revision": "u39_support_lookup_indexes",
+  "indexes": [
+    {
+      "name": "ix_alerts_message_id",
+      "valid": true,
+      "ready": true,
+      "unique": false,
+      "definition": "CREATE INDEX ix_alerts_message_id ON public.alerts USING btree (message_id)"
+    },
+    {
+      "name": "ix_messages_patient_support_recent",
+      "valid": true,
+      "ready": true,
+      "unique": false,
+      "definition": "CREATE INDEX ix_messages_patient_support_recent ON public.messages USING btree (patient_id, id) WHERE (support_requested IS TRUE)"
+    }
+  ],
+  "business_table_checksums_preserved": 35,
+  "sequence_collision_checks": 31,
+  "live_access_metadata_may_append": true,
+  "mis_modified": false,
+  "source_reset": false,
+  "verified_archive_sha256": "2b64412c20406775d4775ab8c77a689c71d041e9d3b6471fd20eedf2bec6a613"
+}

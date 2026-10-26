@@ -9,6 +9,7 @@ from app.db.base import Base
 
 class Survey(Base):
     __tablename__ = "surveys"
+    __table_args__ = (UniqueConstraint("doctor_id", "clinical_key", name="uq_survey_doctor_clinical_key"),)
 
     id: Mapped[int] = mapped_column(primary_key=True)
     doctor_id: Mapped[int] = mapped_column(ForeignKey("users.id"), nullable=False, index=True)
@@ -16,6 +17,7 @@ class Survey(Base):
     description: Mapped[str] = mapped_column(String(2000), nullable=False, default="")
     purpose: Mapped[str] = mapped_column(String(32), nullable=False, default="custom")
     questions: Mapped[list[dict]] = mapped_column(JSONB, nullable=False)
+    clinical_key: Mapped[str | None] = mapped_column(String(64))
     version: Mapped[int] = mapped_column(nullable=False, default=1)
     previous_version_id: Mapped[int | None] = mapped_column(ForeignKey("surveys.id"))
     published_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))

@@ -15,7 +15,8 @@ type Clinic = {
   cohort: Protected<{patients: number}> | null;
   dimensions: (Protected<{responding_patients: number; assigned_patients: number; coverage_percent: number | null}> & {code: string; label: string})[];
   journey: Protected<{assigned: number; opened: number; completed: number; opened_not_completed: number;
-    completed_without_open_record: number; assignment_to_completion: {median_seconds: number | null}; open_to_completion: {median_seconds: number | null}}> | null;
+    completed_without_open_record: number; timing_excluded_generated?: number; timing_eligible_completed?: number;
+    assignment_to_completion: {median_seconds: number | null}; open_to_completion: {median_seconds: number | null}}> | null;
   barriers: Protected<{responding_patients: number; categories: {code: string; label: string; count: number}[]}> | null;
   distributions: (Protected<{responding_patients: number; options: {value: string; count: number}[]}> & {reference: string; dimension: keyof typeof dimensionLabels; kind: string})[];
   adherence: Protected<{reports: number; statuses: Record<string, number>}> | null;
@@ -32,7 +33,7 @@ export function ClinicDecisionSummary({workflow,navigate}:{workflow:Protected<Wo
   const checks=d?verificationProgress(d.tasks):null;
   const waiting=d?.support_requests?d.support_requests.queued+d.support_requests.awaiting_review:null;
   return <section className="clinic-decision-summary" aria-labelledby="clinic-decision-title">
-    <header><div><p className="eyebrow">Продолжение лечения и работа клиники</p><h2 id="clinic-decision-title">Что сейчас требует внимания</h2></div>{d&&<span>Срез на {date(d.as_of)}</span>}</header>
+    <header><div><p className="eyebrow">Продолжение лечения и работа клиники</p><h2 id="clinic-decision-title">Сводка сопровождения</h2></div>{d&&<span>Срез на {date(d.as_of)}</span>}</header>
     {!d?<p className="clinic-summary-hidden">{workflow?.suppressed?"Показатели сопровождения скрыты правилами групп.":"Показатели сопровождения пока недоступны."} Это не нулевой результат. Доступные блоки сводки — ниже.</p>:<>
       <dl className="clinic-summary-values">
         <div><dt>Подтверждённые отказы</dt><dd>{d.treatment.refused}<p>{d.refusal_reasons?.patients?`Конкретная причина известна у ${d.refusal_reasons.with_specific_reason} из ${d.refusal_reasons.patients}.`:d.treatment.refused?"Полнота причин пока неизвестна.":"По текущим решениям врачей отказов нет."}</p></dd></div>
@@ -70,10 +71,11 @@ export function AdminDashboard({view="overview",navigate}: {view?:string;navigat
         <p className="field-hint">Пациенты с ответом / пациенты, которым назначены вопросы направления. Это охват, а не оценка личности. Малые группы скрываются.</p>
       </Section>
       <Section title="Назначение → открытие → завершение">
-        {d.journey?.values ? <>
+        {d.journey?.values&&!d.journey.suppressed ? <>
           <HorizontalBars title="Наблюдаемое прохождение опросов" unit="опросов" rows={[{label:"Назначено",value:d.journey.values.assigned},{label:"Открытие зафиксировано",value:d.journey.values.opened},{label:"Завершено, включая старые ответы",value:d.journey.values.completed}]} caption="Открытия измерялись не у всех старых ответов; этот график не является вложенной воронкой конверсии."/>
           <p>Открыты без ответа: {d.journey.values.opened_not_completed}. Завершены без измеренного открытия: {d.journey.values.completed_without_open_record}.</p>
           <p>Медиана от назначения: {elapsed(d.journey.values.assignment_to_completion.median_seconds)}; от открытия: {elapsed(d.journey.values.open_to_completion.median_seconds)}.</p>
+          {(d.journey.values.timing_excluded_generated??0)>0&&<p className="field-hint">Из расчёта времени исключены сгенерированные примеры: {d.journey.values.timing_excluded_generated}. Осталось завершений для оценки времени: {d.journey.values.timing_eligible_completed}. Общие числа опросов включают оба источника.</p>}
         </> : <p className="muted">{d.status === "privacy_not_configured" ? "Показ появится после настройки групп." : hidden}</p>}
         <p className="field-hint">Назначение не доказывает доставку. Интервалы включают перерывы; скорость ответа не является оценкой заинтересованности.</p>
       </Section>

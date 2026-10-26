@@ -9,7 +9,7 @@ from app.modules.access.models import User, UserRole
 from app.modules.adherence.models import AdherenceReport
 from app.modules.patients.models import Patient
 from app.modules.surveys.models import Survey, SurveyAssignment, SurveySubmission
-from app.modules.analytics.collection import dimension_coverage, survey_journey
+from app.modules.analytics.collection import dimension_coverage, generated_submission_ids, survey_journey
 
 
 async def engagement(session: AsyncSession, user: User,
@@ -18,13 +18,20 @@ async def engagement(session: AsyncSession, user: User,
         raise HTTPException(422, "Укажите корректный период с часовым поясом; верхняя граница не включается")
     patients = (await session.scalars(select(Patient).where(Patient.doctor_id == user.id).order_by(Patient.id))).all()
     patient_ids = [p.id for p in patients]
-    query = select(SurveyAssignment, Survey, SurveySubmission).join(Survey, Survey.id == SurveyAssignment.survey_id).outerjoin(
+    query = select(SurveyAssignment, SurveySubmission).join(Survey, Survey.id == SurveyAssignment.survey_id).outerjoin(
         SurveySubmission, SurveySubmission.assignment_id == SurveyAssignment.id).where(SurveyAssignment.patient_id.in_(patient_ids))
     if since:
         query = query.where(SurveyAssignment.created_at >= since)
     if until:
         query = query.where(SurveyAssignment.created_at < until)
-    rows = (await session.execute(query)).all()
+    assignments = (await session.execute(query)).all()
+    # A published definition is immutable and may be shared by many assignments.
+    # Decode it once per survey, keeping the original scoped assignment/response rows.
+    survey_ids = {assignment.survey_id for assignment, _ in assignments}
+    surveys = {survey.id: survey for survey in (await session.scalars(
+        select(Survey).where(Survey.id.in_(survey_ids)))).all()} if survey_ids else {}
+    rows = [(assignment, surveys[assignment.survey_id], response) for assignment, response in assignments]
+    generated_ids = await generated_submission_ids(session, rows)
     report_query = select(AdherenceReport).where(AdherenceReport.patient_id.in_(patient_ids))
     if since:
         report_query = report_query.where(AdherenceReport.created_at >= since)
@@ -77,7 +84,7 @@ async def engagement(session: AsyncSession, user: User,
         "patients_without_assignments": len(patient_ids) - len(assigned_patients),
         "overdue_assignments": sum(r is None and a.due_at is not None and a.due_at < now for a, _, r in rows),
         "questions": charts,
-        "collection": {"dimensions": dimension_coverage(rows, patient_ids), "journey": survey_journey(rows)},
+        "collection": {"dimensions": dimension_coverage(rows, patient_ids), "journey": survey_journey(rows, generated_ids=generated_ids)},
         "quotes": [{**q, "patient_name": names[q["patient_id"]]} for q in sorted(quotes, key=lambda x: x["created_at"], reverse=True)[:20]],
         "adherence": {"reports": len(reports), "statuses": dict(Counter(r.status for r in reports)),
             "patients_without_reports": len(patient_ids) - len({r.patient_id for r in reports}),

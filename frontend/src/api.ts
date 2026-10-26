@@ -126,6 +126,8 @@ export type Patient = {
   in_progress_tasks?: number;
   pending_events?: number;
   last_observation_at?: string | null;
+  last_observation_source?: "canonical_clinical"|"numeric_demo"|null;
+  latest_clinical_result?: {id:number;instrument_key:string;code:string;name:string;version:string;score:number|null;maximum:number|null;criterion_met:boolean|null;created_at:string}|null;
 };
 export type Card = Patient & {
   mis: {
@@ -147,6 +149,31 @@ export type Question = {
   options: Choice[];
   minimum: number;
   maximum: number;
+  show_if?: {question_id: string; equals: string};
+};
+export type ClinicalInstrument = {
+  key: string; name: string; version: string; instructions: string; questions: Question[];
+  source_title: string; source_url: string; source_check: string; license: string;
+  license_url: string | null; limitation: string; maximum: number | null;
+};
+export type ClinicalResult = {
+  id: number; patient_id: number; submission_id: number; instrument_key: string;
+  definition: ClinicalInstrument; score: number | null; created_at: string;
+  answers: Record<string, unknown>;
+  result: {kind: "sum" | "panic_screen"; maximum?: number; band?: string; item9_positive?: boolean;
+    criterion_met?: boolean; screen_stopped?: boolean; symptoms_yes?: number | null; gates_yes?: number | null;
+    triage?: ClinicalTriage;
+    synthetic_provenance?: {generated:true;dataset_version:string;fixture_sha256:string;scenario:string;measurement:"generated_current"}};
+};
+export type ClinicalComparison = {result_id:number|null;score:number|null;created_at:string|null;delta:number|null;growth_criterion_met:boolean|null};
+export type ClinicalTriage = {
+  rule_version:string; source:string; severity:string; grounds:{code:string;family:string;label:string}[];
+  action_due_hours:number|null; action_label:string; advisory:string[]; missing_data:string[];
+  comparison_previous:ClinicalComparison|null;comparison_baseline:ClinicalComparison|null;immediate_danger_established:boolean;
+};
+export type ReviewTiming = {
+  acknowledgement_due_at:string|null;acknowledgement_state:"accepted"|"late"|"overdue"|"pending"|null;
+  action_due_at:string|null;action_completed_at:string|null;action_overdue:boolean;as_of:string;
 };
 export type Survey = {
   id: number;
@@ -157,6 +184,8 @@ export type Survey = {
   version: number;
   previous_version_id: number | null;
   published_at: string | null;
+  clinical_instrument?: ClinicalInstrument | null;
+  is_clinical_scale?: boolean;
 };
 export type Draft = Omit<
   Survey,
@@ -239,14 +268,17 @@ export type Alert = {
   reason: string;
   status: string;
   created_at: string;
-  source_kind: "assessment" | "support_request";
+  source_kind: "assessment" | "support_request" | "clinical_assessment";
+  severity?:string;
+  review_timing?:ReviewTiming;
   source_message: {id:number; text:string; created_at:string} | null;
   actions: {task_id:number; title:string; status:string; reply_message_id:number|null; created_at:string}[];
   decision: {
     id: number;
     status: string;
     version: number;
-    facts: { form_type: string; score: number; risk_flags: string[] };
+    facts: { form_type: string; score: number|null; risk_flags: string[];triage?:ClinicalTriage;
+      instrument_name?:string;instrument_version?:string;source_url?:string;source_title?:string;clinical_result_id?:number };
     missing_data: string[];
     reason: string;
   } | null;
@@ -313,6 +345,7 @@ export type CollectionMetrics = {
   journey: { assigned: number; opened: number; completed: number; opened_not_completed: number;
     not_opened_not_completed: number; completed_without_open_record: number; completed_after_open: number;
     opening_rate_percent: number | null; completion_after_open_percent: number | null;
+    timing_excluded_generated?: number; timing_eligible_completed?: number;
     assignment_to_completion: DurationSummary; open_to_completion: DurationSummary;
     delivery_to_completion: DurationSummary; interpretation: string };
 };

@@ -11,6 +11,8 @@ from app.modules.assessments.models import OutboxEvent
 from app.modules.messaging.models import Message, MessageStatus
 from app.modules.alerts.models import Alert, ClinicalDecision
 from app.modules.assessments.models import QuestionnaireResponse
+from app.modules.alerts.clinical_review import create_clinical_alert
+from app.modules.alerts.escalation import route_due_urgent_alerts
 from app.modules.audit.service import record_event
 import app.db.models
 
@@ -28,6 +30,8 @@ async def _handle_event(session, event: OutboxEvent) -> None:
         if message is None or message.patient_id != event.payload.get("patient_id") or not message.channel.startswith("tg_"):
             raise ValueError("InvalidMessageReference")
         message.status = MessageStatus.SIMULATED
+    elif event.event_type == "clinical.assessment_flagged":
+        await create_clinical_alert(session, event)
     elif event.event_type == "assessment.risk_detected":
         assessment_id = event.payload.get("assessment_id")
         if type(assessment_id) is not int:
@@ -76,8 +80,6 @@ async def process_pending_events() -> int:
             .order_by(OutboxEvent.id).limit(50).with_for_update(skip_locked=True)
         )
         events = list(result.scalars())
-        if not events:
-            return 0
         processed = 0
         for event in events:
             event.attempts += 1
@@ -94,6 +96,14 @@ async def process_pending_events() -> int:
                 event.status = "failed" if event.attempts >= get_settings().outbox_max_attempts else "pending"
                 event.next_attempt_at = datetime.now(timezone.utc) + timedelta(seconds=min(300, 2 ** min(event.attempts, 8)))
                 logger.warning("event id=%s attempt=%s error=%s", event.id, event.attempts, event.last_error)
+        try:
+            async with session.begin_nested():
+                await route_due_urgent_alerts(session)
+        except Exception as error:
+            # The clinical source is already durable. A failed operational
+            # notice is eligible again next pass; it must not roll back other
+            # patients' independently processed events or leave half a notice.
+            logger.warning("coordinator routing failed error=%s", type(error).__name__)
         await session.commit()
         return processed
 

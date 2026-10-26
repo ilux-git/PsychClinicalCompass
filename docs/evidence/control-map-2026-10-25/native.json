@@ -1,0 +1,735 @@
+{
+  "date": "2026-10-25",
+  "environment": "Dedicated preserved synthetic QA database on 127.0.0.1:8782; no test diary or task writes to the main application",
+  "browser": "CUA native in-app browser 2, own tab 2",
+  "admin": {
+    "desktop": {
+      "icons": [
+        {
+          "border": "0px",
+          "label": "Выйти",
+          "shadow": "none"
+        }
+      ],
+      "route": [
+        {
+          "shadow": "none",
+          "text": "1Обзор клиники"
+        },
+        {
+          "shadow": "none",
+          "text": "2Затруднения, их причины"
+        },
+        {
+          "shadow": "none",
+          "text": "3Действия и результаты"
+        },
+        {
+          "shadow": "none",
+          "text": "4Данные и приватность"
+        }
+      ],
+      "scrollWidth": 1265,
+      "width": 1280
+    },
+    "mobileMenu": {
+      "controls": [
+        {
+          "border": "0px",
+          "focusVisible": false,
+          "name": "Закрыть навигацию",
+          "outline": "3px",
+          "shadow": "none"
+        },
+        {
+          "border": "0px",
+          "focusVisible": false,
+          "name": "Выйти",
+          "outline": "3px",
+          "shadow": "none"
+        },
+        {
+          "border": "0px",
+          "focusVisible": false,
+          "name": "Открыть меню",
+          "outline": "3px",
+          "shadow": "none"
+        }
+      ],
+      "height": 844,
+      "scrollWidth": 360,
+      "width": 375
+    },
+    "mobileHelp": {
+      "active": "Закрыть помощь",
+      "border": "0px none rgb(89, 91, 90)",
+      "focusVisible": false,
+      "outline": "rgb(89, 91, 90) none 3px",
+      "scrollWidth": 360,
+      "shadow": "none",
+      "width": 375
+    }
+  },
+  "patient": {
+    "map": {
+      "mobile": {
+        "hud": {
+          "bottom": 332.53125,
+          "height": 64.296875,
+          "right": 124.5,
+          "width": 81.75,
+          "x": 42.75,
+          "y": 268.234375
+        },
+        "image": {
+          "complete": true,
+          "naturalHeight": 1024,
+          "naturalWidth": 1536,
+          "rect": {
+            "bottom": 453.171875,
+            "height": 194.65625,
+            "right": 326,
+            "width": 292,
+            "x": 34,
+            "y": 258.515625
+          },
+          "src": "/assets/sea-archipelago-v1-BsLQxTY4.png"
+        },
+        "meter": "113 из 250 баллов участия",
+        "pinOverlaps": [],
+        "pins": [
+          {
+            "bottom": 430.6875,
+            "current": null,
+            "height": 44,
+            "name": "Отправная точка · 0 баллов · Открыто",
+            "pressed": "false",
+            "right": 99.71875,
+            "width": 44,
+            "x": 55.71875,
+            "y": 386.6875
+          },
+          {
+            "bottom": 352.75,
+            "current": null,
+            "height": 44,
+            "name": "Тихая поляна · 25 баллов · Открыто",
+            "pressed": "false",
+            "right": 166.25,
+            "width": 44,
+            "x": 122.25,
+            "y": 308.75
+          },
+          {
+            "bottom": 308.078125,
+            "current": null,
+            "height": 44,
+            "name": "Остров наблюдений · 50 баллов · Открыто",
+            "pressed": "false",
+            "right": 206.171875,
+            "width": 44,
+            "x": 162.171875,
+            "y": 264.078125
+          },
+          {
+            "bottom": 351.796875,
+            "current": "step",
+            "height": 44,
+            "name": "Маяк · 100 баллов · Вы здесь",
+            "pressed": "true",
+            "right": 283.171875,
+            "width": 44,
+            "x": 239.171875,
+            "y": 307.796875
+          },
+          {
+            "bottom": 303.3125,
+            "current": null,
+            "height": 44,
+            "name": "Новый горизонт · 250 баллов · Впереди",
+            "pressed": "false",
+            "right": 320.234375,
+            "width": 44,
+            "x": 276.234375,
+            "y": 259.3125
+          }
+        ],
+        "scrollWidth": 360,
+        "width": 375
+      },
+      "tablet": {
+        "pins": [
+          {
+            "bottom": 427.7421875,
+            "height": 45.171875,
+            "right": 166.1484375,
+            "width": 45.171875,
+            "x": 120.9765625,
+            "y": 382.5703125
+          },
+          {
+            "bottom": 250.2421875,
+            "height": 45.171875,
+            "right": 317.6796875,
+            "width": 45.171875,
+            "x": 272.5078125,
+            "y": 205.0703125
+          },
+          {
+            "bottom": 148.4921875,
+            "height": 45.171875,
+            "right": 408.6015625,
+            "width": 45.171875,
+            "x": 363.4296875,
+            "y": 103.3203125
+          },
+          {
+            "bottom": 248.0703125,
+            "height": 45.171875,
+            "right": 583.9453125,
+            "width": 45.171875,
+            "x": 538.7734375,
+            "y": 202.8984375
+          },
+          {
+            "bottom": 137.6640625,
+            "height": 45.171875,
+            "right": 668.3671875,
+            "width": 45.171875,
+            "x": 623.1953125,
+            "y": 92.4921875
+          }
+        ],
+        "scrollWidth": 753,
+        "width": 768
+      },
+      "desktop": {
+        "headings": [
+          "Мой прогресс",
+          "Мой прогресс",
+          "Карта участия",
+          "За что начисляются баллы",
+          "Тестовые скидки",
+          "Мои тестовые купоны",
+          "История участия за неделю",
+          "Условия и история"
+        ],
+        "image": {
+          "loaded": true,
+          "src": "/assets/sea-archipelago-v1-BsLQxTY4.png"
+        },
+        "pins": [
+          {
+            "height": 52,
+            "name": "Отправная точка · 0 баллов · Открыто",
+            "width": 52
+          },
+          {
+            "height": 52,
+            "name": "Тихая поляна · 25 баллов · Открыто",
+            "width": 52
+          },
+          {
+            "height": 52,
+            "name": "Остров наблюдений · 50 баллов · Открыто",
+            "width": 52
+          },
+          {
+            "height": 52,
+            "name": "Маяк · 100 баллов · Вы здесь",
+            "width": 52
+          },
+          {
+            "height": 52,
+            "name": "Новый горизонт · 250 баллов · Впереди",
+            "width": 52
+          }
+        ],
+        "scrollWidth": 1425,
+        "width": 1440
+      }
+    },
+    "rhythm": {
+      "mobile": {
+        "days": [
+          {
+            "artLoaded": true,
+            "background": "rgb(238, 237, 232)",
+            "hasArt": true,
+            "height": 126,
+            "label": "19 октября: 1 учтённое действие, 3 балла",
+            "selected": "false",
+            "width": 65.5
+          },
+          {
+            "artLoaded": true,
+            "background": "rgb(238, 237, 232)",
+            "hasArt": true,
+            "height": 126,
+            "label": "20 октября: 1 учтённое действие, 3 балла",
+            "selected": "false",
+            "width": 65.5
+          },
+          {
+            "artLoaded": true,
+            "background": "rgb(238, 237, 232)",
+            "hasArt": true,
+            "height": 126,
+            "label": "21 октября: 1 учтённое действие, 3 балла",
+            "selected": "false",
+            "width": 65.5
+          },
+          {
+            "artLoaded": true,
+            "background": "rgb(238, 237, 232)",
+            "hasArt": true,
+            "height": 126,
+            "label": "22 октября: 1 учтённое действие, 3 балла",
+            "selected": "false",
+            "width": 65.5
+          },
+          {
+            "artLoaded": true,
+            "background": "rgb(238, 237, 232)",
+            "hasArt": true,
+            "height": 126,
+            "label": "23 октября: 1 учтённое действие, 3 балла",
+            "selected": "false",
+            "width": 65.5
+          },
+          {
+            "artLoaded": true,
+            "background": "rgb(238, 237, 232)",
+            "hasArt": true,
+            "height": 126,
+            "label": "24 октября: 2 учтённых действия, 3 балла",
+            "selected": "false",
+            "width": 65.5
+          },
+          {
+            "artLoaded": true,
+            "background": "rgb(238, 237, 232)",
+            "hasArt": true,
+            "height": 126,
+            "label": "25 октября: 10 учтённых действий, 8 баллов",
+            "selected": "true",
+            "width": 65.5
+          }
+        ],
+        "focused": "SELECT",
+        "heading": "Активность по дням",
+        "mode": "rhythm",
+        "scrollWidth": 360,
+        "width": 375
+      },
+      "tablet": {
+        "days": [
+          {
+            "art": true,
+            "height": 126,
+            "width": 87.28125
+          },
+          {
+            "art": true,
+            "height": 126,
+            "width": 87.28125
+          },
+          {
+            "art": true,
+            "height": 126,
+            "width": 87.28125
+          },
+          {
+            "art": true,
+            "height": 126,
+            "width": 87.296875
+          },
+          {
+            "art": true,
+            "height": 126,
+            "width": 87.28125
+          },
+          {
+            "art": true,
+            "height": 126,
+            "width": 87.28125
+          },
+          {
+            "art": true,
+            "height": 126,
+            "width": 87.28125
+          }
+        ],
+        "scrollWidth": 753,
+        "width": 768
+      },
+      "desktop": {
+        "dayCount": 7,
+        "loaded": true,
+        "scrollWidth": 1425,
+        "width": 1440
+      },
+      "mixed": {
+        "balance": "3",
+        "days": [
+          {
+            "art": false,
+            "label": "19 октября: 0 учтённых действий, 0 баллов",
+            "selected": "false"
+          },
+          {
+            "art": false,
+            "label": "20 октября: 0 учтённых действий, 0 баллов",
+            "selected": "false"
+          },
+          {
+            "art": false,
+            "label": "21 октября: 0 учтённых действий, 0 баллов",
+            "selected": "false"
+          },
+          {
+            "art": false,
+            "label": "22 октября: 0 учтённых действий, 0 баллов",
+            "selected": "false"
+          },
+          {
+            "art": false,
+            "label": "23 октября: 0 учтённых действий, 0 баллов",
+            "selected": "false"
+          },
+          {
+            "art": false,
+            "label": "24 октября: 0 учтённых действий, 0 баллов",
+            "selected": "false"
+          },
+          {
+            "art": true,
+            "label": "25 октября: 1 учтённое действие, 3 балла",
+            "selected": "true"
+          }
+        ],
+        "scrollWidth": 360,
+        "width": 375
+      },
+      "selectedEmptyDay": {
+        "balance": "3",
+        "days": [
+          {
+            "art": false,
+            "selected": "true"
+          },
+          {
+            "art": false,
+            "selected": "false"
+          },
+          {
+            "art": false,
+            "selected": "false"
+          },
+          {
+            "art": false,
+            "selected": "false"
+          },
+          {
+            "art": false,
+            "selected": "false"
+          },
+          {
+            "art": false,
+            "selected": "false"
+          },
+          {
+            "art": true,
+            "selected": "false"
+          }
+        ],
+        "detail": "19 октябряВ приложении нет учтённых действий за этот день"
+      }
+    },
+    "diaryFocus": {
+      "border": "1px solid rgb(52, 59, 56)",
+      "focused": true,
+      "outline": "rgb(24, 25, 26) none 3px",
+      "padding": "12px 14px",
+      "scrollWidth": 360,
+      "shadow": "rgb(52, 59, 56) 0px 0px 0px 1px inset",
+      "shared": false,
+      "width": 375
+    },
+    "diarySaved": {
+      "border": "0px none rgb(24, 25, 26)",
+      "entryOccurrences": 1,
+      "focused": true,
+      "heading": "Запись сохранена",
+      "outline": "rgb(24, 25, 26) none 3px",
+      "privacy": "Эта запись остаётся личной. Поделиться с врачом можно позже.",
+      "receipt": "+3 балла за участиеБаллы — за участие. Содержание ответа и самочувствие на награду не влияют.По записи от 25 окт., 23:07Мой прогресс",
+      "scrollWidth": 360,
+      "shadow": "none",
+      "width": 375
+    },
+    "chatFocus": {
+      "border": "1px solid rgb(52, 59, 56)",
+      "empty": true,
+      "focused": true,
+      "outline": "rgb(24, 25, 26) none 3px",
+      "scrollWidth": 360,
+      "shadow": "rgb(52, 59, 56) 0px 0px 0px 1px inset",
+      "width": 375
+    },
+    "keyboardFocus": {
+      "focusVisible": true,
+      "name": "Мои запросы поддержки (1)",
+      "outline": "rgb(52, 59, 56) solid 2px",
+      "shadow": "none",
+      "tag": "SUMMARY"
+    },
+    "restored": {
+      "patient2": {
+        "balance": "113",
+        "mode": "map"
+      },
+      "patient1": {
+        "balance": "3",
+        "mode": "map"
+      }
+    }
+  },
+  "doctor": {
+    "home": {
+      "buttons": [
+        "Закрыть помощь"
+      ],
+      "heading": "Рабочий день",
+      "primary": [
+        {
+          "background": "rgb(24, 25, 26)",
+          "shadow": "none",
+          "text": "Открыть план работы"
+        }
+      ],
+      "queues": [
+        {
+          "height": 80.1875,
+          "label": "Нужно выполнить: 1. Назначено и в работе",
+          "width": 286
+        },
+        {
+          "height": 80.1875,
+          "label": "Проверить результат: 27. Действие уже выполнено",
+          "width": 286
+        },
+        {
+          "height": 80.1875,
+          "label": "Проверенные результаты: 10. Неизвестный результат: 8",
+          "width": 286
+        }
+      ],
+      "scrollWidth": 360,
+      "width": 375
+    },
+    "awaiting": {
+      "cards": 20,
+      "focus": "Проверить результат",
+      "queue": "Проверить результат 27Действие выполнено, отдельная проверка ещё не сохранена",
+      "scrollWidth": 360,
+      "search": "",
+      "statuses": [
+        "Завершено",
+        "Ожидает проверки результата",
+        "Завершено",
+        "Ожидает проверки результата",
+        "Завершено",
+        "Ожидает проверки результата",
+        "Завершено",
+        "Ожидает проверки результата",
+        "Завершено",
+        "Ожидает проверки результата",
+        "Завершено",
+        "Ожидает проверки результата",
+        "Завершено",
+        "Ожидает проверки результата",
+        "Завершено",
+        "Ожидает проверки результата",
+        "Завершено",
+        "Ожидает проверки результата",
+        "Завершено",
+        "Ожидает проверки результата",
+        "Завершено",
+        "Ожидает проверки результата",
+        "Завершено",
+        "Ожидает проверки результата",
+        "Завершено",
+        "Ожидает проверки результата",
+        "Завершено",
+        "Ожидает проверки результата",
+        "Завершено",
+        "Ожидает проверки результата",
+        "Завершено",
+        "Ожидает проверки результата",
+        "Завершено",
+        "Ожидает проверки результата",
+        "Завершено",
+        "Ожидает проверки результата",
+        "Завершено",
+        "Ожидает проверки результата",
+        "Завершено",
+        "Ожидает проверки результата"
+      ],
+      "width": 375
+    },
+    "checked": {
+      "cards": 10,
+      "focus": "Проверенные результаты",
+      "queue": "Проверенные результаты 10Выводы врача, включая неизвестный результат",
+      "scrollWidth": 360,
+      "statuses": [
+        "Завершено",
+        "Проверено: результат неизвестен",
+        "Завершено",
+        "Проверено: результат неизвестен",
+        "Завершено",
+        "Проверено: результат неизвестен",
+        "Завершено",
+        "Проверено: результат неизвестен",
+        "Завершено",
+        "Проверено: сохраняется",
+        "Завершено",
+        "Проверено: результат неизвестен",
+        "Завершено",
+        "Проверено: результат неизвестен",
+        "Завершено",
+        "Проверено: результат неизвестен",
+        "Завершено",
+        "Проверено: устранено",
+        "Завершено",
+        "Проверено: результат неизвестен"
+      ],
+      "width": 375
+    },
+    "active": {
+      "cards": 1,
+      "focus": "Нужно выполнить",
+      "queue": "Нужно выполнить 1Назначенные действия и задачи в работе",
+      "scrollWidth": 1425,
+      "width": 1440
+    },
+    "field": {
+      "border": "1px solid rgb(52, 59, 56)",
+      "empty": true,
+      "outline": "rgb(24, 25, 26) none 3px",
+      "shadow": "rgb(52, 59, 56) 0px 0px 0px 1px inset",
+      "tag": "TEXTAREA"
+    },
+    "empty": {
+      "cards": 0,
+      "empty": "",
+      "queue": "Срок прошёл 0Незавершённые действия с известным прошедшим сроком",
+      "scrollWidth": 1425,
+      "width": 1440
+    },
+    "paginationBefore": {
+      "active": "BODY",
+      "cards": 7,
+      "headerY": 521.5,
+      "page": "Страница 2",
+      "scrollY": 0,
+      "visibleCards": [
+        "QA page fixture 04: synthetic organization task"
+      ]
+    },
+    "paginationAfter": {
+      "active": {
+        "outline": "rgb(24, 25, 26) none 3px",
+        "tag": "H2",
+        "text": "Проверить результат 27"
+      },
+      "cards": 7,
+      "headerY": 89.5,
+      "page": "Страница 2",
+      "scrollWidth": 360,
+      "scrollY": 432,
+      "width": 375
+    }
+  },
+  "coordinator": {
+    "desktop": {
+      "columns": [
+        "Назначено 0Следующие действия",
+        "В работе 0Исполнитель начал действие",
+        "Завершено 9Действие выполнено; эффект проверяет врач"
+      ],
+      "graph": "Мои поручения: Назначено 0, В работе 0, Завершено 9",
+      "heading": "Мои задачи",
+      "icons": [
+        {
+          "border": "0px",
+          "name": "Закрыть навигацию",
+          "shadow": "none"
+        },
+        {
+          "border": "0px",
+          "name": "Выйти",
+          "shadow": "none"
+        },
+        {
+          "border": "0px",
+          "name": "Открыть меню",
+          "shadow": "none"
+        },
+        {
+          "border": "0px",
+          "name": "Закрыть помощь",
+          "shadow": "none"
+        }
+      ],
+      "scrollWidth": 1425,
+      "width": 1440,
+      "worklistChoices": 0
+    },
+    "mobile": {
+      "scrollWidth": 360,
+      "selectedTab": [
+        "Завершено9"
+      ],
+      "visibleColumns": [
+        {
+          "cards": 9,
+          "header": "Завершено 9Действие выполнено; эффект проверяет врач"
+        }
+      ],
+      "width": 375,
+      "worklistChoices": 0
+    }
+  },
+  "console": {
+    "levels": [
+      "warn",
+      "error"
+    ],
+    "limit": 40,
+    "entries": []
+  },
+  "writes": {
+    "preferenceChanges": [
+      "patient2 map → rhythm → map",
+      "patient1 map → rhythm → map"
+    ],
+    "privateDiaryEntries": 1,
+    "diaryText": "Проверка интерфейса дневника. Синтетическая тестовая запись.",
+    "patient1PointsBefore": 0,
+    "patient1PointsAfter": 3,
+    "newChatMessages": 0,
+    "newTasks": 0,
+    "newCoupons": 0,
+    "mainDatabaseTestEntries": 0
+  },
+  "limits": [
+    "Geometry and focus checks are scoped to the observed views, not a full WCAG certification.",
+    "Some screenshots were captured between builds; the report distinguishes final regression from later static caption and marker changes.",
+    "An early exact getByLabel lookup included option text; it was corrected to the native accessible combobox name.",
+    "The first immediate sign-in batch did not start submission; keyboard sign-in and subsequent sign-ins with a fresh state observation succeeded.",
+    "The empty-queue text selector in the measurement helper was too narrow; the actual empty label was verified by its visible text and screenshot."
+  ],
+  "viewportAfterCycle": "RESET"
+}

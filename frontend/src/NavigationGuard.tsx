@@ -4,7 +4,7 @@ import { keepDialogFocus, m, motionTokens, useInteractionMotion } from "./Intera
 
 export type LeavePrompt = {eyebrow:string;title:string;message:string;stayLabel:string;discardLabel?:string};
 type FormState = {dirty:boolean;pending?:boolean;prompt?:LeavePrompt;save?:()=>Promise<boolean>;scope?:string;focus?:()=>void};
-const surveyPrompt:LeavePrompt={eyebrow:"Незавершённый опрос",title:"Сохранить ответы перед уходом?",message:"В форме есть несохранённые изменения. Черновик останется только у вас; врачу ответы пока не отправятся.",stayLabel:"Остаться в опросе"};
+const surveyPrompt:LeavePrompt={eyebrow:"Незавершённый опрос",title:"Сохранить ответы перед уходом?",message:"В форме есть несохранённые изменения. Черновик останется только у Вас; врачу ответы пока не отправятся.",stayLabel:"Остаться в опросе"};
 const multiplePrompt:LeavePrompt={eyebrow:"Несохранённые изменения",title:"Остаться и закончить ввод?",message:"На экране есть несколько незавершённых форм. Вернитесь к ним, чтобы сохранить или отправить данные. Переход без сохранения удалит текущий ввод.",stayLabel:"Вернуться к формам"};
 
 const NavigationContext = createContext({

@@ -59,7 +59,7 @@ for(const action of ['draft','submit']){
     assert.deepEqual(notices,[],"A local survey error must not be repeated in a global alert");
     assert.equal(input.value,"Синтетический текст не должен теряться");assert.equal(exits,0);
     requests.enableWrites();await user.click(screen.getByRole("button",{name:label,exact:true}));
-    if(action==='draft')assert.equal(exits,1);else await screen.findByRole("heading",{name:"Спасибо за ваш ответ"});
+    if(action==='draft')assert.equal(exits,1);else await screen.findByRole("heading",{name:"Ответы отправлены"});
     assert.equal(requests.writes.length,2);assert.deepEqual(requests.writes[0],requests.writes[1]);
     assert.equal(requests.writes[1].body[action==='draft'?'expected_revision':'expected_draft_revision'],0);
     assert.equal(Boolean(screen.queryByRole('alert')),false);assert.ok(notices.every(notice=>notice[1]!=="error"));

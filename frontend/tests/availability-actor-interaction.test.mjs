@@ -48,6 +48,7 @@ test("a delayed availability response cannot overwrite another signed-in doctor'
       return pendingPatch;
     }
     if(method==="POST"&&path==="/auth/login"&&JSON.parse(options.body).username==="doctor2")return Response.json({access_token:"fixture-doctor2",user:doctor2});
+    if(method==="POST"&&path==="/auth/logout"&&options.headers.Authorization==="Bearer fixture-doctor1")return Response.json({revoked:true});
     unexpected.push({path,method});
     return Response.json({detail:"Unexpected test request"},{status:500});
   };

@@ -1,0 +1,148 @@
+
+> clinical-compass-web@0.1.0 test
+> node --test --test-concurrency=1 tests/*.test.mjs
+
+✔ the same numeric answer retains the bounds of its own question version without normalization (262.7436ms)
+✔ a known zero remains an answer and an absent optional response never becomes zero (10.4031ms)
+✔ map controls select a future place without changing the current earned milestone (4857.9554ms)
+✔ compact atlas stays a decorative preview without duplicate map controls (8.7435ms)
+✔ rhythm reveals art for recorded actions even without awarded points, while an empty day stays covered after selection (59.6261ms)
+You have Reduced Motion enabled on your device. Animations may not appear as expected.. For more information and steps for solving, visit https://motion.dev/troubleshooting/reduced-motion-disabled
+✔ a delayed availability response cannot overwrite another signed-in doctor's status (5329.1758ms)
+✔ an uncompleted action never counts as awaiting a result check (0.7954ms)
+✔ recorded unknown is a performed check, separate from a missing check (0.1116ms)
+✔ a completed action moves to waiting before the physician records any outcome (0.0924ms)
+✔ zero tasks remains an empty observation rather than a successful treatment result (0.07ms)
+You have Reduced Motion enabled on your device. Animations may not appear as expected.. For more information and steps for solving, visit https://motion.dev/troubleshooting/reduced-motion-disabled
+✔ patient: one inline sending error retains the message and retry identity without inventing delivery (5452.9826ms)
+✔ doctor: one inline sending error retains the message and retry identity without inventing delivery (779.179ms)
+✔ a delayed successful send does not steal focus from another chosen control (691.4385ms)
+✔ reading older messages during a pending send preserves position until Show latest is chosen (747.5005ms)
+You have Reduced Motion enabled on your device. Animations may not appear as expected.. For more information and steps for solving, visit https://motion.dev/troubleshooting/reduced-motion-disabled
+✔ aggregate question versions use readable separate labels without merging groups or exposing answer text (4832.9174ms)
+✔ failed refresh retains the last aggregate report, names it stale and retries without requesting patients (169.6906ms)
+✔ clinic overview separates refused patients, unreviewed requests and completed actions without a check (2592.2721ms)
+✔ hidden, unavailable and unconfigured workflow never expose zero or stale protected values (0.6892ms)
+✔ a real zero refusal count stays distinct from unavailable support data (0.5797ms)
+You have Reduced Motion enabled on your device. Animations may not appear as expected.. For more information and steps for solving, visit https://motion.dev/troubleshooting/reduced-motion-disabled
+✔ changing the panic gate clears hidden symptoms and submits only the actual first answer (5423.2793ms)
+✔ numeric zero stays visible without inventing a trend from one answer; panic has no zero severity (32.2137ms)
+✔ the patient's actual state page shows saved clinical data without a contradictory legacy empty state (44.1369ms)
+✔ explicit creation focuses the editor after loading and cannot label an author survey as clinical (202.9651ms)
+✔ direct new-survey route focuses the editor after loading and cannot label an author survey as clinical (59.822ms)
+✔ baseline failure preserves the doctor's explicit selection and private reason until retry (911.0875ms)
+✔ a baseline conflict requires refresh and another explicit save without replacing the doctor's draft (779.9546ms)
+✔ urgent filtering preserves the focused control and never acknowledges events by displaying them (215.4904ms)
+✔ an event's exact clinical measurement opens once without stealing focus on history refresh (136.2513ms)
+✔ a delayed acknowledgement leaves focus on another control the doctor has chosen (161.3844ms)
+✔ a linked clinical action preserves separate medical and verification dates across a retry (403.2087ms)
+✔ a code label requires an exact known code and does not extend to a different subcode or free text (0.4663ms)
+✔ a known source label keeps the dose text and never rewrites personal entries (0.2748ms)
+✔ unknown names, different units, formulations and dosing instructions remain exact source text (0.1177ms)
+You have Reduced Motion enabled on your device. Animations may not appear as expected.. For more information and steps for solving, visit https://motion.dev/troubleshooting/reduced-motion-disabled
+✔ help follows the active clinical-card tab and falls back to the patient list when the card closes (6164.2575ms)
+✔ patient unfinished form opened from home has survey navigation and contextual help without changing its URL (1437.783ms)
+✔ patient history opened from home has survey navigation and contextual help without changing its URL (482.6514ms)
+You have Reduced Motion enabled on your device. Animations may not appear as expected.. For more information and steps for solving, visit https://motion.dev/troubleshooting/reduced-motion-disabled
+✔ route failure retains the explicit recipient; retry saves only this doctor’s selected route (5009.2752ms)
+✔ conflict refresh retains the doctor’s draft and requires another explicit save (225.391ms)
+✔ coordinator retries only the operational receipt and keeps the event awaiting a doctor (154.1728ms)
+✔ history uses its own server filter; a doctor’s acceptance does not fabricate a coordinator receipt (75.848ms)
+You have Reduced Motion enabled on your device. Animations may not appear as expected.. For more information and steps for solving, visit https://motion.dev/troubleshooting/reduced-motion-disabled
+✔ a short private entry starts with text and saves the same canonical observation fields (5479.8707ms)
+✔ optional observation values survive collapse and can be submitted without text (426.4002ms)
+✔ invalid hidden observation time reopens its controls without submitting or losing text (494.0364ms)
+✔ an inline server error retains private input and retries the same request without duplicate alerts (536.3364ms)
+✔ the exit guard keeps a diary draft on stay and allows leaving after it is saved (723.6318ms)
+You have Reduced Motion enabled on your device. Animations may not appear as expected.. For more information and steps for solving, visit https://motion.dev/troubleshooting/reduced-motion-disabled
+✔ extra feedback exposes its survey source and precise answer target, preserving expansion on return (5116.3756ms)
+You have Reduced Motion enabled on your device. Animations may not appear as expected.. For more information and steps for solving, visit https://motion.dev/troubleshooting/reduced-motion-disabled
+✔ typing the first note character retains text area focus (5654.1527ms)
+✔ choosing a category in an empty note retains select focus (255.7663ms)
+✔ canceling navigation reopens a collapsed note and preserves its text (842.9873ms)
+✔ an answer opens a sourced note and unlinking it preserves the draft and focus (685.1957ms)
+✔ switching the source of a dirty note requires confirmation and never relinks old text silently (1870.4315ms)
+✔ failed private-note saves keep the text, category and source, focus one local error and retry only the same explicit payload (1086.253ms)
+✔ a delayed failure reopens a collapsed note, while editing its category clears the old error without stealing focus (886.0216ms)
+You have Reduced Motion enabled on your device. Animations may not appear as expected.. For more information and steps for solving, visit https://motion.dev/troubleshooting/reduced-motion-disabled
+✔ preview never approves automatically; exact consent and a second action lead to a simulator receipt (5355.1786ms)
+✔ approval failure retains consent and uses the same request key on retry (199.8071ms)
+✔ conflict requires a fresh preview and new consent, even when the parent still holds an older task revision (282.8109ms)
+✔ failed simulator transfer keeps the approved document and retries only delivery (123.6203ms)
+✔ late approval for an older task revision cannot mark the new version approved or leave it busy (173.0442ms)
+✔ unsaved task disables the preview without reading or writing (1.8554ms)
+✔ pending action preserves its focus, blocks duplicate writes and respects a later focus choice (230.4919ms)
+You have Reduced Motion enabled on your device. Animations may not appear as expected.. For more information and steps for solving, visit https://motion.dev/troubleshooting/reduced-motion-disabled
+✔ explicit exit clears local access immediately and confirms revocation of its captured credential (5066.0038ms)
+✔ failed revocation still exits locally and says server completion is unconfirmed (133.0484ms)
+✔ late success logout response cannot clear a newer account or attach its notice (301.6833ms)
+✔ late unauthorized logout response cannot clear a newer account or attach its notice (258.8481ms)
+✔ automatic expiry returns to login without recursively requesting logout (46.3826ms)
+You have Reduced Motion enabled on your device. Animations may not appear as expected.. For more information and steps for solving, visit https://motion.dev/troubleshooting/reduced-motion-disabled
+✔ report confirmation survives a schedule reload and uses the returned zero award (5875.8809ms)
+✔ personal schedule closes the editor and confirms the actual two-point award (772.3853ms)
+✔ missing legacy receipt remains unknown instead of inventing a zero or positive award (178.3113ms)
+✔ failed self-report retains the chosen answer and comment without a success receipt (415.9712ms)
+✔ clinician schedule is subordinate to the patient name while the patient's own schedule remains a page heading (45.1012ms)
+✔ failed schedule creation focuses one inline error, preserves fields and retries with the same request identity (979.8778ms)
+✔ failed schedule edit retains its revision, clears the stale error when changed and confirms only a successful retry (734.5016ms)
+You have Reduced Motion enabled on your device. Animations may not appear as expected.. For more information and steps for solving, visit https://motion.dev/troubleshooting/reduced-motion-disabled
+✔ three journey choices show the effective mode without writing a patient override on entry (5066.2617ms)
+✔ a failed explicit choice keeps the effective mode and retries only the user's next action (202.5945ms)
+✔ home uses the same three mode names and changes only after an explicit selection (93.0837ms)
+✔ links restore a physician card and tab after reload; invalid identifiers are rejected (1.1914ms)
+✔ patient links resume a survey but never permit a physician card; roles retain their own home (0.1772ms)
+✔ Back and Forward restore the actual page, then reload preserves it (1.2209ms)
+✔ cancelled Back retains URL and form; approving the next Back traverses once (0.2381ms)
+✔ source metadata survives back-forward; another account cannot restore its context (0.3031ms)
+✔ Back through card tabs preserves the patient and reports the target tab to the guard (0.2251ms)
+✔ a write in progress blocks Back; finishing the write does not silently navigate (0.1845ms)
+✔ repeated clicks do not create duplicate history; a new destination replaces the Forward branch (0.2285ms)
+✔ a delayed approval from a signed-out account cannot restore its page (0.1329ms)
+✔ history stores only navigation metadata and tolerates malformed context (0.2234ms)
+✔ older history entries from another account open the current role home without patient context (0.2055ms)
+✔ calm mode distinguishes an unavailable week from seven observed days without entries (2572.529ms)
+✔ rhythm with missing data does not show a zero active-days result (9.7325ms)
+✔ discount eligibility follows free balance, not lifetime points or an opened map (0.7414ms)
+✔ reward estimate is capped, includes optional effort only as an upper bound, and is unknown without rules (0.1104ms)
+✔ symptom change never compares scales or versions, including when the new version has only one point (0.1318ms)
+✔ a zero score is retained, points sort by date, and equal timestamps do not establish a trajectory (0.1066ms)
+✔ resume the patient's draft first; otherwise use the physician due date; sent answers are excluded (0.1295ms)
+You have Reduced Motion enabled on your device. Animations may not appear as expected.. For more information and steps for solving, visit https://motion.dev/troubleshooting/reduced-motion-disabled
+✔ draft: one local error retains answers and revision until an explicit retry succeeds (5551.2766ms)
+✔ submit: one local error retains answers and revision until an explicit retry succeeds (729.29ms)
+✔ the native secure-context implementation retains its receiver (193.3457ms)
+✔ LAN fallback obtains random bytes and produces a valid v4 UUID for every byte boundary (0.2918ms)
+✔ missing cryptographic randomness is an explicit failure rather than a weak request identity (0.2575ms)
+✔ route content mounts without animation callbacks while a draft still requires an explicit decision (6436.3436ms)
+You have Reduced Motion enabled on your device. Animations may not appear as expected.. For more information and steps for solving, visit https://motion.dev/troubleshooting/reduced-motion-disabled
+✔ a failed self-report keeps its unknown answer, focuses one local error and preserves request identity across repeated explicit retries (6218.8587ms)
+✔ editing a failed self-report clears its stale error and sends the revised answer only after a new explicit submit (1617.5745ms)
+✔ a delayed successful self-report respects focus deliberately moved to another control (1414.976ms)
+You have Reduced Motion enabled on your device. Animations may not appear as expected.. For more information and steps for solving, visit https://motion.dev/troubleshooting/reduced-motion-disabled
+✔ AUTH-STALE-401: an old request does not expire a newer signed-in session (4338.575ms)
+✔ AUTH-CURRENT-401: rejection of the current session still requests sign-out (1.288ms)
+✔ AUTH-FORBIDDEN-403: access denial remains an error without expiring the session (0.9409ms)
+✔ ACTOR-NOTICE: a completed old note cannot display success to the next signed-in doctor (1076.7863ms)
+You have Reduced Motion enabled on your device. Animations may not appear as expected.. For more information and steps for solving, visit https://motion.dev/troubleshooting/reduced-motion-disabled
+✔ a failed assignment retains the chosen template, focuses its local error and retries with the same identity (5527.4917ms)
+✔ changing the failed template clears the old error and only the explicitly chosen new template is assigned (341.5292ms)
+You have Reduced Motion enabled on your device. Animations may not appear as expected.. For more information and steps for solving, visit https://motion.dev/troubleshooting/reduced-motion-disabled
+✔ home counters open the exact cohort and clear an unrelated search, focus and cursor (5379.9483ms)
+✔ a dirty verification survives staying, and changing the worklist resets pagination after confirmed discard (934.7255ms)
+✔ saving an action moves to awaiting verification, then an explicit unknown check moves to checked (1097.4479ms)
+✔ an unavailable summary is not a zero workload and still offers the independently loaded plan (108.2432ms)
+✔ a failed next page focuses its error and offers a return to the previously loaded cohort (239.1508ms)
+ℹ tests 113
+ℹ suites 0
+ℹ pass 113
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 185328.5747
+npm notice
+npm notice New minor version of npm available! 11.6.2 -> 11.21.1
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v11.21.1
+npm notice To update run: npm install -g npm@11.21.1
+npm notice

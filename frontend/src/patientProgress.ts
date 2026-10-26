@@ -1,6 +1,6 @@
 import type { Assessment, Assignment, Question } from "./api";
 
-export const motivationModes:Record<string,string>={map:"Карта маленьких шагов",rhythm:"Мой ритм",calm:"Спокойный режим"};
+export const motivationModes:Record<string,string>={map:"Карта участия",rhythm:"Мой ритм",calm:"Спокойный режим"};
 
 export type MotivationPreference = {patient_choice:string|null; doctor_recommendation:string|null; effective_mode:string};
 export type DiscountOffer = {id:string; title:string; points:number; discount_percent:number};

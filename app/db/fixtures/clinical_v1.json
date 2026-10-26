@@ -1,0 +1,17 @@
+{
+  "schema_version": "synthetic-clinical/1",
+  "synthetic": true,
+  "description": "Новые вымышленные ответы для показа интерфейса. Не результаты пациентов, не клинические рекомендации и не ретроспективное заполнение истории.",
+  "cases": [
+    {"mis_id": 1, "scenario": "financial_barrier", "responses": {"panic": [0], "phq9": [2,2,2,2,1,1,1,1,0], "gad7": [2,1,1,1,1,1,1]}},
+    {"mis_id": 2, "scenario": "anxiety_engaged", "responses": {"panic": [1,1,1,1,1,1,1,1,1,0,0,0,0,0,0], "phq9": [1,1,1,1,1,1,1,1,0], "gad7": [3,3,3,3,2,2,2]}},
+    {"mis_id": 3, "scenario": "medication_self_report", "responses": {"panic": [0], "phq9": [1,1,1,1,1,1,1,0,0], "gad7": [1,1,1,1,1,1,0]}},
+    {"mis_id": 4, "scenario": "uncomfortable_effects", "responses": {"panic": [0], "phq9": [2,2,2,1,1,1,1,1,0], "gad7": [2,1,1,1,1,1,1]}},
+    {"mis_id": 5, "scenario": "clinic_rescheduled", "responses": {"panic": [0], "phq9": [0,0,0,0,0,0,0,0,0], "gad7": [1,1,1,1,0,0,0]}},
+    {"mis_id": 6, "scenario": "treatment_completed", "responses": {}},
+    {"mis_id": 7, "scenario": "treatment_refused", "responses": {}},
+    {"mis_id": 8, "scenario": "no_data", "responses": {}},
+    {"mis_id": 9, "scenario": "irregular_participation", "responses": {"panic": [0], "phq9": [2,2,2,2,2,2,1,1,0], "gad7": [2,2,2,2,2,1,1]}},
+    {"mis_id": 10, "scenario": "manual_clinical_review", "responses": {"panic": [0], "phq9": [2,2,2,2,2,2,2,2,1], "gad7": [3,3,2,2,2,2,2]}}
+  ]
+}

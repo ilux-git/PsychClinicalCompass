@@ -211,14 +211,27 @@ async def coordination_tasks(session: CompassSession,
 @router.get("/coordination/board")
 async def task_board(session: CompassSession,
         user: User = Depends(require_role([UserRole.doctor, UserRole.coordinator])),
-        stage: Literal["open", "in_progress", "done"] = "open",
+        stage: Literal["open", "in_progress", "done", "all"] = "open",
+        focus: Literal["all", "active", "awaiting_check", "checked", "overdue"] = "all",
         q: str = Query(default="", max_length=100),
         patient_id: int | None = Query(default=None, gt=0),
         before: int | None = Query(default=None, gt=0),
         limit: int = Query(default=20, ge=1, le=100)):
     scope = Patient.doctor_id == user.id if user.role == UserRole.doctor else (
         (DoctorTask.assigned_to_id == user.id) & (DoctorTask.kind == "organization"))
-    conditions = [scope, DoctorTask.status == stage]
+    as_of = datetime.now(timezone.utc)
+    conditions = [scope]
+    if stage != "all":
+        conditions.append(DoctorTask.status == stage)
+    if focus in {"active", "overdue"}:
+        conditions.append(DoctorTask.status.in_(("open", "in_progress")))
+    if focus == "overdue":
+        conditions.append(DoctorTask.due_at < as_of)
+    if focus == "awaiting_check":
+        conditions.extend((DoctorTask.status == "done", DoctorTask.verification_status == "pending"))
+    if focus == "checked":
+        conditions.extend((DoctorTask.status == "done",
+            DoctorTask.verification_status.in_(("resolved", "not_resolved", "unknown"))))
     if patient_id is not None:
         conditions.append(DoctorTask.patient_id == patient_id)
     if q.strip():
@@ -235,6 +248,7 @@ async def task_board(session: CompassSession,
         User, User.id == func.coalesce(DoctorTask.assigned_to_id, DoctorTask.doctor_id)).where(
         *conditions).order_by(DoctorTask.id.desc()).limit(limit + 1))).all()
     page = rows[:limit]
-    return {"stage": stage, "total": total, "next_cursor": page[-1][0].id if len(rows) > limit else None,
+    return {"stage": stage, "focus": focus, "as_of": as_of,
+            "total": total, "next_cursor": page[-1][0].id if len(rows) > limit else None,
             "items": [{**task_read(task, operational=user.role == UserRole.coordinator),
                        "patient_name": name, "assignee_name": assignee} for task, name, assignee in page]}

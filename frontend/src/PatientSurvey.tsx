@@ -2,7 +2,8 @@ import { useEffect, useRef, useState, type FormEvent } from "react";
 import { ArrowLeft, ChevronRight, LockKeyhole, Save, Send, Sparkles } from "lucide-react";
 import { api, ApiError, send, type Assignment } from "./api";
 import { Badge, Button, date, ErrorBox, Loading, type Notify } from "./UI";
-import { AnswerSummary, SurveyFields } from "./SurveyFields";
+import { AnswerSummary, SurveyFields, visibleQuestions } from "./SurveyFields";
+import { InstrumentSource } from "./ClinicalHistory";
 import { useNavigationGuard, useUnsavedForm, type LeavePrompt } from "./NavigationGuard";
 import { ContentFrame } from "./Interaction";
 import { ParticipationReceipt, type ParticipationConfirmation } from "./ParticipationReceipt";
@@ -91,23 +92,25 @@ export function AssignedSurvey({ assignment:initialAssignment, done, progress, n
     } catch(error){failed(error);} finally{setAction(null);}
   }
   if(saved)return <ContentFrame><section className="panel thanks-card patient-success"><span className="celebration" aria-hidden="true"><Sparkles size={30}/></span>
-    <p className="eyebrow">Ответы отправлены</p><h1 ref={thanksTitle} tabIndex={-1}>Спасибо за ваш ответ</h1><p>Ответы доступны вашему врачу. Любой честный ответ полезен.</p>
+    <p className="eyebrow">Опрос врача</p><h1 ref={thanksTitle} tabIndex={-1}>Ответы отправлены</h1><p>Ответы доступны Вашему врачу.</p>
     <ParticipationReceipt result={confirmation} progress={progress}/><Button onClick={done}>К опросам врача <ChevronRight size={16}/></Button></section></ContentFrame>;
   return <>
     <button className="back-link" disabled={Boolean(action)} onClick={()=>guard.run(done)}><ArrowLeft size={16}/> Опросы врача</button>
     <section className="panel patient-form" ref={formRef}>
       <div className="survey-form-meta"><Badge tone={assignment.submission?"good":"purple"}>{assignment.submission?"Ответ отправлен":`${assignment.survey.questions.length} вопр.`}</Badge><span>Версия {assignment.survey.version}{assignment.due_at?` · до ${date(assignment.due_at)}`:""}</span></div>
       <h1>{assignment.survey.title}</h1><p className="lede">{assignment.survey.description}</p>
+      {assignment.survey.clinical_instrument&&<InstrumentSource definition={assignment.survey.clinical_instrument}/>}
       {assignment.submission?<><AnswerSummary questions={assignment.survey.questions} answers={assignment.submission.answers}/><p className="field-hint">Отправлено {date(assignment.submission.created_at)}. Для нового ответа врач может назначить ещё один опрос.</p></>:
         !draft?<><ErrorBox message={draftError} retry={()=>setLoadRevision(v=>v+1)}/>{!draftError&&<Loading/>}</>:
         draft.already_completed?<><p>Опрос уже отправлен в другом окне. Откройте обновлённую историю.</p><Button onClick={done}>Обновить опросы врача</Button></>:
         <form onSubmit={submit}>
-          <div className="draft-disclosure"><LockKeyhole size={18}/><span>{draft.updated_at?`Продолжаем черновик от ${date(draft.updated_at)}. `:"Можно сделать паузу. "}Черновик виден только вам. Врач получит ответы после отправки.</span></div>
+          <div className="draft-disclosure"><LockKeyhole size={18}/><span>{draft.updated_at?`Продолжаем черновик от ${date(draft.updated_at)}. `:"Можно сделать паузу. "}Черновик виден только Вам. Врач получит ответы после отправки.</span></div>
           <ErrorBox message={openingError} retry={()=>setOpeningRevision(v=>v+1)}/>
           <ErrorBox message={draftError}/>
           {conflict&&<p className="draft-conflict">Текущий ввод остаётся в форме. Загрузка сохранённой версии заменит его. <Button variant="secondary" type="button" onClick={()=>confirm(()=>setLoadRevision(v=>v+1),replaceDraftPrompt)}>Загрузить сохранённую версию</Button></p>}
           <SurveyFields questions={assignment.survey.questions} answers={answers} onChange={changeAnswers} disabled={Boolean(action)} errors={fieldErrors}/>
-          <p className="field-hint">Необязательные вопросы можно пропустить. Баллы начисляются за отправленный опрос. Для паузы сохраните черновик кнопкой ниже.</p>
+          {assignment.survey.clinical_instrument&&visibleQuestions(assignment.survey.questions,answers).length===1&&answers.q1==="n0"&&<p className="field-hint">Остальные вопросы не заполняются по правилу этой формы. Можно отправить ответ врачу.</p>}
+          <p className="field-hint">{assignment.survey.clinical_instrument?"Для отправки ответьте на показанные вопросы. Расчёт баллов за этот бланк одинаков при любых ответах и с учётом дневного лимита.":"Необязательные вопросы можно пропустить. Баллы начисляются за отправленный опрос."} Для паузы сохраните черновик кнопкой ниже.</p>
           <div className="survey-submit-bar"><Button type="submit" disabled={Boolean(action)||conflict}><Send size={17}/>{action==="submit"?"Отправляем…":"Отправить врачу"}</Button>
             <Button id="save-survey-draft" variant="secondary" type="button" disabled={Boolean(action)||conflict} onClick={()=>saveDraft()}><Save size={17}/>{action==="draft"?"Сохраняем…":"Сохранить и продолжить позже"}</Button></div>
         </form>}

@@ -1,0 +1,29 @@
+{
+  "applied_at": "2026-10-26T04:18:44.622078+00:00",
+  "kind": "qa",
+  "database": "compass_ui_flow_qa",
+  "port": 55432,
+  "revision": "u39_support_lookup_indexes",
+  "indexes": [
+    {
+      "name": "ix_alerts_message_id",
+      "valid": true,
+      "ready": true,
+      "unique": false,
+      "definition": "CREATE INDEX ix_alerts_message_id ON public.alerts USING btree (message_id)"
+    },
+    {
+      "name": "ix_messages_patient_support_recent",
+      "valid": true,
+      "ready": true,
+      "unique": false,
+      "definition": "CREATE INDEX ix_messages_patient_support_recent ON public.messages USING btree (patient_id, id) WHERE (support_requested IS TRUE)"
+    }
+  ],
+  "business_table_checksums_preserved": 35,
+  "sequence_collision_checks": 31,
+  "live_access_metadata_may_append": true,
+  "mis_modified": false,
+  "source_reset": false,
+  "verified_archive_sha256": "415af92b1e04d0298c0a6e2bcf4a63044e26e53e412b4c8861b0958be7f0e268"
+}

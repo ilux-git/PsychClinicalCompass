@@ -1,0 +1,231 @@
+{
+  "date": "2026-10-25",
+  "scope": "R01 brand/login and R02 three motivation modes; implementation and targeted native checks. No clinical or reward-policy changes.",
+  "contract": "R01 brand/login and R02 three explicit mode choices at375x844,768x1024,1440x900; preserve API, data, doctor recommendation, earned points and patient choice. Details: contractDetails and native.json.",
+  "targetViewports": [
+    "375x844",
+    "768x1024",
+    "1440x900"
+  ],
+  "renderedEvidence": [
+    {
+      "artifact": "after-login-desktop.jpg",
+      "pixels": [
+        1280,
+        720
+      ],
+      "format": "JPEG",
+      "bytes": 63604,
+      "viewport": "1280x720",
+      "observation": "Native observed after login desktop; observations and limits recorded in native.json/report."
+    },
+    {
+      "artifact": "after-login-mobile.jpg",
+      "pixels": [
+        360,
+        810
+      ],
+      "format": "JPEG",
+      "bytes": 29542,
+      "viewport": "375x844",
+      "observation": "Native observed after login mobile; observations and limits recorded in native.json/report."
+    },
+    {
+      "artifact": "after-mode-desktop.jpg",
+      "pixels": [
+        1425,
+        891
+      ],
+      "format": "JPEG",
+      "bytes": 97320,
+      "viewport": "1440x900",
+      "observation": "Native observed after mode desktop; observations and limits recorded in native.json/report."
+    },
+    {
+      "artifact": "after-mode-mobile.jpg",
+      "pixels": [
+        360,
+        810
+      ],
+      "format": "JPEG",
+      "bytes": 38767,
+      "viewport": "375x844",
+      "observation": "Native observed after mode mobile; observations and limits recorded in native.json/report."
+    },
+    {
+      "artifact": "after-mode-tablet.jpg",
+      "pixels": [
+        753,
+        1004
+      ],
+      "format": "JPEG",
+      "bytes": 62424,
+      "viewport": "768x1024",
+      "observation": "Native observed after mode tablet; observations and limits recorded in native.json/report."
+    },
+    {
+      "artifact": "before-login.jpg",
+      "pixels": [
+        1265,
+        712
+      ],
+      "format": "JPEG",
+      "bytes": 60953,
+      "viewport": "1280x720",
+      "observation": "Native observed before login; observations and limits recorded in native.json/report."
+    },
+    {
+      "artifact": "before-mode-mobile.jpg",
+      "pixels": [
+        360,
+        810
+      ],
+      "format": "JPEG",
+      "bytes": 37525,
+      "viewport": "375x844",
+      "observation": "Native observed before mode mobile; observations and limits recorded in native.json/report."
+    },
+    {
+      "artifact": "mode-keyboard-rhythm-mobile.jpg",
+      "pixels": [
+        360,
+        810
+      ],
+      "format": "JPEG",
+      "bytes": 37243,
+      "viewport": "375x844",
+      "observation": "Native observed mode keyboard rhythm mobile; observations and limits recorded in native.json/report."
+    }
+  ],
+  "nativeEvidence": "native.json",
+  "functional": {
+    "red": {
+      "passed": 0,
+      "failed": 3,
+      "log": "outputs/limbus-mode-red-20261025.log"
+    },
+    "green": {
+      "passed": 3,
+      "failed": 0,
+      "duration_ms": 4098.0148,
+      "log": "outputs/limbus-mode-green-20261025.log"
+    },
+    "frontend_full": {
+      "passed": 74,
+      "failed": 0,
+      "duration_ms": 90237.8415,
+      "log": "outputs/limbus-foundation-frontend-20261025.log"
+    },
+    "backend": {
+      "changed": false,
+      "rerun": false,
+      "last_full_passed": 151
+    }
+  },
+  "build": {
+    "typescript": "passed",
+    "vite": "passed",
+    "log": "outputs/limbus-foundation-build-20261025.log"
+  },
+  "http": {
+    "root_matches_dist": true,
+    "current_script_style_assets_checked": 20,
+    "compass_db": true,
+    "mis_db": true,
+    "qa_healthy": true,
+    "images_loaded_in_native": true
+  },
+  "accessibility": {
+    "status": "partial",
+    "evidence": "Native ArrowDown/Up preserved select focus; description associated with select; no horizontal overflow in observed viewports. Full screen-reader/browser axe review not performed."
+  },
+  "responsive": {
+    "status": "pass",
+    "evidence": "Observed login at1280x720 and375x844; patient journey at375x844,768x1024,1440x900 without horizontal overflow. Login button bottom788.6875<844."
+  },
+  "contentStates": {
+    "loading": {
+      "status": "observed",
+      "evidence": "Existing API loading state shown on reload; no data were invented."
+    },
+    "empty": {
+      "status": "component-only",
+      "evidence": "Synthetic component fixtures have empty offers/history/activity; native empty week not exercised in this cycle."
+    },
+    "error": {
+      "status": "pass",
+      "evidence": "Controlled503 retained effective map and113balance. Normal mode restored; explicit keyboard writes succeeded."
+    },
+    "partial": {
+      "status": "not-retested",
+      "evidence": "No new partial-response behavior introduced; broader existing regressions passed."
+    },
+    "success": {
+      "status": "pass",
+      "evidence": "Patient keyboard map->rhythm->map,113balance retained; home names match."
+    },
+    "permission": {
+      "status": "not-retested",
+      "evidence": "Roles and endpoints unchanged; this cycle did not add a new authorization path."
+    }
+  },
+  "sources": [
+    {
+      "path": "frontend/src/App.tsx",
+      "sha256": "865229f635633de113e389dca4a26e89c7ea4112f979472b653e7ae6202feb27"
+    },
+    {
+      "path": "frontend/src/Brand.tsx",
+      "sha256": "bd3d67a16b29f76e58b6fd68b5c34ecd8fa90e470bda0381eb584d1871ad4110"
+    },
+    {
+      "path": "frontend/src/brand-theme.css",
+      "sha256": "97063165e144fca74d496096255872dd133691eefb1dc4e441d4e66d5971e70f"
+    },
+    {
+      "path": "frontend/src/PatientJourney.tsx",
+      "sha256": "8c7cf1317f1b29e33e75db05e87c9d5c4134928c620ee70652a9a3e7d1e8c247"
+    },
+    {
+      "path": "frontend/src/patient-adventure.css",
+      "sha256": "611d5a5afba550518bf9420a382451b716460235367bd10f870fa19257146ade"
+    },
+    {
+      "path": "frontend/index.html",
+      "sha256": "a3be0a93a7142156a8abae62c6adbc90a53c0a7d8ba69e46ab7ea59fecc5d138"
+    },
+    {
+      "path": "frontend/src/assets/limbus-mark.svg",
+      "sha256": "d8cd96c0e8235352365c63a48cca5dc824f0218adfb9db5bb4f5c62d7df3298e"
+    },
+    {
+      "path": "frontend/src/assets/limbus-anatomy.jpg",
+      "sha256": "66120c7e495ec3053c2c4d843065298102dd0e7fc997e998bdc169ce9c03eedf"
+    }
+  ],
+  "limits": [
+    "Only local prototype uses supplied JPG; B05 source/public-use clarification remains in queue; image bytes and watermark unchanged.",
+    "No new medical claims, treatment decisions, drug dictionary, external delivery, MIS writes or real discount terms.",
+    "No fullWCAG, pixel regression baseline, FPS or1000/max500 acceptance.",
+    "SVG validated as only svg/title/path and no event attributes, href or url values before copying."
+  ],
+  "contractDetails": {
+    "product": "Лимбус",
+    "surfaces": [
+      "login",
+      "shared shell",
+      "patient progress selector",
+      "patient home selector"
+    ],
+    "primary_actions": [
+      "sign in",
+      "choose one of three modes explicitly"
+    ],
+    "preserved": [
+      "compass-token and persistence keys",
+      "all APIs",
+      "doctor recommendation until patient chooses",
+      "points, coupons, history and unknown states"
+    ]
+  }
+}

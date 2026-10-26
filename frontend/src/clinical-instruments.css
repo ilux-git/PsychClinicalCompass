@@ -1,0 +1,47 @@
+.clinical-catalog { margin-block: 20px 24px; padding: 20px; border: 1px solid var(--line); border-radius: 16px; background: var(--white,#fff); }
+.clinical-catalog > h2 { margin: 0 0 8px; font-size: 20px; }
+.clinical-catalog > p { margin: 0 0 20px; max-width: 76ch; color: var(--muted); line-height: 1.6; }
+.clinical-catalog-grid { display: grid; grid-template-columns: repeat(auto-fit,minmax(min(100%,240px),1fr)); gap: 16px; }
+.clinical-catalog-card { display: flex; flex-direction: column; align-items: flex-start; gap: 12px; padding: 20px; border: 1px solid var(--line); border-radius: 12px; min-width: 0; }
+.clinical-catalog-card h3 { margin: 0; font-size: 16px; line-height: 1.4; }
+.clinical-catalog-card > p { margin: 0; color: var(--muted); font-size: 14px; line-height: 1.6; }
+.clinical-catalog-card > .button { margin-top: auto; }
+.instrument-source { margin-top: 16px; color: var(--muted); font-size: 13px; line-height: 1.65; }
+.instrument-source summary { min-height: 40px; display: flex; align-items: center; cursor: pointer; font-weight: 600; color: var(--ink); }
+.instrument-source p { margin: 8px 0 12px; overflow-wrap: anywhere; }
+.clinical-edition + .clinical-edition { margin-top: 28px; padding-top: 28px; border-top: 1px solid var(--line); }
+.clinical-edition > .section-heading h3 { margin: 0; font-size: 18px; line-height: 1.4; }
+.clinical-edition .assessment-answers > p { margin: 16px 0; }
+.published-survey-summary h2:focus,.editor-panel .section-heading h2:focus { outline: none; }
+.clinical-latest { display: flex; align-items: baseline; flex-wrap: wrap; gap: 8px 16px; padding: 16px 0; line-height: 1.6; }
+.clinical-latest > span,.clinical-latest > time { color: var(--muted); font-size: 13px; }
+.clinical-latest > strong { color: var(--ink); font-size: 20px; font-weight: 650; }
+.clinical-baseline { margin: 20px 0; padding: 16px 20px; border: 1px solid var(--line); border-radius: 12px; background: var(--paper); }
+.clinical-baseline > summary { min-height: 44px; cursor: pointer; font-weight: 600; line-height: 1.5; }
+.clinical-baseline form { margin-top: 20px; }
+.clinical-baseline .field { margin-block: 20px; }
+.clinical-baseline [role="status"] { margin: 20px 0 0; line-height: 1.6; }
+.clinical-baseline [role="status"]:focus { outline: none; }
+.clinical-review-summary { margin-block: 20px; padding-block: 4px; line-height: 1.65; }
+.clinical-review-summary h4 { margin: 20px 0 8px; font-size: 16px; line-height: 1.5; }
+.clinical-review-summary ul { margin: 8px 0 16px; padding-inline-start: 24px; }
+.clinical-review-summary li + li { margin-top: 8px; }
+.clinical-review-summary > p { margin: 16px 0; }
+.clinical-comparisons { display: grid; grid-template-columns: repeat(auto-fit,minmax(min(100%,240px),1fr)); gap: 16px 24px; margin-block: 20px; }
+.clinical-comparisons > div { min-width: 0; }
+.clinical-comparisons dt { margin-bottom: 6px; color: var(--muted); font-size: 13px; line-height: 1.6; }
+.clinical-comparisons dd { margin: 0; color: var(--ink); font-size: 14px; line-height: 1.65; overflow-wrap: anywhere; }
+.clinical-comparisons dd > .badge { margin: 6px 0 0 8px; }
+.review-deadlines { padding: 4px 0 12px; border-bottom: 1px solid var(--line); }
+.review-deadlines .clinical-comparisons { margin-top: 12px; }
+@media(max-width: 600px) { .clinical-catalog { padding: 16px; } .clinical-catalog-card { padding: 16px; } }
+.clinical-cohort-grid { display: grid; grid-template-columns: repeat(auto-fit,minmax(min(100%,280px),1fr)); gap: 24px; margin-block: 24px; }
+.clinical-cohort-card { min-width: 0; padding: 20px; border: 1px solid var(--line); border-radius: 12px; }
+.clinical-cohort-card > h3 { margin: 0 0 8px; font-size: 17px; line-height: 1.5; }
+.clinical-cohort-card > p { line-height: 1.65; margin-block: 12px 20px; }
+.clinical-cohort-coverage { display: flex; flex-wrap: wrap; align-items: baseline; gap: 8px 16px; padding-block: 12px; }
+.clinical-cohort-coverage > span { color: var(--muted); font-size: 13px; }
+.clinical-cohort-coverage > strong { font-size: 24px; font-variant-numeric: tabular-nums; }
+.clinical-cohort-coverage small { color: var(--muted); font-size: 13px; font-weight: 400; }
+.clinical-cohort-card .clinical-comparisons { grid-template-columns: 1fr; margin-block: 20px; }
+.directory-date.has-clinical small { display: block; margin-left: 0; }

@@ -1,0 +1,206 @@
+{
+  "clinicalBefore": [
+    {
+      "font": "12px",
+      "line": "20.4px",
+      "text": "F32.1"
+    },
+    {
+      "font": "12px",
+      "line": "20.4px",
+      "text": "Sertraline 50mg"
+    }
+  ],
+  "clinicalAfterFont": {
+    "overflow": false,
+    "rows": [
+      {
+        "border": "1px",
+        "font": "14px",
+        "line": "23.1px",
+        "text": "F32.1",
+        "weight": "600"
+      },
+      {
+        "border": "0px",
+        "font": "14px",
+        "line": "23.1px",
+        "text": "Sertraline 50mg",
+        "weight": "400"
+      }
+    ],
+    "sourceHelp": [
+      {
+        "open": false,
+        "title": "О шкалах и источниках"
+      }
+    ]
+  },
+  "clinicalLabels": {
+    "diagnosis": "F32.1Депрессивный эпизод средней степениКР 301_3 · раздел 1.4",
+    "originalPrescriptions": [
+      "Sertraline 50mg"
+    ],
+    "overflow": false,
+    "shownPrescription": "Сертралин 50 мг",
+    "sourceLink": "https://apicr.minzdrav.gov.ru/api.ashx?id=301_3&op=GetClinrecPdf"
+  },
+  "clinicalMobile": {
+    "button": [
+      {
+        "font": "14px",
+        "height": 44,
+        "shadow": "none"
+      },
+      {
+        "font": "14px",
+        "height": 44,
+        "shadow": "rgb(215, 213, 207) 0px 3px 0px 0px, rgba(24, 25, 26, 0.04) 0px 4px 8px 0px"
+      }
+    ],
+    "diagnosis": 277.9375,
+    "help": [
+      {
+        "height": 45.4375,
+        "text": "О шкалах и источниках"
+      },
+      {
+        "height": 45.4375,
+        "text": "Исходные назначения из МИС"
+      }
+    ],
+    "overflow": false,
+    "viewport": [
+      375,
+      844
+    ]
+  },
+  "adminDesktop": {
+    "individualNamesVisible": false,
+    "overflow": false,
+    "route": [
+      {
+        "font": "15.6px",
+        "height": 52,
+        "shadow": "rgb(215, 213, 207) 0px 2px 0px 0px",
+        "text": "1Обзор клиники"
+      },
+      {
+        "font": "15.6px",
+        "height": 52,
+        "shadow": "rgb(215, 213, 207) 0px 2px 0px 0px",
+        "text": "2Затруднения, их причины"
+      },
+      {
+        "font": "15.6px",
+        "height": 52,
+        "shadow": "rgb(215, 213, 207) 0px 2px 0px 0px",
+        "text": "3Действия и результаты"
+      },
+      {
+        "font": "15.6px",
+        "height": 52,
+        "shadow": "rgb(215, 213, 207) 0px 2px 0px 0px",
+        "text": "4Данные и приватность"
+      }
+    ],
+    "viewport": [
+      1440,
+      900
+    ]
+  },
+  "adminTablet": {
+    "overflow": false,
+    "route": [
+      {
+        "font": "15.6px",
+        "height": 52,
+        "text": "1Обзор клиники",
+        "width": 356.5
+      },
+      {
+        "font": "15.6px",
+        "height": 52,
+        "text": "2Затруднения, их причины",
+        "width": 356.5
+      },
+      {
+        "font": "15.6px",
+        "height": 52,
+        "text": "3Действия и результаты",
+        "width": 356.5
+      },
+      {
+        "font": "15.6px",
+        "height": 52,
+        "text": "4Данные и приватность",
+        "width": 356.5
+      }
+    ],
+    "viewport": [
+      768,
+      1024
+    ]
+  },
+  "adminMobile": {
+    "bottom": [
+      {
+        "label": "Обзор",
+        "overflow": false
+      },
+      {
+        "label": "Затруднения",
+        "overflow": false
+      },
+      {
+        "label": "Действия",
+        "overflow": false
+      },
+      {
+        "label": "Данные",
+        "overflow": false
+      }
+    ],
+    "overflow": false,
+    "route": [
+      {
+        "font": "15.6px",
+        "height": 71.21875,
+        "overflow": false,
+        "text": "1Обзор клиники",
+        "width": 160
+      },
+      {
+        "font": "15.6px",
+        "height": 71.21875,
+        "overflow": false,
+        "text": "2Затруднения, их причины",
+        "width": 160
+      },
+      {
+        "font": "15.6px",
+        "height": 71.21875,
+        "overflow": false,
+        "text": "3Действия и результаты",
+        "width": 160
+      },
+      {
+        "font": "15.6px",
+        "height": 71.21875,
+        "overflow": false,
+        "text": "4Данные и приватность",
+        "width": 160
+      }
+    ],
+    "viewport": [
+      375,
+      844
+    ]
+  },
+  "console": [],
+  "interactionNotes": [
+    "Original MIS prescription opened with native Enter; source text stayed Sertraline 50mg.",
+    "A broad role locator matched both the numbered route and footer Next; no click occurred. Scoped numbered route then opened the correct barriers page.",
+    "QA UI reads only in this cycle; no medical, reward, privacy or treatment writes."
+  ]
+}

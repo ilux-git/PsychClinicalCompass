@@ -37,7 +37,7 @@ test("help follows the active clinical-card tab and falls back to the patient li
   const patient={id:1,full_name:"Синтетический пациент",mis_id:101,doctor_id:1,created_at:"2026-10-20T10:00:00Z",
     mis:{source:"synthetic-mis",status:"available",diagnoses:[],prescriptions:[]},doctor:{name:doctor.display_name,availability:"available"}};
   const replies=new Map([["/auth/me",doctor],["/patients/1",patient],["/survey-assignments?patient_id=1",[]],
-    ["/patients/1/assessments",[]],["/patients/1/notes",[]],["/patients/1/adherence",{reports:[]}],
+    ["/patients/1/assessments",[]],["/patients/1/clinical-results",[]],["/patients/1/notes",[]],["/patients/1/adherence",{reports:[]}],
     ["/alerts?patient_id=1",[]],["/surveys",[]],["/patients/1/diary",{entries:[]}],
     ["/alerts/inbox?limit=1",{total_open:0,not_presented:0,items:[],next_before_id:null}],
     ["/patients/directory?q=&after=0",{total:0,items:[],next_cursor:null}]]);
@@ -60,7 +60,7 @@ test("help follows the active clinical-card tab and falls back to the patient li
   await user.click(within(dialog).getByRole("button",{name:"Понятно"}));
   assert.equal(document.activeElement===help,true);
   await user.click(screen.getByRole("tab",{name:"История состояния"}));
-  await screen.findByRole("heading",{name:"История PHQ-9 и GAD-7"});
+    await screen.findByRole("heading",{name:"Клинические опросники"});
   await user.click(help);dialog=await screen.findByRole("dialog");
   assert.equal(Boolean(within(dialog).queryByRole("heading",{name:"История состояния"})),true);
   assert.match(dialog.textContent,/поделился/);
@@ -86,7 +86,7 @@ for(const completed of [false,true]){
       ["/patients/2",{id:2,full_name:actor.display_name,mis_id:102,doctor_id:1,created_at:stamp,mis:{source:"synthetic",status:"available",diagnoses:[],prescriptions:[]},doctor:{name:"Учебный врач",availability:"available"}}],
       ["/participation/me",{assigned:1,completed:completed?1:0,pending:completed?0:1,progress_percent:completed?100:0,history:[],message:"Учебная проверка"}],
       ["/survey-assignments/30/draft",{answers:{},revision:0,updated_at:null,already_completed:false}]]);
-    const unusedHomeReads=new Set(["/participation/points","/participation/care-progress","/patients/2/assessments"]);
+    const unusedHomeReads=new Set(["/participation/points","/participation/care-progress","/patients/2/assessments","/patients/2/clinical-results"]);
     let openings=0;
     globalThis.fetch=async(path,options={})=>{
       const method=options.method??'GET';
@@ -108,7 +108,7 @@ for(const completed of [false,true]){
     assert.equal(dom.window.location.search,'?section=overview&assignment=30');
     const help=screen.getByRole('button',{name:'Помощь с разделом'});await user.click(help);
     let dialog=await screen.findByRole('dialog',{name:'Опрос врача'});
-    assert.match(dialog.textContent,/Черновик виден только вам/);assert.match(dialog.textContent,/Сохранить и продолжить позже/);assert.match(dialog.textContent,/Отправить врачу/);
+    assert.match(dialog.textContent,/Черновик виден только Вам/);assert.match(dialog.textContent,/Сохранить и продолжить позже/);assert.match(dialog.textContent,/Отправить врачу/);
     assert.ok(within(dialog).getByRole('button',{name:'На главную'}));
     await user.click(within(dialog).getByRole('button',{name:'Понятно'}));assert.equal(document.activeElement===help,true);
     if(!completed){

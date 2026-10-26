@@ -1,7 +1,7 @@
 import enum
 from datetime import datetime
 
-from sqlalchemy import BigInteger, DateTime, Enum, ForeignKey, String, UniqueConstraint, func
+from sqlalchemy import BigInteger, CheckConstraint, DateTime, Enum, ForeignKey, String, UniqueConstraint, func
 from sqlalchemy.orm import Mapped, mapped_column
 
 from app.db.base import Base
@@ -35,3 +35,20 @@ class TelegramBinding(Base):
     telegram_user_id: Mapped[int] = mapped_column(BigInteger, unique=True, nullable=False)
     telegram_chat_id: Mapped[int] = mapped_column(BigInteger, unique=True, nullable=False)
     verified_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False)
+
+
+class RevokedAccessToken(Base):
+    __tablename__ = "revoked_access_tokens"
+
+    token_hash: Mapped[str] = mapped_column(String(64), primary_key=True)
+    expires_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), index=True, nullable=False)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now(), nullable=False)
+
+
+class AuthLoginBucket(Base):
+    __tablename__ = "auth_login_buckets"
+    __table_args__ = (CheckConstraint("attempts >= 1", name="ck_auth_login_bucket_attempts"),)
+
+    bucket_key: Mapped[str] = mapped_column(String(64), primary_key=True)
+    attempts: Mapped[int] = mapped_column(nullable=False)
+    window_started_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False)

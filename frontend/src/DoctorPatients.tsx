@@ -1,3 +1,4 @@
+import { createRequestId } from "./requestId";
 import { useEffect, useId, useLayoutEffect, useRef, useState, type FormEvent } from "react";
 import {
   ArrowLeft,
@@ -38,6 +39,9 @@ import {
 import { AnswerSummary } from "./SurveyFields";
 import { Chat } from "./Chat";
 import { AssessmentHistory } from "./AssessmentHistory";
+import { ClinicalHistory, type ClinicalResultTarget } from "./ClinicalHistory";
+import { ClinicalCohort } from "./ClinicalCohort";
+import { ClinicalReviewSummary, ReviewDeadlines } from "./ClinicalReview";
 import { dimensionLabels, type Dimension } from "./collection";
 import { SharedDiary } from "./PatientDiary";
 import { CareWorkflow, treatmentLabels, type CareSource, type CareTask } from "./CareWorkflow";
@@ -47,6 +51,7 @@ import { AnimatePresence, ContentFrame, Disclosure } from "./Interaction";
 import { useNavigationGuard, useUnsavedForm, type LeavePrompt } from "./NavigationGuard";
 import { useReturnFocus, useViewState, type PatientAnswerTarget } from "./ViewState";
 import { cardSections, type CardTab } from "./navigation";
+import { diagnosisLabel, prescriptionLabel } from "./clinicalLabels";
 
 const notePrompt:LeavePrompt={eyebrow:"Рабочая заметка врача",title:"Продолжить приватную заметку?",message:"Заметка ещё не сохранена. При выходе из карточки текущий ввод будет потерян. Пациент эту форму не видит.",stayLabel:"Продолжить заметку"};
 const decisionPrompt:LeavePrompt={eyebrow:"Комментарий к событию",title:"Продолжить врачебную оценку?",message:"Комментарий ещё не сохранён. Переход без сохранения удалит ввод. Подтверждение или отклонение оценки выполняется только отдельной кнопкой врача.",stayLabel:"Продолжить оценку"};
@@ -61,11 +66,13 @@ function AlertItem({
   notify,
   reload,
   openPlan,
+  openClinical,
 }: {
   alert: Alert;
   notify: Notify;
   reload: () => void;
   openPlan: () => void;
+  openClinical: (resultId?:number) => void;
 }) {
   const [reason, setReason] = useState("");
   const [busy, setBusy] = useState(false);
@@ -110,25 +117,31 @@ function AlertItem({
         </Badge>
         <small className="muted">{date(alert.created_at)}</small>
       </div>
-      <h3>{alert.reason}</h3>
+      <h3>{alert.source_kind==="clinical_assessment"?alert.decision?.facts.instrument_name??"Клинический опросник":alert.reason}</h3>
+      <ReviewDeadlines timing={alert.review_timing}/>
       {alert.source_kind === "support_request" ? <>
         <p className="field-hint">Источник — явная просьба пациента. Текст не оценивался медицинским классификатором.</p>
         {alert.source_message && <blockquote className="preserve">{alert.source_message.text}<footer>{date(alert.source_message.created_at)} · сообщение #{alert.source_message.id}</footer></blockquote>}
-      </> : <p className="field-hint">
+      </> : alert.source_kind==="clinical_assessment"?<>
+        <p className="field-hint">Основание — результат зафиксированного клинического бланка. Приоритет организует разбор врачом и не устанавливает диагноз или непосредственную угрозу жизни.</p>
+        <ClinicalReviewSummary review={alert.decision?.facts.triage}/>
+        {alert.decision?.facts.source_url&&<p className="field-hint"><a href={alert.decision.facts.source_url} target="_blank" rel="noreferrer">{alert.decision.facts.source_title}</a> · {alert.decision.facts.instrument_version}</p>}
+        <Button variant="secondary" onClick={()=>openClinical(alert.decision?.facts.clinical_result_id)}>Посмотреть ответы клинического опросника</Button>
+      </>:<p className="field-hint">
         Основание: сохранённый результат шкалы и правило исходного прототипа.
         Автоматическое событие не доказывает непосредственную угрозу жизни.
       </p>}
       {alert.decision && (
         <>
-          <p className="field-hint">
+          <details className="source-help"><summary>Факты и версия правила</summary><p className="field-hint">
             Правило: {alert.rule_id} · {alert.rule_version}. Факты:{" "}
-            {alert.decision.facts.form_type.toUpperCase()},{" "}
-            {alert.decision.facts.score} балл.
+            {alert.decision.facts.instrument_name??alert.decision.facts.form_type.toUpperCase()},{" "}
+            {alert.decision.facts.score===null?"скрининговый критерий без суммы баллов":`${alert.decision.facts.score} балл.`}
             {alert.decision.facts.risk_flags.includes("phq9_item9_positive") &&
               " Положительный ответ на пункт 9 PHQ-9."}
-          </p>
+          </p></details>
           <p className="field-hint">
-            {alert.decision.status === "pending_review"
+            {alert.source_kind==="clinical_assessment"?"Бланк и источник зафиксированы. Требуется отдельная оценка врача; для закрытия события — записанное клиническое действие в связанной задаче.":alert.decision.status === "pending_review"
               ? "Не хватает врачебной оценки и согласованного клинического источника правила."
               : "При создании события требовались врачебная оценка и согласованный клинический источник правила."}
           </p>
@@ -242,6 +255,7 @@ function PatientCard({
   const alerts = useApi<Alert[]>(`/alerts?patient_id=${patientId}`, 15000);
   const surveys = useApi<Survey[]>("/surveys");
   const [tab, setTab] = useState<CardTab>(initialTab);
+  const [clinicalTarget,setClinicalTarget]=useState<ClinicalResultTarget|null>(null);
   useLayoutEffect(()=>setTab(initialTab),[initialTab]);
   const [noteText, setNoteText] = useState("");
   const [noteRevealRequest,setNoteRevealRequest]=useState(0);
@@ -293,6 +307,9 @@ function PatientCard({
     setNoteError("");setSource(value);
   }
   function changeTab(next:CardTab) {if(next!==tab)guard.runFor(()=>{setTab(next);onTabChange?.(next);},cardTabScope);}
+  function showClinicalResult(id?:number) {
+    guard.runFor(()=>{setClinicalTarget(current=>id?{id,request:(current?.request??0)+1}:null);setTab("clinical");onTabChange?.("clinical");},cardTabScope);
+  }
   function startTask(value:Source) {
     guard.runFor(()=>{setTaskSource(value);setSourceAssigned(false);setSourceRequest(value=>value+1);setTab("care");onTabChange?.("care");},cardTabScope);
   }
@@ -341,7 +358,7 @@ function PatientCard({
   async function assign() {
     if (!surveyId) return;
     if (assignRequest.current.surveyId !== surveyId)
-      assignRequest.current = { surveyId, id: crypto.randomUUID() };
+      assignRequest.current = { surveyId, id: createRequestId() };
     setAssignError("");setBusy(true);
     try {
       await send(`/surveys/${surveyId}/assign`, {
@@ -428,7 +445,6 @@ function PatientCard({
                   </button>
                 ))}
               </div>
-              <p className="card-section-purpose" role="status">{cardSections[tab].description}</p>
               <AnimatePresence mode="wait" initial={false}><ContentFrame key={tab}>
               {tab === "care" && <CareWorkflow key={`${taskSource?.type}-${taskSource?.id}-${sourceRequest}`} patientId={patientId} source={taskSource} notify={notify} scope={cardTabScope} resolveSource={resolveCareSource} openSource={showCareSource} composeRequested={!sourceAssigned} onCreated={()=>setSourceAssigned(true)} />}
               {tab === "medications" && <MedicationSchedule patientId={patientId} notify={notify} readOnly onSource={startTask} />}
@@ -605,8 +621,9 @@ function PatientCard({
               )}
               {tab === "clinical" && (
                 <>
-                  <Section title="История PHQ-9 и GAD-7">
-                    <ErrorBox message={history.error} retry={history.reload} />
+                  <Section title="Клинические опросники">
+                      <ClinicalHistory patientId={patientId} doctor scope={cardTabScope} target={clinicalTarget}/>
+                      <ErrorBox message={history.error} retry={history.reload} />
                     {history.data ? (
                       <AssessmentHistory rows={history.data} />
                     ) : (
@@ -630,20 +647,22 @@ function PatientCard({
                       <div className="clinical-data">
                         <h3>Диагнозы</h3>
                         {p.mis.diagnoses.length ? (
-                          p.mis.diagnoses.map((text, i) => (
-                            <p key={i}>{text}</p>
-                          ))
+                          p.mis.diagnoses.map((text, i) => {
+                            const label=diagnosisLabel(text);
+                            return <p className="clinical-diagnosis" key={i}><strong>{text}</strong>{label&&<><span className="clinical-code-name">{label.name}</span><a className="clinical-code-source" href={label.source} target="_blank" rel="noreferrer">{label.reference}</a></>}</p>;
+                          })
                         ) : (
                           <p className="muted">Нет данных</p>
                         )}
                         <h3>Назначения</h3>
                         {p.mis.prescriptions.length ? (
                           p.mis.prescriptions.map((text, i) => (
-                            <p key={i}>{text}</p>
+                            <p className="clinical-prescription" key={i}>{prescriptionLabel(text,p.mis.source)}</p>
                           ))
                         ) : (
                           <p className="muted">Нет данных</p>
                         )}
+                        {!!p.mis.prescriptions.length&&<details className="source-help"><summary>Исходные назначения из МИС</summary>{p.mis.prescriptions.map((text,i)=><p className="preserve" key={i}>{text}</p>)}</details>}
                       </div>
                     ) : (
                       <p>
@@ -670,6 +689,7 @@ function PatientCard({
                           notify={notify}
                           reload={alerts.reload}
                           openPlan={()=>startTask({type:"alert",id:alert.id,label:"Событие пациента"})}
+                          openClinical={showClinicalResult}
                         />
                       ))
                     )}
@@ -777,6 +797,7 @@ export function DoctorPatients({
   scope="patients",
   initialAnswer,
   onTabChange,
+  openClinicalLibrary,
 }: {
   selected: number | null;
   onSelect: (id: number | null) => void;
@@ -787,6 +808,7 @@ export function DoctorPatients({
   back?:()=>void;backLabel?:string;scope?:string;
   initialAnswer?:PatientAnswerTarget;
   onTabChange?:(tab:CardTab)=>void;
+  openClinicalLibrary?:()=>void;
 }) {
   const [query, setQuery] = useViewState(`${scope}-search-input`,"");
   const [search,setSearch] = useViewState(`${scope}-search`,"");
@@ -815,9 +837,8 @@ export function DoctorPatients({
   const filtered = page?.items;
   return (
     <>
-      <Heading eyebrow="Люди, которым вы помогаете" title={scope === "state" ? "Динамика состояния" : "Пациенты"}>
-        {initialTab === "clinical" ? "Выберите пациента, чтобы открыть PHQ-9, GAD-7 и сохранённые ответы по пунктам." : "Опросы, самоотчёты и переписка в одной карточке."}
-      </Heading>
+      <Heading eyebrow="Кабинет врача" title={scope === "state" ? "Динамика состояния" : "Пациенты"}/>
+      {scope==="state"&&<ClinicalCohort search={search} openSurveys={openClinicalLibrary}/>}
       <div className="board-toolbar"><div className="search-field">
         <Search size={18} />
         <input
@@ -827,7 +848,7 @@ export function DoctorPatients({
           onChange={(e) => setQuery(e.target.value)}
         />
       </div>{openTasks && <Button variant="secondary" onClick={openTasks}>Открыть доску задач</Button>}<Button variant="ghost" onClick={patients.reload}>Обновить</Button></div>
-      <p className="field-hint directory-status-line" role="status">{patients.loading || search !== query.trim() ? "Обновляем список…" : patients.data ? `Найдено: ${patients.data.total}. На странице: ${patients.data.items.length}. Показаны только ваши пациенты.` : "Список пациентов ещё не получен."}</p>
+      <p className="field-hint directory-status-line" role="status">{patients.loading || search !== query.trim() ? "Обновляем список…" : patients.data ? `Найдено: ${patients.data.total}. На странице: ${patients.data.items.length}. Показаны только Ваши пациенты.` : "Список пациентов ещё не получен."}</p>
       <ErrorBox message={patients.error ? `${patients.data ? "На экране — последние полученные данные. " : ""}${patients.error}` : ""} retry={patients.reload} />
       {patients.loading && !page ? (
         <div className="patient-directory directory-skeleton" role="status" aria-label="Загружаем список пациентов"><span className="sr-only">Загружаем список пациентов</span>{Array.from({length:6},(_,i)=><div className="skeleton-directory-row" key={i} aria-hidden="true"><i/><div><span/><span/></div><span/><span/></div>)}</div>
@@ -849,7 +870,10 @@ export function DoctorPatients({
               <div className="directory-person"><Avatar name={p.full_name} small/><div><strong>{p.full_name}</strong><small>{p.demo_scenario ?? `Учебная карточка #${p.id}`}</small></div></div>
               <div className="directory-status"><Badge tone={p.treatment_status === "completed" ? "good" : "muted"}>{treatmentLabels[p.treatment_status ?? "unknown"]}</Badge></div>
               <div className="directory-signals"><span>{(p.pending_events ?? 0)>0?<Badge tone="warn">События: {p.pending_events}</Badge>:"Нет открытых событий"}</span><small>Задачи: {p.open_tasks ?? 0} назначено · {p.in_progress_tasks ?? 0} в работе</small></div>
-              <div className="directory-date"><span>{p.last_observation_at ? date(p.last_observation_at) : "Пока нет"}</span><small>Состояние пациента</small></div>
+              <div className={`directory-date ${p.latest_clinical_result?"has-clinical":""}`}>{p.latest_clinical_result?<>
+                <span>{p.latest_clinical_result.code} · {p.latest_clinical_result.score!==null?`${p.latest_clinical_result.score} / ${p.latest_clinical_result.maximum}`:p.latest_clinical_result.criterion_met===true?"Критерий выполнен":p.latest_clinical_result.criterion_met===false?"Критерий не выполнен":"Критерий неизвестен"}</span>
+                <small>{date(p.latest_clinical_result.created_at)}</small><small>{p.latest_clinical_result.version}</small>
+              </>:<><span>{p.last_observation_at ? date(p.last_observation_at) : "Нет измерений"}</span><small>{p.last_observation_at?"Числовой демо-результат":"Опросники состояния"}</small></>}</div>
               <ChevronRight size={18}/>
             </button>
           ))}

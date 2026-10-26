@@ -1,3 +1,4 @@
+import { createRequestId } from "./requestId";
 import { useRef, useState, type FormEvent } from "react";
 import { send, useApi } from "./api";
 import { Button, ErrorBox, type Notify } from "./UI";
@@ -17,7 +18,7 @@ export function EventAction({alertId,notify,done,scope}: {alertId:number; notify
     const payload = {title,kind,assigned_to_id:assignee ? Number(assignee) : null,reply,
       due_at:due ? new Date(due).toISOString() : null,follow_up_at:followUp ? new Date(followUp).toISOString() : null};
     const signature = JSON.stringify(payload);
-    if (request.current.signature !== signature) request.current = {signature,id:crypto.randomUUID()};
+    if (request.current.signature !== signature) request.current = {signature,id:createRequestId()};
     setBusy(true);
     try {
       const saved = await send<{task_id:number;reply_message_id:number|null}>(`/alerts/${alertId}/actions`,{...payload,client_request_id:request.current.id});

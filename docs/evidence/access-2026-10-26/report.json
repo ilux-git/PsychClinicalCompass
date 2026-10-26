@@ -1,0 +1,388 @@
+{
+  "created_at": "2026-10-26T00:34:07.308905+07:00",
+  "scope": "current-credential logout, login budget and authenticated-read metadata",
+  "sources": [
+    {
+      "path": ".env.example",
+      "bytes": 773,
+      "sha256": "fee9f632561f2dae8efa1c2f15e0e97cd77ba9ff0e1a2f0a8fbe9027b9074d0a"
+    },
+    {
+      "path": "app/core/security.py",
+      "bytes": 1381,
+      "sha256": "a16036a0dbef1204beb5922dac8efaa019182b1fc4d23f64201d7b8df79d3642"
+    },
+    {
+      "path": "app/core/config.py",
+      "bytes": 1860,
+      "sha256": "2c1d520c12208e31eb00f22e446c14a4a71f4f4599706801433ab3ec2e9ab62f"
+    },
+    {
+      "path": "app/api/deps.py",
+      "bytes": 2951,
+      "sha256": "401bcc10852dae9b8eee3885fc583f3313613f24b60fc7153019b8d634db79c9"
+    },
+    {
+      "path": "app/db/models.py",
+      "bytes": 1013,
+      "sha256": "d44f31319f72b7ef40239f6a1fe4a6102c160d06802242dc45563a092aa89810"
+    },
+    {
+      "path": "app/modules/access/guards.py",
+      "bytes": 2290,
+      "sha256": "de1ccd68e08b69a8107a43d61b02f70bb213a5d68f3c9ad145746a366bd72069"
+    },
+    {
+      "path": "app/modules/access/models.py",
+      "bytes": 2427,
+      "sha256": "d4e19a8983f8456cf7cf44d9c48df04ff4845b189c93b0cb28a16f72fbf984de"
+    },
+    {
+      "path": "app/modules/access/router.py",
+      "bytes": 4367,
+      "sha256": "ae1afa1d6b404c024b5b05ec5f4897e9edbfdc1496730f72fef7243575454e61"
+    },
+    {
+      "path": "app/modules/audit/models.py",
+      "bytes": 1825,
+      "sha256": "82b7d28a800b329dcf9d52e74fae86492b9d6e494a202b155e313f4a862705ad"
+    },
+    {
+      "path": "app/modules/audit/read_access.py",
+      "bytes": 3709,
+      "sha256": "dc33a57ce21945852ef1c9a94d2e400e9ed70d2c997bceb61f0d2da06cbc9e2b"
+    },
+    {
+      "path": "app/main.py",
+      "bytes": 2794,
+      "sha256": "66c4431c3e82fb1c6071fd1c0882adae43a6f1b0fd39a43e446ebd27f4ca6684"
+    },
+    {
+      "path": "alembic/versions/o33_access_safeguards.py",
+      "bytes": 1595,
+      "sha256": "83610c47a3b36157d311962035c94141a7f4492dfd76e4f8c8f2f288b5ed39f6"
+    },
+    {
+      "path": "alembic/versions/p34_read_access_audit.py",
+      "bytes": 1425,
+      "sha256": "9141caac27b4372bd0d089386f8d040ec017eb0dbfb2d45b6e1b13a12c3ee6db"
+    },
+    {
+      "path": "frontend/src/App.tsx",
+      "bytes": 32428,
+      "sha256": "33b6079da54bc3df87bad88d5a0847493e1ce40bc8d3e7a947c3d5fb51381b39"
+    },
+    {
+      "path": "frontend/tests/logout-interaction.test.mjs",
+      "bytes": 6244,
+      "sha256": "e0f008ed2d70ecf9920f227686014b08ae3142ccf4692f1dbe4489942b00d3d7"
+    },
+    {
+      "path": "frontend/tests/availability-actor-interaction.test.mjs",
+      "bytes": 4984,
+      "sha256": "11f2f01850ab1281c9f5053aca4a8ec8dff9d99cf6a6a74e8f8dca0e4a1ec158"
+    },
+    {
+      "path": "frontend/tests/session-boundaries.test.mjs",
+      "bytes": 7065,
+      "sha256": "9e4a837a32798e468cd905824aca71ac2536cf4f15b386ab95d2b35a8e56142f"
+    },
+    {
+      "path": "tests/test_auth_guards.py",
+      "bytes": 8078,
+      "sha256": "a3d57843dfef8b181ba9d3545bf03b046e297dc218ea9e7f802d952ccc2dfcd4"
+    },
+    {
+      "path": "tests/test_read_audit.py",
+      "bytes": 6528,
+      "sha256": "4454aecc3b3039591124ccae757f7c819d4685c98aeb1c857f6d5681969456a0"
+    }
+  ],
+  "backend": {
+    "passed": 177,
+    "failed": 0,
+    "seconds": 111.3,
+    "log": {
+      "path": "outputs/read-audit-full-retry-20261026.log",
+      "bytes": 276,
+      "sha256": "ab3db4bc9cd9a2b492d28f3d1b9da1a42309762ba5789c5be432e2ad409ed8c8"
+    }
+  },
+  "frontend": {
+    "passed": 88,
+    "failed": 0,
+    "milliseconds": 133151.8615,
+    "log": {
+      "path": "outputs/auth-logout-ui-full-retry-20261026.log",
+      "bytes": 12764,
+      "sha256": "461f1e9520a0d8b66fd07cdaa5c7fdb9c91ba4612eda55b5a42ce87a6b799f3b"
+    }
+  },
+  "build": {
+    "exit_code": 0,
+    "typescript": true,
+    "vite": true,
+    "log": {
+      "path": "outputs/auth-logout-build-retry-20261026.log",
+      "bytes": 2350,
+      "sha256": "1403dbc9ce8465890c723f88b568f6bead759292a20a3988c353d5d07b802a36"
+    }
+  },
+  "failed_attempts_preserved": [
+    {
+      "scope": "test setup import",
+      "log": {
+        "path": "outputs/auth-logout-ui-red-20261026.log",
+        "bytes": 2879,
+        "sha256": "5e003b172f8c918182a38ba93810a3b1c9e23fa19da5fc326ba743ef8b105f56"
+      },
+      "accepted_as_behavior_red": false
+    },
+    {
+      "scope": "parallel build/frontend resource failure",
+      "frontend_passed": 83,
+      "test_processes_failed": 2,
+      "accepted_as_full_pass": false
+    },
+    {
+      "scope": "backend system tmp fixture failure",
+      "passed": 176,
+      "setup_errors": 1,
+      "accepted_as_full_pass": false
+    }
+  ],
+  "database_preflight": [
+    {
+      "migration": "o33_access_safeguards",
+      "restored_snapshots": 2,
+      "empty_roundtrips": 2,
+      "lossy_downgrades_rejected": 4,
+      "snapshot_data_matches": true,
+      "archive_sha256": [
+        "5f2f8148a42df5dfc7f9fafada1541b4321e14cf043cdd4ce4378c921849db6b",
+        "198879dd0dc06d5a86ce5833ad42a32c8bd2c44fa0e4925af500844e207443b2"
+      ]
+    },
+    {
+      "migration": "p34_read_access_audit",
+      "restored_snapshots": 2,
+      "empty_roundtrips": 2,
+      "lossy_downgrades_rejected": 2,
+      "snapshot_data_matches": true,
+      "archive_sha256": [
+        "0b22783e4ba3b65d1135c6869bc2dc8f4994c543986949feec8757e81182d12f",
+        "b6a0251d60437ebebda802f6b806b6975ed9e813a67c3be05eb1c509f80b96d6"
+      ]
+    }
+  ],
+  "applied_revisions": [
+    "o33_access_safeguards",
+    "p34_read_access_audit"
+  ],
+  "main_and_qa_upgraded": true,
+  "reset_or_seed": false,
+  "mis_writes": false,
+  "live_qa": {
+    "qa_only": true,
+    "unique_credentials": true,
+    "revocation_scoped_to_one_credential": true,
+    "repeated_logout_idempotent": true,
+    "other_session_preserved": true,
+    "revoked_get_status": 401,
+    "admin_clinical_status": 403,
+    "read_records": 4,
+    "logout_events": 3,
+    "no_clinical_writes": true,
+    "tokens_persisted_or_reported": false
+  },
+  "http": {
+    "base_url": "http://127.0.0.1:8780",
+    "scope": "HTTP bytes and MIME only; not browser layout/interactions",
+    "assets": [
+      {
+        "file": "AdminDashboard-pOa66qA8.js",
+        "status": 200,
+        "bytes": 18568,
+        "sha256": "fed6a5e82f4f5b68e8b2436b597547f2907d6af90bb6f9e8a22a9ede5143ae9e",
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "file": "CareWorkflow-BpdgoUfu.js",
+        "status": 200,
+        "bytes": 26981,
+        "sha256": "f8c8484e2c92bd83f7b9e6cc3eb79c42b060fdbf9b7a10193eb05b19e6c42223",
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "file": "Charts-0ZR8sgxf.js",
+        "status": 200,
+        "bytes": 5337,
+        "sha256": "5455e7339ec137abc8be4f9b797325efff140f0e915ce253e3cb63ff1c138424",
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "file": "DoctorDashboard-UBSELN_k.js",
+        "status": 200,
+        "bytes": 17514,
+        "sha256": "a1e86552976dd9fea8358f02b38c7d5392f9244bcaa5fdaa50b9a4251f8f0e48",
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "file": "DoctorPatients-BNsmSEKL.js",
+        "status": 200,
+        "bytes": 37404,
+        "sha256": "8a020187f76a20b39292e1e581c94681d2388d1eb7bfaa41567dd8bff390e5fb",
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "file": "MedicationSchedule-BHG08nOf.css",
+        "status": 200,
+        "bytes": 2042,
+        "sha256": "4df94529b02ede2dbfedd485780a0a58ea1a3e404af2ce5fc8621ee7f831852f",
+        "mime": "text/css; charset=utf-8"
+      },
+      {
+        "file": "MedicationSchedule-BY44sdUV.js",
+        "status": 200,
+        "bytes": 37780,
+        "sha256": "3bd2efa0997cb16e2393955b4cd269ed9613ea3ee5835140dc4f9f01f389ac69",
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "file": "Patient-B3rzWMYH.js",
+        "status": 200,
+        "bytes": 64570,
+        "sha256": "97ed14d7720b10101e41370b297e691b01b4c870e2f4b892235193167a984a52",
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "file": "Patient-JiBj8C4s.css",
+        "status": 200,
+        "bytes": 27335,
+        "sha256": "45ad5f2192c4962a86f8c2261b383374c16b1840d9a4607097f9a1d3417ce2a1",
+        "mime": "text/css; charset=utf-8"
+      },
+      {
+        "file": "SurveyBuilder-DLDNfjd1.js",
+        "status": 200,
+        "bytes": 25228,
+        "sha256": "f6237508ef24d59291e54b1cd6639d10076d4ab7f61170cb8487db671550a229",
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "file": "SurveyFields-DQYnoW2K.js",
+        "status": 200,
+        "bytes": 3313,
+        "sha256": "bea72df8a6b0889a349231521179db2e46a518d243ef9843be001698759bc0a7",
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "file": "TaskBoard-BouLD5eo.js",
+        "status": 200,
+        "bytes": 9309,
+        "sha256": "d47ed08a5499c26f3bc9fa0096078d40abb9e98d84df7e999f7c7183e8be8abd",
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "file": "WorkflowMetrics-BNc-oAwk.js",
+        "status": 200,
+        "bytes": 12423,
+        "sha256": "adfd923958214eda39c58c6bca726c7b8fb21eb485cffb706a7fde40c709df2e",
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "file": "chevron-right-BN5IUKPT.js",
+        "status": 200,
+        "bytes": 159,
+        "sha256": "99f6864fecb83307394e7facb4160a86a5c291b2afd359f5d2a594e675f0a99c",
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "file": "collection-COswcvyL.js",
+        "status": 200,
+        "bytes": 939,
+        "sha256": "b8f61ba215c319fcc2aaf6ce0fb3b26b182c049b9a0d9e4febe85703fe8000e4",
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "file": "index-BXv2j5D6.js",
+        "status": 200,
+        "bytes": 389721,
+        "sha256": "6170e195d09666b2d94a2a907e542d6fc9d7a7e34c79113c5d4dcd53b6497018",
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "file": "index-CbnS7naW.css",
+        "status": 200,
+        "bytes": 122331,
+        "sha256": "c4c9d3a9a0a4cac95af8d3debc3100b08acd8c7e5ba515e084ea8a92f6288e39",
+        "mime": "text/css; charset=utf-8"
+      },
+      {
+        "file": "patientProgress-DCFXcaSn.js",
+        "status": 200,
+        "bytes": 1115,
+        "sha256": "e78240ab39e83083e585cc606370ca4fe7a5a59433a5a6190f2fe40a443b6430",
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "file": "plus-pa1-fLNM.js",
+        "status": 200,
+        "bytes": 182,
+        "sha256": "b6c32dcd70fa9536caa737e6803265589809504d929ae899362d77b1c9b3c7db",
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "file": "send-ZB3cJb7k.js",
+        "status": 200,
+        "bytes": 652,
+        "sha256": "5786851652c2864ae6cb0417933f476a81d4fc9665ddb74004e80deb49974d7a",
+        "mime": "text/javascript; charset=utf-8"
+      }
+    ],
+    "health": {
+      "status": "ok",
+      "compass_db": true,
+      "mis_db": true,
+      "mode": "synthetic_demo"
+    },
+    "root_matches_dist": true,
+    "qa_health": {
+      "status": "ok",
+      "compass_db": true,
+      "mis_db": true,
+      "mode": "synthetic_demo"
+    }
+  },
+  "native": {
+    "browser": "iab",
+    "qa_port": 8782,
+    "doctor_home_and_logout_after_p34": true,
+    "console_last_20_warn_error": [],
+    "screenshots": [
+      {
+        "path": "docs/evidence/access-2026-10-26/doctor-p34.jpg",
+        "bytes": 63760,
+        "sha256": "26d486f6f557f401a50d7c62d4a44180e0d47469ed722169f87344e566325368"
+      },
+      {
+        "path": "docs/evidence/access-2026-10-26/logout-confirmed.jpg",
+        "bytes": 61327,
+        "sha256": "bd83f09b553647aa5cd988d2c37295659a6832fb064300e99fc70972fb053a70"
+      },
+      {
+        "path": "docs/evidence/access-2026-10-26/logout-p34-confirmed.jpg",
+        "bytes": 61327,
+        "sha256": "bd83f09b553647aa5cd988d2c37295659a6832fb064300e99fc70972fb053a70"
+      }
+    ]
+  },
+  "limits": [
+    "Synthetic local stores only; no legal or clinical acceptance.",
+    "Read metadata is insert-only in application code; no certified tamper-proof storage or retention policy asserted.",
+    "No administrator audit endpoint or expanded clinical scope.",
+    "The current snapshot has not yet been measured at 1000 simultaneous users and maximum 500 ms.",
+    "No real EMR transmission, legal digital signature or new medical rule was enabled.",
+    "Native screenshots verify the observed home/logout states, not full accessibility or every role/error state."
+  ]
+}

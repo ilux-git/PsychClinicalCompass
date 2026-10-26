@@ -35,6 +35,26 @@ before(async()=>{
   ({ViewStateProvider:Views}=await server.ssrLoadModule("/src/ViewState.tsx"));
   ({InteractionProvider:Interactions}=await server.ssrLoadModule("/src/Interaction.tsx"));
 });
+
+test('clinical questions never appear as patient plans or experience while the overall completion totals remain',async()=>{
+  unexpected=[];const routes=[];
+  const question=(id,purpose,prompt)=>({survey_id:id,survey_title:`Опрос ${id}`,version:1,purpose,question_id:`q${id}`,prompt,kind:'single',respondents:1,options:[{id:'yes',label:'Да',count:1}]});
+  globalThis.fetch=async(path,options={})=>{
+    if(path==='/analytics/engagement'&&(options.method??'GET')==='GET')return Response.json({...data,assigned:10,completed:9,completion_rate:90,questions:[
+      question(1,'clinical','Клинический вопрос о тревоге'),question(2,'experience','Как прошёл приём?')]});
+    unexpected.push({path,method:options.method??'GET'});return Response.json({detail:'Unexpected request'},{status:500});
+  };
+  render(h(Interactions,null,h(Views,{returnPoint:null,restored:()=>{}},h(Dashboard,{createSurvey:()=>{},openPatient:()=>{},openClinicalHistory:()=>routes.push('state')}))));
+  const user=userEvent.setup({document:dom.window.document});
+  await screen.findByText(/Клинические опросники включены в общие числа/);
+  await user.click(screen.getByRole('button',{name:'Показать распределения ответов · 1',exact:true}));
+  await screen.findByText('Как прошёл приём?',{exact:true});
+  assert.equal(screen.queryByText('Клинический вопрос о тревоге',{exact:true}),null);
+  const metric=[...document.querySelectorAll('.metric-card')].find(card=>card.textContent.includes('Опросы завершены'));
+  assert.match(metric.textContent,/9\s*\/\s*10/);
+  await user.click(screen.getByRole('button',{name:'Открыть динамику состояния',exact:true}));
+  assert.deepEqual(routes,['state']);
+});
 afterEach(()=>{cleanup();assert.deepEqual(unexpected,[],"Unexpected requests must not hide missing fixture behavior");});
 after(async()=>{await server?.close();dom?.window.close();});
 

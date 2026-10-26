@@ -4,14 +4,14 @@ from collections import Counter, defaultdict
 from sqlalchemy import select
 
 from app.modules.adherence.models import AdherenceReport
-from app.modules.analytics.collection import dimension_coverage, seconds_between, survey_journey
+from app.modules.analytics.collection import dimension_coverage, generated_submission_ids, seconds_between, survey_journey
 from app.modules.analytics.dimensions import BARRIER_CATEGORIES, DIMENSIONS
 from app.modules.patients.models import Patient
 from app.modules.surveys.models import Survey, SurveyAssignment, SurveySubmission
 from app.modules.analytics.care import workflow_metrics
 
 SOURCES = [
-    {"code": "surveys", "status": "available", "label": "Ответы на авторские опросы"},
+    {"code": "surveys", "status": "available", "label": "Авторские и клинические опросники: общие события прохождения"},
     {"code": "survey_events", "status": "available", "label": "Назначение, показ формы и завершение"},
     {"code": "adherence", "status": "available", "label": "Самоотчёты о выполнении рекомендаций"},
     {"code": "doctor_observations", "status": "private_excluded", "label": "Наблюдения врача: приватны"},
@@ -52,6 +52,7 @@ async def clinic_summary(session, minimum: int | None):
     surveys = {survey.id: survey for survey in (await session.scalars(
         select(Survey).where(Survey.id.in_(survey_ids)))).all()} if survey_ids else {}
     rows = [(assignment, surveys[assignment.survey_id], response) for assignment, response in assignments]
+    generated_ids = await generated_submission_ids(session, rows)
     report["cohort"] = protect({"patients": len(population)}, [population], population, minimum)
     for dimension in dimension_coverage(rows, population):
         code = dimension["code"]
@@ -75,15 +76,19 @@ async def clinic_summary(session, minimum: int | None):
             stages["completed"].add(patient)
             stage = "completed_after_open" if assignment.first_opened_at else "completed_without_open"
             stages[stage].add(patient)
-            duration = seconds_between(assignment.first_opened_at, response.created_at)
-            stages["duration_known" if duration is not None else "duration_unknown"].add(patient)
-            assignment_duration = seconds_between(assignment.created_at, response.created_at)
-            stages["assignment_duration_known" if assignment_duration is not None else "assignment_duration_unknown"].add(patient)
+            if response.id in generated_ids:
+                stages["timing_excluded_generated"].add(patient)
+            else:
+                stages["timing_eligible_completed"].add(patient)
+                duration = seconds_between(assignment.first_opened_at, response.created_at)
+                stages["duration_known" if duration is not None else "duration_unknown"].add(patient)
+                assignment_duration = seconds_between(assignment.created_at, response.created_at)
+                stages["assignment_duration_known" if assignment_duration is not None else "assignment_duration_unknown"].add(patient)
         elif assignment.first_opened_at:
             stages["opened_not_completed"].add(patient)
         else:
             stages["not_opened_not_completed"].add(patient)
-    report["journey"] = protect(survey_journey(rows), list(stages.values()), population, minimum)
+    report["journey"] = protect(survey_journey(rows, generated_ids=generated_ids), list(stages.values()), population, minimum)
 
     categories, category_people, barrier_people = Counter(), defaultdict(set), set()
     question_groups = {}

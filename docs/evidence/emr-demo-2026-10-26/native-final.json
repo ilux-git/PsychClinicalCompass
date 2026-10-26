@@ -1,0 +1,21 @@
+{
+  "desktop": {
+    "careColumns": "285.656px",
+    "previewWidth": 285.65625,
+    "receipt": "Принято симулятором26 окт., 01:01",
+    "scrollWidth": 1425,
+    "width": 1440
+  },
+  "tablet": {
+    "careColumns": "316.5px 316.5px",
+    "previewWidth": 653,
+    "scrollWidth": 753,
+    "width": 768
+  },
+  "mobile": {
+    "careColumns": "260px",
+    "previewWidth": 260,
+    "scrollWidth": 360,
+    "width": 375
+  }
+}

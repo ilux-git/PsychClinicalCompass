@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from sqlalchemy import CheckConstraint, DateTime, ForeignKey, String, UniqueConstraint, func
+from sqlalchemy import CheckConstraint, DateTime, ForeignKey, Index, String, UniqueConstraint, func, text
 from sqlalchemy.orm import Mapped, mapped_column
 
 from app.db.base import Base
@@ -23,7 +23,9 @@ class Message(Base):
     __tablename__ = "messages"
     __table_args__ = (UniqueConstraint("external_message_id", name="uq_messages_external_message_id"),
                      UniqueConstraint("sender_id", "client_request_id", name="uq_message_request"),
-                     CheckConstraint("NOT support_requested OR sender_role = 'patient'", name="ck_support_patient"))
+                     CheckConstraint("NOT support_requested OR sender_role = 'patient'", name="ck_support_patient"),
+                     Index("ix_messages_patient_support_recent", "patient_id", "id",
+                           postgresql_where=text("support_requested IS TRUE")))
 
     id: Mapped[int] = mapped_column(primary_key=True)
     client_request_id: Mapped[str | None] = mapped_column(String(36))

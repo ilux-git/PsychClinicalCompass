@@ -1,3 +1,4 @@
+import { createRequestId } from "./requestId";
 import { useEffect, useId, useRef, useState, type FormEvent } from "react";
 import { send } from "./api";
 import { Button, ErrorBox, Section, type Notify } from "./UI";
@@ -33,7 +34,7 @@ export function MedicationEditor({item,scope,notify,onSaved,onClose,onSaving}:{i
       times:fields.kind==="fixed"?fields.times.split(",").map(value=>value.trim()).filter(Boolean):[],
       weekdays:fields.kind==="fixed"?fields.weekdays:[],timezone:fields.zone,starts_on:fields.start,ends_on:fields.end||null,active:fields.active};
     const signature=JSON.stringify(data);
-    if(request.current.signature!==signature)request.current={signature,id:crypto.randomUUID()};
+    if(request.current.signature!==signature)request.current={signature,id:createRequestId()};
     onSaving();setSaveError("");setBusy(true);
     try {
       const response=item?await send<ParticipationConfirmation>(`/medications/items/${item.id}`,{...data,expected_revision:item.revision},"PUT"):

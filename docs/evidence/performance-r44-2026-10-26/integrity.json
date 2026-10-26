@@ -1,0 +1,70 @@
+{
+  "counts": {
+    "patients": 1000,
+    "users": 1022,
+    "diary_entries": 249464,
+    "participation_awards": 253464,
+    "survey_submissions": 4000,
+    "messages": 253630,
+    "alerts": 15832,
+    "alert_handling": 4121,
+    "doctor_tasks": 5121,
+    "outbox_events": 265341,
+    "audit_events": 801828
+  },
+  "violations": {
+    "diaries_without_awards": 0,
+    "diaries_without_audit": 0,
+    "messages_without_outbox": 0,
+    "support_without_event": 0,
+    "processed_support_without_alert": 0,
+    "handling_patient_mismatch": 0,
+    "handling_without_audit": 0,
+    "daily_cap_violations": 0
+  },
+  "outbox": [
+    {
+      "status": "processed",
+      "total": 265341
+    }
+  ],
+  "database_activity": [
+    {
+      "state": "active",
+      "wait_event_type": null,
+      "wait_event": null,
+      "total": 1
+    },
+    {
+      "state": "idle",
+      "wait_event_type": "Client",
+      "wait_event": "ClientRead",
+      "total": 65
+    },
+    {
+      "state": null,
+      "wait_event_type": null,
+      "wait_event": null,
+      "total": 8
+    }
+  ],
+  "current_run_processing": {
+    "events": 11933,
+    "pending": 0,
+    "failed": 0,
+    "p50_processing_ms": 59.391,
+    "p95_processing_ms": 116.60459999999999,
+    "max_processing_ms": 339.63,
+    "scope": "Stored timestamps of simulator processing, before final batch commit; not provider delivery or browser presentation."
+  },
+  "server_process_probe": {
+    "50148": 8,
+    "12776": 8,
+    "30280": 8,
+    "58344": 8,
+    "36296": 8,
+    "56244": 8,
+    "40276": 8,
+    "53692": 8
+  }
+}

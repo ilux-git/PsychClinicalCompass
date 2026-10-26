@@ -2,6 +2,7 @@ from functools import lru_cache
 from pydantic_settings import BaseSettings, SettingsConfigDict
 from pydantic import Field, model_validator
 from urllib.parse import urlsplit
+from typing import Literal
 
 
 class Settings(BaseSettings):
@@ -13,6 +14,9 @@ class Settings(BaseSettings):
     jwt_secret: str
     jwt_algorithm: str = "HS256"
     jwt_expires_minutes: int = 60
+    data_mode: Literal["synthetic_demo"] = "synthetic_demo"
+    auth_login_max_attempts: int = Field(default=10, ge=1, le=100)
+    auth_login_window_seconds: int = Field(default=300, ge=1, le=3600)
     telegram_bot_token: str = ""
     telegram_webhook_secret: str = ""
     telegram_enabled: bool = False
@@ -23,6 +27,7 @@ class Settings(BaseSettings):
     load_test_run_id: str = ""
     compass_db_pool_size: int = Field(default=5, ge=1, le=100)
     compass_db_max_overflow: int = Field(default=10, ge=0, le=100)
+    read_audit_db_pool_size: int = Field(default=1, ge=1, le=10)
     mis_db_pool_size: int = Field(default=5, ge=1, le=100)
     mis_db_max_overflow: int = Field(default=10, ge=0, le=100)
 

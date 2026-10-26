@@ -1,3 +1,4 @@
+import { createRequestId } from "./requestId";
 import { useEffect, useRef, useState, type FormEvent } from "react";
 import { api, ApiError, send, useApi, type Question } from "./api";
 import { Badge, Button, Empty, ErrorBox, Heading, Loading, Section, date, plural, type Notify } from "./UI";
@@ -6,6 +7,7 @@ import { MotivationAdvice } from "./MotivationAdvice";
 import { useUnsavedForm, type LeavePrompt } from "./NavigationGuard";
 import { careProgress } from "./careProgress";
 import { AnswerSummary } from "./SurveyFields";
+import { EmrDemo } from "./EmrDemo";
 
 const outcomePrompt:LeavePrompt={eyebrow:"Решение врача",title:"Продолжить оформление исхода?",message:"Решение и основание ещё не сохранены. При переходе без сохранения текущий ввод будет потерян.",stayLabel:"Продолжить решение"};
 const taskPrompt:LeavePrompt={eyebrow:"Новая задача",title:"Продолжить назначение задачи?",message:"Следующее действие ещё не назначено. При переходе без сохранения текущий ввод будет потерян.",stayLabel:"Продолжить задачу"};
@@ -29,7 +31,7 @@ export const treatmentLabels: Record<string, string> = {in_progress: "В про�
 const verificationLabels: Record<string, string> = {pending: "Результат ещё не проверен", resolved: "Затруднение устранено по проверке врача", not_resolved: "Затруднение сохраняется", unknown: "Результат неизвестен"};
 const sourceLabels: Record<string,string> = {manual:"Ручное наблюдение",message:"Сообщение",assessment:"Опросник состояния",survey_submission:"Ответ на опрос",adherence_report:"Самоотчёт о рекомендации",alert:"Событие для оценки",doctor_note:"Наблюдение врача",medication_log:"Лекарственный самоотчёт",diary_entry:"Запись дневника"};
 
-export type TaskChange={id:number;stage:string};
+export type TaskChange={id:number;stage:string;verification?:string};
 export function TaskItem({task:incomingTask, operational, reload, notify, scope, autoFocus=false,onEditing,detached=false,embedded=false,openSource,nextStep}: {task: CareTask; operational: boolean; reload: (change?:TaskChange) => void; notify: Notify;scope?:string;autoFocus?:boolean;onEditing?:(id:number,dirty:boolean)=>void;detached?:boolean;embedded?:boolean;openSource?:(task:CareTask)=>void;nextStep?:(task:CareTask)=>void}) {
   const [remote,setRemote]=useState<CareTask|null>(null);
   const [remoteError,setRemoteError]=useState(""),[remoteRetry,setRemoteRetry]=useState(0);
@@ -71,7 +73,7 @@ export function TaskItem({task:incomingTask, operational, reload, notify, scope,
   },[task.revision,task.action_result,outdated,detached,dirty,busy]);
   function loadCurrent() {
     if(detached&&!remote)return;
-    form.confirm(()=>{setBaseline({revision:task.revision,result:task.action_result});setResult(task.action_result);setComment("");setStatus("unknown");setConflict(false);form.clear();if(detached){onEditing?.(task.id,false);reload({id:task.id,stage:task.status});}},taskReplacePrompt);
+    form.confirm(()=>{setBaseline({revision:task.revision,result:task.action_result});setResult(task.action_result);setComment("");setStatus("unknown");setConflict(false);form.clear();if(detached){onEditing?.(task.id,false);reload({id:task.id,stage:task.status,verification:task.verification_status});}},taskReplacePrompt);
   }
   async function act(verify = false, stage = "done") {
     if(busy||outdated)return;
@@ -80,14 +82,14 @@ export function TaskItem({task:incomingTask, operational, reload, notify, scope,
       const saved=await send<CareTask>(`/tasks/${task.id}${verify ? "/verify" : ""}`, verify ? {status, comment, expected_revision: baseline.revision} : {status: stage, action_result:result, expected_revision: baseline.revision}, verify ? "POST" : "PATCH");
       focusAfterSave.current=true;setRemote({...task,...saved});setBaseline({revision:saved.revision,result:saved.action_result});setResult(saved.action_result);setConflict(false);
       if(verify){setComment("");setStatus("unknown");}
-      reload({id:task.id,stage:verify?"done":stage}); notify(verify ? "Повторная проверка сохранена" : stage === "in_progress" ? "Задача принята в работу" : "Действие сохранено; результат проверяет врач");
+      reload({id:task.id,stage:verify?"done":stage,verification:saved.verification_status}); notify(verify ? "Повторная проверка сохранена" : stage === "in_progress" ? "Задача принята в работу" : "Действие сохранено; результат проверяет врач");
     } catch (e) {
       if(e instanceof ApiError && (e.status===403||e.status===404)){setUnavailable(true);setResult("");setComment("");setStatus("unknown");form.clear();onEditing?.(task.id,false);}
       else {if(e instanceof ApiError && e.status===409){setConflict(true);reload();}setWriteError(e instanceof Error?e.message:"Не удалось сохранить. Введённые данные остаются в форме.");}
     }
     finally { setBusy(false); }
   }
-  if(unavailable)return <p className="field-hint">Задача больше не доступна вашей учётной записи. Обновите список.</p>;
+  if(unavailable)return <p className="field-hint">Задача больше не доступна Вашей учётной записи. Обновите список.</p>;
   const actionEditor=<>
     <label className="field">Что сделано<textarea rows={3} readOnly={outdated} autoFocus={autoFocus&&task.status!=="done"} maxLength={2000} value={result} onChange={e=>setResult(e.target.value)} placeholder="Опишите фактически выполненное действие"/></label>
     <Button variant={task.status==="done"?"secondary":"primary"} disabled={busy||outdated||!result.trim()} onClick={()=>act()}>{busy?"Сохраняем…":task.status==="done"?"Сохранить описание":"Действие выполнено"}</Button>
@@ -100,13 +102,13 @@ export function TaskItem({task:incomingTask, operational, reload, notify, scope,
     {(conflict||outdated)&&<div className="task-conflict" role="alert"><p>Задача изменилась. Ваш ввод сохранён в форме. Сверьте его с новой версией.</p>{remoteError?<><p>{remoteError}</p><Button variant="secondary" onClick={()=>setRemoteRetry(value=>value+1)}>Повторить загрузку задачи</Button></>:detached&&!remote?<p>Получаем актуальную версию…</p>:outdated?<><details><summary>Посмотреть сохранённое описание</summary><p className="preserve">{task.action_result||"Описание ещё не сохранено"}</p></details><Button variant="secondary" onClick={loadCurrent}>Загрузить версию с сервера</Button></>:<Button variant="secondary" onClick={()=>reload()}>Повторить обновление</Button>}</div>}
     {task.verification_status==="pending"||outdated&&dirty?<fieldset className="form-fields task-current-step" disabled={busy} aria-busy={busy}>
       {task.status!=="done"?<>
-        <h4 data-task-current tabIndex={-1}>Зафиксируйте выполненное действие</h4>
+        <h4 data-task-current tabIndex={-1}>Описание действия</h4>
         {task.status==="open"&&<Button variant="secondary" disabled={busy||outdated} onClick={()=>act(false,"in_progress")}>{result.trim()?"Взять в работу и сохранить описание":"Взять в работу"}</Button>}
         {actionEditor}
       </>:<>
         <div className="task-saved-action"><span className="eyebrow">Выполненное действие</span><p className="preserve">{task.action_result}</p></div>
         {!operational?<div className="task-verification">
-          <h4 data-task-current tabIndex={-1}>Проверьте, что изменилось для пациента</h4>
+          <h4 data-task-current tabIndex={-1}>Проверка результата</h4>
           <label className="field">Результат проверки<select disabled={outdated} value={status} onChange={e=>setStatus(e.target.value)}><option value="unknown">Пока неизвестен</option><option value="resolved">Затруднение устранено</option><option value="not_resolved">Затруднение сохраняется</option></select></label>
           <label className="field">На чём основан вывод<textarea rows={3} readOnly={outdated} value={comment} onChange={e=>setComment(e.target.value)} maxLength={2000} placeholder="Что сообщил пациент и что удалось проверить"/></label>
           {result!==baseline.result&&<p className="field-hint">Сначала сохраните изменённое описание действия. Основание проверки останется в форме.</p>}
@@ -119,6 +121,7 @@ export function TaskItem({task:incomingTask, operational, reload, notify, scope,
       <div className="task-verified-result" data-task-current tabIndex={-1}><Badge tone={task.verification_status==="resolved"?"good":"muted"}>{verificationLabels[task.verification_status]}</Badge>{!operational&&<p className="preserve">{task.verification_comment}</p>}</div>
       {!operational&&nextStep&&task.verification_status!=="resolved"&&<Button variant="secondary" onClick={()=>nextStep(task)}>Запланировать следующий шаг</Button>}
     </>}
+    {!operational&&task.source_type==="survey_submission"&&task.source_id&&<Disclosure title="Передача в демо-ЭМК" lazy><EmrDemo key={`${task.patient_id}:${task.id}`} patientId={task.patient_id} taskId={task.id} taskRevision={task.revision} disabled={busy||outdated||conflict||dirty||unavailable}/></Disclosure>}
   </article>;
 }
 
@@ -151,7 +154,7 @@ export function CareWorkflow({patientId, source:initialSource, notify, scope,res
     e.preventDefault(); if (!care.data) return;
     const category = outcome === "refused" ? reasonCategory || null : null;
     const signature = JSON.stringify([outcome, reason, category, care.data.treatment.revision]);
-    if (statusRequest.current.signature !== signature) statusRequest.current = {signature, id: crypto.randomUUID()};
+    if (statusRequest.current.signature !== signature) statusRequest.current = {signature, id: createRequestId()};
     setBusy(true);
     try { await send(`/patients/${patientId}/treatment-status`, {status: outcome, reason, reason_category:category, expected_revision: care.data.treatment.revision, client_request_id: statusRequest.current.id}); care.reload(); setOutcome(""); setReason(""); setReasonCategory(""); clearOutcome();notify("Исход лечения определён врачом"); }
     catch (e) { notify(e instanceof Error ? e.message : "Не удалось сохранить исход", "error"); }
@@ -161,7 +164,7 @@ export function CareWorkflow({patientId, source:initialSource, notify, scope,res
     e.preventDefault();setFormError("");
     const data = {title, kind, assigned_to_id: assignee ? Number(assignee) : null, source_type: source?.type ?? "manual", source_id: source?.id ?? null, due_at: due ? new Date(due).toISOString() : null, follow_up_at: followUp ? new Date(followUp).toISOString() : null};
     const signature = JSON.stringify(data);
-    if (taskRequest.current.signature !== signature) taskRequest.current = {signature, id: crypto.randomUUID()};
+    if (taskRequest.current.signature !== signature) taskRequest.current = {signature, id: createRequestId()};
     setBusy(true);
     try { const saved=await send<CareTask>(`/patients/${patientId}/tasks`, {...data, client_request_id: taskRequest.current.id}); tasks.reload(); setTitle("");setKind("clinical");setAssignee("");setDue("");setFollowUp("");clearTask();setCreatedTask(saved.id);setComposeOpen(false);onCreated?.();taskRequest.current = {signature: "", id: ""}; notify("Задача связана с источником и назначена исполнителю"); }
     catch (e) { setFormError(e instanceof Error?e.message:"Не удалось назначить действие. Ввод сохранён в форме."); }
@@ -229,5 +232,5 @@ export function CareWorkflow({patientId, source:initialSource, notify, scope,res
 
 export function CoordinatorHome({notify}: {notify: Notify}) {
   const tasks = useApi<CareTask[]>("/coordination/tasks", 15000);
-  return <><Heading eyebrow="Организационная поддержка" title="Назначенные мне задачи">Только задачи, которые врач поручил вам. Медицинские ответы, заметки и исходы лечения доступны врачу.</Heading><ErrorBox message={tasks.error} retry={tasks.reload} />{tasks.loading ? <Loading /> : tasks.data && <Section title="Работа с затруднениями">{!tasks.data.length && <Empty title="Назначенных задач пока нет" />}{tasks.data.map(task => <TaskItem key={`${task.id}-${task.verification_status}`} task={task} operational reload={tasks.reload} notify={notify} />)}</Section>}</>;
+  return <><Heading eyebrow="Организационная поддержка" title="Назначенные мне задачи">Только задачи, которые врач поручил Вам. Медицинские ответы, заметки и исходы лечения доступны врачу.</Heading><ErrorBox message={tasks.error} retry={tasks.reload} />{tasks.loading ? <Loading /> : tasks.data && <Section title="Работа с затруднениями">{!tasks.data.length && <Empty title="Назначенных задач пока нет" />}{tasks.data.map(task => <TaskItem key={`${task.id}-${task.verification_status}`} task={task} operational reload={tasks.reload} notify={notify} />)}</Section>}</>;
 }

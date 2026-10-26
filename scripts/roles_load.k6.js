@@ -2,7 +2,7 @@ import http from 'k6/http';
 import {check, sleep, fail} from 'k6';
 import exec from 'k6/execution';
 import {SharedArray} from 'k6/data';
-import {Trend} from 'k6/metrics';
+import {Counter, Trend} from 'k6/metrics';
 import {randomBytes} from 'k6/crypto';
 import {requestLatency} from './load_latency.mjs';
 
@@ -11,13 +11,21 @@ const manifest = JSON.parse(open(__ENV.LOAD_MANIFEST));
 const patientCount = Number(__ENV.LOAD_PATIENT_VUS || 1000);
 const base = __ENV.LOAD_BASE_URL;
 const extended = __ENV.LOAD_EXTENDED_WORKFLOWS === '1';
+const clinical = __ENV.LOAD_CLINICAL_WORKFLOWS === '1';
 let nextTask = null, nextAlert = null;
 const latency = new Trend('user_request_latency', true);
 const legacyLatency = new Trend('legacy_duplicated_connect_latency', true);
+const workflowRequests = new Counter('workflow_requests');
+const workflowFailures = new Counter('workflow_failures');
 const operations = ['assignments','points','history','medications','patient_card','diary_write','message_outbox','directory','task_board','doctor_care','doctor_engagement','clinic_analytics'];
 if(extended) operations.push('survey_submit','support_progress','doctor_inbox','task_update','event_action');
+if(clinical) operations.push('clinical_history','care_progress','doctor_clinical');
 const thresholds = {http_req_failed:['rate==0'],checks:['rate==1'],user_request_latency:['max<=500']};
-for (const operation of operations) thresholds[`user_request_latency{operation:${operation}}`] = ['max<=500'];
+for (const operation of operations) {
+  thresholds[`user_request_latency{operation:${operation}}`] = ['max<=500'];
+  thresholds[`workflow_requests{operation:${operation}}`] = ['count>0'];
+  thresholds[`workflow_failures{operation:${operation}}`] = ['count==0'];
+}
 export const options = {
   scenarios:{roles:{executor:'ramping-vus',startVUs:0,stages:[
     {duration:__ENV.LOAD_RAMP || '10s',target:patientCount+21},
@@ -30,6 +38,7 @@ export const options = {
 
 export function setup() {
   if (!base || patientCount<1 || patientCount>1000) fail('Invalid bounded local workload');
+  if(clinical && (!extended || manifest.clinical_results_per_patient!==3)) fail('Clinical read profile requires the explicit three-result fixture and extended workflows');
   const response = http.get(base+'/_load-test/context',{responseType:'text',tags:{name:'isolation_check'}});
   if (response.status !== 200) fail('Target is not an isolated load-test API; no workflow writes sent');
   const context = response.json();
@@ -48,16 +57,18 @@ export default function() {
   let operation, method='GET',path,body=null;
   const i = exec.vu.iterationInScenario+vu;
   if (user.role==='patient') {
-    const step=i%(extended ? 9 : 7);
+    const step=i%(clinical ? 11 : extended ? 9 : 7);
     if(step===0) {operation='assignments';path='/survey-assignments';}
     else if(step===1) {operation='points';path='/participation/points';}
     else if(step===2) {operation='history';path=`/patients/${user.patient_id}/assessments`;}
     else if(step===3) {operation='medications';path=`/patients/${user.patient_id}/medications`;}
     else if(step===4) {operation='patient_card';path=`/patients/${user.patient_id}`;}
     else if(step===5) {operation='diary_write';method='POST';path='/diary/entries';body={text:'Синтетическая нагрузочная запись',client_request_id:uuid()};}
-    else if(step===6) {operation='message_outbox';method='POST';path=`/conversations/${user.patient_id}/messages`;body={text:'Синтетическое сообщение нагрузки',channel:'tg_patient',client_request_id:uuid(),support_requested:extended && i%11===0};}
+    else if(step===6) {operation='message_outbox';method='POST';path=`/conversations/${user.patient_id}/messages`;body={text:'Синтетическое сообщение нагрузки',channel:'tg_patient',client_request_id:uuid(),support_requested:extended && (clinical ? Math.floor(i/11)%11===0 : i%11===0)};}
     else if(step===7) {operation='survey_submit';method='POST';path=`/survey-assignments/${user.patient_id}/submit`;body={answers:{barriers:['schedule'],details:'Синтетический ответ для нагрузки'}};}
-    else {operation='support_progress';path=`/patients/${user.patient_id}/support-requests`;}
+    else if(step===8) {operation='support_progress';path=`/patients/${user.patient_id}/support-requests`;}
+    else if(step===9) {operation='clinical_history';path=`/patients/${user.patient_id}/clinical-results`;}
+    else {operation='care_progress';path='/participation/care-progress';}
   } else if(user.role==='doctor') {
     if(extended && i%7===5 && nextTask) {
       operation='task_update';method='PATCH';path=`/tasks/${nextTask.id}`;body={status:'in_progress',expected_revision:nextTask.revision};nextTask=null;
@@ -66,6 +77,7 @@ export default function() {
     } else {
       const steps=[['directory','/patients/directory'],['task_board','/coordination/board?stage=open'],['doctor_care','/analytics/care'],['doctor_engagement','/analytics/engagement']];
       if(extended) steps.push(['doctor_inbox','/alerts/inbox']);
+      if(clinical) steps.push(['doctor_clinical','/analytics/clinical-instruments']);
       [operation,path]=steps[i%steps.length];
     }
   } else {operation='clinic_analytics';path='/analytics/clinic';}
@@ -76,6 +88,11 @@ export default function() {
   const t=response.timings;
   const elapsed=requestLatency(t);
   latency.add(elapsed,{operation});
+  workflowRequests.add(1,{operation,role:user.role});
+  const unsuccessful=response.status<200 || response.status>=300;
+  workflowFailures.add(unsuccessful ? 1 : 0,{operation});
+  if(unsuccessful) console.error(JSON.stringify({kind:'failed_workflow',operation,status:response.status,
+    error_code:response.error_code || null,test_ms:exec.instance.currentTestRunDuration,vu}));
   // Preserve the previous over-counted metric for transparent comparison only.
   legacyLatency.add(t.blocked+t.connecting+t.tls_handshaking+t.duration,{operation});
   if(elapsed>500) console.warn(JSON.stringify({kind:'slow_workflow',operation,elapsed_ms:elapsed,
@@ -92,14 +109,19 @@ export function handleSummary(data) {
     verified_at:new Date().toISOString(),synthetic:true,driver:'k6',patient_sessions:patientCount,
     run_started_at:__ENV.LOAD_RUN_STARTED_AT,
     driver_context:__ENV.LOAD_DRIVER_CONTEXT || 'protected desktop execution',
-    profile:extended ? 'roles-with-surveys-and-explicit-support-v2' : 'roles-baseline-v1',
+    profile:clinical ? 'roles-with-clinical-reads-v3' : extended ? 'roles-with-surveys-and-explicit-support-v2' : 'roles-baseline-v1',
+    clinical_reads_enabled:clinical,
+    clinical_fixture:clinical ? {results_per_patient:manifest.clinical_results_per_patient,sha256:manifest.clinical_fixture_sha256} : null,
     source_fingerprint:__ENV.LOAD_SOURCE_FINGERPRINT || null,
+    schema_revision:__ENV.LOAD_SCHEMA_REVISION || null,
+    think_seconds:Number(__ENV.LOAD_THINK || 1),think_delay_factor_range:[0.8,1.2],
     latency_method:'k6-blocked-plus-duration-v2',
     diagnostic_trace:__ENV.LOAD_TRACE_REQUESTS==='1',
     deployment_mode:__ENV.LOAD_DEPLOYMENT_MODE || 'uvicorn-shared-listener',
     doctor_sessions:20,analyst_sessions:1,limit_ms:500,
     server_configuration:{workers:Number(__ENV.LOAD_SERVER_WORKERS || 1),
       compass_pool_size:Number(__ENV.COMPASS_DB_POOL_SIZE || 5),compass_max_overflow:Number(__ENV.COMPASS_DB_MAX_OVERFLOW || 10),
+      read_audit_pool_size:Number(__ENV.READ_AUDIT_DB_POOL_SIZE || 1),
       mis_pool_size:Number(__ENV.MIS_DB_POOL_SIZE || 5),mis_max_overflow:Number(__ENV.MIS_DB_MAX_OVERFLOW || 10)},
     scope:'Authenticated protocol workflows; excludes login burst and 1000 rendered browsers. Includes connection latency.',
     ...data};

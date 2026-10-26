@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from fastapi import APIRouter, Depends, HTTPException, Request
+from fastapi import APIRouter, Depends, HTTPException, Request, Query
 
 from app.api.deps import CompassSession, require_role
 from app.modules.access.models import User, UserRole
@@ -9,10 +9,17 @@ from app.modules.analytics.admin import clinic_summary
 from app.core.config import get_settings
 from app.modules.analytics.privacy import effective_policy
 from app.modules.analytics.care import workflow_metrics
+from app.modules.analytics.clinical import clinical_cohort
 from app.modules.patients.models import Patient
 from sqlalchemy import select
 
 router = APIRouter(tags=["analytics"])
+
+
+@router.get("/analytics/clinical-instruments")
+async def clinical_metrics(session: CompassSession, user: User = Depends(require_role([UserRole.doctor])),
+                           q: str = Query(default="", max_length=100)) -> dict:
+    return await clinical_cohort(session, user, q)
 
 
 @router.get("/analytics/clinic")

@@ -6,7 +6,7 @@
 .participation-receipt-copy > small { display:block; margin-top:9px; color:var(--muted); font-size:12px; line-height:1.6; }
 .participation-receipt-copy > .button,.thanks-card .participation-receipt .button { min-height:44px; padding:10px 0 0; margin-top:6px; color:var(--ink); font-size:13px; }
 .diary-saved-result { scroll-margin:90px 0; border-radius:14px; }
-.diary-saved-result > h3:focus,.patient-success.thanks-card > h1:focus { outline:2px solid var(--signal-dark); outline-offset:4px; border-radius:4px; }
+.diary-saved-result > h3:focus,.patient-success.thanks-card > h1:focus { outline:none; }
 .diary-saved-result > h3 { font-size:17px; line-height:1.5; margin:22px 0 6px; }
 .diary-saved-result > p { font-size:13px; line-height:1.7; color:var(--muted); margin:0; }
 .diary-saved-result .participation-receipt { margin-top:14px; }

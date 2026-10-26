@@ -1,3 +1,4 @@
+import { createRequestId } from "./requestId";
 import { useEffect, useRef, useState, type FormEvent } from "react";
 import { send, useApi, type DiaryEntry } from "./api";
 import { Badge, Button, Empty, ErrorBox, Heading, Loading, Section, date, type Notify } from "./UI";
@@ -22,7 +23,7 @@ export function SharedDiary({patientId, onSource}: {patientId: number; onSource?
     <p className="field-hint">Только записи, для которых пациент включил доступ лечащего врача. Отсутствие записи не означает отсутствие жалоб.</p>
     <ErrorBox message={entries.error} retry={entries.reload} />
     {entries.loading ? <Loading /> : entries.data && <>
-      {!entries.data.entries.length && <Empty title="Открытых вам записей пока нет" />}
+      {!entries.data.entries.length && <Empty title="Открытых Вам записей пока нет" />}
       {entries.data.entries.map((entry) => <article className="diary-entry" key={entry.id}>
         <Observation entry={entry} />
         {onSource && <Button variant="secondary" onClick={() => onSource({type:"diary_entry",id:entry.id,label:`Запись дневника #${entry.id}`})}>Назначить следующий шаг</Button>}
@@ -60,7 +61,7 @@ export function PatientDiary({patientId, notify, progress}: {patientId: number; 
     const data = {text, shared_with_doctor: shared, observed_at: new Date(observed).toISOString(), observation_kind: kind,
       feeling: feeling || null, daily_impact: impact || null};
     const signature = JSON.stringify(data);
-    if (request.current.signature !== signature) request.current = {signature, id: crypto.randomUUID()};
+    if (request.current.signature !== signature) request.current = {signature, id: createRequestId()};
     setSaveError("");setSaved(null);
     setBusy(true);
     try {
@@ -89,9 +90,9 @@ export function PatientDiary({patientId, notify, progress}: {patientId: number; 
           <textarea ref={textInput} rows={4} maxLength={4000} placeholder="Можно всего несколько слов" value={text} onChange={(e) => setText(e.target.value)} />
         </label>
         <label className="checkbox-label"><input type="checkbox" checked={shared} onChange={(e) => setShared(e.target.checked)} />Поделиться этой записью с лечащим врачом</label>
-        <p className="field-hint">Без отметки запись видна только вам. Доступ можно изменить позже. Дневник не просматривается врачом круглосуточно.</p>
+        <p className="field-hint">Без отметки запись видна только Вам. Доступ можно изменить позже. Дневник не просматривается врачом круглосуточно.</p>
         <Disclosure title="Добавить наблюдения или уточнить время" revealRequest={invalidReveal} focusTarget='input[type="datetime-local"]'>
-          <label className="field">Как вы себя чувствовали? · необязательно<select value={feeling} onChange={e => setFeeling(e.target.value)}><option value="">Не отмечаю</option>{Object.entries(feelings).map(([k,v]) => <option key={k} value={k}>{v}</option>)}</select></label>
+          <label className="field">Как Вы себя чувствовали? · необязательно<select value={feeling} onChange={e => setFeeling(e.target.value)}><option value="">Не отмечаю</option>{Object.entries(feelings).map(([k,v]) => <option key={k} value={k}>{v}</option>)}</select></label>
           <label className="field">Влияние на повседневные дела · необязательно<select value={impact} onChange={e => setImpact(e.target.value)}><option value="">Не отмечаю</option>{Object.entries(impacts).map(([k,v]) => <option key={k} value={k}>{v}</option>)}</select></label>
           <div className="form-grid"><label className="field">Когда наблюдали?<input required type="datetime-local" value={observed} onChange={e => setObserved(e.target.value)} /></label>
           <label className="field">О чём запись?<select value={kind} onChange={e => setKind(e.target.value)}><option value="moment">Состояние в этот момент</option><option value="day_summary">Итог дня</option></select></label></div>

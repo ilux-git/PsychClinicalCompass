@@ -54,8 +54,8 @@ a:focus-visible,
 input:focus-visible,
 select:focus-visible,
 textarea:focus-visible {
-  outline: 3px solid #b5a1e7;
-  outline-offset: 3px;
+  outline: 2px solid #343b38;
+  outline-offset: 2px;
 }
 h1,
 h2,
@@ -1574,7 +1574,7 @@ tr:last-child td {
   color: #815c99;
 }
 .scale-answer input[type="radio"]:focus-visible + span {
-  outline: 3px solid #cbb5df;
+  outline: 2px solid #343b38;
   outline-offset: 2px;
 }
 .message-list {
@@ -3239,3 +3239,5 @@ summary { cursor: pointer; font-weight: 600; }
 @media (max-width: 700px) { .form-grid, .medication-report-form { grid-template-columns: 1fr; } .tabs { flex-wrap: wrap; } }
 @media (max-width: 1050px) { .collection-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (max-width: 600px) { .collection-grid { grid-template-columns: 1fr; } .option-row { flex-wrap: wrap; } }
+.section-tip { margin-block: 24px; }
+.section-tip > p { max-width: 100ch; margin-bottom: 12px; }

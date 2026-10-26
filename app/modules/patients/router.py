@@ -6,6 +6,8 @@ from app.api.deps import CompassSession, CurrentUser, patient_for_user
 from app.db.session import async_session_mis
 from app.modules.access.models import User, UserRole
 from app.modules.assessments.models import QuestionnaireResponse
+from app.modules.assessments.clinical_models import ClinicalResult
+from app.modules.assessments.catalog import PHQ9_KEY, GAD7_KEY, PANIC_KEY
 from app.modules.audit.models import AuditEvent
 from app.modules.integration.mis_models import MISPatient
 from app.modules.patients.models import Patient, PatientMapping
@@ -48,13 +50,26 @@ async def directory_items(session, rows):
         Alert.patient_id.in_(ids), Alert.status != 'closed').group_by(Alert.patient_id))).all())
     observations = dict((await session.execute(select(QuestionnaireResponse.patient_id,func.max(QuestionnaireResponse.created_at)).where(
         QuestionnaireResponse.patient_id.in_(ids)).group_by(QuestionnaireResponse.patient_id))).all())
+    clinical = {row.patient_id: row for row in (await session.scalars(select(ClinicalResult).where(
+        ClinicalResult.patient_id.in_(ids), ClinicalResult.instrument_key.in_((PHQ9_KEY, GAD7_KEY, PANIC_KEY)))
+        .distinct(ClinicalResult.patient_id).order_by(ClinicalResult.patient_id, ClinicalResult.created_at.desc(), ClinicalResult.id.desc()))).all()}
     result = []
     for patient in rows:
+        point = clinical.get(patient.id)
+        numeric_at = observations.get(patient.id)
+        clinical_is_latest = point is not None and (numeric_at is None or point.created_at >= numeric_at)
+        preview = {"id": point.id, "instrument_key": point.instrument_key,
+            "code": {PHQ9_KEY: "PHQ-9", GAD7_KEY: "GAD-7", PANIC_KEY: "PHQ · панический модуль"}[point.instrument_key],
+            "name": point.definition["name"], "version": point.definition["version"],
+            "score": point.score, "maximum": point.definition["maximum"],
+            "criterion_met": point.result.get("criterion_met"), "created_at": point.created_at} if point else None
         fixture = patient_snapshot(patient.mis_id if mappings.get(patient.id) == patient.mis_id else None)
         result.append({**patient_summary(patient), "demo_scenario": fixture['data']['scenario']['title'] if fixture['data'] else None,
             "treatment_status": latest.get(patient.id,'unknown'), "open_tasks":task_counts.get(patient.id,{}).get('open',0),
             "in_progress_tasks":task_counts.get(patient.id,{}).get('in_progress',0), "pending_events": alerts.get(patient.id,0),
-            "last_observation_at":observations.get(patient.id)})
+            "last_observation_at": point.created_at if clinical_is_latest else numeric_at,
+            "last_observation_source": "canonical_clinical" if clinical_is_latest else "numeric_demo" if numeric_at else None,
+            "latest_clinical_result": preview})
     return result
 
 
