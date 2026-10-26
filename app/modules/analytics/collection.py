@@ -1,7 +1,10 @@
 """Descriptive collection metrics. No patient traits are inferred from response time."""
 from statistics import median
 
+from sqlalchemy import select
+
 from app.modules.analytics.dimensions import DIMENSIONS
+from app.modules.assessments.clinical_models import ClinicalResult
 
 
 def seconds_between(start, end):
@@ -14,10 +17,20 @@ def duration_summary(values):
             "median_seconds": round(median(known), 3) if known else None}
 
 
-def survey_journey(rows):
+async def generated_submission_ids(session, rows):
+    ids = {response.id for _, survey, response in rows if response is not None and survey.clinical_key is not None}
+    if not ids:
+        return set()
+    return set((await session.scalars(select(ClinicalResult.submission_id).where(
+        ClinicalResult.submission_id.in_(ids),
+        ClinicalResult.result.contains({"synthetic_provenance": {"generated": True}})))).all())
+
+
+def survey_journey(rows, *, generated_ids=frozenset()):
     opened = [(a, s, r) for a, s, r in rows if a.first_opened_at is not None]
     completed = [(a, s, r) for a, s, r in rows if r is not None]
     completed_after_open = [(a, s, r) for a, s, r in opened if r is not None]
+    timed = [(a, s, r) for a, s, r in completed if r.id not in generated_ids]
     return {
         "assigned": len(rows), "opened": len(opened), "completed": len(completed),
         "opened_not_completed": sum(r is None for _, _, r in opened),
@@ -26,9 +39,10 @@ def survey_journey(rows):
         "completed_after_open": len(completed_after_open),
         "opening_rate_percent": round(100 * len(opened) / len(rows), 1) if rows else None,
         "completion_after_open_percent": round(100 * len(completed_after_open) / len(opened), 1) if opened else None,
-        "assignment_to_completion": duration_summary([seconds_between(a.created_at, r.created_at) for a, _, r in completed]),
-        "open_to_completion": duration_summary([seconds_between(a.first_opened_at, r.created_at) for a, _, r in completed]),
-        "delivery_to_completion": {"known": 0, "unknown": len(completed), "median_seconds": None},
+        "timing_excluded_generated": len(completed) - len(timed), "timing_eligible_completed": len(timed),
+        "assignment_to_completion": duration_summary([seconds_between(a.created_at, r.created_at) for a, _, r in timed]),
+        "open_to_completion": duration_summary([seconds_between(a.first_opened_at, r.created_at) for a, _, r in timed]),
+        "delivery_to_completion": {"known": 0, "unknown": len(timed), "median_seconds": None},
         "interpretation": "Назначение означает доступность в кабинете. Показ формы не равен чтению или согласию; интервалы включают перерывы, внешняя доставка не измерена.",
     }
 

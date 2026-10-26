@@ -1,0 +1,399 @@
+{
+  "created_at": "2026-10-26T01:07:18.518655+07:00",
+  "scope": "survey answer via linked task -> exact physician approval -> separate local synthetic receipt",
+  "sources": [
+    {
+      "path": "app/modules/integration/emr_models.py",
+      "bytes": 1583,
+      "sha256": "6e1e89e35674c5362cae52ec0c42ad7e9ae20fd0a45abde6f4af5acb4c674975"
+    },
+    {
+      "path": "app/modules/integration/emr_schemas.py",
+      "bytes": 656,
+      "sha256": "2d2f2e9a33ea4dee1fb5dd6ec841944281226481237a638fbd2670a464c51ece"
+    },
+    {
+      "path": "app/modules/integration/emr_service.py",
+      "bytes": 4621,
+      "sha256": "fffe8bc23666e5478ba6c59e6ca4265806f63782016dc353ea701da7d95b910a"
+    },
+    {
+      "path": "app/modules/integration/emr_router.py",
+      "bytes": 6390,
+      "sha256": "e985c11a5199f908f74ff91cd27bcad9cf22330965b1b3e9d833aba1d11bf777"
+    },
+    {
+      "path": "app/db/models.py",
+      "bytes": 1092,
+      "sha256": "b28196f1b3c1de0c5ad52df749db807faa2dda47c163cafb7dbd876c6b7f2e48"
+    },
+    {
+      "path": "app/main.py",
+      "bytes": 2905,
+      "sha256": "c76f66161b81d74a5ec8181e86ff131a78e2d70141eab8e0e480de86ec7e11e0"
+    },
+    {
+      "path": "alembic/versions/q35_emr_demo_documents.py",
+      "bytes": 2209,
+      "sha256": "bd3438fe0af874865033cd20f155d96d1546d1fd3ed2bf0d0c7708b3d9947f62"
+    },
+    {
+      "path": "tests/test_emr_demo.py",
+      "bytes": 13899,
+      "sha256": "14fd2d5b10c66741bd91b4532bf88dbdabea50b775f7785d4b2794124fea847a"
+    },
+    {
+      "path": "frontend/src/EmrDemo.tsx",
+      "bytes": 8741,
+      "sha256": "9209f00257b7a7e3f0537baff36d7e4b2d5890f8531d587975b23711b49bc7a0"
+    },
+    {
+      "path": "frontend/src/emr-demo.css",
+      "bytes": 1964,
+      "sha256": "ded3e6446f5020b0b2943a76a7074624821d90b261b64b9c2f607ab51cfbde87"
+    },
+    {
+      "path": "frontend/src/CareWorkflow.tsx",
+      "bytes": 32279,
+      "sha256": "2c997876d1aab172a353e06fd26de82b34d32ea84bd2d7e5a4ca9bddfad239f1"
+    },
+    {
+      "path": "frontend/tests/emr-demo-interaction.test.mjs",
+      "bytes": 12102,
+      "sha256": "d83db6e921669ffcde5035eda3072f378ca03fc000fd22c8df0490e354567953"
+    }
+  ],
+  "backend": {
+    "passed": 197,
+    "failed": 0,
+    "seconds": 118.6,
+    "feature_tests": 20,
+    "log": {
+      "path": "outputs/emr-demo-full-20261026.log",
+      "bytes": 276,
+      "sha256": "25c4c5717971937d1d6739dae21eef9b813de19d3663e903e26b5002aee60853"
+    }
+  },
+  "frontend": {
+    "passed": 95,
+    "failed": 0,
+    "milliseconds": 107989.0073,
+    "feature_tests": 7,
+    "log": {
+      "path": "outputs/emr-demo-ui-full-focus-20261026.log",
+      "bytes": 13696,
+      "sha256": "cd342f7b5a8af05f24d456759d344d22452fd206fba06f5064c6538b85ceae51"
+    }
+  },
+  "build": {
+    "exit_code": 0,
+    "typescript": true,
+    "vite": true,
+    "log": {
+      "path": "outputs/emr-demo-build-width-20261026.log",
+      "bytes": 2428,
+      "sha256": "0aff793059dea2828d0bc9639e250ecc29db7c4f742f7d6def19b3c055518672"
+    }
+  },
+  "change_after_full_frontend": "CSS only: intrinsic min-width makes care blocks stack in narrow board columns. Rebuilt and checked natively at three widths.",
+  "database": {
+    "revision": "q35_emr_demo_documents",
+    "restored_snapshots": 2,
+    "snapshot_data_match": true,
+    "empty_roundtrips": 2,
+    "lossy_downgrades_rejected": 2,
+    "applied_to_main_and_qa": true,
+    "archives_sha256": [
+      "09e8aa8493e53ca6523708770574051e82847cdc530dea8447b97fcd1b35d154",
+      "e6078d80cba5e3f5c5e3f43e29eece1e131860488e650c2869dd454ffffd58e4"
+    ],
+    "reset_or_seed": false,
+    "mis_writes": false
+  },
+  "live": {
+    "main": {
+      "documents": 0,
+      "receipts": 0
+    },
+    "qa": {
+      "documents": 1,
+      "receipts": 1,
+      "document_id": 1,
+      "receipt_id": 1,
+      "content_hash_matches": true,
+      "source_answers_unchanged": true,
+      "task_remains_open_and_unverified": true,
+      "approval_and_receipt_events_each_once": true,
+      "legally_valid_signature": false,
+      "external_delivery": false
+    }
+  },
+  "native_initial": {
+    "mobile": {
+      "width": 375,
+      "scrollWidth": 360,
+      "previewWidth": 264,
+      "buttonHeight": 44,
+      "receiverFailureAlertCount": 1,
+      "approvalPreserved": true,
+      "acceptedFocus": "H4",
+      "acceptedFocusText": "Принято симулятором",
+      "acceptedOutlineStyle": "none"
+    },
+    "tablet": {
+      "width": 768,
+      "scrollWidth": 753,
+      "previewWidth": 653,
+      "careColumns": "316.5px 316.5px"
+    },
+    "desktop": {
+      "careColumns": "132.828px 132.828px",
+      "previewWidth": 285.65625,
+      "scrollWidth": 1425,
+      "width": 1440
+    },
+    "console": []
+  },
+  "native_final": {
+    "desktop": {
+      "careColumns": "285.656px",
+      "previewWidth": 285.65625,
+      "receipt": "Принято симулятором26 окт., 01:01",
+      "scrollWidth": 1425,
+      "width": 1440
+    },
+    "tablet": {
+      "careColumns": "316.5px 316.5px",
+      "previewWidth": 653,
+      "scrollWidth": 753,
+      "width": 768
+    },
+    "mobile": {
+      "careColumns": "260px",
+      "previewWidth": 260,
+      "scrollWidth": 360,
+      "width": 375
+    }
+  },
+  "native_defects_fixed": [
+    "Pending native disabled control lost focus; preserve focus with aria-disabled and a duplicate-write guard.",
+    "Wide viewport had a narrow board column with two 132.8px care blocks; use intrinsic sizing and stack them."
+  ],
+  "receiver_failure": "QA middleware controlled 503 before domain write; approval retained; keyboard retry accepted once.",
+  "screenshots": [
+    {
+      "path": "docs/evidence/emr-demo-2026-10-26/desktop-accepted.jpg",
+      "bytes": 114183,
+      "sha256": "8e0d5279c6cb1391d3a882351ef84086c0c52bb10f41cd4684fd60c551600fab"
+    },
+    {
+      "path": "docs/evidence/emr-demo-2026-10-26/desktop-final.jpg",
+      "bytes": 113553,
+      "sha256": "e61b8f572554bb20ce7e4a5e63f3e0c5930e722ab40abbb8232752d769b385f0"
+    },
+    {
+      "path": "docs/evidence/emr-demo-2026-10-26/mobile-accepted.jpg",
+      "bytes": 32099,
+      "sha256": "c210c801402c4863fa7dc6fb96c11699c16ca7e8616cbdef27f9b2082fe7a859"
+    },
+    {
+      "path": "docs/evidence/emr-demo-2026-10-26/mobile-final.jpg",
+      "bytes": 30475,
+      "sha256": "ccb35305ff163cfa502d3cb6831039a160f6b226bddf822cb492c50ff97e0169"
+    },
+    {
+      "path": "docs/evidence/emr-demo-2026-10-26/mobile-preview.jpg",
+      "bytes": 33431,
+      "sha256": "104712bac36cf110b093713c65e8875cefb16763d35f6bc5596d94b450f81152"
+    },
+    {
+      "path": "docs/evidence/emr-demo-2026-10-26/mobile-receiver-error.jpg",
+      "bytes": 33456,
+      "sha256": "b351abc98046677ee90eebb83c5cc9ee5196cf8ee8b9e431d187b9b5503db583"
+    },
+    {
+      "path": "docs/evidence/emr-demo-2026-10-26/tablet-accepted.jpg",
+      "bytes": 55410,
+      "sha256": "beceba8c5331cd63558642f0f1adc80a7b4c8041ceb59f825f4b6323b1c03908"
+    },
+    {
+      "path": "docs/evidence/emr-demo-2026-10-26/tablet-final.jpg",
+      "bytes": 50842,
+      "sha256": "8e235207acb663eef2dc09f69b4aa747f10e212981ce8064f58f559cf39549c1"
+    }
+  ],
+  "http": {
+    "base_url": "http://127.0.0.1:8780",
+    "scope": "HTTP bytes and MIME only; not browser layout/interactions",
+    "assets": [
+      {
+        "file": "AdminDashboard-D1C0xZPc.js",
+        "status": 200,
+        "bytes": 18568,
+        "sha256": "817cf6559218785df926455cce6b60d609f97f85a0ad8b9cb6a6bcff2cb8dfb9",
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "file": "CareWorkflow-Bzwu_Kvz.js",
+        "status": 200,
+        "bytes": 33975,
+        "sha256": "5e440dc5863bd6b9f3f6fa58d54854f3d0dcc003f5613190377003d193a26eeb",
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "file": "CareWorkflow-Cyb_WPWj.css",
+        "status": 200,
+        "bytes": 1796,
+        "sha256": "c10d2125ceee3582b356ce835d514ea3aa2067e9ff4fb879a280c1d9f2cd791f",
+        "mime": "text/css; charset=utf-8"
+      },
+      {
+        "file": "Charts-DwfjQKEj.js",
+        "status": 200,
+        "bytes": 5337,
+        "sha256": "96961021b3c051a5bd7284c72c3882e0b37066a0d18bf14eef3d10258bafa513",
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "file": "DoctorDashboard-BTZuguOY.js",
+        "status": 200,
+        "bytes": 17514,
+        "sha256": "37622facf14f48ff5350cb90101198a8d29f64c0ea93dd601a58e4a4e8bef9bc",
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "file": "DoctorPatients-CcC6Q9qd.js",
+        "status": 200,
+        "bytes": 37412,
+        "sha256": "a83172b411d0630506e07594d98b9ee846df80eb8d4d6b163b913cf2fb159522",
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "file": "MedicationSchedule-BHG08nOf.css",
+        "status": 200,
+        "bytes": 2042,
+        "sha256": "4df94529b02ede2dbfedd485780a0a58ea1a3e404af2ce5fc8621ee7f831852f",
+        "mime": "text/css; charset=utf-8"
+      },
+      {
+        "file": "MedicationSchedule-C0YsM4U8.js",
+        "status": 200,
+        "bytes": 37833,
+        "sha256": "a048692888ec969e11e158b2a78aa8f0d537c4067d51ad206180505574b4a60b",
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "file": "Patient-CQoIjz_9.js",
+        "status": 200,
+        "bytes": 64582,
+        "sha256": "2bddc4fe4e51029ae83e87dcbcf56eedcebf785d5e56e83de9f0e0c9fdea3ce7",
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "file": "Patient-JiBj8C4s.css",
+        "status": 200,
+        "bytes": 27335,
+        "sha256": "45ad5f2192c4962a86f8c2261b383374c16b1840d9a4607097f9a1d3417ce2a1",
+        "mime": "text/css; charset=utf-8"
+      },
+      {
+        "file": "SurveyBuilder-0L25VW1H.js",
+        "status": 200,
+        "bytes": 25231,
+        "sha256": "bf635ac3d76fd24df5b6bd71949c88dd6c3ae01997a9e5fc470ef813dcb1e047",
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "file": "SurveyFields-Cc8-7z6H.js",
+        "status": 200,
+        "bytes": 3587,
+        "sha256": "3170523fec753644b970372a1bbd852a91ef5b2fc1ac2e131bc2d21aa0e74679",
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "file": "TaskBoard-PIOxKmP8.js",
+        "status": 200,
+        "bytes": 9309,
+        "sha256": "87d779ec5fbf42c07c2278a1b4b328e06ef71530fefcee8fcb266ed46b80af9c",
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "file": "WorkflowMetrics-DePmoIpX.js",
+        "status": 200,
+        "bytes": 12423,
+        "sha256": "6a5929da6c0538ec3f3b192f416fd39b6d5d7ad227c42e658d40cdd63eab4a03",
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "file": "chevron-right-DlAdgAzA.js",
+        "status": 200,
+        "bytes": 159,
+        "sha256": "8bee9d1349f267f1e7309f3b4d4e864f3b9242bbce7d7712a8b11e65a1421657",
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "file": "collection-COswcvyL.js",
+        "status": 200,
+        "bytes": 939,
+        "sha256": "b8f61ba215c319fcc2aaf6ce0fb3b26b182c049b9a0d9e4febe85703fe8000e4",
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "file": "index-3KIhYlNn.js",
+        "status": 200,
+        "bytes": 389770,
+        "sha256": "4d15fc482268caff632580ffcff4a8fd340740e6d7c73a582ea0f14ccbff18cd",
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "file": "index-CbnS7naW.css",
+        "status": 200,
+        "bytes": 122331,
+        "sha256": "c4c9d3a9a0a4cac95af8d3debc3100b08acd8c7e5ba515e084ea8a92f6288e39",
+        "mime": "text/css; charset=utf-8"
+      },
+      {
+        "file": "lock-keyhole-DSbNMm6U.js",
+        "status": 200,
+        "bytes": 380,
+        "sha256": "2444fb1bf26a9173b4ecc39cf630fa6317b99211a40a6bd586cd18d7cd1e46a7",
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "file": "patientProgress-DCFXcaSn.js",
+        "status": 200,
+        "bytes": 1115,
+        "sha256": "e78240ab39e83083e585cc606370ca4fe7a5a59433a5a6190f2fe40a443b6430",
+        "mime": "text/javascript; charset=utf-8"
+      },
+      {
+        "file": "plus-Bie_ugZU.js",
+        "status": 200,
+        "bytes": 182,
+        "sha256": "248769ddf396194312921061c2800676c65a52d168dd4a89612fb2a2880fc0db",
+        "mime": "text/javascript; charset=utf-8"
+      }
+    ],
+    "health": {
+      "status": "ok",
+      "compass_db": true,
+      "mis_db": true,
+      "mode": "synthetic_demo"
+    },
+    "root_matches_dist": true,
+    "qa_health": {
+      "status": "ok",
+      "compass_db": true,
+      "mis_db": true,
+      "mode": "synthetic_demo"
+    }
+  },
+  "limits": [
+    "Only a task linked to an authored survey answer is supported in this slice.",
+    "Receipt is stored locally in Compass, not a real EMR delivery or legal digital signature.",
+    "No private diary/doctor-note export, no coordinator/admin clinical grant, no autonomous medical rule.",
+    "Unknown verification and unfinished action stay unchanged.",
+    "The full 1000-user/max-500ms acceptance has not been rerun on this snapshot.",
+    "Scoped native checks do not certify full accessibility, medical or legal compliance."
+  ]
+}

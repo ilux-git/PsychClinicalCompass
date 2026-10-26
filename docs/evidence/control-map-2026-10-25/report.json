@@ -1,0 +1,555 @@
+{
+  "date": "2026-10-25",
+  "status": "Scoped functional and native UI checks passed; full production, accessibility and clinical acceptance remain open.",
+  "contract": "Patient, physician, administrator and coordinator use direct functional headings, flat graphite primary buttons, unframed icon actions and restrained focus. Patient sees the explicitly approved original archipelago with HTML progress only; activity reveals a landscape on recorded days. Physician home counters open matching authorized server worklists and pagination returns focus to the loaded list.",
+  "references": {
+    "userDecisions": [
+      "Graphite primary buttons; light secondary actions",
+      "First original archipelago approved",
+      "No bridges or boat wake; progress UI overlays original image",
+      "Inactive calendar days covered; activity days reveal landscape",
+      "Functional headings throughout authored UI; preserve published and user-authored history"
+    ],
+    "proposals": "../../design/2026-10-25/index.html",
+    "prompts": "../../design/2026-10-25/prompts.json"
+  },
+  "implementation": {
+    "worklists": [
+      "active",
+      "awaiting_check",
+      "checked",
+      "overdue",
+      "all"
+    ],
+    "apiCompatibility": "Existing stage=open default and role/patient/assignee scope preserved. Filtering precedes total and keyset pagination. No migration.",
+    "pagination": "Preserve column height while an explicit page request is pending; focus/scroll the loaded list heading or error, and offer previous page after failure. No focus change on ordinary polling.",
+    "clinicalAndFinancialRules": "No new medical threshold, drug rule, reward rate, coupon term or MIS write. Existing lifetime milestone thresholds 0/25/50/100/250 retained.",
+    "headings": "97 heading/eyebrow entries extracted for review; authored slogans removed, including sidebar and welcome banner. Published forms, messages and answers retained."
+  },
+  "tests": {
+    "backend": {
+      "passed": 156,
+      "failed": 0,
+      "seconds": 85.61,
+      "log": "outputs/doctor-worklist-backend-20261025.log",
+      "scope": "Full backend after the compatible worklist filters; backend source unchanged since."
+    },
+    "frontend": {
+      "passed": 83,
+      "failed": 0,
+      "duration_ms": 187530.5475,
+      "log": "outputs/worklist-controls-final-frontend-20261025.log"
+    },
+    "afterFullSuite": {
+      "passed": 6,
+      "failed": 0,
+      "duration_ms": 24006.407,
+      "log": "outputs/worklist-copy-final-target-20261025.log",
+      "reason": "Two final static captions (physician workspace and action description)."
+    },
+    "build": {
+      "typecheck": true,
+      "vite": true,
+      "log": "outputs/control-map-worklist-final-build-20261025.log"
+    },
+    "meaningfulFailureChecks": [
+      "Worklist server RED5 before filter implementation → full156 passing",
+      "Missing previous-page recovery RED1 → all5 worklist interactions passing",
+      "Old greeting expectation81/82 → two exact selectors corrected, full82/82 then full83/83 with page recovery",
+      "Home counters received explicit accessible names after the first native-like semantic lookup exposed concatenation"
+    ]
+  },
+  "states": {
+    "loading": {
+      "native": true,
+      "evidence": "doctor-board-loading-mobile.jpg"
+    },
+    "empty": {
+      "native": true,
+      "evidence": "doctor-overdue-empty-desktop.jpg"
+    },
+    "success": {
+      "native": true,
+      "evidence": "diary-saved-mobile.jpg"
+    },
+    "error": {
+      "automated": true,
+      "nativeThisCycle": false,
+      "evidence": "worklist-interaction: unavailable summary and failed next page; motivation-choice failed save"
+    },
+    "partial": {
+      "automated": true,
+      "nativeThisCycle": false,
+      "evidence": "participation-views unknown/partial week and atlas mixed activity with zero awarded points"
+    },
+    "permission": {
+      "apiNegativeTests": true,
+      "nativeThisCycle": false,
+      "evidence": "test_worklist.py and existing task_read access tests"
+    }
+  },
+  "http": {
+    "root_matches_dist": true,
+    "js_css_checked": 20,
+    "health": {
+      "status": "ok",
+      "compass_db": true,
+      "mis_db": true,
+      "mode": "synthetic_demo"
+    },
+    "qa_health": {
+      "status": "ok",
+      "compass_db": true,
+      "mis_db": true,
+      "mode": "synthetic_demo"
+    }
+  },
+  "visualAssets": [
+    {
+      "source": "frontend\\src\\assets\\sea-archipelago-v1.png",
+      "sha256": "3f2edef6873622310f2af4679eefcfecb8ae0b5eea0eb0df2d084165b06b5517",
+      "url": "/assets/sea-archipelago-v1-BsLQxTY4.png",
+      "dimensions": [
+        1536,
+        1024
+      ],
+      "checks": [
+        {
+          "base": "http://127.0.0.1:8780",
+          "status": 200,
+          "bytes": 3086625
+        },
+        {
+          "base": "http://127.0.0.1:8782",
+          "status": 200,
+          "bytes": 3086625
+        }
+      ],
+      "unchanged_from_proposal": true
+    },
+    {
+      "source": "frontend\\src\\assets\\rhythm-coast-v1.png",
+      "sha256": "d9bc3970810ef36753181633e82de361f753e51875594b596d2b3de63f54c5d1",
+      "url": "/assets/rhythm-coast-v1-DCV3r_Fl.png",
+      "dimensions": [
+        1536,
+        1024
+      ],
+      "checks": [
+        {
+          "base": "http://127.0.0.1:8780",
+          "status": 200,
+          "bytes": 3217615
+        },
+        {
+          "base": "http://127.0.0.1:8782",
+          "status": 200,
+          "bytes": 3217615
+        }
+      ],
+      "unchanged_from_proposal": true
+    }
+  ],
+  "sourceHashes": [
+    {
+      "file": "app/modules/notes/router.py",
+      "sha256": "8bc6ddaea424302deebf677cfae43276d72873316565bc56b44eb3db8ce0b36c"
+    },
+    {
+      "file": "tests/test_worklist.py",
+      "sha256": "85596d6f488076c85bc9f3c7c8bb945c3ca76d302a09575ce28a1da3e2b0fd60"
+    },
+    {
+      "file": "frontend/src/worklist.ts",
+      "sha256": "9ede59f5aca4d69049fd1c4e36f728b5aec5d4673d98af7b6b3a7375430e3ca8"
+    },
+    {
+      "file": "frontend/src/TaskBoard.tsx",
+      "sha256": "85d4bce4d06d91e4dbf7f875d778e9dd93c32ba992e889a4f1396945db472b1f"
+    },
+    {
+      "file": "frontend/src/CareWorkflow.tsx",
+      "sha256": "0ba7a6f9d3f204b2a8b650e78e786a6dd2c2746efd38582f7107dae4ce8539b9"
+    },
+    {
+      "file": "frontend/src/WorkspaceHome.tsx",
+      "sha256": "d246dea933b0b87de37e130e6f25a8ae94b262430db40c6d9c89c63eb1e0e627"
+    },
+    {
+      "file": "frontend/src/styles.css",
+      "sha256": "146d5cb6b5bdd607a858fbfaaceca7485254f6b1f0284afa26cb2619dfba9f77"
+    },
+    {
+      "file": "frontend/src/workspace.css",
+      "sha256": "faa1f2f6e35fc1f181008502a4d82c32271765af1a10350484d1d3e6697b7bd0"
+    },
+    {
+      "file": "frontend/src/brand-theme.css",
+      "sha256": "485ec8f5046f2c0ad59eddde5bd99ff2e971bef784098c641617a8dce90d9a48"
+    },
+    {
+      "file": "frontend/src/PatientAdventure.tsx",
+      "sha256": "f15fedd81ea4efe84665ff1d19ef7b9abe97744f7f0ba681a14f2b3f8bdf8241"
+    },
+    {
+      "file": "frontend/src/patient-home.css",
+      "sha256": "346d5c674aef59df7b30f44259256551d505b99b9cdccd389fc18ef262c1dd44"
+    },
+    {
+      "file": "frontend/src/patient-adventure.css",
+      "sha256": "351d522246c1f562d38e9416019c048f8708eaf810f8443ff6702891b52ea334"
+    },
+    {
+      "file": "frontend/src/participation-receipt.css",
+      "sha256": "66aae2b83f0e87febfeeafcec4965fd8e611f3e3a56d157c7dc71a19348faca2"
+    },
+    {
+      "file": "frontend/src/PatientJourney.tsx",
+      "sha256": "0fe68b8bf232f85de1bc4b480b8a6ed09e69ecc6585207a7e9ec1f71cd456f8a"
+    },
+    {
+      "file": "frontend/src/PatientOverview.tsx",
+      "sha256": "6f359f45189acfc0fa21f0a187cc0ecacd772718c6b62e22633e6246e1a8ca86"
+    },
+    {
+      "file": "frontend/src/patientProgress.ts",
+      "sha256": "9c8b8e59aed98afb42fced133d01c9414b7d4b564916dc3cea5aa41d741e9638"
+    },
+    {
+      "file": "frontend/src/App.tsx",
+      "sha256": "2623b1edd742c4b150c6b4f847b16e11c9ed8df415a5c07f4d4695abbf564db1"
+    },
+    {
+      "file": "frontend/src/AdminDashboard.tsx",
+      "sha256": "0649a58f05eb261cad9fcca05bcaa5965e390ecdbd4078d6dc072120e37b7a15"
+    },
+    {
+      "file": "frontend/src/Patient.tsx",
+      "sha256": "44c6bf28698ecf45e7a14746158f04ae59aef45915a0209b1a170b30b40df02f"
+    },
+    {
+      "file": "frontend/src/PatientSurvey.tsx",
+      "sha256": "a742613957aa2b760d3fc5df28c703ca672432854fa8badf659b90ab7571244a"
+    },
+    {
+      "file": "frontend/src/DoctorPatients.tsx",
+      "sha256": "29c135949b257f9b43b131cca9068089c40e4eaaba88c34bb074acaa3b91a791"
+    },
+    {
+      "file": "frontend/src/SurveyBuilder.tsx",
+      "sha256": "552f3d21e97e15e5732a4cc730bd9f636d88733b18fd1133e340836150a1144d"
+    },
+    {
+      "file": "frontend/src/WorkflowMetrics.tsx",
+      "sha256": "091b826b0a2324cc962f74f72e2415501fe72d4c85bfede75499c9ef6664e75e"
+    },
+    {
+      "file": "frontend/src/RoleGuide.tsx",
+      "sha256": "5e8c3d5c0f144fabd5cebdfc300f38ca6783fbc6eb1f937bcdf15b5c6e0b2842"
+    },
+    {
+      "file": "frontend/tests/worklist-interaction.test.mjs",
+      "sha256": "d0f0d5c5b1b6bcb018f652898b6faa4bd89701bdeab7516c342aebbfc768a0f6"
+    },
+    {
+      "file": "frontend/tests/atlas-interaction.test.mjs",
+      "sha256": "c839d7e205837e1ca8faf47adc90883d341bafe9a47a78a0b52293f85c581d4b"
+    },
+    {
+      "file": "frontend/tests/motivation-choice-interaction.test.mjs",
+      "sha256": "b625f7b01a7e7547e0b86ce0a0e541480c7904a01250daf0e516b5e6a67465dd"
+    },
+    {
+      "file": "frontend/tests/route-mount-interaction.test.mjs",
+      "sha256": "7e0bc096d8386cd2bc594a192d52596cadd626182efeae789dff379bbdbb289c"
+    },
+    {
+      "file": "frontend/tests/patient-survey-recovery-interaction.test.mjs",
+      "sha256": "d3a6d4d917de40e314522e88629e1806d069c864f183095aeaddb5ee83f1aabd"
+    }
+  ],
+  "native": "native.json",
+  "screenshots": [
+    {
+      "file": "admin-desktop.jpg",
+      "viewport": {
+        "width": 1265,
+        "height": 712
+      },
+      "sha256": "fdfd7b9e2d79919f78a2cad0ac86673d29810c14fbb4a01a1e22ccc979fc749f",
+      "observation": "admin desktop",
+      "stage": "scoped native observation"
+    },
+    {
+      "file": "admin-menu-mobile.jpg",
+      "viewport": {
+        "width": 375,
+        "height": 844
+      },
+      "sha256": "37387f84a46a2ddec843a670fe40917186c62ec1920d43930a2d3750fb15ced8",
+      "observation": "admin menu mobile",
+      "stage": "scoped native observation"
+    },
+    {
+      "file": "chat-field-mobile.jpg",
+      "viewport": {
+        "width": 360,
+        "height": 810
+      },
+      "sha256": "32aed4fb189ef8da98c2ecfc60b5237f6c353e88dc881247df2f36ebbba61940",
+      "observation": "chat field mobile",
+      "stage": "scoped native observation"
+    },
+    {
+      "file": "coordinator-desktop.jpg",
+      "viewport": {
+        "width": 1425,
+        "height": 891
+      },
+      "sha256": "ca542d8fcdb79e21782730fed2ae626aed23c69f24a12fd486e6f4581bb74490",
+      "observation": "coordinator desktop",
+      "stage": "scoped native observation"
+    },
+    {
+      "file": "coordinator-mobile.jpg",
+      "viewport": {
+        "width": 360,
+        "height": 810
+      },
+      "sha256": "c809a0feba2ad08de0dcb9033ce6754c6c32dfa5e2beed088caf1fabe91d9ab3",
+      "observation": "coordinator mobile",
+      "stage": "scoped native observation"
+    },
+    {
+      "file": "diary-field-mobile.jpg",
+      "viewport": {
+        "width": 360,
+        "height": 810
+      },
+      "sha256": "2743e4bed3ba1315d20bdb3dcf133ed6e08cb43d5686dd687569404c3444b447",
+      "observation": "diary field mobile",
+      "stage": "scoped native observation"
+    },
+    {
+      "file": "diary-saved-mobile.jpg",
+      "viewport": {
+        "width": 360,
+        "height": 810
+      },
+      "sha256": "d5df98b9b889340c1454a0fd3c147c52f46bba98b2aa0aa12b3486fdfd5eef97",
+      "observation": "diary saved mobile",
+      "stage": "scoped native observation"
+    },
+    {
+      "file": "doctor-active-desktop.jpg",
+      "viewport": {
+        "width": 1425,
+        "height": 891
+      },
+      "sha256": "d580c921b4461a737ac06e64356be13fe1f77a3b8d1117186d49f8c72ffa3e17",
+      "observation": "doctor active desktop",
+      "stage": "scoped native observation"
+    },
+    {
+      "file": "doctor-awaiting-mobile.jpg",
+      "viewport": {
+        "width": 360,
+        "height": 810
+      },
+      "sha256": "cb6590b3a186de64c511970702a34631ccd16e240992cc46afce3873ed0b8939",
+      "observation": "doctor awaiting mobile",
+      "stage": "scoped native observation"
+    },
+    {
+      "file": "doctor-board-loading-mobile.jpg",
+      "viewport": {
+        "width": 375,
+        "height": 844
+      },
+      "sha256": "7245a9ae4526370ff3e7d8eb96b08de893ab74cf0deaf91de97bad8952a22f94",
+      "observation": "doctor board loading mobile",
+      "stage": "scoped native observation"
+    },
+    {
+      "file": "doctor-checked-mobile.jpg",
+      "viewport": {
+        "width": 360,
+        "height": 810
+      },
+      "sha256": "ae2da0f1d71cc3e08c6aef6493480d89d9f9cf780353ab4c339016300e1de23e",
+      "observation": "doctor checked mobile",
+      "stage": "scoped native observation"
+    },
+    {
+      "file": "doctor-home-mobile.jpg",
+      "viewport": {
+        "width": 360,
+        "height": 810
+      },
+      "sha256": "b17aa2ce7e151d9d16679e04ac1f1cfccaf210c9cc80bb0988747e1f6cd30a8c",
+      "observation": "doctor home mobile",
+      "stage": "scoped native observation"
+    },
+    {
+      "file": "doctor-overdue-empty-desktop.jpg",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "sha256": "7611c5c17799df2336c1680edddbc499512c8d1d01cdf235190d965fc9322dc1",
+      "observation": "doctor overdue empty desktop",
+      "stage": "scoped native observation"
+    },
+    {
+      "file": "doctor-pagination-after-focus.jpg",
+      "viewport": {
+        "width": 360,
+        "height": 810
+      },
+      "sha256": "45277a7c75c44790d6d79a5a9eae8daec45699dcf2a33141bc2199df104a3326",
+      "observation": "doctor pagination after focus",
+      "stage": "scoped native observation"
+    },
+    {
+      "file": "doctor-pagination-before-focus.jpg",
+      "viewport": {
+        "width": 360,
+        "height": 810
+      },
+      "sha256": "46b8aada9564acf79ffb889f7372bc75dde78f70b7c20a779ec1016081240942",
+      "observation": "doctor pagination before focus",
+      "stage": "before correction"
+    },
+    {
+      "file": "help-mobile.jpg",
+      "viewport": {
+        "width": 360,
+        "height": 810
+      },
+      "sha256": "509b0f4bd3b0e83b23ffc5abe38ff1e81726e61c672eebf66c20645ec6b0e586",
+      "observation": "help mobile",
+      "stage": "scoped native observation"
+    },
+    {
+      "file": "map-desktop.jpg",
+      "viewport": {
+        "width": 1425,
+        "height": 891
+      },
+      "sha256": "29726b9b049b963330288baf3d9ec6ff366d9d0b2c2c8f4d1b447ab36cbb7b61",
+      "observation": "map desktop",
+      "stage": "scoped native observation"
+    },
+    {
+      "file": "map-mobile-before-marker-fix.jpg",
+      "viewport": {
+        "width": 360,
+        "height": 810
+      },
+      "sha256": "44e41d381033afe2b4ab55c9202d7c5bd3420fd800206413dd4dc27a13faa019",
+      "observation": "map mobile before marker fix",
+      "stage": "before correction"
+    },
+    {
+      "file": "map-mobile.jpg",
+      "viewport": {
+        "width": 360,
+        "height": 810
+      },
+      "sha256": "bf6cf6ce9ff60f60fb7bfcce772b0ad5bd3a9a90fdc31beb4b55cbc405a7f320",
+      "observation": "map mobile",
+      "stage": "scoped native observation"
+    },
+    {
+      "file": "map-tablet.jpg",
+      "viewport": {
+        "width": 753,
+        "height": 1004
+      },
+      "sha256": "274924172efee22e7b6aa96ec0e3cf5f5b6b023833d07f3c401a2d1e0e484171",
+      "observation": "map tablet",
+      "stage": "scoped native observation"
+    },
+    {
+      "file": "rhythm-desktop.jpg",
+      "viewport": {
+        "width": 1425,
+        "height": 891
+      },
+      "sha256": "ce509e97ec0ccf47430c52f92f16eb345b3166e9ba39a0c1a3996537a6962501",
+      "observation": "rhythm desktop",
+      "stage": "scoped native observation"
+    },
+    {
+      "file": "rhythm-empty-day-mobile.jpg",
+      "viewport": {
+        "width": 360,
+        "height": 810
+      },
+      "sha256": "63a792899de5659b8a7d4c8b316bc3979beac85868b90d73e8f6fb5197d4500d",
+      "observation": "rhythm empty day mobile",
+      "stage": "scoped native observation"
+    },
+    {
+      "file": "rhythm-mixed-mobile.jpg",
+      "viewport": {
+        "width": 360,
+        "height": 810
+      },
+      "sha256": "a6af0cdc36bf9757df949e932f8e3cc4a10e2381d73c94ac30ed0711138717cf",
+      "observation": "rhythm mixed mobile",
+      "stage": "scoped native observation"
+    },
+    {
+      "file": "rhythm-mobile-detail.jpg",
+      "viewport": {
+        "width": 360,
+        "height": 810
+      },
+      "sha256": "526b2e0cda0c13d8e6af1d86fd1acab566b12a706e9a91dd68955c79aac25821",
+      "observation": "rhythm mobile detail",
+      "stage": "scoped native observation"
+    },
+    {
+      "file": "rhythm-mobile.jpg",
+      "viewport": {
+        "width": 360,
+        "height": 810
+      },
+      "sha256": "f86d824ea59bd203295ffa57ec12df2c1dae2ea01804c0992e77143ac6474fb1",
+      "observation": "rhythm mobile",
+      "stage": "scoped native observation"
+    },
+    {
+      "file": "rhythm-tablet.jpg",
+      "viewport": {
+        "width": 753,
+        "height": 1004
+      },
+      "sha256": "a4fcfa0b13f0a91703b35484850a261e85c3b8f23bb69e252e5af3f006724dfa",
+      "observation": "rhythm tablet",
+      "stage": "scoped native observation"
+    }
+  ],
+  "nativeWrites": {
+    "preferenceChanges": [
+      "patient2 map → rhythm → map",
+      "patient1 map → rhythm → map"
+    ],
+    "privateDiaryEntries": 1,
+    "diaryText": "Проверка интерфейса дневника. Синтетическая тестовая запись.",
+    "patient1PointsBefore": 0,
+    "patient1PointsAfter": 3,
+    "newChatMessages": 0,
+    "newTasks": 0,
+    "newCoupons": 0,
+    "mainDatabaseTestEntries": 0
+  },
+  "limits": [
+    "This scoped report is not a full WCAG 2.2 certification or an approved visual-regression baseline.",
+    "Native error, partial-data and denied-access states were not all re-exercised in this cycle; their API/component evidence is identified separately.",
+    "The 1000-concurrent-users maximum500ms target was not measured here.",
+    "B01–B07 clinical, routing, EMR, pilot, image-rights, real-discount and target-environment decisions remain in OPEN_QUESTIONS.",
+    "Screenshots include intermediate observations and two explicit before/after corrections; source hashes freeze the final implementation of this cycle."
+  ]
+}

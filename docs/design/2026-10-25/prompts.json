@@ -1,0 +1,19 @@
+{
+  "created": "2026-10-25",
+  "tool": "image_gen.imagegen",
+  "type": "original illustration generation; no reference image uploaded",
+  "assets": [
+    {
+      "key": "harbor",
+      "prompt": "Use case: illustration-story. Create one original premium illustrated sea journey map as a production background asset for an adult mental wellbeing app. Landscape 1536 x 1024. An inviting small archipelago seen from a gently tilted top-down perspective, translucent turquoise shallows, deep muted teal ocean, creamy limestone shores, small sage-green pine-covered islands, one tiny wooden boat, a modest elegant lighthouse. Painterly editorial / sophisticated cozy adventure-game art, tactile gouache, carefully composed and beautifully lit, detailed yet calm, no childish characters. There are five distinct destinations following a broad winding journey from lower left toward upper right, with ample visible calm water between islands so interactive UI markers can be placed later. No paths with arrows, no UI, no buttons, no text, no letters, no numbers, no labels, no logos, no border, no watermark. Artwork fills the whole image. Rich marine blues within the illustration, warm ivory highlights, restrained terracotta accents. Avoid tropical holiday advertising and neon colors. This is a decorative metaphor for participation, not a map of recovery or a medical claim."
+    },
+    {
+      "key": "odyssey",
+      "prompt": "Use case: stylized-concept. Create one original beautiful mature illustrated map background for a sea journey in an adult mental wellbeing product. Landscape 1536 x 1024. Sophisticated stylized 3D-isometric / hand-painted game environment: an expansive blue bay with a sequence of five beautiful small islands from bottom left to upper right, rocky coves, stone bridges on land, sage and dark green foliage, soft ivory beaches, one little sailing boat and a lighthouse at the far upper right. Broad inviting sea, balanced empty water areas between destinations to place interactive HTML markers later. Aerial map perspective, not a side-view scenic landscape. A coherent quiet world, deep turquoise and slate blue sea, sunlit warm cream stone, very subtle coral accents, soft shadows. High craft, elegant, suitable for clinicians and adult patients, distinctive but never toy-like or childish. No interface, no panels, no frames, no words, no numbers, no route dots, no typography, no characters, no logos or watermark. Full bleed original illustration, not an imitation of any specific game."
+    },
+    {
+      "key": "rhythm",
+      "prompt": "Use case: illustration-story. Create one original panoramic coastal landscape painting for a calendar reveal background in an adult wellbeing app. Landscape 1536 x 1024. A beautifully composed calm sea inlet with layered sage and dark green hills, warm ivory cliffs and a winding coastal trail, a small lighthouse in the middle distance, soft blue sky with painterly pale clouds, turquoise bay in the foreground. Sophisticated editorial gouache illustration with subtle paper grain, calm enough to crop into seven date tiles, premium travel-journal feel, no people, mature and soothing, clear shapes that remain beautiful at small size. Teal ocean, sage plants, cream sandstone, restrained terracotta roof accents. No text, no numbers, no calendar, no grid, no UI, no borders, no logos, no watermark. The user interface will cover the art on inactive days and reveal it on days with recorded activity; avoid any visual judgment about health."
+    }
+  ]
+}

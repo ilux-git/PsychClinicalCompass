@@ -1,3 +1,4 @@
+import { createRequestId } from "./requestId";
 import { useEffect, useRef, useState, type FormEvent } from "react";
 import { ApiError, send, useApi } from "./api";
 import { Badge, Button, ErrorBox, Section, date } from "./UI";
@@ -23,7 +24,7 @@ export function PrivacySettings({reload}: {reload: () => void}) {
     e.preventDefault(); if (!baseline || busy) return;
     const data = {min_group_size: size ? Number(size) : null, reason, expected_revision: baseline.revision};
     const signature = JSON.stringify(data);
-    if (request.current.signature !== signature) request.current = {signature, id: crypto.randomUUID()};
+    if (request.current.signature !== signature) request.current = {signature, id: createRequestId()};
     setBusy(true); setError("");setSaved(false);
     try {const updated=await send<Policy>("/admin/privacy-policy", {...data, client_request_id: request.current.id}, "PUT");const next=updated.min_group_size===null?"":String(updated.min_group_size);setBaseline({revision:updated.revision,size:next});setSize(next);clear();policy.reload(); reload(); setReason("");setSaved(true);}
     catch (e) {setError(e instanceof Error ? e.message : "Не удалось сохранить политику");if(e instanceof ApiError&&e.status===409)policy.reload();}

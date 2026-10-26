@@ -1,3 +1,4 @@
+import { createRequestId } from "./requestId";
 import { useEffect, useId, useRef, useState } from "react";
 import {
   Plus,
@@ -16,6 +17,7 @@ import {
   type Patient,
   type Question,
   type Survey,
+  type ClinicalInstrument,
 } from "./api";
 import {
   Badge,
@@ -28,6 +30,7 @@ import {
   type Notify,
 } from "./UI";
 import { SurveyFields } from "./SurveyFields";
+import { InstrumentSource } from "./ClinicalHistory";
 import { barrierLabels, dimensionLabels, type Dimension, type BarrierCategory } from "./collection";
 import { experienceTemplate, supportTemplate } from "./supportTemplate";
 import { Disclosure } from "./Interaction";
@@ -37,7 +40,7 @@ const draftPrompt:LeavePrompt={eyebrow:"Черновик врача",title:"Со
 const assignmentPrompt:LeavePrompt={eyebrow:"Незавершённое назначение",title:"Продолжить выбор пациентов?",message:"Опрос ещё не назначен. При уходе или смене версии список выбранных пациентов и срок будут сброшены. Назначение отправляется только отдельной кнопкой.",stayLabel:"Продолжить назначение"};
 
 const id = (prefix: string) =>
-  prefix + crypto.randomUUID().replaceAll("-", "").slice(0, 12);
+  prefix + createRequestId().replaceAll("-", "").slice(0, 12);
 const question = (): Question => ({
   id: id("q_"),
   prompt: "",
@@ -76,6 +79,7 @@ const purposeNames: Record<string, string> = {
   experience: "Опыт пациента",
   follow_up: "Между визитами",
   custom: "Другой авторский опрос",
+  clinical: "Клинический опросник",
 };
 
 export function SurveyBuilder({
@@ -86,6 +90,7 @@ export function SurveyBuilder({
   initialNew?: boolean;
 }) {
   const library = useApi<Survey[]>("/surveys");
+  const instruments = useApi<ClinicalInstrument[]>("/clinical-instruments");
   const patients = useApi<Patient[]>("/patients");
   const [draft, setDraft] = useState<Draft | null>(
     initialNew ? newDraft : null,
@@ -94,11 +99,18 @@ export function SurveyBuilder({
   const [previewAnswers,setPreviewAnswers] = useState<Record<string,unknown>>({});
   const [baseline,setBaseline] = useState(()=>draft?draftSignature(draft):"");
   const [busy, setBusy] = useState(false);
+  const [editorFocus,setEditorFocus] = useState(initialNew?1:0);
+  const focusEditor=useRef(initialNew);
   const [saveError,setSaveError]=useState("");
   const [validationAttempted,setValidationAttempted]=useState(false);
   const [validationFocus,setValidationFocus]=useState(0);
   const fieldId=useId();
   const builderRef=useRef<HTMLFieldSetElement>(null);
+  useEffect(()=>{
+    if(!focusEditor.current)return;
+    const heading=builderRef.current?.querySelector<HTMLElement>('.published-survey-summary h2,.editor-panel .section-heading h2');
+    if(heading){focusEditor.current=false;heading.tabIndex=-1;heading.focus();}
+  },[editorFocus,Boolean(library.data)]);
   const [patientIds, setPatientIds] = useState<number[]>([]);
   const [due, setDue] = useState("");
   const request = useRef({ signature: "", id: "" });
@@ -111,12 +123,13 @@ export function SurveyBuilder({
   useEffect(()=>{if(validationFocus)builderRef.current?.querySelector<HTMLElement>('[aria-invalid="true"]')?.focus();},[validationFocus]);
   const {clear:clearGuard} = useUnsavedForm({dirty,pending:busy,prompt:draftPrompt,save:dirty&&!busy?()=>save(false):undefined,focus:()=>(builderRef.current?.querySelector<HTMLElement>('[aria-invalid="true"]')??builderRef.current?.querySelector<HTMLElement>('.builder-save-error .error-box,.editor-panel input'))?.focus()});
   const {clear:clearAssignment}=useUnsavedForm({dirty:locked&&Boolean(patientIds.length||due),pending:busy,prompt:assignmentPrompt,focus:()=>(builderRef.current?.querySelector<HTMLElement>('.assign-patients input:checked')??builderRef.current?.querySelector<HTMLElement>('.assign-patients input'))?.focus()});
-  function selectDraft(value:Draft) {
+  function selectDraft(value:Draft,moveFocus=true) {
     setDraft(value);setBaseline(draftSignature(value));setPreview(false);setPreviewAnswers({});setPatientIds([]);setDue("");setSaveError("");setValidationAttempted(false);
     request.current={signature:"",id:""};
+    if(moveFocus){focusEditor.current=true;setEditorFocus(value=>value+1);}
   }
   useEffect(() => {
-    if (!draft && library.data) selectDraft(library.data[0] ?? newDraft());
+    if (!draft && library.data) selectDraft(library.data[0] ?? newDraft(),false);
   }, [library.data, draft]);
   function patch(values: Partial<Draft>) {
     setDraft((current) => (current ? { ...current, ...values } : current));
@@ -191,12 +204,21 @@ export function SurveyBuilder({
       setBusy(false);
     }
   }
+  async function openInstrument(key:string) {
+    setBusy(true);setSaveError("");
+    try {
+      selectDraft(await send<Survey>(`/clinical-instruments/${key}/survey`,{}));
+      library.reload();clearGuard();clearAssignment();
+      notify("Клиническая форма выбрана. Укажите пациентов и назначьте опрос.");
+    } catch(error) {setSaveError(error instanceof Error?error.message:"Не удалось открыть клиническую форму");}
+    finally {setBusy(false);}
+  }
   async function assign() {
     if (!draft?.id || !patientIds.length) return;
     const dueAt = due ? new Date(`${due}T23:59:59`).toISOString() : null;
     const signature = JSON.stringify([draft.id, [...patientIds].sort(), dueAt]);
     if (signature !== request.current.signature)
-      request.current = { signature, id: crypto.randomUUID() };
+      request.current = { signature, id: createRequestId() };
     setBusy(true);
     try {
       await send(`/surveys/${draft.id}/assign`, {
@@ -220,7 +242,7 @@ export function SurveyBuilder({
   return (
     <fieldset ref={builderRef} className="survey-builder" disabled={busy} aria-busy={busy} aria-label="Конструктор и назначение опросов">
       <Heading
-        eyebrow="Вопросы, которые помогают понять пациента"
+        eyebrow="Опросы обратной связи"
         title="Опросы для пациентов"
         action={
           <Button
@@ -229,12 +251,18 @@ export function SurveyBuilder({
             <Plus size={17} /> Создать опрос
           </Button>
         }
-      >
-        Свои вопросы, понятные ответы и история каждой опубликованной версии.
-      </Heading>
+      />
       <div className="builder-save-error"><ErrorBox message={saveError||(Object.keys(fieldErrors).length?"Заполните отмеченные поля. Опрос пока не сохранён.":"")}/></div>
+      <section className="clinical-catalog" aria-label="Клинические опросники">
+        <h2>Клинические опросники</h2><p>Выберите форму, затем пациента и срок. Тексты и варианты ответов зафиксированы; повторное измерение назначается тем же бланком.</p>
+        <ErrorBox message={instruments.error} retry={instruments.reload}/>
+        {instruments.loading&&!instruments.data?<Loading/>:<div className="clinical-catalog-grid">{instruments.data?.map(item=><article className="clinical-catalog-card" key={item.key}>
+          <h3>{item.name}</h3><p>{item.version} · {item.questions.length} вопросов</p>
+          <Button variant="secondary" disabled={busy} aria-label={`Выбрать ${item.name}`} onClick={()=>guard.run(()=>void openInstrument(item.key))}>Выбрать форму</Button>
+        </article>)}</div>}
+      </section>
       <div className="template-explainer"><Disclosure title="Начать с редактируемого шаблона">
-        <h3>Как получается следовать плану</h3><p>Понятен ли план, подходит ли помощь, что мешает и нужен ли следующий шаг. Перед публикацией уточните конкретную рекомендацию и период.</p>
+        <h3>Выполнение рекомендаций</h3><p>Понятен ли план, подходит ли помощь, что мешает и нужен ли следующий шаг. Перед публикацией уточните конкретную рекомендацию и период.</p>
         <Button variant="secondary" disabled={busy} onClick={() => guard.run(()=>selectDraft(supportTemplate()))}>Открыть анкету сопровождения</Button>
         <h3 className="template-next-title">Опыт использования приложения</h3><p>Понятность и польза приложения, предложения пациента. Эти ответы отделены от доверия к лечению и не дают медицинского балла.</p>
         <Button variant="secondary" disabled={busy} onClick={() => guard.run(()=>selectDraft(experienceTemplate()))}>Открыть опрос об удобстве</Button>
@@ -262,7 +290,7 @@ export function SurveyBuilder({
             <Empty title="Библиотека пока недоступна" />
           ) : !library.data?.length ? (
             <Empty title="Начните с одного вопроса">
-              Создайте опрос о том, что важно понять вашему пациенту.
+              Создайте опрос о том, что важно понять Вашему пациенту.
             </Empty>
           ) : (
             library.data.map((s) => (
@@ -312,11 +340,10 @@ export function SurveyBuilder({
                 </div>
                 {locked && (
                   <div className={`subtle-notice ${!preview?"published-lock-hint":""}`}>
-                    <LockKeyhole size={16} /> Вопросы зафиксированы. Для
-                    изменений создайте новую версию.
+                    <LockKeyhole size={16} /> {draft.clinical_instrument?"Клинический бланк зафиксирован. Для повторного измерения назначьте его ещё раз.":"Вопросы зафиксированы. Для изменений создайте новую версию."}
                   </div>
                 )}
-                {locked&&!preview?<div className="published-survey-summary"><h2>{draft.title}</h2><p>{draft.description}</p><div className="button-row"><Badge tone="good">Опубликован · v{draft.version}</Badge><span>{draft.questions.length} вопр.</span><span>{purposeNames[draft.purpose]??"Авторский опрос"}</span><Button variant="ghost" disabled={busy} onClick={()=>guard.run(()=>void copy())}><Copy size={16}/>Новая версия</Button></div></div>:preview ? (
+                {locked&&!preview?<div className="published-survey-summary"><h2>{draft.title}</h2><p>{draft.description}</p><div className="button-row"><Badge tone="good">Опубликован · v{draft.version}</Badge><span>{draft.questions.length} вопр.</span><span>{purposeNames[draft.purpose]??"Авторский опрос"}</span>{!draft.clinical_instrument&&<Button variant="ghost" disabled={busy} onClick={()=>guard.run(()=>void copy())}><Copy size={16}/>Новая версия</Button>}</div>{draft.clinical_instrument&&<InstrumentSource definition={draft.clinical_instrument}/>}</div>:preview ? (
                   <>
                     <h2 className="preview-title">{draft.title || "Название опроса"}</h2>
                     <p className="muted">{draft.description}</p>
@@ -350,7 +377,7 @@ export function SurveyBuilder({
                         value={draft.purpose}
                         onChange={(e) => patch({ purpose: e.target.value })}
                       >
-                        {Object.entries(purposeNames).map(([value, label]) => (
+                        {Object.entries(purposeNames).filter(([value])=>value!=="clinical").map(([value, label]) => (
                           <option key={value} value={value}>
                             {label}
                           </option>
@@ -364,7 +391,7 @@ export function SurveyBuilder({
                         disabled={locked}
                         maxLength={2000}
                         rows={2}
-                        placeholder="Как ответы помогут вам в дальнейшем сопровождении"
+                        placeholder="Как ответы помогут Вам в дальнейшем сопровождении"
                         onChange={(e) => patch({ description: e.target.value })}
                       />
                     </label>

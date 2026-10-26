@@ -1,3 +1,4 @@
+import { createRequestId } from "./requestId";
 import { useEffect, useId, useRef, useState } from "react";
 import { ArrowRight, ArrowUp, Compass, Gift, Leaf } from "lucide-react";
 import { send, useApi } from "./api";
@@ -38,7 +39,7 @@ export function PatientRewardSummary({result,notify,navigate}: {result:ReturnTyp
   const offer=data?[...data.offers].sort((a,b)=>a.points-b.points)[0]:null;
   const calm=data?.preference.effective_mode==="calm";
   return <section className={`patient-reward-card${calm?" patient-reward-calm":data?.preference.effective_mode==="map"?" patient-reward-map":""}`} aria-labelledby="patient-reward-title">
-    <div className="patient-reward-heading"><span className="patient-reward-icon"><Compass size={23}/></span><div><p className="eyebrow">Прогресс участия</p><h2 id="patient-reward-title">{data?.preference.effective_mode==="map"?"Ваш маршрут, ваш темп":"Ваши шаги сохраняются"}</h2></div></div>
+    <div className="patient-reward-heading"><span className="patient-reward-icon"><Compass size={23}/></span><div><p className="eyebrow">Программа участия</p><h2 id="patient-reward-title">Баллы и скидки</h2></div></div>
     <ErrorBox message={result.error} retry={result.reload}/>
     {!data?result.loading?<Loading/>:<p>Баллы пока недоступны. Можно продолжать опросы и записи, а затем повторить загрузку.</p>:<>
       {result.error&&<p className="field-hint">Баланс не обновился. Показаны последние полученные данные.</p>}
@@ -49,7 +50,7 @@ export function PatientRewardSummary({result,notify,navigate}: {result:ReturnTyp
       {data.preference.effective_mode==="map"&&<ParticipationAtlas earned={data.earned_total} compact/>}
       {data.preference.effective_mode==="rhythm"&&<ParticipationRhythm activity={data.activity} compact/>}
       {calm&&<ParticipationCalm activity={data.activity} compact/>}
-      <label className="field patient-home-mode">Как показывать прогресс<select ref={modeFocus.ref} disabled={busy} value={data.preference.effective_mode} onChange={event=>chooseMode(event.target.value)}><option value="map">Карта маленьких шагов</option><option value="rhythm">Только ритм записей</option><option value="calm">Спокойный вид без игры</option></select></label>
+      <label className="field patient-home-mode">Вид прогресса<select ref={modeFocus.ref} disabled={busy} value={data.preference.effective_mode} onChange={event=>chooseMode(event.target.value)}>{Object.entries(modes).map(([key,label])=><option value={key} key={key}>{label}</option>)}</select></label>
       <p className="patient-reward-principle">Баллы — за участие и честные наблюдения. Паузы не отнимают накопленное; доступ к врачу от баланса не зависит.</p>
     </>}
   </section>;
@@ -67,6 +68,7 @@ export function PatientJourney({notify, navigate}: {notify:Notify; navigate?: (v
   const cancelButton=useRef<HTMLButtonElement>(null),catalog=useRef<HTMLDivElement>(null),coupons=useRef<HTMLDivElement>(null);
   const returnToCoupons=useRef(false);
   const confirmationTitle=useId();
+  const modeDescription=useId();
   const modeFocus=usePendingSelectFocus(busy),lastAction=useRef<"mode"|"coupon">("coupon");
   useUnsavedForm({dirty:false,pending:busy,focus:()=>{
     if(lastAction.current==="mode")modeFocus.ref.current?.focus({preventScroll:true});
@@ -96,14 +98,14 @@ export function PatientJourney({notify, navigate}: {notify:Notify; navigate?: (v
   async function mode(value:string) {
     modeFocus.remember();lastAction.current="mode";
     setBusy(true);
-    try {await send('/participation/preferences',{mode:value || null},'PUT'); result.reload(); notify("Вид маршрута сохранён");}
+    try {await send('/participation/preferences',{mode:value},'PUT'); result.reload(); notify("Вид маршрута сохранён");}
     catch(e) {notify(e instanceof Error ? e.message : "Не удалось изменить вид", "error");}
     finally {setBusy(false);}
   }
   async function exchange(offer:string) {
     if (!d || busy) return;
     lastAction.current="coupon";
-    if (request.current.offer !== offer) request.current = {offer,id:crypto.randomUUID()};
+    if (request.current.offer !== offer) request.current = {offer,id:createRequestId()};
     setBusy(true);setExchangeError("");
     try {await send('/participation/demo-coupons',{offer_id:offer,catalog_version:d.catalog_version,client_request_id:request.current.id});
       result.reload(); returnToCoupons.current=true;setSelectedOffer(null); request.current = {offer:"",id:""}; notify("Тестовый купон создан. Условия реальной скидки согласует клиника");}
@@ -119,7 +121,7 @@ export function PatientJourney({notify, navigate}: {notify:Notify; navigate?: (v
   }
   function openCatalog() {catalog.current?.focus({preventScroll:true});catalog.current?.scrollIntoView({block:'start'});}
   function returnToStart() {const main=document.getElementById('compass-main');main?.focus({preventScroll:true});main?.scrollIntoView({block:'start'});}
-  const heading=<Heading eyebrow="Маленькие шаги имеют значение" title="Мой прогресс">Сохраняйте важное между встречами и получайте баллы за участие. Их можно обменять на тестовый купон; игровой вид можно отключить.</Heading>;
+  const heading=<Heading eyebrow="Участие и баллы" title="Мой прогресс">Баллы начисляются за опросы, отметки в расписании и дневник. Их можно обменять на тестовый купон.</Heading>;
   if (!d) return <div className="patient-progress-page">{heading}{result.error?<Section title="Баллы пока недоступны">
     <ErrorBox message={result.error} retry={result.reload}/>
     <p>Опросы, расписание и дневник остаются доступны. Баланс появится после успешного обновления.</p>
@@ -130,7 +132,7 @@ export function PatientJourney({notify, navigate}: {notify:Notify; navigate?: (v
     <ErrorBox message={result.error} retry={result.reload}/>
     {result.error&&<p className="field-hint">Показаны последние полученные данные. Баланс и условия обмена не обновились — повторите загрузку перед выбором купона.</p>}
     <section className={`journey-panel ${d.preference.effective_mode === "calm" ? "journey-calm" : ""}`}>
-      <div className="journey-panel-heading"><div><label className="field journey-view-choice">Как показывать маршрут<select ref={modeFocus.ref} disabled={busy} value={d.preference.patient_choice ?? ""} onChange={e => mode(e.target.value)}><option value="">{d.preference.doctor_recommendation ? `Рекомендация врача: ${modes[d.preference.doctor_recommendation]}` : "По умолчанию: карта шагов"}</option>{Object.entries(modes).map(([key,label]) => <option value={key} key={key}>{label}</option>)}</select></label><h2>{d.preference.effective_mode==="map"?"Ваш маршрут, ваш темп":"Ваши шаги сохраняются"}</h2></div>
+      <div className="journey-panel-heading"><div><label className="field journey-view-choice">Вид прогресса<select ref={modeFocus.ref} aria-describedby={modeDescription} disabled={busy} value={d.preference.effective_mode} onChange={e => mode(e.target.value)}>{Object.entries(modes).map(([key,label]) => <option value={key} key={key}>{label}</option>)}</select></label><p className="journey-mode-note" id={modeDescription}>Выбор меняет оформление. Опросы, история и баллы сохраняются во всех режимах.</p><h2>{d.preference.effective_mode==="map"?"Карта участия":d.preference.effective_mode==="rhythm"?"Мой ритм":"Спокойный режим"}</h2></div>
         <button type="button" className="journey-balance journey-balance-link" onClick={openCatalog} aria-label={`${pointsLabel(d.balance)} к обмену. Посмотреть тестовые скидки`}><strong>{d.balance}</strong><span>{plural(d.balance,"балл к обмену","балла к обмену","баллов к обмену")}<ArrowRight size={14}/></span></button></div>
       <div className="journey-experience">
       <div className="journey-visual">
@@ -143,10 +145,9 @@ export function PatientJourney({notify, navigate}: {notify:Notify; navigate?: (v
         <Button variant="secondary" onClick={openCatalog}>Посмотреть тестовые скидки<ArrowRight size={16}/></Button>
       </aside>
       </div>
-      <p className="journey-mode-note">Выбор меняет оформление. Опросы, история и баллы сохраняются во всех режимах.</p>
     </section>
-      <Section title="За что начисляются баллы"><div className="collection-grid participation-actions">{d.rules.map(r => <article className="collection-card" key={r.kind}><Leaf size={19}/><h3>{r.label}</h3><p>{r.description}</p><strong>{pointsLabel(r.earned_today)} сегодня</strong><small>{r.earned_today>=r.daily_cap?"Баллы за сегодня начислены; записи остаются доступны":`Предел начисления: ${pointsLabel(r.daily_cap)} за сутки UTC`}</small>{navigate&&pointActions[r.kind]&&<Button variant="ghost" onClick={()=>navigate(pointActions[r.kind].view)}>{pointActions[r.kind].label}<ArrowRight size={16}/></Button>}</article>)}</div><p className="field-hint">Дневной предел — ограничение начислений, а не цель на день. Следующее обновление лимита: {date(d.next_reset_at)} (сутки UTC; время на вашем устройстве). Содержание ответа и ваше самочувствие не меняют награду.</p></Section>
-      <div className="loyalty-section-target" ref={catalog} tabIndex={-1} role="region" aria-label="Каталог тестовых скидок"><Section title="Баллы на скидку к следующему приёму" aside={<div className="loyalty-catalog-actions"><Badge tone="purple">Демонстрация обмена</Badge><Button variant="ghost" aria-label="К началу страницы" onClick={returnToStart}><ArrowUp size={16}/>К началу</Button></div>}>
+      <Section title="За что начисляются баллы"><div className="collection-grid participation-actions">{d.rules.map(r => <article className="collection-card" key={r.kind}><Leaf size={19}/><h3>{r.label}</h3><p>{r.description}</p><strong>{pointsLabel(r.earned_today)} сегодня</strong><small>{r.earned_today>=r.daily_cap?"Баллы за сегодня начислены; записи остаются доступны":`Предел начисления: ${pointsLabel(r.daily_cap)} за сутки UTC`}</small>{navigate&&pointActions[r.kind]&&<Button variant="ghost" onClick={()=>navigate(pointActions[r.kind].view)}>{pointActions[r.kind].label}<ArrowRight size={16}/></Button>}</article>)}</div><details className="source-help"><summary>О лимитах начисления</summary><p>После достижения лимита записи остаются доступны. Содержание ответа и самочувствие не меняют награду.</p><p>Лимиты обновятся {date(d.next_reset_at)} по времени Вашего устройства; расчётные сутки — UTC.</p></details></Section>
+      <div className="loyalty-section-target" ref={catalog} tabIndex={-1} role="region" aria-label="Каталог тестовых скидок"><Section title="Тестовые скидки" aside={<div className="loyalty-catalog-actions"><Badge tone="purple">Демонстрация обмена</Badge><Button variant="ghost" aria-label="К началу страницы" onClick={returnToStart}><ArrowUp size={16}/>К началу</Button></div>}>
         <p>Выберите тестовый купон и подтвердите обмен. Баллы резервируются; при отмене купона они снова доступны. Коды DEMO не действуют в клинике. Реальные цены, лимиты и применение скидок ещё предстоит согласовать.</p>
         <div className="loyalty-offers">{d.offers.map(o => <article key={o.id} className="loyalty-offer"><Gift size={26}/><h3>{o.title}</h3><strong>{o.points} баллов</strong><p>{d.balance < o.points ? `Ещё ${o.points-d.balance} баллов до обмена` : "Достаточно баллов"}</p><Button disabled={busy || d.balance < o.points} onClick={() => setSelectedOffer(o.id)}>Выбрать тестовый купон</Button></article>)}</div>
       </Section></div>

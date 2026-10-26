@@ -1,0 +1,26 @@
+{
+  "mobile": {
+    "width": 375,
+    "scrollWidth": 360,
+    "previewWidth": 264,
+    "buttonHeight": 44,
+    "receiverFailureAlertCount": 1,
+    "approvalPreserved": true,
+    "acceptedFocus": "H4",
+    "acceptedFocusText": "Принято симулятором",
+    "acceptedOutlineStyle": "none"
+  },
+  "tablet": {
+    "width": 768,
+    "scrollWidth": 753,
+    "previewWidth": 653,
+    "careColumns": "316.5px 316.5px"
+  },
+  "desktop": {
+    "careColumns": "132.828px 132.828px",
+    "previewWidth": 285.65625,
+    "scrollWidth": 1425,
+    "width": 1440
+  },
+  "console": []
+}

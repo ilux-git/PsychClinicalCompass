@@ -1,0 +1,43 @@
+
+> clinical-compass-web@0.1.0 build
+> tsc --noEmit && vite build
+
+vite v8.3.5 building client environment for production...
+transforming...
+✓ 2415 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                                  0.49 kB │ gzip:   0.35 kB
+dist/assets/limbus-mark-B1rtQGEW.svg             7.31 kB │ gzip:   3.05 kB
+dist/assets/limbus-anatomy-DWBO3zJV.jpg        144.30 kB
+dist/assets/sea-archipelago-v1-BsLQxTY4.png  3,086.62 kB
+dist/assets/rhythm-coast-v1-DCV3r_Fl.png     3,217.61 kB
+dist/assets/CareWorkflow-Cyb_WPWj.css            1.79 kB │ gzip:   0.68 kB
+dist/assets/MedicationSchedule-BHG08nOf.css      2.04 kB │ gzip:   0.65 kB
+dist/assets/Patient-TlXmYUUV.css                27.64 kB │ gzip:   5.20 kB
+dist/assets/index-COLg4rDT.css                 127.64 kB │ gzip:  25.27 kB
+dist/assets/chevron-right-BdLy4xil.js            0.15 kB │ gzip:   0.16 kB
+dist/assets/plus-Dh443BPD.js                     0.18 kB │ gzip:   0.16 kB
+dist/assets/requestId-C4pe-sDc.js                0.60 kB │ gzip:   0.40 kB
+dist/assets/collection-COswcvyL.js               0.93 kB │ gzip:   0.57 kB
+dist/assets/patientProgress-DCFXcaSn.js          1.11 kB │ gzip:   0.57 kB
+dist/assets/SurveyFields-CWi8YxTz.js             4.13 kB │ gzip:   1.81 kB
+dist/assets/Charts-xdlAR8-Y.js                   5.46 kB │ gzip:   2.22 kB
+dist/assets/TaskBoard-BdzgKBDK.js                9.31 kB │ gzip:   3.91 kB
+dist/assets/ClinicalHistory-xyFWL5qn.js          9.33 kB │ gzip:   3.81 kB
+dist/assets/WorkflowMetrics-DDogN79t.js         12.42 kB │ gzip:   3.80 kB
+dist/assets/DoctorDashboard-hhoTf1sB.js         18.12 kB │ gzip:   5.81 kB
+dist/assets/AdminDashboard-CKkCA-x9.js          18.59 kB │ gzip:   5.98 kB
+dist/assets/SurveyBuilder-DLPtvSa0.js           27.26 kB │ gzip:   8.43 kB
+dist/assets/CareWorkflow-D0H8E0MK.js            33.97 kB │ gzip:   9.87 kB
+dist/assets/MedicationSchedule-DH5lT1BO.js      37.88 kB │ gzip:  11.31 kB
+dist/assets/DoctorPatients-MgRKI9H8.js          46.79 kB │ gzip:  13.34 kB
+dist/assets/Patient-w7gaTvjJ.js                 66.39 kB │ gzip:  18.24 kB
+dist/assets/index-IUkK7B60.js                  408.89 kB │ gzip: 129.75 kB
+
+✓ built in 494ms
+npm notice
+npm notice New minor version of npm available! 11.6.2 -> 11.21.1
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v11.21.1
+npm notice To update run: npm install -g npm@11.21.1
+npm notice

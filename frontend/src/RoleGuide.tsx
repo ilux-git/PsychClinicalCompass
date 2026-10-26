@@ -22,8 +22,8 @@ export function RoleGuide({user,view,navigate,startSignal,context}:{user:User;vi
   function close(){setOpen(false);dismiss();}
   return <>
     {!hidden&&<section className="navigation-welcome" aria-label="Первое знакомство">
-      <Compass size={21} aria-hidden="true"/><p><strong>Первый раз в кабинете?</strong> Кнопка «Помощь» объяснит текущий раздел и доступные действия.</p>
-      <Button variant="ghost" onClick={()=>setOpen(true)}>Как здесь работать</Button>
+      <Compass size={21} aria-hidden="true"/><p><strong>Навигация по кабинету.</strong> Кнопка «Помощь» объяснит текущий раздел и доступные действия.</p>
+      <Button variant="ghost" onClick={()=>setOpen(true)}>Открыть инструкцию</Button>
       <button type="button" className="icon-button" aria-label="Скрыть приветствие" onClick={dismiss}><X size={17}/></button>
     </section>}
     <dialog ref={dialog} className="navigation-help" aria-labelledby="navigation-help-title" onKeyDown={keepDialogFocus} onCancel={event=>{event.preventDefault();close();}}>

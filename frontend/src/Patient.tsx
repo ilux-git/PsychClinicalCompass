@@ -1,3 +1,4 @@
+import { createRequestId } from "./requestId";
 import { useEffect, useId, useRef, useState, type FormEvent } from "react";
 import {
   Check,
@@ -37,6 +38,7 @@ import {
 import { AssignedSurvey } from "./PatientSurvey";
 import { Chat } from "./Chat";
 import { AssessmentHistory } from "./AssessmentHistory";
+import { ClinicalHistory } from "./ClinicalHistory";
 import { PatientDiary } from "./PatientDiary";
 import { MedicationSchedule } from "./MedicationSchedule";
 import { PatientJourney } from "./PatientJourney";
@@ -76,7 +78,7 @@ function SelfReport({
     event.preventDefault();
     const signature = JSON.stringify([recommendation, status, reason]);
     if (signature !== request.current.signature)
-      request.current = { signature, id: crypto.randomUUID() };
+      request.current = { signature, id: createRequestId() };
     setSaveError("");setSavedId(null);setBusy(true);
     try {
       const response=await send<Adherence>("/adherence/reports", {
@@ -92,7 +94,7 @@ function SelfReport({
       clear();
       request.current = { signature: "", id: "" };
       reports.reload();
-      notify("Спасибо! Врач увидит, какая поддержка вам нужна.");
+      notify("Спасибо! Врач увидит, какая поддержка Вам нужна.");
     } catch (error) {
       setSaveError(error instanceof Error ? error.message : "Не удалось сохранить самоотчёт");
     } finally {
@@ -101,9 +103,7 @@ function SelfReport({
   }
   return (
     <>
-      <Heading eyebrow="Без оценок и осуждения" title="Выполнение рекомендаций">
-        Расскажите, что получается с рекомендациями врача и что мешает.
-      </Heading>
+      <Heading eyebrow="Самоотчёт" title="Выполнение рекомендаций"/>
       <Section title="Мой самоотчёт">
         <form ref={reportForm} onSubmit={submit} className="self-report-form">
           <div ref={errorResult} id={errorId}><ErrorBox message={saveError}/></div>
@@ -215,11 +215,10 @@ export function PatientHome({
   if (view === "state")
     return (
       <>
-        <Heading eyebrow="Сохранённые ответы" title="История состояния">
-          История PHQ-9 и GAD-7. Обсудить изменения и следующие шаги можно с вашим врачом.
-        </Heading>
+        <Heading eyebrow="Сохранённые ответы" title="История состояния"/>
         <Section title="Мои измерения">
           <ErrorBox message={assessmentHistory.error} retry={assessmentHistory.reload} />
+          {user.patient_id&&<ClinicalHistory patientId={user.patient_id}/>}
           {assessmentHistory.loading ? <Loading /> : assessmentHistory.data ? (
             <AssessmentHistory rows={assessmentHistory.data} />
           ) : <p className="muted">История пока недоступна.</p>}
@@ -233,7 +232,7 @@ export function PatientHome({
           eyebrow="В контакте с врачом"
           title={view === "telegram" ? "Симулятор Telegram" : "Написать врачу"}
         >
-          Можно рассказать, как вы себя чувствуете, или задать вопрос.
+          Можно рассказать, как Вы себя чувствуете, или задать вопрос.
         </Heading>
         <Section title="Переписка" aside={<div className="chat-doctor">
           <span
@@ -264,7 +263,7 @@ export function PatientHome({
   if (view === "medications")
     return <MedicationSchedule patientId={user.patient_id} notify={notify} progress={()=>navigate("journey")} />;
   if(assignmentId!==null&&!selected)return <>
-    <Heading eyebrow="Опрос врача" title={assignments.loading?"Открываем опрос…":assignments.error||!assignments.data?"Не удалось загрузить опрос":"Опрос недоступен"}>Открыть можно только назначенные вам опросы.</Heading>
+    <Heading eyebrow="Опрос врача" title={assignments.loading?"Открываем опрос…":assignments.error||!assignments.data?"Не удалось загрузить опрос":"Опрос недоступен"}>Открыть можно только назначенные Вам опросы.</Heading>
     <ErrorBox message={assignments.error} retry={assignments.reload}/>
     {assignments.loading?<Loading/>:<><p className="muted">{assignments.error||!assignments.data?"Список назначений пока не получен или не обновился. Повторите загрузку, когда соединение восстановится.":"Назначение не найдено среди доступных. Вернитесь к списку или повторите загрузку."}</p><div className="button-row"><Button onClick={()=>navigate("surveys")}>К опросам врача</Button><Button variant="secondary" onClick={assignments.reload}>Повторить загрузку</Button></div></>}
   </>;
@@ -294,10 +293,10 @@ export function PatientHome({
   return (
     <>
       <Heading
-        eyebrow={view === "surveys" ? "Вопросы от вашего врача" : "Ваш день в Compass"}
-        title={view === "surveys" ? "Опросы врача" : `Здравствуйте, ${user.display_name.split(" ")[0]}`}
+        eyebrow={view === "surveys" ? "Назначенные опросы" : "Личный кабинет"}
+        title={view === "surveys" ? "Опросы врача" : "Мой день"}
       >
-        Небольшие ответы помогают врачу лучше поддерживать вас между визитами.
+        Назначенные опросы и история отправленных ответов.
       </Heading>
       <ErrorBox
         message={assignments.error || participation.error || card.error}
@@ -309,7 +308,7 @@ export function PatientHome({
       />
       <div className="patient-section-heading">
         <h2>
-          Для вас{" "}
+          Назначенные опросы{" "}
           <span className="count-circle">
             {assignments.data ? pending.length : "—"}
           </span>
@@ -326,7 +325,7 @@ export function PatientHome({
         </section>
       ) : !pending.length ? (
         <section className="panel">
-          <Empty title={assignments.data.length ? "Всё готово, спасибо!" : "Пока нет назначенных опросов"}>
+          <Empty title={assignments.data.length ? "Нет ожидающих опросов" : "Пока нет назначенных опросов"}>
             Когда врач назначит новый опрос, он появится здесь.
           </Empty>
         </section>
@@ -362,7 +361,7 @@ export function PatientHome({
       <div className="support-card">
         <MessageCircle size={24} />
         <div>
-          <h3>Не всё получается? Об этом можно рассказать</h3>
+          <h3>Сообщить о затруднении</h3>
           <p>
             Сложности — повод подобрать поддержку. Ваши ответы увидит лечащий
             врач.
@@ -382,7 +381,7 @@ export function PatientHome({
           <p className="muted">История ещё не получена.</p>
         ) : !completed.length ? (
           <p className="muted">
-            Здесь сохранится история ваших ответов и пройденный путь.
+            Здесь сохранится история Ваших ответов и пройденный путь.
           </p>
         ) : (
           completed.map((assignment) => (

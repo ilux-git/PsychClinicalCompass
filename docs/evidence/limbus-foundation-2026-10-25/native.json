@@ -1,0 +1,63 @@
+{
+  "beforeMode": {
+    "description": null,
+    "options": [
+      {
+        "text": "По умолчанию: карта шагов",
+        "value": ""
+      },
+      {
+        "text": "Карта маленьких шагов",
+        "value": "map"
+      },
+      {
+        "text": "Мой ритм",
+        "value": "rhythm"
+      },
+      {
+        "text": "Спокойный режим",
+        "value": "calm"
+      }
+    ],
+    "value": "map"
+  },
+  "successfulKeyboardChange": {
+    "balance": "113",
+    "disabled": false,
+    "focused": true,
+    "options": 3,
+    "overflow": false,
+    "value": "rhythm"
+  },
+  "restoredMode": {
+    "balance": "113",
+    "focused": true,
+    "value": "map"
+  },
+  "tablet": {
+    "mode": "map",
+    "overflow": false,
+    "title": "Мой прогресс · Лимбус",
+    "viewport": [
+      768,
+      1024
+    ]
+  },
+  "desktop": {
+    "brand": "Лимбус",
+    "logoLoaded": true,
+    "overflow": false,
+    "title": "Мой прогресс · Лимбус",
+    "viewport": [
+      1440,
+      900
+    ]
+  },
+  "controlledFailure": {
+    "mode": "fail",
+    "response": 503,
+    "observed": "One technical error notice; map and 113 balance retained; three options remained",
+    "screenshot": false
+  },
+  "console": []
+}

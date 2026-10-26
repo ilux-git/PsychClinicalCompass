@@ -1,0 +1,332 @@
+{
+  "date": "2026-10-25",
+  "base_commit": "35c644951acc1d4d1ca9910e6532d1adad4f950b",
+  "scope": "Read attachments and current code; plan only. No implementation, deployment, new clinical validation or fresh runtime acceptance.",
+  "sources": [
+    {
+      "name": "НЕСоответствие ТЗ.txt",
+      "original_path": "C:\\Users\\n-sav\\Downloads\\Telegram Desktop\\НЕСоответствие ТЗ.txt",
+      "bytes": 13631,
+      "sha256": "2ea25853b9c82a24a8a71c1eca40daf627a5288f243fbbbc6fbd2715df697b69",
+      "kind": "requirements_material",
+      "read_status": "full_text"
+    },
+    {
+      "name": "Задача (2).txt",
+      "original_path": "C:\\Users\\n-sav\\Downloads\\Telegram Desktop\\Задача (2).txt",
+      "bytes": 14218,
+      "sha256": "8ff03c1a4b3fed4241b480fff1f7e9b660e4b24086ff53c63e41705937b7c357",
+      "kind": "requirements_material",
+      "read_status": "full_text"
+    },
+    {
+      "name": "UI Design.txt",
+      "original_path": "C:\\Users\\n-sav\\Downloads\\Telegram Desktop\\UI Design.txt",
+      "bytes": 13214,
+      "sha256": "b2c179d74575bd56b030a91492eb8f0fd958daa5dfab5f232804ef871b3f6746",
+      "kind": "requirements_material",
+      "read_status": "full_text"
+    },
+    {
+      "name": "Лимбус.svg",
+      "original_path": "C:\\Users\\n-sav\\Downloads\\Telegram Desktop\\Лимбус.svg",
+      "bytes": 7312,
+      "sha256": "d8cd96c0e8235352365c63a48cca5dc824f0218adfb9db5bb4f5c62d7df3298e",
+      "kind": "visual_reference",
+      "read_status": "xml_inspected_without_execution"
+    },
+    {
+      "name": "Лимбус.jpg",
+      "original_path": "C:\\Users\\n-sav\\Downloads\\Telegram Desktop\\Лимбус.jpg",
+      "bytes": 144301,
+      "sha256": "66120c7e495ec3053c2c4d843065298102dd0e7fc997e998bdc169ce9c03eedf",
+      "kind": "visual_reference",
+      "read_status": "attached_image_inspected"
+    },
+    {
+      "name": "codex-clipboard-96aab436-35ed-4c42-a586-56150784f2ab.png",
+      "original_path": "C:\\Users\\n-sav\\AppData\\Local\\Temp\\codex-clipboard-96aab436-35ed-4c42-a586-56150784f2ab.png",
+      "bytes": 109936,
+      "sha256": "f8656bf013e9c94f4edbc8a0508036f8dc9f1121fc169f1fef4b2da9e185abd6",
+      "kind": "visual_reference",
+      "read_status": "attached_image_inspected"
+    },
+    {
+      "name": "codex-clipboard-f7ee2d7f-0707-4e67-b53e-845fcdd97d18.png",
+      "original_path": "C:\\Users\\n-sav\\AppData\\Local\\Temp\\codex-clipboard-f7ee2d7f-0707-4e67-b53e-845fcdd97d18.png",
+      "bytes": 206892,
+      "sha256": "937aa2d901acda3acf91746102f2d3671822d03719bd354c75dd376b218b94e4",
+      "kind": "visual_reference",
+      "read_status": "attached_image_inspected"
+    },
+    {
+      "name": "codex-clipboard-aec886cc-629d-4a9e-b376-b2538bf0557d.png",
+      "original_path": "C:\\Users\\n-sav\\AppData\\Local\\Temp\\codex-clipboard-aec886cc-629d-4a9e-b376-b2538bf0557d.png",
+      "bytes": 137109,
+      "sha256": "0c4fd027c8a6408926ee5e8cd3f0740f5c081d078eee591a54fe8a7510effbdd",
+      "kind": "visual_reference",
+      "read_status": "attached_image_inspected"
+    }
+  ],
+  "copy_requests": [
+    {
+      "id": "COPY-01",
+      "requested_text": "Сопровождение между визитами",
+      "exact_source_matches": [
+        "frontend/src/App.tsx"
+      ],
+      "planned_action": "remove_redundant_visible_copy",
+      "action_status": "planned_only"
+    },
+    {
+      "id": "COPY-02",
+      "requested_text": "Услышать обратную связь, заметить сложности и подобрать следующий шаг вместе с пациентом.",
+      "exact_source_matches": [],
+      "planned_action": "remove_redundant_visible_copy",
+      "action_status": "planned_only"
+    },
+    {
+      "id": "COPY-03",
+      "requested_text": "Учебный стенд · только синтетические данные",
+      "exact_source_matches": [
+        "frontend/src/App.tsx"
+      ],
+      "planned_action": "replace_with_compact_metadata_or_source_label",
+      "action_status": "planned_only"
+    },
+    {
+      "id": "COPY-04",
+      "requested_text": "От затруднения пациента — к действию и отдельной проверке результата.",
+      "exact_source_matches": [
+        "frontend/src/WorkspaceHome.tsx"
+      ],
+      "planned_action": "remove_redundant_visible_copy",
+      "action_status": "planned_only"
+    },
+    {
+      "id": "COPY-05",
+      "requested_text": "Опросы, самоотчёты и переписка в одной карточке.",
+      "exact_source_matches": [
+        "frontend/src/DoctorPatients.tsx"
+      ],
+      "planned_action": "remove_redundant_visible_copy",
+      "action_status": "planned_only"
+    },
+    {
+      "id": "COPY-06",
+      "requested_text": "Открытые сигналы из всех карточек. Принятие в работу и клиническое решение врач фиксирует отдельно.",
+      "exact_source_matches": [
+        "frontend/src/DoctorInbox.tsx"
+      ],
+      "planned_action": "remove_long_copy_and_preserve_relevant_semantics_in_context_help",
+      "action_status": "planned_only"
+    },
+    {
+      "id": "COPY-07",
+      "requested_text": "От конкретного затруднения к действию и проверке результата. Новую задачу можно создать в карточке пациента.",
+      "exact_source_matches": [
+        "frontend/src/TaskBoard.tsx"
+      ],
+      "planned_action": "remove_redundant_visible_copy",
+      "action_status": "planned_only"
+    },
+    {
+      "id": "COPY-08",
+      "requested_text": "Свои вопросы, понятные ответы и история каждой опубликованной версии.",
+      "exact_source_matches": [
+        "frontend/src/SurveyBuilder.tsx"
+      ],
+      "planned_action": "remove_redundant_visible_copy",
+      "action_status": "planned_only"
+    },
+    {
+      "id": "COPY-09",
+      "requested_text": "Причины со слов пациентов и вопросы, на которые ещё нет ответов.",
+      "exact_source_matches": [
+        "frontend/src/DoctorDashboard.tsx"
+      ],
+      "planned_action": "remove_redundant_visible_copy",
+      "action_status": "planned_only"
+    },
+    {
+      "id": "COPY-10",
+      "requested_text": "Показаны все назначения. Самоотчёты о рекомендациях отбираются по дате записи.",
+      "exact_source_matches": [],
+      "planned_action": "remove_long_copy_and_preserve_relevant_semantics_in_context_help",
+      "action_status": "planned_only"
+    },
+    {
+      "id": "COPY-11",
+      "requested_text": "Синтетические события визитов показаны во вкладке «Действия и исходы».",
+      "exact_source_matches": [
+        "frontend/src/DoctorDashboard.tsx"
+      ],
+      "planned_action": "remove_long_copy_and_preserve_relevant_semantics_in_context_help",
+      "action_status": "planned_only"
+    },
+    {
+      "id": "COPY-12",
+      "requested_text": "Выберите пациента, чтобы открыть PHQ-9, GAD-7 и сохранённые ответы по пунктам.",
+      "exact_source_matches": [
+        "frontend/src/DoctorPatients.tsx"
+      ],
+      "planned_action": "remove_redundant_visible_copy",
+      "action_status": "planned_only"
+    },
+    {
+      "id": "COPY-13",
+      "requested_text": "Демо · синтетические данные",
+      "exact_source_matches": [
+        "frontend/src/App.tsx"
+      ],
+      "planned_action": "replace_with_compact_metadata_or_source_label",
+      "action_status": "planned_only"
+    },
+    {
+      "id": "COPY-14",
+      "requested_text": "Clinical Compass · учебный MVP",
+      "exact_source_matches": [
+        "frontend/src/App.tsx"
+      ],
+      "planned_action": "replace_with_compact_metadata_or_source_label",
+      "action_status": "planned_only"
+    },
+    {
+      "id": "COPY-15",
+      "requested_text": "Поддержка диалога между врачом и пациентом",
+      "exact_source_matches": [
+        "frontend/src/App.tsx"
+      ],
+      "planned_action": "remove_redundant_visible_copy",
+      "action_status": "planned_only"
+    },
+    {
+      "id": "COPY-16",
+      "requested_text": "Синтетические ответы",
+      "exact_source_matches": [
+        "frontend/src/AssessmentHistory.tsx"
+      ],
+      "planned_action": "replace_with_compact_metadata_or_source_label",
+      "action_status": "planned_only"
+    },
+    {
+      "id": "COPY-17",
+      "requested_text": "Сопоставьте сохранённые измерения и ответы. Ниже — сведения из учебной клинической базы; отсутствующие наблюдения не равны нулю.",
+      "exact_source_matches": [
+        "frontend/src/navigation.ts"
+      ],
+      "planned_action": "replace_with_compact_metadata_or_source_label",
+      "action_status": "planned_only"
+    },
+    {
+      "id": "COPY-18",
+      "requested_text": "Точки расположены по фактическим датам. Между точками новых измерений нет.",
+      "exact_source_matches": [
+        "frontend/src/Charts.tsx"
+      ],
+      "planned_action": "remove_long_copy_and_preserve_relevant_semantics_in_context_help",
+      "action_status": "planned_only"
+    },
+    {
+      "id": "COPY-19",
+      "requested_text": "Показаны номера пунктов и сохранённые значения. Тексты клинических форм и их интерпретация ожидают согласования; числовая история не заменяет разговор с врачом.",
+      "exact_source_matches": [],
+      "planned_action": "remove_long_copy_and_preserve_relevant_semantics_in_context_help",
+      "action_status": "planned_only"
+    },
+    {
+      "id": "COPY-20",
+      "requested_text": "Личные позиции отделены от назначений МИС. Отсутствие отметки остаётся неизвестным; отметка — сообщение пациента, а не подтверждение приёма.",
+      "exact_source_matches": [
+        "frontend/src/MedicationSchedule.tsx"
+      ],
+      "planned_action": "remove_long_copy_and_preserve_relevant_semantics_in_context_help",
+      "action_status": "planned_only"
+    },
+    {
+      "id": "COPY-21",
+      "requested_text": "МИС · синтетический JSON · только чтение",
+      "exact_source_matches": [
+        "frontend/src/MedicationSchedule.tsx"
+      ],
+      "planned_action": "replace_with_compact_metadata_or_source_label",
+      "action_status": "planned_only"
+    },
+    {
+      "id": "COPY-22",
+      "requested_text": "События построены по текущей версии расписания. Исторические отметки сохраняются отдельно. Внешняя доставка напоминаний не подключена.",
+      "exact_source_matches": [
+        "frontend/src/MedicationSchedule.tsx"
+      ],
+      "planned_action": "remove_long_copy_and_preserve_relevant_semantics_in_context_help",
+      "action_status": "planned_only"
+    },
+    {
+      "id": "COPY-23",
+      "requested_text": "История PHQ-9 и GAD-7. Обсудить изменения и следующие шаги можно с вашим врачом.",
+      "exact_source_matches": [
+        "frontend/src/Patient.tsx"
+      ],
+      "planned_action": "remove_redundant_visible_copy",
+      "action_status": "planned_only"
+    },
+    {
+      "id": "COPY-24",
+      "requested_text": "Сохранённые числовые ответы. Разные шкалы и версии сравниваются отдельно. Изменение балла само по себе не устанавливает диагноз или эффект лечения.",
+      "exact_source_matches": [],
+      "planned_action": "remove_long_copy_and_preserve_relevant_semantics_in_context_help",
+      "action_status": "planned_only"
+    },
+    {
+      "id": "COPY-25",
+      "requested_text": "Расскажите, что получается с рекомендациями врача и что мешает.",
+      "exact_source_matches": [
+        "frontend/src/Patient.tsx"
+      ],
+      "planned_action": "remove_redundant_visible_copy",
+      "action_status": "planned_only"
+    },
+    {
+      "id": "COPY-26",
+      "requested_text": "Принятие в работу не означает, что затруднение уже решено. Ответ врача появится в переписке.",
+      "exact_source_matches": [
+        "frontend/src/Chat.tsx"
+      ],
+      "planned_action": "remove_long_copy_and_preserve_relevant_semantics_in_context_help",
+      "action_status": "planned_only"
+    },
+    {
+      "id": "COPY-27",
+      "requested_text": "Дневной предел — ограничение начислений, а не цель на день. Следующее обновление лимита: 26 окт., 07:00 (сутки UTC; время на вашем устройстве). Содержание ответа и ваше самочувствие не меняют награду.",
+      "exact_source_matches": [],
+      "planned_action": "remove_long_copy_and_preserve_relevant_semantics_in_context_help",
+      "action_status": "planned_only"
+    },
+    {
+      "id": "COPY-28",
+      "requested_text": "Только порученные вам организационные действия.",
+      "exact_source_matches": [
+        "frontend/src/TaskBoard.tsx"
+      ],
+      "planned_action": "remove_redundant_visible_copy",
+      "action_status": "planned_only"
+    }
+  ],
+  "copy_limit": "Exact search found 23 of 28 strings. Five are split across JSX or generated dynamically; their owners were found by fragment search in App.tsx, DoctorDashboard.tsx, AssessmentHistory.tsx and PatientJourney.tsx. No runtime absence is inferred from exact source matching.",
+  "visual_intent": {
+    "brand": "Лимбус: supplied SVG mark, orange backing, supplied anatomical image on entry screen",
+    "rhythm": "Scenic calendar tiles with legible dates and existing actual activity state",
+    "map": "Stylized marine journey; retain current participation data and milestones",
+    "calm": "Accessible view without game ornament; same access and history"
+  },
+  "svg_inspection": {
+    "viewBox": "1560 260 360 280",
+    "elements": [
+      "svg",
+      "title",
+      "path"
+    ],
+    "external_references": [],
+    "scripts_or_foreign_objects": false
+  }
+}

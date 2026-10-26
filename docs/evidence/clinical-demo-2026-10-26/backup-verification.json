@@ -1,0 +1,321 @@
+{
+  "verified_at": "2026-10-26T02:36:00.777555+00:00",
+  "source_database": "compass_dev",
+  "target_database": "compass_clinical_demo_20261026_restore_test",
+  "snapshot_at": "2026-10-26T02:35:59.447919+00:00",
+  "consistent_exported_snapshot": true,
+  "source_modified": false,
+  "backup_seconds": 0.26,
+  "restore_seconds": 0.862,
+  "archive_bytes": 189973,
+  "archive_sha256": "cf77af33f28c069fcca0f7bb41ac1f31c967c393b3e7720f811da768d14b774e",
+  "tables": {
+    "public.adherence_reports": {
+      "rows": 5,
+      "sha256": "91e9c10a22ead4cf07044e2b41a94daf277f08c2a5189b165d51d61199339a8b"
+    },
+    "public.alembic_version": {
+      "rows": 1,
+      "sha256": "115684e2982dddeaacc1ea9338187a9630dfbdf28f87c8ffab58622a9c3df43c"
+    },
+    "public.alert_handling": {
+      "rows": 2,
+      "sha256": "d13bc13738474f824dc25616b6f3bdeddac998f6956f9dadb29850e234085358"
+    },
+    "public.alert_presentations": {
+      "rows": 7,
+      "sha256": "e769d6d84e73c16c0712bde85eb5b2f693bb99d6b6112c57b4f0a579f9b8896c"
+    },
+    "public.alerts": {
+      "rows": 16,
+      "sha256": "dfd7e3281390a82b54d85238a9c10e3096c20a640d6fb2fe71c9994034a080f7"
+    },
+    "public.audit_events": {
+      "rows": 174,
+      "sha256": "1f75a524c9b26cece4303d4d1e3e848558f25b22b25bcf50d2e749445aa92c71"
+    },
+    "public.auth_login_buckets": {
+      "rows": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "public.clinical_baselines": {
+      "rows": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "public.clinical_decisions": {
+      "rows": 14,
+      "sha256": "d7ab0c7fdbff1d4c7fe8e6006aa8d6b7a0defdd3f097797f8ebc605640c15166"
+    },
+    "public.clinical_results": {
+      "rows": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "public.coordinator_notices": {
+      "rows": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "public.demo_loyalty_coupons": {
+      "rows": 1,
+      "sha256": "2f94249ed8df8b9e0c55d58fb028e8d401d3e11ed144bdd93d1abca5e3175e79"
+    },
+    "public.diary_entries": {
+      "rows": 39,
+      "sha256": "2c67c0a663296ced4a13859a3e1b7b1ebb154f873bfd1a185dec278f11752222"
+    },
+    "public.doctor_escalation_routes": {
+      "rows": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "public.doctor_notes": {
+      "rows": 4,
+      "sha256": "292c791e9b1651164f4bc55a7cf0fcc91422eaec192a141bc8f2558e586f64dc"
+    },
+    "public.doctor_tasks": {
+      "rows": 8,
+      "sha256": "c9ad2f7b82d27a637a909c5b35ccc5eea959f2425593bbbbfa4a2b71cdc5c350"
+    },
+    "public.emr_demo_documents": {
+      "rows": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "public.emr_demo_receipts": {
+      "rows": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "public.medication_items": {
+      "rows": 2,
+      "sha256": "cea14902e06359cd30a9a090bb04dcbe5b61cd3eadf1567a870f1e80c999551c"
+    },
+    "public.medication_logs": {
+      "rows": 3,
+      "sha256": "fda446f5a9012027c13e676d6d8728b5d609ad0c6bc61b2c34acd8a9cc35718e"
+    },
+    "public.messages": {
+      "rows": 25,
+      "sha256": "cbbd0595758da1388488088f6c3e05cf0a6dcff5be1c03e3a0ece1bfb8f779f0"
+    },
+    "public.outbox_events": {
+      "rows": 17,
+      "sha256": "a0c6d127a0ff92fe14470bdf6c44e6e9f81d364c4aa36e7f28ff97def0b57b0e"
+    },
+    "public.participation_awards": {
+      "rows": 43,
+      "sha256": "ba01a564da8386b32834eb17343ca5319f131921c9a00d24b9e830eb22d545e3"
+    },
+    "public.participation_preferences": {
+      "rows": 2,
+      "sha256": "6ff8148319c361e74bb6fb3e5e70085a52d83a3f39946a1c427d69cca65da8db"
+    },
+    "public.patient_mappings": {
+      "rows": 10,
+      "sha256": "199f523fdd63d1684a23e753eebedb71a7272be4e115494fcaabccbe2c7272e5"
+    },
+    "public.patients": {
+      "rows": 10,
+      "sha256": "71d68cf1ad13866e5efdfec49fb52f58a436ec66747de815f478fd828787cb9a"
+    },
+    "public.privacy_policy_changes": {
+      "rows": 1,
+      "sha256": "5180c364c0b360ee51566a22bd310e06181bed97b8ecfbaf47dcb0eda2b0d06e"
+    },
+    "public.questionnaire_responses": {
+      "rows": 30,
+      "sha256": "e00d816fc23070592cf3a9446be49b4eac4f3c84a3aa258d960dd2c4b88964ee"
+    },
+    "public.read_access_events": {
+      "rows": 1025,
+      "sha256": "45fe1f19d3c7c1327ef7f52bf426d438fbb2ec112b439b59f970a047e0b03ba1"
+    },
+    "public.revoked_access_tokens": {
+      "rows": 1,
+      "sha256": "95ec22adfa1b6743f2eb42d55e7987c78aaee518529897604e609aa712c7323f"
+    },
+    "public.survey_assignments": {
+      "rows": 27,
+      "sha256": "ba3d6f0dc4aa43def61c074d6180aefb26d1b0f87f544e438d01b9bb8e77f7a8"
+    },
+    "public.survey_drafts": {
+      "rows": 1,
+      "sha256": "a093edf492d827a92ec69b35e52df42953d0e52bbf33b71276bc3ce54333cc8e"
+    },
+    "public.survey_submissions": {
+      "rows": 16,
+      "sha256": "4f11a5a8e14254c08981f433e75e0163d5be60b4b7e048ace8a89444714b4d1a"
+    },
+    "public.surveys": {
+      "rows": 7,
+      "sha256": "b400a65ea7c04867d7449498c9ff4ecba013d21b340a050afa510914feba358c"
+    },
+    "public.telegram_bindings": {
+      "rows": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "public.treatment_status_changes": {
+      "rows": 10,
+      "sha256": "b453872436d40fad97490a185567bc3d523eabba67666e235a8f233b0321d314"
+    },
+    "public.users": {
+      "rows": 14,
+      "sha256": "05001858206b41eb4f380910d8588d18fd0fbc8acde0c1650d0d6043ef8983a8"
+    }
+  },
+  "sequences": [
+    {
+      "table": "public.adherence_reports",
+      "column": "id",
+      "next_value_exceeds_maximum": true
+    },
+    {
+      "table": "public.alert_handling",
+      "column": "id",
+      "next_value_exceeds_maximum": true
+    },
+    {
+      "table": "public.alert_presentations",
+      "column": "id",
+      "next_value_exceeds_maximum": true
+    },
+    {
+      "table": "public.alerts",
+      "column": "id",
+      "next_value_exceeds_maximum": true
+    },
+    {
+      "table": "public.audit_events",
+      "column": "id",
+      "next_value_exceeds_maximum": true
+    },
+    {
+      "table": "public.clinical_baselines",
+      "column": "id",
+      "next_value_exceeds_maximum": true
+    },
+    {
+      "table": "public.clinical_decisions",
+      "column": "id",
+      "next_value_exceeds_maximum": true
+    },
+    {
+      "table": "public.clinical_results",
+      "column": "id",
+      "next_value_exceeds_maximum": true
+    },
+    {
+      "table": "public.coordinator_notices",
+      "column": "id",
+      "next_value_exceeds_maximum": true
+    },
+    {
+      "table": "public.demo_loyalty_coupons",
+      "column": "id",
+      "next_value_exceeds_maximum": true
+    },
+    {
+      "table": "public.diary_entries",
+      "column": "id",
+      "next_value_exceeds_maximum": true
+    },
+    {
+      "table": "public.doctor_notes",
+      "column": "id",
+      "next_value_exceeds_maximum": true
+    },
+    {
+      "table": "public.doctor_tasks",
+      "column": "id",
+      "next_value_exceeds_maximum": true
+    },
+    {
+      "table": "public.emr_demo_documents",
+      "column": "id",
+      "next_value_exceeds_maximum": true
+    },
+    {
+      "table": "public.emr_demo_receipts",
+      "column": "id",
+      "next_value_exceeds_maximum": true
+    },
+    {
+      "table": "public.medication_items",
+      "column": "id",
+      "next_value_exceeds_maximum": true
+    },
+    {
+      "table": "public.medication_logs",
+      "column": "id",
+      "next_value_exceeds_maximum": true
+    },
+    {
+      "table": "public.messages",
+      "column": "id",
+      "next_value_exceeds_maximum": true
+    },
+    {
+      "table": "public.outbox_events",
+      "column": "id",
+      "next_value_exceeds_maximum": true
+    },
+    {
+      "table": "public.participation_awards",
+      "column": "id",
+      "next_value_exceeds_maximum": true
+    },
+    {
+      "table": "public.patient_mappings",
+      "column": "id",
+      "next_value_exceeds_maximum": true
+    },
+    {
+      "table": "public.patients",
+      "column": "id",
+      "next_value_exceeds_maximum": true
+    },
+    {
+      "table": "public.privacy_policy_changes",
+      "column": "id",
+      "next_value_exceeds_maximum": true
+    },
+    {
+      "table": "public.questionnaire_responses",
+      "column": "id",
+      "next_value_exceeds_maximum": true
+    },
+    {
+      "table": "public.read_access_events",
+      "column": "id",
+      "next_value_exceeds_maximum": true
+    },
+    {
+      "table": "public.survey_assignments",
+      "column": "id",
+      "next_value_exceeds_maximum": true
+    },
+    {
+      "table": "public.survey_submissions",
+      "column": "id",
+      "next_value_exceeds_maximum": true
+    },
+    {
+      "table": "public.surveys",
+      "column": "id",
+      "next_value_exceeds_maximum": true
+    },
+    {
+      "table": "public.telegram_bindings",
+      "column": "id",
+      "next_value_exceeds_maximum": true
+    },
+    {
+      "table": "public.treatment_status_changes",
+      "column": "id",
+      "next_value_exceeds_maximum": true
+    },
+    {
+      "table": "public.users",
+      "column": "id",
+      "next_value_exceeds_maximum": true
+    }
+  ],
+  "data_match": true,
+  "scope": "Single synthetic Compass database; not a full-service RTO/RPO or MIS recovery test"
+}

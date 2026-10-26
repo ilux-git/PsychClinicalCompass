@@ -66,6 +66,6 @@ export function TimeSeries({title, points, maximum, unit = "балл."}: {
       {tickPoints.map((p,i) => <text key={p.id} x={x(p.at)} y="222" textAnchor={i===0 ? "start" : i===tickPoints.length-1 ? "end" : "middle"} className="chart-axis">{new Date(p.at).toLocaleDateString("ru-RU",{day:"numeric",month:"short"})}</text>)}
     </svg>
     </div>
-    <p className="field-hint">{first === last ? "Измерения в один момент времени; динамику оценить нельзя." : "Точки расположены по фактическим датам. Между точками новых измерений нет."}</p>
+    {first === last && <p className="field-hint">{sorted.length===1?"Для оценки динамики нужны измерения в разные моменты времени.":"Измерения в один момент времени; динамику оценить нельзя."}</p>}
   </figure>;
 }

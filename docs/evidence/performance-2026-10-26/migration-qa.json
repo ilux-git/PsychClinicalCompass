@@ -1,0 +1,66 @@
+{
+  "checked_at": "2026-10-26T04:07:30.492924+00:00",
+  "kind": "qa",
+  "source_database": "compass_ui_flow_qa",
+  "source_port": 55432,
+  "target_database": "compass_r43_qa_index_restore_test",
+  "source_modified": false,
+  "snapshot_data_match": true,
+  "archive_sha256": "415af92b1e04d0298c0a6e2bcf4a63044e26e53e412b4c8861b0958be7f0e268",
+  "migration_sha256": "e2631ecf2d948511cdeee4460fdae2ab36dda79171a7778fbd6ab8e4e86afbef",
+  "actions": [
+    {
+      "command": "upgrade",
+      "revision": "u39_support_lookup_indexes",
+      "exit_code": 0,
+      "indexes": [
+        {
+          "name": "ix_alerts_message_id",
+          "valid": true,
+          "ready": true,
+          "unique": false,
+          "definition": "CREATE INDEX ix_alerts_message_id ON public.alerts USING btree (message_id)"
+        },
+        {
+          "name": "ix_messages_patient_support_recent",
+          "valid": true,
+          "ready": true,
+          "unique": false,
+          "definition": "CREATE INDEX ix_messages_patient_support_recent ON public.messages USING btree (patient_id, id) WHERE (support_requested IS TRUE)"
+        }
+      ]
+    },
+    {
+      "command": "downgrade",
+      "revision": "t38_coordinator_fallback",
+      "exit_code": 0,
+      "indexes": []
+    },
+    {
+      "command": "upgrade",
+      "revision": "u39_support_lookup_indexes",
+      "exit_code": 0,
+      "indexes": [
+        {
+          "name": "ix_alerts_message_id",
+          "valid": true,
+          "ready": true,
+          "unique": false,
+          "definition": "CREATE INDEX ix_alerts_message_id ON public.alerts USING btree (message_id)"
+        },
+        {
+          "name": "ix_messages_patient_support_recent",
+          "valid": true,
+          "ready": true,
+          "unique": false,
+          "definition": "CREATE INDEX ix_messages_patient_support_recent ON public.messages USING btree (patient_id, id) WHERE (support_requested IS TRUE)"
+        }
+      ]
+    }
+  ],
+  "preserved_tables": 36,
+  "preserved_sequences": 31,
+  "concurrent_indexes": true,
+  "business_rows_unchanged": true,
+  "verification_retry": null
+}

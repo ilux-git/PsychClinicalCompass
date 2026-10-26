@@ -1,0 +1,137 @@
+{
+  "checked_at": "2026-10-25T21:01:33.390247+00:00",
+  "read_only": true,
+  "databases": [
+    {
+      "database": "compass_dev",
+      "revision": "s37_clinical_review",
+      "violations": {
+        "result_submission_patient_mismatch": 0,
+        "baseline_source_mismatch": 0,
+        "clinical_alert_source_mismatch": 0,
+        "alert_without_decision": 0,
+        "flagged_result_without_outbox": 0,
+        "processed_clinical_event_without_alert": 0,
+        "closed_clinical_alert_without_action": 0,
+        "closed_clinical_alert_without_decision": 0
+      },
+      "clinical_results": 0,
+      "queue": [
+        {
+          "event_type": "assessment.risk_detected",
+          "status": "processed",
+          "count": 14
+        },
+        {
+          "event_type": "patient.support_requested",
+          "status": "processed",
+          "count": 2
+        },
+        {
+          "event_type": "telegram.send_message",
+          "status": "processed",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "database": "compass_ui_flow_qa",
+      "revision": "s37_clinical_review",
+      "violations": {
+        "result_submission_patient_mismatch": 0,
+        "baseline_source_mismatch": 0,
+        "clinical_alert_source_mismatch": 0,
+        "alert_without_decision": 0,
+        "flagged_result_without_outbox": 0,
+        "processed_clinical_event_without_alert": 0,
+        "closed_clinical_alert_without_action": 0,
+        "closed_clinical_alert_without_decision": 0
+      },
+      "clinical_results": 4,
+      "queue": [
+        {
+          "event_type": "assessment.risk_detected",
+          "status": "processed",
+          "count": 14
+        },
+        {
+          "event_type": "clinical.assessment_flagged",
+          "status": "processed",
+          "count": 2
+        },
+        {
+          "event_type": "patient.support_requested",
+          "status": "processed",
+          "count": 2
+        },
+        {
+          "event_type": "telegram.send_message",
+          "status": "processed",
+          "count": 1
+        }
+      ],
+      "fixture_results": [
+        {
+          "id": 1,
+          "score": null,
+          "instrument_key": "phq_panic_cr456_3_g3_v1",
+          "triage": null,
+          "created_at": "2026-10-25 19:15:24.556796+00:00"
+        },
+        {
+          "id": 2,
+          "score": 0,
+          "instrument_key": "phq9_zolotareva_2023_v1",
+          "triage": "{\"source\": \"medical_answers_2026-10-26\", \"grounds\": [], \"advisory\": [], \"severity\": \"no_signal\", \"action_label\": \"\", \"missing_data\": [\"Предыдущее измерение этой версии отсутствует\", \"Врач не выбрал исходное измерение этой версии\"], \"rule_version\": \"medical_answers_20261026_v1\", \"action_due_hours\": null, \"comparison_baseline\": {\"delta\": null, \"score\": null, \"result_id\": null, \"created_at\": null, \"growth_criterion_met\": null}, \"comparison_previous\": {\"delta\": null, \"score\": null, \"result_id\": null, \"created_at\": null, \"growth_criterion_met\": null}, \"immediate_danger_established\": false}",
+          "created_at": "2026-10-25 20:26:31.188652+00:00"
+        },
+        {
+          "id": 3,
+          "score": 21,
+          "instrument_key": "gad7_cr457_3_g2_v1",
+          "triage": "{\"source\": \"medical_answers_2026-10-26\", \"grounds\": [{\"code\": \"gad7_high\", \"label\": \"GAD-7: высокий уровень, 15–21 балл\", \"family\": \"absolute\"}], \"advisory\": [], \"severity\": \"urgent_review\", \"action_label\": \"Связаться с пациентом раньше и провести врачебную оценку\", \"missing_data\": [\"Срок медицинского действия по GAD-7 отдельно не согласован; врач задаёт срок задачи\"], \"rule_version\": \"medical_answers_20261026_v1\", \"action_due_hours\": null, \"comparison_baseline\": null, \"comparison_previous\": null, \"immediate_danger_established\": false}",
+          "created_at": "2026-10-25 20:27:25.392031+00:00"
+        },
+        {
+          "id": 4,
+          "score": 16,
+          "instrument_key": "phq9_zolotareva_2023_v1",
+          "triage": "{\"source\": \"medical_answers_2026-10-26\", \"grounds\": [{\"code\": \"phq9_above_15\", \"label\": \"Сумма PHQ-9 строго больше 15\", \"family\": \"absolute\"}, {\"code\": \"phq9_growth_10\", \"label\": \"Рост PHQ-9 не менее чем на 10 баллов\", \"family\": \"growth\"}], \"advisory\": [], \"severity\": \"urgent_review\", \"action_label\": \"Связаться с пациентом раньше и провести срочную врачебную оценку\", \"missing_data\": [], \"rule_version\": \"medical_answers_20261026_v1\", \"action_due_hours\": 16, \"comparison_baseline\": {\"delta\": 16, \"score\": 0, \"result_id\": 2, \"created_at\": \"2026-10-25T20:26:31.188652+00:00\", \"growth_criterion_met\": true}, \"comparison_previous\": {\"delta\": 16, \"score\": 0, \"result_id\": 2, \"created_at\": \"2026-10-25T20:26:31.188652+00:00\", \"growth_criterion_met\": true}, \"immediate_danger_established\": false}",
+          "created_at": "2026-10-25 20:49:33.766894+00:00"
+        }
+      ],
+      "fixture_alerts": [
+        {
+          "id": 17,
+          "clinical_result_id": 3,
+          "status": "acknowledged",
+          "acknowledged_at": "2026-10-25 20:38:17.842903+00:00",
+          "acknowledgement_due_at": "2026-10-25 22:27:25.562380+00:00",
+          "action_due_at": null,
+          "decision_status": "pending_review"
+        },
+        {
+          "id": 18,
+          "clinical_result_id": 4,
+          "status": "closed",
+          "acknowledged_at": "2026-10-25 20:55:58.525304+00:00",
+          "acknowledgement_due_at": "2026-10-25 22:49:33.971405+00:00",
+          "action_due_at": "2026-10-26 12:49:33.766894+00:00",
+          "decision_status": "confirmed"
+        }
+      ],
+      "fixture_tasks": [
+        {
+          "alert_id": 18,
+          "id": 39,
+          "status": "done",
+          "kind": "clinical",
+          "completed_at": "2026-10-25 20:58:33.003138+00:00",
+          "verification_status": "unknown",
+          "verified_at": "2026-10-25 20:59:21.492996+00:00",
+          "action_recorded": true
+        }
+      ]
+    }
+  ]
+}

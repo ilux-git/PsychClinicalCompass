@@ -5,10 +5,13 @@ import {fileURLToPath} from "node:url";
 import {JSDOM} from "jsdom";
 import {createServer} from "vite";
 import {createElement as h,useState} from "react";
+import {webcrypto} from "node:crypto";
 
 let dom,server,Diary,Guard,useGuard,Interactions,render,screen,cleanup,userEvent,fireEvent,waitFor,unexpected;
 const toggleName="Добавить наблюдения или уточнить время";
 before(async()=>{
+  // The phone's LAN HTTP origin has getRandomValues but no secure-context randomUUID.
+  Object.defineProperty(globalThis,"crypto",{configurable:true,value:{getRandomValues:array=>webcrypto.getRandomValues(array)}});
   dom=new JSDOM("<!doctype html><html><body></body></html>",{url:"http://localhost/",pretendToBeVisual:true});
   for(const name of ["window","document","navigator","Node","Element","HTMLElement","HTMLDialogElement","SVGElement","MutationObserver","Event","KeyboardEvent","MouseEvent","sessionStorage"]){
     Object.defineProperty(globalThis,name,{configurable:true,value:name==="window"?dom.window:dom.window[name]});
@@ -63,7 +66,7 @@ test("a short private entry starts with text and saves the same canonical observ
   await screen.findByText("Записей пока нет");
   const toggle=screen.getByRole("button",{name:toggleName});
   assert.equal(toggle.getAttribute("aria-expanded"),"false");
-  assert.equal(Boolean(screen.queryByRole("combobox",{name:/Как вы себя чувствовали/})),false);
+  assert.equal(Boolean(screen.queryByRole("combobox",{name:/Как Вы себя чувствовали/})),false);
   const text=screen.getByRole("textbox",{name:"Что хотите сохранить?"});
   assert.equal(text.closest("form").querySelector("input,textarea,select")===text,true);
   assert.equal(screen.getByRole("checkbox",{name:"Поделиться этой записью с лечащим врачом"}).checked,false);
@@ -86,7 +89,7 @@ test("optional observation values survive collapse and can be submitted without 
   const writes=transport({points:0});const user=mount();
   await screen.findByText("Записей пока нет");
   const toggle=screen.getByRole("button",{name:toggleName});await user.click(toggle);
-  await user.selectOptions(screen.getByRole("combobox",{name:/Как вы себя чувствовали/}),"neutral");
+  await user.selectOptions(screen.getByRole("combobox",{name:/Как Вы себя чувствовали/}),"neutral");
   await user.selectOptions(screen.getByRole("combobox",{name:/Влияние на повседневные дела/}),"some_interference");
   await user.selectOptions(screen.getByRole("combobox",{name:"О чём запись?"}),"day_summary");
   const observed="2026-10-24T12:30";

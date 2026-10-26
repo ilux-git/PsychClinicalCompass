@@ -30,7 +30,7 @@ export function TreatmentContinuityView({d}: {d:WorkflowValues}) {
 export function WorkflowValuesView({d,includeContinuity=true}: {d: WorkflowValues;includeContinuity?:boolean}) {
   const checks=verificationProgress(d.tasks);
   return <>
-    <div className="workflow-section-heading"><h3>От действия к проверенному результату</h3><p>Срез всех задач сопровождения. Связь с источником не означает, что он содержит подтверждённую причину ухода.</p></div>
+    <div className="workflow-section-heading"><h3>Выполнение и проверка задач</h3><p>Срез всех задач сопровождения. Связь с источником не означает, что он содержит подтверждённую причину ухода.</p></div>
     <dl className="care-progress-summary analytics-care-summary">
       <div><dt>Связаны с источником</dt><dd>{d.tasks.with_source}<span> из {d.tasks.total} задач</span></dd></div>
       <div><dt>Ждут проверки врача</dt><dd>{checks.awaiting}<span> из {d.tasks.action_done} выполненных</span></dd></div>
@@ -44,7 +44,7 @@ export function WorkflowValuesView({d,includeContinuity=true}: {d: WorkflowValue
     {includeContinuity&&<Disclosure title="Продолжение лечения и сообщённые причины отказов"><TreatmentContinuityView d={d}/></Disclosure>}
     <Disclosure title="Обращения за поддержкой и время реакции">
     {d.support_requests && <>
-      <div className="workflow-section-heading"><h3>Как клиника отвечает на просьбы о поддержке</h3><p>Только обращения, в которых пациент сам отметил, что ему нужна поддержка.</p></div>
+      <div className="workflow-section-heading"><h3>Обращения за поддержкой</h3><p>Только обращения, в которых пациент сам отметил, что ему нужна поддержка.</p></div>
       <HorizontalBars title="Путь явного запроса поддержки" maximum={d.support_requests.total} unit="обращений" rows={[{label:"Ещё не появились в очереди врача",value:d.support_requests.queued},{label:"Ждут разбора",value:d.support_requests.awaiting_review},{label:"Приняты врачом",value:d.support_requests.acknowledged},{label:"Есть связанная задача",value:d.support_requests.with_task},{label:"Есть связанный ответ в диалоге",value:d.support_requests.with_linked_reply}]} caption={`Всего: ${d.support_requests.total} ${plural(d.support_requests.total,"обращение","обращения","обращений")}. Задачи и ответы — пересекающиеся подмножества. Принятие и ответ не доказывают решение затруднения.`}/>
       <div className="collection-grid workflow-metrics"><article className="collection-card"><h3>Принято запросов поддержки</h3><strong>{ratio(d.support_requests.acknowledgement_coverage)}</strong><p>Включая ещё не созданные события в знаменателе.</p></article><article className="collection-card"><h3>Медиана до принятия</h3><strong>{interval(d.support_requests.median_to_acknowledgement_seconds)}</strong><p>Измеренных интервалов: {d.support_requests.acknowledgement_intervals}. {d.support_requests.oldest_unacknowledged_seconds===null?"Сейчас непринятых обращений нет.":`Самое долгое текущее ожидание: ${interval(d.support_requests.oldest_unacknowledged_seconds)}.`}</p></article><article className="collection-card"><h3>Медиана до связанного ответа</h3><strong>{interval(d.support_requests.median_to_linked_reply_seconds)}</strong><p>Измеренных интервалов: {d.support_requests.linked_reply_intervals}. Сохранение ответа в диалоге не доказывает прочтение или внешнюю доставку.</p></article></div>
     </>}
@@ -63,5 +63,5 @@ export function WorkflowValuesView({d,includeContinuity=true}: {d: WorkflowValue
 
 export function DoctorWorkflowMetrics() {
   const result = useApi<WorkflowValues>("/analytics/care", 15000);
-  return <Section title="Действия и проверка результата"><p className="field-hint">Все ваши пациенты, текущий срез. Период во вкладке «Опросы и барьеры» на эти показатели не влияет.</p><ErrorBox message={result.error} retry={result.reload} />{result.loading ? <Loading /> : result.data && <WorkflowValuesView d={result.data} />}</Section>;
+  return <Section title="Действия и проверка результата"><p className="field-hint">Все Ваши пациенты, текущий срез. Период во вкладке «Опросы и барьеры» на эти показатели не влияет.</p><ErrorBox message={result.error} retry={result.reload} />{result.loading ? <Loading /> : result.data && <WorkflowValuesView d={result.data} />}</Section>;
 }

@@ -22,6 +22,7 @@ export function CollectionMetrics({data}: {data: CollectionData}) {
         <div><dt>Медиана от назначения до ответа</dt><dd>{elapsed(journey.assignment_to_completion.median_seconds)} · измерений {journey.assignment_to_completion.known}</dd></div>
         <div><dt>Медиана от открытия до ответа</dt><dd>{elapsed(journey.open_to_completion.median_seconds)} · измерений {journey.open_to_completion.known}</dd></div>
       </dl>
+      {(journey.timing_excluded_generated??0)>0&&<p className="field-hint">Из расчёта времени исключены сгенерированные примеры: {journey.timing_excluded_generated}. Осталось завершений для оценки времени: {journey.timing_eligible_completed}. Общие числа опросов включают оба источника.</p>}
       <p className="field-hint">Завершены без измеренного открытия: {journey.completed_without_open_record}. Без записи об открытии и ответа: {journey.not_opened_not_completed}. Неизвестных интервалов от открытия: {journey.open_to_completion.unknown}.</p>
       <p className="field-hint">{journey.interpretation} Скорость прохождения не определяет отношение пациента к лечению.</p>
     </Section>

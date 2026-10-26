@@ -2,14 +2,14 @@ from collections.abc import AsyncIterator, Awaitable, Callable
 from typing import Annotated
 
 import jwt
-from fastapi import Depends, HTTPException, status
+from fastapi import Depends, HTTPException, Request, status
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy import select
+from sqlalchemy import exists, select
 
-from app.core.security import decode_token
+from app.core.security import decode_token, token_fingerprint
 from app.db.session import async_session_compass
-from app.modules.access.models import User, UserRole
+from app.modules.access.models import RevokedAccessToken, User, UserRole
 from app.modules.patients.models import Patient
 
 bearer_scheme = HTTPBearer(auto_error=False)
@@ -20,10 +20,11 @@ async def get_compass_session() -> AsyncIterator[AsyncSession]:
         yield session
 
 
-CompassSession = Annotated[AsyncSession, Depends(get_compass_session)]
+CompassSession = Annotated[AsyncSession, Depends(get_compass_session, scope="function")]
 
 
 async def get_current_user(
+    request: Request,
     credentials: Annotated[HTTPAuthorizationCredentials | None, Depends(bearer_scheme)],
     session: CompassSession,
 ) -> User:
@@ -36,9 +37,11 @@ async def get_current_user(
     sub = payload.get("sub")
     if not isinstance(sub, str) or not sub.isdigit():
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid token")
-    user = await session.get(User, int(sub))
+    user = await session.scalar(select(User).where(User.id == int(sub),
+        ~exists().where(RevokedAccessToken.token_hash == token_fingerprint(credentials.credentials))))
     if user is None:
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="User not found")
+    request.state.read_audit_actor = (user.id, user.role.value)
     return user
 
 

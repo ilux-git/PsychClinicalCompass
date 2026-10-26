@@ -1,0 +1,129 @@
+{
+  "scope": "Only author-owned frontend source strings; no DB, API answer/history or published survey update.",
+  "changes": [
+    {
+      "file": "frontend/src/App.tsx",
+      "counts": {
+        "ваши": 1,
+        "вам": 1
+      }
+    },
+    {
+      "file": "frontend/src/CareWorkflow.tsx",
+      "counts": {
+        "вашей": 1,
+        "вам": 1
+      }
+    },
+    {
+      "file": "frontend/src/DoctorDashboard.tsx",
+      "counts": {
+        "ваши": 1
+      }
+    },
+    {
+      "file": "frontend/src/DoctorInbox.tsx",
+      "counts": {
+        "вам": 1
+      }
+    },
+    {
+      "file": "frontend/src/DoctorPatients.tsx",
+      "counts": {
+        "ваши": 1
+      }
+    },
+    {
+      "file": "frontend/src/MedicationSchedule.tsx",
+      "counts": {
+        "ваше": 1
+      }
+    },
+    {
+      "file": "frontend/src/navigation.ts",
+      "counts": {
+        "вам": 2,
+        "вашей": 1
+      }
+    },
+    {
+      "file": "frontend/src/NavigationGuard.tsx",
+      "counts": {
+        "вас": 1
+      }
+    },
+    {
+      "file": "frontend/src/Patient.tsx",
+      "counts": {
+        "вам": 2,
+        "вы": 1,
+        "вашего": 1,
+        "вас": 2,
+        "ваших": 1
+      }
+    },
+    {
+      "file": "frontend/src/PatientAdventure.tsx",
+      "counts": {
+        "вас": 1,
+        "вашего": 2
+      }
+    },
+    {
+      "file": "frontend/src/PatientDiary.tsx",
+      "counts": {
+        "вам": 2,
+        "вы": 1
+      }
+    },
+    {
+      "file": "frontend/src/PatientOverview.tsx",
+      "counts": {
+        "вы": 2,
+        "вашем": 1,
+        "вам": 2,
+        "вас": 1
+      }
+    },
+    {
+      "file": "frontend/src/PatientSurvey.tsx",
+      "counts": {
+        "ваш": 1,
+        "вашему": 1,
+        "вам": 1
+      }
+    },
+    {
+      "file": "frontend/src/supportTemplate.ts",
+      "counts": {
+        "вы": 1,
+        "вам": 6
+      }
+    },
+    {
+      "file": "frontend/src/SurveyBuilder.tsx",
+      "counts": {
+        "вашему": 1,
+        "вам": 1
+      }
+    },
+    {
+      "file": "frontend/src/TaskBoard.tsx",
+      "counts": {
+        "вашему": 1
+      }
+    },
+    {
+      "file": "frontend/src/WorkflowMetrics.tsx",
+      "counts": {
+        "ваши": 1
+      }
+    },
+    {
+      "file": "frontend/src/WorkspaceHome.tsx",
+      "counts": {
+        "ваших": 1
+      }
+    }
+  ]
+}

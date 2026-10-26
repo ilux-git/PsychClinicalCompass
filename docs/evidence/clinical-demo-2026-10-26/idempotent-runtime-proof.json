@@ -1,0 +1,279 @@
+{
+  "checked_at": "2026-10-26T02:38:25.754159+00:00",
+  "read_only_checks": true,
+  "repeat_apply_explicit": true,
+  "repeat_added_records": false,
+  "main": {
+    "database": "compass_dev",
+    "revision": "t38_coordinator_fallback",
+    "violations": {
+      "result_submission_patient_mismatch": 0,
+      "baseline_source_mismatch": 0,
+      "clinical_alert_source_mismatch": 0,
+      "alert_without_decision": 0,
+      "flagged_result_without_outbox": 0,
+      "processed_clinical_event_without_alert": 0,
+      "closed_clinical_alert_without_action": 0,
+      "closed_clinical_alert_without_decision": 0,
+      "notice_patient_mismatch": 0,
+      "notice_source_not_urgent_clinical": 0,
+      "notice_recipient_not_coordinator": 0,
+      "route_role_mismatch": 0
+    },
+    "pending_or_failed_events": 0,
+    "counts": {
+      "clinical_results": 21,
+      "survey_assignments": 48,
+      "survey_submissions": 37,
+      "participation_awards": 64,
+      "outbox_events": 22,
+      "audit_events": 290,
+      "treatment_status_changes": 10,
+      "doctor_tasks": 8,
+      "clinical_baselines": 0,
+      "clinical_decisions": 19
+    },
+    "existing_immutable_rows_unchanged": true,
+    "existing_immutable_rows": {
+      "questionnaire_responses": 30,
+      "survey_submissions": 16,
+      "clinical_results": 0,
+      "emr_demo_documents": 0,
+      "emr_demo_receipts": 0
+    },
+    "generated_results": [
+      {
+        "id": 1,
+        "patient_id": 1,
+        "instrument_key": "phq_panic_cr456_3_g3_v1",
+        "score": null,
+        "provenance": "{\"scenario\": \"financial_barrier\", \"generated\": true, \"measurement\": \"generated_current\", \"fixture_sha256\": \"c85797532fb13c0fa9d206a7fe21457ab1c73dde641398a6b0bd089671ac6057\", \"dataset_version\": \"synthetic-clinical/1\"}",
+        "first_opened_at": null
+      },
+      {
+        "id": 2,
+        "patient_id": 1,
+        "instrument_key": "phq9_zolotareva_2023_v1",
+        "score": 12,
+        "provenance": "{\"scenario\": \"financial_barrier\", \"generated\": true, \"measurement\": \"generated_current\", \"fixture_sha256\": \"c85797532fb13c0fa9d206a7fe21457ab1c73dde641398a6b0bd089671ac6057\", \"dataset_version\": \"synthetic-clinical/1\"}",
+        "first_opened_at": null
+      },
+      {
+        "id": 3,
+        "patient_id": 1,
+        "instrument_key": "gad7_cr457_3_g2_v1",
+        "score": 8,
+        "provenance": "{\"scenario\": \"financial_barrier\", \"generated\": true, \"measurement\": \"generated_current\", \"fixture_sha256\": \"c85797532fb13c0fa9d206a7fe21457ab1c73dde641398a6b0bd089671ac6057\", \"dataset_version\": \"synthetic-clinical/1\"}",
+        "first_opened_at": null
+      },
+      {
+        "id": 4,
+        "patient_id": 2,
+        "instrument_key": "phq_panic_cr456_3_g3_v1",
+        "score": null,
+        "provenance": "{\"scenario\": \"anxiety_engaged\", \"generated\": true, \"measurement\": \"generated_current\", \"fixture_sha256\": \"c85797532fb13c0fa9d206a7fe21457ab1c73dde641398a6b0bd089671ac6057\", \"dataset_version\": \"synthetic-clinical/1\"}",
+        "first_opened_at": null
+      },
+      {
+        "id": 5,
+        "patient_id": 2,
+        "instrument_key": "phq9_zolotareva_2023_v1",
+        "score": 8,
+        "provenance": "{\"scenario\": \"anxiety_engaged\", \"generated\": true, \"measurement\": \"generated_current\", \"fixture_sha256\": \"c85797532fb13c0fa9d206a7fe21457ab1c73dde641398a6b0bd089671ac6057\", \"dataset_version\": \"synthetic-clinical/1\"}",
+        "first_opened_at": null
+      },
+      {
+        "id": 6,
+        "patient_id": 2,
+        "instrument_key": "gad7_cr457_3_g2_v1",
+        "score": 18,
+        "provenance": "{\"scenario\": \"anxiety_engaged\", \"generated\": true, \"measurement\": \"generated_current\", \"fixture_sha256\": \"c85797532fb13c0fa9d206a7fe21457ab1c73dde641398a6b0bd089671ac6057\", \"dataset_version\": \"synthetic-clinical/1\"}",
+        "first_opened_at": null
+      },
+      {
+        "id": 7,
+        "patient_id": 3,
+        "instrument_key": "phq_panic_cr456_3_g3_v1",
+        "score": null,
+        "provenance": "{\"scenario\": \"medication_self_report\", \"generated\": true, \"measurement\": \"generated_current\", \"fixture_sha256\": \"c85797532fb13c0fa9d206a7fe21457ab1c73dde641398a6b0bd089671ac6057\", \"dataset_version\": \"synthetic-clinical/1\"}",
+        "first_opened_at": null
+      },
+      {
+        "id": 8,
+        "patient_id": 3,
+        "instrument_key": "phq9_zolotareva_2023_v1",
+        "score": 7,
+        "provenance": "{\"scenario\": \"medication_self_report\", \"generated\": true, \"measurement\": \"generated_current\", \"fixture_sha256\": \"c85797532fb13c0fa9d206a7fe21457ab1c73dde641398a6b0bd089671ac6057\", \"dataset_version\": \"synthetic-clinical/1\"}",
+        "first_opened_at": null
+      },
+      {
+        "id": 9,
+        "patient_id": 3,
+        "instrument_key": "gad7_cr457_3_g2_v1",
+        "score": 6,
+        "provenance": "{\"scenario\": \"medication_self_report\", \"generated\": true, \"measurement\": \"generated_current\", \"fixture_sha256\": \"c85797532fb13c0fa9d206a7fe21457ab1c73dde641398a6b0bd089671ac6057\", \"dataset_version\": \"synthetic-clinical/1\"}",
+        "first_opened_at": null
+      },
+      {
+        "id": 10,
+        "patient_id": 4,
+        "instrument_key": "phq_panic_cr456_3_g3_v1",
+        "score": null,
+        "provenance": "{\"scenario\": \"uncomfortable_effects\", \"generated\": true, \"measurement\": \"generated_current\", \"fixture_sha256\": \"c85797532fb13c0fa9d206a7fe21457ab1c73dde641398a6b0bd089671ac6057\", \"dataset_version\": \"synthetic-clinical/1\"}",
+        "first_opened_at": null
+      },
+      {
+        "id": 11,
+        "patient_id": 4,
+        "instrument_key": "phq9_zolotareva_2023_v1",
+        "score": 11,
+        "provenance": "{\"scenario\": \"uncomfortable_effects\", \"generated\": true, \"measurement\": \"generated_current\", \"fixture_sha256\": \"c85797532fb13c0fa9d206a7fe21457ab1c73dde641398a6b0bd089671ac6057\", \"dataset_version\": \"synthetic-clinical/1\"}",
+        "first_opened_at": null
+      },
+      {
+        "id": 12,
+        "patient_id": 4,
+        "instrument_key": "gad7_cr457_3_g2_v1",
+        "score": 8,
+        "provenance": "{\"scenario\": \"uncomfortable_effects\", \"generated\": true, \"measurement\": \"generated_current\", \"fixture_sha256\": \"c85797532fb13c0fa9d206a7fe21457ab1c73dde641398a6b0bd089671ac6057\", \"dataset_version\": \"synthetic-clinical/1\"}",
+        "first_opened_at": null
+      },
+      {
+        "id": 13,
+        "patient_id": 5,
+        "instrument_key": "phq_panic_cr456_3_g3_v1",
+        "score": null,
+        "provenance": "{\"scenario\": \"clinic_rescheduled\", \"generated\": true, \"measurement\": \"generated_current\", \"fixture_sha256\": \"c85797532fb13c0fa9d206a7fe21457ab1c73dde641398a6b0bd089671ac6057\", \"dataset_version\": \"synthetic-clinical/1\"}",
+        "first_opened_at": null
+      },
+      {
+        "id": 14,
+        "patient_id": 5,
+        "instrument_key": "phq9_zolotareva_2023_v1",
+        "score": 0,
+        "provenance": "{\"scenario\": \"clinic_rescheduled\", \"generated\": true, \"measurement\": \"generated_current\", \"fixture_sha256\": \"c85797532fb13c0fa9d206a7fe21457ab1c73dde641398a6b0bd089671ac6057\", \"dataset_version\": \"synthetic-clinical/1\"}",
+        "first_opened_at": null
+      },
+      {
+        "id": 15,
+        "patient_id": 5,
+        "instrument_key": "gad7_cr457_3_g2_v1",
+        "score": 4,
+        "provenance": "{\"scenario\": \"clinic_rescheduled\", \"generated\": true, \"measurement\": \"generated_current\", \"fixture_sha256\": \"c85797532fb13c0fa9d206a7fe21457ab1c73dde641398a6b0bd089671ac6057\", \"dataset_version\": \"synthetic-clinical/1\"}",
+        "first_opened_at": null
+      },
+      {
+        "id": 16,
+        "patient_id": 9,
+        "instrument_key": "phq_panic_cr456_3_g3_v1",
+        "score": null,
+        "provenance": "{\"scenario\": \"irregular_participation\", \"generated\": true, \"measurement\": \"generated_current\", \"fixture_sha256\": \"c85797532fb13c0fa9d206a7fe21457ab1c73dde641398a6b0bd089671ac6057\", \"dataset_version\": \"synthetic-clinical/1\"}",
+        "first_opened_at": null
+      },
+      {
+        "id": 17,
+        "patient_id": 9,
+        "instrument_key": "phq9_zolotareva_2023_v1",
+        "score": 14,
+        "provenance": "{\"scenario\": \"irregular_participation\", \"generated\": true, \"measurement\": \"generated_current\", \"fixture_sha256\": \"c85797532fb13c0fa9d206a7fe21457ab1c73dde641398a6b0bd089671ac6057\", \"dataset_version\": \"synthetic-clinical/1\"}",
+        "first_opened_at": null
+      },
+      {
+        "id": 18,
+        "patient_id": 9,
+        "instrument_key": "gad7_cr457_3_g2_v1",
+        "score": 12,
+        "provenance": "{\"scenario\": \"irregular_participation\", \"generated\": true, \"measurement\": \"generated_current\", \"fixture_sha256\": \"c85797532fb13c0fa9d206a7fe21457ab1c73dde641398a6b0bd089671ac6057\", \"dataset_version\": \"synthetic-clinical/1\"}",
+        "first_opened_at": null
+      },
+      {
+        "id": 19,
+        "patient_id": 10,
+        "instrument_key": "phq_panic_cr456_3_g3_v1",
+        "score": null,
+        "provenance": "{\"scenario\": \"manual_clinical_review\", \"generated\": true, \"measurement\": \"generated_current\", \"fixture_sha256\": \"c85797532fb13c0fa9d206a7fe21457ab1c73dde641398a6b0bd089671ac6057\", \"dataset_version\": \"synthetic-clinical/1\"}",
+        "first_opened_at": null
+      },
+      {
+        "id": 20,
+        "patient_id": 10,
+        "instrument_key": "phq9_zolotareva_2023_v1",
+        "score": 17,
+        "provenance": "{\"scenario\": \"manual_clinical_review\", \"generated\": true, \"measurement\": \"generated_current\", \"fixture_sha256\": \"c85797532fb13c0fa9d206a7fe21457ab1c73dde641398a6b0bd089671ac6057\", \"dataset_version\": \"synthetic-clinical/1\"}",
+        "first_opened_at": null
+      },
+      {
+        "id": 21,
+        "patient_id": 10,
+        "instrument_key": "gad7_cr457_3_g2_v1",
+        "score": 16,
+        "provenance": "{\"scenario\": \"manual_clinical_review\", \"generated\": true, \"measurement\": \"generated_current\", \"fixture_sha256\": \"c85797532fb13c0fa9d206a7fe21457ab1c73dde641398a6b0bd089671ac6057\", \"dataset_version\": \"synthetic-clinical/1\"}",
+        "first_opened_at": null
+      }
+    ],
+    "new_clinical_events": [
+      {
+        "clinical_result_id": 4,
+        "status": "created",
+        "acknowledged_at": null,
+        "decision_status": "pending_review"
+      },
+      {
+        "clinical_result_id": 6,
+        "status": "created",
+        "acknowledged_at": null,
+        "decision_status": "pending_review"
+      },
+      {
+        "clinical_result_id": 18,
+        "status": "created",
+        "acknowledged_at": null,
+        "decision_status": "pending_review"
+      },
+      {
+        "clinical_result_id": 20,
+        "status": "created",
+        "acknowledged_at": null,
+        "decision_status": "pending_review"
+      },
+      {
+        "clinical_result_id": 21,
+        "status": "created",
+        "acknowledged_at": null,
+        "decision_status": "pending_review"
+      }
+    ]
+  },
+  "qa": {
+    "database": "compass_ui_flow_qa",
+    "revision": "t38_coordinator_fallback",
+    "violations": {
+      "result_submission_patient_mismatch": 0,
+      "baseline_source_mismatch": 0,
+      "clinical_alert_source_mismatch": 0,
+      "alert_without_decision": 0,
+      "flagged_result_without_outbox": 0,
+      "processed_clinical_event_without_alert": 0,
+      "closed_clinical_alert_without_action": 0,
+      "closed_clinical_alert_without_decision": 0,
+      "notice_patient_mismatch": 0,
+      "notice_source_not_urgent_clinical": 0,
+      "notice_recipient_not_coordinator": 0,
+      "route_role_mismatch": 0
+    },
+    "pending_or_failed_events": 0,
+    "counts": {
+      "clinical_results": 5,
+      "survey_assignments": 36,
+      "survey_submissions": 24,
+      "participation_awards": 62,
+      "outbox_events": 20,
+      "audit_events": 432,
+      "treatment_status_changes": 10,
+      "doctor_tasks": 40,
+      "clinical_baselines": 1,
+      "clinical_decisions": 17
+    }
+  },
+  "mis_modified": false
+}

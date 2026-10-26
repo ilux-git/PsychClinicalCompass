@@ -1,0 +1,74 @@
+[
+  {
+    "kind": "main",
+    "source_database": "compass_dev",
+    "snapshot_data_match": true,
+    "archive_sha256": "86c63943b9632583b7e798d3a55699e0132c86ce951b0ac5155bc6397746e9d5",
+    "backup_seconds": 0.227,
+    "restore_seconds": 0.613,
+    "actions": [
+      {
+        "command": "upgrade s37_clinical_review",
+        "exit_code": 0,
+        "expected_success": true
+      },
+      {
+        "command": "downgrade r36_clinical_instruments",
+        "exit_code": 0,
+        "expected_success": true
+      },
+      {
+        "command": "upgrade s37_clinical_review",
+        "exit_code": 0,
+        "expected_success": true
+      },
+      {
+        "command": "downgrade r36_clinical_instruments",
+        "exit_code": 1,
+        "expected_success": false
+      },
+      {
+        "command": "downgrade r36_clinical_instruments",
+        "exit_code": 1,
+        "expected_success": false
+      }
+    ],
+    "source_modified": false
+  },
+  {
+    "kind": "qa",
+    "source_database": "compass_ui_flow_qa",
+    "snapshot_data_match": true,
+    "archive_sha256": "b842f21736245bba292a9b3a6649e4a1e6bbb6768e10a408ede3b04fe0489721",
+    "backup_seconds": 0.238,
+    "restore_seconds": 0.638,
+    "actions": [
+      {
+        "command": "upgrade s37_clinical_review",
+        "exit_code": 0,
+        "expected_success": true
+      },
+      {
+        "command": "downgrade r36_clinical_instruments",
+        "exit_code": 0,
+        "expected_success": true
+      },
+      {
+        "command": "upgrade s37_clinical_review",
+        "exit_code": 0,
+        "expected_success": true
+      },
+      {
+        "command": "downgrade r36_clinical_instruments",
+        "exit_code": 1,
+        "expected_success": false
+      },
+      {
+        "command": "downgrade r36_clinical_instruments",
+        "exit_code": 1,
+        "expected_success": false
+      }
+    ],
+    "source_modified": false
+  }
+]

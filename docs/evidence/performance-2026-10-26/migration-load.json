@@ -1,0 +1,72 @@
+{
+  "checked_at": "2026-10-26T04:05:54.385001+00:00",
+  "kind": "load",
+  "source_database": "compass_roles_load_test",
+  "source_port": 55433,
+  "target_database": "compass_r43_load_index_restore_test",
+  "source_modified": false,
+  "snapshot_data_match": true,
+  "archive_sha256": "55575b93ec4354e85a4fac4fb1d5ffe45f2b13ab9846eef26b7b243fcc6fb153",
+  "migration_sha256": "e2631ecf2d948511cdeee4460fdae2ab36dda79171a7778fbd6ab8e4e86afbef",
+  "actions": [
+    {
+      "command": "downgrade",
+      "revision": "t38_coordinator_fallback",
+      "exit_code": 0,
+      "indexes": []
+    },
+    {
+      "command": "upgrade",
+      "revision": "u39_support_lookup_indexes",
+      "exit_code": 0,
+      "indexes": [
+        {
+          "name": "ix_alerts_message_id",
+          "valid": true,
+          "ready": true,
+          "unique": false,
+          "definition": "CREATE INDEX ix_alerts_message_id ON public.alerts USING btree (message_id)"
+        },
+        {
+          "name": "ix_messages_patient_support_recent",
+          "valid": true,
+          "ready": true,
+          "unique": false,
+          "definition": "CREATE INDEX ix_messages_patient_support_recent ON public.messages USING btree (patient_id, id) WHERE (support_requested IS TRUE)"
+        }
+      ]
+    },
+    {
+      "command": "downgrade",
+      "revision": "t38_coordinator_fallback",
+      "exit_code": 0,
+      "indexes": []
+    },
+    {
+      "command": "upgrade",
+      "revision": "u39_support_lookup_indexes",
+      "exit_code": 0,
+      "indexes": [
+        {
+          "name": "ix_alerts_message_id",
+          "valid": true,
+          "ready": true,
+          "unique": false,
+          "definition": "CREATE INDEX ix_alerts_message_id ON public.alerts USING btree (message_id)"
+        },
+        {
+          "name": "ix_messages_patient_support_recent",
+          "valid": true,
+          "ready": true,
+          "unique": false,
+          "definition": "CREATE INDEX ix_messages_patient_support_recent ON public.messages USING btree (patient_id, id) WHERE (support_requested IS TRUE)"
+        }
+      ]
+    }
+  ],
+  "preserved_tables": 36,
+  "preserved_sequences": 31,
+  "concurrent_indexes": true,
+  "business_rows_unchanged": true,
+  "verification_retry": "Fingerprint connection now uses the same UTC/ISO settings as the backup verifier; source was not changed"
+}

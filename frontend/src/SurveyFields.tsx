@@ -1,6 +1,10 @@
 import type { Question } from "./api";
 import { useId } from "react";
 
+export function visibleQuestions(questions: Question[], answers: Record<string, unknown>) {
+  return questions.filter(q=>!q.show_if||answers[q.show_if.question_id]===q.show_if.equals);
+}
+
 export function SurveyFields({
   questions,
   answers,
@@ -15,8 +19,11 @@ export function SurveyFields({
   errors?:Record<string,string>;
 }) {
   const formId=useId();
-  const change = (id: string, value: unknown) =>
-    onChange({ ...answers, [id]: value });
+  const change = (id: string, value: unknown) => {
+    const next={...answers,[id]:value};
+    const visible=new Set(visibleQuestions(questions,next).map(q=>q.id));
+    onChange(Object.fromEntries(Object.entries(next).filter(([key])=>visible.has(key))));
+  };
   function choose(q: Question, option: Question["options"][number]) {
     if (q.kind === "single") return change(q.id, option.id);
     const previous = Array.isArray(answers[q.id]) ? answers[q.id] as string[] : [];
@@ -25,7 +32,7 @@ export function SurveyFields({
   }
   return (
     <div className="survey-questions">
-      {questions.map((q, index) => (
+      {visibleQuestions(questions,answers).map((q, index) => (
         <fieldset key={q.id} data-question={q.id} disabled={disabled} className="survey-question" aria-invalid={Boolean(errors[q.id])||undefined} aria-describedby={errors[q.id]?`${formId}-${index}-error`:undefined}>
           <legend>
             <span className="question-number">{index + 1}</span>
@@ -115,14 +122,16 @@ export function AnswerSummary({
   highlightQuestion?:string;
 }) {
   const summaryId=useId();
+  const shown=visibleQuestions(questions,answers);
+  const skipped=questions.length-shown.length;
   return (
+    <>
     <dl className="answer-summary">
-      {questions.map((q,index) => {
+      {shown.map((q,index) => {
         const value = answers[q.id];
         const label = (id: string) =>
           q.options.find((o) => o.id === id)?.label ?? id;
-        const answer =
-          value === undefined
+        const answer = value === undefined
             ? "Нет ответа"
             : Array.isArray(value)
               ? value.map((v) => label(String(v))).join(", ")
@@ -137,5 +146,7 @@ export function AnswerSummary({
         );
       })}
     </dl>
+    {skipped>0&&<p className="field-hint">Вопросы, скрытые по условию предыдущего ответа: {skipped}. Они не заполнялись и не приравниваются к отрицательным ответам.</p>}
+    </>
   );
 }

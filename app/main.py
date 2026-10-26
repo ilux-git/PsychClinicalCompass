@@ -8,8 +8,11 @@ from fastapi.staticfiles import StaticFiles
 
 from app.api.deps import get_compass_session  # noqa: F401
 from app.core.config import get_settings
+from app.core.browser_security import BrowserSecurityMiddleware
+from app.core.api_docs import router as api_docs_router
 from app.db.session import dispose_engines, ping_databases
 from app.modules.assessments.router import router as assessments_router
+from app.modules.assessments.clinical_router import router as clinical_instruments_router
 from app.modules.messaging.router import router as messaging_router
 from app.modules.access.router import router as access_router
 from app.modules.patients.router import router as patients_router
@@ -18,11 +21,14 @@ from app.modules.adherence.router import router as adherence_router
 from app.modules.analytics.router import router as analytics_router
 from app.modules.notes.router import router as notes_router
 from app.modules.alerts.router import router as alerts_router
+from app.modules.alerts.escalation_router import router as escalation_router
 from app.modules.care.router import router as care_router
 from app.modules.adherence.medication_router import router as medication_router
 from app.modules.adherence.rewards import router as rewards_router
 from app.modules.analytics.privacy import router as privacy_router
 import app.db.models
+from app.modules.audit.read_access import ReadAccessMiddleware
+from app.modules.integration.emr_router import router as emr_demo_router
 
 
 @asynccontextmanager
@@ -32,9 +38,15 @@ async def lifespan(app: FastAPI):
     await dispose_engines()
 
 
-app = FastAPI(title="Clinical Compass", lifespan=lifespan)
+app = FastAPI(title="Clinical Compass", lifespan=lifespan, docs_url=None, redoc_url=None)
+app.add_middleware(ReadAccessMiddleware)
+app.add_middleware(BrowserSecurityMiddleware)
+app.include_router(api_docs_router)
 app.include_router(assessments_router)
+app.include_router(clinical_instruments_router)
 app.include_router(messaging_router)
+app.include_router(emr_demo_router)
+app.include_router(escalation_router)
 for router in (access_router, patients_router, surveys_router, adherence_router, analytics_router, notes_router, alerts_router, care_router, medication_router, rewards_router, privacy_router):
     app.include_router(router)
 

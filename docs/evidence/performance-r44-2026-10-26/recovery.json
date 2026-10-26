@@ -1,0 +1,22 @@
+{
+  "checked_at": "2026-10-26T04:38:51.931846+00:00",
+  "read_only": true,
+  "violations": {
+    "result_submission_patient_mismatch": 0,
+    "baseline_source_mismatch": 0,
+    "clinical_alert_source_mismatch": 0,
+    "alert_without_decision": 0,
+    "flagged_result_without_outbox": 0,
+    "processed_clinical_event_without_alert": 0,
+    "closed_clinical_alert_without_action": 0,
+    "closed_clinical_alert_without_decision": 0,
+    "notice_patient_mismatch": 0,
+    "notice_source_not_urgent_clinical": 0,
+    "notice_recipient_not_coordinator": 0,
+    "route_role_mismatch": 0
+  },
+  "canonical_results": 3000,
+  "results_per_patient": 3,
+  "revision": "u39_support_lookup_indexes",
+  "main_or_qa_modified": false
+}

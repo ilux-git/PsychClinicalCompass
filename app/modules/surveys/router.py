@@ -55,6 +55,8 @@ async def publish_survey(survey_id: int, session: CompassSession, doctor: User =
 @router.post("/surveys/{survey_id}/copy", status_code=201)
 async def copy_survey(survey_id: int, session: CompassSession, doctor: User = Doctor) -> dict:
     previous = await owned_survey(session, doctor, survey_id)
+    if previous.clinical_key:
+        raise HTTPException(409, "Клиническая версия зафиксирована. Для нового измерения назначьте тот же бланк повторно")
     survey = await create_survey(session, doctor, SurveyWrite.model_validate(survey_read(previous)), previous=previous)
     await session.commit()
     return survey_read(survey)

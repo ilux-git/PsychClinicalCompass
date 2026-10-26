@@ -1,0 +1,29 @@
+{
+  "applied_at": "2026-10-26T04:08:17.040131+00:00",
+  "kind": "load",
+  "database": "compass_roles_load_test",
+  "port": 55433,
+  "revision": "u39_support_lookup_indexes",
+  "indexes": [
+    {
+      "name": "ix_alerts_message_id",
+      "valid": true,
+      "ready": true,
+      "unique": false,
+      "definition": "CREATE INDEX ix_alerts_message_id ON public.alerts USING btree (message_id)"
+    },
+    {
+      "name": "ix_messages_patient_support_recent",
+      "valid": true,
+      "ready": true,
+      "unique": false,
+      "definition": "CREATE INDEX ix_messages_patient_support_recent ON public.messages USING btree (patient_id, id) WHERE (support_requested IS TRUE)"
+    }
+  ],
+  "business_table_checksums_preserved": 36,
+  "sequence_collision_checks": 31,
+  "live_access_metadata_may_append": false,
+  "mis_modified": false,
+  "source_reset": false,
+  "verified_archive_sha256": "55575b93ec4354e85a4fac4fb1d5ffe45f2b13ab9846eef26b7b243fcc6fb153"
+}

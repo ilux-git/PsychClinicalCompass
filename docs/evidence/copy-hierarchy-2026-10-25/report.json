@@ -1,0 +1,265 @@
+{
+  "date": "2026-10-25",
+  "scope": "R01 copy and respectful UI language; R02 action depth, admin navigation and medical data hierarchy; bounded display-only source labels.",
+  "contract": {
+    "preserved": [
+      "all APIs and DB data",
+      "published survey versions",
+      "raw answers and chat text",
+      "clinical scoring and thresholds",
+      "reward policy and patient privacy",
+      "personal medication labels"
+    ],
+    "changed": [
+      "28 requested long-copy placements handled by deletion, compact metadata or contextual help",
+      "46 personal-address words in18author-owned frontendfiles capitalized",
+      "diagnosis/prescription12px->14px; diagnosis framed",
+      "admin route12px->15.6px and barriers section renamed",
+      "common primary/secondary depth and44pxminimum",
+      "two exact ICD-code names and8bounded prescription-name aliases with source links/original text"
+    ]
+  },
+  "functional": {
+    "initial_frontend": {
+      "passed": 70,
+      "failed": 4,
+      "total": 74,
+      "reason": "Four stale expected labels used lowercase personal address; no functional assertion was relaxed."
+    },
+    "targeted": {
+      "passed": 13,
+      "failed": 0,
+      "duration_ms": 11509.1541,
+      "limit": "Manual multi-file node invocation used default parallelism and emitted a Vite WebSocket24678 fixture warning; subsequent full suite uses configured concurrency1."
+    },
+    "final_frontend": {
+      "passed": 77,
+      "failed": 0,
+      "duration_ms": 119138.9647,
+      "log": "outputs/copy-hierarchy-frontend-final-20261025.log"
+    },
+    "new_label_tests": 3,
+    "backend_changed": false,
+    "backend_rerun": false,
+    "last_backend_full": 151,
+    "after_full_suite": "Only the admin bottom-nav caption changed from Барьеры to Затруднения; final build/native mobile verified afterwards."
+  },
+  "build": {
+    "typescript": "passed",
+    "vite": "passed",
+    "log": "outputs/copy-hierarchy-final-build-20261025.log"
+  },
+  "nativeEvidence": "native.json",
+  "renderedEvidence": [
+    {
+      "artifact": "after-admin-barriers-mobile.jpg",
+      "pixels": [
+        360,
+        810
+      ],
+      "format": "JPEG"
+    },
+    {
+      "artifact": "after-admin-desktop.jpg",
+      "pixels": [
+        1425,
+        891
+      ],
+      "format": "JPEG"
+    },
+    {
+      "artifact": "after-admin-mobile.jpg",
+      "pixels": [
+        360,
+        810
+      ],
+      "format": "JPEG"
+    },
+    {
+      "artifact": "after-admin-tablet.jpg",
+      "pixels": [
+        753,
+        1004
+      ],
+      "format": "JPEG"
+    },
+    {
+      "artifact": "after-clinical-data.jpg",
+      "pixels": [
+        1425,
+        891
+      ],
+      "format": "JPEG"
+    },
+    {
+      "artifact": "after-clinical-labels.jpg",
+      "pixels": [
+        1425,
+        891
+      ],
+      "format": "JPEG"
+    },
+    {
+      "artifact": "after-clinical-mobile.jpg",
+      "pixels": [
+        360,
+        810
+      ],
+      "format": "JPEG"
+    },
+    {
+      "artifact": "before-clinical-data.jpg",
+      "pixels": [
+        1425,
+        891
+      ],
+      "format": "JPEG"
+    },
+    {
+      "artifact": "before-doctor-home.jpg",
+      "pixels": [
+        1425,
+        891
+      ],
+      "format": "JPEG"
+    }
+  ],
+  "sources": [
+    {
+      "path": "frontend/src/App.tsx",
+      "before_sha256": "865229f635633de113e389dca4a26e89c7ea4112f979472b653e7ae6202feb27",
+      "after_sha256": "ab3f5f3983fad516003d8f7b6a4bc1d93ab5ab1639de187d006e349657553ee4"
+    },
+    {
+      "path": "frontend/src/AssessmentHistory.tsx",
+      "before_sha256": "82b6aec9b1a920d4fb391082fbfae86167d0e539c4e1c7f72b04d1bc391cb784",
+      "after_sha256": "fa28be375809c6afccb70ee4b02714304cf0e9c5eed4318f7217fe86f38bc825"
+    },
+    {
+      "path": "frontend/src/brand-theme.css",
+      "before_sha256": "97063165e144fca74d496096255872dd133691eefb1dc4e441d4e66d5971e70f",
+      "after_sha256": "eaba7f6f527515683165bd64b67d2cff9994bf265e49f2d2fbfa19d910c87fae"
+    },
+    {
+      "path": "frontend/src/CareWorkflow.tsx",
+      "before_sha256": "3bf0998588e514c936a71a9b3db36ac7d3faf06df6182adf16d3551560e2eac0",
+      "after_sha256": "cf1bc974d5f5587b15db09ea83c65764f1e0318b9203f2bbd7493bac5c3db2cf"
+    },
+    {
+      "path": "frontend/src/Charts.tsx",
+      "before_sha256": "e06513e0b2635905e42651ec00a41accc9eb9da3f9b22098f2538bf258d8f864",
+      "after_sha256": "7b682661e1e088219911c83c549f49407bf4f51b20b7e3555dd4ee8842d54f3a"
+    },
+    {
+      "path": "frontend/src/Chat.tsx",
+      "before_sha256": "462af8f4baee14d90f63e6407aeb13ae10b4f44478d05d193580c88f987923ef",
+      "after_sha256": "e2d1524b5ae66820570dfa571820838df6a5a78d971fc871a64e634f1f88dfed"
+    },
+    {
+      "path": "frontend/src/DoctorDashboard.tsx",
+      "before_sha256": "2655cdb466809062cab400f78db722a60be7692b467179305ca26b4ed88b6c29",
+      "after_sha256": "b7e8ae10d89b8bd14b10158c009d86bead563c0c6750cc323375b2c381e3098c"
+    },
+    {
+      "path": "frontend/src/DoctorInbox.tsx",
+      "before_sha256": "506389cebf95de9bc0cf3384d9755dc3df20f67c82eba31eb1ccd663c23c3f20",
+      "after_sha256": "5285d9f2174218bce84860cc7cdbe9b0e792bdc03064960a296b2c24be6461a4"
+    },
+    {
+      "path": "frontend/src/DoctorPatients.tsx",
+      "before_sha256": "11918cf9c459cc9c95078e64160e4376381d3e1cfff3e58230067d016bef8574",
+      "after_sha256": "7879d741d5453c8bbf410a3c37b40a5ddbe1241f64ee6aea43fe2debb1a17ede"
+    },
+    {
+      "path": "frontend/src/MedicationSchedule.tsx",
+      "before_sha256": "1e9b42c56b182462e08a071cc3a6990d6c572eeb1e8c1e6a201d0919ccb7d496",
+      "after_sha256": "23bbe559c95e0df47c4987d9a38e59f6a3bbf1a7d5e93c7120e4ee28f1455c03"
+    },
+    {
+      "path": "frontend/src/navigation.ts",
+      "before_sha256": "4f1a6258aed0e2b6203a62f9a6754d6ae5b1552e73b4e3e3a634fe8d95047a10",
+      "after_sha256": "a3186aadc8c196b16ecee442e17fdf192810b83f847559858ade2ef8b5278a14"
+    },
+    {
+      "path": "frontend/src/NavigationGuard.tsx",
+      "before_sha256": "6a179322dbffc203cb49da924469b74a59a8465980105f9b83c38f6c4a42e94e",
+      "after_sha256": "a4799b80b9b029e66ed03eaeecdb242178e4f2823e69aa8e2dca04ee880f2237"
+    },
+    {
+      "path": "frontend/src/Patient.tsx",
+      "before_sha256": "f20f42719c1adb04a394c95b89ad19226bf638f25ad2c975b538422186278b9f",
+      "after_sha256": "740e29fa37b21942944e3d0efe7ded68c185b0179deb6a6ce051908c3e0ba9bb"
+    },
+    {
+      "path": "frontend/src/PatientAdventure.tsx",
+      "before_sha256": "81d713faa6341c82783134174db60421cea79e2092ade1f5069ccd99aa0b6538",
+      "after_sha256": "23f73dc116fe2701136ae17e6b82d8229668b6a2cadef1a6edfe9a9af799a667"
+    },
+    {
+      "path": "frontend/src/PatientDiary.tsx",
+      "before_sha256": "a5e4d45bb302a1572485b841ab60cb2107bd916d0401a237c0f68fd637170bc9",
+      "after_sha256": "55372d9a421da27414f0ee6bab7b534d26c4c0bbf8028005029e3e71bcfec8a7"
+    },
+    {
+      "path": "frontend/src/PatientJourney.tsx",
+      "before_sha256": "8c7cf1317f1b29e33e75db05e87c9d5c4134928c620ee70652a9a3e7d1e8c247",
+      "after_sha256": "9ea5dfe44ca500150f202ee07110869cb739cbf0ce53581d30104b2e828cc6af"
+    },
+    {
+      "path": "frontend/src/PatientOverview.tsx",
+      "before_sha256": "ff7155e31a12ae662d5c44677784bc55689a0e425abd80ae77310bc1af5234cf",
+      "after_sha256": "fc102f475a98873af86dafb7e031570d0a45c9ff670712f46e41b936eda75ad4"
+    },
+    {
+      "path": "frontend/src/PatientSurvey.tsx",
+      "before_sha256": "6f08db92c2ebcfa58f25b66467a7adc4329ca4d5babe1ed6acf4d231c1f2c13f",
+      "after_sha256": "a10b08974a5d017500c8a1219f36da3e349c0c669597e066cbd0f7d7cb054864"
+    },
+    {
+      "path": "frontend/src/supportTemplate.ts",
+      "before_sha256": "2ba17f683d94f1875bc466fad94bcc803862e225c5231f153a6d06fb45aacc40",
+      "after_sha256": "70f9b4a48bd5e9ad469ab32a163f5516099c64d3a86ab756e995adbb556f7b15"
+    },
+    {
+      "path": "frontend/src/SurveyBuilder.tsx",
+      "before_sha256": "ad82c620917ab7f1668f19ace074e9d7f9c5c62328064580fcefccf9b251d2b0",
+      "after_sha256": "1792a30614ca3bc46dc808cfcc6e4893307866e16d94286891daf20160d8589e"
+    },
+    {
+      "path": "frontend/src/TaskBoard.tsx",
+      "before_sha256": "95cccd448cd9cfefa1395c0eeb089e4f6154b277564d73014ae3f9ed4cfe669f",
+      "after_sha256": "941ad55e6350975019738d3ddea8d2ee209ad52085cfaa45777bfa4b69ebf492"
+    },
+    {
+      "path": "frontend/src/WorkflowMetrics.tsx",
+      "before_sha256": "79d2277c7322b0316fe48a131b876d32a8e764af77b8ff8a64aaafd9353c6b2d",
+      "after_sha256": "0ea94eade0c408960f4764dfb2fa9a118fe7eab9f5322bb3c404b1139cbdcbc3"
+    },
+    {
+      "path": "frontend/src/WorkspaceHome.tsx",
+      "before_sha256": "6afc7f6f8bf5c11962a6959b9db61a7b4897c334c707cc7be0a20422dbf34d14",
+      "after_sha256": "aa19952f2ba0cead9f29eaf765ee130d0fde30d7f7643bfd5e3c5f320eee2b00"
+    }
+  ],
+  "new_source_files": [
+    {
+      "path": "frontend/src/clinicalLabels.ts",
+      "sha256": "646936cef3c9ff7eaaba288d4da2b35e8490665fb9e7247361eb719734cb3cd9"
+    },
+    {
+      "path": "frontend/tests/clinical-labels.test.mjs",
+      "sha256": "9b1c34f95b5e016ec7ba160264a9cbfd34933c86d0b62151478a44e846a0aef1"
+    },
+    {
+      "path": "docs/UI_LABEL_SOURCES_2026-10-25.md",
+      "sha256": "1955fa8f45e1a1490afd954521a056319514432de4eed039891d758ce4705fbf"
+    }
+  ],
+  "limits": [
+    "UI-4 remains partial: F43.1 and Prazosin/Bupropion have no verified label source in this cycle; original strings retained. No registration or treatment suitability claim.",
+    "Existing published survey titles/answers retain their original language; future templates and static UI do not rewrite stored content.",
+    "Two official Ministry PDFs were searched/read for names only; whole-document revalidation or clinical approval not claimed.",
+    "FullWCAG, visual baseline, FPS and1000/max500acceptance remain open.",
+    "Native clinical at375/1440 and administrator at375/768/1440; other modified sections rely on source review and functional regressions until their role-flow passes."
+  ]
+}

@@ -1,5 +1,7 @@
 from datetime import datetime, timedelta, timezone
 from typing import Any
+from hashlib import sha256
+from uuid import uuid4
 
 import bcrypt
 import jwt
@@ -26,10 +28,18 @@ def create_access_token(subject: str | int, role: str) -> str:
         "role": role,
         "iat": now,
         "exp": now + timedelta(minutes=settings.jwt_expires_minutes),
+        "jti": str(uuid4()),
     }
     return jwt.encode(payload, settings.jwt_secret, algorithm=settings.jwt_algorithm)
 
 
 def decode_token(token: str) -> dict[str, Any]:
     settings = get_settings()
-    return jwt.decode(token, settings.jwt_secret, algorithms=[settings.jwt_algorithm])
+    if len(token) > 8192:
+        raise jwt.InvalidTokenError("Token exceeds the accepted credential size")
+    return jwt.decode(token, settings.jwt_secret, algorithms=[settings.jwt_algorithm],
+                      options={"require": ["sub", "iat", "exp"]})
+
+
+def token_fingerprint(token: str) -> str:
+    return sha256(token.encode("utf-8")).hexdigest()

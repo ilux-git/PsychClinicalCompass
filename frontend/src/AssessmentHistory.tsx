@@ -1,16 +1,12 @@
 import type { Assessment } from "./api";
-import { Badge, date, Empty } from "./UI";
+import { Badge, date } from "./UI";
 import { TimeSeries } from "./Charts";
 
 export function AssessmentHistory({ rows }: { rows: Assessment[] }) {
-  if (!rows.length)
-    return <Empty title="Измерений пока нет">Отсутствие ответов не означает нулевой балл.</Empty>;
+  if (!rows.length)return null;
   return (
     <div className="assessment-history">
-      <p className="field-hint">
-        Сохранённые числовые ответы. Разные шкалы и версии сравниваются отдельно.
-        Изменение балла само по себе не устанавливает диагноз или эффект лечения.
-      </p>
+      <h3>Демонстрационные числовые ответы</h3><p className="field-hint">Эти исторические записи не получены из новых клинических бланков. Их динамика показана отдельно.</p>
       {["phq9", "gad7"].map((form) => {
         const versions = [...new Set(rows.filter((r) => r.form_type === form).map((r) => r.form_version))];
         return (
@@ -28,7 +24,7 @@ export function AssessmentHistory({ rows }: { rows: Assessment[] }) {
               return (
                 <div key={version} className="assessment-version">
                   <div className="section-heading">
-                    <Badge>{version === "demo_numeric_v1" ? "Синтетические ответы" : `Версия ${version}`}</Badge>
+                    <Badge>{version === "demo_numeric_v1" ? "Числовая версия" : `Версия ${version}`}</Badge>
                     <span className="field-hint">Измерений: {points.length}</span>
                   </div>
                   <p className="assessment-change">
@@ -54,10 +50,7 @@ export function AssessmentHistory({ rows }: { rows: Assessment[] }) {
           </section>
         );
       })}
-      <p className="field-hint">
-        Показаны номера пунктов и сохранённые значения. Тексты клинических форм
-        и их интерпретация ожидают согласования; числовая история не заменяет разговор с врачом.
-      </p>
+      <details className="source-help"><summary>О числовых демонстрационных данных</summary><p>Сравниваются измерения одной шкалы и версии. Балл сам по себе не устанавливает диагноз и не доказывает эффект лечения. Источник и формулировки новых клинических бланков указаны отдельно, рядом с их результатами.</p></details>
     </div>
   );
 }

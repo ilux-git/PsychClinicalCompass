@@ -50,9 +50,11 @@ const quoteTarget=(quote:Quote):PatientAnswerTarget|undefined=>quote.assignment_
 export function DoctorDashboard({
   openPatient,
   createSurvey,
+  openClinicalHistory,
 }: {
   openPatient: (id: number,returnKey?:string,answerTarget?:PatientAnswerTarget) => void;
   createSurvey: () => void;
+  openClinicalHistory?: () => void;
 }) {
   const [since, setSince] = useViewState("analytics-since","");
   const [until, setUntil] = useViewState("analytics-until","");
@@ -63,7 +65,7 @@ export function DoctorDashboard({
   const data = useApi<Dashboard>(section==="feedback"?`/analytics/engagement${period}`:null, 15000);
   const d = data.data;
   useReturnFocus("overview",Boolean(d||data.error));
-  const options = d?.questions.filter((q) => q.kind !== "text") ?? [];
+  const options = d?.questions.filter((q) => q.kind !== "text" && q.purpose !== "clinical") ?? [];
   const barriers = options.filter((q) => q.dimension === "constraints" || (!q.dimension && q.purpose === "barriers"));
   const other = options.filter((q) => !barriers.includes(q));
   function renderQuote(quote:Quote,index:number) {
@@ -96,9 +98,7 @@ export function DoctorDashboard({
             <Plus size={17} /> Создать опрос
           </Button>
         }
-      >
-        {section==="feedback"?"Причины со слов пациентов и вопросы, на которые ещё нет ответов.":"Действия по затруднениям, проверка результата и решения врача о продолжении лечения."}
-      </Heading>
+      />
       <div className="tabs analytics-tabs" role="tablist" aria-label="Разделы аналитики врача">{[{id:"feedback",label:"Опросы и барьеры"},{id:"actions",label:"Действия и исходы"}].map(item=><button key={item.id} id={`${panelId}-tab-${item.id}`} role="tab" aria-selected={section===item.id} aria-controls={`${panelId}-panel-${item.id}`} tabIndex={section===item.id?0:-1} className={section===item.id?"active":""} onClick={()=>setSection(item.id)} onKeyDown={event=>{const next=event.key==="Home"?"feedback":event.key==="End"?"actions":event.key==="ArrowLeft"||event.key==="ArrowRight"?(section==="feedback"?"actions":"feedback"):null;if(next){event.preventDefault();setSection(next);document.getElementById(`${panelId}-tab-${next}`)?.focus();}}}>{item.label}</button>)}</div>
       <AnimatePresence mode="wait" initial={false}><ContentFrame key={section}><div role="tabpanel" id={`${panelId}-panel-${section}`} aria-labelledby={`${panelId}-tab-${section}`}>
       {section==="actions"?<DoctorWorkflowMetrics/>:<>
@@ -143,7 +143,7 @@ export function DoctorDashboard({
         </button>
       </div>
       {since&&until&&since>until&&<p className="question-error" role="alert">Конец периода должен быть не раньше начала.</p>}
-      {d&&<p className="field-hint applied-period" role="status">{!d.period.since&&!d.period.until_exclusive?"Показаны все назначения.":`Показаны назначения с ${d.period.since?new Date(d.period.since).toLocaleDateString("ru-RU"):"начала наблюдения"}${d.period.until_exclusive?` по ${new Date(Date.parse(d.period.until_exclusive)-1).toLocaleDateString("ru-RU")} включительно`:", без конечной даты"}.`} Самоотчёты о рекомендациях отбираются по дате записи.</p>}
+      {d&&<p className="field-hint applied-period" role="status">Назначения: {!d.period.since&&!d.period.until_exclusive?"все даты":`с ${d.period.since?new Date(d.period.since).toLocaleDateString("ru-RU"):"начала наблюдения"}${d.period.until_exclusive?` по ${new Date(Date.parse(d.period.until_exclusive)-1).toLocaleDateString("ru-RU")} включительно`:", без конечной даты"}`}. Самоотчёты: по дате записи.</p>}
       <ErrorBox message={data.error} retry={data.reload} />
       {!d ? (
         data.loading?<Loading />:<Empty title="Аналитика пока недоступна"/>
@@ -156,7 +156,7 @@ export function DoctorDashboard({
               </span>
               <span>Мои пациенты</span>
               <strong>{d.patients_total}</strong>
-              <small>Доступны только ваши карточки</small>
+              <small>Доступны только Ваши карточки</small>
             </article>
             <article className="metric-card">
               <span className="metric-icon mint">
@@ -200,10 +200,13 @@ export function DoctorDashboard({
               <strong>Неответ — это пробел в данных</strong>
               <p>
                 Неответ не подтверждает отказ от лечения или невыполнение рекомендаций.
-                Синтетические события визитов показаны во вкладке «Действия и исходы».
               </p>
             </div>
           </div>
+          {d.questions.some(question=>question.purpose==="clinical")&&<div className="section-tip">
+            <p>Клинические опросники включены в общие числа назначений и ответов. Их вопросы не относятся к планам и опыту пациентов; результаты и версии показаны в «Динамике состояния».</p>
+            {openClinicalHistory&&<Button variant="secondary" onClick={openClinicalHistory}>Открыть динамику состояния</Button>}
+          </div>}
           <div className="dashboard-columns">
             <div className="dashboard-primary">
               <Section

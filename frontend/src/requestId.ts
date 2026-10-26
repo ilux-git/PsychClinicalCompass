@@ -1,0 +1,15 @@
+/** RFC 4122 v4 request IDs also work on the synthetic LAN HTTP demo.
+ * randomUUID is restricted to secure contexts; getRandomValues is not.
+ * https://www.w3.org/TR/webcrypto/#Crypto-method-getRandomValues
+ */
+type RandomSource=Pick<Crypto,"getRandomValues">&Partial<Pick<Crypto,"randomUUID">>;
+
+export function createRequestId(source:RandomSource|undefined=globalThis.crypto):string {
+  if(typeof source?.randomUUID==="function")return source.randomUUID();
+  if(typeof source?.getRandomValues!=="function")throw new Error("Браузер не поддерживает безопасное создание идентификатора. Обновите браузер и повторите действие.");
+  const bytes=source.getRandomValues(new Uint8Array(16));
+  bytes[6]=(bytes[6]&0x0f)|0x40;
+  bytes[8]=(bytes[8]&0x3f)|0x80;
+  const hex=Array.from(bytes,value=>value.toString(16).padStart(2,"0"));
+  return [hex.slice(0,4).join(""),hex.slice(4,6).join(""),hex.slice(6,8).join(""),hex.slice(8,10).join(""),hex.slice(10).join("")].join("-");
+}

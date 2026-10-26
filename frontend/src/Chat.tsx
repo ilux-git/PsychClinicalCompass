@@ -1,3 +1,4 @@
+import { createRequestId } from "./requestId";
 import { useEffect, useId, useRef, useState, type FormEvent } from "react";
 import { Send, MessageCircle } from "lucide-react";
 import { send, useApi, type ChatMessage } from "./api";
@@ -78,7 +79,7 @@ export function Chat({
     if (!text.trim()) return;
     const signature = JSON.stringify([text,supportRequested]);
     if (request.current.text !== signature || !request.current.id)
-      request.current = { text:signature, id: crypto.randomUUID() };
+      request.current = { text:signature, id: createRequestId() };
     const scrollAtSend=scrollRevision.current;
     resumeComposer.current=document.activeElement===composer.current||document.activeElement===sendButton.current;
     setSendError("");setBusy(true);
@@ -193,7 +194,7 @@ export function Chat({
         {!!requests.data?.length && <details className="support-progress"><summary>Мои запросы поддержки ({requests.data.length})</summary>{requests.data.map(item => <article key={item.message_id}>
           <Badge tone={item.acknowledged_at ? "purple" : "muted"}>{item.acknowledged_at ? "Врач принял в работу" : item.status === "queued" ? "Подготавливается для очереди врача" : "Ожидает разбора врачом"}</Badge>
           <p>{item.text}</p><small>{date(item.created_at)}{item.acknowledged_at ? ` · принято ${date(item.acknowledged_at)}` : ""}</small>
-        </article>)}<p className="field-hint">Принятие в работу не означает, что затруднение уже решено. Ответ врача появится в переписке.</p></details>}
+        </article>)}</details>}
       </>}
       <p className="field-hint">
         История обновляется автоматически. Статус врача не означает

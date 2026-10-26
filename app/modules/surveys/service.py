@@ -7,17 +7,21 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.modules.access.models import User
 from app.modules.audit.service import record_event
-from app.modules.adherence.rewards import grant_points
+from app.modules.adherence.rewards import CLINICAL_POLICY_VERSION, grant_points
 from app.modules.patients.models import Patient
 from app.modules.surveys.models import Survey, SurveyAssignment, SurveySubmission, SurveyDraft
 from app.modules.surveys.schemas import AssignSurvey, SurveyWrite
+from app.modules.assessments.catalog import visible_questions
+from app.modules.assessments.clinical_service import save_clinical_result, survey_definition
 
 
 def survey_read(survey: Survey) -> dict:
+    definition = survey_definition(survey)
     return {"id": survey.id, "title": survey.title, "description": survey.description,
             "purpose": survey.purpose, "questions": survey.questions, "version": survey.version,
             "previous_version_id": survey.previous_version_id, "published_at": survey.published_at,
-            "created_at": survey.created_at, "is_clinical_scale": False}
+            "created_at": survey.created_at, "is_clinical_scale": definition is not None,
+            "clinical_instrument": definition}
 
 
 async def owned_survey(session: AsyncSession, doctor: User, survey_id: int, lock: bool = False) -> Survey:
@@ -76,9 +80,15 @@ async def assign_survey(session: AsyncSession, doctor: User, survey: Survey, pay
 
 
 def validate_answers(survey: Survey, answers: dict, *, partial: bool = False) -> dict:
+    clinical = survey_definition(survey)
     questions = {q["id"]: q for q in survey.questions}
     if set(answers) - set(questions):
         raise HTTPException(422, "В ответах есть неизвестный вопрос")
+    if clinical:
+        visible = {q["id"] for q in visible_questions(survey.questions, answers)}
+        if set(answers) - visible:
+            raise HTTPException(422, "Ответы на скрытые вопросы не принимаются. Проверьте первый ответ")
+        questions = {key: q for key, q in questions.items() if key in visible}
     normalized: dict = {}
     for qid, question in questions.items():
         value = answers.get(qid)
@@ -179,6 +189,12 @@ async def submit_assignment(session: AsyncSession, user: User, assignment_id: in
         await session.delete(draft)
     await session.flush()
     record_event(session, user.id, assignment.patient_id, "survey.completed", "survey_submission", submission.id)
+    clinical_result = await save_clinical_result(session, survey, submission, user.id)
     units = sum(2 if q["kind"] == "text" else 1 for q in survey.questions if q["id"] in normalized)
-    await grant_points(session, assignment.patient_id, "survey", f"survey_submission:{submission.id}", user.id, units)
+    if clinical_result is not None:
+        # A positive screening answer must never buy a larger award than a negative one.
+        await grant_points(session, assignment.patient_id, "survey", f"survey_submission:{submission.id}", user.id,
+                           len(survey.questions), policy_version=CLINICAL_POLICY_VERSION)
+    else:
+        await grant_points(session, assignment.patient_id, "survey", f"survey_submission:{submission.id}", user.id, units)
     return submission, False

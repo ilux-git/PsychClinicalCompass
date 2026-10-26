@@ -1,3 +1,4 @@
+import { createRequestId } from "./requestId";
 import { useEffect, useId, useRef, useState, type FormEvent } from "react";
 import { send, useApi } from "./api";
 import { Badge, Button, Empty, ErrorBox, Heading, Loading, Section, date, type Notify } from "./UI";
@@ -5,6 +6,7 @@ import { MedicationEditor, localDay } from "./MedicationEditor";
 import { useNavigationGuard, useUnsavedForm, type LeavePrompt } from "./NavigationGuard";
 import { ParticipationReceipt, type ParticipationConfirmation } from "./ParticipationReceipt";
 import { useInteractionMotion } from "./Interaction";
+import { prescriptionLabel } from "./clinicalLabels";
 export type MedicationItem = {key: string; id?: number; label: string; instructions: string; schedule_text: string; schedule_kind: string;
   times: string[]; weekdays: number[]; timezone: string; starts_on: string; ends_on: string | null; active: boolean;
   revision: number; source: string; editable: boolean};
@@ -32,7 +34,7 @@ function ReportForm({item, event, prior, day, readOnly, notify, reload, scope, o
     e.preventDefault();
     const data = {item_key: item.key, day, occurrence_key: event?.occurrence_key ?? `${day}@self_report/v${item.revision}`, status, reason};
     const signature = JSON.stringify(data);
-    if (request.current.signature !== signature) request.current = {signature, id: crypto.randomUUID()};
+    if (request.current.signature !== signature) request.current = {signature, id: createRequestId()};
     onSaving();setSaveError("");setBusy(true);
     try {
       const response=current?await send<ParticipationConfirmation>(`/medications/reports/${current.id}`, {status, reason, expected_revision: current.revision}, "PATCH"):
@@ -71,10 +73,11 @@ export function MedicationSchedule({patientId, notify, readOnly = false, onSourc
   }
   function changeDay(value:string) {if(value && value!==day)guard.runFor(()=>{clearConfirmation();setDay(value);},reportScope);}
   return <>
-    <Heading level={readOnly?2:1} eyebrow={readOnly?undefined:"Личный учёт и данные МИС"} title={readOnly ? "Расписание и самоотчёты пациента" : "Моё расписание лекарств"} action={!readOnly&&<Button onClick={()=>edit(null)}>Добавить свою позицию</Button>}>{readOnly?"Отсутствие отметки не доказывает пропуск.":"Личные позиции отделены от назначений МИС. Отсутствие отметки остаётся неизвестным; отметка — сообщение пациента, а не подтверждение приёма."}</Heading>
+    <Heading level={readOnly?2:1} eyebrow={readOnly?undefined:"Личный учёт и данные МИС"} title={readOnly ? "Расписание и самоотчёты пациента" : "Моё расписание лекарств"} action={!readOnly&&<Button onClick={()=>edit(null)}>Добавить свою позицию</Button>}/>
+    <details className="source-help"><summary>Об источниках и отметках</summary><p>Назначения из МИС и личные позиции пациента показаны отдельно. Самоотчёт передаёт сообщение о приёме; отсутствие отметки означает отсутствие данных.</p><p>Напоминания здесь демонстрационные. Отметки прежних расписаний доступны в истории.</p></details>
     {saved&&!readOnly&&<section ref={savedPanel} className="panel medication-saved-result" aria-labelledby={savedId}>
       <div className="section-heading"><h2 ref={savedHeading} id={savedId} tabIndex={-1}>{saved.kind==="schedule"?"Расписание сохранено":"Самоотчёт сохранён"}</h2></div>
-      <p className="field-hint">{saved.kind==="schedule"?"Личная запись обновлена. Назначение в МИС не менялось.":"Отметка доступна лечащему врачу. Это ваше наблюдение, а не подтверждение приёма."}</p>
+      <p className="field-hint">{saved.kind==="schedule"?"Личная запись обновлена. Назначение в МИС не менялось.":"Отметка доступна лечащему врачу. Это Ваше наблюдение, а не подтверждение приёма."}</p>
       <ParticipationReceipt result={saved.result} progress={progress}/>
     </section>}
     {editorOpen&&!readOnly&&<MedicationEditor key={editorVersion} item={editing} scope={editorScope} notify={notify} onClose={()=>setEditorOpen(false)} onSaving={clearConfirmation} onSaved={result=>{setSaved({kind:"schedule",result});setEditorOpen(false);schedule.reload();}}/>}
@@ -83,8 +86,8 @@ export function MedicationSchedule({patientId, notify, readOnly = false, onSourc
       {schedule.loading ? <Loading /> : schedule.data && <>
         {!schedule.data.items.length && <Empty title="Позиций пока нет">{readOnly?"Пациент ещё не добавлял личных позиций; данные назначений из МИС не предоставлены.":<>Добавьте личную позицию, чтобы видеть расписание и сохранять отметки.<span className="medication-empty-action"><Button variant="secondary" onClick={()=>edit(null)}>Добавить личное расписание</Button></span></>}</Empty>}
         {schedule.data.items.map(item => <article className="diary-entry" key={item.key}>
-          <Badge tone={item.source === "patient_entered" ? "purple" : "muted"}>{item.source === "patient_entered" ? "Личная позиция пациента" : "МИС · синтетический JSON · только чтение"}</Badge>
-          <h3>{item.label}{!item.active && " · архив"}</h3><p className="preserve">{item.instructions}</p><p className="preserve">{item.schedule_text}</p><small>{item.timezone} · версия {item.revision}</small>
+          <Badge tone={item.source === "patient_entered" ? "purple" : "muted"}>{item.source === "patient_entered" ? "Личная позиция пациента" : "Назначение из МИС"}</Badge>
+          <h3>{prescriptionLabel(item.label,item.source)}{!item.active && " · архив"}</h3><p className="preserve">{item.instructions}</p><p className="preserve">{item.schedule_text}</p><small>{item.timezone} · версия {item.revision}</small>
           {!readOnly && item.editable && <p><Button variant="ghost" onClick={() => edit(item)}>Редактировать личную позицию</Button></p>}
           {schedule.data!.events.filter(e => e.item_key === item.key).map(event => <div className="medication-event" key={event.occurrence_key}>
             <h4>{event.clock} · {event.report ? "Есть самоотчёт" : "Без отметки"}</h4>
@@ -95,7 +98,6 @@ export function MedicationSchedule({patientId, notify, readOnly = false, onSourc
         </article>)}
         {schedule.data.historical_reports.length > 0 && <details><summary>Самоотчёты свободного расписания и предыдущих версий</summary>{schedule.data.historical_reports.map(r => <p key={r.id}>{schedule.data!.items.find(i => i.key === r.item_key)?.label ?? "Название позиции недоступно"} · {reportLabels[r.status]} · {r.reason}</p>)}</details>}
         {schedule.data.recent_reports.length > 0 && <div className="medication-recent"><h3>Последние самоотчёты · все даты</h3>{schedule.data.recent_reports.map(r => <article className="diary-entry" key={r.id}><h4>{r.occurrence_key.slice(0,10)} · {schedule.data!.items.find(i => i.key === r.item_key)?.label ?? "Название позиции недоступно"}</h4><p>{reportLabels[r.status]}</p><p className="preserve">{r.reason}</p><div className="button-row"><Button variant="ghost" onClick={() => changeDay(r.occurrence_key.slice(0,10))}>Открыть день</Button>{readOnly && onSource && <Button variant="secondary" onClick={() => onSource({type:"medication_log",id:r.id,label:`Лекарственный самоотчёт #${r.id}`})}>Назначить следующий шаг</Button>}</div></article>)}</div>}
-        <p className="field-hint">События построены по текущей версии расписания. Исторические отметки сохраняются отдельно. Внешняя доставка напоминаний не подключена.</p>
       </>}
     </Section>
   </>;
