@@ -1,0 +1,13 @@
+{
+  "checked_at": "2026-10-27T06:55:04.264Z",
+  "theme": "light",
+  "route": "/?section=home",
+  "viewport": {
+    "width": 1440,
+    "height": 900
+  },
+  "axe_version": "4.14.0",
+  "violations": [],
+  "incomplete": [],
+  "passed_nodes": 58
+}

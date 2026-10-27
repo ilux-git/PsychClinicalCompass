@@ -6,7 +6,7 @@ from typing import Literal
 
 
 class Settings(BaseSettings):
-    model_config = SettingsConfigDict(env_file=".env", extra="ignore")
+    model_config = SettingsConfigDict(env_file=".env", extra="ignore", hide_input_in_errors=True)
 
     compass_database_url: str
     mis_database_url: str
@@ -17,9 +17,11 @@ class Settings(BaseSettings):
     data_mode: Literal["synthetic_demo"] = "synthetic_demo"
     auth_login_max_attempts: int = Field(default=10, ge=1, le=100)
     auth_login_window_seconds: int = Field(default=300, ge=1, le=3600)
-    telegram_bot_token: str = ""
+    telegram_bot_token: str = Field(default="", repr=False)
     telegram_webhook_secret: str = ""
     telegram_enabled: bool = False
+    telegram_mini_app_enabled: bool = False
+    telegram_init_data_max_age_seconds: int = Field(default=300, ge=60, le=3600)
     outbox_poll_interval_seconds: float = Field(default=5, gt=0, le=300)
     outbox_max_attempts: int = 5
     admin_analytics_min_group_size: int | None = Field(default=None, ge=1)
@@ -36,8 +38,10 @@ class Settings(BaseSettings):
         if self.load_test_mode:
             if any(not urlsplit(url).path.endswith("_load_test") for url in (self.compass_database_url, self.mis_database_url)):
                 raise ValueError("Load-test mode requires separate *_load_test databases")
-            if self.telegram_enabled or len(self.load_test_run_id) < 16:
+            if self.telegram_enabled or self.telegram_mini_app_enabled or len(self.load_test_run_id) < 16:
                 raise ValueError("Load-test mode requires a run marker and disabled external delivery")
+        if self.telegram_mini_app_enabled and not self.telegram_bot_token.strip():
+            raise ValueError("Telegram Mini App requires a configured bot credential")
         return self
 
 

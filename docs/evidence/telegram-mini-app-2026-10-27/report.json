@@ -1,0 +1,590 @@
+{
+  "verified_at": "2026-10-26T18:49:54.285683+00:00",
+  "data_mode": "synthetic_demo",
+  "git_head": "2274f2e319d064a17310d4ec6b049f0a31c88455",
+  "changes_committed": false,
+  "backend": {
+    "tests": 313,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "seconds": 213.68
+  },
+  "frontend": {
+    "tests": 137,
+    "pass": 137,
+    "fail": 0,
+    "skipped": 0,
+    "seconds": 150.0291388
+  },
+  "types_and_build_passed": true,
+  "alembic_check_passed": true,
+  "migration_revision": "v40_telegram_mini_app_access",
+  "backups": {
+    "main": {
+      "verified_at": "2026-10-26T17:50:02.601365+00:00",
+      "kind": "main",
+      "backup_data_match": true,
+      "backup_archive_sha256": "ff8942056915592616a03fa6050c5c667f5f638a24995f1429dad987943e1242",
+      "tables_restored": 37,
+      "sequence_collision_checks": 31,
+      "migration_sha256": "59eb02fef3a473e104b8a0613b908b5a7397a46c39dca816b61e8b645230d79e",
+      "roundtrip_preserved": true,
+      "mini_app_link_downgrade_refused": true,
+      "disabled_user_downgrade_refused": true,
+      "source_applied": true,
+      "business_tables_preserved": 36,
+      "original_user_fields_preserved": true,
+      "mis_modified": false
+    },
+    "qa": {
+      "verified_at": "2026-10-26T17:51:40.437019+00:00",
+      "kind": "qa",
+      "backup_data_match": true,
+      "backup_archive_sha256": "4b915fdb2d4be4595ee34bea8d818492e7f7674c42bcda8d7d7a557cc0b9410f",
+      "tables_restored": 37,
+      "sequence_collision_checks": 31,
+      "migration_sha256": "59eb02fef3a473e104b8a0613b908b5a7397a46c39dca816b61e8b645230d79e",
+      "roundtrip_preserved": true,
+      "mini_app_link_downgrade_refused": true,
+      "disabled_user_downgrade_refused": true,
+      "source_applied": true,
+      "business_tables_preserved": 36,
+      "original_user_fields_preserved": true,
+      "mis_modified": false
+    }
+  },
+  "clinical_integrity": {
+    "main_results": 21,
+    "qa_results": 5,
+    "invariants_each": 12,
+    "violations": 0,
+    "immutable_history_preserved": true,
+    "main_clinical_events_still_pending": 5,
+    "mis_modified": false
+  },
+  "health": {
+    "status": "ok",
+    "compass_db": true,
+    "mis_db": true,
+    "mode": "synthetic_demo"
+  },
+  "telegram": {
+    "bot": "LimbusMed_bot",
+    "bot_identity_verified_by_get_me": true,
+    "enabled_locally": true,
+    "public_https_url": null,
+    "bot_menu_changed": false,
+    "live_user_login_verified": false,
+    "real_message_delivery": false
+  },
+  "browser": {
+    "console_errors_observed": 0,
+    "document_horizontal_overflow_observed": false,
+    "real_telegram_sdk_loaded_outside_telegram": true,
+    "escape_returns_to_settings_trigger": true,
+    "rhythm_inactive_opacity": 0.2,
+    "rhythm_active_opacity": 1,
+    "different_weekday_scenes": 7,
+    "doctor_table_header_font_px": 14.3,
+    "main_patient_names_with_latin_letters": 0,
+    "actual_native_telegram_themes_or_keyboard_checked": false,
+    "axe_audit_performed": false,
+    "cwv_measured": false,
+    "automatic_pixel_baseline_comparison": false
+  },
+  "deployment": {
+    "compose_configuration_validated": true,
+    "caddy_configuration_validated": true,
+    "new_docker_image_run": false,
+    "vps_deployed": false,
+    "public_tunnel_started": false
+  },
+  "load_test_repeated": false,
+  "max_500_ms_accepted": false,
+  "real_clinical_or_legal_readiness_confirmed": false,
+  "actual_secret_matches": 0,
+  "frames": [
+    {
+      "file": "account-375.png",
+      "css_viewport": [
+        375,
+        812
+      ],
+      "image_pixels": [
+        360,
+        780
+      ],
+      "sha256": "e388a1eb639f39cfd66a3fade6442c456877c871bd03db75559a3628236c0e6c"
+    },
+    {
+      "file": "admin-1440.png",
+      "css_viewport": [
+        1440,
+        900
+      ],
+      "image_pixels": [
+        1425,
+        891
+      ],
+      "sha256": "307fd3f49707f0bd4171278720d88d1200ed9e80f8163c43b7d0ac1a57cc7902"
+    },
+    {
+      "file": "admin-768.png",
+      "css_viewport": [
+        768,
+        1024
+      ],
+      "image_pixels": [
+        753,
+        1004
+      ],
+      "sha256": "ee523cd0328fb910e27f78b8ded61366d2c2f525bb68a634f02bd089a8cbbbf0"
+    },
+    {
+      "file": "calm-375.png",
+      "css_viewport": [
+        375,
+        812
+      ],
+      "image_pixels": [
+        360,
+        780
+      ],
+      "sha256": "56d4f94dcf60d1a476887c0497a347891cc5647e3cc3609fe364731f19205d4c"
+    },
+    {
+      "file": "doctor-analytics-1440.png",
+      "css_viewport": [
+        1440,
+        900
+      ],
+      "image_pixels": [
+        1425,
+        891
+      ],
+      "sha256": "66364ac24c9e46ac3385a41d2195168e4f33ef18cc5b267d82a6014883f60463"
+    },
+    {
+      "file": "doctor-clinical-375.png",
+      "css_viewport": [
+        375,
+        812
+      ],
+      "image_pixels": [
+        360,
+        780
+      ],
+      "sha256": "73c8ad66486ef1d1a7447b0ac593238161abfdd58b6f7f78108dcd439c3f9fa2"
+    },
+    {
+      "file": "doctor-patients-1440.png",
+      "css_viewport": [
+        1440,
+        900
+      ],
+      "image_pixels": [
+        1425,
+        891
+      ],
+      "sha256": "8a8d921a04ca84ba8aef6aa2967e64d57c8acc22c7121b14fc7d84d813717c77"
+    },
+    {
+      "file": "doctor-patients-375.png",
+      "css_viewport": [
+        375,
+        812
+      ],
+      "image_pixels": [
+        360,
+        780
+      ],
+      "sha256": "478f841f91a0a68e7cabe6caff665f5301eaf639a6ff980682d8fdd24f7d264c"
+    },
+    {
+      "file": "doctor-surveys-375.png",
+      "css_viewport": [
+        375,
+        812
+      ],
+      "image_pixels": [
+        360,
+        780
+      ],
+      "sha256": "adafe355ed15c558a9e22c5e4ff4cde0ed735ac2895a6cf600cfd86b29dec40d"
+    },
+    {
+      "file": "login-1440.png",
+      "css_viewport": [
+        1440,
+        900
+      ],
+      "image_pixels": [
+        1440,
+        900
+      ],
+      "sha256": "f4f944372e01d48a90f483c826e5e1e94cd1a7f29727befeac75899a66d190dd"
+    },
+    {
+      "file": "login-375.png",
+      "css_viewport": [
+        375,
+        812
+      ],
+      "image_pixels": [
+        375,
+        812
+      ],
+      "sha256": "7713d1c5c6f04e396a4bdf96709d9a8349b62d6f778f1aac9c3540b044a00046"
+    },
+    {
+      "file": "login-768.png",
+      "css_viewport": [
+        768,
+        1024
+      ],
+      "image_pixels": [
+        768,
+        938
+      ],
+      "sha256": "4b5390ebbd1eb96e1ee446740723586fd0a70a023b37814a68d5ca46a37da8d4"
+    },
+    {
+      "file": "map-1440.png",
+      "css_viewport": [
+        1440,
+        900
+      ],
+      "image_pixels": [
+        1425,
+        891
+      ],
+      "sha256": "fc20bd8fd24aa8315e06a3084a12e3f73978ea27b7fc7dd06cf1673fbe87ddb1"
+    },
+    {
+      "file": "map-375.png",
+      "css_viewport": [
+        375,
+        812
+      ],
+      "image_pixels": [
+        360,
+        780
+      ],
+      "sha256": "84098a39a4fc94423968305678b332a1d7627dbe78e6fbc0795413e16467eb57"
+    },
+    {
+      "file": "map-768.png",
+      "css_viewport": [
+        768,
+        1024
+      ],
+      "image_pixels": [
+        753,
+        920
+      ],
+      "sha256": "1070b8b065a976359647a637277da7879a4eb5aff9022938bc276b08496a942a"
+    },
+    {
+      "file": "rhythm-375.png",
+      "css_viewport": [
+        375,
+        812
+      ],
+      "image_pixels": [
+        360,
+        780
+      ],
+      "sha256": "1cf246609a1cf692da3b5fdddd03c45277308744338f9cefdc72d0542c7ec007"
+    },
+    {
+      "file": "telegram-outside-375.png",
+      "css_viewport": [
+        375,
+        812
+      ],
+      "image_pixels": [
+        375,
+        812
+      ],
+      "sha256": "d621bfbfce6aa151f4d5973bba1f17a901f1566054a54660ca027358d7c4552c"
+    }
+  ],
+  "source_files_sha256": {
+    "app/main.py": "61f9025b25534d0c67e4106e9fb35ff854442556773e68277866211aeaa14281",
+    "app/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "app/api/deps.py": "0261152fb53e347f3af19b5c09969e15abfcfff9e76eb84714cda3b390da7a6b",
+    "app/api/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "app/core/api_docs.py": "9cd2d9cf7ce63bcce55e3370e749f77d83534d783cee9b1dc1629be620b2aab1",
+    "app/core/browser_security.py": "abdcf604e5673b9124510421ba2934099b96df377aff0d027a44ea40e30a0d99",
+    "app/core/config.py": "22b230360391a9ff047cd947e3b6ef789f0e48a58a5d7c4e90ae80bfe5ee436a",
+    "app/core/security.py": "a41390db52ee661d3a05f12d83769cd57271e5479edff3e0bee30a0e3f3cf3ef",
+    "app/core/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "app/db/base.py": "321535142401636fa46cc06bcbf989563955b44f873ce53eb7b1364a5ddfcdb1",
+    "app/db/demo_data.py": "a7ab6c9e623c8ab05329b4fed5fbd262199c6898a5cb851463ffa55dd9a2bdb0",
+    "app/db/initialize.py": "dc3230951493a28c8fa5aadcf3956c08789670ad0de71bd60da75e49cb11b55d",
+    "app/db/models.py": "d9551849a9bca35b2878b97e55cfab4fd6a56baf7bbc1102627d5b8974697604",
+    "app/db/seed.py": "43526163d05707d8236323fc8aa3f0e2a317050a14cc477936fe287405bdf5c6",
+    "app/db/seed_clinical.py": "6c86c79c2a228d1b94832b1935989d41dc4f72a1d7ba1d14eb98e536fbdef42d",
+    "app/db/session.py": "25d005386176ab6ccc927848da4e7c61a58e531b8dd77613dae075cbfc809690",
+    "app/db/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "app/modules/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "app/workers/outbox_worker.py": "a60850a6db13359e9bb10b89339145e20050ae04d560bf41acbfc1863e3afe4e",
+    "app/workers/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "app/modules/access/guards.py": "de1ccd68e08b69a8107a43d61b02f70bb213a5d68f3c9ad145746a366bd72069",
+    "app/modules/access/models.py": "66b95be34fce923a02ed0d52bf6c23387c708a4c1842c9697750806a20aa26a3",
+    "app/modules/access/router.py": "a46b2d676702564b027386de5a3b0ac478f1807f24467f616f0d6afdeddcc3fd",
+    "app/modules/access/schemas.py": "44e2edf45a7ff6d251c06f5fb5de600b86ee03a705c214ae1ec0ca9ff14522ef",
+    "app/modules/access/telegram.py": "45be020d4e9e5476a363ba683b643eff0fb504c7ff29bd3b7830dae879db2804",
+    "app/modules/access/telegram_router.py": "4a30873a0db224319ff5b30e8c65faec431ab91d13d15055e1645f738d38c2d3",
+    "app/modules/access/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "app/modules/adherence/medications.py": "0645c31aded6546e06ea755462b3c9e9efa248fb3b37d5310556f71b78e95670",
+    "app/modules/adherence/medication_models.py": "498e093542dd8b646c4ca261dd297ecc65ff5287e4904dc30297798d9ead1503",
+    "app/modules/adherence/medication_router.py": "f9b2a3ac497960f2f7b4b4e303d04214183ad610ae7e7e682b1f8b73e924656e",
+    "app/modules/adherence/medication_schemas.py": "9a93ebc31c6f02606e2f3792e187bc763b6d3a083b4275366b4b17efd1caccfc",
+    "app/modules/adherence/models.py": "b0ba395d955afd229434dff65eb017cc22edfd31120f34a557fc53ec265d20ff",
+    "app/modules/adherence/rewards.py": "c1fa4dcfd881fe31cb6eb41728a15a15d32f30b35069ee86231592542707260b",
+    "app/modules/adherence/router.py": "a372ae84ace99a66fe8c050d7d5d397560ae2bb4357de91b8bbccbf98d156a73",
+    "app/modules/adherence/schemas.py": "ae4cbc182665f6f18c32052d4542fa7716eb80dff44bdd6bb25b2083f2f6492e",
+    "app/modules/adherence/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "app/modules/alerts/clinical_review.py": "b14520fe84a14a71f57a88d2068fa022aa549f810813a855f0237d5327bb57de",
+    "app/modules/alerts/escalation.py": "8781e0f66afaffabef9e3b02b7a33772e4c9ea464784ec1d50dda9670af24d61",
+    "app/modules/alerts/escalation_models.py": "49d5a374608c57c3316f242f70e6b2509c024d7195311fd24c7b7fdb9715e9b4",
+    "app/modules/alerts/escalation_router.py": "69784147ac57f8ea596237a0cd2e4d9b0cce10ded8dd9aa4d608bdc264d7af37",
+    "app/modules/alerts/models.py": "96c09960d7e327e1c2c0bb9e9d5e40d8cdc5f821849a48ac387093a652723099",
+    "app/modules/alerts/router.py": "08839110413f862a515728050603db79937df517622fe68ce259ed75b2fd32aa",
+    "app/modules/alerts/schemas.py": "76a3e6a2e6d8b01df3ed4f5ea6cbd47d671ce7ae447dcde629bd6d68a896c312",
+    "app/modules/alerts/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "app/modules/analytics/admin.py": "0ffed46f948ae618bddb03fc8f0b2a1d09148f43e1016a5813c15b909c3583b8",
+    "app/modules/analytics/care.py": "ee676d2ffbcafbb793e1ff6a88520f4d1173120874dc5fe877888e640e894eff",
+    "app/modules/analytics/clinical.py": "2cdba62624ea10168fd9faa3acbc13e36284b8eaa4c0ee7dfea5b8723448d637",
+    "app/modules/analytics/collection.py": "14e0065a2488c4f100858ae2124e7dffd49ec89b7c56322065c777b18b4b7c9d",
+    "app/modules/analytics/dimensions.py": "b7301d0abb927c176ed4b3524388e4051386c4f691b5e30b30e030ba8b81dc4f",
+    "app/modules/analytics/privacy.py": "794df2cc4961ad56b7bed4b212c48fa3359efc8acf218e7b3ad0c2300908897d",
+    "app/modules/analytics/router.py": "5ecb7c9cd4f21c25261a6d40ccbbf89c7f2a13f11698ba7c5b3f1d94009c26c3",
+    "app/modules/analytics/service.py": "b0b491b5982ddd6116432ce410292d211b3c3a74d56e1d7c48042f5dd9ad70d1",
+    "app/modules/analytics/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "app/modules/assessments/catalog.py": "e2fc72411fcf82a952bedb9ac811ae0248e4b3a49e811698b1b71cd4751c01bc",
+    "app/modules/assessments/clinical_models.py": "2f52259b8a931e7fbbecad913dcec6dd0a0a5fc94d61334d5507273e2f38b4b9",
+    "app/modules/assessments/clinical_router.py": "29292f2ed3a508bb7b0cf6c04df6a0a883b9ffc65e67612478bd5237dd50ae0f",
+    "app/modules/assessments/clinical_service.py": "e38b31375ea22b16dafb8ac806c93d5b1c480766822506f3533bd40eb5cff5de",
+    "app/modules/assessments/models.py": "24c449bcfadb0eaad107dfa3fc2e72627faa61aa37bf118f0dfa91554c24019d",
+    "app/modules/assessments/router.py": "87c2a70a37cb8271c03a64f41b6a5fc4b604f0855692e92816371a053ef7f097",
+    "app/modules/assessments/schemas.py": "438fef7a413eb7ad1063c5abf3e530d71352875ab6c4a2719f3a3f9ad4386d80",
+    "app/modules/assessments/service.py": "3b837ee078c376c79e34bb81a47951acdfaba0f32bcbb86c227db44da1a93f10",
+    "app/modules/assessments/triage.py": "7192ee3d2356fdda79f3489f4f1dd06eed506eea6e4f1d452530e87ee474d45f",
+    "app/modules/assessments/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "app/modules/audit/models.py": "82b7d28a800b329dcf9d52e74fae86492b9d6e494a202b155e313f4a862705ad",
+    "app/modules/audit/read_access.py": "68006f30b85ed10ef33fd958f57de8839ec078df231f90bd0dd530f9acf00828",
+    "app/modules/audit/service.py": "7705ae93e85043d4e30f4f604d2f72ce1727f67b88c385d9decddfc265b2059d",
+    "app/modules/audit/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "app/modules/care/categories.py": "3c56cf2564c4813bc86a324e987b7cee2382b1967f0b781fc58e429500b2a36c",
+    "app/modules/care/models.py": "d0b6427579b402c214b6eaa6a674e880d44e3e69a097e966546a3a168a8dcae3",
+    "app/modules/care/router.py": "02c6e875442959aa887c8ea67226b02bc877620625879bdd8c48c9cd5b38306a",
+    "app/modules/care/schemas.py": "f2bd460d36f9f34adcd901214faf33caefb884686ee02cebc46b89b016d70d15",
+    "app/modules/care/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "app/modules/integration/emr_models.py": "6e1e89e35674c5362cae52ec0c42ad7e9ae20fd0a45abde6f4af5acb4c674975",
+    "app/modules/integration/emr_router.py": "e985c11a5199f908f74ff91cd27bcad9cf22330965b1b3e9d833aba1d11bf777",
+    "app/modules/integration/emr_schemas.py": "2d2f2e9a33ea4dee1fb5dd6ec841944281226481237a638fbd2670a464c51ece",
+    "app/modules/integration/emr_service.py": "fffe8bc23666e5478ba6c59e6ca4265806f63782016dc353ea701da7d95b910a",
+    "app/modules/integration/mis_models.py": "c2f7403fd86992507916e3c48ecd264a318c2281bba4d52a916cdd9cda1d5d68",
+    "app/modules/integration/synthetic.py": "e95d4c5976fe9d824d4ab52ecff730708cf4338e6248461382ee256dba92c4d1",
+    "app/modules/integration/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "app/modules/messaging/models.py": "1fc8bf93951aa8f191aa80e2f8626830f823c66a565f5817c11f30e6cc14ee89",
+    "app/modules/messaging/router.py": "a3da9eacba76c8d6675ff089d96e257319c4bf8e5bd71eeea33ea97f6af088d3",
+    "app/modules/messaging/schemas.py": "19a759abe81dca528dc2ec0aa0d02f5ba87c3ce2675edab1f70abbe3e0b6fb7a",
+    "app/modules/messaging/service.py": "1f76509ce97d3211975afdfc094d46b8e90b6e93800c6b5abceb863c562ce613",
+    "app/modules/messaging/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "app/modules/notes/models.py": "c10c36fa851bb23815ec869beea6b922b3c590c5b03ff82ac755d6977e7f4997",
+    "app/modules/notes/router.py": "8bc6ddaea424302deebf677cfae43276d72873316565bc56b44eb3db8ce0b36c",
+    "app/modules/notes/schemas.py": "6a2645eb2e97c24d84653d0938a296a3257d7c6609bdf4a9db5d5b1271e584c5",
+    "app/modules/notes/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "app/modules/patients/models.py": "3cf683cab98272c2d3af0ea36221e7fee0d6234bc6609dcd604c7f78db33e50e",
+    "app/modules/patients/router.py": "886000c5473326694acdb0983e80e299aa39ae1d632b50582fa74952e7bfbbfa",
+    "app/modules/patients/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "app/modules/surveys/models.py": "586b1f512962bc11612f645a2d16d30d4022474e373f120e5a4506f0ee0d3a3c",
+    "app/modules/surveys/router.py": "602ae5b2ff0d3d5aef110c373de14adc75cbdfb30e902dc107e77ad859651247",
+    "app/modules/surveys/schemas.py": "d52a86fd4994601d191dbe864813d4aa23ce9dcde67f418e21d80b5eb265aa37",
+    "app/modules/surveys/service.py": "905a1f4a9ff423d35c3dea6fd5d3213dc492961db2e1e3f9ba3158a2713d8220",
+    "app/modules/surveys/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "alembic/env.py": "3722e9d0e6ca9714e6d22983fa50ac6f332bb1af1650737d0e0893ca1a620b03",
+    "alembic/versions/1f9990e14d6e_messages_table.py": "df1ea435b3508be73f57a7fb7700a29b7c6e7e5821d4afe0872fbe3890e7e711",
+    "alembic/versions/5d6108dc7d09_assessments_tables.py": "9c399958a1013c38c96decc43b2750a5080c182846ba6a2dee77ff93d25621e1",
+    "alembic/versions/c01d144cd894_core_tables.py": "d8799b53cb85811d8b372b97589011a829198d916db8fc456c21643a2b1b54ab",
+    "alembic/versions/d22_retention_mvp_retention_surveys_and_patient_support.py": "52d1d1838bad438ea0320d950a5c0a2c83ebdb6921f15daaa5efd53d115dfdfe",
+    "alembic/versions/e23_alert_presentations.py": "8b431d79b4445df9052c4ed033942568c027094d7284a38fd85136b50503e29d",
+    "alembic/versions/f24_analytics_collection.py": "96473f081df067cd75d909c4ff3c3057a612f3205780755a9e61e9d4d8fd2ba0",
+    "alembic/versions/g25_care_workflow.py": "2b3ad7a4bd4c730592eb879b3522d5faa1239b8c4294042c91a41686e361363d",
+    "alembic/versions/h26_medication_schedule_personal_medication_schedule_and_.py": "44eeb9ec79d0354b7e166e6913de4d59e52a679c3b1353bca51a2618cf5a8abd",
+    "alembic/versions/i27_participation_privacy_participation_ledger_diary_observations_.py": "5e397d12e7633950f7217cf5361febdc9cfeb91040a8c638ed23e330faf2e3fd",
+    "alembic/versions/j28_task_board.py": "e285acf302078f28f80efb8bb842f078196766c044dd56dfa64e4d9e37754342",
+    "alembic/versions/k29_demo_loyalty.py": "25c692075c49ded90a26e5770c2f62fcdbc06d7223c1163eda1ae314a8aa7f6d",
+    "alembic/versions/l30_refusal_reasons.py": "c3c5e208df95a389e8b122f898bbdb8fb9b14f45ad409a1ba4dbaeb7c42654b5",
+    "alembic/versions/m31_explicit_support.py": "dd62976ec7709fa211c9ea5e8f3ccb4a085f9df7fbe1678c559e98c99ba74ab3",
+    "alembic/versions/n32_patient_survey_drafts.py": "4b586389121100bf74b620756a3ca6e876e74975f118d49645f7e726b95bdf1d",
+    "alembic/versions/o33_access_safeguards.py": "83610c47a3b36157d311962035c94141a7f4492dfd76e4f8c8f2f288b5ed39f6",
+    "alembic/versions/p34_read_access_audit.py": "9141caac27b4372bd0d089386f8d040ec017eb0dbfb2d45b6e1b13a12c3ee6db",
+    "alembic/versions/q35_emr_demo_documents.py": "bd3438fe0af874865033cd20f155d96d1546d1fd3ed2bf0d0c7708b3d9947f62",
+    "alembic/versions/r36_clinical_instruments.py": "a9d6b77ead0584bbcf0132e10825b15bbe577d82d47b12746c3e26b25e3020ee",
+    "alembic/versions/s37_clinical_review.py": "bdb1c287b14696fc4e4516ec564c833678cf9448be88b32944cb49d1d963e776",
+    "alembic/versions/t38_coordinator_fallback.py": "0a9ecf4993ff2d0fc49e2a14bb2f5cce4b78a9bab265e0f663300017460988d5",
+    "alembic/versions/u39_support_lookup_indexes.py": "e2631ecf2d948511cdeee4460fdae2ab36dda79171a7778fbd6ab8e4e86afbef",
+    "alembic/versions/v40_telegram_mini_app_access.py": "59eb02fef3a473e104b8a0613b908b5a7397a46c39dca816b61e8b645230d79e",
+    "tests/conftest.py": "3cb504af6690b46061fed507efb0efbb7e8911d17b14f3f9c4bc859d39ef09f9",
+    "tests/test_access.py": "112bdd16dd92407bb6327be3becc84f192bde52a051ec827381f894ab064fe51",
+    "tests/test_auth_guards.py": "a3d57843dfef8b181ba9d3545bf03b046e297dc218ea9e7f802d952ccc2dfcd4",
+    "tests/test_backup_guards.py": "16a2cadda45100a63f7dcb81cfbe18e9ffe39bc0a3ee2909b56a4db6800e25d2",
+    "tests/test_browser_security.py": "dfc89686db93413c929255e8c8aea9b678068271d59832ea6178b69a41053dc4",
+    "tests/test_care.py": "ea5a2406672397d7a641d9eb75e8e3d2ff321a82152f2d4e06acb0227a45ed28",
+    "tests/test_clinical_cohort.py": "29622576ec2ba83fa2f1b5cdbedcd6a6c11563c236d4783d00fda22657b17c0c",
+    "tests/test_clinical_demo_seed.py": "d37f4a794356bd6b0a5ad585ee3adc9060a03ece4fd2944ee6aef16c10849a42",
+    "tests/test_clinical_instruments.py": "7635d797bc1ca79ab64111d6989656f291b6bbe981c52353a5740a271ddef45a",
+    "tests/test_clinical_review.py": "3589ff8c7f04e6a5c9f4cf95c06ca71c54334a97b674a481473004919aa5d05b",
+    "tests/test_collection.py": "af423ee051e44e292772758594073daa221e306bb8f4c92487d7585009402417",
+    "tests/test_coordinator_fallback.py": "c9953a9490798c6c06fdd399c56aba7e728b58d2eb84c1b5a95d7cba8fa68f2a",
+    "tests/test_emr_demo.py": "14fd2d5b10c66741bd91b4532bf88dbdabea50b775f7785d4b2794124fea847a",
+    "tests/test_events.py": "dfc40cf6b3220c7aa65b00d611b993d3d76551a1d51346ec17b738ad256f57c4",
+    "tests/test_generated_timing.py": "8e507fef9fd0908376c94457a2c888aade627ff3c9ce9269e01257626f6acb80",
+    "tests/test_inbox.py": "93a561f73caf48452e0f1ed2cb91f7804b37328c982db8b3fe167132ac106b36",
+    "tests/test_load_guards.py": "3809eb91e3abcb283c1586413d1c114e03964c6edc94a6912b2e662c05857166",
+    "tests/test_loyalty.py": "8c8eee8fa03cc7504054439e1c57c08b421eb4c98ed196aeec5066b0d8bcd4fa",
+    "tests/test_medications.py": "8030a21d3ee3b582a0989ff4522c1b2e1e4913fbbe2306867c5dfbc52149716b",
+    "tests/test_medication_receipts.py": "87632e0a86d538530cda4d5f95173874f73e55aa53891951ddcde4a1db44c7aa",
+    "tests/test_participation_points.py": "81406eb364971dce0de857e4b3098777decd955f0528f6c93c64652047cf55b5",
+    "tests/test_patient_progress.py": "7c6b7118e129012a6aa0b803e9067a1a5b98ef04ba15302a8510d1dfe654b2d8",
+    "tests/test_quote_sources.py": "ac80adfaa7de597cdaf3888e9d33d47f15e347a97ccfcd5012506bd41fca0ba0",
+    "tests/test_read_audit.py": "4b70c67da211fe075df6bff1fab73812a7006ff61707f0edf036ec6137cbedae",
+    "tests/test_refusal_reasons.py": "d6ba7f93d59fa1f182923ca16e3bca15a3bb769264fb4060c51b8ce5daa401ad",
+    "tests/test_reward_receipts.py": "da01e19fff69efcd300f970934e23d0d74b5e55c24a35b97566822ab27d87ce2",
+    "tests/test_scoring.py": "74302ea6c150b49d474e9bcbb71427cbe8557247bbf37dffc6141612416f4d5a",
+    "tests/test_seed_and_migrations.py": "19325f15379727af38980c51e06b110004a04e91ea731e7f512c86a181b961d6",
+    "tests/test_support.py": "19bfac3c5727a3670005869fc60a3ad764c6a5f2be47d34818bd89558a80e792",
+    "tests/test_support_requests.py": "9ee17fdcca6e7bc05443a913a7b20b96f242f2156f8dd9c458cad3b43d29ff2f",
+    "tests/test_surveys.py": "9908ceced98ecb9a416533a58ffb70564edf7367485e19d5a309eacb2eea3315",
+    "tests/test_survey_drafts.py": "2b418fc3b430c4468881b1a143cbcda41f350aa374a4675b1b37d250f530ade3",
+    "tests/test_task_board.py": "84fe984007ee27eb786d676ea534f2f1f560c53987eb68ab17f5ba901ac46138",
+    "tests/test_task_read.py": "aebbc45a5f1a5bc38d758044978e07d9d63267e9ef7db4c33b204cbcda4894dc",
+    "tests/test_telegram_mini_app.py": "b8368dd37b7525b23b81c971753338a81e4e4d7d95a72d57eeb77ce5a43a44e7",
+    "tests/test_workflow_analytics.py": "800e450f00dda757ac581e16a89fcf3d7795e4e081f9bff72231c9fa33b755fb",
+    "tests/test_worklist.py": "85596d6f488076c85bc9f3c7c8bb945c3ca76d302a09575ce28a1da3e2b0fd60",
+    "frontend/src/AccountSettings.tsx": "01a857a8929b12ea76cadb21b62f7c58d799b48babb81f830e7b862e2f5bda20",
+    "frontend/src/AdminDashboard.tsx": "55b49f2cdf976947ebfc80b754c6227d819546319c6f61e62b2f652d25cf1adc",
+    "frontend/src/api.ts": "19e6d074016fbf1f780fcc788e1322433f980e6dd0a4d3d4732837a37bf29588",
+    "frontend/src/App.tsx": "a4ea0b9f313449a2c4700f6c9fa5cf63d8db5eda2bc89bff95c46d1d7aecab56",
+    "frontend/src/AssessmentHistory.tsx": "2d4264a7fe820d64372e76a481b90927c579b71f9a7ebab8a549080c503213c0",
+    "frontend/src/brand-theme.css": "485ec8f5046f2c0ad59eddde5bd99ff2e971bef784098c641617a8dce90d9a48",
+    "frontend/src/Brand.tsx": "bd3d67a16b29f76e58b6fd68b5c34ecd8fa90e470bda0381eb584d1871ad4110",
+    "frontend/src/careProgress.ts": "97c3606f806a2971258014c7dada718078c1897585934d9d1f6c71ca9a5f1914",
+    "frontend/src/CareWorkflow.tsx": "8b2663596b749055ce74dde911867b4f221a6ce94d68ea05bc47925bede5912a",
+    "frontend/src/Charts.tsx": "8f9106e52aa1f152102de2db332befed8446347951c9dfcc541e74c18c705b7f",
+    "frontend/src/Chat.tsx": "7d6030d55b1059ef7b8600e02d22a8d16400cd79eaa8dc7f9988d2f31209dde1",
+    "frontend/src/clinical-instruments.css": "8a789a10f155a068425b15b978daf1c7b7ca76c7a839ecf819fe43901f6cfc9c",
+    "frontend/src/ClinicalBaseline.tsx": "1ff01ee1cf24e777f6d994f26a10472e1845959e6314e94af43932788fd7ac1c",
+    "frontend/src/ClinicalCohort.tsx": "f327ed7acc12434a6fe9eb6ff28af3faf7c1cba9564612a3364123d6c015e9eb",
+    "frontend/src/ClinicalHistory.tsx": "b52c44fd6daf5f9b7b453b19908f57fe5f7f7ca9a283c7580f802dd63312490a",
+    "frontend/src/clinicalLabels.ts": "646936cef3c9ff7eaaba288d4da2b35e8490665fb9e7247361eb719734cb3cd9",
+    "frontend/src/clinicalResults.ts": "74432aec3b82a24ebf3b80d7ad2ca32c47313b2d53a7b26d7e61db1ce8d01b67",
+    "frontend/src/ClinicalReview.tsx": "67b64adc269e7f75270fb6bc36a34e4f4671f6593f9e5a7d28b83e0f98e23577",
+    "frontend/src/collection.ts": "2788d784703ac9525700eccd009e94f186eac37ffa9329af3901d334d96bd05c",
+    "frontend/src/CollectionMetrics.tsx": "7a0d5d35e5e14781bab9f8d5fa26688dda7187c574aad2dd1b571971a730c524",
+    "frontend/src/coordination.css": "f9c69e2f53872711a8dc6d33c9e7406848ffa47e723b7f26f34af440d358972e",
+    "frontend/src/CoordinatorFallback.tsx": "91a7e9a597387328dce91dc8b512e7faa36bcb7d6efcc4bce3533fe5a9f46629",
+    "frontend/src/DoctorDashboard.tsx": "17352a728b25f6e9205e8334ac3fc259be1d66624ac62a94ab02238687f594eb",
+    "frontend/src/DoctorInbox.tsx": "c29572c1b34cd592c66ebb9aca3a06d9912fdd72b5e7cdec7ee6b2cdbf4a273a",
+    "frontend/src/DoctorPatients.tsx": "ef5a2c437654421a62db48d8b5bb53532d12a024c3b817cb5e7839b7d1547bc1",
+    "frontend/src/emr-demo.css": "ded3e6446f5020b0b2943a76a7074624821d90b261b64b9c2f607ab51cfbde87",
+    "frontend/src/EmrDemo.tsx": "69c96790b41243358c30abdc400d62fbdd58c6faf6623369e026f400d293a571",
+    "frontend/src/EventAction.tsx": "2c44f0a9d42f2a16b3ca3f3aab0e52efa9297d7efff7554cb01629082dae8e3b",
+    "frontend/src/Interaction.tsx": "23dc573f833b643b21f283e3fffd83c0fa2031927b03c56c1b6528198840e1f0",
+    "frontend/src/main.tsx": "c90afd8d4d1adea6b8b736125cf4292fb46c841d0e1d7e6bde95b3aa8554b382",
+    "frontend/src/MedicationEditor.tsx": "45f2b64c17e9521b1d1c0e2567e3ef4581b43bd1524cc8f0cc4756a83867a271",
+    "frontend/src/MedicationSchedule.tsx": "8064c39ae74e0017fa82d4dde31c3b5ea9de4bac8ab941047f85cdfa80d07695",
+    "frontend/src/MotivationAdvice.tsx": "5728ea4d941570f44c543ae4cf7b71b355bebdc95309634be64f6c09e738d88b",
+    "frontend/src/navigation.ts": "9432b64efb11850d1f1c56273787059599ef5e31a498f9c35022838b2175fda6",
+    "frontend/src/NavigationGuard.tsx": "a4799b80b9b029e66ed03eaeecdb242178e4f2823e69aa8e2dca04ee880f2237",
+    "frontend/src/participation-receipt.css": "66aae2b83f0e87febfeeafcec4965fd8e611f3e3a56d157c7dc71a19348faca2",
+    "frontend/src/ParticipationPoints.tsx": "3b329a8bbeb3e3610d6db31381467a8184c5de8a1f99fea63ff68635668eb9db",
+    "frontend/src/ParticipationReceipt.tsx": "1d48cb7e3494d41d8dcc6c25e3f1a445f0c9ba1b0bd8892483d8c526ccdac805",
+    "frontend/src/patient-adventure.css": "07bc725a2a840826b70de307b7af7a4af23abe8aa73dc8c2320a9dd379498325",
+    "frontend/src/patient-home.css": "7703252730fe58c5941531840c07e401fe14c4d81406979eb5c4267a1aec1c5c",
+    "frontend/src/Patient.tsx": "05a3b042513796d89c513b1d9f41dd8467d86f17c7e303d9336f8b360b75db9e",
+    "frontend/src/PatientAdventure.tsx": "1575b7214785c1f12e8a45dab2ec8a66163a8a2b21ab5de42b9c1fcd6f26577a",
+    "frontend/src/PatientDiary.tsx": "cbb642ed302f5f5c11e760468536d01f34f79a0093587777f407536c297c8e69",
+    "frontend/src/PatientJourney.tsx": "33b1f15eaa54e12b70ece4ee4d8f64aa193f8cf44a9d9b6edc60297ae076f0c1",
+    "frontend/src/PatientOverview.tsx": "afe9407dc51a9e910342ea0272b7ab0715806f85f27088f41d89c80e44967eb8",
+    "frontend/src/patientProgress.ts": "9c8b8e59aed98afb42fced133d01c9414b7d4b564916dc3cea5aa41d741e9638",
+    "frontend/src/PatientStatePreview.tsx": "a77f7eb95e8303e60d056b83314ae0595ec959af519ff0768922a3710a02bd84",
+    "frontend/src/PatientSurvey.tsx": "09714116e55d8e9db8a3f7a8966bfb2407855b074bbbf8690e066da5c715650c",
+    "frontend/src/PrivacySettings.tsx": "f2cb921ed28596802e0060a1891150890f57e71b323e52d4180612cb032b9db9",
+    "frontend/src/requestId.ts": "eed8a52017787553e00f1e4499e84267c6470956b26c4276bcfc401d1a51ad0b",
+    "frontend/src/RoleGuide.tsx": "5e8c3d5c0f144fabd5cebdfc300f38ca6783fbc6eb1f937bcdf15b5c6e0b2842",
+    "frontend/src/routes.ts": "4b18013de2f8ecb45931c3611bb8d5ebf7d9be8360bea88cefd65163b2c6b14c",
+    "frontend/src/SectionBoundary.tsx": "e8c126e1b70ad1d18b816f9fa514ca06f03451312bebc44ac1f99c768e5a8b4a",
+    "frontend/src/styles.css": "bc2fa1836018bd46af02a8540f1e387b26445098f542fef355e08aec1a3228d6",
+    "frontend/src/supportTemplate.ts": "70f9b4a48bd5e9ad469ab32a163f5516099c64d3a86ab756e995adbb556f7b15",
+    "frontend/src/SurveyBuilder.tsx": "1a54579ac1a11e7d9ad0e01d868e75295d719158e3f46d3a6aa984a67215382b",
+    "frontend/src/SurveyFields.tsx": "dd616ebea08dc6cb79402e7cf9a1f552d2f8988f49882ad76e3d5dfea103ece4",
+    "frontend/src/TaskBoard.tsx": "85d4bce4d06d91e4dbf7f875d778e9dd93c32ba992e889a4f1396945db472b1f",
+    "frontend/src/telegram.css": "c514eadcdba8884b3c1416eacaee6b243f19f79567ff22c9ef78caff9b5b7de6",
+    "frontend/src/TelegramEntry.tsx": "5f2b672a6223b4a77a4b23acc5238734485fef1f3a5fcaf7b1a0aec815c97c7d",
+    "frontend/src/telegramRuntime.ts": "b112a4eda2618427ffd89db51f257752cc5aa7bf44da85be6ef5a8bd10151a06",
+    "frontend/src/UI.tsx": "7aa7e9c32c195b35918cee9929fc05a8e0e14f6c55222934df378fe7ce10cf43",
+    "frontend/src/ViewState.tsx": "84d0ba1c43b7ae81a9461c47c609673789c65a05dcfe58e935128d55c3cb5aad",
+    "frontend/src/vite-env.d.ts": "65996936fbb042915f7b74a200fcdde7e410f32a669b1ab9597cfaa4b0faddb5",
+    "frontend/src/WorkflowMetrics.tsx": "091b826b0a2324cc962f74f72e2415501fe72d4c85bfede75499c9ef6664e75e",
+    "frontend/src/worklist.ts": "9ede59f5aca4d69049fd1c4e36f728b5aec5d4673d98af7b6b3a7375430e3ca8",
+    "frontend/src/workspace.css": "560eec1c11cdde79edee2337c5be68e6386104b93535abbb45a83a23289e57fe",
+    "frontend/src/WorkspaceHome.tsx": "aab4473db8d412586072ee880c497bf3e099197462f675c899a1873461c22b5e",
+    "frontend/src/assets/limbus-anatomy.jpg": "66120c7e495ec3053c2c4d843065298102dd0e7fc997e998bdc169ce9c03eedf",
+    "frontend/src/assets/limbus-final.png": "f3446b0cf4834028e6ee68d67eb2ae3fb217b63e91ef689a97bc8799a632680b",
+    "frontend/src/assets/limbus-mark.svg": "d8cd96c0e8235352365c63a48cca5dc824f0218adfb9db5bb4f5c62d7df3298e",
+    "frontend/src/assets/rhythm-coast-v1.png": "d9bc3970810ef36753181633e82de361f753e51875594b596d2b3de63f54c5d1",
+    "frontend/src/assets/rhythm-scenes-v2.png": "27d5763f64a1ecabd8c18b8f2c3d4b39c4c2a30c69bdbe4ed20587f2ac545430",
+    "frontend/src/assets/sea-archipelago-v1.png": "3f2edef6873622310f2af4679eefcfecb8ae0b5eea0eb0df2d084165b06b5517",
+    "frontend/tests/answer-scale-context.test.mjs": "748ce70a39165d60fa85ba7474809ef7f7fd608b588031d60e777f1d8e915924",
+    "frontend/tests/atlas-interaction.test.mjs": "ea02e32181ca6e9fa6b8168c1dc0e202b3e397fa68246896117503405efc9873",
+    "frontend/tests/availability-actor-interaction.test.mjs": "11f2f01850ab1281c9f5053aca4a8ec8dff9d99cf6a6a74e8f8dca0e4a1ec158",
+    "frontend/tests/care-progress.test.mjs": "e6adc112210ffa3f25dbf83df59caeb29a41b236071567a33a92846995811ec9",
+    "frontend/tests/chat-recovery-interaction.test.mjs": "9895bc43285727deaffefa6e5d496c1f4c50657a146558dd702c7dd3b3ce83ee",
+    "frontend/tests/clinic-report-interaction.test.mjs": "fa064c4cf9f9e029e12220fca9ce4b9cc9a87d8110ca9121e208aac78448f071",
+    "frontend/tests/clinic-summary.test.mjs": "85971634bba925c31a6262495e82f0c5196cf4b1c9fd82ad81a709f8889f16ac",
+    "frontend/tests/clinical-cohort-interaction.test.mjs": "f0235bc8d33a3fa75edba41df9f9cd03c7de4d81abdd298d89e320b1a735e131",
+    "frontend/tests/clinical-instruments-interaction.test.mjs": "5b8b65a34cafc8804c94d5faea2fd1efa14f63ec3bcef6d6cd8a20479678d105",
+    "frontend/tests/clinical-labels.test.mjs": "9b1c34f95b5e016ec7ba160264a9cbfd34933c86d0b62151478a44e846a0aef1",
+    "frontend/tests/clinical-source-consistency-interaction.test.mjs": "9298eae898eef3ac10a54314c061f9ea5313002229387081788af73fe4b05dac",
+    "frontend/tests/context-help-interaction.test.mjs": "f43c7e283f2d73024f715b015a6d8f80e35b0ffc8fbc2da5d43f9c479910253a",
+    "frontend/tests/coordinator-fallback-interaction.test.mjs": "84e64c6a54b0c5077219f7e5ebcad5b33355d0f4161fe92cfd23284ff3d38971",
+    "frontend/tests/diary-flow-interaction.test.mjs": "418b78cb133a43ae8730ad39c2fca9bb54b857c88666dec8e25641359b03086b",
+    "frontend/tests/doctor-feedback-interaction.test.mjs": "c16482b6d463425ee3af334e1a9463c167766e44c798a3b7fdc613ec6a035600",
+    "frontend/tests/doctor-note-interaction.test.mjs": "a835de2d2856bba95758e6fb18d1d9dee80b6b26839bd94508eb4ba964e1b9dc",
+    "frontend/tests/emr-demo-interaction.test.mjs": "d83db6e921669ffcde5035eda3072f378ca03fc000fd22c8df0490e354567953",
+    "frontend/tests/logout-interaction.test.mjs": "e0f008ed2d70ecf9920f227686014b08ae3142ccf4692f1dbe4489942b00d3d7",
+    "frontend/tests/medication-receipt-interaction.test.mjs": "22ec8215082a218d40d4d5c1f7de79eedb5e043aa16ec703fd5ea338faa0b7e2",
+    "frontend/tests/motivation-choice-interaction.test.mjs": "b625f7b01a7e7547e0b86ce0a0e541480c7904a01250daf0e516b5e6a67465dd",
+    "frontend/tests/navigation.test.mjs": "5da946f109ffe5516056bbb980f7fb4497c4d5d2377ecc7654b3a09c67cdf2b6",
+    "frontend/tests/participation-views.test.mjs": "4cf5c5260e956e87b13c03587d1b72072234cc399fc0f22b09e1043a7f3fdc3d",
+    "frontend/tests/patient-progress.test.mjs": "6c87173b486df421c799060b66a702b6fd02406eec5bf2d50f26ee93105c4389",
+    "frontend/tests/patient-survey-recovery-interaction.test.mjs": "d3a6d4d917de40e314522e88629e1806d069c864f183095aeaddb5ee83f1aabd",
+    "frontend/tests/request-id.test.mjs": "a2b9ad9a6c17bd573691e61f6c495966d4c1b33595638a4779bc41e0a9f082b0",
+    "frontend/tests/route-mount-interaction.test.mjs": "ec602428681d8f8b102d0be878248c30db76b2be6b230a3ece2e212bdd9a0166",
+    "frontend/tests/self-report-recovery-interaction.test.mjs": "f7d7b57d66d6d7eaccd63aa5663aafbb1b4b35b2a9e7de5ff4528dbaefc344fb",
+    "frontend/tests/session-boundaries.test.mjs": "9e4a837a32798e468cd905824aca71ac2536cf4f15b386ab95d2b35a8e56142f",
+    "frontend/tests/survey-assignment-interaction.test.mjs": "c08dda91f26d699c43837dcddf0e5ac2896833642ca2d626a5faf14cc2ec7ebb",
+    "frontend/tests/telegram-entry.test.mjs": "38bef16698b2835b3d0cbcec4713973281f602dd9c3ba6f8cd50e41ec101930d",
+    "frontend/tests/worklist-interaction.test.mjs": "d0f0d5c5b1b6bcb018f652898b6faa4bd89701bdeab7516c342aebbfc768a0f6",
+    "scripts/benchmark_api.py": "b4a2b5c5db9d01343d1ad28f3645ea9929d5b5b2dd1625d513d8c4b8cdf93b1b",
+    "scripts/configure_telegram_mini_app.py": "8b26042438586910e75e57cf86c47187722f1ef57269a940d6139c0119b4eb1b",
+    "scripts/load_latency.mjs": "7f8f9bc330c672197944a0fec35f63e8972d56f6b3cac29710438176453f89e6",
+    "scripts/load_scenario.py": "49b37782c03ea28a16b637a760a95d2b9a2ac2aa05dd3b690ebbac7d0082cb8d",
+    "scripts/verify_backup_restore.py": "cdadaffdd410c6d6c5be0431ec1717aab9dfe155c5ce567c799b58374f5bf8ff",
+    "scripts/tests/load_latency.test.mjs": "d698f759769df015097270004e17e53315850acfb19b3628bec77ddd365168a8",
+    "requirements.txt": "9f5c69dbdd498204a83cb9655804673b845882b65902937da9e3597e5c7f7b00",
+    "requirements-dev.txt": "582cdf0ba12cfc637a1b8511dbc16d8a1154c92f8627923af3abbc09504a3e29",
+    "Dockerfile": "b3a63e4a5d63de04902bbe980b08b083c57256f4d341cb3066401505526df48f",
+    "docker-compose.yml": "e95d2f86ead213367e0f223c7757440ce4a351bdfa981eb4895f88f82e5e8f6b",
+    "docker-compose.public.yml": "cb7fb8f8084d3e77577ed95cba75a211291d57746810896d74f39ef64b3b0947",
+    "docker/caddy/Caddyfile": "afea5b393a3890f32fbea1e68c7db81f19bb3c822ea0c80e89b7dd73ea5f5cb7",
+    "frontend/package.json": "0a532f5bc58a04db9bbd1f65f5b572f450ad36be59b7d9bf836c21bb1c95b98a",
+    "frontend/package-lock.json": "bd6b6e3218344d066c857f0e8435d991641c66b79902eac9f0ca3a42cfe4f78e"
+  }
+}

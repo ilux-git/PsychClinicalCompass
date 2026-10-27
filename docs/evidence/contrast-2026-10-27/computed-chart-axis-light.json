@@ -1,0 +1,203 @@
+{
+  "label": "computed-chart-axis-light",
+  "rows": [
+    {
+      "background": "rgba(0, 0, 0, 0)",
+      "contrast": 7.445125206412436,
+      "foreground": "rgb(79, 87, 83)",
+      "photo_plate_worst_case": false,
+      "resolved_background": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "selector": ".time-series .chart-axis",
+      "tag": "text"
+    },
+    {
+      "background": "rgba(0, 0, 0, 0)",
+      "contrast": 7.445125206412436,
+      "foreground": "rgb(79, 87, 83)",
+      "photo_plate_worst_case": false,
+      "resolved_background": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "selector": ".time-series .chart-axis",
+      "tag": "text"
+    },
+    {
+      "background": "rgba(0, 0, 0, 0)",
+      "contrast": 7.445125206412436,
+      "foreground": "rgb(79, 87, 83)",
+      "photo_plate_worst_case": false,
+      "resolved_background": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "selector": ".time-series .chart-axis",
+      "tag": "text"
+    },
+    {
+      "background": "rgba(0, 0, 0, 0)",
+      "contrast": 7.445125206412436,
+      "foreground": "rgb(79, 87, 83)",
+      "photo_plate_worst_case": false,
+      "resolved_background": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "selector": ".time-series .chart-axis",
+      "tag": "text"
+    },
+    {
+      "background": "rgba(0, 0, 0, 0)",
+      "contrast": 7.445125206412436,
+      "foreground": "rgb(79, 87, 83)",
+      "photo_plate_worst_case": false,
+      "resolved_background": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "selector": ".time-series .chart-axis",
+      "tag": "text"
+    },
+    {
+      "background": "rgba(0, 0, 0, 0)",
+      "contrast": 7.445125206412436,
+      "foreground": "rgb(79, 87, 83)",
+      "photo_plate_worst_case": false,
+      "resolved_background": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "selector": ".time-series .chart-axis",
+      "tag": "text"
+    },
+    {
+      "background": "rgba(0, 0, 0, 0)",
+      "contrast": 7.445125206412436,
+      "foreground": "rgb(79, 87, 83)",
+      "photo_plate_worst_case": false,
+      "resolved_background": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "selector": ".time-series .chart-axis",
+      "tag": "text"
+    },
+    {
+      "background": "rgba(0, 0, 0, 0)",
+      "contrast": 7.445125206412436,
+      "foreground": "rgb(79, 87, 83)",
+      "photo_plate_worst_case": false,
+      "resolved_background": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "selector": ".time-series .chart-axis",
+      "tag": "text"
+    },
+    {
+      "background": "rgba(0, 0, 0, 0)",
+      "contrast": 7.445125206412436,
+      "foreground": "rgb(79, 87, 83)",
+      "photo_plate_worst_case": false,
+      "resolved_background": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "selector": ".time-series .chart-axis",
+      "tag": "text"
+    },
+    {
+      "background": "rgba(0, 0, 0, 0)",
+      "contrast": 7.445125206412436,
+      "foreground": "rgb(79, 87, 83)",
+      "photo_plate_worst_case": false,
+      "resolved_background": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "selector": ".time-series .chart-axis",
+      "tag": "text"
+    },
+    {
+      "background": "rgba(0, 0, 0, 0)",
+      "contrast": 7.445125206412436,
+      "foreground": "rgb(79, 87, 83)",
+      "photo_plate_worst_case": false,
+      "resolved_background": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "selector": ".time-series .chart-axis",
+      "tag": "text"
+    },
+    {
+      "background": "rgba(0, 0, 0, 0)",
+      "contrast": 7.445125206412436,
+      "foreground": "rgb(79, 87, 83)",
+      "photo_plate_worst_case": false,
+      "resolved_background": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "selector": ".time-series .chart-axis",
+      "tag": "text"
+    },
+    {
+      "background": "rgba(0, 0, 0, 0)",
+      "contrast": 7.445125206412436,
+      "foreground": "rgb(79, 87, 83)",
+      "photo_plate_worst_case": false,
+      "resolved_background": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "selector": ".time-series .chart-axis",
+      "tag": "text"
+    },
+    {
+      "background": "rgba(0, 0, 0, 0)",
+      "contrast": 7.445125206412436,
+      "foreground": "rgb(79, 87, 83)",
+      "photo_plate_worst_case": false,
+      "resolved_background": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "selector": ".time-series .chart-axis",
+      "tag": "text"
+    }
+  ],
+  "minimum": 7.445125206412436,
+  "failures": []
+}

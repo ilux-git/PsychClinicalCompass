@@ -73,9 +73,9 @@ test('the actual patient home shows canonical zero and panic separately from a n
   assert.match(cards[1].textContent,/0 \/ 27/);assert.doesNotMatch(cards[1].textContent,/20 \/ 27/);
   assert.match(cards[2].textContent,/Критерий скрининга не выполнен/);assert.doesNotMatch(cards[2].textContent,/0 \/|0 балл/);
   assert.doesNotMatch(document.body.textContent,/Измерений этой шкалы пока нет|Клинических результатов пока нет/);
-  assert.equal(screen.queryByRole('heading',{name:'PHQ-9 · числовые демо-ответы'}),null);
-  await userEvent.setup({document:dom.window.document}).click(screen.getByRole('button',{name:'Прежние числовые демо-данные',exact:true}));
-  await screen.findByRole('heading',{name:'PHQ-9 · числовые демо-ответы',exact:true});
+  assert.equal(screen.queryByRole('heading',{name:'PHQ-9 · числовая история'}),null);
+  await userEvent.setup({document:dom.window.document}).click(screen.getByRole('button',{name:'Числовая история состояния',exact:true}));
+  await screen.findByRole('heading',{name:'PHQ-9 · числовая история',exact:true});
   assert.match(document.body.textContent,/20 \/ 27/);
   await userEvent.setup({document:dom.window.document}).click(screen.getByRole('button',{name:'Вся история',exact:true}));
   assert.deepEqual(routes,['state']);assert.ok(calls.every(call=>call.method==='GET'));
@@ -87,8 +87,8 @@ test('a clinical source failure does not claim no results or hide the independen
   await screen.findByRole('alert');
   assert.doesNotMatch(document.body.textContent,/Клинических результатов пока нет/);
   const user=userEvent.setup({document:dom.window.document});
-  await user.click(screen.getByRole('button',{name:'Прежние числовые демо-данные',exact:true}));
-  await screen.findByRole('heading',{name:'PHQ-9 · числовые демо-ответы',exact:true});
+  await user.click(screen.getByRole('button',{name:'Числовая история состояния',exact:true}));
+  await screen.findByRole('heading',{name:'PHQ-9 · числовая история',exact:true});
   fixture.recoverClinical();await user.click(screen.getByRole('button',{name:'Повторить',exact:true}));
   await screen.findByRole('heading',{name:phq.name,exact:true});
   await waitFor(()=>assert.ok(screen.queryByRole('alert')===null));
@@ -115,16 +115,19 @@ test('history orders editions by newest observation, retains within-edition chro
   assert.match(editions[2].querySelector('.clinical-latest').textContent,/0 \/ 27/);
 });
 
-test('generated demo answers retain a visible provenance notice on home and in the exact historical answer',async()=>{
+// User-approved presentation contract: mode/delivery disclosure is now in AccountSettings,
+// whose real rendered content is verified in telegram-entry.test.mjs. Scores, editions
+// and the exact historical measurement remain on these working pages.
+test('generated results keep their zero, edition and exact historical identity after mode notices move to settings',async()=>{
   const generated=row(9,phq,0,stamp,{synthetic_provenance:{generated:true,dataset_version:'synthetic-clinical/1',fixture_sha256:'fixture-only',scenario:'test',measurement:'generated_current'}});
   transport({results:[generated],old:[]});mount(h(Preview,{patientId:2,navigate:()=>{}}));
-  await screen.findByText('Демо-набор: вымышленные ответы для показа, а не наблюдение пациента.',{exact:true});
-  assert.equal(screen.getAllByText('Демо-набор',{exact:true}).length,1);
+  await screen.findByRole('heading',{name:phq.name,exact:true});
+  assert.match(document.body.textContent,/0 \/ 27/);
   cleanup();transport({results:[generated],old:[]});mount(h(History,{patientId:2}));
   await screen.findByRole('heading',{name:phq.name,exact:true});
   const answer=document.querySelector('[data-clinical-result="9"]');
-  assert.match(answer.textContent,/Вымышленные ответы демо-набора/);
   assert.match(answer.textContent,/0 \/ 27/);
+  assert.equal(generated.result.synthetic_provenance.generated,true);
 });
 
 test('doctor and administrator explain the excluded timing examples, and a suppressed bundle never renders the counts',async()=>{
@@ -134,8 +137,8 @@ test('doctor and administrator explain the excluded timing examples, and a suppr
     assignment_to_completion:{known:1,unknown:0,median_seconds:100},open_to_completion:{known:1,unknown:0,median_seconds:80},
     delivery_to_completion:{known:0,unknown:1,median_seconds:null},interpretation:'Источники времени показаны отдельно.'};
   mount(h(Collection,{data:{dimensions:[],journey}}));
-  assert.match(document.body.textContent,/Из расчёта времени исключены сгенерированные примеры: 3/);
-  assert.match(document.body.textContent,/Осталось завершений для оценки времени: 1/);
+  assert.match(document.body.textContent,/Не включены в расчёт времени: 3/);
+  assert.match(document.body.textContent,/Завершений для оценки времени: 1/);
   cleanup();
   for(const suppressed of [false,true]){
     globalThis.fetch=async(path,options={})=>{
@@ -146,10 +149,10 @@ test('doctor and administrator explain the excluded timing examples, and a suppr
     mount(h(Admin,{view:'overview'}));
     await screen.findByRole('heading',{name:'Назначение → открытие → завершение',exact:true});
     if(suppressed){
-      assert.doesNotMatch(document.body.textContent,/Из расчёта времени|Осталось завершений для оценки/);
+      assert.doesNotMatch(document.body.textContent,/Не включены в расчёт времени|Завершений для оценки времени/);
       assert.match(document.body.textContent,/Показатели скрыты/);
     }else{
-      assert.match(document.body.textContent,/Из расчёта времени исключены сгенерированные примеры: 3/);
+      assert.match(document.body.textContent,/Не включены в расчёт времени: 3/);
     }
     cleanup();
   }

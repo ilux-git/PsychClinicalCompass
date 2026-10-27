@@ -1,0 +1,63 @@
+{
+  "label": "computed-calm-copy-dark",
+  "rows": [
+    {
+      "background": "rgba(0, 0, 0, 0)",
+      "contrast": 10.54312877488063,
+      "foreground": "rgb(195, 204, 199)",
+      "photo_plate_worst_case": false,
+      "resolved_background": [
+        0.09411764705882351,
+        0.10588235294117648,
+        0.10980392156862744,
+        1
+      ],
+      "selector": ".participation-calm > div > p",
+      "tag": "P"
+    },
+    {
+      "background": "rgba(0, 0, 0, 0)",
+      "contrast": 10.54312877488063,
+      "foreground": "rgb(195, 204, 199)",
+      "photo_plate_worst_case": false,
+      "resolved_background": [
+        0.09411764705882351,
+        0.10588235294117648,
+        0.10980392156862744,
+        1
+      ],
+      "selector": ".participation-calm > div > p",
+      "tag": "P"
+    },
+    {
+      "background": "rgba(0, 0, 0, 0)",
+      "contrast": 15.325610598163175,
+      "foreground": "rgb(242, 241, 237)",
+      "photo_plate_worst_case": false,
+      "resolved_background": [
+        0.09411764705882351,
+        0.10588235294117648,
+        0.10980392156862744,
+        1
+      ],
+      "selector": ".participation-calm h3",
+      "tag": "H3"
+    },
+    {
+      "background": "rgba(0, 0, 0, 0)",
+      "contrast": 10.54312877488063,
+      "foreground": "rgb(195, 204, 199)",
+      "photo_plate_worst_case": false,
+      "resolved_background": [
+        0.09411764705882351,
+        0.10588235294117648,
+        0.10980392156862744,
+        1
+      ],
+      "selector": ".participation-calm small",
+      "tag": "SMALL"
+    }
+  ],
+  "minimum": 10.54312877488063,
+  "failures": []
+}

@@ -1,0 +1,69 @@
+{
+  "verified_at": "2026-10-27T13:48:44.726737+00:00",
+  "release": "20261027t134439z-c34dd0dec4",
+  "base_url": "https://104.238.29.90",
+  "mini_app_document_matches_build": true,
+  "tls_verification_disabled": false,
+  "health_status": 200,
+  "unauthenticated_statuses": {
+    "/auth/me": 401,
+    "/patients": 401
+  },
+  "clinical_access_denied": {
+    "doctor2": 404,
+    "admin": 403,
+    "coordinator": 403
+  },
+  "policy_version": "demo-effort-msk-v3",
+  "day_timezone": "Europe/Moscow",
+  "daily_caps": {
+    "survey": 30,
+    "medication": 10,
+    "diary": 10
+  },
+  "assets": [
+    {
+      "path": "/assets/index-BDgV-R7c.js",
+      "sha256": "4ffe3f21711a8ed2f80f1a89bce546250a870358f61167117faee609c4f4f250",
+      "bytes": 420188
+    },
+    {
+      "path": "/assets/index-CqRuwxDY.css",
+      "sha256": "8b4bf9d0ada1702e8568aa30add32ac5c2436dd66c6d2cd930744531c9fa117f",
+      "bytes": 141258
+    },
+    {
+      "path": "/assets/MedicationSchedule-Dwgi7Oc3.css",
+      "sha256": "8d6499f2d0871ad78b6f0cf7ce330941a08b91ede5d03a799f44da144b64a342",
+      "bytes": 2853
+    },
+    {
+      "path": "/assets/Patient-COc1d5VE.css",
+      "sha256": "50ac23d60841238fa2762c0a9fcf63b985f3aa752c75b41a7514ce5ca64ab2d7",
+      "bytes": 30526
+    },
+    {
+      "path": "/assets/CareWorkflow-Cg2WRZv3.css",
+      "sha256": "f5318d9142c2b72cdda037bb31c64a685214c818b99a4977895a93447034adc6",
+      "bytes": 1949
+    },
+    {
+      "path": "/assets/Patient-B8a4kLZT.js",
+      "sha256": "c73fa971270bc5d143c12d2f878af9d85eaecfe076346d49b5984b379c05af0a",
+      "bytes": 66272
+    },
+    {
+      "path": "/assets/DoctorPatients-B9iuaitm.js",
+      "sha256": "2b37342bd483f138bbc42dedb21833e57fc86f9d4bd715a3ad098fcc78986548",
+      "bytes": 49168
+    },
+    {
+      "path": "/assets/SurveyBuilder-BPThFzCA.js",
+      "sha256": "2ee22d0c9d8584dd5b3f81cd85bacd4204c526f8ae367136dc49fedb7aa9fe4a",
+      "bytes": 29594
+    }
+  ],
+  "new_patient_writes": 0,
+  "telephone_links_activated": false,
+  "real_telegram_device_theme_verified": false
+}

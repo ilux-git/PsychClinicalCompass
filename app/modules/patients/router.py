@@ -1,4 +1,5 @@
 from fastapi import APIRouter, HTTPException, Query
+from datetime import datetime,timedelta
 from sqlalchemy import func, select
 from sqlalchemy.exc import SQLAlchemyError
 
@@ -8,6 +9,7 @@ from app.modules.access.models import User, UserRole
 from app.modules.assessments.models import QuestionnaireResponse
 from app.modules.assessments.clinical_models import ClinicalResult
 from app.modules.assessments.catalog import PHQ9_KEY, GAD7_KEY, PANIC_KEY
+from app.modules.assessments.scenarios import scenario_label, scenario_for_mis
 from app.modules.audit.models import AuditEvent
 from app.modules.integration.mis_models import MISPatient
 from app.modules.patients.models import Patient, PatientMapping
@@ -21,7 +23,7 @@ router = APIRouter(prefix="/patients", tags=["patients"])
 
 def patient_summary(patient: Patient) -> dict:
     return {"id": patient.id, "full_name": patient.full_name, "mis_id": patient.mis_id,
-            "doctor_id": patient.doctor_id, "created_at": patient.created_at}
+            "doctor_id": patient.doctor_id, "created_at": patient.created_at,"scenario_label":scenario_label(patient.mis_id)}
 
 
 @router.get("")
@@ -64,12 +66,16 @@ async def directory_items(session, rows):
             "score": point.score, "maximum": point.definition["maximum"],
             "criterion_met": point.result.get("criterion_met"), "created_at": point.created_at} if point else None
         fixture = patient_snapshot(patient.mis_id if mappings.get(patient.id) == patient.mis_id else None)
-        result.append({**patient_summary(patient), "demo_scenario": fixture['data']['scenario']['title'] if fixture['data'] else None,
+        case=scenario_for_mis(patient.mis_id) if mappings.get(patient.id)==patient.mis_id else None
+        measurement=max(case["measurements"],key=lambda row:row["day"],default=None) if case else None
+        scenario_measurement={**measurement,"created_at":datetime.fromisoformat(case["anchor_date"].replace("Z","+00:00"))+timedelta(days=measurement["day"]),
+            "source":"supplied_case_history","version_confirmed":False} if measurement else None
+        result.append({**patient_summary(patient), "demo_scenario": scenario_label(patient.mis_id) or (fixture['data']['scenario']['title'] if fixture['data'] else None),
             "treatment_status": latest.get(patient.id,'unknown'), "open_tasks":task_counts.get(patient.id,{}).get('open',0),
             "in_progress_tasks":task_counts.get(patient.id,{}).get('in_progress',0), "pending_events": alerts.get(patient.id,0),
             "last_observation_at": point.created_at if clinical_is_latest else numeric_at,
             "last_observation_source": "canonical_clinical" if clinical_is_latest else "numeric_demo" if numeric_at else None,
-            "latest_clinical_result": preview})
+            "latest_clinical_result": preview,"scenario_measurement":scenario_measurement})
     return result
 
 
@@ -94,6 +100,9 @@ async def card(patient_id: int, session: CompassSession, user: CurrentUser) -> d
     mis: dict = {"source": "MIS", "status": "not_linked", "diagnoses": [], "prescriptions": []}
     if mapping is not None and mapping.mis_id != patient.mis_id:
         mis["status"] = "mapping_conflict"
+    elif mapping is not None and (case:=scenario_for_mis(patient.mis_id)) is not None:
+        mis.update(source="synthetic_mis_json",status="available",full_name=case["full_name"],
+            diagnoses=case["diagnoses"],prescriptions=case["current_prescriptions"])
     elif mapping is not None:
         try:
             async with async_session_mis() as mis_session:

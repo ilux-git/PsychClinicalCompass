@@ -7,6 +7,9 @@ import { usePrepareViewState } from "./ViewState";
 import { worklistViewKey, type WorklistFocus } from "./worklist";
 import { Disclosure } from "./Interaction";
 import { DoctorEscalationSettings } from "./CoordinatorFallback";
+import activeArt from "./assets/team-scenes/queue-active.jpg";
+import checkArt from "./assets/team-scenes/queue-check.jpg";
+import checkedArt from "./assets/team-scenes/queue-checked.jpg";
 
 export function WorkspaceHome({navigate}:{navigate:(view:string)=>void}) {
   const workload=useApi<WorkflowValues>("/analytics/care",15000);
@@ -26,10 +29,11 @@ export function WorkspaceHome({navigate}:{navigate:(view:string)=>void}) {
       {workload.loading?<div className="workspace-workload-loading"><Loading/></div>:tasks&&checks?<>
         <div className="workspace-queue-cards" role="group" aria-label="Выборки плана работы">
           {[
-            {focus:"active" as const,title:"Нужно выполнить",count:tasks.open+tasks.in_progress,detail:"Назначено и в работе",icon:ListTodo},
-            {focus:"awaiting_check" as const,title:"Проверить результат",count:checks.awaiting,detail:"Действие уже выполнено",icon:ClipboardCheck},
-            {focus:"checked" as const,title:"Проверенные результаты",count:checks.checked,detail:`Неизвестный результат: ${checks.unknown}`,icon:CheckCheck},
+            {focus:"active" as const,title:"Нужно выполнить",count:tasks.open+tasks.in_progress,detail:"Назначено и в работе",icon:ListTodo,art:activeArt},
+            {focus:"awaiting_check" as const,title:"Проверить результат",count:checks.awaiting,detail:"Действие уже выполнено",icon:ClipboardCheck,art:checkArt},
+            {focus:"checked" as const,title:"Проверенные результаты",count:checks.checked,detail:`Неизвестный результат: ${checks.unknown}`,icon:CheckCheck,art:checkedArt},
           ].map(item=><button type="button" className={`workspace-queue-card queue-${item.focus}`} key={item.focus} aria-label={`${item.title}: ${item.count}. ${item.detail}`} onClick={()=>openWorklist(item.focus)}>
+            <img className="queue-card-art" src={item.art} alt="" width={1200} height={680} loading="lazy" decoding="async" aria-hidden="true"/>
             <span className="queue-card-label"><item.icon size={19}/>{item.title}</span><strong>{item.count}</strong><span className="queue-card-detail">{item.detail}<ArrowRight size={17}/></span>
           </button>)}
         </div>

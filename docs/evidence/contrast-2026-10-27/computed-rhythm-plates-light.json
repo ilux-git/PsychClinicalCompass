@@ -1,0 +1,301 @@
+{
+  "label": "computed-rhythm-plates-light",
+  "rows": [
+    {
+      "background": "rgba(255, 255, 255, 0.94)",
+      "contrast": 15.407349460269572,
+      "foreground": "rgb(24, 25, 26)",
+      "photo_plate_worst_case": true,
+      "resolved_background": [
+        0.996,
+        0.9957647058823528,
+        0.9945882352941176,
+        1
+      ],
+      "selector": ".rhythm-calendar button > span",
+      "tag": "SPAN"
+    },
+    {
+      "background": "rgba(255, 255, 255, 0.94)",
+      "contrast": 15.407349460269572,
+      "foreground": "rgb(24, 25, 26)",
+      "photo_plate_worst_case": true,
+      "resolved_background": [
+        0.996,
+        0.9957647058823528,
+        0.9945882352941176,
+        1
+      ],
+      "selector": ".rhythm-calendar button > span",
+      "tag": "SPAN"
+    },
+    {
+      "background": "rgba(255, 255, 255, 0.94)",
+      "contrast": 15.407349460269572,
+      "foreground": "rgb(24, 25, 26)",
+      "photo_plate_worst_case": true,
+      "resolved_background": [
+        0.996,
+        0.9957647058823528,
+        0.9945882352941176,
+        1
+      ],
+      "selector": ".rhythm-calendar button > span",
+      "tag": "SPAN"
+    },
+    {
+      "background": "rgba(255, 255, 255, 0.94)",
+      "contrast": 15.407349460269572,
+      "foreground": "rgb(24, 25, 26)",
+      "photo_plate_worst_case": true,
+      "resolved_background": [
+        0.996,
+        0.9957647058823528,
+        0.9945882352941176,
+        1
+      ],
+      "selector": ".rhythm-calendar button > span",
+      "tag": "SPAN"
+    },
+    {
+      "background": "rgba(255, 255, 255, 0.94)",
+      "contrast": 15.407349460269572,
+      "foreground": "rgb(24, 25, 26)",
+      "photo_plate_worst_case": true,
+      "resolved_background": [
+        0.996,
+        0.9957647058823528,
+        0.9945882352941176,
+        1
+      ],
+      "selector": ".rhythm-calendar button > span",
+      "tag": "SPAN"
+    },
+    {
+      "background": "rgba(255, 255, 255, 0.94)",
+      "contrast": 15.407349460269572,
+      "foreground": "rgb(24, 25, 26)",
+      "photo_plate_worst_case": true,
+      "resolved_background": [
+        0.996,
+        0.9957647058823528,
+        0.9945882352941176,
+        1
+      ],
+      "selector": ".rhythm-calendar button > span",
+      "tag": "SPAN"
+    },
+    {
+      "background": "rgba(255, 255, 255, 0.94)",
+      "contrast": 15.407349460269572,
+      "foreground": "rgb(24, 25, 26)",
+      "photo_plate_worst_case": true,
+      "resolved_background": [
+        0.996,
+        0.9957647058823528,
+        0.9945882352941176,
+        1
+      ],
+      "selector": ".rhythm-calendar button > span",
+      "tag": "SPAN"
+    },
+    {
+      "background": "rgba(255, 255, 255, 0.94)",
+      "contrast": 15.407349460269572,
+      "foreground": "rgb(24, 25, 26)",
+      "photo_plate_worst_case": true,
+      "resolved_background": [
+        0.996,
+        0.9957647058823528,
+        0.9945882352941176,
+        1
+      ],
+      "selector": ".rhythm-calendar button > strong",
+      "tag": "STRONG"
+    },
+    {
+      "background": "rgba(255, 255, 255, 0.94)",
+      "contrast": 15.407349460269572,
+      "foreground": "rgb(24, 25, 26)",
+      "photo_plate_worst_case": true,
+      "resolved_background": [
+        0.996,
+        0.9957647058823528,
+        0.9945882352941176,
+        1
+      ],
+      "selector": ".rhythm-calendar button > strong",
+      "tag": "STRONG"
+    },
+    {
+      "background": "rgba(255, 255, 255, 0.94)",
+      "contrast": 15.407349460269572,
+      "foreground": "rgb(24, 25, 26)",
+      "photo_plate_worst_case": true,
+      "resolved_background": [
+        0.996,
+        0.9957647058823528,
+        0.9945882352941176,
+        1
+      ],
+      "selector": ".rhythm-calendar button > strong",
+      "tag": "STRONG"
+    },
+    {
+      "background": "rgba(255, 255, 255, 0.94)",
+      "contrast": 15.407349460269572,
+      "foreground": "rgb(24, 25, 26)",
+      "photo_plate_worst_case": true,
+      "resolved_background": [
+        0.996,
+        0.9957647058823528,
+        0.9945882352941176,
+        1
+      ],
+      "selector": ".rhythm-calendar button > strong",
+      "tag": "STRONG"
+    },
+    {
+      "background": "rgba(255, 255, 255, 0.94)",
+      "contrast": 15.407349460269572,
+      "foreground": "rgb(24, 25, 26)",
+      "photo_plate_worst_case": true,
+      "resolved_background": [
+        0.996,
+        0.9957647058823528,
+        0.9945882352941176,
+        1
+      ],
+      "selector": ".rhythm-calendar button > strong",
+      "tag": "STRONG"
+    },
+    {
+      "background": "rgba(255, 255, 255, 0.94)",
+      "contrast": 15.407349460269572,
+      "foreground": "rgb(24, 25, 26)",
+      "photo_plate_worst_case": true,
+      "resolved_background": [
+        0.996,
+        0.9957647058823528,
+        0.9945882352941176,
+        1
+      ],
+      "selector": ".rhythm-calendar button > strong",
+      "tag": "STRONG"
+    },
+    {
+      "background": "rgba(255, 255, 255, 0.94)",
+      "contrast": 15.407349460269572,
+      "foreground": "rgb(24, 25, 26)",
+      "photo_plate_worst_case": true,
+      "resolved_background": [
+        0.996,
+        0.9957647058823528,
+        0.9945882352941176,
+        1
+      ],
+      "selector": ".rhythm-calendar button > strong",
+      "tag": "STRONG"
+    },
+    {
+      "background": "rgba(255, 255, 255, 0.94)",
+      "contrast": 6.99378340744181,
+      "foreground": "rgb(73, 83, 77)",
+      "photo_plate_worst_case": true,
+      "resolved_background": [
+        0.996,
+        0.9957647058823528,
+        0.9945882352941176,
+        1
+      ],
+      "selector": ".rhythm-calendar button > i",
+      "tag": "I"
+    },
+    {
+      "background": "rgba(255, 255, 255, 0.94)",
+      "contrast": 6.99378340744181,
+      "foreground": "rgb(73, 83, 77)",
+      "photo_plate_worst_case": true,
+      "resolved_background": [
+        0.996,
+        0.9957647058823528,
+        0.9945882352941176,
+        1
+      ],
+      "selector": ".rhythm-calendar button > i",
+      "tag": "I"
+    },
+    {
+      "background": "rgba(255, 255, 255, 0.94)",
+      "contrast": 6.99378340744181,
+      "foreground": "rgb(73, 83, 77)",
+      "photo_plate_worst_case": true,
+      "resolved_background": [
+        0.996,
+        0.9957647058823528,
+        0.9945882352941176,
+        1
+      ],
+      "selector": ".rhythm-calendar button > i",
+      "tag": "I"
+    },
+    {
+      "background": "rgba(255, 255, 255, 0.94)",
+      "contrast": 6.99378340744181,
+      "foreground": "rgb(73, 83, 77)",
+      "photo_plate_worst_case": true,
+      "resolved_background": [
+        0.996,
+        0.9957647058823528,
+        0.9945882352941176,
+        1
+      ],
+      "selector": ".rhythm-calendar button > i",
+      "tag": "I"
+    },
+    {
+      "background": "rgba(255, 255, 255, 0.94)",
+      "contrast": 6.99378340744181,
+      "foreground": "rgb(73, 83, 77)",
+      "photo_plate_worst_case": true,
+      "resolved_background": [
+        0.996,
+        0.9957647058823528,
+        0.9945882352941176,
+        1
+      ],
+      "selector": ".rhythm-calendar button > i",
+      "tag": "I"
+    },
+    {
+      "background": "rgb(24, 25, 26)",
+      "contrast": 17.605536762696666,
+      "foreground": "rgb(255, 255, 255)",
+      "photo_plate_worst_case": true,
+      "resolved_background": [
+        0.09411764705882351,
+        0.09803921568627452,
+        0.10196078431372547,
+        1
+      ],
+      "selector": ".rhythm-calendar button > i",
+      "tag": "I"
+    },
+    {
+      "background": "rgba(255, 255, 255, 0.94)",
+      "contrast": 6.99378340744181,
+      "foreground": "rgb(73, 83, 77)",
+      "photo_plate_worst_case": true,
+      "resolved_background": [
+        0.996,
+        0.9957647058823528,
+        0.9945882352941176,
+        1
+      ],
+      "selector": ".rhythm-calendar button > i",
+      "tag": "I"
+    }
+  ],
+  "minimum": 6.99378340744181,
+  "failures": []
+}

@@ -91,7 +91,7 @@ test("ACTOR-NOTICE: a completed old note cannot display success to the next sign
   await waitFor(()=>assert.equal(writes.length,1));
   // Actual auth-expiry entry point must clear the first workspace even during its pending write.
   await act(async()=>{window.dispatchEvent(new Event("compass-auth-expired"));});
-  await user.selectOptions(await screen.findByRole("combobox",{name:"Демонстрационная роль"}),"doctor2");
+  await user.selectOptions(await screen.findByRole("combobox",{name:"Роль"}),"doctor2");
   await user.click(screen.getByRole("button",{name:"Войти",exact:true}));
   await screen.findByText(second.display_name);
   await act(async()=>{finishNote(Response.json({}));await waiting;});

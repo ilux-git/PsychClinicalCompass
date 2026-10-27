@@ -15,6 +15,7 @@ from app.modules.access.models import RevokedAccessToken, User, UserRole
 from app.modules.access.schemas import AvailabilityUpdate, LoginRequest
 from app.modules.audit.service import record_event
 from app.modules.patients.models import Patient
+from app.modules.assessments.scenarios import scenario_label
 
 router = APIRouter(tags=["access"])
 # Not an account or a usable credential; unknown usernames still receive a bcrypt check.
@@ -22,18 +23,24 @@ DUMMY_PASSWORD_HASH = hash_password("unavailable-account-placeholder")
 
 
 async def user_profile(session: CompassSession, user: User) -> dict:
-    patient_id = await session.scalar(select(Patient.id).where(Patient.user_id == user.id))
+    patient = await session.scalar(select(Patient).where(Patient.user_id == user.id))
     return {"id": user.id, "username": user.username, "display_name": user.display_name,
-            "role": user.role.value, "patient_id": patient_id, "availability": user.availability}
+            "role": user.role.value, "patient_id": patient.id if patient else None, "availability": user.availability,
+            "scenario_label":scenario_label(patient.mis_id) if patient else None}
+
+
+async def authenticate_password(payload: LoginRequest, request: Request, session: CompassSession) -> tuple[User, str]:
+    bucket = await reserve_login_attempt(session, payload.username, request.client.host if request.client else "unknown")
+    user = await session.scalar(select(User).where(User.username == payload.username.strip().lower()))
+    password_ok = await run_in_threadpool(verify_password, payload.password, user.hashed_password if user else DUMMY_PASSWORD_HASH)
+    if user is None or not password_ok or not user.is_active:
+        raise HTTPException(401, "Неверный логин или пароль")
+    return user, bucket
 
 
 @router.post("/auth/login")
 async def login(payload: LoginRequest, request: Request, session: CompassSession) -> dict:
-    bucket = await reserve_login_attempt(session, payload.username, request.client.host if request.client else "unknown")
-    user = await session.scalar(select(User).where(User.username == payload.username.strip().lower()))
-    password_ok = await run_in_threadpool(verify_password, payload.password, user.hashed_password if user else DUMMY_PASSWORD_HASH)
-    if user is None or not password_ok:
-        raise HTTPException(401, "Неверный логин или пароль")
+    user, bucket = await authenticate_password(payload, request, session)
     profile = await user_profile(session, user)
     await clear_login_attempts(session, bucket)
     await session.commit()

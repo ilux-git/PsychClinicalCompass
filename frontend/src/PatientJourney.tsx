@@ -1,6 +1,9 @@
+import {participationPrinciples} from "./presentation";
 import { createRequestId } from "./requestId";
 import { useEffect, useId, useRef, useState } from "react";
-import { ArrowRight, ArrowUp, Compass, Gift, Leaf } from "lucide-react";
+import { ArrowRight, ArrowUp, Compass, Gift } from "lucide-react";
+import { ParticipationRules } from "./ParticipationRules";
+import "./patient-home.css";
 import { send, useApi } from "./api";
 import { Badge, Button, Empty, ErrorBox, Heading, Loading, Section, date, plural, type Notify } from "./UI";
 import { HorizontalBars } from "./Charts";
@@ -11,14 +14,14 @@ import { Disclosure, keepDialogFocus, usePendingSelectFocus } from "./Interactio
 
 type Points = ParticipationPoints;
 const pointsLabel = (n:number) => `${n} ${plural(n,"балл","балла","баллов")}`;
-const pointActions:Record<string,{view:string;label:string}>={survey:{view:"surveys",label:"К моим опросам"},medication:{view:"medications",label:"Открыть расписание"},diary:{view:"diary",label:"Сделать запись"}};
+const discountLabel=(value:number)=>new Intl.NumberFormat("ru-RU",{style:"percent",maximumFractionDigits:0}).format(value/100);
 
 function DiscountGoal({points,offer,calm=false}: {points:Points;offer:DiscountOffer;calm?:boolean}) {
   const progress=discountProgress(points,offer);
   return <div className="patient-discount-goal">
-    <div className="patient-discount-label"><span><Gift size={18}/>Скидка на приём · демо</span><strong>{offer.discount_percent}%</strong></div>
-    <p>{progress.canExchange?"Баллов достаточно для тестового купона":<>Ещё <strong>{pointsLabel(progress.remaining)}</strong> до тестового купона</>}</p>
-    {!calm&&<progress max={progress.maximum} value={progress.value} aria-label={`Баллы для тестовой скидки ${offer.discount_percent} процентов: ${progress.value} из ${offer.points}. Доступно ${pointsLabel(progress.available)}`}/>}
+    <div className="patient-discount-label"><span><Gift size={18}/>Скидка на приём</span><strong className="patient-discount-value">{discountLabel(offer.discount_percent)}</strong></div>
+    <p>{progress.canExchange?"Баллов достаточно для купона":<>Ещё <strong>{pointsLabel(progress.remaining)}</strong> до купона</>}</p>
+    {!calm&&<progress max={progress.maximum} value={progress.value} aria-label={`Баллы для скидки ${offer.discount_percent} процентов: ${progress.value} из ${offer.points}. Доступно ${pointsLabel(progress.available)}`}/>}
     <small>{pointsLabel(progress.available)} доступно · для обмена нужно {pointsLabel(offer.points)}</small>
   </div>;
 }
@@ -45,8 +48,8 @@ export function PatientRewardSummary({result,notify,navigate}: {result:ReturnTyp
       {result.error&&<p className="field-hint">Баланс не обновился. Показаны последние полученные данные.</p>}
       <div className="patient-home-balance"><strong>{data.balance}</strong><span>{plural(data.balance,"балл доступен","балла доступны","баллов доступно")}</span></div>
       {offer&&<DiscountGoal points={data} offer={offer} calm={calm}/>}
-      <Button variant="secondary" onClick={()=>navigate("journey")}>{offer&&discountProgress(data,offer).canExchange?"Выбрать тестовую скидку":"Как получить и обменять баллы"}<ArrowRight size={16}/></Button>
-      <p className="patient-demo-note">Купоны DEMO показывают механику и пока не действуют в клинике.</p>
+      <Button variant="secondary" onClick={()=>navigate("journey")}>{offer&&discountProgress(data,offer).canExchange?"Выбрать скидку":"Как получить и обменять баллы"}<ArrowRight size={16}/></Button>
+
       {data.preference.effective_mode==="map"&&<ParticipationAtlas earned={data.earned_total} compact/>}
       {data.preference.effective_mode==="rhythm"&&<ParticipationRhythm activity={data.activity} compact/>}
       {calm&&<ParticipationCalm activity={data.activity} compact/>}
@@ -108,20 +111,20 @@ export function PatientJourney({notify, navigate}: {notify:Notify; navigate?: (v
     if (request.current.offer !== offer) request.current = {offer,id:createRequestId()};
     setBusy(true);setExchangeError("");
     try {await send('/participation/demo-coupons',{offer_id:offer,catalog_version:d.catalog_version,client_request_id:request.current.id});
-      result.reload(); returnToCoupons.current=true;setSelectedOffer(null); request.current = {offer:"",id:""}; notify("Тестовый купон создан. Условия реальной скидки согласует клиника");}
+      result.reload(); returnToCoupons.current=true;setSelectedOffer(null); request.current = {offer:"",id:""}; notify("Купон создан");}
     catch(e) {setExchangeError(e instanceof Error?e.message:"Не удалось создать купон");result.reload();}
     finally {setBusy(false);}
   }
   async function cancel(id:number) {
     lastAction.current="coupon";
     setBusy(true);
-    try {await send(`/participation/demo-coupons/${id}/cancel`,{}); result.reload();coupons.current?.focus({preventScroll:true});notify("Тестовый купон отменён, баллы снова доступны");}
+    try {await send(`/participation/demo-coupons/${id}/cancel`,{}); result.reload();coupons.current?.focus({preventScroll:true});notify("Купон отменён, баллы снова доступны");}
     catch(e) {notify(e instanceof Error ? e.message : "Не удалось отменить купон", "error");}
     finally {setBusy(false);}
   }
   function openCatalog() {catalog.current?.focus({preventScroll:true});catalog.current?.scrollIntoView({block:'start'});}
   function returnToStart() {const main=document.getElementById('compass-main');main?.focus({preventScroll:true});main?.scrollIntoView({block:'start'});}
-  const heading=<Heading eyebrow="Участие и баллы" title="Мой прогресс">Баллы начисляются за опросы, отметки в расписании и дневник. Их можно обменять на тестовый купон.</Heading>;
+  const heading=<Heading eyebrow="Участие и баллы" title="Мой прогресс">Баллы начисляются за опросы, отметки в расписании и дневник. Их можно обменять на купон.</Heading>;
   if (!d) return <div className="patient-progress-page">{heading}{result.error?<Section title="Баллы пока недоступны">
     <ErrorBox message={result.error} retry={result.reload}/>
     <p>Опросы, расписание и дневник остаются доступны. Баланс появится после успешного обновления.</p>
@@ -133,35 +136,35 @@ export function PatientJourney({notify, navigate}: {notify:Notify; navigate?: (v
     {result.error&&<p className="field-hint">Показаны последние полученные данные. Баланс и условия обмена не обновились — повторите загрузку перед выбором купона.</p>}
     <section className={`journey-panel ${d.preference.effective_mode === "calm" ? "journey-calm" : ""}`}>
       <div className="journey-panel-heading"><div><label className="field journey-view-choice">Вид прогресса<select ref={modeFocus.ref} aria-describedby={modeDescription} disabled={busy} value={d.preference.effective_mode} onChange={e => mode(e.target.value)}>{Object.entries(modes).map(([key,label]) => <option value={key} key={key}>{label}</option>)}</select></label><p className="journey-mode-note" id={modeDescription}>Выбор меняет оформление. Опросы, история и баллы сохраняются во всех режимах.</p><h2>{d.preference.effective_mode==="map"?"Карта участия":d.preference.effective_mode==="rhythm"?"Мой ритм":"Спокойный режим"}</h2></div>
-        <button type="button" className="journey-balance journey-balance-link" onClick={openCatalog} aria-label={`${pointsLabel(d.balance)} к обмену. Посмотреть тестовые скидки`}><strong>{d.balance}</strong><span>{plural(d.balance,"балл к обмену","балла к обмену","баллов к обмену")}<ArrowRight size={14}/></span></button></div>
+        <button type="button" className="journey-balance journey-balance-link" onClick={openCatalog} aria-label={`${pointsLabel(d.balance)} к обмену. Посмотреть скидки`}><strong>{d.balance}</strong><span>{plural(d.balance,"балл к обмену","балла к обмену","баллов к обмену")}<ArrowRight size={14}/></span></button></div>
       <div className="journey-experience">
       <div className="journey-visual">
       {d.preference.effective_mode === "map" && <JourneyMap earned={d.earned_total}/>}
       {d.preference.effective_mode === "rhythm" && <ParticipationRhythm activity={d.activity}/>}
       {d.preference.effective_mode === "calm" && <ParticipationCalm activity={d.activity}/>}
       </div>
-      <aside className="journey-wallet" aria-label="Баллы и тестовая скидка">
+      <aside className="journey-wallet" aria-label="Баллы и скидка">
         {!!d.offers.length&&<DiscountGoal points={d} offer={[...d.offers].sort((a,b)=>a.points-b.points)[0]} calm={d.preference.effective_mode==="calm"}/>}
-        <Button variant="secondary" onClick={openCatalog}>Посмотреть тестовые скидки<ArrowRight size={16}/></Button>
+        <Button variant="secondary" onClick={openCatalog}>Посмотреть скидки<ArrowRight size={16}/></Button>
       </aside>
       </div>
     </section>
-      <Section title="За что начисляются баллы"><div className="collection-grid participation-actions">{d.rules.map(r => <article className="collection-card" key={r.kind}><Leaf size={19}/><h3>{r.label}</h3><p>{r.description}</p><strong>{pointsLabel(r.earned_today)} сегодня</strong><small>{r.earned_today>=r.daily_cap?"Баллы за сегодня начислены; записи остаются доступны":`Предел начисления: ${pointsLabel(r.daily_cap)} за сутки UTC`}</small>{navigate&&pointActions[r.kind]&&<Button variant="ghost" onClick={()=>navigate(pointActions[r.kind].view)}>{pointActions[r.kind].label}<ArrowRight size={16}/></Button>}</article>)}</div><details className="source-help"><summary>О лимитах начисления</summary><p>После достижения лимита записи остаются доступны. Содержание ответа и самочувствие не меняют награду.</p><p>Лимиты обновятся {date(d.next_reset_at)} по времени Вашего устройства; расчётные сутки — UTC.</p></details></Section>
-      <div className="loyalty-section-target" ref={catalog} tabIndex={-1} role="region" aria-label="Каталог тестовых скидок"><Section title="Тестовые скидки" aside={<div className="loyalty-catalog-actions"><Badge tone="purple">Демонстрация обмена</Badge><Button variant="ghost" aria-label="К началу страницы" onClick={returnToStart}><ArrowUp size={16}/>К началу</Button></div>}>
-        <p>Выберите тестовый купон и подтвердите обмен. Баллы резервируются; при отмене купона они снова доступны. Коды DEMO не действуют в клинике. Реальные цены, лимиты и применение скидок ещё предстоит согласовать.</p>
-        <div className="loyalty-offers">{d.offers.map(o => <article key={o.id} className="loyalty-offer"><Gift size={26}/><h3>{o.title}</h3><strong>{o.points} баллов</strong><p>{d.balance < o.points ? `Ещё ${o.points-d.balance} баллов до обмена` : "Достаточно баллов"}</p><Button disabled={busy || d.balance < o.points} onClick={() => setSelectedOffer(o.id)}>Выбрать тестовый купон</Button></article>)}</div>
+      <Section title="За что начисляются баллы"><ParticipationRules rules={d.rules} navigate={navigate}/><details className="source-help"><summary>О лимитах начисления</summary>{d.rules.map(rule=><p key={rule.kind}><strong>{rule.label}:</strong> {rule.description}</p>)}<p>После достижения лимита записи остаются доступны. Содержание ответа и самочувствие не меняют награду.</p><p>Лимиты обновятся {date(d.next_reset_at)}. Часовой пояс расчёта: {d.day_timezone==="Europe/Moscow"?"Москва (МСК)":d.day_timezone??"UTC"}.</p></details></Section>
+      <div className="loyalty-section-target" ref={catalog} tabIndex={-1} role="region" aria-label="Каталог скидок"><Section title="Скидки" aside={<div className="loyalty-catalog-actions"><Button variant="ghost" aria-label="К началу страницы" onClick={returnToStart}><ArrowUp size={16}/>К началу</Button></div>}>
+        <p>Выберите купон и подтвердите обмен. Баллы резервируются; при отмене купона они снова доступны.</p>
+        <div className="loyalty-offers">{d.offers.map(o => <article key={o.id} className="loyalty-offer"><Gift size={26}/><h3>{o.title}</h3><strong>{o.points} баллов</strong><p>{d.balance < o.points ? `Ещё ${o.points-d.balance} баллов до обмена` : "Достаточно баллов"}</p><Button disabled={busy || d.balance < o.points} onClick={() => setSelectedOffer(o.id)}>Выбрать купон</Button></article>)}</div>
       </Section></div>
-      <div className="loyalty-section-target" ref={coupons} tabIndex={-1} role="region" aria-label="Мои тестовые купоны"><Section title="Мои тестовые купоны">
+      <div className="loyalty-section-target" ref={coupons} tabIndex={-1} role="region" aria-label="Мои купоны"><Section title="Мои купоны">
         {!d.coupons.length && <Empty title="Купонов пока нет">Они появятся после подтверждённого обмена.</Empty>}
-        {d.coupons.map(c => <article className="coupon-row" key={c.id}><div><strong>Скидка {c.discount_percent}% · DEMO</strong><p><code>{c.code}</code> · {date(c.created_at)}</p><small>{c.status === "cancelled" ? "Отменён; баллы возвращены" : `Зарезервировано ${c.points} баллов; в клинике не применяется`}</small></div>{c.status === "issued" && <Button disabled={busy} variant="secondary" onClick={() => cancel(c.id)}>Отменить купон</Button>}</article>)}
+        {d.coupons.map(c => <article className="coupon-row" key={c.id}><div><strong>Скидка {discountLabel(c.discount_percent)}</strong><p><code>{c.code}</code> · {date(c.created_at)}</p><small>{c.status === "cancelled" ? "Отменён; баллы возвращены" : `Зарезервировано ${c.points} баллов`}</small></div>{c.status === "issued" && <Button disabled={busy} variant="secondary" onClick={() => cancel(c.id)}>Отменить купон</Button>}</article>)}
       </Section></div>
-      {d.preference.effective_mode!=="rhythm"&&<Section title="История участия за неделю"><Disclosure title="Посмотреть баллы по дням"><HorizontalBars title="Баллы за последние семь дней" unit="баллов" rows={d.activity.map(day => ({label:new Date(day.day+'T12:00:00Z').toLocaleDateString("ru-RU",{day:"numeric",month:"short",timeZone:"UTC"}),value:day.points}))} caption="Дни по UTC. День без начислений не означает ухудшение самочувствия или невыполнение рекомендаций."/></Disclosure></Section>}
-      <Section title="Условия и история"><p>Начислено за всё время: {d.earned_total}. В тестовых купонах: {d.reserved_points}. Доступно: {d.balance}.</p>{d.principles.map(p => <p key={p}>{p}</p>)}<details><summary>Последние начисления ({d.history.length})</summary>{d.history.map(row => <p key={row.id}>{date(row.created_at)} · {d.rules.find(r => r.kind === row.kind)?.label ?? row.kind} · {row.points ? `+${row.points}` : "Без дополнительных баллов"}{row.policy_version.startsWith('synthetic-') ? " · учебная история" : ""}</p>)}</details></Section>
+      {d.preference.effective_mode!=="rhythm"&&<Section title="История участия за неделю"><Disclosure title="Посмотреть баллы по дням"><HorizontalBars title="Баллы за последние семь дней" unit="баллов" rows={d.activity.map(day => ({label:new Date(day.day+'T12:00:00Z').toLocaleDateString("ru-RU",{day:"numeric",month:"short",timeZone:"UTC"}),value:day.points}))} caption="День без начислений не означает ухудшение самочувствия или невыполнение рекомендаций."/></Disclosure></Section>}
+      <Section title="Условия и история"><p>Начислено за всё время: {d.earned_total}. В купонах: {d.reserved_points}. Доступно: {d.balance}.</p>{participationPrinciples(d.principles).map(p => <p key={p}>{p}</p>)}<details><summary>Последние начисления ({d.history.length})</summary>{d.history.map(row => <p key={row.id}>{date(row.created_at)} · {d.rules.find(r => r.kind === row.kind)?.label ?? row.kind} · {row.points ? `+${row.points}` : "Без дополнительных баллов"}</p>)}</details></Section>
     <dialog ref={confirmation} className="loyalty-confirmation" aria-labelledby={confirmationTitle} onKeyDown={keepDialogFocus} onCancel={event=>{event.preventDefault();if(!busy){setSelectedOffer(null);setExchangeError("");}}}>
-      {offer&&<><p className="eyebrow">Подтверждение · демонстрация</p><h2 id={confirmationTitle}>{offer.title}</h2><p>{d.balance>=offer.points?`Будет зарезервировано ${pointsLabel(offer.points)}. После обмена останется ${pointsLabel(d.balance-offer.points)}.`:"Доступный баланс изменился. Для этого купона сейчас недостаточно баллов."}</p><p>Код DEMO не действует в клинике. Резерв можно отменить; тогда баллы снова станут доступны. Накопленный прогресс участия сохранится.</p>
+      {offer&&<><p className="eyebrow">Подтверждение обмена</p><h2 id={confirmationTitle}>{offer.title}</h2><p>{d.balance>=offer.points?`Будет зарезервировано ${pointsLabel(offer.points)}. После обмена останется ${pointsLabel(d.balance-offer.points)}.`:"Доступный баланс изменился. Для этого купона сейчас недостаточно баллов."}</p><p>Резерв можно отменить; тогда баллы снова станут доступны. Накопленный прогресс участия сохранится.</p>
         <ErrorBox message={exchangeError} retry={!busy&&d.balance>=offer.points?()=>exchange(offer.id):undefined}/>
         <ErrorBox message={result.error} retry={result.reload}/>
-        <div className="button-row"><Button disabled={busy||d.balance<offer.points} onClick={()=>exchange(offer.id)}>{busy?"Создаём тестовый купон…":"Подтвердить тестовый обмен"}</Button><Button ref={cancelButton} variant="secondary" disabled={busy} onClick={()=>{setSelectedOffer(null);setExchangeError("");}}>Отмена</Button></div></>}
+        <div className="button-row"><Button disabled={busy||d.balance<offer.points} onClick={()=>exchange(offer.id)}>{busy?"Создаём купон…":"Подтвердить обмен"}</Button><Button ref={cancelButton} variant="secondary" disabled={busy} onClick={()=>{setSelectedOffer(null);setExchangeError("");}}>Отмена</Button></div></>}
     </dialog>
   </div>;
 }

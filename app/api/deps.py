@@ -37,8 +37,12 @@ async def get_current_user(
     sub = payload.get("sub")
     if not isinstance(sub, str) or not sub.isdigit():
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid token")
-    user = await session.scalar(select(User).where(User.id == int(sub),
-        ~exists().where(RevokedAccessToken.token_hash == token_fingerprint(credentials.credentials))))
+    statement = select(User).where(User.id == int(sub), User.is_active.is_(True),
+        ~exists().where(RevokedAccessToken.token_hash == token_fingerprint(credentials.credentials)))
+    if 'auth_provider' in payload or 'tg_binding_id' in payload:
+        # Password-only Mini App access retires every binding-derived session.
+        raise HTTPException(401, "Войдите заново по логину и паролю")
+    user = await session.scalar(statement)
     if user is None:
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="User not found")
     request.state.read_audit_actor = (user.id, user.role.value)

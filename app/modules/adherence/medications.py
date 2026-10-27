@@ -1,10 +1,11 @@
-from datetime import date, datetime, time, timezone
+from datetime import date, datetime, time, timedelta, timezone
 from zoneinfo import ZoneInfo
 
 from sqlalchemy import select
 
 from app.modules.adherence.medication_models import MedicationItem
 from app.modules.integration.synthetic import linked_snapshot
+from app.core.clinic_time import CLINIC_ZONE, clinic_day_bounds
 
 
 def item_read(row: MedicationItem):
@@ -55,6 +56,27 @@ def occurrences(item, day: date):
             "item_key": item["key"], "scheduled_for": instant, "clock": clock,
             "status": "unknown", "requires_time_confirmation": instant is None, "report": None})
     return result
+
+
+def clinic_occurrences(item, day: date):
+    """Display a clinic day while preserving the source schedule and report keys."""
+    start, end = clinic_day_bounds(day)
+    source_zone = ZoneInfo(item["timezone"])
+    source_day = start.astimezone(source_zone).date()
+    last_day = (end - timedelta(microseconds=1)).astimezone(source_zone).date()
+    result = []
+    while source_day <= last_day:
+        for event in occurrences(item, source_day):
+            instant = event["scheduled_for"]
+            if instant is not None and not start <= instant < end:
+                continue
+            if instant is None and source_day != day:
+                continue
+            result.append({**event, "source_day": source_day.isoformat(), "source_clock": event["clock"],
+                "source_timezone": item["timezone"],
+                "clock": instant.astimezone(CLINIC_ZONE).strftime("%H:%M") if instant is not None else event["clock"]})
+        source_day += timedelta(days=1)
+    return sorted(result, key=lambda event: event["clock"])
 
 
 def log_read(row):

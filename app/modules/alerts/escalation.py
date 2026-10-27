@@ -27,15 +27,15 @@ async def route_due_urgent_alerts(session: AsyncSession, *, now: datetime | None
         DoctorEscalationRoute, DoctorEscalationRoute.doctor_id == User.id).join(
         recipient, recipient.id == DoctorEscalationRoute.coordinator_id).outerjoin(
         CoordinatorNotice, CoordinatorNotice.alert_id == Alert.id).where(
-        Alert.source_kind == "clinical_assessment", Alert.severity == "urgent_review",
+        Alert.source_kind.in_(["clinical_assessment","clinical_scenario"]), Alert.severity.in_(["urgent_review","critical_review"]),
         Alert.status == "created", Alert.acknowledged_at.is_(None),
-        Alert.acknowledgement_due_at.is_not(None), CoordinatorNotice.id.is_(None),
+        CoordinatorNotice.id.is_(None),
         User.role == UserRole.doctor, recipient.role == UserRole.coordinator,
         or_(User.availability.in_(("offline", "on_leave")), Alert.acknowledgement_due_at < now)
     ).order_by(Alert.id).limit(100).with_for_update(of=Alert, skip_locked=True))).all()
     created = 0
     for alert, doctor_id, coordinator_id, revision in rows:
-        reason = "acknowledgement_overdue" if alert.acknowledgement_due_at < now else "doctor_unavailable"
+        reason = "acknowledgement_overdue" if alert.acknowledgement_due_at and alert.acknowledgement_due_at < now else "doctor_unavailable"
         notice_id = await session.scalar(insert(CoordinatorNotice).values(
             alert_id=alert.id, patient_id=alert.patient_id, doctor_id=doctor_id,
             coordinator_id=coordinator_id, route_revision=revision, reason=reason, created_at=now

@@ -1,10 +1,17 @@
 import { useCallback, useEffect, useState } from "react";
 import type { BarrierCategory, Dimension } from "./collection";
+import { isTelegramPath } from "./telegramRuntime";
+
+let telegramCredential:string|null=null;
+export const sessionToken=()=>isTelegramPath()?telegramCredential:sessionStorage.getItem("compass-token");
+export function saveSessionToken(token:string) {if(isTelegramPath())telegramCredential=token;else sessionStorage.setItem("compass-token",token);}
+export function clearSessionToken() {if(isTelegramPath())telegramCredential=null;else sessionStorage.removeItem("compass-token");}
 
 export class ApiError extends Error {
   constructor(
     public status: number,
     message: string,
+    public code?: string,
   ) {
     super(message);
   }
@@ -14,7 +21,7 @@ export async function api<T>(
   path: string,
   options: RequestInit = {},
 ): Promise<T> {
-  const token = sessionStorage.getItem("compass-token");
+  const token = sessionToken();
   let response: Response;
   try {
     response = await fetch(path, {
@@ -33,17 +40,22 @@ export async function api<T>(
   }
   if (!response.ok) {
     let message = "Не удалось выполнить запрос. Повторите попытку.";
+    let code:string|undefined;
     try {
       const body = await response.json();
       if (typeof body.detail === "string") message = body.detail;
+      if(body.detail&&typeof body.detail==="object"&&!Array.isArray(body.detail)) {
+        if(typeof body.detail.message==="string")message=body.detail.message;
+        if(typeof body.detail.code==="string")code=body.detail.code;
+      }
       if (Array.isArray(body.detail))
         message = body.detail.map((e: { msg: string }) => e.msg).join("; ");
     } catch {
       /* A transport error may not contain JSON. */
     }
-    if (response.status === 401 && sessionStorage.getItem("compass-token") === token)
+    if (response.status === 401 && code!=="invalid_credentials" && token && sessionToken() === token)
       window.dispatchEvent(new Event("compass-auth-expired"));
-    throw new ApiError(response.status, message);
+    throw new ApiError(response.status, message,code);
   }
   return response.json() as Promise<T>;
 }
@@ -113,6 +125,7 @@ export type User = {
   role: "doctor" | "patient" | "admin" | "coordinator";
   patient_id: number | null;
   availability: string;
+  scenario_label?:string|null;
 };
 export type Patient = {
   id: number;
@@ -121,6 +134,7 @@ export type Patient = {
   doctor_id: number;
   created_at: string;
   demo_scenario?: string | null;
+  scenario_label?:string|null;
   treatment_status?: string;
   open_tasks?: number;
   in_progress_tasks?: number;
@@ -128,6 +142,7 @@ export type Patient = {
   last_observation_at?: string | null;
   last_observation_source?: "canonical_clinical"|"numeric_demo"|null;
   latest_clinical_result?: {id:number;instrument_key:string;code:string;name:string;version:string;score:number|null;maximum:number|null;criterion_met:boolean|null;created_at:string}|null;
+  scenario_measurement?:{instrument:string;score:number;day:number;version:string|null;created_at:string;source:string;version_confirmed:boolean}|null;
 };
 export type Card = Patient & {
   mis: {
@@ -168,10 +183,12 @@ export type ClinicalResult = {
 export type ClinicalComparison = {result_id:number|null;score:number|null;created_at:string|null;delta:number|null;growth_criterion_met:boolean|null};
 export type ClinicalTriage = {
   rule_version:string; source:string; severity:string; grounds:{code:string;family:string;label:string}[];
+  priority?:"CRITICAL"|"HIGH"|"MEDIUM"|"INFO";response_target?:"immediate"|"urgent"|"working_day"|null;
   action_due_hours:number|null; action_label:string; advisory:string[]; missing_data:string[];
   comparison_previous:ClinicalComparison|null;comparison_baseline:ClinicalComparison|null;immediate_danger_established:boolean;
 };
 export type ReviewTiming = {
+  immediate_action_required?:boolean;
   acknowledgement_due_at:string|null;acknowledgement_state:"accepted"|"late"|"overdue"|"pending"|null;
   action_due_at:string|null;action_completed_at:string|null;action_overdue:boolean;as_of:string;
 };
@@ -225,6 +242,7 @@ export type ChatMessage = {
   channel: string;
   status: string;
   support_requested: boolean;
+  emergency_help?:boolean;
   created_at: string;
 };
 export type Note = {
@@ -268,7 +286,7 @@ export type Alert = {
   reason: string;
   status: string;
   created_at: string;
-  source_kind: "assessment" | "support_request" | "clinical_assessment";
+  source_kind: "assessment" | "support_request" | "clinical_assessment" | "clinical_scenario";
   severity?:string;
   review_timing?:ReviewTiming;
   source_message: {id:number; text:string; created_at:string} | null;
@@ -278,11 +296,16 @@ export type Alert = {
     status: string;
     version: number;
     facts: { form_type: string; score: number|null; risk_flags: string[];triage?:ClinicalTriage;
-      instrument_name?:string;instrument_version?:string;source_url?:string;source_title?:string;clinical_result_id?:number };
+      instrument_name?:string;instrument_version?:string;source_url?:string;source_title?:string;clinical_result_id?:number;
+      system_proposal?:string;case_review?:ScenarioContext };
     missing_data: string[];
     reason: string;
   } | null;
 };
+export type ScenarioContext={source_case_id:string;case_key:string;title:string;day:number;facts:string[];
+  source_file:string|null;source_sha256:string|null;hypothesis:{proposal:string;category:string;missing_data:string[];
+    source?:string;priority?:"CRITICAL"|"HIGH"|"MEDIUM";suggested_actions?:string[];
+    registry_current_verified?:boolean;review_source?:{title:string;url:string|null};drug_source?:{title:string;url:string;document_url:string;registry_current_verified:boolean}}|null};
 export type ChartQuestion = {
   survey_id: number;
   survey_title: string;

@@ -1,0 +1,56 @@
+{
+  "health": {
+    "status": "ok",
+    "compass_db": true,
+    "mis_db": true,
+    "mode": "synthetic_demo"
+  },
+  "entry_status": 200,
+  "auth_required": {
+    "/auth/me": 401,
+    "/patients": 401
+  },
+  "profiles": [
+    {
+      "username": "doctor",
+      "role": "doctor",
+      "scenario_label": null,
+      "patient_id": null,
+      "case_episode_counts": [
+        5,
+        5,
+        3
+      ]
+    },
+    {
+      "username": "patient_aviandr_positive",
+      "role": "patient",
+      "scenario_label": "P008 · Авиандр · динамика EPDS и сопровождение",
+      "patient_id": 11
+    },
+    {
+      "username": "patient_aviandr_interaction",
+      "role": "patient",
+      "scenario_label": "P009 · Авиандр · самостоятельное добавление препарата",
+      "patient_id": 12
+    },
+    {
+      "username": "patient_aviandr_renal",
+      "role": "patient",
+      "scenario_label": "P010 · Авиандр · функция почек и недостающие данные",
+      "patient_id": 13
+    },
+    {
+      "username": "admin",
+      "role": "admin",
+      "scenario_label": null,
+      "patient_id": null
+    },
+    {
+      "username": "coordinator",
+      "role": "coordinator",
+      "scenario_label": null,
+      "patient_id": null
+    }
+  ]
+}

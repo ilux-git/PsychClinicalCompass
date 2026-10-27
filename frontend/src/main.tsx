@@ -5,6 +5,7 @@ import { InteractionProvider } from "./Interaction";
 import "./styles.css";
 import "./workspace.css";
 import "./brand-theme.css";
+import "./telegram.css";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>

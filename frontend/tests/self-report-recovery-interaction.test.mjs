@@ -6,7 +6,7 @@ import {JSDOM} from "jsdom";
 import {createServer} from "vite";
 import {createElement as h} from "react";
 
-let dom,server,Patient,Guard,Interactions,render,screen,cleanup,act,userEvent,unexpected;
+let dom,server,Patient,Guard,Interactions,render,screen,cleanup,act,waitFor,userEvent,unexpected;
 const actor={id:3,display_name:"Учебный пациент",role:"patient",patient_id:2,availability:"available"};
 before(async()=>{
   dom=new JSDOM("<!doctype html><html><body></body></html>",{url:"http://localhost/",pretendToBeVisual:true});
@@ -18,7 +18,7 @@ before(async()=>{
   dom.window.matchMedia=query=>({matches:query.includes("prefers-reduced-motion"),media:query,addListener(){},removeListener(){},addEventListener(){},removeEventListener(){}});
   dom.window.scrollTo=()=>{};dom.window.HTMLElement.prototype.scrollIntoView=()=>{};
   dom.window.HTMLDialogElement.prototype.showModal=function(){this.setAttribute("open","");};dom.window.HTMLDialogElement.prototype.close=function(){this.removeAttribute("open");};
-  ({render,screen,cleanup,act}=await import("@testing-library/react"));({default:userEvent}=await import("@testing-library/user-event"));
+  ({render,screen,cleanup,act,waitFor}=await import("@testing-library/react"));({default:userEvent}=await import("@testing-library/user-event"));
   server=await createServer({root:fileURLToPath(new URL("../",import.meta.url)),server:{middlewareMode:true,hmr:false},appType:"custom"});
   ({PatientHome:Patient}=await server.ssrLoadModule("/src/Patient.tsx"));
   ({NavigationGuard:Guard}=await server.ssrLoadModule("/src/NavigationGuard.tsx"));({InteractionProvider:Interactions}=await server.ssrLoadModule("/src/Interaction.tsx"));
@@ -63,7 +63,7 @@ test('a failed self-report keeps its unknown answer, focuses one local error and
   await user.click(submit);error=await screen.findByRole('alert');assert.equal(document.activeElement,error);assert.equal(screen.getAllByRole('alert').length,1);
   assert.equal(requests.writes.length,2);assert.deepEqual(requests.writes[0],requests.writes[1]);assert.equal(requests.writes[0].status,'unknown');
   requests.enableWrites();await user.click(submit);const saved=await screen.findByRole('heading',{name:'Учебная проверка интерфейса',exact:true});
-  assert.equal(document.activeElement===saved.closest('article'),true,'Successful submission should acknowledge the saved report in history');
+  await waitFor(()=>assert.equal(document.activeElement===saved.closest('article'),true,'Successful submission should acknowledge the saved report in history'));
   assert.equal(requests.writes.length,3);assert.deepEqual(requests.writes[1],requests.writes[2]);
   assert.equal(fields.recommendation.value,'');assert.equal(fields.reason.value,'');assert.equal(document.querySelectorAll('.self-report-form input:checked').length,0);
   assert.equal(screen.queryByRole('alert'),null);assert.equal(notices.length,1);assert.ok(notices.every(n=>n[1]!=='error'));

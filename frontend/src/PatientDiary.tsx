@@ -5,13 +5,14 @@ import { Badge, Button, Empty, ErrorBox, Heading, Loading, Section, date, type N
 import { useUnsavedForm, type LeavePrompt } from "./NavigationGuard";
 import { ParticipationReceipt, type ParticipationConfirmation } from "./ParticipationReceipt";
 import { Disclosure, useInteractionMotion } from "./Interaction";
+import {clinicInputValue,clinicInputToIso} from "./clinicTime";
 
 const diaryPrompt:LeavePrompt={eyebrow:"Несохранённая запись",title:"Вернуться к записи дневника?",message:"Запись ещё не сохранена. При переходе без сохранения текущий текст и выбранные наблюдения будут потеряны.",stayLabel:"Продолжить запись"};
 
 type Entries = {entries: DiaryEntry[]};
 const feelings: Record<string,string> = {very_difficult: "Очень тяжело", difficult: "Тяжело", neutral: "Нейтрально", good: "Хорошо", very_good: "Очень хорошо"};
 const impacts: Record<string,string> = {no_interference: "Не мешало повседневным делам", some_interference: "Частично мешало", strong_interference: "Сильно мешало", cannot_assess: "Не могу оценить"};
-function nowLocal() { const d = new Date(); return new Date(d.getTime() - d.getTimezoneOffset()*60000).toISOString().slice(0,16); }
+function nowLocal() { return clinicInputValue(); }
 function Observation({entry}: {entry: DiaryEntry}) {
   return <><small className="muted">{entry.observed_at ? `Наблюдение: ${date(entry.observed_at)} · ${entry.observation_kind === "day_summary" ? "итог дня" : "в этот момент"}` : "Время наблюдения не указано"} · внесено {date(entry.created_at)}</small>
     {entry.feeling && <p><Badge tone="purple">{feelings[entry.feeling]}</Badge></p>}{entry.daily_impact && <p>{impacts[entry.daily_impact]}</p>}{entry.text && <p className="preserve">{entry.text}</p>}</>;
@@ -58,7 +59,7 @@ export function PatientDiary({patientId, notify, progress}: {patientId: number; 
   const request = useRef({signature: "", id: ""});
   async function save(event: FormEvent) {
     event.preventDefault();
-    const data = {text, shared_with_doctor: shared, observed_at: new Date(observed).toISOString(), observation_kind: kind,
+    const data = {text, shared_with_doctor: shared, observed_at: clinicInputToIso(observed), observation_kind: kind,
       feeling: feeling || null, daily_impact: impact || null};
     const signature = JSON.stringify(data);
     if (request.current.signature !== signature) request.current = {signature, id: createRequestId()};
@@ -96,7 +97,7 @@ export function PatientDiary({patientId, notify, progress}: {patientId: number; 
           <label className="field">Влияние на повседневные дела · необязательно<select value={impact} onChange={e => setImpact(e.target.value)}><option value="">Не отмечаю</option>{Object.entries(impacts).map(([k,v]) => <option key={k} value={k}>{v}</option>)}</select></label>
           <div className="form-grid"><label className="field">Когда наблюдали?<input required type="datetime-local" value={observed} onChange={e => setObserved(e.target.value)} /></label>
           <label className="field">О чём запись?<select value={kind} onChange={e => setKind(e.target.value)}><option value="moment">Состояние в этот момент</option><option value="day_summary">Итог дня</option></select></label></div>
-          <p className="field-hint">Свободное наблюдение, а не диагностическая шкала. Можно выбрать наблюдение или оставить только текст.</p>
+          <p className="field-hint">Время по Москве. Можно выбрать наблюдение или оставить только текст.</p>
         </Disclosure>
         <Button disabled={busy || (!text.trim() && !feeling && !impact)} type="submit">{busy?"Сохраняем…":"Сохранить запись"}</Button>
         </fieldset>

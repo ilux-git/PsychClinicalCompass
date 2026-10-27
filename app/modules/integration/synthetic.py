@@ -6,6 +6,7 @@ from pathlib import Path
 
 from pydantic import BaseModel, ConfigDict, Field, PrivateAttr, model_validator
 from sqlalchemy import select
+from app.modules.assessments.scenarios import scenario_for_mis, scenario_catalog
 
 PATH = Path(os.environ.get("SYNTHETIC_MIS_FIXTURE_PATH", str(Path(__file__).with_name("fixtures") / "mis_v1.json")))
 
@@ -36,9 +37,15 @@ def snapshot() -> Snapshot:
 def patient_snapshot(mis_id: int | None) -> dict:
     data = snapshot()
     patient = data._patients_by_mis.get(mis_id)
+    case=scenario_for_mis(mis_id) if patient is None else None
+    if case:
+        patient={"mis_id":case["mis_id"],"scenario":{"code":case["key"],"title":f'{case["source_id"]} · {case["title"]}',
+            "description":case["history"],"expected_route":"Гипотеза → решение врача → действие → проверка"},
+            "visits":[],"medications":[],"age":case["age"],"sex":case["sex"],"diagnoses":case["diagnoses"],
+            "prescriptions":case["current_prescriptions"],"source":"supplied_scenario_json"}
     # Deep copy: callers must not mutate the cached source.
     return {"source": "synthetic_mis_json", "schema_version": data.schema_version,
-            "as_of": data.as_of, "synthetic": True, "read_only": True,
+            "as_of": scenario_catalog()["as_of"] if case else data.as_of, "synthetic": True, "read_only": True,
             "status": "available" if patient else "not_linked",
             "data": json.loads(json.dumps(patient)) if patient else None,
             "limitations": data.limitations}

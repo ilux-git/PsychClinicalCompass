@@ -1,3 +1,5 @@
+import {surveyTitle} from "./presentation";
+import {ClinicalScenarioPanel,ScenarioHypothesis} from "./ClinicalScenarios";
 import { createRequestId } from "./requestId";
 import { useEffect, useId, useLayoutEffect, useRef, useState, type FormEvent } from "react";
 import {
@@ -41,7 +43,7 @@ import { Chat } from "./Chat";
 import { AssessmentHistory } from "./AssessmentHistory";
 import { ClinicalHistory, type ClinicalResultTarget } from "./ClinicalHistory";
 import { ClinicalCohort } from "./ClinicalCohort";
-import { ClinicalReviewSummary, ReviewDeadlines } from "./ClinicalReview";
+import { ClinicalReviewSummary, ReviewDeadlines, reviewPriority } from "./ClinicalReview";
 import { dimensionLabels, type Dimension } from "./collection";
 import { SharedDiary } from "./PatientDiary";
 import { CareWorkflow, treatmentLabels, type CareSource, type CareTask } from "./CareWorkflow";
@@ -67,17 +69,30 @@ function AlertItem({
   reload,
   openPlan,
   openClinical,
+  focusRequested=false,
+  focusHandled,
 }: {
   alert: Alert;
   notify: Notify;
   reload: () => void;
   openPlan: () => void;
   openClinical: (resultId?:number) => void;
+  focusRequested?:boolean;
+  focusHandled?:()=>void;
 }) {
-  const [reason, setReason] = useState("");
+  const eventCard=useRef<HTMLElement>(null);
+  useLayoutEffect(()=>{
+    if(!focusRequested||!eventCard.current)return;
+    eventCard.current.focus({preventScroll:true});
+    eventCard.current.scrollIntoView({block:"start"});
+    focusHandled?.();
+  },[focusRequested,focusHandled]);
+  const isScenario=alert.source_kind==="clinical_scenario";
+  const initialReason=useRef(isScenario&&alert.decision?.status==="pending_review"?alert.decision.facts.system_proposal??"":"");
+  const [reason, setReason] = useState(initialReason.current);
   const [busy, setBusy] = useState(false);
   const comment=useRef<HTMLTextAreaElement>(null);
-  const {clear,confirm}=useUnsavedForm({dirty:Boolean(reason),pending:busy,prompt:decisionPrompt,scope:cardTabScope,focus:()=>comment.current?.focus()});
+  const {clear,confirm}=useUnsavedForm({dirty:reason!==initialReason.current,pending:busy,prompt:decisionPrompt,scope:cardTabScope,focus:()=>comment.current?.focus()});
   async function act(
     action: "acknowledge" | "confirmed" | "declined" | "close",
   ) {
@@ -90,7 +105,7 @@ function AlertItem({
           expected_version: alert.decision.version,
           reason,
         });
-        setReason("");clear();
+        initialReason.current="";setReason("");clear();
       } else await send(`/alerts/${alert.id}/${action}`, {});
       reload();
       notify("Действие врача сохранено в истории");
@@ -104,7 +119,7 @@ function AlertItem({
     }
   }
   return (
-    <article className="alert-card" aria-busy={busy}>
+    <article ref={eventCard} className="alert-card" aria-busy={busy} tabIndex={-1} data-alert-id={alert.id} aria-label={`Событие #${alert.id}`}>
       <div className="section-heading">
         <Badge tone={alert.status === "closed" ? "good" : alert.decision&&alert.decision.status!=="pending_review" ? "purple" : "warn"}>
           {alert.status === "closed"
@@ -115,11 +130,12 @@ function AlertItem({
               ? "В работе"
               : "Нужна оценка врача"}
         </Badge>
+        {alert.status!=="closed"&&reviewPriority(alert.severity)<2&&<Badge tone="warn">{alert.severity==="critical_review"?"CRITICAL · Немедленная оценка":"Срочный разбор"}</Badge>}
         <small className="muted">{date(alert.created_at)}</small>
       </div>
       <h3>{alert.source_kind==="clinical_assessment"?alert.decision?.facts.instrument_name??"Клинический опросник":alert.reason}</h3>
       <ReviewDeadlines timing={alert.review_timing}/>
-      {alert.source_kind === "support_request" ? <>
+      {isScenario&&alert.decision?.facts.case_review?<ScenarioHypothesis context={alert.decision.facts.case_review}/>:alert.source_kind === "support_request" ? <>
         <p className="field-hint">Источник — явная просьба пациента. Текст не оценивался медицинским классификатором.</p>
         {alert.source_message && <blockquote className="preserve">{alert.source_message.text}<footer>{date(alert.source_message.created_at)} · сообщение #{alert.source_message.id}</footer></blockquote>}
       </> : alert.source_kind==="clinical_assessment"?<>
@@ -136,19 +152,19 @@ function AlertItem({
           <details className="source-help"><summary>Факты и версия правила</summary><p className="field-hint">
             Правило: {alert.rule_id} · {alert.rule_version}. Факты:{" "}
             {alert.decision.facts.instrument_name??alert.decision.facts.form_type.toUpperCase()},{" "}
-            {alert.decision.facts.score===null?"скрининговый критерий без суммы баллов":`${alert.decision.facts.score} балл.`}
+            {alert.decision.facts.score===null?isScenario?"факты клинического сценария":"скрининговый критерий без суммы баллов":`${alert.decision.facts.score} балл.`}
             {alert.decision.facts.risk_flags.includes("phq9_item9_positive") &&
               " Положительный ответ на пункт 9 PHQ-9."}
           </p></details>
           <p className="field-hint">
-            {alert.source_kind==="clinical_assessment"?"Бланк и источник зафиксированы. Требуется отдельная оценка врача; для закрытия события — записанное клиническое действие в связанной задаче.":alert.decision.status === "pending_review"
+            {isScenario?"Исходная гипотеза сохранена отдельно. Одобрение или исправление вывода не меняет терапию и не закрывает событие без записанного действия.":alert.source_kind==="clinical_assessment"?"Бланк и источник зафиксированы. Требуется отдельная оценка врача; для закрытия события — записанное клиническое действие в связанной задаче.":alert.decision.status === "pending_review"
               ? "Не хватает врачебной оценки и согласованного клинического источника правила."
               : "При создании события требовались врачебная оценка и согласованный клинический источник правила."}
           </p>
           {alert.decision.status === "pending_review" ? (
             <>
               <label className="field">
-                Комментарий врача
+                {isScenario?"Вывод врача · можно исправить гипотезу":"Комментарий врача"}
                 <textarea
                   ref={comment}
                   disabled={busy}
@@ -169,15 +185,15 @@ function AlertItem({
                     Взять в работу
                   </Button>
                 )}
-                <Button disabled={busy} onClick={() => act("confirmed")}>
-                  Подтвердить оценку
+                <Button disabled={busy||(isScenario&&!reason.trim())} onClick={() => act("confirmed")}>
+                  {isScenario?(reason.trim()===(alert.decision.facts.system_proposal??"").trim()?"Одобрить гипотезу":"Сохранить исправленный вывод"):"Подтвердить оценку"}
                 </Button>
                 <Button
                   variant="ghost"
-                  disabled={busy}
+                  disabled={busy||(isScenario&&!reason.trim())}
                   onClick={() => act("declined")}
                 >
-                  Отклонить
+                  {isScenario?"Отклонить гипотезу":"Отклонить"}
                 </Button>
               </div>
             </>
@@ -193,15 +209,16 @@ function AlertItem({
               {alert.decision.reason && (
                 <p className="preserve">{alert.decision.reason}</p>
               )}
-              {alert.status !== "closed" && (
+              {alert.status !== "closed" && <>
                 <Button
                   variant="secondary"
-                  disabled={busy}
+                  disabled={busy||((isScenario||alert.source_kind==="clinical_assessment")&&!alert.review_timing?.action_completed_at)}
                   onClick={() => act("close")}
                 >
                   Закрыть событие
                 </Button>
-              )}
+                {(isScenario||alert.source_kind==="clinical_assessment")&&!alert.review_timing?.action_completed_at&&<p className="field-hint">Для закрытия сохраните выполненное клиническое действие в связанной задаче. Назначить действие можно ниже.</p>}
+              </>}
             </>
           )}
           <p className="field-hint">
@@ -209,7 +226,7 @@ function AlertItem({
           </p>
         </>
       )}
-      {reason&&alert.decision?.status!=="pending_review"&&<div className="task-conflict" role="alert"><p>Событие уже оценено в другой сессии. Ваш комментарий не отправлен и остаётся здесь для копирования. Сохранённое решение показано выше.</p><label className="field">Ваш неотправленный комментарий<textarea ref={comment} rows={4} value={reason} readOnly/></label><Button variant="secondary" onClick={()=>confirm(()=>{setReason("");clear();},clearCommentPrompt)}>Очистить мой комментарий</Button></div>}
+      {reason&&reason!==initialReason.current&&alert.decision?.status!=="pending_review"&&<div className="task-conflict" role="alert"><p>Событие уже оценено в другой сессии. Ваш комментарий не отправлен и остаётся здесь для копирования. Сохранённое решение показано выше.</p><label className="field">Ваш неотправленный комментарий<textarea ref={comment} rows={4} value={reason} readOnly/></label><Button variant="secondary" onClick={()=>confirm(()=>{setReason("");clear();},clearCommentPrompt)}>Очистить мой комментарий</Button></div>}
       {!!alert.actions?.length && <div className="event-action-result">{alert.actions.map(action=><div key={action.task_id}><strong>Задача #{action.task_id}: {action.title}</strong><p>{action.status === "done" ? "Действие выполнено; результат проверяется отдельно" : action.status === "in_progress" ? "Задача в работе" : "Задача назначена"}{action.reply_message_id ? " · ответ пациенту сохранён" : ""}</p></div>)}</div>}
       {alert.status !== "closed" && <>
         <Disclosure lazy title={alert.actions?.length ? "Действия по событию" : "Назначить действие по событию"}><EventAction alertId={alert.id} notify={notify} done={reload} scope={cardTabScope}/></Disclosure>
@@ -255,6 +272,7 @@ function PatientCard({
   const alerts = useApi<Alert[]>(`/alerts?patient_id=${patientId}`, 15000);
   const surveys = useApi<Survey[]>("/surveys");
   const [tab, setTab] = useState<CardTab>(initialTab);
+  const [eventTarget,setEventTarget]=useState<number|null>(null);
   const [clinicalTarget,setClinicalTarget]=useState<ClinicalResultTarget|null>(null);
   useLayoutEffect(()=>setTab(initialTab),[initialTab]);
   const [noteText, setNoteText] = useState("");
@@ -307,6 +325,9 @@ function PatientCard({
     setNoteError("");setSource(value);
   }
   function changeTab(next:CardTab) {if(next!==tab)guard.runFor(()=>{setTab(next);onTabChange?.(next);},cardTabScope);}
+  function openScenarioEvent(alertId:number) {
+    guard.runFor(()=>{setEventTarget(alertId);setTab("events");onTabChange?.("events");},cardTabScope);
+  }
   function showClinicalResult(id?:number) {
     guard.runFor(()=>{setClinicalTarget(current=>id?{id,request:(current?.request??0)+1}:null);setTab("clinical");onTabChange?.("clinical");},cardTabScope);
   }
@@ -406,8 +427,9 @@ function PatientCard({
             <div>
               <p className="eyebrow">Карточка пациента · #{p.id}</p>
               <h1>{p.full_name}</h1>
+              {p.scenario_label&&<p className="scenario-label">Сценарий: {p.scenario_label}</p>}
               <p className="muted">
-                Синтетический пациент · источник МИС #{p.mis_id}
+                Источник МИС #{p.mis_id}
               </p>
             </div>
             <Badge tone="purple">Ваш пациент</Badge>
@@ -424,7 +446,7 @@ function PatientCard({
                   ["care", "План и задачи"],
                   ["events", "События"],
                   ["medications", "Расписание лекарств"],
-                  ["chat", simulated ? "Telegram · симулятор" : "Диалог"],
+                  ["chat", simulated ? "Чат" : "Диалог"],
                   ["clinical", "История состояния"],
                 ].map(([key, label]) => (
                   <button
@@ -471,7 +493,7 @@ function PatientCard({
                     {initialAnswer&&answerAssignment&&<div className="answer-source-context"><FileText size={18}/><span>В карточке выделен ответ, выбранный в аналитике.</span><Button variant="ghost" onClick={focusSelectedAnswer}>Показать выбранный ответ</Button></div>}
                     {initialAnswer&&assignments.data&&!answerAssignment&&<p className="subtle-notice" role="status">Выбранный ответ не найден в доступных назначениях. Можно повторить загрузку или вернуться в аналитику.</p>}
                     <div ref={assignErrorResult} id={assignErrorId}><ErrorBox message={assignError}/></div>
-                    {selectedSurvey&&<p className="field-hint" id={assignSelectionId}>Выбран опрос «{selectedSurvey.title}». Версия {selectedSurvey.version}. Вопросов: {selectedSurvey.questions.length}.</p>}
+                    {selectedSurvey&&<p className="field-hint" id={assignSelectionId}>Выбран опрос «{surveyTitle(selectedSurvey.title)}». Версия {selectedSurvey.version}. Вопросов: {selectedSurvey.questions.length}.</p>}
                     <div className="quick-assign">
                       <label className="sr-only" htmlFor="quick-survey">
                         Опрос для назначения
@@ -488,7 +510,7 @@ function PatientCard({
                           ?.filter((s) => s.published_at)
                           .map((s) => (
                             <option key={s.id} value={s.id}>
-                              {s.title} · v{s.version}
+                              {surveyTitle(s.title)} · v{s.version}
                             </option>
                           ))}
                       </select>
@@ -514,7 +536,7 @@ function PatientCard({
                         >
                           <header className="assignment-result-heading">
                             <div>
-                              <h3>{assignment.survey.title}</h3>
+                              <h3>{surveyTitle(assignment.survey.title)}</h3>
                               <p className="assignment-result-meta">{assignment.submission?`Ответ от ${date(assignment.submission.created_at)}`:`Назначен ${date(assignment.created_at)}`}<span aria-hidden="true"> · </span>Версия {assignment.survey.version}</p>
                             </div>
                             <div className="assignment-result-status"><Badge tone={assignment.submission?"good":"muted"}>{assignment.submission?"Ответ получен":"Ждём ответа"}</Badge>{assignment.id===answerAssignment?.id&&<Badge tone="purple">Из аналитики</Badge>}</div>
@@ -602,7 +624,7 @@ function PatientCard({
                 <Section
                   title={
                     simulated
-                      ? "Канал Telegram · симулятор"
+                      ? "Чат"
                       : "Диалог с пациентом"
                   }
                 >
@@ -621,6 +643,7 @@ function PatientCard({
               )}
               {tab === "clinical" && (
                 <>
+                  {p.scenario_label&&<ClinicalScenarioPanel key={patientId} patientId={patientId} openEvents={openScenarioEvent}/>}
                   <Section title="Клинические опросники">
                       <ClinicalHistory patientId={patientId} doctor scope={cardTabScope} target={clinicalTarget}/>
                       <ErrorBox message={history.error} retry={history.reload} />
@@ -631,7 +654,7 @@ function PatientCard({
                     )}
                   </Section>
                   <SharedDiary patientId={patientId} onSource={startTask} />
-                  <Section
+                  {!p.scenario_label&&<Section
                     title="Данные из МИС"
                     aside={
                       <Badge
@@ -670,7 +693,7 @@ function PatientCard({
                         отсутствие диагнозов или назначений.
                       </p>
                     )}
-                  </Section>
+                  </Section>}
                 </>
               )}
               {tab === "events" && (
@@ -682,7 +705,7 @@ function PatientCard({
                     ) : !alerts.data.length ? (
                       <Empty title="Событий пока нет" />
                     ) : (
-                      alerts.data.map((alert) => (
+                      [...alerts.data].sort((a,b)=>Number(a.status==="closed")-Number(b.status==="closed")||reviewPriority(a.severity)-reviewPriority(b.severity)||b.id-a.id).map((alert) => (
                         <AlertItem
                           key={alert.id}
                           alert={alert}
@@ -690,6 +713,8 @@ function PatientCard({
                           reload={alerts.reload}
                           openPlan={()=>startTask({type:"alert",id:alert.id,label:"Событие пациента"})}
                           openClinical={showClinicalResult}
+                          focusRequested={eventTarget===alert.id}
+                          focusHandled={()=>setEventTarget(null)}
                         />
                       ))
                     )}
@@ -800,7 +825,7 @@ export function DoctorPatients({
   openClinicalLibrary,
 }: {
   selected: number | null;
-  onSelect: (id: number | null) => void;
+  onSelect: (id: number | null, entry?:CardTab) => void;
   notify: Notify;
   simulated?: boolean;
   initialTab?: CardTab;
@@ -825,7 +850,7 @@ export function DoctorPatients({
         key={`${selected}-${simulated}`}
         patientId={selected}
         back={back??(()=>onSelect(null))}
-        backLabel={backLabel??(scope==="state"?"К динамике состояния":scope==="telegram"?"К списку симулятора":"К списку пациентов")}
+        backLabel={backLabel??(scope==="state"?"К динамике состояния":scope==="telegram"?"К списку чатов":"К списку пациентов")}
         notify={notify}
         simulated={simulated}
         initialTab={initialTab}
@@ -865,15 +890,15 @@ export function DoctorPatients({
               data-return-key={`directory-${p.id}`}
               key={p.id}
               disabled={patients.loading || search !== query.trim()}
-              onClick={() => onSelect(p.id)}
+              onClick={() => onSelect(p.id,p.scenario_label&&scope==="patients"?"clinical":undefined)}
             >
-              <div className="directory-person"><Avatar name={p.full_name} small/><div><strong>{p.full_name}</strong><small>{p.demo_scenario ?? `Учебная карточка #${p.id}`}</small></div></div>
+              <div className="directory-person"><Avatar name={p.full_name} small/><div><strong>{p.full_name}</strong><small>{p.demo_scenario ?? `Карточка #${p.id}`}</small></div></div>
               <div className="directory-status"><Badge tone={p.treatment_status === "completed" ? "good" : "muted"}>{treatmentLabels[p.treatment_status ?? "unknown"]}</Badge></div>
               <div className="directory-signals"><span>{(p.pending_events ?? 0)>0?<Badge tone="warn">События: {p.pending_events}</Badge>:"Нет открытых событий"}</span><small>Задачи: {p.open_tasks ?? 0} назначено · {p.in_progress_tasks ?? 0} в работе</small></div>
               <div className={`directory-date ${p.latest_clinical_result?"has-clinical":""}`}>{p.latest_clinical_result?<>
                 <span>{p.latest_clinical_result.code} · {p.latest_clinical_result.score!==null?`${p.latest_clinical_result.score} / ${p.latest_clinical_result.maximum}`:p.latest_clinical_result.criterion_met===true?"Критерий выполнен":p.latest_clinical_result.criterion_met===false?"Критерий не выполнен":"Критерий неизвестен"}</span>
                 <small>{date(p.latest_clinical_result.created_at)}</small><small>{p.latest_clinical_result.version}</small>
-              </>:<><span>{p.last_observation_at ? date(p.last_observation_at) : "Нет измерений"}</span><small>{p.last_observation_at?"Числовой демо-результат":"Опросники состояния"}</small></>}</div>
+              </>:p.scenario_measurement?<><span>{p.scenario_measurement.instrument} · {p.scenario_measurement.score} / 30</span><small>{date(p.scenario_measurement.created_at)}</small><small>Переданная история · версия не указана</small></>:<><span>{p.last_observation_at ? date(p.last_observation_at) : "Нет измерений"}</span><small>{p.last_observation_at?"Предыдущая версия шкалы":"Опросники состояния"}</small></>}</div>
               <ChevronRight size={18}/>
             </button>
           ))}

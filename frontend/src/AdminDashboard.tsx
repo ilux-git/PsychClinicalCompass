@@ -8,6 +8,8 @@ import { CoverageGrid, HorizontalBars } from "./Charts";
 import { navigationFor } from "./navigation";
 import { verificationProgress } from "./careProgress";
 
+const sourceLabels:Record<string,string>={visits:"Визиты и назначения из МИС",medication_reminders:"Личные расписания и самоотчёты"};
+
 type Protected<T> = {suppressed: boolean; reason: string | null; values: T | null};
 type Clinic = {
   status: string;
@@ -75,7 +77,7 @@ export function AdminDashboard({view="overview",navigate}: {view?:string;navigat
           <HorizontalBars title="Наблюдаемое прохождение опросов" unit="опросов" rows={[{label:"Назначено",value:d.journey.values.assigned},{label:"Открытие зафиксировано",value:d.journey.values.opened},{label:"Завершено, включая старые ответы",value:d.journey.values.completed}]} caption="Открытия измерялись не у всех старых ответов; этот график не является вложенной воронкой конверсии."/>
           <p>Открыты без ответа: {d.journey.values.opened_not_completed}. Завершены без измеренного открытия: {d.journey.values.completed_without_open_record}.</p>
           <p>Медиана от назначения: {elapsed(d.journey.values.assignment_to_completion.median_seconds)}; от открытия: {elapsed(d.journey.values.open_to_completion.median_seconds)}.</p>
-          {(d.journey.values.timing_excluded_generated??0)>0&&<p className="field-hint">Из расчёта времени исключены сгенерированные примеры: {d.journey.values.timing_excluded_generated}. Осталось завершений для оценки времени: {d.journey.values.timing_eligible_completed}. Общие числа опросов включают оба источника.</p>}
+          {(d.journey.values.timing_excluded_generated??0)>0&&<p className="field-hint">Не включены в расчёт времени: {d.journey.values.timing_excluded_generated}. Завершений для оценки времени: {d.journey.values.timing_eligible_completed}. Общие числа опросов включают обе группы.</p>}
         </> : <p className="muted">{d.status === "privacy_not_configured" ? "Показ появится после настройки групп." : hidden}</p>}
         <p className="field-hint">Назначение не доказывает доставку. Интервалы включают перерывы; скорость ответа не является оценкой заинтересованности.</p>
       </Section>
@@ -115,8 +117,7 @@ export function AdminDashboard({view="overview",navigate}: {view?:string;navigat
       {view === "sources" && <>
       <PrivacySettings reload={report.reload}/>
       <Section title="Источники данных">
-        <p className="field-hint">Внешняя МИС не подключена; визиты/назначения предоставлены синтетическими JSON.</p>
-        {d.sources.map((source) => <p key={source.code}><Badge tone={source.status === "available" ? "good" : "muted"}>{source.status === "available" ? "Данные приложения" : source.status === "synthetic_json" ? "Синтетический JSON" : source.status === "in_app_simulation" ? "Симуляция" : source.status.includes("excluded") ? "Отдельный доступ" : "Не подключён"}</Badge> {source.label}</p>)}
+        {d.sources.map((source) => <p key={source.code}><Badge tone={source.status === "available" ? "good" : "muted"}>{source.status === "available" ? "Данные приложения" : source.status === "synthetic_json" ? "МИС · JSON" : source.status === "in_app_simulation" ? "В приложении" : source.status.includes("excluded") ? "Отдельный доступ" : "Не подключён"}</Badge> {sourceLabels[source.code]??source.label}</p>)}
       </Section>
       </>}
       {view === "actions" && <Section title="Действия и исходы помощи">{d.workflow?.values ? <WorkflowValuesView d={d.workflow.values} includeContinuity={false}/> : <p className="muted">{d.status === "privacy_not_configured" ? "Настройте правила публикации в разделе «Данные и приватность»." : hidden}</p>}</Section>}

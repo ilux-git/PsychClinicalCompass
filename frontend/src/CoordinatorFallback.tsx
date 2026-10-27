@@ -1,3 +1,4 @@
+import {accountName} from "./presentation";
 import { useEffect, useRef, useState, type FormEvent } from "react";
 import { ApiError, api, send, useApi } from "./api";
 import { Badge, Button, date, Empty, ErrorBox, Heading, Loading } from "./UI";
@@ -48,13 +49,13 @@ export function DoctorEscalationSettings() {
     <label className="field">Резервный координатор<select ref={select} disabled={busy} value={value} onChange={event=>{setDraft({value:event.target.value,revision:draft?.revision??current.revision});setStatus("");}}>
       <option value="">Не передавать координатору</option>
       {value&&!known&&<option value={value}>Сохранённый получатель недоступен в списке</option>}
-      {current.coordinators.map(item=><option key={item.id} value={item.id}>{item.name}</option>)}
+      {current.coordinators.map(item=><option key={item.id} value={item.id}>{accountName(item.name)}</option>)}
     </select></label>
     <p>Передача касается ещё не принятых срочных клинических событий, когда врач недоступен или в отпуске, либо истёк исходный срок принятия. Статус «Занят» сам по себе передачу не включает.</p>
     <p className="field-hint">Сейчас не принятых срочных событий: {current.waiting_urgent}. Изменение применяется к ещё не переданным событиям. Ранее переданные остаются у прежнего получателя. ФИО пациента, ответы, баллы и доступ к карточке не передаются.</p>
     <div className="button-row">{conflict&&<Button type="button" variant="secondary" disabled={busy} onClick={refresh}>Обновить маршрут</Button>}<Button disabled={busy||conflict||!dirty||Boolean(value&&!known)}>{busy?"Сохраняем…":"Сохранить маршрут"}</Button></div>
     {status&&<p className="coordination-status" role="status" tabIndex={-1} ref={result}>{status}</p>}
-    {current.recent_notices.length>0&&<details className="source-help"><summary>Последние передачи координатору</summary><ul className="coordination-recent">{current.recent_notices.map(item=><li key={item.id}><strong>Пациент #{item.patient_id}</strong><span>{noticeLabels[item.state]??item.state}</span><span>{date(item.created_at)} · {current.coordinators.find(person=>person.id===item.coordinator_id)?.name??`координатор #${item.coordinator_id}`}</span></li>)}</ul></details>}
+    {current.recent_notices.length>0&&<details className="source-help"><summary>Последние передачи координатору</summary><ul className="coordination-recent">{current.recent_notices.map(item=><li key={item.id}><strong>Пациент #{item.patient_id}</strong><span>{noticeLabels[item.state]??item.state}</span><span>{date(item.created_at)} · {accountName(current.coordinators.find(person=>person.id===item.coordinator_id)?.name??`координатор #${item.coordinator_id}`)}</span></li>)}</ul></details>}
   </form>;
 }
 

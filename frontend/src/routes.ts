@@ -1,4 +1,5 @@
 import { defaultView, navigationFor, type CardTab } from "./navigation.ts";
+import { applicationBase } from "./telegramRuntime.ts";
 
 export type WorkspaceRoute={view:string;patientId:number|null;cardTab:CardTab;assignmentId:number|null};
 export type RouteContext={origin?:{view:string;key:string};answer?:{assignmentId:number;submissionId:number;questionId:string};returnPoint?:{scope:string;key:string}};
@@ -15,11 +16,11 @@ export function readRoute(role:string,href:string):WorkspaceRoute {
   const assignmentId=role==="patient"&&["overview","surveys"].includes(view)?positiveId(params.get("assignment")):null;
   return {view,patientId,cardTab,assignmentId};
 }
-export function routeHref(route:WorkspaceRoute) {
+export function routeHref(route:WorkspaceRoute,basePath="/") {
   const params=new URLSearchParams({section:route.view});
   if(route.patientId!==null){params.set("patient",String(route.patientId));params.set("tab",route.cardTab);}
   if(route.assignmentId!==null)params.set("assignment",String(route.assignmentId));
-  return `/?${params}`;
+  return `${basePath==="/tg"?"/tg":"/"}?${params}`;
 }
 export function pageRoute(role:string,view:string) {return readRoute(role,`/?section=${encodeURIComponent(view)}`);}
 
@@ -28,6 +29,8 @@ export type LocationPort={href:()=>string;state:()=>unknown;push:(state:unknown,
 
 /** Compensate a native traversal before asking about drafts; cancel keeps both URL and form. */
 export function createWorkspaceHistory({role,owner,port,approve,apply}:{role:string;owner:number;port:LocationPort;approve:(action:()=>void,target:WorkspaceRoute)=>void;apply:(route:WorkspaceRoute,context:RouteContext)=>void}) {
+  const basePath=applicationBase(new URL(port.href(),"http://compass.local").pathname);
+  const href=(route:WorkspaceRoute)=>routeHref(route,basePath);
   function cleanContext(value:RouteContext|undefined):RouteContext {
     if(!value||typeof value!=="object")return {};
     const known=(view:unknown)=>typeof view==="string"&&navigationFor(role).some(item=>item.id===view);
@@ -46,12 +49,12 @@ export function createWorkspaceHistory({role,owner,port,approve,apply}:{role:str
   }
   const prior=entry(port.state());
   const foreign=Boolean(port.state()&&typeof port.state()==="object"&&"compassNavigation" in (port.state() as object)&&!prior);
-  let current={route:readRoute(role,foreign?routeHref(pageRoute(role,defaultView(role))):port.href()),entry:prior??{owner,index:0,context:{}}};
+  let current={route:readRoute(role,foreign?href(pageRoute(role,defaultView(role))):port.href()),entry:prior??{owner,index:0,context:{}}};
   let restoring:{route:WorkspaceRoute;entry:HistoryEntry}|null=null;
   let replaying=false,disposed=false;
   const state=(value:HistoryEntry)=>({compassNavigation:value});
   function render(next:typeof current) {current=next;apply(next.route,next.entry.context);}
-  port.replace(state(current.entry),routeHref(current.route));
+  port.replace(state(current.entry),href(current.route));
   apply(current.route,current.entry.context);
   const stop=port.listen(()=>{
     if(disposed)return;
@@ -68,19 +71,19 @@ export function createWorkspaceHistory({role,owner,port,approve,apply}:{role:str
       port.go(current.entry.index-nextEntry.index);
       return;
     }
-    if(nextEntry&&routeHref(nextRoute)===routeHref(current.route))return;
+    if(nextEntry&&href(nextRoute)===href(current.route))return;
     // A same-document entry from outside this workspace has no trustworthy traversal index.
-    port.replace(state(current.entry),routeHref(current.route));
+    port.replace(state(current.entry),href(current.route));
     const safeTarget=nextEntry?nextRoute:pageRoute(role,defaultView(role));
-    approve(()=>{if(disposed)return;const next={route:safeTarget,entry:{...current.entry,context:{}}};port.replace(state(next.entry),routeHref(next.route));render(next);},safeTarget);
+    approve(()=>{if(disposed)return;const next={route:safeTarget,entry:{...current.entry,context:{}}};port.replace(state(next.entry),href(next.route));render(next);},safeTarget);
   });
   return {
     push(route:WorkspaceRoute,context:RouteContext={}) {
       if(disposed||restoring||replaying)return;
-      const normalized=readRoute(role,routeHref(route));
-      if(routeHref(normalized)===routeHref(current.route)&&JSON.stringify(context)===JSON.stringify(current.entry.context))return;
+      const normalized=readRoute(role,href(route));
+      if(href(normalized)===href(current.route)&&JSON.stringify(context)===JSON.stringify(current.entry.context))return;
       const next={route:normalized,entry:{owner,index:current.entry.index+1,context:cleanContext(context)}};
-      port.push(state(next.entry),routeHref(normalized));render(next);
+      port.push(state(next.entry),href(normalized));render(next);
     },
     current:()=>current,
     dispose(){disposed=true;stop();},

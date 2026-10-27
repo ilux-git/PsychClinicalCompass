@@ -5,6 +5,7 @@ import httpx
 import pytest
 import pytest_asyncio
 from sqlalchemy.ext.asyncio import AsyncSession
+from sqlalchemy import text
 
 os.environ.setdefault("COMPASS_DATABASE_URL", "postgresql+asyncpg://unused@127.0.0.1:1/compass_test")
 os.environ.setdefault("MIS_DATABASE_URL", "postgresql+asyncpg://unused@127.0.0.1:1/mis_test")
@@ -51,6 +52,8 @@ async def accounts(database):
             session.add(patient)
             await session.flush()
             session.add(PatientMapping(compass_patient_id=patient.id, mis_id=i))
+        # Explicit fixture IDs do not advance PostgreSQL's native sequence.
+        await session.execute(text("SELECT setval(pg_get_serial_sequence('patients','id'), (SELECT max(id) FROM patients), true)"))
         await session.commit()
     return users
 

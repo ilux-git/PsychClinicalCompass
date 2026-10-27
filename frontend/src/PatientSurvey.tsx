@@ -1,3 +1,4 @@
+import {surveyDescription,surveyTitle} from "./presentation";
 import { useEffect, useRef, useState, type FormEvent } from "react";
 import { ArrowLeft, ChevronRight, LockKeyhole, Save, Send, Sparkles } from "lucide-react";
 import { api, ApiError, send, type Assignment } from "./api";
@@ -98,7 +99,7 @@ export function AssignedSurvey({ assignment:initialAssignment, done, progress, n
     <button className="back-link" disabled={Boolean(action)} onClick={()=>guard.run(done)}><ArrowLeft size={16}/> Опросы врача</button>
     <section className="panel patient-form" ref={formRef}>
       <div className="survey-form-meta"><Badge tone={assignment.submission?"good":"purple"}>{assignment.submission?"Ответ отправлен":`${assignment.survey.questions.length} вопр.`}</Badge><span>Версия {assignment.survey.version}{assignment.due_at?` · до ${date(assignment.due_at)}`:""}</span></div>
-      <h1>{assignment.survey.title}</h1><p className="lede">{assignment.survey.description}</p>
+      <h1>{surveyTitle(assignment.survey.title)}</h1><p className="lede">{surveyDescription(assignment.survey.description)}</p>
       {assignment.survey.clinical_instrument&&<InstrumentSource definition={assignment.survey.clinical_instrument}/>}
       {assignment.submission?<><AnswerSummary questions={assignment.survey.questions} answers={assignment.submission.answers}/><p className="field-hint">Отправлено {date(assignment.submission.created_at)}. Для нового ответа врач может назначить ещё один опрос.</p></>:
         !draft?<><ErrorBox message={draftError} retry={()=>setLoadRevision(v=>v+1)}/>{!draftError&&<Loading/>}</>:

@@ -1,10 +1,10 @@
 """Fixed all-clinic aggregates; never return arbitrary clinical/free-text fields."""
-from collections import Counter, defaultdict
+from collections import Counter, defaultdict, namedtuple
 
 from sqlalchemy import select
 
 from app.modules.adherence.models import AdherenceReport
-from app.modules.analytics.collection import dimension_coverage, generated_submission_ids, seconds_between, survey_journey
+from app.modules.analytics.collection import dimension_coverage, dimension_observations, generated_submission_ids, seconds_between, survey_journey
 from app.modules.analytics.dimensions import BARRIER_CATEGORIES, DIMENSIONS
 from app.modules.patients.models import Patient
 from app.modules.surveys.models import Survey, SurveyAssignment, SurveySubmission
@@ -22,6 +22,9 @@ SOURCES = [
     {"code": "wearables", "status": "not_connected", "label": "Носимые устройства: нет реального подключения"},
     {"code": "apple_state_of_mind", "status": "not_connected", "label": "Apple Health / HealthKit: выбран первым источником, подключение запланировано"},
 ]
+
+_Assignment = namedtuple('_Assignment', 'id survey_id patient_id created_at due_at first_opened_at')
+_Submission = namedtuple('_Submission', 'id answers created_at')
 
 
 def protect(values, contributor_sets, population, minimum):
@@ -43,9 +46,14 @@ async def clinic_summary(session, minimum: int | None):
     if minimum is None:
         return report
     population = set((await session.scalars(select(Patient.id))).all())
-    assignments = (await session.execute(select(SurveyAssignment, SurveySubmission).join(
+    # Aggregate-only facts need no ORM identity state, relationship loaders or private draft fields.
+    facts = (await session.execute(select(SurveyAssignment.id, SurveyAssignment.survey_id,
+        SurveyAssignment.patient_id, SurveyAssignment.created_at, SurveyAssignment.due_at,
+        SurveyAssignment.first_opened_at, SurveySubmission.id, SurveySubmission.answers,
+        SurveySubmission.created_at).join(
         Survey, Survey.id == SurveyAssignment.survey_id).outerjoin(
         SurveySubmission, SurveySubmission.assignment_id == SurveyAssignment.id))).all()
+    assignments = [(_Assignment(*row[:6]), _Submission(*row[6:]) if row[6] is not None else None) for row in facts]
     # Published definitions are immutable. Fetch each once instead of decoding its
     # JSON again for every assignment; retain the original inner/outer join rows.
     survey_ids = {assignment.survey_id for assignment, _ in assignments}
@@ -54,15 +62,10 @@ async def clinic_summary(session, minimum: int | None):
     rows = [(assignment, surveys[assignment.survey_id], response) for assignment, response in assignments]
     generated_ids = await generated_submission_ids(session, rows)
     report["cohort"] = protect({"patients": len(population)}, [population], population, minimum)
-    for dimension in dimension_coverage(rows, population):
+    observations = dimension_observations(rows)
+    for dimension in dimension_coverage(rows, population, observations=observations):
         code = dimension["code"]
-        assigned, responded = set(), set()
-        for assignment, survey, response in rows:
-            for question in survey.questions:
-                if question.get("dimension") == code:
-                    assigned.add(assignment.patient_id)
-                    if response and question["id"] in response.answers:
-                        responded.add(assignment.patient_id)
+        assigned, responded = observations[code]["assigned"], observations[code]["responded"]
         report["dimensions"].append({"code": code, "label": dimension["label"],
             **protect({key: value for key, value in dimension.items() if key not in {"code", "label", "inferred_score"}},
                       [assigned, responded, assigned - responded, population - assigned], population, minimum)})
@@ -92,17 +95,22 @@ async def clinic_summary(session, minimum: int | None):
 
     categories, category_people, barrier_people = Counter(), defaultdict(set), set()
     question_groups = {}
+    eligible_questions = {key: [(position, question) for position, question in enumerate(survey.questions, 1)
+        if question.get("dimension") in DIMENSIONS] for key, survey in surveys.items()}
     for assignment, survey, response in rows:
         if response is None:
             continue
-        for position, question in enumerate(survey.questions, 1):
+        for position, question in eligible_questions[survey.id]:
             answer = response.answers.get(question["id"])
             if answer is None or question.get("dimension") not in DIMENSIONS:
                 continue
             key = (survey.id, position)
-            item = question_groups.setdefault(key, {"reference": f"S{survey.id}/V{survey.version}/Q{position}",
-                "dimension": question["dimension"], "kind": question["kind"], "people": set(),
-                "counts": Counter(), "buckets": defaultdict(set)})
+            item = question_groups.get(key)
+            if item is None:
+                item = {"reference": f"S{survey.id}/V{survey.version}/Q{position}",
+                    "dimension": question["dimension"], "kind": question["kind"], "people": set(),
+                    "counts": Counter(), "buckets": defaultdict(set)}
+                question_groups[key] = item
             item["people"].add(assignment.patient_id)
             if question["kind"] == "scale":
                 item["counts"][str(answer)] += 1

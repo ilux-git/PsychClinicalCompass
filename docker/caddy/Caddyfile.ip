@@ -1,0 +1,15 @@
+{
+	admin off
+	default_sni {$PUBLIC_HOST}
+}
+
+{$PUBLIC_HOST} {
+	# Public IP certificates require an explicit public issuer and the short-lived profile.
+	tls {
+		issuer acme https://acme-v02.api.letsencrypt.org/directory {
+			profile shortlived
+		}
+	}
+	encode zstd gzip
+	reverse_proxy app:8000
+}

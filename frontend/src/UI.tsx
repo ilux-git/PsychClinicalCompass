@@ -1,6 +1,7 @@
 "use client";
 
 import type { ReactNode } from "react";
+import {clinicTimeZone} from "./clinicTime";
 import type { HTMLMotionProps } from "motion/react";
 import { m, motionTokens, useInteractionMotion } from "./Interaction";
 import {
@@ -17,6 +18,7 @@ export const date = (value: string | null | undefined) =>
         month: "short",
         hour: "2-digit",
         minute: "2-digit",
+        timeZone:clinicTimeZone,
       })
     : "Без срока";
 export const plural = (n: number, one: string, few: string, many: string) =>

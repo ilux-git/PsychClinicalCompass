@@ -30,5 +30,6 @@ class MessageRead(BaseModel):
     status: str
     channel: str
     support_requested: bool
+    emergency_help: bool = False
     external_message_id: str | None
     created_at: datetime

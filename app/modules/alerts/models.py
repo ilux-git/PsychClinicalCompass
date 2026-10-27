@@ -10,9 +10,10 @@ from app.db.base import Base
 class Alert(Base):
     __tablename__ = "alerts"
     __table_args__ = (CheckConstraint(
-        "(source_kind = 'assessment' AND assessment_id IS NOT NULL AND message_id IS NULL AND clinical_result_id IS NULL) OR "
-        "(source_kind = 'support_request' AND message_id IS NOT NULL AND assessment_id IS NULL AND clinical_result_id IS NULL) OR "
-        "(source_kind = 'clinical_assessment' AND clinical_result_id IS NOT NULL AND assessment_id IS NULL AND message_id IS NULL)",
+        "(source_kind = 'assessment' AND assessment_id IS NOT NULL AND message_id IS NULL AND clinical_result_id IS NULL AND scenario_episode_id IS NULL) OR "
+        "(source_kind = 'support_request' AND message_id IS NOT NULL AND assessment_id IS NULL AND clinical_result_id IS NULL AND scenario_episode_id IS NULL) OR "
+        "(source_kind = 'clinical_assessment' AND clinical_result_id IS NOT NULL AND assessment_id IS NULL AND message_id IS NULL AND scenario_episode_id IS NULL) OR "
+        "(source_kind = 'clinical_scenario' AND scenario_episode_id IS NOT NULL AND clinical_result_id IS NULL AND assessment_id IS NULL AND message_id IS NULL)",
         name="ck_alert_source"),)
 
     id: Mapped[int] = mapped_column(primary_key=True)
@@ -21,6 +22,7 @@ class Alert(Base):
     assessment_id: Mapped[int | None] = mapped_column(ForeignKey("questionnaire_responses.id"))
     message_id: Mapped[int | None] = mapped_column(ForeignKey("messages.id"), index=True)
     clinical_result_id: Mapped[int | None] = mapped_column(ForeignKey("clinical_results.id"))
+    scenario_episode_id: Mapped[int | None] = mapped_column(ForeignKey("clinical_scenario_episodes.id"))
     source_kind: Mapped[str] = mapped_column(String(24), nullable=False, default="assessment", server_default="assessment")
     rule_id: Mapped[str] = mapped_column(String(80), nullable=False)
     rule_version: Mapped[str] = mapped_column(String(32), nullable=False)

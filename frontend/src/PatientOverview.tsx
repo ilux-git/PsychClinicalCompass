@@ -1,3 +1,4 @@
+import {surveyDescription,surveyTitle} from "./presentation";
 import { useRef, useState } from "react";
 import { ArrowRight, BookOpen, CalendarDays, Check, ChevronRight, ClipboardCheck, Gift, MessageCircle, Pill } from "lucide-react";
 import { useApi, type Assignment, type Card, type User } from "./api";
@@ -8,6 +9,7 @@ import { PatientRewardSummary } from "./PatientJourney";
 import { AtlasScene } from "./PatientAdventure";
 import { discountProgress, pendingSurveys, surveyRewardEstimate, type ParticipationPoints, type PatientCareProgress } from "./patientProgress";
 import "./patient-home.css";
+import diaryArt from "./assets/team-scenes/patient-diary.jpg";
 
 type Resource<T> = ReturnType<typeof useApi<T>>;
 const treatmentText = {
@@ -36,7 +38,7 @@ function CareSummary({result, completed, assigned, navigate}: {
       <div><dt><ClipboardCheck size={16}/>Ответы для врача</dt><dd>{completed===null?"Нет данных":`${completed} ${plural(completed,"опрос отправлен","опроса отправлено","опросов отправлено")}`}
         <p>{assigned===null?"Список назначений ещё не получен":assigned===0?"Назначенных опросов пока нет":`Из ${assigned} назначенных за всё время`}</p></dd></div>
     </dl>}
-    {data&&<p className="care-source-note">{data.visits.synthetic?"Встречи: учебный снимок МИС":"Встречи: МИС"}{data.visits.source_as_of?` от ${date(data.visits.source_as_of)}`:""}. {data.visits.status!=="available"?"Источник встреч не связан или недоступен. ":""}{data.visits.has_undated_visits?"Некоторые даты встреч требуют уточнения. ":""}Это сведения о сопровождении; количество действий не определяет результат лечения. Время — на Вашем устройстве.</p>}
+    {data&&<><p className="care-source-note">Встречи: МИС{data.visits.source_as_of?` от ${date(data.visits.source_as_of)}`:""}. {data.visits.status!=="available"?"Источник встреч не связан или недоступен. ":""}{data.visits.has_undated_visits?"Некоторые даты встреч требуют уточнения. ":""}Это сведения о сопровождении; количество действий не определяет результат лечения.</p><details className="source-help"><summary>Часовой пояс</summary><p>Даты и время показаны по Москве.</p></details></>}
   </section>;
 }
 
@@ -69,8 +71,9 @@ export function PatientOverview({user, assignments, doctor, doctorError, retryDo
 
   return <div className="patient-overview" data-mode={points.data?.preference.effective_mode}>
     <Heading eyebrow="Личный кабинет" title="Мой день"/>
+    {user.scenario_label&&<p className="scenario-label">Сценарий: {user.scenario_label}</p>}
     <p className="patient-care-status"><CalendarDays size={16}/><span>Моё лечение · {care.data?treatmentText[care.data.treatment.status].title:care.loading?"получаем сведения врача…":"сведения врача пока недоступны"}</span></p>
-    <button className="patient-mobile-reward" onClick={()=>navigate("journey")}>{points.data?.preference.effective_mode==="map"&&<span className="patient-ticket-art" aria-hidden="true"><AtlasScene earned={points.data.earned_total}/></span>}<Gift size={20}/><span><strong>{points.data?`${points.data.balance} ${plural(points.data.balance,"балл","балла","баллов")} доступно`:points.loading?"Получаем баллы…":"Баллы пока недоступны"}</strong><small>{discount&&firstOffer?discount.canExchange?`Можно выбрать тестовую скидку ${firstOffer.discount_percent}%`:`Ещё ${discount.remaining} ${plural(discount.remaining,"балл","балла","баллов")} до тестовых ${firstOffer.discount_percent}%`:"Баллы и условия тестовых скидок"}</small></span><ChevronRight size={18}/></button>
+    <button className="patient-mobile-reward" onClick={()=>navigate("journey")}>{points.data?.preference.effective_mode==="map"&&<span className="patient-ticket-art" aria-hidden="true"><AtlasScene earned={points.data.earned_total}/></span>}<Gift size={20}/><span><strong>{points.data?`${points.data.balance} ${plural(points.data.balance,"балл","балла","баллов")} доступно`:points.loading?"Получаем баллы…":"Баллы пока недоступны"}</strong><small>{discount&&firstOffer?discount.canExchange?`Можно выбрать скидку ${firstOffer.discount_percent}%`:`Ещё ${discount.remaining} ${plural(discount.remaining,"балл","балла","баллов")} до скидки ${firstOffer.discount_percent}%`:"Баллы и условия скидок"}</small></span><ChevronRight size={18}/></button>
     <div className="patient-home-grid">
       <section className="patient-next-step" aria-labelledby="patient-next-title">
         <div className="patient-next-heading"><span className="patient-step-icon"><ClipboardCheck size={20}/></span><div><p className="eyebrow">Доступные действия</p><p className="patient-next-caption">Выберите опрос, дневник или расписание.</p></div></div>
@@ -79,16 +82,16 @@ export function PatientOverview({user, assignments, doctor, doctorError, retryDo
         {assignments.loading?<div className="patient-step-loading"><h2 id="patient-next-title">Получаем следующие действия…</h2><Loading/></div>:<>
           <div className="patient-step-detail">
             <ContentFrame key={chosen}>
-            {chosen==="survey"&&next?<><span className="patient-step-origin">Ваш врач: {doctor?.name??"имя пока недоступно"}</span><h2 id="patient-next-title" ref={stepTitle} tabIndex={-1}>{next.survey.title}</h2><p>{next.survey.description||"Ваши ответы помогут врачу обсудить, что получается и какая поддержка нужна."}</p>
+            {chosen==="survey"&&next?<><span className="patient-step-origin">Ваш врач: {doctor?.name??"имя пока недоступно"}</span><h2 id="patient-next-title" ref={stepTitle} tabIndex={-1}>{surveyTitle(next.survey.title)}</h2><p>{surveyDescription(next.survey.description)||"Ваши ответы помогут врачу обсудить, что получается и какая поддержка нужна."}</p>
               <Button onClick={()=>openSurvey(next)}>{next.draft_updated_at?"Продолжить опрос":"Ответить врачу"}<ArrowRight size={17}/></Button>
               <div className="patient-step-meta"><span>{next.survey.questions.length} {plural(next.survey.questions.length,"вопрос","вопроса","вопросов")}</span><span>{next.due_at?`Срок врача: ${date(next.due_at)}`:"Без указанного срока"}</span>{next.draft_updated_at&&<span>Черновик сохранён</span>}</div>
               <p className="patient-step-reward">{surveyAward===null?"Баллы за заполненные пункты будут рассчитаны при отправке.":surveyAward===0?"Лимит баллов за опросы на сегодня достигнут. Отправить ответы можно и сейчас.":`До +${surveyAward} ${plural(surveyAward,"балла","баллов","баллов")} за заполненные пункты. Содержание ответа на награду не влияет.`}</p>
             </>:chosen==="medications"?<><span className="patient-step-origin">Личный учёт</span><h2 id="patient-next-title" ref={stepTitle} tabIndex={-1}>Отметить, как получается следовать расписанию</h2><p>Если у Вас уже есть расписание, можно указать, что приём состоялся, не состоялся или Вы не можете уточнить. Честная отметка поможет обсудить затруднения с врачом.</p>
               <Button onClick={()=>navigate("medications")}>Открыть расписание<ArrowRight size={17}/></Button>
-              <p className="patient-step-reward">{dayAward===null?"Баллы начисляются за ведение расписания независимо от содержания отметки.":dayAward===0?"Баллы за ведение расписания сегодня уже начислены. Новые отметки всё равно доступны.":`+${dayAward} балла за день ведения расписания. Число лекарств и ответ не увеличивают награду.`}</p>
-            </>:<><span className="patient-step-origin">По желанию</span><h2 id="patient-next-title" ref={stepTitle} tabIndex={-1}>Записать самочувствие</h2><p>Опишите состояние или напишите несколько слов. Запись будет личной; поделиться с врачом можно позже.</p>
+              <p className="patient-step-reward">{dayAward===null?"Баллы начисляются за отчёт о приёме независимо от содержания отметки.":dayAward===0?"Баллы за лекарственные отчёты сегодня уже начислены. Новые отметки всё равно доступны.":`+${dayAward} ${plural(dayAward,"балл","балла","баллов")} за отчёт в этот день. Награда одинакова для любого ответа.`}</p>
+            </>:<><img className="patient-diary-art" src={diaryArt} alt="" width={1200} height={675} loading="lazy" decoding="async" aria-hidden="true"/><span className="patient-step-origin">По желанию</span><h2 id="patient-next-title" ref={stepTitle} tabIndex={-1}>Записать самочувствие</h2><p>Опишите состояние или напишите несколько слов. Запись будет личной; поделиться с врачом можно позже.</p>
               <Button onClick={()=>navigate("diary")}>Открыть дневник<ArrowRight size={17}/></Button>
-              <p className="patient-step-reward">{dayAward===null?"За запись можно получить баллы; личная и открытая врачу запись равноправны.":dayAward===0?"Баллы за дневник сегодня уже начислены. Сохранять важное можно и дальше.":`+${dayAward} балла за запись в этот день. Самочувствие и доступ врача не меняют награду.`}</p>
+              <p className="patient-step-reward">{dayAward===null?"За запись можно получить баллы; личная и открытая врачу запись равноправны.":dayAward===0?"Баллы за дневник сегодня уже начислены. Сохранять важное можно и дальше.":`+${dayAward} ${plural(dayAward,"балл","балла","баллов")} за запись в этот день. Самочувствие и доступ врача не меняют награду.`}</p>
             </>}
             </ContentFrame>
           </div>
@@ -104,7 +107,7 @@ export function PatientOverview({user, assignments, doctor, doctorError, retryDo
     {user.patient_id!==null&&<PatientStatePreview patientId={user.patient_id} navigate={navigate}/>}
     <Disclosure title={`Что уже сохранено${completed?` · ${completed.length} ${plural(completed.length,"опрос","опроса","опросов")}`:""}`}>
       <p className="field-hint">Сохранённые ответы доступны Вам и лечащему врачу. Они не исчезают при паузе в использовании приложения.</p>
-      {completed?.length?completed.slice(0,3).map(assignment=><button className="completed-survey" key={assignment.id} onClick={()=>openSurvey(assignment)}><span className="completed-check"><Check size={17}/></span><div><strong>{assignment.survey.title}</strong><small>{date(assignment.submission?.created_at)}</small></div><ChevronRight size={18}/></button>):<p className="muted">{completed?"Отправленных опросов пока нет.":"История опросов пока не получена."}</p>}
+      {completed?.length?completed.slice(0,3).map(assignment=><button className="completed-survey" key={assignment.id} onClick={()=>openSurvey(assignment)}><span className="completed-check"><Check size={17}/></span><div><strong>{surveyTitle(assignment.survey.title)}</strong><small>{date(assignment.submission?.created_at)}</small></div><ChevronRight size={18}/></button>):<p className="muted">{completed?"Отправленных опросов пока нет.":"История опросов пока не получена."}</p>}
       <Button variant="ghost" onClick={()=>navigate("surveys")}>Открыть историю ответов<ArrowRight size={16}/></Button>
     </Disclosure>
   </div>;

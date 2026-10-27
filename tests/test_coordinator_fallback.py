@@ -82,6 +82,13 @@ async def test_expired_original_deadline_routes_once_even_without_new_outbox_eve
     await configure(client, headers, coordinators)
     await client.patch("/doctors/me/availability", headers=headers("doctor"), json={"availability": "available"})
     await urgent(client, headers)
+    # Explicit legacy snapshot: new results no longer inherit the former 2h clock.
+    from app.modules.assessments.clinical_models import ClinicalResult
+    from app.modules.assessments.triage import assess_review
+    async with database() as session:
+        result = await session.scalar(select(ClinicalResult))
+        result.result = {**result.result, "triage": assess_review(GAD7_KEY, result.score, result.result)}
+        await session.commit()
     await process_pending_events()
     async with database() as session:
         alert = await session.scalar(select(Alert))
@@ -107,14 +114,14 @@ async def test_no_automatic_recipient_and_no_escalation_after_doctor_acceptance(
         assert await session.scalar(select(func.count(CoordinatorNotice.id))) == 0
 
 
-async def test_item9_and_panic_clarifications_do_not_acquire_urgent_fallback(client, headers, coordinators, database):
+async def test_item9_now_routes_as_high_when_unavailable_but_panic_does_not(client, headers, coordinators, database):
     await configure(client, headers, coordinators)
     await complete(client, headers, PHQ9_KEY, {**values(9, 0), "q9": "n1"})
     await complete(client, headers, PANIC_KEY, values(15, 1))
     await process_pending_events()
     async with database() as session:
         assert await session.scalar(select(func.count(Alert.id))) == 2
-        assert await session.scalar(select(func.count(CoordinatorNotice.id))) == 0
+        assert await session.scalar(select(func.count(CoordinatorNotice.id))) == 1
 
 
 async def test_coordinator_receives_only_operational_context_and_cannot_accept_clinical_work(client, headers, coordinators, database):

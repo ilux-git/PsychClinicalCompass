@@ -35,7 +35,7 @@ export function ClinicalHistory({patientId,doctor=false,scope,target}: {patientI
   },[patientId,target,history.data]);
   if(history.error)return <ErrorBox message={history.error} retry={history.reload}/>;
   if(!history.data)return <Loading/>;
-  if(!history.data.length)return <Empty title="Заполненных клинических опросников пока нет">Врач может назначить PHQ-9, GAD-7 или панический модуль PHQ. Старые числовые демонстрационные ответы показаны отдельно.</Empty>;
+  if(!history.data.length)return <Empty title="Заполненных клинических опросников пока нет">Врач может назначить PHQ-9, GAD-7 или панический модуль PHQ.</Empty>;
   return <div className="clinical-history" ref={container}>
     {target&&!history.data.some(row=>row.id===target.id)&&<p role="status">Исходное измерение события не найдено в доступной истории. Обновите данные или вернитесь к событию.</p>}
     {clinicalEditions(history.data).map(({key,rows,definition,latest})=>{
@@ -49,7 +49,7 @@ export function ClinicalHistory({patientId,doctor=false,scope,target}: {patientI
       {numeric.length===1&&<p className="field-hint">Динамика появится после следующего измерения, назначенного врачом.</p>}
       {[...rows].reverse().map(row=><details className="assessment-answers" data-clinical-result={row.id} key={row.id}>
         <summary>{clinicalDate(row.created_at)} · {clinicalResultLabel(row)}{row.score!==null&&row.result.band?` · ${row.result.band} уровень`:""}</summary>
-        {row.result.synthetic_provenance?.generated&&<p className="field-hint">Вымышленные ответы демо-набора. Это пример для показа, а не наблюдение пациента.</p>}
+
         {row.result.kind==="panic_screen"&&<p className="field-hint">{row.result.screen_stopped?"На первый вопрос получен ответ «Нет». Остальные вопросы не заполнялись и не приравниваются к отрицательным ответам.":`Положительных ответов в первом блоке: ${row.result.gates_yes} из 4; симптомов: ${row.result.symptoms_yes} из 11. Критерий: все 4 ответа первого блока и не менее 4 симптомов.`} Этот результат не подтверждает и не исключает диагноз.</p>}
         {row.result.item9_positive&&<p className="subtle-notice">Ответ на вопрос о мыслях о смерти или самоповреждении требует уточнения врачом. Он сам по себе не подтверждает непосредственную угрозу жизни.</p>}
         {doctor&&<ClinicalReviewSummary review={row.result.triage}/>}

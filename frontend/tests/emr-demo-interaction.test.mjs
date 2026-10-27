@@ -59,7 +59,7 @@ test("preview never approves automatically; exact consent and a second action le
   assert.ok(screen.getByText("Не подходит расписание"));
   await user.click(screen.getByRole("checkbox",{name:confirmation}));
   await user.click(approve);
-  const transfer=await screen.findByRole("button",{name:"Передать в симулятор"});
+  const transfer=await screen.findByRole("button",{name:"Передать документ"});
   assert.equal(writes.length,1,"Approval must never automatically transfer");
   assert.equal(writes[0].body.content_hash,data.content_hash);
   assert.equal(writes[0].body.expected_task_revision,0);
@@ -67,10 +67,10 @@ test("preview never approves automatically; exact consent and a second action le
   assert.equal(writes[0].authorization,"Bearer synthetic-doctor");
   assert.equal(document.activeElement,screen.getByRole("heading",{name:"Одобрено Вами"}));
   await user.click(transfer);
-  await screen.findByRole("heading",{name:"Принято симулятором"});
+  await screen.findByRole("heading",{name:"Квитанция получена"});
   assert.equal(writes.length,2);
   assert.deepEqual(writes[1].body,{content_hash:data.content_hash,confirmed:true});
-  assert.equal(screen.queryByRole("button",{name:"Передать в симулятор"}),null);
+  assert.equal(screen.queryByRole("button",{name:"Передать документ"}),null);
 });
 
 test("approval failure retains consent and uses the same request key on retry",async()=>{
@@ -131,12 +131,12 @@ test("failed simulator transfer keeps the approved document and retries only del
   });
   render(h(EmrDemo,{patientId:1,taskId:4,taskRevision:0}));
   const user=userEvent.setup({document:dom.window.document});
-  await user.click(await screen.findByRole("button",{name:"Передать в симулятор"}));
+  await user.click(await screen.findByRole("button",{name:"Передать документ"}));
   const retry=await screen.findByRole("button",{name:"Повторить передачу"});
   assert.ok(screen.getByRole("heading",{name:"Одобрено Вами"}));
   assert.equal(screen.queryByRole("button",{name:"Одобрить этот пакет"}),null);
   await user.click(retry);
-  await screen.findByRole("heading",{name:"Принято симулятором"});
+  await screen.findByRole("heading",{name:"Квитанция получена"});
   assert.equal(transfers,2);
 });
 

@@ -16,7 +16,7 @@ def isolated(**changes):
 
 
 @pytest.mark.parametrize('values',[{'compass_database_url':'postgresql://x@localhost/compass'},
-    {'mis_database_url':'postgresql://x@localhost/mis'},{'telegram_enabled':True}])
+    {'mis_database_url':'postgresql://x@localhost/mis'},{'telegram_enabled':True},{'telegram_mini_app_enabled':True}])
 def test_load_mode_refuses_real_database_or_external_delivery(values):
     with pytest.raises(ValidationError): isolated(**values)
 

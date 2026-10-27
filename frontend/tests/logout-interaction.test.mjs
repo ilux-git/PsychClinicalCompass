@@ -75,7 +75,7 @@ for(const result of ["success","unauthorized"])test(`late ${result} logout respo
   const pending=new Promise(resolve=>{finish=resolve;});
   const {user,exits}=await setup(()=>pending);
   await user.click(screen.getByRole("button",{name:"Выйти",exact:true}));
-  await user.selectOptions(await screen.findByRole("combobox",{name:"Демонстрационная роль"}),"doctor2");
+  await user.selectOptions(await screen.findByRole("combobox",{name:"Роль"}),"doctor2");
   await user.click(screen.getByRole("button",{name:"Войти",exact:true}));
   await screen.findByText(second.display_name);
   await act(async()=>{finish(result==="success"?Response.json({revoked:true}):Response.json({detail:"Expired old session"},{status:401}));await pending;});

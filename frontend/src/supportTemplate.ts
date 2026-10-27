@@ -33,3 +33,21 @@ export function experienceTemplate(): Draft {
       {id:"app_suggestion",prompt:"Что в приложении стоит сделать удобнее? · по желанию",kind:"text",required:false,options:[],dimension:null,minimum:0,maximum:10},
     ]};
 }
+
+/** Original support questions; no EPDS wording, diagnostic sum or cutoffs. */
+export function postpartumSupportTemplate(): Draft {
+  return {title:"Самочувствие и поддержка после родов",purpose:"follow_up",
+    description:"Короткая обратная связь для беседы с врачом. Расскажите, какая поддержка нужна сейчас. На отдельные вопросы можно не отвечать.",
+    questions:[
+      {...q("current_load","Что больше всего влияет на Ваше самочувствие сейчас?",options([
+        ["rest","Сон и возможность отдыха"],["daily_load","Повседневная нагрузка"],["support","Поддержка близких"],
+        ["worries","Беспокойство"],["other","Другое"]]),null),kind:"multiple",required:false},
+      {...q("available_help","На какую помощь Вы можете рассчитывать в ближайшие дни?",[
+        {id:"home",label:"С делами дома"},{id:"childcare",label:"С уходом за ребёнком"},
+        {id:"rest",label:"С перерывом для отдыха"},{id:"none",label:"Пока нет поддержки",exclusive:true},
+        {id:"decline",label:"Не хочу отвечать",exclusive:true}],null),kind:"multiple",required:false},
+      {id:"doctor_topic",prompt:"Что Вы хотели бы обсудить с врачом на ближайшей встрече?",kind:"text",required:false,options:[],dimension:null,minimum:0,maximum:10},
+      {...q("earlier_contact","Нужно ли Вам обсудить что-то раньше запланированной встречи?",options([
+        ["yes","Да"],["no","Достаточно плановой встречи"],["unknown","Пока не могу оценить"]]),null),required:false},
+    ]};
+}

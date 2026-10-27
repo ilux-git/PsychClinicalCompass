@@ -15,6 +15,23 @@ function browser(initial="/",initialState=null) {
   };
 }
 
+test('Mini App role navigation, guarded Back/Forward and reload always retain /tg',()=>{
+  for(const role of ['patient','doctor']) {
+    const port=browser('/tg'),seen=[];
+    const options={role,owner:1,port,approve:action=>action(),apply:route=>seen.push(route.view)};
+    let controller=createWorkspaceHistory(options);
+    const destination=role==='patient'?'diary':'patients';
+    controller.push(pageRoute(role,destination));
+    assert.match(port.href(),/^\/tg\?section=/);
+    port.go(-1);port.flush();assert.match(port.href(),/^\/tg\?section=/);
+    port.go(1);port.flush();assert.equal(seen.at(-1),destination);
+    controller.dispose();controller=createWorkspaceHistory(options);
+    assert.equal(seen.at(-1),destination);assert.match(port.href(),/^\/tg\?section=/);
+    assert.match(routeHref(pageRoute(role,destination),'/tg'),/^\/tg\?/);
+    controller.dispose();
+  }
+});
+
 test("links restore a physician card and tab after reload; invalid identifiers are rejected",()=>{
   const route=readRoute("doctor","/?section=patients&patient=6&tab=care");
   assert.equal(route.patientId,6);assert.equal(route.cardTab,"care");

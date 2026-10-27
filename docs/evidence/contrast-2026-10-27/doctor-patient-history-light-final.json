@@ -1,0 +1,483 @@
+{
+  "checked_at": "2026-10-27T06:34:57.181Z",
+  "theme": "light",
+  "route": "/?section=patients&patient=5&tab=clinical",
+  "viewport": {
+    "width": 1440,
+    "height": 900
+  },
+  "axe_version": "4.14.0",
+  "violations": [],
+  "incomplete": [
+    {
+      "id": "color-contrast",
+      "impact": "serious",
+      "tags": [
+        "cat.color",
+        "wcag2aa",
+        "wcag143",
+        "TTv5",
+        "TT13.c",
+        "EN-301-549",
+        "EN-9.1.4.3",
+        "ACT",
+        "RGAAv4",
+        "RGAA-3.2.1"
+      ],
+      "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+      "help": "Elements must meet minimum color contrast ratio thresholds",
+      "helpUrl": "https://dequeuniversity.com/rules/axe/4.14/color-contrast?application=axeAPI",
+      "nodes": [
+        {
+          "any": [
+            {
+              "id": "color-contrast",
+              "data": {
+                "contrastRatio": 0,
+                "fontSize": "10.5pt (14px)",
+                "fontWeight": "normal",
+                "messageKey": "shortTextContent",
+                "expectedContrastRatio": "4.5:1"
+              },
+              "relatedNodes": [
+                {
+                  "html": "<svg viewBox=\"0 0 709 244\" role=\"img\" aria-label=\"PHQ-9 · история наблюдений. 2 наблюдения. Последнее: 6 балл.\">",
+                  "target": [
+                    "figure[aria-label=\"PHQ-9 · история наблюдений\"] > .time-series-plot > svg[viewBox=\"0 0 709 244\"][role=\"img\"]"
+                  ]
+                }
+              ],
+              "impact": "serious",
+              "message": "Element content is too short to determine if it is actual text content"
+            }
+          ],
+          "all": [],
+          "none": [],
+          "impact": "serious",
+          "html": "<text x=\"32\" y=\"198\" text-anchor=\"end\" class=\"chart-axis\">0</text>",
+          "target": [
+            "figure[aria-label=\"PHQ-9 · история наблюдений\"] > .time-series-plot > svg[viewBox=\"0 0 709 244\"][role=\"img\"] > g:nth-child(2) > text[y=\"198\"][x=\"32\"][text-anchor=\"end\"]"
+          ],
+          "failureSummary": "Fix any of the following:\n  Element content is too short to determine if it is actual text content"
+        },
+        {
+          "any": [
+            {
+              "id": "color-contrast",
+              "data": {
+                "contrastRatio": 0,
+                "fontSize": "10.5pt (14px)",
+                "fontWeight": "normal",
+                "messageKey": "shortTextContent",
+                "expectedContrastRatio": "4.5:1"
+              },
+              "relatedNodes": [
+                {
+                  "html": "<svg viewBox=\"0 0 709 244\" role=\"img\" aria-label=\"PHQ-9 · история наблюдений. 2 наблюдения. Последнее: 6 балл.\">",
+                  "target": [
+                    "figure[aria-label=\"PHQ-9 · история наблюдений\"] > .time-series-plot > svg[viewBox=\"0 0 709 244\"][role=\"img\"]"
+                  ]
+                }
+              ],
+              "impact": "serious",
+              "message": "Element content is too short to determine if it is actual text content"
+            }
+          ],
+          "all": [],
+          "none": [],
+          "impact": "serious",
+          "html": "<text x=\"32\" y=\"144.66666666666669\" text-anchor=\"end\" class=\"chart-axis\">9</text>",
+          "target": [
+            "figure[aria-label=\"PHQ-9 · история наблюдений\"] > .time-series-plot > svg[viewBox=\"0 0 709 244\"][role=\"img\"] > g:nth-child(3) > text[y=\"144.66666666666669\"][x=\"32\"][text-anchor=\"end\"]"
+          ],
+          "failureSummary": "Fix any of the following:\n  Element content is too short to determine if it is actual text content"
+        },
+        {
+          "any": [
+            {
+              "id": "color-contrast",
+              "data": {
+                "contrastRatio": 0,
+                "fontSize": "10.5pt (14px)",
+                "fontWeight": "normal",
+                "messageKey": "imgNode",
+                "expectedContrastRatio": "4.5:1"
+              },
+              "relatedNodes": [
+                {
+                  "html": "<svg viewBox=\"0 0 709 244\" role=\"img\" aria-label=\"PHQ-9 · история наблюдений. 2 наблюдения. Последнее: 6 балл.\">",
+                  "target": [
+                    "figure[aria-label=\"PHQ-9 · история наблюдений\"] > .time-series-plot > svg[viewBox=\"0 0 709 244\"][role=\"img\"]"
+                  ]
+                }
+              ],
+              "impact": "serious",
+              "message": "Element's background color could not be determined because element contains an image node"
+            }
+          ],
+          "all": [],
+          "none": [],
+          "impact": "serious",
+          "html": "<text x=\"32\" y=\"91.33333333333334\" text-anchor=\"end\" class=\"chart-axis\">18</text>",
+          "target": [
+            "figure[aria-label=\"PHQ-9 · история наблюдений\"] > .time-series-plot > svg[viewBox=\"0 0 709 244\"][role=\"img\"] > g:nth-child(4) > text[y=\"91.33333333333334\"][x=\"32\"][text-anchor=\"end\"]"
+          ],
+          "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because element contains an image node"
+        },
+        {
+          "any": [
+            {
+              "id": "color-contrast",
+              "data": {
+                "contrastRatio": 0,
+                "fontSize": "10.5pt (14px)",
+                "fontWeight": "normal",
+                "messageKey": "imgNode",
+                "expectedContrastRatio": "4.5:1"
+              },
+              "relatedNodes": [
+                {
+                  "html": "<svg viewBox=\"0 0 709 244\" role=\"img\" aria-label=\"PHQ-9 · история наблюдений. 2 наблюдения. Последнее: 6 балл.\">",
+                  "target": [
+                    "figure[aria-label=\"PHQ-9 · история наблюдений\"] > .time-series-plot > svg[viewBox=\"0 0 709 244\"][role=\"img\"]"
+                  ]
+                }
+              ],
+              "impact": "serious",
+              "message": "Element's background color could not be determined because element contains an image node"
+            }
+          ],
+          "all": [],
+          "none": [],
+          "impact": "serious",
+          "html": "<text x=\"32\" y=\"38\" text-anchor=\"end\" class=\"chart-axis\">27</text>",
+          "target": [
+            "figure[aria-label=\"PHQ-9 · история наблюдений\"] > .time-series-plot > svg[viewBox=\"0 0 709 244\"][role=\"img\"] > g:nth-child(5) > text[y=\"38\"][x=\"32\"][text-anchor=\"end\"]"
+          ],
+          "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because element contains an image node"
+        },
+        {
+          "any": [
+            {
+              "id": "color-contrast",
+              "data": {
+                "contrastRatio": 0,
+                "fontSize": "10.5pt (14px)",
+                "fontWeight": "normal",
+                "messageKey": "imgNode",
+                "expectedContrastRatio": "4.5:1"
+              },
+              "relatedNodes": [
+                {
+                  "html": "<svg viewBox=\"0 0 709 244\" role=\"img\" aria-label=\"PHQ-9 · история наблюдений. 2 наблюдения. Последнее: 6 балл.\">",
+                  "target": [
+                    "figure[aria-label=\"PHQ-9 · история наблюдений\"] > .time-series-plot > svg[viewBox=\"0 0 709 244\"][role=\"img\"]"
+                  ]
+                }
+              ],
+              "impact": "serious",
+              "message": "Element's background color could not be determined because element contains an image node"
+            }
+          ],
+          "all": [],
+          "none": [],
+          "impact": "serious",
+          "html": "<text x=\"44\" y=\"18\" class=\"chart-axis\">балл.</text>",
+          "target": [
+            "figure[aria-label=\"PHQ-9 · история наблюдений\"] > .time-series-plot > svg[viewBox=\"0 0 709 244\"][role=\"img\"] > text[y=\"18\"][x=\"44\"]"
+          ],
+          "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because element contains an image node"
+        },
+        {
+          "any": [
+            {
+              "id": "color-contrast",
+              "data": {
+                "contrastRatio": 0,
+                "fontSize": "10.5pt (14px)",
+                "fontWeight": "normal",
+                "messageKey": "imgNode",
+                "expectedContrastRatio": "4.5:1"
+              },
+              "relatedNodes": [
+                {
+                  "html": "<svg viewBox=\"0 0 709 244\" role=\"img\" aria-label=\"PHQ-9 · история наблюдений. 2 наблюдения. Последнее: 6 балл.\">",
+                  "target": [
+                    "figure[aria-label=\"PHQ-9 · история наблюдений\"] > .time-series-plot > svg[viewBox=\"0 0 709 244\"][role=\"img\"]"
+                  ]
+                }
+              ],
+              "impact": "serious",
+              "message": "Element's background color could not be determined because element contains an image node"
+            }
+          ],
+          "all": [],
+          "none": [],
+          "impact": "serious",
+          "html": "<text x=\"44\" y=\"222\" text-anchor=\"start\" class=\"chart-axis\">8 окт.</text>",
+          "target": [
+            "figure[aria-label=\"PHQ-9 · история наблюдений\"] > .time-series-plot > svg[viewBox=\"0 0 709 244\"][role=\"img\"] > text[text-anchor=\"start\"][x=\"44\"][y=\"222\"]"
+          ],
+          "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because element contains an image node"
+        },
+        {
+          "any": [
+            {
+              "id": "color-contrast",
+              "data": {
+                "contrastRatio": 0,
+                "fontSize": "10.5pt (14px)",
+                "fontWeight": "normal",
+                "messageKey": "imgNode",
+                "expectedContrastRatio": "4.5:1"
+              },
+              "relatedNodes": [
+                {
+                  "html": "<svg viewBox=\"0 0 709 244\" role=\"img\" aria-label=\"PHQ-9 · история наблюдений. 2 наблюдения. Последнее: 6 балл.\">",
+                  "target": [
+                    "figure[aria-label=\"PHQ-9 · история наблюдений\"] > .time-series-plot > svg[viewBox=\"0 0 709 244\"][role=\"img\"]"
+                  ]
+                }
+              ],
+              "impact": "serious",
+              "message": "Element's background color could not be determined because element contains an image node"
+            }
+          ],
+          "all": [],
+          "none": [],
+          "impact": "serious",
+          "html": "<text x=\"687\" y=\"222\" text-anchor=\"end\" class=\"chart-axis\">20 окт.</text>",
+          "target": [
+            "figure[aria-label=\"PHQ-9 · история наблюдений\"] > .time-series-plot > svg[viewBox=\"0 0 709 244\"][role=\"img\"] > text[x=\"687\"][y=\"222\"][text-anchor=\"end\"]"
+          ],
+          "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because element contains an image node"
+        },
+        {
+          "any": [
+            {
+              "id": "color-contrast",
+              "data": {
+                "contrastRatio": 0,
+                "fontSize": "10.5pt (14px)",
+                "fontWeight": "normal",
+                "messageKey": "shortTextContent",
+                "expectedContrastRatio": "4.5:1"
+              },
+              "relatedNodes": [
+                {
+                  "html": "<svg viewBox=\"0 0 709 244\" role=\"img\" aria-label=\"GAD-7 · история наблюдений. 2 наблюдения. Последнее: 2 балл.\">",
+                  "target": [
+                    "figure[aria-label=\"GAD-7 · история наблюдений\"] > .time-series-plot > svg[viewBox=\"0 0 709 244\"][role=\"img\"]"
+                  ]
+                }
+              ],
+              "impact": "serious",
+              "message": "Element content is too short to determine if it is actual text content"
+            }
+          ],
+          "all": [],
+          "none": [],
+          "impact": "serious",
+          "html": "<text x=\"32\" y=\"198\" text-anchor=\"end\" class=\"chart-axis\">0</text>",
+          "target": [
+            "figure[aria-label=\"GAD-7 · история наблюдений\"] > .time-series-plot > svg[viewBox=\"0 0 709 244\"][role=\"img\"] > g:nth-child(2) > text[y=\"198\"][x=\"32\"][text-anchor=\"end\"]"
+          ],
+          "failureSummary": "Fix any of the following:\n  Element content is too short to determine if it is actual text content"
+        },
+        {
+          "any": [
+            {
+              "id": "color-contrast",
+              "data": {
+                "contrastRatio": 0,
+                "fontSize": "10.5pt (14px)",
+                "fontWeight": "normal",
+                "messageKey": "shortTextContent",
+                "expectedContrastRatio": "4.5:1"
+              },
+              "relatedNodes": [
+                {
+                  "html": "<svg viewBox=\"0 0 709 244\" role=\"img\" aria-label=\"GAD-7 · история наблюдений. 2 наблюдения. Последнее: 2 балл.\">",
+                  "target": [
+                    "figure[aria-label=\"GAD-7 · история наблюдений\"] > .time-series-plot > svg[viewBox=\"0 0 709 244\"][role=\"img\"]"
+                  ]
+                }
+              ],
+              "impact": "serious",
+              "message": "Element content is too short to determine if it is actual text content"
+            }
+          ],
+          "all": [],
+          "none": [],
+          "impact": "serious",
+          "html": "<text x=\"32\" y=\"144.66666666666669\" text-anchor=\"end\" class=\"chart-axis\">7</text>",
+          "target": [
+            "figure[aria-label=\"GAD-7 · история наблюдений\"] > .time-series-plot > svg[viewBox=\"0 0 709 244\"][role=\"img\"] > g:nth-child(3) > text[y=\"144.66666666666669\"][x=\"32\"][text-anchor=\"end\"]"
+          ],
+          "failureSummary": "Fix any of the following:\n  Element content is too short to determine if it is actual text content"
+        },
+        {
+          "any": [
+            {
+              "id": "color-contrast",
+              "data": {
+                "contrastRatio": 0,
+                "fontSize": "10.5pt (14px)",
+                "fontWeight": "normal",
+                "messageKey": "imgNode",
+                "expectedContrastRatio": "4.5:1"
+              },
+              "relatedNodes": [
+                {
+                  "html": "<svg viewBox=\"0 0 709 244\" role=\"img\" aria-label=\"GAD-7 · история наблюдений. 2 наблюдения. Последнее: 2 балл.\">",
+                  "target": [
+                    "figure[aria-label=\"GAD-7 · история наблюдений\"] > .time-series-plot > svg[viewBox=\"0 0 709 244\"][role=\"img\"]"
+                  ]
+                }
+              ],
+              "impact": "serious",
+              "message": "Element's background color could not be determined because element contains an image node"
+            }
+          ],
+          "all": [],
+          "none": [],
+          "impact": "serious",
+          "html": "<text x=\"32\" y=\"91.33333333333334\" text-anchor=\"end\" class=\"chart-axis\">14</text>",
+          "target": [
+            "figure[aria-label=\"GAD-7 · история наблюдений\"] > .time-series-plot > svg[viewBox=\"0 0 709 244\"][role=\"img\"] > g:nth-child(4) > text[y=\"91.33333333333334\"][x=\"32\"][text-anchor=\"end\"]"
+          ],
+          "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because element contains an image node"
+        },
+        {
+          "any": [
+            {
+              "id": "color-contrast",
+              "data": {
+                "contrastRatio": 0,
+                "fontSize": "10.5pt (14px)",
+                "fontWeight": "normal",
+                "messageKey": "imgNode",
+                "expectedContrastRatio": "4.5:1"
+              },
+              "relatedNodes": [
+                {
+                  "html": "<svg viewBox=\"0 0 709 244\" role=\"img\" aria-label=\"GAD-7 · история наблюдений. 2 наблюдения. Последнее: 2 балл.\">",
+                  "target": [
+                    "figure[aria-label=\"GAD-7 · история наблюдений\"] > .time-series-plot > svg[viewBox=\"0 0 709 244\"][role=\"img\"]"
+                  ]
+                }
+              ],
+              "impact": "serious",
+              "message": "Element's background color could not be determined because element contains an image node"
+            }
+          ],
+          "all": [],
+          "none": [],
+          "impact": "serious",
+          "html": "<text x=\"32\" y=\"38\" text-anchor=\"end\" class=\"chart-axis\">21</text>",
+          "target": [
+            "figure[aria-label=\"GAD-7 · история наблюдений\"] > .time-series-plot > svg[viewBox=\"0 0 709 244\"][role=\"img\"] > g:nth-child(5) > text[y=\"38\"][x=\"32\"][text-anchor=\"end\"]"
+          ],
+          "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because element contains an image node"
+        },
+        {
+          "any": [
+            {
+              "id": "color-contrast",
+              "data": {
+                "contrastRatio": 0,
+                "fontSize": "10.5pt (14px)",
+                "fontWeight": "normal",
+                "messageKey": "imgNode",
+                "expectedContrastRatio": "4.5:1"
+              },
+              "relatedNodes": [
+                {
+                  "html": "<svg viewBox=\"0 0 709 244\" role=\"img\" aria-label=\"GAD-7 · история наблюдений. 2 наблюдения. Последнее: 2 балл.\">",
+                  "target": [
+                    "figure[aria-label=\"GAD-7 · история наблюдений\"] > .time-series-plot > svg[viewBox=\"0 0 709 244\"][role=\"img\"]"
+                  ]
+                }
+              ],
+              "impact": "serious",
+              "message": "Element's background color could not be determined because element contains an image node"
+            }
+          ],
+          "all": [],
+          "none": [],
+          "impact": "serious",
+          "html": "<text x=\"44\" y=\"18\" class=\"chart-axis\">балл.</text>",
+          "target": [
+            "figure[aria-label=\"GAD-7 · история наблюдений\"] > .time-series-plot > svg[viewBox=\"0 0 709 244\"][role=\"img\"] > text[y=\"18\"][x=\"44\"]"
+          ],
+          "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because element contains an image node"
+        },
+        {
+          "any": [
+            {
+              "id": "color-contrast",
+              "data": {
+                "contrastRatio": 0,
+                "fontSize": "10.5pt (14px)",
+                "fontWeight": "normal",
+                "messageKey": "imgNode",
+                "expectedContrastRatio": "4.5:1"
+              },
+              "relatedNodes": [
+                {
+                  "html": "<svg viewBox=\"0 0 709 244\" role=\"img\" aria-label=\"GAD-7 · история наблюдений. 2 наблюдения. Последнее: 2 балл.\">",
+                  "target": [
+                    "figure[aria-label=\"GAD-7 · история наблюдений\"] > .time-series-plot > svg[viewBox=\"0 0 709 244\"][role=\"img\"]"
+                  ]
+                }
+              ],
+              "impact": "serious",
+              "message": "Element's background color could not be determined because element contains an image node"
+            }
+          ],
+          "all": [],
+          "none": [],
+          "impact": "serious",
+          "html": "<text x=\"44\" y=\"222\" text-anchor=\"start\" class=\"chart-axis\">8 окт.</text>",
+          "target": [
+            "figure[aria-label=\"GAD-7 · история наблюдений\"] > .time-series-plot > svg[viewBox=\"0 0 709 244\"][role=\"img\"] > text[text-anchor=\"start\"][x=\"44\"][y=\"222\"]"
+          ],
+          "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because element contains an image node"
+        },
+        {
+          "any": [
+            {
+              "id": "color-contrast",
+              "data": {
+                "contrastRatio": 0,
+                "fontSize": "10.5pt (14px)",
+                "fontWeight": "normal",
+                "messageKey": "imgNode",
+                "expectedContrastRatio": "4.5:1"
+              },
+              "relatedNodes": [
+                {
+                  "html": "<svg viewBox=\"0 0 709 244\" role=\"img\" aria-label=\"GAD-7 · история наблюдений. 2 наблюдения. Последнее: 2 балл.\">",
+                  "target": [
+                    "figure[aria-label=\"GAD-7 · история наблюдений\"] > .time-series-plot > svg[viewBox=\"0 0 709 244\"][role=\"img\"]"
+                  ]
+                }
+              ],
+              "impact": "serious",
+              "message": "Element's background color could not be determined because element contains an image node"
+            }
+          ],
+          "all": [],
+          "none": [],
+          "impact": "serious",
+          "html": "<text x=\"687\" y=\"222\" text-anchor=\"end\" class=\"chart-axis\">20 окт.</text>",
+          "target": [
+            "figure[aria-label=\"GAD-7 · история наблюдений\"] > .time-series-plot > svg[viewBox=\"0 0 709 244\"][role=\"img\"] > text[x=\"687\"][y=\"222\"][text-anchor=\"end\"]"
+          ],
+          "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because element contains an image node"
+        }
+      ]
+    }
+  ],
+  "passed_nodes": 117
+}

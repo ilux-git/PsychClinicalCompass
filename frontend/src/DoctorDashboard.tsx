@@ -1,3 +1,5 @@
+import {clinicTimeZone} from "./clinicTime";
+import {surveyTitle} from "./presentation";
 import { useId } from "react";
 import { useReturnFocus, useViewState, type PatientAnswerTarget } from "./ViewState";
 import { CollectionMetrics } from "./CollectionMetrics";
@@ -34,7 +36,7 @@ function AnswerChart({ question }: { question: ChartQuestion }) {
     <div className="answer-chart">
       <div className="chart-caption">
         <span>
-          {question.survey_title} · v{question.version}
+          {surveyTitle(question.survey_title)} · v{question.version}
         </span>
         <span>{question.respondents} {plural(question.respondents,"заполнение","заполнения","заполнений")}</span>
       </div>
@@ -70,7 +72,7 @@ export function DoctorDashboard({
   const other = options.filter((q) => !barriers.includes(q));
   function renderQuote(quote:Quote,index:number) {
     return <article className="patient-quote" key={quoteKey(quote,index)}>
-      {quote.survey_title&&<p className="quote-survey-title">{quote.survey_title}</p>}
+      {quote.survey_title&&<p className="quote-survey-title">{surveyTitle(quote.survey_title)}</p>}
       <p className="quote-prompt">{quote.prompt}</p>
       <blockquote>«{quote.text}»</blockquote>
       <button className="person-link" data-return-key={quoteKey(quote,index)} aria-label={`${quoteTarget(quote)?"Открыть ответ":"Открыть карточку"}: ${quote.patient_name}`} onClick={()=>openPatient(quote.patient_id,quoteKey(quote,index),quoteTarget(quote))}>
@@ -143,7 +145,7 @@ export function DoctorDashboard({
         </button>
       </div>
       {since&&until&&since>until&&<p className="question-error" role="alert">Конец периода должен быть не раньше начала.</p>}
-      {d&&<p className="field-hint applied-period" role="status">Назначения: {!d.period.since&&!d.period.until_exclusive?"все даты":`с ${d.period.since?new Date(d.period.since).toLocaleDateString("ru-RU"):"начала наблюдения"}${d.period.until_exclusive?` по ${new Date(Date.parse(d.period.until_exclusive)-1).toLocaleDateString("ru-RU")} включительно`:", без конечной даты"}`}. Самоотчёты: по дате записи.</p>}
+      {d&&<p className="field-hint applied-period" role="status">Назначения: {!d.period.since&&!d.period.until_exclusive?"все даты":`с ${d.period.since?new Date(d.period.since).toLocaleDateString("ru-RU",{timeZone:clinicTimeZone}):"начала наблюдения"}${d.period.until_exclusive?` по ${new Date(Date.parse(d.period.until_exclusive)-1).toLocaleDateString("ru-RU",{timeZone:clinicTimeZone})} включительно`:", без конечной даты"}`}. Самоотчёты: по дате записи.</p>}
       <ErrorBox message={data.error} retry={data.reload} />
       {!d ? (
         data.loading?<Loading />:<Empty title="Аналитика пока недоступна"/>

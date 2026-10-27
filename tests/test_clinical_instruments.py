@@ -147,7 +147,7 @@ async def test_panic_award_is_independent_of_screening_answers(client, headers):
         assert response.status_code == 200
         receipts.append(response.json()["participation"])
     assert receipts[0]["points"] == receipts[1]["points"] == 15
-    assert all(receipt["policy_version"] == "demo-clinical-completion-v1" for receipt in receipts)
+    assert all(receipt["policy_version"] == "demo-clinical-completion-msk-v2" for receipt in receipts)
 
 
 async def test_failure_after_scoring_rolls_back_submission_result_and_award(client, headers, database, monkeypatch):

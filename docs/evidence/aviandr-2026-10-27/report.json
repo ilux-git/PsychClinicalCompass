@@ -1,0 +1,93 @@
+{
+  "verified_at": "2026-10-27T11:02:49.915864+00:00",
+  "release": "20261027t105745z-c4df05fd05",
+  "schema": "v41_clinical_scenarios",
+  "backend": {
+    "full_passed": 313,
+    "full_seconds": 254.71,
+    "latest_directory_scope_passed": 38
+  },
+  "frontend": {
+    "full_passed_before_last_two_line_reopen_fix": 147,
+    "full_seconds": 186.688,
+    "targeted_after_reopen_fix_passed": 13,
+    "build_passed": true
+  },
+  "migration": {
+    "verified_at": "2026-10-27T10:32:59.457743+00:00",
+    "backup_data_match": true,
+    "backup_archive_sha256": "f54fffb951ece057cf0f9d623e812dfc76aa0bdd78ffbf2cbc533f9a434c35cb",
+    "tables_restored": 37,
+    "roundtrip_preserved": true,
+    "alembic_check_passed": true,
+    "history_downgrade_refused": true,
+    "migration_sha256": "aa22ce4ce651a83119da711b8ea4fee14252cf0c391f57f9bfca88f8b4c21229",
+    "source_applied": true,
+    "business_tables_preserved": 36,
+    "mis_unchanged": true
+  },
+  "vps_clone_roundtrip_passed": true,
+  "vps_case_import": {
+    "existing_compass_rows_preserved": true,
+    "mis_exact_match": true,
+    "case_import_deltas": {
+      "public.users": 3,
+      "public.patients": 3,
+      "public.patient_mappings": 3,
+      "public.messages": 4,
+      "public.clinical_scenario_episodes": 13,
+      "public.audit_events": 20,
+      "public.outbox_events": 11
+    },
+    "repeat_seed_preserved": true
+  },
+  "vps_final_ui_existing_rows_preserved": true,
+  "vps_final_ui_mis_exact_match": true,
+  "vps_final_ui_row_deltas": {},
+  "source_files": 244,
+  "source_manifest_sha256": "c4df05fd0501a97b839a8eee46dd468101b1afafb775490be23c387ad877a365",
+  "source_drift_files": 0,
+  "roles_api_verified": [
+    "doctor",
+    "patient",
+    "admin",
+    "coordinator"
+  ],
+  "browser": {
+    "environment": "isolated synthetic QA restore on 127.0.0.1:8783",
+    "physician_conclusion_saved": true,
+    "source_proposal_preserved": true,
+    "historical_day0_hides_later_therapy": true,
+    "viewports": [
+      375,
+      768,
+      1440
+    ],
+    "full_wcag_or_visual_baseline_acceptance_claimed": false,
+    "console_errors_observed": 0,
+    "reopened_conclusion_has_no_false_conflict": true,
+    "public_p008_card_and_epds_verified": true,
+    "public_patient_directory_has_all_three_scenarios": true
+  },
+  "limitations": [
+    "Full EPDS form needs exact edition and online permission",
+    "Current GRLS edition not independently matched",
+    "Real-device Telegram acceptance remains separate",
+    "1000 concurrent / maximum 500 ms gate is not passed",
+    "No real-patient legal acceptance or MIS writes claimed"
+  ],
+  "git_commit_or_push_performed": false,
+  "final_runtime": {
+    "schema": "v41_clinical_scenarios",
+    "case_patients": 3,
+    "case_episodes": 13,
+    "case_alerts": 11,
+    "case_outbox": {
+      "processed": 11
+    },
+    "automatic_conclusions": 0,
+    "patient_reference_violations": 0
+  },
+  "public_assets_report": "../vps-2026-10-27/public-assets.json",
+  "public_asset_hash_matches": 5
+}

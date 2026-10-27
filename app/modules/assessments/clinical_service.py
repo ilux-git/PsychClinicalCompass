@@ -9,7 +9,7 @@ from app.modules.access.models import User
 from app.modules.assessments.catalog import PHQ9_KEY, calculate, instrument
 from app.modules.assessments.clinical_models import ClinicalBaseline, ClinicalResult
 from app.modules.assessments.models import OutboxEvent
-from app.modules.assessments.triage import assess_review
+from app.modules.assessments.alert_protocol import assess_current_review
 from app.modules.audit.service import record_event
 from app.modules.patients.models import Patient
 from app.modules.surveys.models import Survey, SurveySubmission
@@ -52,7 +52,7 @@ async def save_clinical_result(session: AsyncSession, survey: Survey, submission
         ClinicalBaseline, ClinicalBaseline.result_id == ClinicalResult.id).where(
         ClinicalBaseline.patient_id == submission.patient_id, ClinicalBaseline.instrument_key == spec["key"]
     )) if spec["key"] == PHQ9_KEY else None
-    result["triage"] = assess_review(spec["key"], score, result,
+    result["triage"] = assess_current_review(spec["key"], score, result,
                                      previous=reference_read(previous), baseline=reference_read(baseline))
     row = ClinicalResult(patient_id=submission.patient_id, submission_id=submission.id,
                          instrument_key=spec["key"], definition=spec, score=score, result=result,

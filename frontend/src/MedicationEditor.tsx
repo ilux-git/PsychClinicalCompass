@@ -5,17 +5,18 @@ import { Button, ErrorBox, Section, type Notify } from "./UI";
 import { useUnsavedForm, type LeavePrompt } from "./NavigationGuard";
 import type { MedicationItem } from "./MedicationSchedule";
 import type { ParticipationConfirmation } from "./ParticipationReceipt";
+import {clinicDay,clinicTimeZone} from "./clinicTime";
 
 const editorPrompt:LeavePrompt={eyebrow:"Личное расписание",title:"Продолжить редактирование расписания?",message:"Изменения личной позиции ещё не сохранены. При переходе без сохранения текущий ввод будет потерян. Назначения МИС не меняются.",stayLabel:"Продолжить редактирование"};
 const week=["Пн","Вт","Ср","Чт","Пт","Сб","Вс"];
-export function localDay() {const d=new Date();return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`;}
+export function localDay() {return clinicDay();}
 
 export function MedicationEditor({item,scope,notify,onSaved,onClose,onSaving}:{item:MedicationItem|null;scope:string;notify:Notify;onSaved:(result:ParticipationConfirmation)=>void;onClose:()=>void;onSaving:()=>void}) {
   const [fields,setFields]=useState(()=>({
     label:item?.label??"",instructions:item?.instructions??"",text:item?.schedule_text??"",
     kind:item?.schedule_kind??"fixed",times:item?.times.join(", ")??"",
     weekdays:item?.weekdays??[0,1,2,3,4,5,6],
-    zone:item?.timezone??(Intl.DateTimeFormat().resolvedOptions().timeZone||"UTC"),
+    zone:item?.timezone??clinicTimeZone,
     start:item?.starts_on??localDay(),end:item?.ends_on??"",active:item?.active??true,
   }));
   const baseline=useRef(JSON.stringify(fields));
@@ -55,7 +56,7 @@ export function MedicationEditor({item,scope,notify,onSaved,onClose,onSaving}:{i
         <fieldset className="weekdays"><legend>Дни недели</legend>{week.map((label,index)=><label key={label}><input type="checkbox" checked={fields.weekdays.includes(index)} onChange={()=>patch({weekdays:fields.weekdays.includes(index)?fields.weekdays.filter(day=>day!==index):[...fields.weekdays,index]})}/>{label}</label>)}</fieldset>
       </>}
       <div className="form-grid"><label className="field">С даты<input type="date" required value={fields.start} onChange={e=>patch({start:e.target.value})}/></label><label className="field">По дату · необязательно<input type="date" min={fields.start} value={fields.end} onChange={e=>patch({end:e.target.value})}/></label></div>
-      <label className="field">Часовой пояс<input required value={fields.zone} onChange={e=>patch({zone:e.target.value})}/><small>Определён по устройству. Например, Asia/Novosibirsk. Время расписания считается в этом поясе.</small></label>
+      <label className="field">Часовой пояс<input required value={fields.zone} onChange={e=>patch({zone:e.target.value})}/><small>Для новой позиции — Москва (Europe/Moscow). Время расписания считается в указанном поясе; при редактировании сохраняется прежний пояс.</small></label>
       <label className="checkbox-label"><input type="checkbox" checked={fields.active} onChange={e=>patch({active:e.target.checked})}/>Активная личная позиция</label>
       <div className="button-row"><Button type="submit" disabled={busy}>{busy?"Сохраняем…":"Сохранить личное расписание"}</Button><Button type="button" variant="ghost" disabled={busy} onClick={()=>confirm(onClose)}>Отменить</Button></div>
     </fieldset></form>

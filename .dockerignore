@@ -1,5 +1,6 @@
 .git
 .codex
+.codex-remote-attachments
 .env
 .env.*
 !.env.example
