@@ -12,6 +12,7 @@ from app.modules.messaging.models import Message, MessageStatus
 from app.modules.alerts.models import Alert, ClinicalDecision
 from app.modules.assessments.models import QuestionnaireResponse
 from app.modules.alerts.clinical_review import create_clinical_alert
+from app.modules.alerts.scenario_review import create_scenario_alert
 from app.modules.alerts.escalation import route_due_urgent_alerts
 from app.modules.audit.service import record_event
 import app.db.models
@@ -32,6 +33,8 @@ async def _handle_event(session, event: OutboxEvent) -> None:
         message.status = MessageStatus.SIMULATED
     elif event.event_type == "clinical.assessment_flagged":
         await create_clinical_alert(session, event)
+    elif event.event_type == "clinical.scenario_review_requested":
+        await create_scenario_alert(session,event)
     elif event.event_type == "assessment.risk_detected":
         assessment_id = event.payload.get("assessment_id")
         if type(assessment_id) is not int:

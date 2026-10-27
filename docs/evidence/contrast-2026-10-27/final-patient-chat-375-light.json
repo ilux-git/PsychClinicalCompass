@@ -1,0 +1,13 @@
+{
+  "checked_at": "2026-10-27T06:53:29.815Z",
+  "theme": "light",
+  "route": "/?section=chat",
+  "viewport": {
+    "width": 375,
+    "height": 812
+  },
+  "axe_version": "4.14.0",
+  "violations": [],
+  "incomplete": [],
+  "passed_nodes": 28
+}

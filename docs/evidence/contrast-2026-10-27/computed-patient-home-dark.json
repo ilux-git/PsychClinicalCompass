@@ -1,0 +1,119 @@
+{
+  "label": "computed-patient-home-dark",
+  "rows": [
+    {
+      "background": "rgba(0, 0, 0, 0)",
+      "contrast": 13.37816483098874,
+      "foreground": "rgb(242, 241, 237)",
+      "photo_plate_worst_case": false,
+      "resolved_background": [
+        0.13333333333333333,
+        0.15294117647058825,
+        0.1568627450980392,
+        1
+      ],
+      "selector": "#patient-next-title",
+      "tag": "H2"
+    },
+    {
+      "background": "rgba(0, 0, 0, 0)",
+      "contrast": 9.20339934786014,
+      "foreground": "rgb(195, 204, 199)",
+      "photo_plate_worst_case": false,
+      "resolved_background": [
+        0.13333333333333333,
+        0.15294117647058825,
+        0.1568627450980392,
+        1
+      ],
+      "selector": ".patient-next-caption",
+      "tag": "P"
+    },
+    {
+      "background": "rgba(0, 0, 0, 0)",
+      "contrast": 9.20339934786014,
+      "foreground": "rgb(195, 204, 199)",
+      "photo_plate_worst_case": false,
+      "resolved_background": [
+        0.13333333333333333,
+        0.15294117647058825,
+        0.1568627450980392,
+        1
+      ],
+      "selector": ".patient-step-origin",
+      "tag": "SPAN"
+    },
+    {
+      "background": "rgba(0, 0, 0, 0)",
+      "contrast": 9.20339934786014,
+      "foreground": "rgb(195, 204, 199)",
+      "photo_plate_worst_case": false,
+      "resolved_background": [
+        0.13333333333333333,
+        0.15294117647058825,
+        0.1568627450980392,
+        1
+      ],
+      "selector": ".patient-step-meta span",
+      "tag": "SPAN"
+    },
+    {
+      "background": "rgba(0, 0, 0, 0)",
+      "contrast": 9.20339934786014,
+      "foreground": "rgb(195, 204, 199)",
+      "photo_plate_worst_case": false,
+      "resolved_background": [
+        0.13333333333333333,
+        0.15294117647058825,
+        0.1568627450980392,
+        1
+      ],
+      "selector": ".patient-step-meta span",
+      "tag": "SPAN"
+    },
+    {
+      "background": "rgba(0, 0, 0, 0)",
+      "contrast": 9.20339934786014,
+      "foreground": "rgb(195, 204, 199)",
+      "photo_plate_worst_case": false,
+      "resolved_background": [
+        0.13333333333333333,
+        0.15294117647058825,
+        0.1568627450980392,
+        1
+      ],
+      "selector": ".patient-step-reward",
+      "tag": "P"
+    },
+    {
+      "background": "rgb(231, 233, 229)",
+      "contrast": 14.174424624681466,
+      "foreground": "rgb(24, 27, 28)",
+      "photo_plate_worst_case": false,
+      "resolved_background": [
+        0.9058823529411764,
+        0.9137254901960784,
+        0.8980392156862745,
+        1
+      ],
+      "selector": ".patient-step-detail .button",
+      "tag": "BUTTON"
+    },
+    {
+      "background": "rgba(0, 0, 0, 0)",
+      "contrast": 13.37816483098874,
+      "foreground": "rgb(242, 241, 237)",
+      "photo_plate_worst_case": false,
+      "resolved_background": [
+        0.13333333333333333,
+        0.15294117647058825,
+        0.1568627450980392,
+        1
+      ],
+      "selector": ".patient-support-link strong",
+      "tag": "STRONG"
+    }
+  ],
+  "minimum": 9.20339934786014,
+  "failures": []
+}

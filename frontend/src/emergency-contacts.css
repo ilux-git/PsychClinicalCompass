@@ -1,0 +1,10 @@
+.emergency-contacts { padding:14px 16px; margin-bottom:18px; background:var(--paper); color:var(--ink); border:1px solid var(--line); border-radius:12px; }
+.emergency-contacts > summary { font-size:14px; line-height:1.5; font-weight:600; cursor:pointer; }
+.emergency-contacts-body { display:grid; gap:14px; padding-top:16px; }
+.emergency-contacts-body p { margin:0; font-size:16px; line-height:1.55; }
+.emergency-contacts-body ol { display:grid; gap:8px; margin:0; padding-left:20px; color:var(--muted); font-size:14px; line-height:1.6; }
+.emergency-contacts-body li { padding-left:3px; }
+.emergency-contact-actions { display:flex; flex-wrap:wrap; gap:8px; }
+.emergency-contact-actions .button { min-height:44px; gap:8px; font-size:14px; text-decoration:none; }
+.emergency-contact-actions svg { flex-shrink:0; }
+@media(max-width:480px) { .emergency-contact-actions .button { flex:1 1 220px; } }

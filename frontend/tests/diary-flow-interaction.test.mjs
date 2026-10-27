@@ -34,7 +34,7 @@ before(async()=>{
 afterEach(()=>{cleanup();assert.deepEqual(unexpected,[],"Unexpected transport must not hide missing fixture coverage");});
 after(async()=>{await server?.close();dom?.window.close();});
 
-function transport({failOnce=false,points=3}={}){
+function transport({failOnce=false,points=10}={}){
   unexpected=[];const writes=[];let entries=[];
   globalThis.fetch=async(path,options={})=>{
     const method=options.method??"GET";
@@ -80,7 +80,7 @@ test("a short private entry starts with text and saves the same canonical observ
   assert.equal(writes[0].observation_kind,"moment");
   assert.equal(writes[0].feeling,null);assert.equal(writes[0].daily_impact,null);
   assert.equal(Number.isNaN(new Date(writes[0].observed_at).getTime()),false);
-  assert.ok(screen.getByText("+3 балла за участие"));
+  assert.ok(screen.getByText("+10 баллов за участие"));
   await user.click(screen.getByRole("button",{name:"Мой прогресс"}));
   assert.equal(opened,1);
 });
@@ -101,7 +101,7 @@ test("optional observation values survive collapse and can be submitted without 
   assert.equal(writes.length,1);assert.equal(writes[0].text,"");
   assert.equal(writes[0].feeling,"neutral");assert.equal(writes[0].daily_impact,"some_interference");
   assert.equal(writes[0].observation_kind,"day_summary");
-  assert.equal(writes[0].observed_at,new Date(observed).toISOString());
+  assert.equal(writes[0].observed_at,"2026-10-24T09:30:00.000Z","Observation inputs use Moscow time regardless of the device zone");
   assert.ok(screen.getByText("Сохранено без дополнительных баллов"));
 });
 

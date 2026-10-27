@@ -1,5 +1,6 @@
 import { useEffect, useId, useRef, useState } from "react";
 import { plural } from "./UI";
+import {clinicTimeZone} from "./clinicTime";
 
 export function CoverageGrid({rows}: {rows:{label:string;responded:number|null;assigned:number|null;percent:number|null;note?:string}[]}) {
   return <div className="coverage-grid">{rows.map(row=><article className="coverage-cell" key={row.label}>
@@ -58,12 +59,12 @@ export function TimeSeries({title, points, maximum, unit = "балл."}: {
     <figcaption>{title}</figcaption>
     <div className="time-series-plot" ref={container}>
     <svg viewBox={`0 0 ${width} 244`} role="img" aria-label={`${title}. ${sorted.length} ${plural(sorted.length,"наблюдение","наблюдения","наблюдений")}. Последнее: ${sorted.at(-1)!.value} ${unit}`}>
-      <defs><linearGradient id={identifier} x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stopColor="#3e897e" stopOpacity=".16"/><stop offset="100%" stopColor="#3e897e" stopOpacity="0"/></linearGradient></defs>
-      {[0,1,2,3].map(i => {const value = maximum*i/3; return <g key={i}><line x1="44" x2={width-22} y1={y(value)} y2={y(value)} stroke="#e9e6ef"/><text x="32" y={y(value)+4} textAnchor="end" className="chart-axis">{Number(value.toFixed(1))}</text></g>;})}
+      <defs><linearGradient id={identifier} x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stopColor="var(--chart-line)" stopOpacity=".16"/><stop offset="100%" stopColor="var(--chart-line)" stopOpacity="0"/></linearGradient></defs>
+      {[0,1,2,3].map(i => {const value = maximum*i/3; return <g key={i}><line x1="44" x2={width-22} y1={y(value)} y2={y(value)} stroke="var(--line)"/><text x="32" y={y(value)+4} textAnchor="end" className="chart-axis">{Number(value.toFixed(1))}</text></g>;})}
       <text x="44" y="18" className="chart-axis">{unit}</text>
-      {sorted.length > 1 && last > first && <><path d={`${path} L${x(sorted.at(-1)!.at)},194 L${x(sorted[0].at)},194 Z`} fill={`url(#${identifier})`}/><path d={path} fill="none" stroke="#317c74" strokeWidth="2.5" strokeLinejoin="round"/></>}
-      {sorted.map(p => <circle key={p.id} cx={x(p.at)} cy={y(p.value)} r="4.5" fill="#317c74" stroke="white" strokeWidth="2"><title>{new Date(p.at).toLocaleString("ru-RU")}: {p.value} {unit}</title></circle>)}
-      {tickPoints.map((p,i) => <text key={p.id} x={x(p.at)} y="222" textAnchor={i===0 ? "start" : i===tickPoints.length-1 ? "end" : "middle"} className="chart-axis">{new Date(p.at).toLocaleDateString("ru-RU",{day:"numeric",month:"short"})}</text>)}
+      {sorted.length > 1 && last > first && <><path d={`${path} L${x(sorted.at(-1)!.at)},194 L${x(sorted[0].at)},194 Z`} fill={`url(#${identifier})`}/><path d={path} fill="none" stroke="var(--chart-line)" strokeWidth="2.5" strokeLinejoin="round"/></>}
+      {sorted.map(p => <circle key={p.id} cx={x(p.at)} cy={y(p.value)} r="4.5" fill="var(--chart-line)" stroke="var(--surface)" strokeWidth="2"><title>{new Date(p.at).toLocaleString("ru-RU",{timeZone:clinicTimeZone})}: {p.value} {unit}</title></circle>)}
+      {tickPoints.map((p,i) => <text key={p.id} x={x(p.at)} y="222" textAnchor={i===0 ? "start" : i===tickPoints.length-1 ? "end" : "middle"} className="chart-axis">{new Date(p.at).toLocaleDateString("ru-RU",{timeZone:clinicTimeZone,day:"numeric",month:"short"})}</text>)}
     </svg>
     </div>
     {first === last && <p className="field-hint">{sorted.length===1?"Для оценки динамики нужны измерения в разные моменты времени.":"Измерения в один момент времени; динамику оценить нельзя."}</p>}

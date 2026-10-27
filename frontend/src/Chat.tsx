@@ -13,6 +13,7 @@ import {
 } from "./UI";
 import { useUnsavedForm, type LeavePrompt } from "./NavigationGuard";
 import { AnimatePresence, m, motionTokens, useInteractionMotion } from "./Interaction";
+import {EmergencyContacts} from "./EmergencyContacts";
 
 const messagePrompt:LeavePrompt={eyebrow:"Неотправленное сообщение",title:"Оставить сообщение в форме?",message:"Сообщение ещё не отправлено. Вернитесь к переписке, чтобы дописать и отправить его. При переходе без сохранения текст будет потерян.",stayLabel:"Продолжить сообщение"};
 
@@ -37,6 +38,9 @@ export function Chat({
   );
   const [text, setText] = useState("");
   const [supportRequested,setSupportRequested] = useState(false);
+  const [emergencyFromSend,setEmergencyFromSend]=useState(false);
+  useEffect(()=>setEmergencyFromSend(false),[patientId,role]);
+  useEffect(()=>{if(messages.data)setEmergencyFromSend(false);},[messages.data]);
   const requests = useApi<{message_id:number; text:string; created_at:string; status:string; acknowledged_at:string|null}[]>(
     role === "patient" ? `/patients/${patientId}/support-requests` : null, 5000);
   const [busy, setBusy] = useState(false);
@@ -84,12 +88,13 @@ export function Chat({
     resumeComposer.current=document.activeElement===composer.current||document.activeElement===sendButton.current;
     setSendError("");setBusy(true);
     try {
-      await send(`/conversations/${patientId}/messages`, {
+      const saved=await send<ChatMessage>(`/conversations/${patientId}/messages`, {
         text,
         channel: simulated ? `tg_${role}` : "web",
         client_request_id: request.current.id,
         support_requested: supportRequested,
       });
+      if(saved.emergency_help)setEmergencyFromSend(true);
       setText("");
       setSupportRequested(false);
       clearGuard();
@@ -107,15 +112,6 @@ export function Chat({
   }
   return (
     <div className="chat-panel">
-      {simulated && (
-        <div className="channel-notice">
-          <MessageCircle size={17} />
-          <span>
-            Симулятор Telegram. Сообщения сохраняются в общей истории; внешняя
-            доставка не выполняется.
-          </span>
-        </div>
-      )}
       <ErrorBox message={messages.error} retry={messages.reload} />
       <div className="chat-history">
       {!messages.data ? (
@@ -149,9 +145,9 @@ export function Chat({
                 {message.channel === "web"
                   ? "Сохранено"
                   : message.status === "simulated"
-                    ? "Демодоставка"
+                    ? "Сохранено в чате"
                     : message.status === "queued"
-                      ? "В очереди симулятора"
+                      ? "В очереди"
                       : "Получено из канала"}
               </div>
               {role === "doctor" && onObservation && <Button variant="ghost" onClick={() => onObservation(message)}>Наблюдение к сообщению</Button>}
@@ -162,6 +158,7 @@ export function Chat({
       <AnimatePresence>{newMessages&&<m.div className="new-messages" role="status" initial={{opacity:0,y:moving?motionTokens.distance.small:0}} animate={{opacity:1,y:0}} exit={{opacity:0}} transition={transition}><Button variant="secondary" onClick={showLatest}>Новые сообщения · Показать</Button></m.div>}</AnimatePresence>
       </div>
       {(messages.data?.length??0)>=100&&<p className="field-hint">Показаны последние 100 сообщений диалога.</p>}
+      {role==="patient"&&<EmergencyContacts active={emergencyFromSend||(messages.data?.some(message=>message.emergency_help)??false)}/>}
       <form onSubmit={submit}>
       <div ref={errorResult} id={errorId}><ErrorBox message={sendError}/></div>
       <fieldset className="form-fields" disabled={busy} aria-busy={busy} aria-describedby={sendError?errorId:undefined}>

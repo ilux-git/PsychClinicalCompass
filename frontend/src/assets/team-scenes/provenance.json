@@ -1,0 +1,65 @@
+{
+  "source": "User-provided artwork; mapping confirmed by attached Telegram file-list screenshot, 2026-10-27",
+  "images": [
+    {
+      "file": "rhythm-thu.jpg",
+      "team_filename": "ЧТ-квадрат.jpg",
+      "sha256": "ac9700d67b5b2f57088710dcf10f47f561d3a4e4fa09c1c2e0b547b179b4c59d"
+    },
+    {
+      "file": "queue-checked.jpg",
+      "team_filename": "Проверенные результаты.jpg",
+      "sha256": "2cacb445f7ea54332a8a61830f88f001942e898e3d3a1e8cb09911ee9b5c4e47"
+    },
+    {
+      "file": "queue-check.jpg",
+      "team_filename": "Проверить результат.jpg",
+      "sha256": "1e0bb1188541270376d2be906e0b1ca6a95854834ee3d66458892982f7897c07"
+    },
+    {
+      "file": "calm-cat.jpg",
+      "team_filename": "Бэкграунд Спокойного режима.jpg",
+      "sha256": "cbf08e477b8a09b20a9d1f682ab32d3f7f90d048ea63cc8f0b13ec7ad42179e3"
+    },
+    {
+      "file": "rhythm-tue.jpg",
+      "team_filename": "ВТ-квадрат.jpg",
+      "sha256": "9979636e472a08b618d31a53ddf9e709098d726348b8a108f9e21bd7a77c571c"
+    },
+    {
+      "file": "patient-diary.jpg",
+      "team_filename": "Мой день записать самочувствие.jpg",
+      "sha256": "89b34896381c4da9319c380c78a70832a968aca501f5937e3b3db50cf0ecb66d"
+    },
+    {
+      "file": "queue-active.jpg",
+      "team_filename": "Нужно выполнить.jpg",
+      "sha256": "7252f31a0afd8fd644cc1e695eb01046128b209c36ec0669930d65ae5fc3200c"
+    },
+    {
+      "file": "rhythm-mon.jpg",
+      "team_filename": "ПН-квадрат.jpg",
+      "sha256": "b1404790b39cb941075dd6e7df365e06e0e1c38846cb645201b6f09e314df819"
+    },
+    {
+      "file": "rhythm-wed.jpg",
+      "team_filename": "СР-квадрат.jpg",
+      "sha256": "7fee5d19a72a087f20eccaef4eacd04b613501571aa83f19b5d20e05c652fc52"
+    },
+    {
+      "file": "rhythm-sun.jpg",
+      "team_filename": "ВС-квадрат.jpg",
+      "sha256": "2a008c306ab2ccd0b07b2194ba7f3c5655a99f2e48c5f3b445043fc2cc4c317b"
+    },
+    {
+      "file": "rhythm-fri.jpg",
+      "team_filename": "ПТ-квадрат.jpg",
+      "sha256": "d123780605a580ca540bdf1410f9a4156a6c14474348a4a2c6411c8a5607ec2b"
+    },
+    {
+      "file": "rhythm-sat.jpg",
+      "team_filename": "СБ-квадрат.jpg",
+      "sha256": "d99e7f7cba2803c195196480eea44d5f54c391a050addd95c160db9de5fe9434"
+    }
+  ]
+}

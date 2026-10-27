@@ -1,4 +1,6 @@
 .env
+.env.*
+!.env.example
 __pycache__/
 *.pyc
 .venv/
@@ -6,6 +8,7 @@ __pycache__/
 
 # Local tooling and generated artifacts
 .codex/
+.codex-remote-attachments/
 work/
 outputs/
 node_modules/

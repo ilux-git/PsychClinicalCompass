@@ -52,10 +52,13 @@ async def engagement(session: AsyncSession, user: User,
             if answer is None:
                 continue
             key = (survey.id, question["id"])
-            item = breakdown.setdefault(key, {"survey_id": survey.id, "survey_title": survey.title, "version": survey.version,
-                "purpose": survey.purpose, "question_id": question["id"], "prompt": question["prompt"], "kind": question["kind"],
-                "dimension": question.get("dimension"),
-                "respondents": 0, "counts": Counter(), "options": {o["id"]: o["label"] for o in question["options"]}})
+            item = breakdown.get(key)
+            if item is None:
+                item = {"survey_id": survey.id, "survey_title": survey.title, "version": survey.version,
+                    "purpose": survey.purpose, "question_id": question["id"], "prompt": question["prompt"], "kind": question["kind"],
+                    "dimension": question.get("dimension"),
+                    "respondents": 0, "counts": Counter(), "options": {o["id"]: o["label"] for o in question["options"]}}
+                breakdown[key] = item
             item["respondents"] += 1
             if question["kind"] in {"single", "multiple"}:
                 item["counts"].update(answer if isinstance(answer, list) else [answer])

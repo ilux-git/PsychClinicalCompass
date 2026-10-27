@@ -1,4 +1,5 @@
-import { Fragment, lazy, Suspense, useCallback, useEffect, useId, useLayoutEffect, useRef, useState, type CSSProperties, type FormEvent } from "react";
+import {accountName} from "./presentation";
+import { Fragment, lazy, Suspense, useCallback, useEffect, useId, useLayoutEffect, useRef, useState, type CSSProperties } from "react";
 import {
   Activity,
   LayoutDashboard,
@@ -20,8 +21,9 @@ import {
   House,
   ListTodo,
   CircleHelp,
+  Settings2,
 } from "lucide-react";
-import { api, send, type User } from "./api";
+import { api, send, sessionToken, saveSessionToken, clearSessionToken, type User } from "./api";
 import {
   Avatar,
   Badge,
@@ -41,8 +43,13 @@ import { cardSections, defaultView, navigationFor, patientSurveyGuide, sectionFo
 import { WorkspaceHome } from "./WorkspaceHome";
 import { CoordinatorNotices } from "./CoordinatorFallback";
 import { BrandIdentity, productName } from "./Brand";
-import anatomy from "./assets/limbus-anatomy.jpg";
-import { createWorkspaceHistory, pageRoute, routeHref, type RouteContext, type WorkspaceRoute } from "./routes";
+import { createWorkspaceHistory, pageRoute, routeHref as workspaceHref, type RouteContext, type WorkspaceRoute } from "./routes";
+import { applicationBase, isTelegramPath, telegramWebApp } from "./telegramRuntime";
+import { TelegramHost } from "./TelegramEntry";
+import { Login } from "./Login";
+import { AccountSettings } from "./AccountSettings";
+
+const routeHref=(route:WorkspaceRoute)=>workspaceHref(route,applicationBase(window.location.pathname));
 
 const DoctorDashboard = lazy(() => import("./DoctorDashboard").then(module => ({default:module.DoctorDashboard})));
 const SurveyBuilder = lazy(() => import("./SurveyBuilder").then(module => ({default:module.SurveyBuilder})));
@@ -53,112 +60,6 @@ const TaskBoard = lazy(() => import("./TaskBoard").then(module => ({default:modu
 
 const navIcons:Record<string,typeof Users>={home:House,users:Users,bell:Bell,tasks:ListTodo,surveys:ClipboardList,chart:LayoutDashboard,activity:Activity,chat:MessageCircle,heart:HeartHandshake,sparkles:Sparkles,book:BookOpen,pill:Pill,shield:ShieldCheck};
 
-function Login({ onLogin, sessionMessage }: { onLogin: (user: User) => void; sessionMessage: string }) {
-  const [username, setUsername] = useState("doctor");
-  const [password, setPassword] = useState("doctor-pass-123");
-  const [busy, setBusy] = useState(false);
-  const [error, setError] = useState("");
-  const [preset, setPreset] = useState("doctor");
-  async function login(event: FormEvent) {
-    event.preventDefault();
-    setBusy(true);
-    setError("");
-    try {
-      const result = await send<{ access_token: string; user: User }>(
-        "/auth/login",
-        { username, password },
-      );
-      sessionStorage.setItem("compass-token", result.access_token);
-      onLogin(result.user);
-    } catch (error) {
-      setError(
-        error instanceof Error ? error.message : "Нет соединения с сервером",
-      );
-    } finally {
-      setBusy(false);
-    }
-  }
-  function select(value: string) {
-    setPreset(value);
-    setUsername(value);
-    setPassword(
-      value.startsWith("patient")
-        ? "patient-pass-123"
-        : value === "admin"
-          ? "admin-pass-123"
-          : value === "coordinator" ? "coordinator-pass-123"
-          : "doctor-pass-123",
-    );
-  }
-  return (
-    <main className="login-page">
-      <div className="login-story">
-        <a href="/" className="brand">
-          <BrandIdentity/>
-        </a>
-        <div className="login-story-main">
-          <h1>Сопровождение пациентов</h1>
-          <figure className="limbus-anatomy" aria-hidden="true"><img src={anatomy} width="736" height="1308" decoding="async" alt=""/></figure>
-        </div>
-      </div>
-      <div className="login-form-side">
-        <form className="login-form" onSubmit={login}>
-          <p className="eyebrow">Демонстрационный стенд</p>
-          <h2>Войти в {productName}</h2>
-          <p className="muted">
-            Только синтетические пациенты. Не вводите данные реальных людей. Выберите роль или введите данные демонстрационной учётной записи.
-          </p>
-          <label className="field">
-            Демонстрационная роль
-            <select value={preset} onChange={(e) => select(e.target.value)}>
-              <option value="doctor">Врач · основные пациенты</option>
-              <option value="doctor2">Второй врач · отдельные пациенты</option>
-              {Array.from({ length: 10 }, (_, i) => (
-                <option key={i} value={`patient${i + 1}`}>
-                  Пациент {i + 1}
-                </option>
-              ))}
-              <option value="admin">
-                Администратор · обезличенная сводка
-              </option>
-              <option value="coordinator">Координатор · назначенные задачи</option>
-            </select>
-          </label>
-          <label className="field">
-            Логин
-            <input
-              autoComplete="username"
-              required
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-            />
-          </label>
-          <label className="field">
-            Пароль
-            <input
-              type="password"
-              autoComplete="current-password"
-              required
-              maxLength={72}
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
-          </label>
-          <ErrorBox message={error} />
-          {sessionMessage && <p className="field-hint" role="status">{sessionMessage}</p>}
-          <Button disabled={busy} type="submit">
-            {busy ? "Входим…" : "Войти"}
-            <ArrowRight size={17} />
-          </Button>
-          <p className="field-hint">
-            Доступны только Ваши пациенты и ответы. Кабинет администратора не
-            открывает медицинские карточки.
-          </p>
-        </form>
-      </div>
-    </main>
-  );
-}
 
 function Workspace() {
   const guard = useNavigationGuard();
@@ -166,6 +67,7 @@ function Workspace() {
   const [user, setUser] = useState<User | null>(null);
   const sessionEpoch = useRef(0);
   const [sessionMessage, setSessionMessage] = useState("");
+  const [settingsOpen,setSettingsOpen]=useState(false);
   const currentUser=useRef(user);currentUser.current=user;
   const [availabilityPending,setAvailabilityPending]=useState<{doctorId:number;value:string}|null>(null);
   const [availabilityError,setAvailabilityError]=useState<{doctorId:number;message:string}|null>(null);
@@ -173,7 +75,7 @@ function Workspace() {
   const availabilityFocus=usePendingSelectFocus(availabilityBusy),availabilityId=useId();
   useEffect(()=>setAvailabilityError(null),[user?.id]);
   const [booting, setBooting] = useState(
-    Boolean(sessionStorage.getItem("compass-token")),
+    !isTelegramPath()&&Boolean(sessionToken()),
   );
   const [view, setView] = useState("overview");
   const [navigationRevision,setNavigationRevision]=useState(0);
@@ -286,10 +188,11 @@ function Workspace() {
   }, [notice]);
   const logout = useCallback(() => {
     sessionEpoch.current += 1;
-    setSessionMessage("");
+    setSessionMessage("Сессия завершена. Войдите снова.");
+    setSettingsOpen(false);
     historyNavigation.current?.dispose();historyNavigation.current=null;locationSnapshot.current=null;
     window.history.replaceState(null,"",window.location.pathname);
-    sessionStorage.removeItem("compass-token");
+    clearSessionToken();
     setUser(null);
     setView("overview");
     setSelectedPatient(null);
@@ -301,13 +204,13 @@ function Workspace() {
     setMenuOpen(false);
   }, []);
   function signOut() {
-    const token = sessionStorage.getItem("compass-token");
+    const token = sessionToken();
     // Start while api() can still capture this credential. Local exit never waits for transport.
     const request = token ? api<{revoked:boolean}>("/auth/logout", {method:"POST"}) : null;
     logout();
     if (!request) return;
     const exitEpoch = sessionEpoch.current;
-    const stillSignedOut = () => sessionEpoch.current === exitEpoch && !sessionStorage.getItem("compass-token");
+    const stillSignedOut = () => sessionEpoch.current === exitEpoch && !sessionToken();
     setSessionMessage("Вы вышли на этом устройстве. Завершаем сессию…");
     void request.then(result => {
       if (result.revoked !== true) throw new Error("Revocation was not confirmed");
@@ -318,7 +221,7 @@ function Workspace() {
   }
   useEffect(() => {
     let active = true;
-    if (sessionStorage.getItem("compass-token"))
+    if (!isTelegramPath()&&sessionToken())
       api<User>("/auth/me")
         .then((data) => {
           if (active) {setUser(data); setView(defaultView(data.role));}
@@ -335,6 +238,21 @@ function Workspace() {
       window.removeEventListener("compass-auth-expired", logout);
     };
   }, [logout]);
+  useEffect(()=>{
+    if(!isTelegramPath()||!user)return;
+    const back=telegramWebApp()?.BackButton;
+    if(!back)return;
+    const current=locationSnapshot.current?.route;
+    const canBack=Boolean(current&&(current.view!==defaultView(user.role)||current.patientId!==null||current.assignmentId!==null));
+    if(canBack)back.show();else back.hide();
+    const goBack=()=>{
+      setMenuOpen(false);
+      if(historyNavigation.current&&historyNavigation.current.current().entry.index>0)window.history.back();
+      else guard.run(()=>historyNavigation.current?.push(pageRoute(user.role,defaultView(user.role))));
+    };
+    back.onClick(goBack);
+    return()=>{back.offClick(goBack);back.hide();};
+  },[user?.id,user?.role,view,selectedPatient,selectedAssignment,guard.run]);
   function navigate(next: string,after?:()=>void) {
     setMenuOpen(false);
     guard.run(() => {
@@ -395,12 +313,15 @@ function Workspace() {
         <Loading />
       </div>
     );
-  if (!user) return <Login sessionMessage={sessionMessage} onLogin={value => {sessionEpoch.current += 1; setSessionMessage(""); setUser(value); setView(defaultView(value.role));}} />;
+  if (!user) {
+    const onLogin=(value:User)=>{sessionEpoch.current+=1;setSessionMessage("");setUser(value);setView(defaultView(value.role));};
+    return <Login key={sessionEpoch.current} sessionMessage={sessionMessage} onLogin={onLogin}/>;
+  }
   const nav=navigationFor(user.role);
   const currentSection=sectionFor(user.role,navigationView);
   const primaryNav=nav.filter(item=>!item.secondary);
   const secondaryNav=nav.filter(item=>item.secondary);
-  const quickNav=user.role==="doctor"?[["home","Главная"],["patients","Пациенты"],["events","События"],["tasks","План"]]:user.role==="patient"?[["overview","Мой день"],["surveys","Опросы"],["diary","Дневник"],["chat","Врачу"]]:user.role==="admin"?[["overview","Обзор"],["barriers","Затруднения"],["actions","Действия"],["sources","Данные"]]:[];
+  const quickNav=user.role==="doctor"?[["home","Главная"],["patients","Пациенты"],["events","События"],["tasks","План"]]:user.role==="patient"?[["overview","Мой день"],["surveys","Опросы"],["diary","Дневник"],["chat","Чат"]]:user.role==="admin"?[["overview","Обзор"],["barriers","Затруднения"],["actions","Действия"],["sources","Данные"]]:[];
   function navControl(item:NavItem) {
     const Icon=navIcons[item.icon];
     return <a href={routeHref(pageRoute(user!.role,item.id))} className={navigationView===item.id?"active":""} aria-current={navigationView===item.id?"page":undefined} onClick={event=>{if(!event.metaKey&&!event.ctrlKey&&!event.shiftKey&&!event.altKey&&event.button===0){event.preventDefault();navigate(item.id);}}}>
@@ -414,7 +335,7 @@ function Workspace() {
       <a className="skip-link" href="#compass-main" onClick={event=>{event.preventDefault();document.getElementById("compass-main")?.focus();document.getElementById("compass-main")?.scrollIntoView({block:"start"});}}>Перейти к содержимому</a>
       <aside ref={sidebar} className={`sidebar ${menuOpen ? "open" : ""}`} role={menuOpen?"dialog":undefined} aria-modal={menuOpen||undefined} aria-label="Меню кабинета">
         <a
-          href="/"
+          href={applicationBase(window.location.pathname)}
           className="brand"
           onClick={(event) => {
             event.preventDefault();
@@ -436,7 +357,7 @@ function Workspace() {
             {navControl(item)}
           </Fragment>)}
         </nav>
-        {secondaryNav.length>0&&<details className="demo-navigation" key={view==="telegram"?"active-demo":"demo"} open={view==="telegram"||undefined}><summary>Демонстрация</summary><div>{secondaryNav.map(item=><Fragment key={item.id}>{navControl(item)}</Fragment>)}</div></details>}
+        {secondaryNav.length>0&&<details className="demo-navigation" key={view==="telegram"?"active-demo":"demo"} open={view==="telegram"||undefined}><summary>Другие разделы</summary><div>{secondaryNav.map(item=><Fragment key={item.id}>{navControl(item)}</Fragment>)}</div></details>}
         {user.role==="doctor"&&<div className="availability-select sidebar-availability" aria-busy={availabilityBusy}>
           <div className="availability-heading"><label htmlFor={availabilityId}>Доступность врача</label><span role="status">{availabilityBusy?"Сохраняем…":""}</span></div>
           <div className="availability-field"><span className={`availability-dot ${availabilityBusy?"pending":user.availability==="available"?"online":""}`} aria-hidden="true"/>
@@ -447,9 +368,9 @@ function Workspace() {
           {availabilityError?.doctorId===user.id&&<p id={`${availabilityId}-error`} className="availability-error" role="alert">Изменение не подтверждено. {availabilityError.message} Выберите статус ещё раз, чтобы повторить.</p>}
         </div>}
         <div className="sidebar-profile">
-          <Avatar name={user.display_name} small />
+          <Avatar name={accountName(user.display_name)} small />
           <div>
-            <strong>{user.display_name}</strong>
+            <strong>{accountName(user.display_name)}</strong>
             <small>
               {user.role === "doctor"
                 ? "Врач"
@@ -457,6 +378,7 @@ function Workspace() {
                   ? "Пациент"
                   : user.role === "coordinator" ? "Координатор" : "Администратор"}
             </small>
+            {user.scenario_label&&<small className="scenario-profile-label">Сценарий: {user.scenario_label}</small>}
           </div>
           <button className="icon-button" onClick={() => {setMenuOpen(false);guard.run(signOut);}} aria-label="Выйти">
             <LogOut size={18} />
@@ -487,9 +409,10 @@ function Workspace() {
             {selectedPatient!==null||selectedAssignment!==null?<><button onClick={()=>navigate(navigationView)}>{currentSection.title}</button><span aria-hidden="true">/</span><strong aria-current="page">{selectedPatient!==null?cardSections[patientEntry].title:"Ответ на опрос"}</strong></>:<strong aria-current="page">{currentSection.title}</strong>}
           </nav>
           <div className="topbar-actions">
+            <button type="button" className="icon-button account-settings-trigger" aria-label="Настройки аккаунта" onClick={()=>{setMenuOpen(false);setSettingsOpen(true);}}><Settings2 size={19}/></button>
             {user.role === "doctor" && <DoctorInboxNotice key={user.id} open={() => navigate("events")} />}
             <Button variant="ghost" className="section-help-button" aria-label="Помощь с разделом" onClick={()=>setGuideStart(value=>value+1)}><CircleHelp size={18}/><span>Помощь</span></Button>
-            <Badge tone="muted">Демо</Badge>
+
           </div>
         </header>
         <main className="main-content" id="compass-main" tabIndex={-1} key={user.id}>
@@ -542,7 +465,7 @@ function Workspace() {
               <DoctorPatients
                 key={view}
                 selected={selectedPatient}
-                onSelect={id=>id===null?returnFromPatient():openPatient(id)}
+                onSelect={(id,entry)=>id===null?returnFromPatient():openPatient(id,{entry})}
                 back={returnFromPatient}
                 backLabel={patientOrigin?.label}
                 scope={view}
@@ -578,10 +501,11 @@ function Workspace() {
           {user.role!=="admin"&&<button type="button" className={!quickNav.some(([id])=>id===navigationView)?"active":""} aria-label="Все разделы кабинета" aria-expanded={menuOpen} onClick={()=>setMenuOpen(true)}><Menu size={20}/><span>Ещё</span></button>}
         </nav>}
       </div>
+      {settingsOpen&&<AccountSettings user={user} close={()=>setSettingsOpen(false)}/>}
     </div></ViewStateProvider>
   );
 }
 
 export default function App() {
-  return <NavigationGuard><Workspace/></NavigationGuard>;
+  return <TelegramHost><NavigationGuard><Workspace/></NavigationGuard></TelegramHost>;
 }

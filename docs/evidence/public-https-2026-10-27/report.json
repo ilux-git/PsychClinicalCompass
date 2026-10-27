@@ -1,0 +1,87 @@
+{
+  "verified_at": "2026-10-27T05:53:16.858737+00:00",
+  "base_url": "https://browsers-belief-divx-patrol.trycloudflare.com",
+  "mini_app_url": "https://browsers-belief-divx-patrol.trycloudflare.com/tg",
+  "environment": "temporary_public_synthetic_demo",
+  "statuses": {
+    "/health": 200,
+    "/": 200,
+    "/tg": 200,
+    "/auth/me": 401,
+    "/patients": 401
+  },
+  "public_html_matches_local": true,
+  "mini_app_cache_control": "no-store",
+  "tls_verification_disabled": false,
+  "protected_endpoints_require_auth": true,
+  "script_bytes": 420338,
+  "script_sha256": "a6ea052f66cbf228b943aad33f68c1e1ea74c82cc89b761e86f8065101be7031",
+  "bot_username": "LimbusMed_bot",
+  "bot_menu": {
+    "type": "web_app",
+    "text": "Открыть Лимбус",
+    "web_app": {
+      "url": "https://browsers-belief-divx-patrol.trycloudflare.com/tg"
+    }
+  },
+  "bot_menu_readback_verified": true,
+  "menu_scope": "default; no per-chat override",
+  "messages_sent": 0,
+  "webhook_write_requested": false,
+  "live_telegram_user_login_verified": false,
+  "tunnel": {
+    "provider": "Cloudflare Quick Tunnel",
+    "version": "2026.10.4",
+    "binary_sha256": "411b16d40c8d872243efeb52c550053d00af0a8a97fbb32e730fb8aba429eaa8",
+    "upstream": "http://127.0.0.1:8780",
+    "session": 76509,
+    "url_is_temporary": true,
+    "concurrent_in_flight_request_limit": 200,
+    "load_acceptance_claimed": false
+  },
+  "targeted_tests": {
+    "command": "python -m pytest tests/test_telegram_menu_setup.py -q",
+    "passed": 4,
+    "seconds": 0.04
+  },
+  "setup_note": "Nested JSON request returned true but readback stayed commands. Form-encoded JSON-serialized menu was accepted and read back exactly. Deployment helper corrected; initial failure logs retained privately.",
+  "previous_local_verification": "../telegram-mini-app-2026-10-27/report.json",
+  "browser_screenshots": [
+    "mini-app-outside-telegram.png",
+    "public-patient-progress.png"
+  ],
+  "browser": {
+    "checked_at": "2026-10-27T05:55:08.931530+00:00",
+    "public_web_demo_login": "patient5; ordinary login form",
+    "loaded_sections": [
+      "overview",
+      "journey"
+    ],
+    "telegram_outside_browser_state": "Open the bot; unverified browser cannot sign in as Telegram",
+    "observed_console_errors": 0,
+    "clinical_mutations": 0,
+    "synthetic_only": true,
+    "screenshots": [
+      {
+        "path": "mini-app-outside-telegram.png",
+        "dimensions": [
+          354,
+          572
+        ],
+        "sha256": "b099574aec4f3cdf19e4fe5570ff1312a7cc12505028ddfd854e23fcad373d96"
+      },
+      {
+        "path": "public-patient-progress.png",
+        "dimensions": [
+          339,
+          548
+        ],
+        "sha256": "0f35c4288ca9498daa7f97700a93b224e745b48fe7f50ec6a54d03bdedcc744a"
+      }
+    ]
+  },
+  "deployment_source_sha256": {
+    "scripts/configure_telegram_mini_app.py": "ed83aa15e698d29457788f1407688e808ce1859954482473b641655bf532c471",
+    "tests/test_telegram_menu_setup.py": "74bb01cb60baa002a5ded6231320c8985825950a64200570eb90976f281279e4"
+  }
+}

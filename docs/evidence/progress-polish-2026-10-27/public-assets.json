@@ -1,0 +1,44 @@
+{
+  "verified_at": "2026-10-27T12:32:30.734023+00:00",
+  "base_url": "https://104.238.29.90",
+  "mini_app_document_matches_build": true,
+  "tls_verification_disabled": false,
+  "health_status": 200,
+  "unauthenticated_statuses": {
+    "/auth/me": 401,
+    "/patients": 401
+  },
+  "assets": [
+    {
+      "path": "/assets/index-CflRfJJE.js",
+      "status": 200,
+      "bytes": 419276,
+      "sha256": "08f375b0190cf5bd1834985f9aca3b638a8215326343398315db8ab0e48653ad"
+    },
+    {
+      "path": "/assets/index-CqRuwxDY.css",
+      "status": 200,
+      "bytes": 141258,
+      "sha256": "8b4bf9d0ada1702e8568aa30add32ac5c2436dd66c6d2cd930744531c9fa117f"
+    },
+    {
+      "path": "/assets/MedicationSchedule-BHG08nOf.css",
+      "status": 200,
+      "bytes": 2042,
+      "sha256": "4df94529b02ede2dbfedd485780a0a58ea1a3e404af2ce5fc8621ee7f831852f"
+    },
+    {
+      "path": "/assets/Patient-COc1d5VE.css",
+      "status": 200,
+      "bytes": 30526,
+      "sha256": "50ac23d60841238fa2762c0a9fcf63b985f3aa752c75b41a7514ce5ca64ab2d7"
+    },
+    {
+      "path": "/assets/CareWorkflow-Cg2WRZv3.css",
+      "status": 200,
+      "bytes": 1949,
+      "sha256": "f5318d9142c2b72cdda037bb31c64a685214c818b99a4977895a93447034adc6"
+    }
+  ],
+  "real_telegram_device_theme_verified": false
+}

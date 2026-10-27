@@ -62,7 +62,7 @@ test('an empty canonical cohort explains the provenance boundary and opens the e
   };
   mount(h(Cohort,{search:'',openSurveys:()=>{opened++;}}));
   await screen.findByText('Канонических клинических ответов пока нет',{exact:true});
-  assert.match(document.body.textContent,/Старые демо-ответы остаются в карточках/);
+  assert.match(document.body.textContent,/Назначьте бланк из библиотеки/);
   assert.match(document.body.textContent,/Медиана последних балловНет измерений/);
   const user=userEvent.setup({document:dom.window.document});await user.click(screen.getByRole('button',{name:'Открыть библиотеку опросов',exact:true}));
   assert.equal(opened,1);

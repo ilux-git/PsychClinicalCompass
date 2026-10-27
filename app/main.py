@@ -4,6 +4,9 @@ import os
 
 from fastapi import FastAPI, HTTPException
 from fastapi.responses import JSONResponse
+from fastapi.exceptions import RequestValidationError
+from fastapi.exception_handlers import request_validation_exception_handler
+from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
 
 from app.api.deps import get_compass_session  # noqa: F401
@@ -13,8 +16,10 @@ from app.core.api_docs import router as api_docs_router
 from app.db.session import dispose_engines, ping_databases
 from app.modules.assessments.router import router as assessments_router
 from app.modules.assessments.clinical_router import router as clinical_instruments_router
+from app.modules.assessments.scenario_router import router as scenario_router
 from app.modules.messaging.router import router as messaging_router
 from app.modules.access.router import router as access_router
+from app.modules.access.telegram_router import router as telegram_auth_router
 from app.modules.patients.router import router as patients_router
 from app.modules.surveys.router import router as surveys_router
 from app.modules.adherence.router import router as adherence_router
@@ -41,14 +46,24 @@ async def lifespan(app: FastAPI):
 app = FastAPI(title="Clinical Compass", lifespan=lifespan, docs_url=None, redoc_url=None)
 app.add_middleware(ReadAccessMiddleware)
 app.add_middleware(BrowserSecurityMiddleware)
+app.include_router(telegram_auth_router)
 app.include_router(api_docs_router)
 app.include_router(assessments_router)
 app.include_router(clinical_instruments_router)
+app.include_router(scenario_router)
 app.include_router(messaging_router)
 app.include_router(emr_demo_router)
 app.include_router(escalation_router)
 for router in (access_router, patients_router, surveys_router, adherence_router, analytics_router, notes_router, alerts_router, care_router, medication_router, rewards_router, privacy_router):
     app.include_router(router)
+
+
+@app.exception_handler(RequestValidationError)
+async def validation_error(request, exc):
+    if request.url.path.startswith('/auth/'):
+        return JSONResponse(status_code=422, content={'detail': [
+            {key: error[key] for key in ('loc', 'msg', 'type') if key in error} for error in exc.errors()]})
+    return await request_validation_exception_handler(request, exc)
 
 
 @app.get("/health")
@@ -69,4 +84,9 @@ async def load_test_context():
 
 frontend = Path(__file__).resolve().parent.parent / "frontend" / "dist"
 if frontend.is_dir():
+    @app.get('/tg', include_in_schema=False)
+    @app.get('/tg/', include_in_schema=False)
+    async def mini_app_entry():
+        return FileResponse(frontend / 'index.html')
+
     app.mount("/", StaticFiles(directory=str(frontend), html=True), name="frontend")

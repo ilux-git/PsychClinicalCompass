@@ -20,7 +20,7 @@ def verify_password(plain: str, hashed: str) -> bool:
         return False
 
 
-def create_access_token(subject: str | int, role: str) -> str:
+def create_access_token(subject: str | int, role: str, *, telegram_binding_id: int | None = None) -> str:
     settings = get_settings()
     now = datetime.now(timezone.utc)
     payload: dict[str, Any] = {
@@ -30,6 +30,8 @@ def create_access_token(subject: str | int, role: str) -> str:
         "exp": now + timedelta(minutes=settings.jwt_expires_minutes),
         "jti": str(uuid4()),
     }
+    if telegram_binding_id is not None:
+        payload.update({"auth_provider": "telegram", "tg_binding_id": telegram_binding_id})
     return jwt.encode(payload, settings.jwt_secret, algorithm=settings.jwt_algorithm)
 
 

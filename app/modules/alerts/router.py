@@ -5,10 +5,10 @@ from collections import defaultdict
 from typing import Literal
 
 from fastapi import APIRouter, Depends, HTTPException, Query
-from sqlalchemy import and_, func, select, text
+from sqlalchemy import Integer, and_, bindparam, case, func, or_, select, text
 from sqlalchemy.dialects.postgresql import insert
 
-from app.api.deps import CompassSession, CurrentUser, patient_for_user, require_role
+from app.api.deps import CompassSession, CurrentUser, patient_for_user, patient_read_queries, patient_read_rows, require_role
 from app.modules.access.models import User, UserRole
 from app.modules.alerts.models import Alert, AlertHandling, AlertPresentation, ClinicalDecision
 from app.modules.alerts.clinical_review import completed_action_times, review_timing
@@ -24,6 +24,11 @@ from app.modules.notes.models import DoctorTask
 from app.modules.alerts.schemas import AlertActionWrite, DecisionWrite
 
 router = APIRouter(tags=["alerts"])
+_SUPPORT_HISTORY = patient_read_queries(select(Patient.id.label("scope_patient_id"),
+    Message.id.label("message_id"), Message.text, Message.created_at,
+    Alert.id.label("alert_id"), Alert.status, Alert.acknowledged_at).select_from(Patient).outerjoin(
+    Message, and_(Message.patient_id == Patient.id, Message.support_requested.is_(True))).outerjoin(
+    Alert, Alert.message_id == Message.id).order_by(Message.id.desc()).limit(bindparam("support_limit", type_=Integer)))
 Doctor = Depends(require_role([UserRole.doctor]))
 
 
@@ -46,20 +51,26 @@ async def inbox(session: CompassSession, doctor: User = Doctor,
                 priority: Literal["all", "urgent"] = "all",
                 limit: int = Query(default=20, ge=1, le=100)) -> dict:
     presentation = and_(AlertPresentation.alert_id == Alert.id, AlertPresentation.doctor_id == doctor.id)
+    urgency = case((Alert.severity == "critical_review", 0), (Alert.severity == "urgent_review", 1), else_=2)
+    urgent_severities = ("critical_review", "urgent_review")
     scope = (Patient.doctor_id == doctor.id, Alert.status != "closed")
     counts = (await session.execute(select(
         func.count(Alert.id), func.count(Alert.id).filter(AlertPresentation.id.is_(None)),
-        func.count(Alert.id).filter(Alert.severity == "urgent_review")
+        func.count(Alert.id).filter(Alert.severity.in_(urgent_severities))
     ).join(Patient, Patient.id == Alert.patient_id).outerjoin(AlertPresentation, presentation).where(*scope))).one()
     query = select(Alert, Patient, OutboxEvent.created_at, AlertPresentation.presented_at).join(
         Patient, Patient.id == Alert.patient_id).join(OutboxEvent, OutboxEvent.id == Alert.source_event_id).outerjoin(
         AlertPresentation, presentation).where(*scope)
     if before_id is not None:
-        query = query.where(Alert.id < before_id)
+        cursor = (await session.execute(select(Alert.id, urgency).join(Patient, Patient.id == Alert.patient_id).where(
+            Alert.id == before_id, Patient.doctor_id == doctor.id))).first()
+        if cursor is None:
+            raise HTTPException(400, "Курсор очереди недоступен. Обновите список")
+        query = query.where(or_(urgency > cursor[1], and_(urgency == cursor[1], Alert.id < before_id)))
     if priority == "urgent":
-        query = query.where(Alert.severity == "urgent_review")
-    rows = (await session.execute(query.order_by(Alert.id.desc()).limit(limit + 1))).all()
-    action_times = await completed_action_times(session, [a.id for a, _, _, _ in rows[:limit] if a.clinical_result_id])
+        query = query.where(Alert.severity.in_(urgent_severities))
+    rows = (await session.execute(query.order_by(urgency, Alert.id.desc()).limit(limit + 1))).all()
+    action_times = await completed_action_times(session, [a.id for a, _, _, _ in rows[:limit] if a.clinical_result_id or a.scenario_episode_id])
     as_of = datetime.now(timezone.utc)
     items = [{"id": a.id, "patient_id": p.id, "patient_name": p.full_name, "reason": a.reason,
               "severity": a.severity, "status": a.status, "rule_id": a.rule_id, "rule_version": a.rule_version,
@@ -86,7 +97,7 @@ async def alerts(session: CompassSession, doctor: User = Doctor, patient_id: int
         await patient_for_user(session, doctor, patient_id)
         query = query.where(Patient.id == patient_id)
     rows = (await session.execute(query.order_by(Alert.created_at.desc(), Alert.id.desc()))).all()
-    action_times = await completed_action_times(session, [a.id for a, _, _, _ in rows if a.clinical_result_id])
+    action_times = await completed_action_times(session, [a.id for a, _, _, _ in rows if a.clinical_result_id or a.scenario_episode_id])
     as_of = datetime.now(timezone.utc)
     actions = defaultdict(list)
     for handling, task in (await session.execute(select(AlertHandling, DoctorTask).join(
@@ -106,13 +117,10 @@ async def alerts(session: CompassSession, doctor: User = Doctor, patient_id: int
 @router.get("/patients/{patient_id}/support-requests")
 async def support_requests(patient_id: int, session: CompassSession, user: CurrentUser,
                            limit: int = Query(default=20, ge=1, le=100)) -> list[dict]:
-    await patient_for_user(session, user, patient_id)
-    rows = (await session.execute(select(Message, Alert).outerjoin(Alert, Alert.message_id == Message.id).where(
-        Message.patient_id == patient_id, Message.support_requested.is_(True)
-    ).order_by(Message.id.desc()).limit(limit))).all()
-    return [{"message_id": message.id, "text": message.text, "created_at": message.created_at,
-             "status": alert.status if alert else "queued", "acknowledged_at": alert.acknowledged_at if alert else None,
-             "external_delivery_performed": False} for message, alert in rows]
+    rows = await patient_read_rows(session, user, patient_id, _SUPPORT_HISTORY, parameters={"support_limit": limit})
+    return [{"message_id": row.message_id, "text": row.text, "created_at": row.created_at,
+             "status": row.status if row.alert_id is not None else "queued", "acknowledged_at": row.acknowledged_at,
+             "external_delivery_performed": False} for row in rows if row.message_id is not None]
 
 
 @router.post("/alerts/{alert_id}/actions", status_code=201)
@@ -196,7 +204,7 @@ async def close(alert_id: int, session: CompassSession, doctor: User = Doctor) -
     decision = await session.scalar(select(ClinicalDecision).where(ClinicalDecision.alert_id == row.id))
     if decision is None or decision.status == "pending_review":
         raise HTTPException(409, "Сначала зафиксируйте решение врача")
-    if row.clinical_result_id and row.status != "closed" and row.id not in await completed_action_times(session, [row.id]):
+    if (row.clinical_result_id or row.scenario_episode_id) and row.status != "closed" and row.id not in await completed_action_times(session, [row.id]):
         raise HTTPException(409, "Сначала зафиксируйте выполненное клиническое действие в связанной задаче. Принятие уведомления не завершает работу с пациентом")
     if row.status != "closed":
         row.status = "closed"
@@ -213,6 +221,8 @@ async def confirm(decision_id: int, payload: DecisionWrite, session: CompassSess
         ClinicalDecision.id == decision_id, Patient.doctor_id == doctor.id).with_for_update(of=ClinicalDecision))
     if row is None:
         raise HTTPException(404, "Решение не найдено или недоступно")
+    if row.facts.get("source")=="clinical_scenario" and not payload.reason.strip():
+        raise HTTPException(422,"Одобрите исходную гипотезу или сохраните исправленный вывод врача")
     if row.status != "pending_review":
         if row.status == payload.action and row.reason == payload.reason:
             return decision_read(row)

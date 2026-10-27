@@ -14,7 +14,7 @@ type InboxItem = {
   status: string;
   rule_id: string;
   rule_version: string;
-  source_kind: "assessment" | "support_request" | "clinical_assessment";
+  source_kind: "assessment" | "support_request" | "clinical_assessment" | "clinical_scenario";
   severity?:string;
   review_timing?:ReviewTiming;
   event_created_at: string;
@@ -117,8 +117,8 @@ function EventRow({ item, openPatient, reload }: {
           {item.status === "created" ? "Ждёт разбора" : "Принято в работу"}
         </Badge>
       </div>
-      <p className="inbox-origin"><time dateTime={item.created_at}>{date(item.created_at)}</time><span>{item.source_kind==="support_request"?"Запрос поддержки":item.source_kind==="clinical_assessment"?"Клинический опросник":"Числовой демо-результат"}</span></p>
-      {item.severity&&reviewLabels[item.severity]&&<Badge tone={item.severity==="urgent_review"?"warn":undefined}>{reviewLabels[item.severity]}</Badge>}
+      <p className="inbox-origin"><time dateTime={item.created_at}>{date(item.created_at)}</time><span>{item.source_kind==="support_request"?"Запрос поддержки":item.source_kind==="clinical_assessment"?"Клинический опросник":item.source_kind==="clinical_scenario"?"Клиническое событие":"Предыдущая версия шкалы"}</span></p>
+      {item.severity&&reviewLabels[item.severity]&&<Badge tone={item.severity==="urgent_review"||item.severity==="critical_review"?"warn":undefined}>{reviewLabels[item.severity]}</Badge>}
       <p>{item.reason}</p>
       <ReviewDeadlines timing={item.review_timing}/>
       <div className="inbox-actions">
@@ -134,7 +134,7 @@ function EventRow({ item, openPatient, reload }: {
           <div><dt>Показано в очереди</dt><dd>{presentedAt ? date(presentedAt) : "Пока не зафиксировано"}</dd></div>
           <div><dt>Принято врачом</dt><dd>{item.acknowledged_at ? date(item.acknowledged_at) : "Ожидает действия врача"}</dd></div>
         </dl>
-        <p>{item.source_kind === "support_request" ? "Явный запрос поддержки от пациента. Медицинский риск из текста не вычислялся." : item.source_kind==="clinical_assessment"?"Результат зафиксированной клинической формы и отдельные правила организации разбора из ответов врача от 26.10.2026. Требуется оценка врача.":"Учебный сигнал из числового демо-результата требует врачебной оценки."} Источник {item.rule_id}, версия {item.rule_version}.</p>
+        <p>{item.source_kind === "support_request" ? "Явный запрос поддержки от пациента. Медицинский риск из текста не вычислялся." : item.source_kind==="clinical_assessment"?"Результат зафиксированной клинической формы и отдельные правила организации разбора из ответов врача от 26.10.2026. Требуется оценка врача.":"Результат опросника требует врачебной оценки."} Источник {item.rule_id}, версия {item.rule_version}.</p>
         <p>От поступления данных: создание события — {seconds(item.latency_seconds.event_to_alert)}; показ — {seconds(item.latency_seconds.event_to_presentation)}; принятие — {seconds(item.latency_seconds.event_to_acknowledgement)}.</p>
         <p>Показ фиксируется при видимой строке в активной вкладке. Он не подтверждает прочтение человеком. Внешнее уведомление не отправлялось.</p>
       </Disclosure>

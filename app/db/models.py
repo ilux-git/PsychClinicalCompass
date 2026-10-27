@@ -2,7 +2,7 @@
 from app.modules.access.models import User, TelegramBinding, RevokedAccessToken, AuthLoginBucket
 from app.modules.patients.models import Patient, PatientMapping
 from app.modules.assessments.models import QuestionnaireResponse, OutboxEvent
-from app.modules.assessments.clinical_models import ClinicalResult, ClinicalBaseline
+from app.modules.assessments.clinical_models import ClinicalResult, ClinicalBaseline, ScenarioEpisode
 from app.modules.messaging.models import Message
 from app.modules.audit.models import AuditEvent, ReadAccessEvent
 from app.modules.surveys.models import Survey, SurveyAssignment, SurveySubmission, SurveyDraft

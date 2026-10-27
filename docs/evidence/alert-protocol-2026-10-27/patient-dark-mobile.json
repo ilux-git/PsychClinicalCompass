@@ -1,0 +1,34 @@
+{
+  "contrast": {
+    "axe_version": "4.14.0",
+    "checked_at": "2026-10-27T13:29:34.114Z",
+    "incomplete": [],
+    "passed_nodes": 51,
+    "route": "/?section=chat",
+    "theme": "dark",
+    "viewport": {
+      "height": 844,
+      "width": 375
+    },
+    "violations": []
+  },
+  "emergencyHelpOpen": true,
+  "horizontalOverflow": 0,
+  "instructionFont": "16px",
+  "links": [
+    {
+      "height": 44,
+      "href": "tel:112",
+      "text": "112 · Экстренная служба"
+    },
+    {
+      "height": 44,
+      "href": "tel:103",
+      "text": "103 · Скорая помощь"
+    }
+  ],
+  "viewport": {
+    "height": 844,
+    "width": 375
+  }
+}

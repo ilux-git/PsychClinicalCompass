@@ -1,6 +1,6 @@
 import logging
 
-from sqlalchemy import select
+from sqlalchemy import or_, select
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.dialects.postgresql import insert
 
@@ -62,6 +62,8 @@ async def send_message(
                 or message.support_requested != support_requested):
             from fastapi import HTTPException
             raise HTTPException(409, "Ключ запроса уже использован с другим сообщением")
+        if sender.role == UserRole.patient:
+            message.emergency_help = await _has_open_critical_review(session, patient_id)
         return message
     if channel.startswith("tg_"):
         session.add(
@@ -74,6 +76,8 @@ async def send_message(
         session.add(OutboxEvent(event_type="patient.support_requested",
                                 payload={"message_id": message.id, "patient_id": patient_id}))
     record_event(session, sender.id, patient_id, "message.created", "message", message.id)
+    from app.modules.assessments.scenario_messages import review_patient_message
+    await review_patient_message(session, message)
     return message
 
 
@@ -90,8 +94,25 @@ async def get_history(
     query = select(Message).where(Message.patient_id == patient_id)
     if after_id is not None:
         query = query.where(Message.id > after_id).order_by(Message.id)
-        return list((await session.scalars(query.limit(limit))).all())
-    return list(reversed(list((await session.scalars(query.order_by(Message.id.desc()).limit(limit))).all())))
+        rows = list((await session.scalars(query.limit(limit))).all())
+    else:
+        rows = list(reversed(list((await session.scalars(query.order_by(Message.id.desc()).limit(limit))).all())))
+    if viewer.role == UserRole.patient and rows:
+        rows[-1].emergency_help = await _has_open_critical_review(session, patient_id)
+    return rows
+
+
+async def _has_open_critical_review(session: AsyncSession, patient_id: int) -> bool:
+    from app.modules.assessments.clinical_models import ScenarioEpisode
+    from app.modules.assessments.alert_protocol import RULE_VERSION
+    from app.modules.alerts.models import Alert
+
+    active = await session.scalar(select(ScenarioEpisode.id).outerjoin(Alert,
+        Alert.scenario_episode_id == ScenarioEpisode.id).where(
+        ScenarioEpisode.patient_id == patient_id, ScenarioEpisode.case_key == RULE_VERSION,
+        ScenarioEpisode.snapshot["hypothesis"]["priority"].astext == "CRITICAL",
+        or_(Alert.id.is_(None), Alert.status != "closed")).limit(1))
+    return active is not None
 
 
 async def receive_telegram_message(
@@ -106,7 +127,7 @@ async def receive_telegram_message(
     patient = await session.scalar(select(Patient).join(User, User.id == Patient.user_id).join(
         TelegramBinding, TelegramBinding.user_id == User.id).where(
         TelegramBinding.telegram_chat_id == chat_id, TelegramBinding.telegram_user_id == sender_telegram_id,
-        User.role == UserRole.patient))
+        User.role == UserRole.patient, User.is_active.is_(True)))
     if patient is None:
         logger.info("ignored Telegram update without verified binding")
         return None
@@ -123,4 +144,6 @@ async def receive_telegram_message(
         constraint="uq_messages_external_message_id").returning(Message))).scalar_one_or_none()
     if message:
         record_event(session, patient.user_id, patient.id, "message.received", "message", message.id)
+        from app.modules.assessments.scenario_messages import review_patient_message
+        await review_patient_message(session, message)
     return message

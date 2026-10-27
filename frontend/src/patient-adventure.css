@@ -5,8 +5,12 @@
 .atlas-heading strong { font-size:12px; font-weight:500; color:var(--atlas-muted); font-variant-numeric:tabular-nums; }
 .atlas-scene { display:block; position:relative; width:100%; aspect-ratio:3/2; margin-top:12px; overflow:hidden; }
 .atlas-scene > img { display:block; width:100%; height:100%; object-fit:cover; }
-.atlas-preview-station { position:absolute; display:grid; place-items:center; width:22px; height:22px; border-radius:50%; transform:translate(-50%,-50%); background:#fff; color:#344c4c; }
-.atlas-preview-station[data-reached="true"] { background:var(--ink); color:#fff; }
+.atlas-scene > .atlas-route { display:block; position:absolute; inset:0; width:100%; height:100%; max-height:none; pointer-events:none; }
+.atlas-route path { fill:none; stroke-linecap:round; stroke-linejoin:round; vector-effect:non-scaling-stroke; }
+.atlas-route-underlay { stroke:#163d4c80; stroke-width:3px; }
+.atlas-route-dashes { stroke:#ffffffe6; stroke-width:1.4px; stroke-dasharray:3 7; }
+.atlas-preview-station { position:absolute; display:block; width:8px; height:8px; border:1px solid #244e55; border-radius:50%; transform:translate(-50%,-50%); background:#fff; }
+.atlas-preview-station[data-reached="true"] { background:#254d45; border-color:#fff; }
 .atlas-preview-station.is-current { border:2px solid #fff; }
 .atlas-scene-frame { position:relative; margin-top:16px; }
 .participation-atlas:not(.participation-atlas-compact) .atlas-scene-frame { margin-inline:0; }
@@ -19,12 +23,13 @@
 .atlas-map-summary small { font-size:12px; font-weight:400; color:#595b5a; }
 .atlas-summary-meter { height:4px; border-radius:3px; background:#cbded8; overflow:hidden; }
 .atlas-summary-meter > i { display:block; height:100%; border-radius:inherit; background:#244e55; }
-.atlas-marker { position:absolute; z-index:1; display:grid; place-items:center; width:clamp(44px,6vw,52px); height:clamp(44px,6vw,52px); padding:0; transform:translate(-50%,-50%); border:2px solid #fff; border-radius:50%; background:#fff; color:#244e55; box-shadow:0 2px 8px #112f4430; pointer-events:auto; cursor:pointer; transition:background-color .16s ease,border-color .16s ease; }
-.participation-atlas .atlas-marker .lucide { display:block; width:22px; height:22px; max-height:none; }
-.atlas-marker[data-reached="true"] { background:var(--ink); color:#fff; }
-.atlas-marker:hover { background:#e3f0eb; color:#244e55; }
-.atlas-marker[aria-pressed="true"] { background:#dcebe8; color:#244e55; border-color:#244e55; }
-.atlas-marker:focus-visible { outline:2px solid #fff; outline-offset:-5px; z-index:2; }
+.participation-atlas .atlas-marker { position:absolute; z-index:1; display:grid; place-items:center; width:44px; height:44px; min-width:44px; min-height:44px; padding:0; transform:translate(-50%,-50%); border:0; border-radius:50%; background:transparent; box-shadow:none; pointer-events:auto; cursor:pointer; }
+.participation-atlas .atlas-marker:is(:hover,:active) { background:transparent; border:0; box-shadow:none; }
+.atlas-marker-dot { display:block; width:14px; height:14px; border:1.5px solid #244e55; border-radius:50%; background:#fff; box-shadow:0 1px 3px #112f4426; transition:background-color .16s ease,box-shadow .16s ease; }
+.atlas-marker[data-reached="true"] .atlas-marker-dot { background:#254d45; border-color:#fff; }
+.atlas-marker[aria-current="step"] .atlas-marker-dot { box-shadow:0 0 0 3px #ffffff80; }
+.atlas-marker:hover .atlas-marker-dot,.atlas-marker[aria-pressed="true"] .atlas-marker-dot { box-shadow:0 0 0 3px #ffffffa6; }
+.participation-atlas .atlas-marker:focus-visible { outline:2px solid #fff; outline-offset:-6px; z-index:2; }
 .journey-map .atlas-scene { display:block; width:100%; max-height:none; }
 .participation-atlas .atlas-scene .lucide { display:block; width:20px; height:20px; max-height:none; }
 .participation-atlas .atlas-heading .lucide { display:block; width:16px; height:16px; max-height:none; flex-shrink:0; }
@@ -60,20 +65,21 @@
 .participation-atlas-compact .atlas-heading { padding:16px 16px 0; }
 .participation-atlas-compact .atlas-heading > span { font-size:12px; }
 .participation-atlas-compact figcaption { padding:0 20px 18px; }
-.patient-overview[data-mode="map"] .patient-next-step { border:1px solid var(--line); border-radius:20px; box-shadow:none; background:#fff; }
+.patient-overview[data-mode="map"] .patient-next-step { border:1px solid var(--line); border-radius:20px; box-shadow:none; background:var(--surface); }
 .patient-overview[data-mode="map"] .patient-step-icon { width:48px; height:48px; background:var(--paper); border:0; box-shadow:none; color:var(--ink); border-radius:16px; }
-.patient-reward-card.patient-reward-map { border:1px solid var(--line); border-radius:20px; background:#fff; box-shadow:none; }
+.patient-reward-card.patient-reward-map { border:1px solid var(--line); border-radius:20px; background:var(--surface); box-shadow:none; }
 .patient-reward-map .patient-reward-icon { background:var(--paper); color:var(--ink); border:0; box-shadow:none; transform:none; border-radius:14px; }
 .patient-reward-map .patient-home-balance { border-bottom:1px solid var(--line); padding-bottom:18px; margin-bottom:18px; }
 .patient-reward-map .patient-home-balance strong { font-size:44px; color:var(--ink); }
-.patient-overview[data-mode="map"] .patient-step-detail .button.primary,.patient-progress-page[data-mode="map"] .loyalty-offer .button.primary { min-height:48px; padding:12px 20px; border:1px solid var(--ink); border-radius:12px; background:var(--ink); color:#fff; font-size:14px; font-weight:600; box-shadow:none; }
-.patient-overview[data-mode="map"] .patient-step-detail .button.primary:hover:not(:disabled),.patient-progress-page[data-mode="map"] .loyalty-offer .button.primary:hover:not(:disabled) { background:#333536; border-color:#333536; }
+.patient-overview[data-mode="map"] .patient-step-detail .button.primary,.patient-progress-page[data-mode="map"] .loyalty-offer .button.primary { min-height:48px; padding:12px 20px; border:1px solid var(--button-bg); border-radius:12px; background:var(--button-bg); color:var(--button-ink); font-size:14px; font-weight:600; box-shadow:none; }
+.patient-overview[data-mode="map"] .patient-step-detail .button.primary:hover:not(:disabled),.patient-progress-page[data-mode="map"] .loyalty-offer .button.primary:hover:not(:disabled) { background:var(--button-hover); border-color:var(--button-hover); }
+.patient-overview[data-mode="map"] .patient-step-detail .button.primary:active:not(:disabled),.patient-progress-page[data-mode="map"] .loyalty-offer .button.primary:active:not(:disabled) { background:var(--button-active); border-color:var(--button-active); }
 .patient-reward-map > .button.secondary { min-height:48px; border:1px solid var(--line); border-radius:12px; background:var(--paper); color:var(--ink); font-weight:600; box-shadow:none; }
-.patient-progress-page[data-mode="map"] .journey-panel { background:#fff; border:1px solid var(--line); border-radius:22px; box-shadow:none; }
+.patient-progress-page[data-mode="map"] .journey-panel { background:var(--surface); border:1px solid var(--line); border-radius:22px; box-shadow:none; }
 .patient-progress-page[data-mode="map"] .journey-panel-heading h2 { color:var(--ink); max-width:30ch; font-size:clamp(24px,2.2vw,32px); line-height:1.3; letter-spacing:-.55px; }
 .patient-progress-page[data-mode="map"] .journey-balance { padding:14px 18px; border:1px solid var(--line); border-radius:16px; color:var(--ink); background:var(--paper); }
 .patient-progress-page[data-mode="map"] .journey-balance strong { color:var(--ink); }
-.patient-progress-page[data-mode="map"] .loyalty-offer { position:relative; padding:24px; border:1px solid var(--line); border-radius:18px; background:#fff; }
+.patient-progress-page[data-mode="map"] .loyalty-offer { position:relative; padding:24px; border:1px solid var(--line); border-radius:18px; background:var(--surface); }
 .patient-progress-page[data-mode="map"] .loyalty-offer > svg { color:var(--signal-dark); width:34px; height:34px; margin-bottom:12px; }
 .patient-progress-page[data-mode="map"] .loyalty-offer > h3 { font-size:19px; line-height:1.45; }
 .patient-progress-page[data-mode="map"] .loyalty-offer > strong { color:var(--ink); font-size:25px; }
@@ -116,14 +122,15 @@
 .participation-rhythm header > strong { color:var(--ink); font-size:30px; font-weight:600; line-height:1.2; font-variant-numeric:tabular-nums; text-align:right; }
 .participation-rhythm header > strong > span { display:block; color:var(--muted); font-size:12px; line-height:1.6; font-weight:400; margin-top:4px; max-width:12ch; }
 .rhythm-calendar { display:grid; grid-template-columns:repeat(7,minmax(44px,1fr)); gap:8px; padding:4px; }
-.rhythm-calendar button { position:relative; isolation:isolate; overflow:hidden; min-width:0; min-height:126px; padding:12px 6px; display:flex; flex-direction:column; align-items:center; gap:8px; border:1px solid var(--line); border-radius:12px; color:var(--muted); background:#eeede8; transition:background-color .16s ease,border-color .16s ease; }
-.rhythm-calendar .rhythm-day-art { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; z-index:-1; }
+.rhythm-calendar button { position:relative; isolation:isolate; overflow:hidden; min-width:0; min-height:126px; padding:12px 6px; display:flex; flex-direction:column; align-items:center; gap:8px; border:1px solid var(--line); border-radius:12px; color:var(--muted); background:var(--surface-alt); transition:background-color .16s ease,border-color .16s ease; }
+.rhythm-calendar .rhythm-day-art { position:absolute; inset:0; width:100%; height:100%; max-height:none; object-fit:cover; z-index:-1; opacity:.2; filter:saturate(.45); }
+.rhythm-calendar .has-entries .rhythm-day-art { opacity:1; filter:none; }
 .rhythm-calendar button > span,.rhythm-calendar button > strong { padding:1px 6px; border-radius:5px; }
-.rhythm-calendar button.has-entries > span,.rhythm-calendar button.has-entries > strong { background:#fffffff0; color:#18191a; }
+.rhythm-calendar button > span,.rhythm-calendar button > strong { background:#fffffff0; color:#18191a; }
 .rhythm-calendar button > span { font-size:12px; line-height:1.4; }
-.rhythm-calendar button > strong { color:var(--ink); font-size:22px; font-weight:600; font-variant-numeric:tabular-nums; line-height:1.3; }
-.rhythm-calendar button i { display:grid; place-items:center; margin-top:auto; width:20px; height:20px; border-radius:50%; font-style:normal; color:var(--muted); }
-.rhythm-calendar button.has-entries i { background:var(--ink); color:#fff; }
+.rhythm-calendar button > strong { color:#18191a; font-size:22px; font-weight:600; font-variant-numeric:tabular-nums; line-height:1.3; }
+.rhythm-calendar button i { display:grid; place-items:center; margin-top:auto; width:20px; height:20px; border-radius:50%; font-style:normal; color:#49534d; background:#fffffff0; }
+.rhythm-calendar button.has-entries i { background:var(--button-bg); color:var(--button-ink); }
 .rhythm-calendar button[aria-pressed="true"] { border-color:var(--ink); box-shadow:inset 0 0 0 1px var(--ink); }
 .rhythm-calendar button:hover { border-color:#343b38; }
 .rhythm-calendar button:focus-visible { outline:2px solid var(--ink); outline-offset:-2px; }
@@ -133,16 +140,21 @@
 .participation-rhythm-compact header h3 { font-size:16px; }
 .participation-rhythm-compact .rhythm-calendar { grid-template-columns:repeat(4,minmax(44px,1fr)); }
 .participation-rhythm-compact .rhythm-calendar button { min-height:112px; }
-.participation-calm { margin:24px 0 0; padding:24px; display:flex; align-items:flex-start; gap:18px; border:1px solid var(--line); border-left:3px solid #aaa99f; border-radius:14px; background:var(--paper); }
-.calm-mark { display:grid; place-items:center; flex-shrink:0; width:42px; height:42px; border-radius:50%; background:#e8e6dd; color:var(--muted); }
+.participation-calm { position:relative; isolation:isolate; overflow:hidden; margin:24px 0 0; padding:0; display:flex; flex-direction:column; border:1px solid var(--line); border-radius:14px; background:var(--paper); }
+.participation-calm .calm-background { display:block; width:100%; height:clamp(180px,24vw,300px); object-fit:cover; object-position:center 55%; }
+.participation-calm > div { padding:24px; background:var(--paper); }
+.participation-calm > .calm-mark { position:absolute; top:16px; left:16px; }
+.calm-mark { display:grid; place-items:center; flex-shrink:0; width:42px; height:42px; border-radius:50%; background:var(--surface-alt); color:var(--muted); }
 .participation-calm .eyebrow { font-size:11px; letter-spacing:.3px; margin:0 0 6px; }
 .participation-calm h3 { font-size:19px; line-height:1.5; margin:0 0 8px; }
 .participation-calm p:not(.eyebrow) { font-size:14px; line-height:1.8; color:var(--muted); margin:0 0 12px; max-width:75ch; }
 .participation-calm small { font-size:12px; line-height:1.7; color:var(--muted); }
-.participation-calm-compact { padding:20px 0 0; border:0; border-top:1px solid var(--line); border-radius:0; background:transparent; gap:12px; }
+.participation-calm-compact { padding:0; border:1px solid var(--line); border-radius:14px; }
+.participation-calm-compact .calm-background { height:180px; }
+.participation-calm-compact > div { padding:20px; }
 .participation-calm-compact .calm-mark { display:none; }
 .participation-calm-compact h3 { font-size:17px; }
-.patient-progress-page .journey-panel { background:#fff; border-color:var(--line); }
+.patient-progress-page .journey-panel { background:var(--surface); border-color:var(--line); }
 .patient-progress-page .journey-panel .eyebrow { color:var(--muted); }
 .patient-progress-page .journey-balance strong { color:var(--ink); }
 .patient-progress-page .loyalty-offer { background:var(--paper); border-color:var(--line); }
@@ -151,9 +163,9 @@
 @media (max-width:700px) {
   .atlas-place-detail { margin-inline:20px; min-height:190px; }
   .rhythm-calendar { grid-template-columns:repeat(4,minmax(44px,1fr)); }
-  .participation-calm { padding:20px 16px; gap:12px; }
+  .participation-calm > div { padding:20px 16px; }
   .participation-calm .calm-mark { width:32px; height:32px; }
-  .participation-calm-compact { padding:20px 0 0; }
+  .participation-calm-compact > div { padding:20px 16px; }
 }
 @media (prefers-reduced-motion:reduce) {
   .atlas-marker,.rhythm-calendar button,.journey-balance-link { transition:none; }

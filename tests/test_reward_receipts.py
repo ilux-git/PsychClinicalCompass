@@ -31,13 +31,13 @@ async def test_diary_receipt_matches_saved_award_replay_and_daily_cap(client, he
     first = await client.post('/diary/entries', headers=headers('patient1'), json=payload)
     assert first.status_code == 201
     receipt = first.json()['participation']
-    assert receipt['points'] == 3 and receipt['policy_version'] == POLICY_VERSION and receipt['recorded_at']
+    assert receipt['points'] == 10 and receipt['policy_version'] == POLICY_VERSION and receipt['recorded_at']
     retry = await client.post('/diary/entries', headers=headers('patient1'), json=payload)
     assert retry.json()['replayed'] is True and retry.json()['participation'] == receipt
     second = await client.post('/diary/entries', headers=headers('patient1'),
                                json={**payload, 'text': 'Ещё наблюдение', 'client_request_id': str(uuid4())})
     assert second.json()['participation']['points'] == 0
-    assert (await client.get('/participation/points', headers=headers('patient1'))).json()['balance'] == 3
+    assert (await client.get('/participation/points', headers=headers('patient1'))).json()['balance'] == 10
     assert (await client.get('/patients/1/diary', headers=headers('doctor'))).json()['entries'] == []
     async with database() as session:
         assert await session.scalar(select(func.count(ParticipationAward.id))) == 2

@@ -1,0 +1,85 @@
+# Dedicated synthetic-demo VPS. Restore verified snapshots into new volumes before init.
+# Use with docker-compose.yml and docker-compose.public.yml; secrets come from private .env.
+services:
+  init:
+    env_file: !override [".env.runtime"]
+    image: ${LIMBUS_IMAGE:?Set the release image tag}
+    pull_policy: never
+    command: ["alembic", "upgrade", "head"]
+    user: "10001:10001"
+    environment:
+      PYTHONDONTWRITEBYTECODE: "1"
+    read_only: true
+    tmpfs:
+      - /tmp:rw,nosuid,noexec,size=64m
+    cap_drop: [ALL]
+    security_opt: ["no-new-privileges:true"]
+  app:
+    env_file: !override [".env.runtime"]
+    image: ${LIMBUS_IMAGE:?Set the release image tag}
+    pull_policy: never
+    restart: unless-stopped
+    user: "10001:10001"
+    environment:
+      PYTHONDONTWRITEBYTECODE: "1"
+    read_only: true
+    tmpfs:
+      - /tmp:rw,nosuid,noexec,size=64m
+    cap_drop: [ALL]
+    security_opt: ["no-new-privileges:true"]
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/health',timeout=3)"]
+      interval: 15s
+      timeout: 5s
+      retries: 6
+      start_period: 20s
+    logging:
+      driver: local
+      options:
+        max-size: "10m"
+        max-file: "3"
+  worker:
+    env_file: !override [".env.runtime"]
+    image: ${LIMBUS_IMAGE:?Set the release image tag}
+    pull_policy: never
+    restart: unless-stopped
+    user: "10001:10001"
+    environment:
+      PYTHONDONTWRITEBYTECODE: "1"
+    read_only: true
+    tmpfs:
+      - /tmp:rw,nosuid,noexec,size=64m
+    cap_drop: [ALL]
+    security_opt: ["no-new-privileges:true"]
+    logging:
+      driver: local
+      options:
+        max-size: "10m"
+        max-file: "3"
+  db_compass:
+    restart: unless-stopped
+    environment:
+      POSTGRES_PASSWORD: ${COMPASS_DB_PASSWORD:?Set a new Compass database credential}
+  db_mis:
+    restart: unless-stopped
+    environment:
+      POSTGRES_PASSWORD: ${MIS_DB_PASSWORD:?Set a new MIS owner credential}
+      MIS_READER_PASSWORD: ${MIS_READER_PASSWORD:?Set a read-only MIS credential}
+    volumes: !override
+      - mis_pgdata:/var/lib/postgresql/data
+      - ./docker/db_mis/init-vps.sh:/docker-entrypoint-initdb.d/10-roles.sh:ro
+  redis:
+    restart: unless-stopped
+    environment:
+      REDIS_PASSWORD: ${REDIS_PASSWORD:?Set a Redis credential}
+    command: ["redis-server", "--requirepass", "${REDIS_PASSWORD}"]
+    healthcheck:
+      test: ["CMD-SHELL", "REDISCLI_AUTH=$$REDIS_PASSWORD redis-cli ping | grep -q PONG"]
+  gateway:
+    volumes: !override
+      - ./docker/caddy/Caddyfile.ip:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
+    depends_on:
+      app:
+        condition: service_healthy

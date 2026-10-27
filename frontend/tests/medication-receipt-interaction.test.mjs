@@ -33,11 +33,11 @@ before(async()=>{
 afterEach(()=>{cleanup();assert.deepEqual(unexpected,[],"Unexpected requests are not accepted by this fixture");});
 after(async()=>{await server?.close();dom?.window.close();});
 
-function transport({empty=false,receipt=award(0),fail=false,holdReload=false}={}){
+function transport({empty=false,receipt=award(0),fail=false,holdReload=false,fixed=false}={}){
   unexpected=[];
-  let items=empty?[]:[structuredClone(initialItem)],reports=[],reads=0,release;
+  let items=empty?[]:[{...structuredClone(initialItem),...(fixed?{schedule_kind:"fixed",times:["22:00"]}:{})}],reports=[],reads=0,release;
   const writes=[];
-  const data=()=>({day:"2026-10-25",items,events:[],historical_reports:reports,recent_reports:[],source:{status:"synthetic"}});
+  const data=()=>({day:"2026-10-25",items,events:fixed?[{item_key:initialItem.key,occurrence_key:"2026-10-24@22:00/v1",source_day:"2026-10-24",clock:"01:00",scheduled_for:"2026-10-24T22:00:00Z",status:"unknown",can_report:true,requires_time_confirmation:false,report:reports[0]??null}]:[],historical_reports:fixed?[]:reports,recent_reports:[],source:{status:"synthetic"}});
   globalThis.fetch=async(path,options={})=>{
     const method=options.method??"GET";
     if(method==="GET"&&path.startsWith("/patients/2/medications?on=")){
@@ -64,6 +64,18 @@ function mount(notify=()=>{},progress=()=>{}){
   return userEvent.setup({document:dom.window.document});
 }
 
+test("a Moscow display saves against the original medication occurrence date",async()=>{
+  const requests=transport({fixed:true,receipt:award(2)}),user=mount();
+  await screen.findByRole("heading",{name:"01:00 · Без отметки",exact:true});
+  await user.selectOptions(screen.getByRole("combobox",{name:"Мой самоотчёт"}),"unknown");
+  await user.click(screen.getByRole("button",{name:"Сохранить отметку"}));
+  await screen.findByRole("heading",{name:"Самоотчёт сохранён"});
+  assert.equal(requests.writes.length,1);
+  assert.equal(requests.writes[0].body.day,"2026-10-24");
+  assert.equal(requests.writes[0].body.occurrence_key,"2026-10-24@22:00/v1");
+  assert.equal(requests.writes[0].body.status,"unknown");
+});
+
 test("report confirmation survives a schedule reload and uses the returned zero award",async()=>{
   const requests=transport({holdReload:true});let progress=0;
   const user=mount(()=>{},()=>progress++);
@@ -89,8 +101,8 @@ test("report confirmation survives a schedule reload and uses the returned zero 
   assert.equal(requests.writes.length,1);
 });
 
-test("personal schedule closes the editor and confirms the actual two-point award",async()=>{
-  const requests=transport({empty:true,receipt:award(2)});
+test("personal schedule closes the editor and confirms saving without awarding report points",async()=>{
+  const requests=transport({empty:true,receipt:award(0)});
   const user=mount();
   await screen.findByText("Позиций пока нет");
   await user.click(screen.getByRole("button",{name:"Добавить свою позицию",exact:true}));
@@ -100,7 +112,7 @@ test("personal schedule closes the editor and confirms the actual two-point awar
   await user.click(screen.getByRole("button",{name:"Сохранить личное расписание"}));
   await screen.findByRole("heading",{name:"Расписание сохранено"});
   assert.equal(Boolean(screen.queryByRole("textbox",{name:"Название",exact:true})),false);
-  assert.ok(screen.getByText("+2 балла за участие"));
+  assert.ok(screen.getByText("Сохранено без дополнительных баллов"));
   assert.equal(requests.writes.length,1);
   assert.deepEqual(requests.writes[0].body.times,[]);
   assert.ok(await screen.findByRole("heading",{name:"Учебный учёт"}));

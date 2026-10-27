@@ -1,0 +1,56 @@
+{
+  "counts": {
+    "patients": 1000,
+    "users": 1022,
+    "diary_entries": 5874,
+    "participation_awards": 9874,
+    "survey_submissions": 4000,
+    "messages": 6294,
+    "alerts": 546,
+    "alert_handling": 122,
+    "doctor_tasks": 1122,
+    "outbox_events": 6718,
+    "audit_events": 36149,
+    "clinical_results": 3000
+  },
+  "violations": {
+    "diaries_without_awards": 0,
+    "diaries_without_audit": 0,
+    "messages_without_outbox": 0,
+    "support_without_event": 0,
+    "processed_support_without_alert": 0,
+    "handling_patient_mismatch": 0,
+    "handling_without_audit": 0,
+    "daily_cap_violations": 0
+  },
+  "outbox": [
+    {
+      "status": "processed",
+      "total": 6718
+    }
+  ],
+  "database_activity": [
+    {
+      "state": "active",
+      "wait_event_type": null,
+      "wait_event": null,
+      "total": 1
+    },
+    {
+      "state": "idle",
+      "wait_event_type": "Client",
+      "wait_event": "ClientRead",
+      "total": 1
+    }
+  ],
+  "current_run_processing": {
+    "events": 1036,
+    "pending": 0,
+    "failed": 0,
+    "p50_processing_ms": 90.792,
+    "p95_processing_ms": 167.45024999999998,
+    "max_processing_ms": 505.207,
+    "scope": "Stored timestamps of simulator processing, before final batch commit; not provider delivery or browser presentation."
+  },
+  "server_process_probe": {}
+}

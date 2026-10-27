@@ -6,7 +6,7 @@ export function AssessmentHistory({ rows }: { rows: Assessment[] }) {
   if (!rows.length)return null;
   return (
     <div className="assessment-history">
-      <h3>Демонстрационные числовые ответы</h3><p className="field-hint">Эти исторические записи не получены из новых клинических бланков. Их динамика показана отдельно.</p>
+      <h3>Числовая история состояния</h3><p className="field-hint">Эти исторические записи не получены из новых клинических бланков. Их динамика показана отдельно.</p>
       {["phq9", "gad7"].map((form) => {
         const versions = [...new Set(rows.filter((r) => r.form_type === form).map((r) => r.form_version))];
         return (
@@ -50,7 +50,7 @@ export function AssessmentHistory({ rows }: { rows: Assessment[] }) {
           </section>
         );
       })}
-      <details className="source-help"><summary>О числовых демонстрационных данных</summary><p>Сравниваются измерения одной шкалы и версии. Балл сам по себе не устанавливает диагноз и не доказывает эффект лечения. Источник и формулировки новых клинических бланков указаны отдельно, рядом с их результатами.</p></details>
+      <details className="source-help"><summary>Об истории измерений</summary><p>Сравниваются измерения одной шкалы и версии. Балл сам по себе не устанавливает диагноз и не доказывает эффект лечения. Источник и формулировки новых клинических бланков указаны отдельно, рядом с их результатами.</p></details>
     </div>
   );
 }

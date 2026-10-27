@@ -1,0 +1,147 @@
+{
+  "label": "computed-discounts-and-controls",
+  "rows": [
+    {
+      "background": "rgba(0, 0, 0, 0)",
+      "contrast": 16.017046614562478,
+      "foreground": "rgb(24, 25, 26)",
+      "photo_plate_worst_case": false,
+      "resolved_background": [
+        0.9647058823529412,
+        0.9568627450980391,
+        0.9372549019607844,
+        1
+      ],
+      "selector": ".patient-discount-label strong",
+      "tag": "STRONG"
+    },
+    {
+      "background": "rgba(0, 0, 0, 0)",
+      "contrast": 17.605536762696666,
+      "foreground": "rgb(24, 25, 26)",
+      "photo_plate_worst_case": false,
+      "resolved_background": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "selector": ".collection-card strong",
+      "tag": "STRONG"
+    },
+    {
+      "background": "rgba(0, 0, 0, 0)",
+      "contrast": 17.605536762696666,
+      "foreground": "rgb(24, 25, 26)",
+      "photo_plate_worst_case": false,
+      "resolved_background": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "selector": ".collection-card strong",
+      "tag": "STRONG"
+    },
+    {
+      "background": "rgba(0, 0, 0, 0)",
+      "contrast": 17.605536762696666,
+      "foreground": "rgb(24, 25, 26)",
+      "photo_plate_worst_case": false,
+      "resolved_background": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "selector": ".collection-card strong",
+      "tag": "STRONG"
+    },
+    {
+      "background": "rgba(0, 0, 0, 0)",
+      "contrast": 17.605536762696666,
+      "foreground": "rgb(24, 25, 26)",
+      "photo_plate_worst_case": false,
+      "resolved_background": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "selector": ".empty strong",
+      "tag": "STRONG"
+    },
+    {
+      "background": "rgba(0, 0, 0, 0)",
+      "contrast": 7.445125206412436,
+      "foreground": "rgb(79, 87, 83)",
+      "photo_plate_worst_case": false,
+      "resolved_background": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "selector": ".empty p",
+      "tag": "P"
+    },
+    {
+      "background": "rgba(0, 0, 0, 0)",
+      "contrast": 17.605536762696666,
+      "foreground": "rgb(24, 25, 26)",
+      "photo_plate_worst_case": false,
+      "resolved_background": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "selector": ".loyalty-offer > strong",
+      "tag": "STRONG"
+    },
+    {
+      "background": "rgba(0, 0, 0, 0)",
+      "contrast": 17.605536762696666,
+      "foreground": "rgb(24, 25, 26)",
+      "photo_plate_worst_case": false,
+      "resolved_background": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "selector": ".loyalty-offer > strong",
+      "tag": "STRONG"
+    },
+    {
+      "background": "rgb(227, 228, 223)",
+      "contrast": 6.480597759051918,
+      "foreground": "rgb(73, 80, 76)",
+      "photo_plate_worst_case": false,
+      "resolved_background": [
+        0.8901960784313725,
+        0.8941176470588236,
+        0.8745098039215686,
+        1
+      ],
+      "selector": ".loyalty-offer .button:disabled",
+      "tag": "BUTTON"
+    },
+    {
+      "background": "rgb(227, 228, 223)",
+      "contrast": 6.480597759051918,
+      "foreground": "rgb(73, 80, 76)",
+      "photo_plate_worst_case": false,
+      "resolved_background": [
+        0.8901960784313725,
+        0.8941176470588236,
+        0.8745098039215686,
+        1
+      ],
+      "selector": ".loyalty-offer .button:disabled",
+      "tag": "BUTTON"
+    }
+  ],
+  "minimum": 6.480597759051918,
+  "failures": []
+}

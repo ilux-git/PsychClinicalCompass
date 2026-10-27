@@ -59,7 +59,7 @@ test("a delayed availability response cannot overwrite another signed-in doctor'
   await waitFor(()=>assert.ok(status.disabled));
   assert.ok(screen.getByText("Сохраняем…"));
   await user.click(screen.getByRole("button",{name:"Выйти"}));
-  await user.selectOptions(await screen.findByRole("combobox",{name:"Демонстрационная роль"}),"doctor2");
+  await user.selectOptions(await screen.findByRole("combobox",{name:"Роль"}),"doctor2");
   await user.click(screen.getByRole("button",{name:"Войти",exact:true}));
   await screen.findByText(doctor2.display_name);
   const secondStatus=screen.getByRole("combobox",{name:"Доступность врача"});

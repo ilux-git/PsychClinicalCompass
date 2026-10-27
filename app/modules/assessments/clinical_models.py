@@ -37,3 +37,17 @@ class ClinicalBaseline(Base):
     reason: Mapped[str] = mapped_column(String(500), nullable=False)
     revision: Mapped[int] = mapped_column(nullable=False)
     selected_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False)
+
+
+class ScenarioEpisode(Base):
+    __tablename__ = "clinical_scenario_episodes"
+    __table_args__ = (UniqueConstraint("patient_id", "case_key", "step_key", name="uq_scenario_episode"),)
+
+    id: Mapped[int] = mapped_column(primary_key=True)
+    patient_id: Mapped[int] = mapped_column(ForeignKey("patients.id"), nullable=False, index=True)
+    message_id: Mapped[int | None] = mapped_column(ForeignKey("messages.id"), unique=True)
+    case_key: Mapped[str] = mapped_column(String(80), nullable=False)
+    step_key: Mapped[str] = mapped_column(String(80), nullable=False)
+    snapshot: Mapped[dict] = mapped_column(JSONB, nullable=False)
+    occurred_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())

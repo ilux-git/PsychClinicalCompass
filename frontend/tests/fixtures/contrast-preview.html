@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Локальная проверка контраста · Лимбус</title>
+    <style>
+      #contrast-tools { position:fixed; z-index:2000; right:12px; bottom:86px; max-width:calc(100vw - 24px); padding:10px; border:1px solid #565f5b; border-radius:10px; background:#fff; color:#18191a; font:12px/1.5 system-ui; box-shadow:0 2px 12px #0003; }
+      #contrast-tools label { display:flex; align-items:center; gap:8px; }
+      #contrast-tools select,#contrast-tools button { width:auto; min-height:36px; padding:6px 10px; color:#18191a; background:#f6f4ef; border:1px solid #565f5b; }
+      #contrast-tools pre { max-height:45vh; max-width:650px; overflow:auto; white-space:pre-wrap; }
+      #contrast-tools p { margin:4px 0; }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+    <aside id="contrast-tools" aria-label="Локальная проверка оформления">
+      <details>
+        <summary>Проверка оформления</summary>
+        <p>Обычный веб-вход. Меняется только оформление; Telegram-вход не имитируется.</p>
+        <label>Проверяемая тема
+          <select id="contrast-theme">
+            <option value="web">Веб</option>
+            <option value="light">Telegram · светлая палитра</option>
+            <option value="dark">Telegram · тёмная палитра</option>
+          </select>
+        </label>
+        <button id="contrast-run" type="button">Проверить контраст</button>
+        <p id="contrast-status" role="status">Проверка ещё не запускалась.</p>
+        <details><summary>Результат проверки</summary><pre id="contrast-result"></pre></details>
+      </details>
+    </aside>
+    <script type="module" src="/src/main.tsx"></script>
+    <script type="module" src="./contrast-preview.mjs"></script>
+  </body>
+</html>

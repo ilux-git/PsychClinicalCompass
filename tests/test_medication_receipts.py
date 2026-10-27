@@ -1,4 +1,5 @@
-from datetime import datetime, timedelta, timezone
+import asyncio
+from datetime import datetime, timezone
 from uuid import uuid4
 
 import pytest
@@ -32,7 +33,7 @@ def report(item, status="unknown"):
 async def test_schedule_receipt_follows_committed_revision_and_noop_is_replayed(client, headers, database):
     payload, item = await create_item(client, headers)
     receipt = item["participation"]
-    assert receipt["points"] == 2 and receipt["policy_version"] == POLICY_VERSION and receipt["recorded_at"]
+    assert receipt["points"] == 0 and receipt["policy_version"] == POLICY_VERSION and receipt["recorded_at"]
     retry = await client.post("/medications/items", headers=headers("patient1"), json=payload)
     assert retry.json()["replayed"] is True and retry.json()["participation"] == receipt
     path = f"/medications/items/{item['id']}"
@@ -46,27 +47,23 @@ async def test_schedule_receipt_follows_committed_revision_and_noop_is_replayed(
     assert second.json()["replayed"] is True and second.json()["participation"] == first.json()["participation"]
     _, next_item = await create_item(client, headers)
     assert next_item["participation"]["points"] == 0
-    assert (await client.get("/participation/points", headers=headers("patient1"))).json()["balance"] == 2
+    assert (await client.get("/participation/points", headers=headers("patient1"))).json()["balance"] == 0
     async with database() as session:
         assert await session.scalar(select(func.count(ParticipationAward.id))) == 3
         rows = (await session.scalars(select(ParticipationAward).order_by(ParticipationAward.id))).all()
         assert [(r.source_key, r.points) for r in rows] == [
-            (f"item:{item['id']}:v1", 2), (f"item:{item['id']}:v2", 0), (f"item:{next_item['id']}:v1", 0)]
+            (f"item:{item['id']}:v1", 0), (f"item:{item['id']}:v2", 0), (f"item:{next_item['id']}:v1", 0)]
 
 
 @pytest.mark.parametrize("status", ["taken", "not_taken", "unknown", "not_applicable"])
 async def test_report_receipt_uses_same_reward_for_every_answer_and_owned_retry(client, headers, database, status):
     _, item = await create_item(client, headers)
-    # The schedule was prepared on a previous award day; today's report can earn2.
-    async with database() as session:
-        award = await session.scalar(select(ParticipationAward))
-        award.day = datetime.now(timezone.utc).date() - timedelta(days=1)
-        await session.commit()
+    # Creating a schedule does not consume today's ten-point report allowance.
     payload = report(item, status)
     first = await client.post("/medications/reports", headers=headers("patient1"), json=payload)
     assert first.status_code == 201
     saved = first.json()
-    assert saved["participation"]["points"] == 2 and not saved["ingestion_verified"]
+    assert saved["participation"]["points"] == 10 and not saved["ingestion_verified"]
     for next_payload in [payload, {**payload, "client_request_id": str(uuid4())}]:
         response = await client.post("/medications/reports", headers=headers("patient1"), json=next_payload)
         assert response.json()["replayed"] is True and response.json()["participation"] == saved["participation"]
@@ -79,10 +76,23 @@ async def test_report_receipt_uses_same_reward_for_every_answer_and_owned_retry(
     for role, expected in [("doctor", 403), ("admin", 403), ("patient2", 404)]:
         denied = await client.patch(path, headers=headers(role), json=correction)
         assert denied.status_code == expected and "participation" not in denied.json()
-    assert (await client.get("/participation/points", headers=headers("patient1"))).json()["balance"] == 4
+    assert (await client.get("/participation/points", headers=headers("patient1"))).json()["balance"] == 10
     async with database() as session:
         assert await session.scalar(select(func.count(MedicationLog.id))) == 1
         assert await session.scalar(select(func.count(ParticipationAward.id))) == 3
+
+
+async def test_distinct_concurrent_medication_reports_share_one_ten_point_daily_limit(client, headers):
+    items = [(await create_item(client, headers))[1] for _ in range(3)]
+    payloads = [report(item, status) for item, status in zip(items, ['taken', 'not_taken', 'unknown'])]
+    results = await asyncio.gather(*[client.post('/medications/reports', headers=headers('patient1'), json=payload) for payload in payloads])
+    assert all(result.status_code == 201 for result in results)
+    assert sorted(result.json()['participation']['points'] for result in results) == [0, 0, 10]
+    summary = (await client.get('/participation/points', headers=headers('patient1'))).json()
+    assert summary['balance'] == 10
+    diary = await client.post('/diary/entries', headers=headers('patient1'), json={'text':'Отдельная запись', 'client_request_id':str(uuid4())})
+    assert diary.status_code == 201 and diary.json()['participation']['points'] == 10
+    assert (await client.get('/participation/points', headers=headers('patient1'))).json()['balance'] == 20
 
 
 async def test_legacy_schedule_without_award_keeps_unknown_receipt_on_noop(client, headers, database, accounts):

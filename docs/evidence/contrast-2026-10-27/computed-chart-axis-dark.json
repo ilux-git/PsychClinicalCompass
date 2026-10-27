@@ -1,0 +1,203 @@
+{
+  "label": "computed-chart-axis-dark",
+  "rows": [
+    {
+      "background": "rgba(0, 0, 0, 0)",
+      "contrast": 9.20339934786014,
+      "foreground": "rgb(195, 204, 199)",
+      "photo_plate_worst_case": false,
+      "resolved_background": [
+        0.13333333333333333,
+        0.15294117647058825,
+        0.1568627450980392,
+        1
+      ],
+      "selector": ".time-series .chart-axis",
+      "tag": "text"
+    },
+    {
+      "background": "rgba(0, 0, 0, 0)",
+      "contrast": 9.20339934786014,
+      "foreground": "rgb(195, 204, 199)",
+      "photo_plate_worst_case": false,
+      "resolved_background": [
+        0.13333333333333333,
+        0.15294117647058825,
+        0.1568627450980392,
+        1
+      ],
+      "selector": ".time-series .chart-axis",
+      "tag": "text"
+    },
+    {
+      "background": "rgba(0, 0, 0, 0)",
+      "contrast": 9.20339934786014,
+      "foreground": "rgb(195, 204, 199)",
+      "photo_plate_worst_case": false,
+      "resolved_background": [
+        0.13333333333333333,
+        0.15294117647058825,
+        0.1568627450980392,
+        1
+      ],
+      "selector": ".time-series .chart-axis",
+      "tag": "text"
+    },
+    {
+      "background": "rgba(0, 0, 0, 0)",
+      "contrast": 9.20339934786014,
+      "foreground": "rgb(195, 204, 199)",
+      "photo_plate_worst_case": false,
+      "resolved_background": [
+        0.13333333333333333,
+        0.15294117647058825,
+        0.1568627450980392,
+        1
+      ],
+      "selector": ".time-series .chart-axis",
+      "tag": "text"
+    },
+    {
+      "background": "rgba(0, 0, 0, 0)",
+      "contrast": 9.20339934786014,
+      "foreground": "rgb(195, 204, 199)",
+      "photo_plate_worst_case": false,
+      "resolved_background": [
+        0.13333333333333333,
+        0.15294117647058825,
+        0.1568627450980392,
+        1
+      ],
+      "selector": ".time-series .chart-axis",
+      "tag": "text"
+    },
+    {
+      "background": "rgba(0, 0, 0, 0)",
+      "contrast": 9.20339934786014,
+      "foreground": "rgb(195, 204, 199)",
+      "photo_plate_worst_case": false,
+      "resolved_background": [
+        0.13333333333333333,
+        0.15294117647058825,
+        0.1568627450980392,
+        1
+      ],
+      "selector": ".time-series .chart-axis",
+      "tag": "text"
+    },
+    {
+      "background": "rgba(0, 0, 0, 0)",
+      "contrast": 9.20339934786014,
+      "foreground": "rgb(195, 204, 199)",
+      "photo_plate_worst_case": false,
+      "resolved_background": [
+        0.13333333333333333,
+        0.15294117647058825,
+        0.1568627450980392,
+        1
+      ],
+      "selector": ".time-series .chart-axis",
+      "tag": "text"
+    },
+    {
+      "background": "rgba(0, 0, 0, 0)",
+      "contrast": 9.20339934786014,
+      "foreground": "rgb(195, 204, 199)",
+      "photo_plate_worst_case": false,
+      "resolved_background": [
+        0.13333333333333333,
+        0.15294117647058825,
+        0.1568627450980392,
+        1
+      ],
+      "selector": ".time-series .chart-axis",
+      "tag": "text"
+    },
+    {
+      "background": "rgba(0, 0, 0, 0)",
+      "contrast": 9.20339934786014,
+      "foreground": "rgb(195, 204, 199)",
+      "photo_plate_worst_case": false,
+      "resolved_background": [
+        0.13333333333333333,
+        0.15294117647058825,
+        0.1568627450980392,
+        1
+      ],
+      "selector": ".time-series .chart-axis",
+      "tag": "text"
+    },
+    {
+      "background": "rgba(0, 0, 0, 0)",
+      "contrast": 9.20339934786014,
+      "foreground": "rgb(195, 204, 199)",
+      "photo_plate_worst_case": false,
+      "resolved_background": [
+        0.13333333333333333,
+        0.15294117647058825,
+        0.1568627450980392,
+        1
+      ],
+      "selector": ".time-series .chart-axis",
+      "tag": "text"
+    },
+    {
+      "background": "rgba(0, 0, 0, 0)",
+      "contrast": 9.20339934786014,
+      "foreground": "rgb(195, 204, 199)",
+      "photo_plate_worst_case": false,
+      "resolved_background": [
+        0.13333333333333333,
+        0.15294117647058825,
+        0.1568627450980392,
+        1
+      ],
+      "selector": ".time-series .chart-axis",
+      "tag": "text"
+    },
+    {
+      "background": "rgba(0, 0, 0, 0)",
+      "contrast": 9.20339934786014,
+      "foreground": "rgb(195, 204, 199)",
+      "photo_plate_worst_case": false,
+      "resolved_background": [
+        0.13333333333333333,
+        0.15294117647058825,
+        0.1568627450980392,
+        1
+      ],
+      "selector": ".time-series .chart-axis",
+      "tag": "text"
+    },
+    {
+      "background": "rgba(0, 0, 0, 0)",
+      "contrast": 9.20339934786014,
+      "foreground": "rgb(195, 204, 199)",
+      "photo_plate_worst_case": false,
+      "resolved_background": [
+        0.13333333333333333,
+        0.15294117647058825,
+        0.1568627450980392,
+        1
+      ],
+      "selector": ".time-series .chart-axis",
+      "tag": "text"
+    },
+    {
+      "background": "rgba(0, 0, 0, 0)",
+      "contrast": 9.20339934786014,
+      "foreground": "rgb(195, 204, 199)",
+      "photo_plate_worst_case": false,
+      "resolved_background": [
+        0.13333333333333333,
+        0.15294117647058825,
+        0.1568627450980392,
+        1
+      ],
+      "selector": ".time-series .chart-axis",
+      "tag": "text"
+    }
+  ],
+  "minimum": 9.20339934786014,
+  "failures": []
+}

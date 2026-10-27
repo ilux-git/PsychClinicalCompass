@@ -81,7 +81,7 @@ async def test_preview_is_read_only_and_apply_replays_without_rewriting_history_
         assert legacy.score == 9 and legacy.answers == [1]*9 and legacy.created_at == demo_profiles['legacy_at']
         assert await session.scalar(select(func.count(AuditEvent.id)).where(AuditEvent.event_type == 'demo.clinical_answer_generated')) == 21
         awards = (await session.scalars(select(ParticipationAward))).all()
-        assert all(row.policy_version == 'demo-clinical-completion-v1' for row in awards)
+        assert all(row.policy_version == 'demo-clinical-completion-msk-v2' for row in awards)
     second = await run_seed(database, apply=True)
     assert second['created_results'] == 0 and second['replayed_results'] == 21
     async with database() as session:

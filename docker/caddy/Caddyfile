@@ -1,0 +1,9 @@
+{
+	admin off
+}
+
+{$PUBLIC_HOST} {
+	encode zstd gzip
+	# Keep /tg, /assets and API URLs on the same origin. No request body/access logging.
+	reverse_proxy app:8000
+}

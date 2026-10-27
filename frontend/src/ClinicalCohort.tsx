@@ -18,7 +18,7 @@ export function ClinicalCohort({search,openSurveys}: {search:string;openSurveys?
   return <Section title="Клинические опросники" aside={<Button variant="ghost" onClick={cohort.reload}>Обновить сводку</Button>}>
     <ErrorBox message={cohort.error} retry={cohort.reload}/>
     {!cohort.data?cohort.error?<Empty title="Сводка пока недоступна">Список пациентов ниже остаётся доступным. Повторите загрузку сводки.</Empty>:<Loading/>:<>
-      <p className="field-hint">{cohort.data.search?`Поиск по имени: «${cohort.data.search}». `:""}Пациентов в выборке: {cohort.data.patients_total}. Срез на {clinicalDate(cohort.data.as_of)}. Каждая версия показана отдельно; старые числовые демо-данные сюда не включены.</p>
+      <p className="field-hint">{cohort.data.search?`Поиск по имени: «${cohort.data.search}». `:""}Пациентов в выборке: {cohort.data.patients_total}. Срез на {clinicalDate(cohort.data.as_of)}. Каждая версия показана отдельно.</p>
       <div className="clinical-cohort-grid">{cohort.data.instruments.map(item=><article className="clinical-cohort-card" key={item.key}>
         <h3>{item.name}</h3><p className="field-hint">{item.version}</p>
         <div className="clinical-cohort-coverage"><span>Пациентов с ответом</span><strong>{item.observed_patients}<small> из {item.assigned_patients} с назначением</small></strong></div>
@@ -37,7 +37,7 @@ export function ClinicalCohort({search,openSurveys}: {search:string;openSurveys?
         </Disclosure>
         <details className="instrument-source"><summary>Источник и ограничения</summary><p><a href={item.source_url} target="_blank" rel="noreferrer">{item.source_title}</a></p><p>{item.source_check}</p><p>{item.license}{item.license_url&&<> <a href={item.license_url} target="_blank" rel="noreferrer">Условия лицензии</a></>}</p><p>{item.limitation}</p></details>
       </article>)}</div>
-      {cohort.data.instruments.every(item=>item.observed_patients===0)&&<Empty title="Канонических клинических ответов пока нет">Назначьте бланк из библиотеки. Старые демо-ответы остаются в карточках и не становятся измерениями подтверждённой версии.</Empty>}
+      {cohort.data.instruments.every(item=>item.observed_patients===0)&&<Empty title="Канонических клинических ответов пока нет">Назначьте бланк из библиотеки.</Empty>}
       {openSurveys&&<Button variant="secondary" onClick={openSurveys}>Открыть библиотеку опросов</Button>}
       <p className="field-hint">Это охват измерениями и описательная статистика. По этим показателям не вычисляется эффективность лечения или причина отказа пациента.</p>
     </>}

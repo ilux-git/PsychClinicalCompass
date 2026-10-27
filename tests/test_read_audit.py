@@ -82,6 +82,25 @@ async def test_audit_storage_failure_withholds_clinical_response(client, headers
     assert "Иван" not in response.text and "Соколов" not in response.text
 
 
+async def test_database_audit_rejection_withholds_response_and_pool_recovers(client, headers, database, monkeypatch):
+    from app.modules.audit import read_access
+
+    path = "/patients/1/assessments"
+    assert (await client.get(path, headers=headers("doctor"))).status_code == 200
+    first = (await history(database))[0]
+    # Exercise an actual PostgreSQL constraint failure, including autocommit's
+    # failed-statement boundary, instead of replacing persistence with a stub.
+    with monkeypatch.context() as patch:
+        patch.setattr(read_access, "uuid4", lambda: UUID(first.request_id))
+        rejected = await client.get(path, headers=headers("doctor"))
+        assert rejected.status_code == 503
+        assert rejected.headers["cache-control"] == "no-store"
+        assert "answers" not in rejected.text
+    assert len(await history(database)) == 1
+    assert (await client.get(path, headers=headers("doctor"))).status_code == 200
+    assert len(await history(database)) == 2
+
+
 async def test_audit_commit_precedes_response_start(accounts, database, headers):
     from app.main import app
 

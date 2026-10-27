@@ -6,7 +6,7 @@ import {JSDOM} from "jsdom";
 import {createServer} from "vite";
 import {createElement as h} from "react";
 
-let dom,server,Assigned,History,Baseline,Inbox,PatientHome,Builder,EventAction,Guard,Interactions,render,screen,within,waitFor,cleanup,fireEvent,userEvent,unexpected;
+let dom,server,Assigned,History,Baseline,Inbox,PatientHome,Builder,EventAction,Guard,Interactions,Deadlines,render,screen,within,waitFor,cleanup,fireEvent,userEvent,unexpected;
 const stamp="2026-10-26T10:00:00Z";
 const question=(id,prompt,gate=false)=>({id,prompt,kind:"single",required:true,options:[{id:"n0",label:"Нет"},{id:"n1",label:"Да"}],minimum:0,maximum:1,...(gate?{show_if:{question_id:"q1",equals:"n1"}}:{})});
 const definition={key:"panic-v1",name:"PHQ · панические атаки",version:"КР 456_3, Г3 · v1",instructions:"Вопросы о последнем приступе",source_title:"Бланк врача",source_url:"https://cr.minzdrav.gov.ru/view-cr/456_3",source_check:"Предоставлен врачом",license:"Демонстрационный прототип",license_url:null,limitation:"Скрининг не является диагнозом",maximum:null,
@@ -31,9 +31,18 @@ before(async()=>{
   ({PatientHome}=await server.ssrLoadModule("/src/Patient.tsx"));({SurveyBuilder:Builder}=await server.ssrLoadModule("/src/SurveyBuilder.tsx"));
   ({EventAction}=await server.ssrLoadModule('/src/EventAction.tsx'));
   ({NavigationGuard:Guard}=await server.ssrLoadModule("/src/NavigationGuard.tsx"));({InteractionProvider:Interactions}=await server.ssrLoadModule("/src/Interaction.tsx"));
+  ({ReviewDeadlines:Deadlines}=await server.ssrLoadModule('/src/ClinicalReview.tsx'));
 });
 afterEach(()=>{cleanup();assert.deepEqual(unexpected,[],"No unlisted clinical request is allowed");});
 after(async()=>{await server?.close();dom?.window.close();});
+
+test("critical acceptance timing never suggests waiting two hours for medical contact",()=>{
+  unexpected=[];
+  render(h(Deadlines,{timing:{acknowledgement_due_at:stamp,acknowledgement_state:'overdue',action_due_at:null,action_completed_at:null,immediate_action_required:true}}));
+  assert.match(document.body.textContent,/Немедленная оценка и связь/);
+  assert.match(document.body.textContent,/Пять минут — контроль принятия/);
+  assert.doesNotMatch(document.body.textContent,/за 2 часа/);
+});
 
 test("changing the panic gate clears hidden symptoms and submits only the actual first answer",async()=>{
   unexpected=[];const writes=[];
@@ -280,7 +289,7 @@ test("a linked clinical action preserves separate medical and verification dates
   fail=false;await user.click(screen.getByRole('button',{name:'Назначить задачу по событию',exact:true}));
   await screen.findByText('Создана задача #39',{exact:true});
   assert.deepEqual(commands[1],commands[0]);
-  assert.equal(commands[0].due_at,new Date('2026-10-26T19:49').toISOString());
-  assert.equal(commands[0].follow_up_at,new Date('2026-10-27T12:00').toISOString());
+  assert.equal(commands[0].due_at,'2026-10-26T16:49:00.000Z');
+  assert.equal(commands[0].follow_up_at,'2026-10-27T09:00:00.000Z');
   assert.equal(commands[0].kind,'clinical');assert.equal(commands[0].assigned_to_id,null);
 });

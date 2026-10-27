@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
 import { ArrowRight, Search } from "lucide-react";
 import { useApi } from "./api";
+import {clinicTimeZone} from "./clinicTime";
 import { TaskItem, type CareTask, type TaskChange } from "./CareWorkflow";
 import { Badge, Button, Empty, ErrorBox, Heading, Loading, plural, type Notify } from "./UI";
 import { Disclosure } from "./Interaction";
@@ -72,13 +73,13 @@ function Column({stage, query, operational, changed, notify, openPatient, revisi
         </div>
         <h3>{task.title}</h3>
         {stage.id==="all"&&<Badge tone="muted">{stages.find(item=>item.id===task.status)?.label??task.status}</Badge>}
-        {task.due_at && <p className={task.status !== "done" && Date.parse(task.due_at) < Date.now() ? "deadline-overdue" : "field-hint"}>Срок: {new Date(task.due_at).toLocaleString("ru-RU")}</p>}
+        {task.due_at && <p className={task.status !== "done" && Date.parse(task.due_at) < Date.now() ? "deadline-overdue" : "field-hint"}>Срок: {new Date(task.due_at).toLocaleString("ru-RU",{timeZone:clinicTimeZone})}</p>}
         {task.status === "done" && <Badge tone="muted">{task.verification_status === "pending" ? "Ожидает проверки результата" : task.verification_status === "resolved" ? "Проверено: устранено" : task.verification_status === "not_resolved" ? "Проверено: сохраняется" : "Проверено: результат неизвестен"}</Badge>}
         <Disclosure reveal={task.id===focusedTask} title={task.status === "open" ? "Принять и выполнить" : task.status === "in_progress" ? "Сохранить действие" : "Действие и проверка"}>
           <TaskItem task={task} operational={operational} reload={changed} notify={notify} scope={scope} autoFocus={task.id===focusedTask} onEditing={editing} embedded detached={detachedRows.some(row=>row.id===task.id)}/>
         </Disclosure>
       </article>)}
-      {stage.id==="all"&&<p className="field-hint">На странице: {pageRows.length} из {page.data.total}. Сначала новые задачи.{page.data.as_of&&` Срез: ${new Date(page.data.as_of).toLocaleString("ru-RU")}.`}</p>}
+      {stage.id==="all"&&<p className="field-hint">На странице: {pageRows.length} из {page.data.total}. Сначала новые задачи.{page.data.as_of&&` Срез: ${new Date(page.data.as_of).toLocaleString("ru-RU",{timeZone:clinicTimeZone})}.`}</p>}
       <div className="board-pagination"><Button variant="ghost" disabled={!cursors.length} onClick={() => turnPage(prev => prev.slice(0,-1))}>Назад</Button>
         <span>Страница {cursors.length + 1}</span><Button variant="ghost" disabled={!page.data.next_cursor} onClick={() => turnPage(prev => [...prev, page.data!.next_cursor!])}>Далее</Button></div>
     </>}

@@ -1,0 +1,322 @@
+{
+  "chat": "Мой день\nОпросы\nДневник\nЧат\nЕщё",
+  "contrast": {
+    "axe_version": "4.14.0",
+    "checked_at": "2026-10-27T12:18:21.084Z",
+    "incomplete": [
+      {
+        "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+        "help": "Elements must meet minimum color contrast ratio thresholds",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/4.14/color-contrast?application=axeAPI",
+        "id": "color-contrast",
+        "impact": "serious",
+        "nodes": [
+          {
+            "all": [],
+            "any": [
+              {
+                "data": {
+                  "contrastRatio": 0,
+                  "expectedContrastRatio": "4.5:1",
+                  "fontSize": "6.8pt (9px)",
+                  "fontWeight": "normal",
+                  "messageKey": "bgOverlap"
+                },
+                "id": "color-contrast",
+                "impact": "serious",
+                "message": "Element's background color could not be determined because it is overlapped by another element",
+                "relatedNodes": []
+              }
+            ],
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it is overlapped by another element",
+            "html": "<span>Открыто мест</span>",
+            "impact": "serious",
+            "none": [],
+            "target": [
+              ".atlas-map-summary > span"
+            ]
+          },
+          {
+            "all": [],
+            "any": [
+              {
+                "data": {
+                  "contrastRatio": 0,
+                  "expectedContrastRatio": "4.5:1",
+                  "fontSize": "14.3pt (19px)",
+                  "fontWeight": "normal",
+                  "messageKey": "shortTextContent"
+                },
+                "id": "color-contrast",
+                "impact": "serious",
+                "message": "Element content is too short to determine if it is actual text content",
+                "relatedNodes": []
+              }
+            ],
+            "failureSummary": "Fix any of the following:\n  Element content is too short to determine if it is actual text content",
+            "html": "<strong>2<small> из 6</small></strong>",
+            "impact": "serious",
+            "none": [],
+            "target": [
+              ".atlas-map-summary > strong"
+            ]
+          },
+          {
+            "all": [],
+            "any": [
+              {
+                "data": {
+                  "contrastRatio": 0,
+                  "expectedContrastRatio": "4.5:1",
+                  "fontSize": "7.5pt (10px)",
+                  "fontWeight": "normal",
+                  "messageKey": "bgOverlap"
+                },
+                "id": "color-contrast",
+                "impact": "serious",
+                "message": "Element's background color could not be determined because it is overlapped by another element",
+                "relatedNodes": []
+              }
+            ],
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it is overlapped by another element",
+            "html": "<small> из 6</small>",
+            "impact": "serious",
+            "none": [],
+            "target": [
+              "strong > small"
+            ]
+          },
+          {
+            "all": [],
+            "any": [
+              {
+                "data": {
+                  "contrastRatio": 0,
+                  "expectedContrastRatio": "3:1",
+                  "fontSize": "18.0pt (24px)",
+                  "fontWeight": "normal",
+                  "messageKey": "elmPartiallyObscured"
+                },
+                "id": "color-contrast",
+                "impact": "serious",
+                "message": "Element's background color could not be determined because it's partially obscured by another element",
+                "relatedNodes": [
+                  "[MaxDepth]"
+                ]
+              }
+            ],
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it's partially obscured by another element",
+            "html": "<strong class=\"patient-discount-value\">5&nbsp;%</strong>",
+            "impact": "serious",
+            "none": [],
+            "target": [
+              ".patient-discount-value"
+            ]
+          }
+        ],
+        "tags": [
+          "cat.color",
+          "wcag2aa",
+          "wcag143",
+          "TTv5",
+          "TT13.c",
+          "EN-301-549",
+          "EN-9.1.4.3",
+          "ACT",
+          "RGAAv4",
+          "RGAA-3.2.1"
+        ]
+      }
+    ],
+    "passed_nodes": 64,
+    "route": "/?section=journey",
+    "theme": "dark",
+    "viewport": {
+      "height": 844,
+      "width": 375
+    },
+    "violations": []
+  },
+  "discount": {
+    "label": {
+      "height": 28.796875,
+      "right": 306,
+      "width": 252,
+      "x": 54,
+      "y": 1305.9375
+    },
+    "text": "5 %",
+    "value": {
+      "height": 28.796875,
+      "right": 306,
+      "width": 40.09375,
+      "x": 265.90625,
+      "y": 1305.9375
+    },
+    "whiteSpace": "nowrap"
+  },
+  "map": [
+    {
+      "background": "rgba(0, 0, 0, 0)",
+      "dot": {
+        "height": 14,
+        "right": 84.71875,
+        "width": 14,
+        "x": 70.71875,
+        "y": 806.5
+      },
+      "icons": 0,
+      "name": "Отправная точка · 0 баллов · Открыто",
+      "target": {
+        "height": 44,
+        "right": 99.71875,
+        "width": 44,
+        "x": 55.71875,
+        "y": 791.5
+      }
+    },
+    {
+      "background": "rgba(0, 0, 0, 0)",
+      "dot": {
+        "height": 14,
+        "right": 151.25,
+        "width": 14,
+        "x": 137.25,
+        "y": 728.5625
+      },
+      "icons": 0,
+      "name": "Тихая поляна · 25 баллов · Вы здесь",
+      "target": {
+        "height": 44,
+        "right": 166.25,
+        "width": 44,
+        "x": 122.25,
+        "y": 713.5625
+      }
+    },
+    {
+      "background": "rgba(0, 0, 0, 0)",
+      "dot": {
+        "height": 14,
+        "right": 191.171875,
+        "width": 14,
+        "x": 177.171875,
+        "y": 683.890625
+      },
+      "icons": 0,
+      "name": "Остров наблюдений · 50 баллов · Впереди",
+      "target": {
+        "height": 44,
+        "right": 206.171875,
+        "width": 44,
+        "x": 162.171875,
+        "y": 668.890625
+      }
+    },
+    {
+      "background": "rgba(0, 0, 0, 0)",
+      "dot": {
+        "height": 14,
+        "right": 268.171875,
+        "width": 14,
+        "x": 254.171875,
+        "y": 727.609375
+      },
+      "icons": 0,
+      "name": "Маяк · 100 баллов · Впереди",
+      "target": {
+        "height": 44,
+        "right": 283.171875,
+        "width": 44,
+        "x": 239.171875,
+        "y": 712.609375
+      }
+    },
+    {
+      "background": "rgba(0, 0, 0, 0)",
+      "dot": {
+        "height": 14,
+        "right": 272.921875,
+        "width": 14,
+        "x": 258.921875,
+        "y": 796.984375
+      },
+      "icons": 0,
+      "name": "Южный остров · 150 баллов · Впереди",
+      "target": {
+        "height": 44,
+        "right": 287.921875,
+        "width": 44,
+        "x": 243.921875,
+        "y": 781.984375
+      }
+    },
+    {
+      "background": "rgba(0, 0, 0, 0)",
+      "dot": {
+        "height": 14,
+        "right": 305.234375,
+        "width": 14,
+        "x": 291.234375,
+        "y": 679.125
+      },
+      "icons": 0,
+      "name": "Новый горизонт · 250 баллов · Впереди",
+      "target": {
+        "height": 44,
+        "right": 320.234375,
+        "width": 44,
+        "x": 276.234375,
+        "y": 664.125
+      }
+    }
+  ],
+  "overflow": -15,
+  "rules": [
+    {
+      "icons": [
+        "lucide lucide-clipboard-list"
+      ],
+      "rect": {
+        "height": 128,
+        "right": 323,
+        "width": 286,
+        "x": 37,
+        "y": 1635.515625
+      },
+      "text": "Опросы\n0 из 30 баллов сегодня\nК моим опросам"
+    },
+    {
+      "icons": [
+        "lucide lucide-pill"
+      ],
+      "rect": {
+        "height": 128,
+        "right": 323,
+        "width": 286,
+        "x": 37,
+        "y": 1775.515625
+      },
+      "text": "Расписание лекарств\n0 из 2 баллов сегодня\nОткрыть расписание"
+    },
+    {
+      "icons": [
+        "lucide lucide-book-open"
+      ],
+      "rect": {
+        "height": 128,
+        "right": 323,
+        "width": 286,
+        "x": 37,
+        "y": 1915.515625
+      },
+      "text": "Дневник состояния\n0 из 3 баллов сегодня\nОткрыть дневник"
+    }
+  ],
+  "theme": "dark",
+  "viewport": {
+    "height": 844,
+    "width": 375
+  },
+  "visibleUTC": false
+}

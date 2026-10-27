@@ -1,14 +1,16 @@
 from datetime import date, datetime, timezone
 from zoneinfo import ZoneInfo
+from typing import Literal
+from app.core.clinic_time import CLINIC_TIMEZONE, clinic_day, clinic_day_bounds
 
 from fastapi import APIRouter, Depends, HTTPException, Query
-from sqlalchemy import select
+from sqlalchemy import and_, or_, select
 
 from app.api.deps import CompassSession, CurrentUser, patient_for_user, require_role
 from app.modules.access.models import User, UserRole
 from app.modules.adherence.medication_models import MedicationItem, MedicationLog
 from app.modules.adherence.medication_schemas import MedicationCreate, MedicationEdit, MedicationReport, MedicationReportEdit
-from app.modules.adherence.medications import inventory, item_read, log_read, occurrences
+from app.modules.adherence.medications import clinic_occurrences, inventory, item_read, log_read, occurrences
 from app.modules.audit.service import record_event
 from app.modules.patients.models import Patient
 from app.modules.adherence.rewards import grant_points, participation_receipt
@@ -34,25 +36,42 @@ async def medication_response(session, patient_id, data, source_key, replayed):
 
 @router.get("/patients/{patient_id}/medications")
 async def medication_schedule(patient_id: int, session: CompassSession, user: CurrentUser,
-                              on: date | None = Query(default=None)):
+                              on: date | None = Query(default=None), calendar: Literal["source", "clinic"] = "source") -> dict:
     patient = await patient_for_user(session, user, patient_id)
-    day = on or datetime.now(timezone.utc).date()
+    now = datetime.now(timezone.utc)
+    day = on or (clinic_day(now) if calendar == "clinic" else now.date())
     items, source = await inventory(session, patient)
-    logs = (await session.scalars(select(MedicationLog).where(MedicationLog.patient_id == patient.id,
-        MedicationLog.occurrence_key.like(day.isoformat() + "@%")).order_by(MedicationLog.id))).all()
+    source_date = MedicationLog.occurrence_key.like(day.isoformat() + "@%")
+    if calendar == "clinic":
+        start, end = clinic_day_bounds(day)
+        date_filter = or_(and_(MedicationLog.scheduled_for >= start, MedicationLog.scheduled_for < end),
+                          and_(MedicationLog.scheduled_for.is_(None), source_date))
+    else:
+        date_filter = source_date
+    recent_ids = select(MedicationLog.id).where(MedicationLog.patient_id == patient.id).order_by(
+        MedicationLog.id.desc()).limit(30).correlate(None)
+    # The union retains every report on the requested day and the actual latest
+    # 30 reports, including older/future-day reads and unknown scheduled times.
+    report_rows = (await session.execute(select(MedicationLog, date_filter.label("on_selected_day")).where(
+        MedicationLog.patient_id == patient.id, or_(date_filter, MedicationLog.id.in_(recent_ids)))
+        .order_by(MedicationLog.id.desc()))).all()
+    logs = [report for report, on_day in reversed(report_rows) if on_day]
+    recent = [report for report, _ in report_rows[:30]]
     by_key = {(r.item_key, r.occurrence_key): r for r in logs}
     events = []
     for item in items:
-        for event in occurrences(item, day):
+        for event in (clinic_occurrences(item, day) if calendar == "clinic" else occurrences(item, day)):
             report = by_key.get((event["item_key"], event["occurrence_key"]))
             if report:
                 event.update(status=report.status, report=log_read(report))
             event["can_report"] = event["scheduled_for"] is not None and event["scheduled_for"] <= datetime.now(timezone.utc)
+            # Keep the established ISO offset format when the typed response is
+            # serialized directly by Pydantic instead of jsonable_encoder.
+            if event["scheduled_for"] is not None:
+                event["scheduled_for"] = event["scheduled_for"].isoformat()
             events.append(event)
     current_keys = {(e["item_key"], e["occurrence_key"]) for e in events}
-    recent = (await session.scalars(select(MedicationLog).where(MedicationLog.patient_id == patient.id)
-                                   .order_by(MedicationLog.id.desc()).limit(30))).all()
-    return {"day": day, "items": items, "events": events,
+    return {"day": day, "day_timezone": CLINIC_TIMEZONE if calendar == "clinic" else "source", "items": items, "events": events,
             "historical_reports": [log_read(r) for r in logs if (r.item_key, r.occurrence_key) not in current_keys],
             "recent_reports": [log_read(r) for r in recent],
             "source": {k: source[k] for k in ("source", "schema_version", "status", "synthetic", "read_only")},
@@ -75,7 +94,7 @@ async def create_item(payload: MedicationCreate, session: CompassSession, user: 
     session.add(row); await session.flush()
     record_event(session, user.id, patient.id, "medication.item_created", "medication_item", row.id,
                  {"source": "patient_entered", "mis_write": False})
-    await grant_points(session, patient.id, "medication", f"item:{row.id}:v1", user.id)
+    await grant_points(session, patient.id, "medication", f"item:{row.id}:v1", user.id, effort_units=0)
     response = await medication_response(session, patient.id, item_read(row), f"item:{row.id}:v1", False)
     await session.commit()
     return response
@@ -100,7 +119,7 @@ async def edit_item(item_id: int, payload: MedicationEdit, session: CompassSessi
         row.revision += 1; row.updated_at = datetime.now(timezone.utc)
         record_event(session, user.id, patient.id, "medication.item_updated", "medication_item", row.id,
                      {"revision": row.revision, "mis_write": False})
-        await grant_points(session, patient.id, "medication", f"item:{row.id}:v{row.revision}", user.id)
+        await grant_points(session, patient.id, "medication", f"item:{row.id}:v{row.revision}", user.id, effort_units=0)
     response = await medication_response(session, patient.id, item_read(row), f"item:{row.id}:v{row.revision}", same)
     await session.commit()
     return response
@@ -120,7 +139,8 @@ async def medication_report(payload: MedicationReport, session: CompassSession, 
     item = next((i for i in items if i["key"] == payload.item_key), None)
     if item is None or not item["active"]:
         raise HTTPException(404, "Позиция не найдена или неактивна")
-    if payload.day > datetime.now(ZoneInfo(item["timezone"])).date():
+    today = datetime.now(ZoneInfo(item["timezone"])).date() if item["schedule_kind"] == "fixed" else clinic_day(datetime.now(timezone.utc))
+    if payload.day > today:
         raise HTTPException(422, "Самоотчёт о будущем дне недопустим")
     if item["schedule_kind"] == "fixed":
         event = next((e for e in occurrences(item, payload.day) if e["occurrence_key"] == payload.occurrence_key), None)

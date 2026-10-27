@@ -18,10 +18,14 @@ def duration_summary(values):
 
 
 async def generated_submission_ids(session, rows):
+    # Imported presentation events carry an explicit, non-UUID source namespace.
+    # Their stages can populate the funnel; their timestamps aren't measured UI latency.
+    generated = {response.id for assignment, _, response in rows if response is not None
+                 and getattr(assignment, "client_request_id", "").startswith("demo-cohort-v1:")}
     ids = {response.id for _, survey, response in rows if response is not None and survey.clinical_key is not None}
     if not ids:
-        return set()
-    return set((await session.scalars(select(ClinicalResult.submission_id).where(
+        return generated
+    return generated | set((await session.scalars(select(ClinicalResult.submission_id).where(
         ClinicalResult.submission_id.in_(ids),
         ClinicalResult.result.contains({"synthetic_provenance": {"generated": True}})))).all())
 
@@ -47,25 +51,36 @@ def survey_journey(rows, *, generated_ids=frozenset()):
     }
 
 
-def dimension_coverage(rows, patient_ids):
+def dimension_observations(rows):
+    """Reuse immutable question metadata within this one request, never patient data across requests."""
+    groups = {code: {"assigned": set(), "responded": set(), "versions": set(), "answers": 0}
+              for code in DIMENSIONS}
+    questions_by_survey = {}
+    for assignment, survey, response in rows:
+        if survey.id not in questions_by_survey:
+            questions_by_survey[survey.id] = [(question["dimension"], question["id"])
+                for question in survey.questions if question.get("dimension") in DIMENSIONS]
+        for code, question_id in questions_by_survey[survey.id]:
+            group = groups[code]
+            group["assigned"].add(assignment.patient_id)
+            group["versions"].add((survey.id, question_id))
+            if response and question_id in response.answers:
+                group["responded"].add(assignment.patient_id)
+                group["answers"] += 1
+    return groups
+
+
+def dimension_coverage(rows, patient_ids, *, observations=None):
     result = []
     all_patients = set(patient_ids)
+    groups = dimension_observations(rows) if observations is None else observations
     for code, label in DIMENSIONS.items():
-        assigned_patients, respondents, question_versions = set(), set(), set()
-        answer_count = 0
-        for assignment, survey, response in rows:
-            for question in survey.questions:
-                if question.get("dimension") != code:
-                    continue
-                assigned_patients.add(assignment.patient_id)
-                question_versions.add((survey.id, question["id"]))
-                if response and question["id"] in response.answers:
-                    respondents.add(assignment.patient_id)
-                    answer_count += 1
+        group = groups[code]
+        assigned_patients, respondents, question_versions = group["assigned"], group["responded"], group["versions"]
         result.append({"code": code, "label": label, "question_versions": len(question_versions),
                        "assigned_patients": len(assigned_patients), "responding_patients": len(respondents),
                        "patients_without_answer": len(assigned_patients - respondents),
                        "patients_without_assignment": len(all_patients - assigned_patients),
                        "coverage_percent": round(100 * len(respondents) / len(assigned_patients), 1) if assigned_patients else None,
-                       "answers": answer_count, "inferred_score": None})
+                       "answers": group["answers"], "inferred_score": None})
     return result

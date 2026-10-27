@@ -11,6 +11,7 @@ export type ParticipationPoints = {
   coupons:{id:number; code:string; points:number; discount_percent:number; status:string; created_at:string; simulated:boolean}[];
   rules:PointsRule[];
   history:{id:number; kind:string; points:number; created_at:string; policy_version:string}[];
+  day_timezone?:string;
   activity:{day:string; actions:number; points:number}[]; principles:string[]; next_reset_at:string;
 };
 export type PatientCareProgress = {

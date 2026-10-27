@@ -52,6 +52,7 @@ function uuid() {
 }
 
 export default function() {
+  const iterationStartedAt = Date.now();
   const vu = exec.vu.idInTest;
   const user = users[vu<=patientCount ? vu-1 : 1000+(vu-patientCount)-1];
   let operation, method='GET',path,body=null;
@@ -101,7 +102,8 @@ export default function() {
   check(response,{'workflow request succeeds':r=>r.status>=200 && r.status<300},{operation});
   if(extended && response.status===200 && operation==='task_board') nextTask=response.json().items[0] || null;
   if(extended && response.status===200 && operation==='doctor_inbox') nextAlert=(response.json().items.find(item=>item.source_kind==='support_request' && item.status==='created') || {}).id || null;
-  sleep(Number(__ENV.LOAD_THINK || 1)*(0.8+Math.random()*0.4));
+  const period = Number(__ENV.LOAD_THINK || 1);
+  sleep(__ENV.LOAD_PACING_MODE === 'interval' ? Math.max(0, period-(Date.now()-iterationStartedAt)/1000) : period*(0.8+Math.random()*0.4));
 }
 
 export function handleSummary(data) {
@@ -114,7 +116,9 @@ export function handleSummary(data) {
     clinical_fixture:clinical ? {results_per_patient:manifest.clinical_results_per_patient,sha256:manifest.clinical_fixture_sha256} : null,
     source_fingerprint:__ENV.LOAD_SOURCE_FINGERPRINT || null,
     schema_revision:__ENV.LOAD_SCHEMA_REVISION || null,
-    think_seconds:Number(__ENV.LOAD_THINK || 1),think_delay_factor_range:[0.8,1.2],
+    think_seconds:Number(__ENV.LOAD_THINK || 1),think_delay_factor_range:__ENV.LOAD_PACING_MODE==='interval'?[1,1]:[0.8,1.2],
+    pacing_mode:__ENV.LOAD_PACING_MODE==='interval'?'target-action-interval':'pause-after-response',
+    target_action_interval_seconds:__ENV.LOAD_PACING_MODE==='interval'?Number(__ENV.LOAD_THINK || 1):null,
     latency_method:'k6-blocked-plus-duration-v2',
     diagnostic_trace:__ENV.LOAD_TRACE_REQUESTS==='1',
     deployment_mode:__ENV.LOAD_DEPLOYMENT_MODE || 'uvicorn-shared-listener',

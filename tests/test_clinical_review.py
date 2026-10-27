@@ -112,7 +112,7 @@ async def test_baseline_cannot_reference_another_patient_or_instrument(client, h
     assert (await client.put(path, headers=headers("doctor"), json={**payload, "result_id": True})).status_code == 422
 
 
-async def test_urgent_alert_has_two_separate_clocks_and_acknowledgement_does_not_close_it(client, headers, database):
+async def test_current_urgent_alert_requires_action_without_reusing_old_hour_deadlines(client, headers, database):
     await complete(client, headers, PHQ9_KEY, numeric_answers(0))
     response = await complete(client, headers, PHQ9_KEY, numeric_answers(16))
     assert await process_pending_events() == 1
@@ -120,11 +120,11 @@ async def test_urgent_alert_has_two_separate_clocks_and_acknowledgement_does_not
     alert = (await client.get("/alerts?patient_id=1", headers=headers("doctor"))).json()[0]
     assert alert["source_kind"] == "clinical_assessment" and alert["severity"] == "urgent_review"
     timing = alert["review_timing"]
-    created = datetime.fromisoformat(alert["created_at"])
-    assert datetime.fromisoformat(timing["acknowledgement_due_at"]) - created == timedelta(hours=2)
+    assert timing["acknowledgement_due_at"] is None
+    assert timing["action_due_at"] is None
     async with database() as session:
         result = await session.scalar(select(ClinicalResult).where(ClinicalResult.submission_id == response.json()["id"]))
-        assert datetime.fromisoformat(timing["action_due_at"]) - result.created_at == timedelta(hours=16)
+        assert result.result["triage"]["response_target"] == "urgent"
         assert await session.scalar(select(func.count(Alert.id))) == 1
         assert await session.scalar(select(func.count(ClinicalDecision.id))) == 1
     for _ in range(2):

@@ -1,0 +1,103 @@
+{
+  "checked_at": "2026-10-27T06:24:13.875Z",
+  "theme": "dark",
+  "route": "/?section=medications",
+  "viewport": {
+    "width": 1440,
+    "height": 900
+  },
+  "axe_version": "4.14.0",
+  "violations": [
+    {
+      "id": "color-contrast",
+      "impact": "serious",
+      "tags": [
+        "cat.color",
+        "wcag2aa",
+        "wcag143",
+        "TTv5",
+        "TT13.c",
+        "EN-301-549",
+        "EN-9.1.4.3",
+        "ACT",
+        "RGAAv4",
+        "RGAA-3.2.1"
+      ],
+      "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+      "help": "Elements must meet minimum color contrast ratio thresholds",
+      "helpUrl": "https://dequeuniversity.com/rules/axe/4.14/color-contrast?application=axeAPI",
+      "nodes": [
+        {
+          "any": [
+            {
+              "id": "color-contrast",
+              "data": {
+                "fgColor": "#686a7e",
+                "bgColor": "#222728",
+                "contrastRatio": 2.84,
+                "fontSize": "9.8pt (13px)",
+                "fontWeight": "normal",
+                "messageKey": null,
+                "expectedContrastRatio": "4.5:1"
+              },
+              "relatedNodes": [
+                {
+                  "html": "<section class=\"panel medication-schedule\">",
+                  "target": [
+                    ".panel"
+                  ]
+                }
+              ],
+              "impact": "serious",
+              "message": "Element has insufficient color contrast of 2.84 (foreground color: #686a7e, background color: #222728, font size: 9.8pt (13px), font weight: normal). Expected contrast ratio of 4.5:1"
+            }
+          ],
+          "all": [],
+          "none": [],
+          "impact": "serious",
+          "html": "<strong>Позиций пока нет</strong>",
+          "target": [
+            ".empty > strong"
+          ],
+          "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 2.84 (foreground color: #686a7e, background color: #222728, font size: 9.8pt (13px), font weight: normal). Expected contrast ratio of 4.5:1"
+        },
+        {
+          "any": [
+            {
+              "id": "color-contrast",
+              "data": {
+                "fgColor": "#696a76",
+                "bgColor": "#222728",
+                "contrastRatio": 2.82,
+                "fontSize": "9.0pt (12px)",
+                "fontWeight": "normal",
+                "messageKey": null,
+                "expectedContrastRatio": "4.5:1"
+              },
+              "relatedNodes": [
+                {
+                  "html": "<section class=\"panel medication-schedule\">",
+                  "target": [
+                    ".panel"
+                  ]
+                }
+              ],
+              "impact": "serious",
+              "message": "Element has insufficient color contrast of 2.82 (foreground color: #696a76, background color: #222728, font size: 9.0pt (12px), font weight: normal). Expected contrast ratio of 4.5:1"
+            }
+          ],
+          "all": [],
+          "none": [],
+          "impact": "serious",
+          "html": "<p>Добавьте личную позицию, чтобы видеть расписание и сохранять отметки.<span class=\"medication-empty-action\"><button class=\"button secondary \" tabindex=\"0\">Добавить личное расписание</button></span></p>",
+          "target": [
+            ".empty > p"
+          ],
+          "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 2.82 (foreground color: #696a76, background color: #222728, font size: 9.0pt (12px), font weight: normal). Expected contrast ratio of 4.5:1"
+        }
+      ]
+    }
+  ],
+  "incomplete": [],
+  "passed_nodes": 41
+}

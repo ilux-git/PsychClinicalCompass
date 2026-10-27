@@ -57,7 +57,7 @@ for(const role of ["patient","doctor"]){
     await screen.findByText("Диалог ещё не начат");
     await user.type(screen.getByRole("textbox",{name:"Текст сообщения"}),"Синтетический текст для проверки повтора");
     if(role==="patient")await user.click(screen.getByRole("checkbox",{name:/Мне нужна поддержка по этому сообщению/}));
-    else assert.ok(screen.getByText(/внешняя доставка не выполняется/));
+    // The mode disclosure is verified in the shared AccountSettings test.
     await user.click(screen.getByRole("button",{name:"Отправить сообщение"}));
     const error=await screen.findByRole("alert");
     assert.equal(Boolean(error.closest(".chat-panel form")),true,"The failed message needs an error beside the retained composer");
@@ -79,7 +79,7 @@ for(const role of ["patient","doctor"]){
     assert.equal(document.activeElement===screen.getByRole("textbox",{name:"Текст сообщения"}),true,"Successful sending should return the cursor to the composer");
     if(role==="patient")assert.equal(screen.getByRole("checkbox",{name:/Мне нужна поддержка по этому сообщению/}).checked,false);
     assert.equal(Boolean(screen.queryByRole("alert")),false);
-    assert.ok(screen.getByText(role==="patient"?"Сохранено":"В очереди симулятора"));
+    assert.ok(screen.getByText(role==="patient"?"Сохранено":"В очереди"));
     assert.equal(Boolean(screen.queryByText("Доставлено в Telegram")),false);
   });
 }

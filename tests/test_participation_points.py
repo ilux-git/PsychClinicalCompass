@@ -22,13 +22,13 @@ async def test_diary_points_are_capped_and_independent_of_sharing_and_feeling(cl
     responses = await asyncio.gather(*[client.post("/diary/entries",headers=headers("patient1"),json=p) for p in payloads])
     assert all(r.status_code == 201 for r in responses)
     points = await balance(client,headers)
-    assert points["balance"] == 3 and sum(r["points"] for r in points["history"]) == 3
+    assert points["balance"] == 10 and sum(r["points"] for r in points["history"]) == 10
     shared = await client.post("/diary/entries", headers=headers("patient3"), json={**common,
         "client_request_id": str(uuid4()), "shared_with_doctor": True, "feeling": "very_good"})
-    assert shared.status_code == 201 and (await balance(client,headers,"patient3"))["balance"] == 3
+    assert shared.status_code == 201 and (await balance(client,headers,"patient3"))["balance"] == 10
     replay = await client.post("/diary/entries", headers=headers("patient1"), json=payloads[0])
     assert replay.status_code == 201 and replay.json()["replayed"]
-    assert (await balance(client,headers))["balance"] == 3
+    assert (await balance(client,headers))["balance"] == 10
     assert (await client.get("/patients/1/diary",headers=headers("doctor"))).json()["entries"] == []
     for role in ("doctor", "admin"):
         assert (await client.get("/participation/points",headers=headers(role))).status_code == 403

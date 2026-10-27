@@ -1,10 +1,11 @@
 """Effort-based awards and explicitly simulated loyalty coupons."""
+from collections import defaultdict
 from datetime import date, datetime, timedelta, timezone
 from typing import Literal
 from uuid import UUID, uuid4
 
 from fastapi import APIRouter, Depends, HTTPException
-from sqlalchemy import CheckConstraint, Date, DateTime, ForeignKey, String, UniqueConstraint, func, select
+from sqlalchemy import CheckConstraint, Date, DateTime, ForeignKey, String, UniqueConstraint, bindparam, func, select
 from sqlalchemy.orm import Mapped, mapped_column
 from pydantic import BaseModel
 
@@ -13,9 +14,10 @@ from app.db.base import Base
 from app.modules.access.models import User, UserRole
 from app.modules.audit.service import record_event
 from app.modules.patients.models import Patient
+from app.core.clinic_time import CLINIC_TIMEZONE,clinic_day,clinic_day_bounds
 
-POLICY_VERSION = "demo-effort-v1"
-CLINICAL_POLICY_VERSION = "demo-clinical-completion-v1"
+POLICY_VERSION = "demo-effort-msk-v3"
+CLINICAL_POLICY_VERSION = "demo-clinical-completion-msk-v2"
 CATALOG_VERSION = "demo-visit-discounts-v1"
 OFFERS = {
     "visit_5": {"title": "Скидка 5% на приём врача", "points": 100, "discount_percent": 5},
@@ -23,8 +25,8 @@ OFFERS = {
 }
 RULES = {
     "survey": {"label": "Опросы", "daily_cap": 30, "description": "Авторские формы: 1 балл за пункт, 2 за текстовый. Клинические: по числу пунктов полного бланка, независимо от ответов и ветки. Всего до 30 в день"},
-    "medication": {"label": "Ведение расписания лекарств", "daily_cap": 2, "description": "2 балла за ведение расписания или явную отметку; один раз в день независимо от числа лекарств и приёмов"},
-    "diary": {"label": "Дневник состояния", "daily_cap": 3, "description": "3 балла за запись, один раз в день; личная и общая запись равноправны"},
+    "medication": {"label": "Отчёты о приёме лекарств", "daily_cap": 10, "description": "10 баллов за отчёт о приёме, максимум 10 в сутки. Ответ о пропуске или неизвестном результате равноправен отметке приёма. Создание и изменение расписания — без баллов"},
+    "diary": {"label": "Дневник состояния", "daily_cap": 10, "description": "10 баллов за запись, максимум 10 в сутки; личная и общая запись равноправны"},
 }
 
 
@@ -86,6 +88,14 @@ class ModeRequest(BaseModel):
     mode: Literal["map", "rhythm", "calm"] | None
 
 
+_OWN_PATIENT = select(Patient).where(Patient.user_id == bindparam("scope_user_id"))
+_OWN_PATIENT_LOCKED = _OWN_PATIENT.with_for_update()
+_AWARD_HISTORY = select(ParticipationAward).where(ParticipationAward.patient_id == bindparam("scope_patient_id")).order_by(ParticipationAward.id.desc())
+_COUPON_HISTORY = select(DemoCoupon).where(DemoCoupon.patient_id == bindparam("scope_patient_id")).order_by(DemoCoupon.id.desc())
+_POINTS_ACCOUNT = select(Patient.id, ParticipationPreference.patient_choice, ParticipationPreference.doctor_recommendation).outerjoin(
+    ParticipationPreference, ParticipationPreference.patient_id == Patient.id).where(Patient.user_id == bindparam("scope_user_id"))
+
+
 def preference_read(row):
     return {"patient_choice": row.patient_choice if row else None,
             "doctor_recommendation": row.doctor_recommendation if row else None,
@@ -93,9 +103,7 @@ def preference_read(row):
 
 
 async def own_patient(session, user, lock=False):
-    query = select(Patient).where(Patient.user_id == user.id)
-    if lock: query = query.with_for_update()
-    patient = await session.scalar(query)
+    patient = await session.scalar(_OWN_PATIENT_LOCKED if lock else _OWN_PATIENT, {"scope_user_id": user.id})
     if patient is None:
         raise HTTPException(403, "Учётная запись не связана с пациентом")
     return patient
@@ -111,7 +119,8 @@ async def earned_and_reserved(session, patient_id):
 def coupon_read(row):
     return {"id": row.id, "code": row.code, "offer_id": row.offer_id, "catalog_version": row.catalog_version,
             "points": row.points, "discount_percent": row.discount_percent, "status": row.status,
-            "created_at": row.created_at, "cancelled_at": row.cancelled_at, "simulated": True}
+            "created_at": row.created_at.isoformat(),
+            "cancelled_at": row.cancelled_at.isoformat() if row.cancelled_at else None, "simulated": True}
 
 
 async def grant_points(session, patient_id, kind, source_key, actor_id, effort_units=1, *, policy_version=POLICY_VERSION):
@@ -121,13 +130,16 @@ async def grant_points(session, patient_id, kind, source_key, actor_id, effort_u
         ParticipationAward.kind == kind, ParticipationAward.source_key == source_key))
     if previous:
         return 0
-    day = datetime.now(timezone.utc).date()
+    now=datetime.now(timezone.utc)
+    day=clinic_day(now)
+    start,end=clinic_day_bounds(day)
     used = await session.scalar(select(func.coalesce(func.sum(ParticipationAward.points), 0)).where(
-        ParticipationAward.patient_id == patient_id, ParticipationAward.kind == kind, ParticipationAward.day == day))
-    wanted = effort_units if kind == "survey" else RULES[kind]["daily_cap"]
+        ParticipationAward.patient_id == patient_id, ParticipationAward.kind == kind,
+        ParticipationAward.created_at>=start,ParticipationAward.created_at<end))
+    wanted = effort_units if kind == "survey" else RULES[kind]["daily_cap"] if effort_units > 0 else 0
     points = max(0, min(wanted, RULES[kind]["daily_cap"] - used))
     row = ParticipationAward(patient_id=patient_id, kind=kind, source_key=source_key,
-        policy_version=policy_version, points=points, day=day)
+        policy_version=policy_version, points=points, day=day,created_at=now)
     session.add(row); await session.flush()
     record_event(session, actor_id, patient_id, "participation.recorded", "participation_award", row.id,
                  {"kind": kind, "points": points, "policy_version": policy_version})
@@ -147,26 +159,35 @@ router = APIRouter(tags=["participation points"])
 
 
 @router.get("/participation/points")
-async def points(session: CompassSession, user: User = Depends(require_role([UserRole.patient]))):
-    patient = await own_patient(session, user)
-    rows = (await session.scalars(select(ParticipationAward).where(ParticipationAward.patient_id == patient.id)
-                                  .order_by(ParticipationAward.id.desc()))).all()
-    today = datetime.now(timezone.utc).date()
-    coupons = (await session.scalars(select(DemoCoupon).where(DemoCoupon.patient_id == patient.id).order_by(DemoCoupon.id.desc()))).all()
-    earned = sum(r.points for r in rows)
+async def points(session: CompassSession, user: User = Depends(require_role([UserRole.patient]))) -> dict:
+    account = (await session.execute(_POINTS_ACCOUNT, {"scope_user_id": user.id})).one_or_none()
+    if account is None:
+        raise HTTPException(403, "Учётная запись не связана с пациентом")
+    params = {"scope_patient_id": account.id}
+    rows = (await session.scalars(_AWARD_HISTORY, params)).all()
+    today = clinic_day(datetime.now(timezone.utc))
+    activity = defaultdict(lambda: [0, 0])
+    earned_today = defaultdict(int)
+    earned = 0
+    for row in rows:
+        recorded_day = clinic_day(row.created_at)
+        activity[recorded_day][0] += 1
+        activity[recorded_day][1] += row.points
+        earned += row.points
+        if recorded_day == today:
+            earned_today[row.kind] += row.points
+    coupons = (await session.scalars(_COUPON_HISTORY, params)).all()
     reserved = sum(c.points for c in coupons if c.status == "issued")
-    pref = await session.get(ParticipationPreference, patient.id)
     return {"balance": earned-reserved, "earned_total": earned, "reserved_points": reserved, "policy_version": POLICY_VERSION,
-        "policy_status": "demo_proposal", "exchange_enabled": False, "day_timezone": "UTC",
+        "policy_status": "demo_proposal", "exchange_enabled": False, "day_timezone": CLINIC_TIMEZONE,
         "demo_exchange_enabled": True, "catalog_version": CATALOG_VERSION,
         "offers": [{"id": key, **offer} for key, offer in OFFERS.items()],
-        "coupons": [coupon_read(c) for c in coupons[:100]], "preference": preference_read(pref),
-        "activity": [{"day": (today-timedelta(days=i)).isoformat(),
-                      "actions": sum(r.day == today-timedelta(days=i) for r in rows),
-                      "points": sum(r.points for r in rows if r.day == today-timedelta(days=i))} for i in range(6,-1,-1)],
-        "next_reset_at": datetime.combine(today + timedelta(days=1), datetime.min.time(), tzinfo=timezone.utc),
-        "rules": [{"kind": k, **v, "earned_today": sum(r.points for r in rows if r.kind == k and r.day == today)} for k,v in RULES.items()],
-        "history": [{"id": r.id, "kind": r.kind, "points": r.points, "created_at": r.created_at,
+        "coupons": [coupon_read(c) for c in coupons[:100]], "preference": preference_read(account),
+        "activity": [{"day": day.isoformat(), "actions": activity[day][0], "points": activity[day][1]}
+                     for day in (today-timedelta(days=i) for i in range(6,-1,-1))],
+        "next_reset_at": clinic_day_bounds(today)[1].isoformat(),
+        "rules": [{"kind": k, **v, "earned_today": earned_today[k]} for k,v in RULES.items()],
+        "history": [{"id": r.id, "kind": r.kind, "points": r.points, "created_at": r.created_at.isoformat(),
                      "policy_version": r.policy_version} for r in rows[:100]],
         "principles": ["Баллы за участие, а не за хорошее самочувствие или нужный ответ.",
             "Количество лекарств, пропущенные дни и доступ врача к дневнику не увеличивают и не уменьшают награду.",

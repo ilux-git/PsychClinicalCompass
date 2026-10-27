@@ -1,0 +1,80 @@
+{
+  "verified_at": "2026-10-27T13:50:19.675421+00:00",
+  "release": "20261027t134439z-c34dd0dec4",
+  "schema_revision": "v41_clinical_scenarios",
+  "backend": {
+    "passed": 356,
+    "log": "outputs/final-alerts-rewards-backend.log"
+  },
+  "frontend": {
+    "full_passed": 155,
+    "final_copy_targeted_passed": 18,
+    "full_log": "outputs/final-alerts-rewards-frontend.log",
+    "final_copy_log": "outputs/final-reward-copy-ui.log",
+    "build_exit": 0
+  },
+  "reward_policy": "demo-effort-msk-v3",
+  "daily_caps": {
+    "medication": 10,
+    "diary": 10,
+    "survey": 30
+  },
+  "schedule_edits_award_points": false,
+  "historical_awards_rewritten": false,
+  "migration_required": false,
+  "deployment": {
+    "existing_compass_rows_preserved": true,
+    "mis_exact_match": true,
+    "row_deltas": {},
+    "sequence_checks": 32,
+    "backup": "/opt/limbus/shared/backups/before-20261027t134439z-c34dd0dec4-r2"
+  },
+  "public_verification": "public-verification.json",
+  "browser_verification": "patient-dark-mobile.json",
+  "real_telegram_delivery_enabled": false,
+  "telephone_calls_performed": false,
+  "load_1000_max_500_ms_passed": false,
+  "superseded_runs": [
+    "outputs/alert-protocol-backend-full.log",
+    "outputs/alert-protocol-backend-full-r2.log",
+    "outputs/alert-protocol-frontend-full-r2.log",
+    "outputs/alert-protocol-atlas-r4.log"
+  ],
+  "notes": [
+    "Interrupted local runs and erroneous collapsed-details assertion were corrected; their outputs are retained.",
+    "No new commit or push in this task.",
+    "The new 2-second load profile has not yet been executed."
+  ],
+  "artifacts": [
+    {
+      "path": "medication-report-ten-points.png",
+      "sha256": "07086a5fdef9b6788f8ae583b43be3c7a80a068acd4a1757bea2cdef99e389e2"
+    },
+    {
+      "path": "patient-critical-dark-mobile.png",
+      "sha256": "441ea7a08935c088ff4c79041f3df2e9d0083f53449fb03942374a77e1b7b9fa"
+    },
+    {
+      "path": "patient-dark-mobile.json",
+      "sha256": "697c9054802f0a5864a53682dc5fc2cc9fb19c5dce9e4f1371ff90d804316c3c"
+    },
+    {
+      "path": "public-emergency-mobile.png",
+      "sha256": "46601f6fded52e85086c465c599a60e04982b450acbc83ad53fc214a8198a629"
+    },
+    {
+      "path": "public-points-rules-mobile.png",
+      "sha256": "993cfec275186c4f4e4aa3964ef902f32f2a9fb68c4dc436a3764db9fd8daca1"
+    },
+    {
+      "path": "public-verification.json",
+      "sha256": "673c74a681dab925b77322dbe9d639093999cbbe536e33212179d1338ad7e197"
+    }
+  ],
+  "local_preview": {
+    "url": "http://127.0.0.1:8780/",
+    "health_status": 200,
+    "bundle_matches_public_release": true,
+    "temporary_qa_servers_stopped": true
+  }
+}

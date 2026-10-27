@@ -1,3 +1,4 @@
+import {surveyDescription,surveyTitle} from "./presentation";
 import { createRequestId } from "./requestId";
 import { useEffect, useId, useRef, useState } from "react";
 import {
@@ -32,7 +33,7 @@ import {
 import { SurveyFields } from "./SurveyFields";
 import { InstrumentSource } from "./ClinicalHistory";
 import { barrierLabels, dimensionLabels, type Dimension, type BarrierCategory } from "./collection";
-import { experienceTemplate, supportTemplate } from "./supportTemplate";
+import { experienceTemplate, postpartumSupportTemplate, supportTemplate } from "./supportTemplate";
 import { Disclosure } from "./Interaction";
 import { useNavigationGuard, useUnsavedForm, type LeavePrompt } from "./NavigationGuard";
 
@@ -266,7 +267,9 @@ export function SurveyBuilder({
         <Button variant="secondary" disabled={busy} onClick={() => guard.run(()=>selectDraft(supportTemplate()))}>Открыть анкету сопровождения</Button>
         <h3 className="template-next-title">Опыт использования приложения</h3><p>Понятность и польза приложения, предложения пациента. Эти ответы отделены от доверия к лечению и не дают медицинского балла.</p>
         <Button variant="secondary" disabled={busy} onClick={() => guard.run(()=>selectDraft(experienceTemplate()))}>Открыть опрос об удобстве</Button>
-        <p className="field-hint">Оба шаблона можно изменить. Сохранение, публикация и назначение выполняются отдельно; автоматической рассылки нет. Это авторские вопросы, а не диагностические шкалы.</p>
+        <h3 className="template-next-title">Поддержка после родов</h3><p>Отдых, повседневная нагрузка и помощь близких. Самостоятельный авторский опрос для беседы, без диагностической суммы; с результатами EPDS не объединяется.</p>
+        <Button variant="secondary" disabled={busy} onClick={()=>guard.run(()=>selectDraft(postpartumSupportTemplate()))}>Открыть опрос о поддержке после родов</Button>
+        <p className="field-hint">Шаблоны можно изменить. Сохранение, публикация и назначение выполняются отдельно; автоматической рассылки нет. Это авторские вопросы, а не диагностические шкалы.</p>
       </Disclosure></div>
       <ErrorBox
         message={library.error || patients.error}
@@ -277,7 +280,7 @@ export function SurveyBuilder({
       />
       <div className="builder-layout">
         <label className="field mobile-survey-select">Выберите опрос<select value={draft?.id??""} onChange={event=>{const survey=library.data?.find(value=>value.id===Number(event.target.value));if(survey)guard.run(()=>selectDraft(survey));}}>
-          <option value="" disabled>Новый черновик</option>{library.data?.map(survey=><option key={survey.id} value={survey.id}>{survey.title} · v{survey.version}{survey.published_at?"":" · черновик"}</option>)}
+          <option value="" disabled>Новый черновик</option>{library.data?.map(survey=><option key={survey.id} value={survey.id}>{surveyTitle(survey.title)} · v{survey.version}{survey.published_at?"":" · черновик"}</option>)}
         </select></label>
         <aside className="survey-library">
           <div className="section-heading">
@@ -303,7 +306,7 @@ export function SurveyBuilder({
                 <Badge tone={s.published_at ? "good" : "muted"}>
                   {s.published_at ? "Опубликован" : "Черновик"}
                 </Badge>
-                <strong>{s.title}</strong>
+                <strong>{surveyTitle(s.title)}</strong>
                 <span>
                   {s.questions.length} вопр. · версия {s.version}
                 </span>
@@ -343,10 +346,10 @@ export function SurveyBuilder({
                     <LockKeyhole size={16} /> {draft.clinical_instrument?"Клинический бланк зафиксирован. Для повторного измерения назначьте его ещё раз.":"Вопросы зафиксированы. Для изменений создайте новую версию."}
                   </div>
                 )}
-                {locked&&!preview?<div className="published-survey-summary"><h2>{draft.title}</h2><p>{draft.description}</p><div className="button-row"><Badge tone="good">Опубликован · v{draft.version}</Badge><span>{draft.questions.length} вопр.</span><span>{purposeNames[draft.purpose]??"Авторский опрос"}</span>{!draft.clinical_instrument&&<Button variant="ghost" disabled={busy} onClick={()=>guard.run(()=>void copy())}><Copy size={16}/>Новая версия</Button>}</div>{draft.clinical_instrument&&<InstrumentSource definition={draft.clinical_instrument}/>}</div>:preview ? (
+                {locked&&!preview?<div className="published-survey-summary"><h2>{surveyTitle(draft.title)}</h2><p>{surveyDescription(draft.description)}</p><div className="button-row"><Badge tone="good">Опубликован · v{draft.version}</Badge><span>{draft.questions.length} вопр.</span><span>{purposeNames[draft.purpose]??"Авторский опрос"}</span>{!draft.clinical_instrument&&<Button variant="ghost" disabled={busy} onClick={()=>guard.run(()=>void copy())}><Copy size={16}/>Новая версия</Button>}</div>{draft.clinical_instrument&&<InstrumentSource definition={draft.clinical_instrument}/>}</div>:preview ? (
                   <>
-                    <h2 className="preview-title">{draft.title || "Название опроса"}</h2>
-                    <p className="muted">{draft.description}</p>
+                    <h2 className="preview-title">{surveyTitle(draft.title) || "Название опроса"}</h2>
+                    <p className="muted">{surveyDescription(draft.description)}</p>
                     <SurveyFields
                       questions={draft.questions}
                       answers={previewAnswers}

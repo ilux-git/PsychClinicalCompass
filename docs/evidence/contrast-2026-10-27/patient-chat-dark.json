@@ -1,0 +1,375 @@
+{
+  "checked_at": "2026-10-27T06:24:27.027Z",
+  "theme": "dark",
+  "route": "/?section=chat",
+  "viewport": {
+    "width": 1440,
+    "height": 900
+  },
+  "axe_version": "4.14.0",
+  "violations": [
+    {
+      "id": "color-contrast",
+      "impact": "serious",
+      "tags": [
+        "cat.color",
+        "wcag2aa",
+        "wcag143",
+        "TTv5",
+        "TT13.c",
+        "EN-301-549",
+        "EN-9.1.4.3",
+        "ACT",
+        "RGAAv4",
+        "RGAA-3.2.1"
+      ],
+      "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+      "help": "Elements must meet minimum color contrast ratio thresholds",
+      "helpUrl": "https://dequeuniversity.com/rules/axe/4.14/color-contrast?application=axeAPI",
+      "nodes": [
+        {
+          "any": [
+            {
+              "id": "color-contrast",
+              "data": {
+                "fgColor": "#c3ccc7",
+                "bgColor": "#f4f7f9",
+                "contrastRatio": 1.52,
+                "fontSize": "9.0pt (12px)",
+                "fontWeight": "normal",
+                "messageKey": null,
+                "expectedContrastRatio": "4.5:1"
+              },
+              "relatedNodes": [
+                {
+                  "html": "<article class=\"message \"><div class=\"message-meta\"><strong>Врач</strong><time datetime=\"2026-10-18T17:38:16.356049Z\">19 окт., 00:38</time></div><p>Здравствуйте! Поделитесь, что сейчас мешает соблюдать согласованный план.</p><div class=\"message-delivery\">Сохранено</div></article>",
+                  "target": [
+                    "article:nth-child(1)"
+                  ]
+                }
+              ],
+              "impact": "serious",
+              "message": "Element has insufficient color contrast of 1.52 (foreground color: #c3ccc7, background color: #f4f7f9, font size: 9.0pt (12px), font weight: normal). Expected contrast ratio of 4.5:1"
+            }
+          ],
+          "all": [],
+          "none": [],
+          "impact": "serious",
+          "html": "<strong>Врач</strong>",
+          "target": [
+            "article:nth-child(1) > .message-meta > strong"
+          ],
+          "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 1.52 (foreground color: #c3ccc7, background color: #f4f7f9, font size: 9.0pt (12px), font weight: normal). Expected contrast ratio of 4.5:1"
+        },
+        {
+          "any": [
+            {
+              "id": "color-contrast",
+              "data": {
+                "fgColor": "#c3ccc7",
+                "bgColor": "#f4f7f9",
+                "contrastRatio": 1.52,
+                "fontSize": "9.0pt (12px)",
+                "fontWeight": "normal",
+                "messageKey": null,
+                "expectedContrastRatio": "4.5:1"
+              },
+              "relatedNodes": [
+                {
+                  "html": "<article class=\"message \"><div class=\"message-meta\"><strong>Врач</strong><time datetime=\"2026-10-18T17:38:16.356049Z\">19 окт., 00:38</time></div><p>Здравствуйте! Поделитесь, что сейчас мешает соблюдать согласованный план.</p><div class=\"message-delivery\">Сохранено</div></article>",
+                  "target": [
+                    "article:nth-child(1)"
+                  ]
+                }
+              ],
+              "impact": "serious",
+              "message": "Element has insufficient color contrast of 1.52 (foreground color: #c3ccc7, background color: #f4f7f9, font size: 9.0pt (12px), font weight: normal). Expected contrast ratio of 4.5:1"
+            }
+          ],
+          "all": [],
+          "none": [],
+          "impact": "serious",
+          "html": "<time datetime=\"2026-10-18T17:38:16.356049Z\">19 окт., 00:38</time>",
+          "target": [
+            "time[datetime=\"2026-10-18T17:38:16.356049Z\"]"
+          ],
+          "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 1.52 (foreground color: #c3ccc7, background color: #f4f7f9, font size: 9.0pt (12px), font weight: normal). Expected contrast ratio of 4.5:1"
+        },
+        {
+          "any": [
+            {
+              "id": "color-contrast",
+              "data": {
+                "fgColor": "#f2f1ed",
+                "bgColor": "#f4f7f9",
+                "contrastRatio": 1.05,
+                "fontSize": "10.5pt (14px)",
+                "fontWeight": "normal",
+                "messageKey": null,
+                "expectedContrastRatio": "4.5:1"
+              },
+              "relatedNodes": [
+                {
+                  "html": "<article class=\"message \"><div class=\"message-meta\"><strong>Врач</strong><time datetime=\"2026-10-18T17:38:16.356049Z\">19 окт., 00:38</time></div><p>Здравствуйте! Поделитесь, что сейчас мешает соблюдать согласованный план.</p><div class=\"message-delivery\">Сохранено</div></article>",
+                  "target": [
+                    "article:nth-child(1)"
+                  ]
+                }
+              ],
+              "impact": "serious",
+              "message": "Element has insufficient color contrast of 1.05 (foreground color: #f2f1ed, background color: #f4f7f9, font size: 10.5pt (14px), font weight: normal). Expected contrast ratio of 4.5:1"
+            }
+          ],
+          "all": [],
+          "none": [],
+          "impact": "serious",
+          "html": "<p>Здравствуйте! Поделитесь, что сейчас мешает соблюдать согласованный план.</p>",
+          "target": [
+            "article:nth-child(1) > p"
+          ],
+          "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 1.05 (foreground color: #f2f1ed, background color: #f4f7f9, font size: 10.5pt (14px), font weight: normal). Expected contrast ratio of 4.5:1"
+        },
+        {
+          "any": [
+            {
+              "id": "color-contrast",
+              "data": {
+                "fgColor": "#c3ccc7",
+                "bgColor": "#f4f7f9",
+                "contrastRatio": 1.52,
+                "fontSize": "9.0pt (12px)",
+                "fontWeight": "normal",
+                "messageKey": null,
+                "expectedContrastRatio": "4.5:1"
+              },
+              "relatedNodes": [
+                {
+                  "html": "<article class=\"message \"><div class=\"message-meta\"><strong>Врач</strong><time datetime=\"2026-10-18T17:38:16.356049Z\">19 окт., 00:38</time></div><p>Здравствуйте! Поделитесь, что сейчас мешает соблюдать согласованный план.</p><div class=\"message-delivery\">Сохранено</div></article>",
+                  "target": [
+                    "article:nth-child(1)"
+                  ]
+                }
+              ],
+              "impact": "serious",
+              "message": "Element has insufficient color contrast of 1.52 (foreground color: #c3ccc7, background color: #f4f7f9, font size: 9.0pt (12px), font weight: normal). Expected contrast ratio of 4.5:1"
+            }
+          ],
+          "all": [],
+          "none": [],
+          "impact": "serious",
+          "html": "<div class=\"message-delivery\">Сохранено</div>",
+          "target": [
+            "article:nth-child(1) > .message-delivery"
+          ],
+          "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 1.52 (foreground color: #c3ccc7, background color: #f4f7f9, font size: 9.0pt (12px), font weight: normal). Expected contrast ratio of 4.5:1"
+        },
+        {
+          "any": [
+            {
+              "id": "color-contrast",
+              "data": {
+                "fgColor": "#c3ccc7",
+                "bgColor": "#edf6f2",
+                "contrastRatio": 1.49,
+                "fontSize": "9.0pt (12px)",
+                "fontWeight": "normal",
+                "messageKey": null,
+                "expectedContrastRatio": "4.5:1"
+              },
+              "relatedNodes": [
+                {
+                  "html": "<article class=\"message own\"><div class=\"message-meta\"><strong>Пациент</strong><time datetime=\"2026-10-18T17:39:16.356049Z\">19 окт., 00:39</time></div><p>Пока всё получается, спасибо за обратную связь.</p><div class=\"message-delivery\">Сохранено</div></article>",
+                  "target": [
+                    ".own"
+                  ]
+                }
+              ],
+              "impact": "serious",
+              "message": "Element has insufficient color contrast of 1.49 (foreground color: #c3ccc7, background color: #edf6f2, font size: 9.0pt (12px), font weight: normal). Expected contrast ratio of 4.5:1"
+            }
+          ],
+          "all": [],
+          "none": [],
+          "impact": "serious",
+          "html": "<strong>Пациент</strong>",
+          "target": [
+            ".own > .message-meta > strong"
+          ],
+          "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 1.49 (foreground color: #c3ccc7, background color: #edf6f2, font size: 9.0pt (12px), font weight: normal). Expected contrast ratio of 4.5:1"
+        },
+        {
+          "any": [
+            {
+              "id": "color-contrast",
+              "data": {
+                "fgColor": "#c3ccc7",
+                "bgColor": "#edf6f2",
+                "contrastRatio": 1.49,
+                "fontSize": "9.0pt (12px)",
+                "fontWeight": "normal",
+                "messageKey": null,
+                "expectedContrastRatio": "4.5:1"
+              },
+              "relatedNodes": [
+                {
+                  "html": "<article class=\"message own\"><div class=\"message-meta\"><strong>Пациент</strong><time datetime=\"2026-10-18T17:39:16.356049Z\">19 окт., 00:39</time></div><p>Пока всё получается, спасибо за обратную связь.</p><div class=\"message-delivery\">Сохранено</div></article>",
+                  "target": [
+                    ".own"
+                  ]
+                }
+              ],
+              "impact": "serious",
+              "message": "Element has insufficient color contrast of 1.49 (foreground color: #c3ccc7, background color: #edf6f2, font size: 9.0pt (12px), font weight: normal). Expected contrast ratio of 4.5:1"
+            }
+          ],
+          "all": [],
+          "none": [],
+          "impact": "serious",
+          "html": "<time datetime=\"2026-10-18T17:39:16.356049Z\">19 окт., 00:39</time>",
+          "target": [
+            "time[datetime=\"2026-10-18T17:39:16.356049Z\"]"
+          ],
+          "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 1.49 (foreground color: #c3ccc7, background color: #edf6f2, font size: 9.0pt (12px), font weight: normal). Expected contrast ratio of 4.5:1"
+        },
+        {
+          "any": [
+            {
+              "id": "color-contrast",
+              "data": {
+                "fgColor": "#f2f1ed",
+                "bgColor": "#edf6f2",
+                "contrastRatio": 1.02,
+                "fontSize": "10.5pt (14px)",
+                "fontWeight": "normal",
+                "messageKey": null,
+                "expectedContrastRatio": "4.5:1"
+              },
+              "relatedNodes": [
+                {
+                  "html": "<article class=\"message own\"><div class=\"message-meta\"><strong>Пациент</strong><time datetime=\"2026-10-18T17:39:16.356049Z\">19 окт., 00:39</time></div><p>Пока всё получается, спасибо за обратную связь.</p><div class=\"message-delivery\">Сохранено</div></article>",
+                  "target": [
+                    ".own"
+                  ]
+                }
+              ],
+              "impact": "serious",
+              "message": "Element has insufficient color contrast of 1.02 (foreground color: #f2f1ed, background color: #edf6f2, font size: 10.5pt (14px), font weight: normal). Expected contrast ratio of 4.5:1"
+            }
+          ],
+          "all": [],
+          "none": [],
+          "impact": "serious",
+          "html": "<p>Пока всё получается, спасибо за обратную связь.</p>",
+          "target": [
+            ".own > p"
+          ],
+          "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 1.02 (foreground color: #f2f1ed, background color: #edf6f2, font size: 10.5pt (14px), font weight: normal). Expected contrast ratio of 4.5:1"
+        },
+        {
+          "any": [
+            {
+              "id": "color-contrast",
+              "data": {
+                "fgColor": "#c3ccc7",
+                "bgColor": "#edf6f2",
+                "contrastRatio": 1.49,
+                "fontSize": "9.0pt (12px)",
+                "fontWeight": "normal",
+                "messageKey": null,
+                "expectedContrastRatio": "4.5:1"
+              },
+              "relatedNodes": [
+                {
+                  "html": "<article class=\"message own\"><div class=\"message-meta\"><strong>Пациент</strong><time datetime=\"2026-10-18T17:39:16.356049Z\">19 окт., 00:39</time></div><p>Пока всё получается, спасибо за обратную связь.</p><div class=\"message-delivery\">Сохранено</div></article>",
+                  "target": [
+                    ".own"
+                  ]
+                }
+              ],
+              "impact": "serious",
+              "message": "Element has insufficient color contrast of 1.49 (foreground color: #c3ccc7, background color: #edf6f2, font size: 9.0pt (12px), font weight: normal). Expected contrast ratio of 4.5:1"
+            }
+          ],
+          "all": [],
+          "none": [],
+          "impact": "serious",
+          "html": "<div class=\"message-delivery\">Сохранено</div>",
+          "target": [
+            ".own > .message-delivery"
+          ],
+          "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 1.49 (foreground color: #c3ccc7, background color: #edf6f2, font size: 9.0pt (12px), font weight: normal). Expected contrast ratio of 4.5:1"
+        },
+        {
+          "any": [
+            {
+              "id": "color-contrast",
+              "data": {
+                "fgColor": "#f2f1ed",
+                "bgColor": "#f8fafb",
+                "contrastRatio": 1.07,
+                "fontSize": "9.8pt (13px)",
+                "fontWeight": "normal",
+                "messageKey": null,
+                "expectedContrastRatio": "4.5:1"
+              },
+              "relatedNodes": [
+                {
+                  "html": "<label class=\"support-request-choice\"><input type=\"checkbox\"><span>Мне нужна поддержка по этому сообщению<small>Создаст отдельное событие лечащему врачу. Здесь нет экстренной или круглосуточной службы.</small></span></label>",
+                  "target": [
+                    ".support-request-choice"
+                  ]
+                }
+              ],
+              "impact": "serious",
+              "message": "Element has insufficient color contrast of 1.07 (foreground color: #f2f1ed, background color: #f8fafb, font size: 9.8pt (13px), font weight: normal). Expected contrast ratio of 4.5:1"
+            }
+          ],
+          "all": [],
+          "none": [],
+          "impact": "serious",
+          "html": "<span>Мне нужна поддержка по этому сообщению<small>Создаст отдельное событие лечащему врачу. Здесь нет экстренной или круглосуточной службы.</small></span>",
+          "target": [
+            ".support-request-choice > span"
+          ],
+          "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 1.07 (foreground color: #f2f1ed, background color: #f8fafb, font size: 9.8pt (13px), font weight: normal). Expected contrast ratio of 4.5:1"
+        },
+        {
+          "any": [
+            {
+              "id": "color-contrast",
+              "data": {
+                "fgColor": "#c3ccc7",
+                "bgColor": "#f8fafb",
+                "contrastRatio": 1.56,
+                "fontSize": "9.0pt (12px)",
+                "fontWeight": "normal",
+                "messageKey": null,
+                "expectedContrastRatio": "4.5:1"
+              },
+              "relatedNodes": [
+                {
+                  "html": "<label class=\"support-request-choice\"><input type=\"checkbox\"><span>Мне нужна поддержка по этому сообщению<small>Создаст отдельное событие лечащему врачу. Здесь нет экстренной или круглосуточной службы.</small></span></label>",
+                  "target": [
+                    ".support-request-choice"
+                  ]
+                }
+              ],
+              "impact": "serious",
+              "message": "Element has insufficient color contrast of 1.56 (foreground color: #c3ccc7, background color: #f8fafb, font size: 9.0pt (12px), font weight: normal). Expected contrast ratio of 4.5:1"
+            }
+          ],
+          "all": [],
+          "none": [],
+          "impact": "serious",
+          "html": "<small>Создаст отдельное событие лечащему врачу. Здесь нет экстренной или круглосуточной службы.</small>",
+          "target": [
+            ".support-request-choice > span > small"
+          ],
+          "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 1.56 (foreground color: #c3ccc7, background color: #f8fafb, font size: 9.0pt (12px), font weight: normal). Expected contrast ratio of 4.5:1"
+        }
+      ]
+    }
+  ],
+  "incomplete": [],
+  "passed_nodes": 41
+}

@@ -1,3 +1,5 @@
+import {surveyDescription,surveyTitle} from "./presentation";
+import {ScenarioMeasurements} from "./ClinicalScenarios";
 import { createRequestId } from "./requestId";
 import { useEffect, useId, useRef, useState, type FormEvent } from "react";
 import {
@@ -217,6 +219,7 @@ export function PatientHome({
       <>
         <Heading eyebrow="Сохранённые ответы" title="История состояния"/>
         <Section title="Мои измерения">
+          {user.scenario_label&&<ScenarioMeasurements patientId={user.patient_id}/>}
           <ErrorBox message={assessmentHistory.error} retry={assessmentHistory.reload} />
           {user.patient_id&&<ClinicalHistory patientId={user.patient_id}/>}
           {assessmentHistory.loading ? <Loading /> : assessmentHistory.data ? (
@@ -230,7 +233,7 @@ export function PatientHome({
       <>
         <Heading
           eyebrow="В контакте с врачом"
-          title={view === "telegram" ? "Симулятор Telegram" : "Написать врачу"}
+          title="Чат"
         >
           Можно рассказать, как Вы себя чувствуете, или задать вопрос.
         </Heading>
@@ -345,8 +348,8 @@ export function PatientHome({
                   {assignment.survey.questions.length} вопр.
                 </Badge>
                 {assignment.draft_updated_at && <Badge tone="good">Черновик · продолжить</Badge>}
-                <h3>{assignment.survey.title}</h3>
-                <p>{assignment.survey.description}</p>
+                <h3>{surveyTitle(assignment.survey.title)}</h3>
+                <p>{surveyDescription(assignment.survey.description)}</p>
                 <small>
                   {assignment.due_at
                     ? `Ответить до ${date(assignment.due_at)}`
@@ -394,7 +397,7 @@ export function PatientHome({
                 <Check size={17} />
               </span>
               <div>
-                <strong>{assignment.survey.title}</strong>
+                <strong>{surveyTitle(assignment.survey.title)}</strong>
                 <small>{date(assignment.submission?.created_at)}</small>
               </div>
               <ChevronRight size={18} />

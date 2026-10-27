@@ -9,6 +9,7 @@ from app.modules.assessments.catalog import GAD7_KEY, PANIC_KEY, PHQ9_KEY
 from app.modules.assessments.clinical_models import ClinicalResult
 from app.modules.assessments.models import OutboxEvent
 from app.modules.assessments.triage import RULE_VERSION
+from app.modules.assessments.alert_protocol import RULE_VERSION as PROTOCOL_VERSION
 from app.modules.audit.service import record_event
 from app.modules.notes.models import DoctorTask
 
@@ -22,21 +23,22 @@ async def create_clinical_alert(session: AsyncSession, event: OutboxEvent) -> No
         raise ValueError("InvalidClinicalResultReference")
     triage = row.result.get("triage", {})
     if (row.instrument_key not in {PHQ9_KEY, GAD7_KEY, PANIC_KEY} or
-            triage.get("rule_version") != RULE_VERSION or
+            triage.get("rule_version") not in {RULE_VERSION, PROTOCOL_VERSION} or
             triage.get("severity") not in {"urgent_review", "review_required", "needs_clarification"} or
             not triage.get("grounds")):
         raise ValueError("InvalidClinicalReviewSnapshot")
     now = datetime.now(timezone.utc)
     due_hours = triage["action_due_hours"]
-    if due_hours not in {None, 16, 48}:
+    is_protocol = triage["rule_version"] == PROTOCOL_VERSION
+    if due_hours not in ({None} if is_protocol else {None, 16, 48}):
         raise ValueError("UnapprovedClinicalActionDeadline")
     # Acceptance starts with a durable in-app event. The medical action clock
     # starts with the source result, so outbox delays cannot extend its deadline.
     alert = (await session.execute(insert(Alert).values(
         patient_id=row.patient_id, source_event_id=event.id, clinical_result_id=row.id,
-        source_kind="clinical_assessment", rule_id="clinical_review", rule_version=RULE_VERSION,
+        source_kind="clinical_assessment", rule_id="clinical_review", rule_version=triage["rule_version"],
         severity=triage["severity"], status="created", created_at=now,
-        acknowledgement_due_at=now + timedelta(hours=2) if triage["severity"] == "urgent_review" else None,
+        acknowledgement_due_at=now + timedelta(hours=2) if not is_protocol and triage["severity"] == "urgent_review" else None,
         action_due_at=row.created_at + timedelta(hours=due_hours) if due_hours is not None else None,
         reason=row.definition["name"] + ": " + "; ".join(item["label"] for item in triage["grounds"]),
     ).on_conflict_do_nothing(index_elements=[Alert.source_event_id]).returning(Alert))).scalar_one_or_none()
@@ -72,6 +74,7 @@ def review_timing(alert: Alert, action_completed_at: datetime | None, now: datet
         acknowledgement = ("late" if alert.acknowledged_at > alert.acknowledgement_due_at else "accepted") if alert.acknowledged_at else (
             "overdue" if now > alert.acknowledgement_due_at and alert.status != "closed" else "pending")
     return {"acknowledgement_due_at": alert.acknowledgement_due_at,
+            "immediate_action_required": alert.severity == "critical_review",
             "acknowledgement_state": acknowledgement, "action_due_at": alert.action_due_at,
             "action_completed_at": action_completed_at,
             "action_overdue": bool(alert.action_due_at and action_completed_at is None and

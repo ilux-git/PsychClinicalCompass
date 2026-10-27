@@ -8,6 +8,9 @@ CONTENT_SECURITY_POLICY = "; ".join([
     "img-src 'self' data:", "font-src 'self' data:", "connect-src 'self'",
     "object-src 'none'", "base-uri 'self'", "form-action 'self'", "frame-ancestors 'none'",
 ])
+TELEGRAM_CONTENT_SECURITY_POLICY = CONTENT_SECURITY_POLICY.replace(
+    "script-src 'self'", "script-src 'self' https://telegram.org").replace(
+    "frame-ancestors 'none'", "frame-ancestors https://web.telegram.org https://*.web.telegram.org")
 
 
 class BrowserSecurityMiddleware:
@@ -22,9 +25,11 @@ class BrowserSecurityMiddleware:
         async def secured_send(message: Message) -> None:
             if message['type'] == 'http.response.start':
                 headers = MutableHeaders(scope=message)
-                headers['Content-Security-Policy'] = CONTENT_SECURITY_POLICY
+                mini_app = scope.get('path', '') in {'/tg', '/tg/'}
+                headers['Content-Security-Policy'] = TELEGRAM_CONTENT_SECURITY_POLICY if mini_app else CONTENT_SECURITY_POLICY
                 headers['X-Content-Type-Options'] = 'nosniff'
-                headers['X-Frame-Options'] = 'DENY'
+                if not mini_app:
+                    headers['X-Frame-Options'] = 'DENY'
                 headers['Referrer-Policy'] = 'no-referrer'
                 headers['Permissions-Policy'] = 'camera=(), microphone=(), geolocation=()'
                 # Clinical HTML/API responses must not be retained by shared or browser caches.

@@ -1,0 +1,13 @@
+.participation-rule-list { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:12px; list-style:none; padding:0; margin:0; }
+.participation-rule-card { min-width:0; display:grid; gap:12px; align-content:start; padding:16px; border:1px solid var(--line); border-radius:12px; background:var(--paper); }
+.participation-rule-heading { display:flex; align-items:center; justify-content:center; gap:10px; min-height:32px; }
+.participation-rule-heading > span { display:grid; place-items:center; flex:0 0 30px; width:30px; height:30px; color:var(--ink); }
+.participation-rule-heading > h3 { margin:0; font-size:14px; line-height:1.5; font-weight:600; text-wrap:balance; }
+.participation-rule-meta { display:flex; flex-wrap:wrap; justify-content:center; align-items:center; gap:4px 12px; color:var(--muted); font-size:12px; line-height:1.5; text-align:center; font-variant-numeric:tabular-nums; }
+.participation-rule-meta > span { white-space:nowrap; }
+.participation-rule-meta strong { color:var(--ink); font-weight:600; }
+.participation-rule-meta .button { min-height:36px; padding:6px 0; font-size:12px; }
+@media(max-width:760px) {
+  .participation-rule-list { grid-template-columns:1fr; }
+  .participation-rule-card { gap:8px; padding:14px 16px; }
+}

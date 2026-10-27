@@ -1,0 +1,422 @@
+{
+  "verified_at": "2026-10-27T14:53:06.791646+00:00",
+  "verdict": "FAIL",
+  "host": {
+    "vcpus": 2,
+    "memory_mib": 3910,
+    "shared_hardware_with_main": true
+  },
+  "target": "Isolated Docker API, worker and gateway; separate synthetic Compass/MIS databases",
+  "pacing": {
+    "mode": "target-action-interval",
+    "seconds": 2,
+    "closed_loop": true,
+    "overloaded_requests_reduce_achieved_rate": true
+  },
+  "schedule": {
+    "ramp_seconds": 10,
+    "steady_seconds": 60,
+    "smoke_steady_seconds": 15
+  },
+  "latency": {
+    "method": "blocked + duration (includes connection/TLS)",
+    "max_limit_ms": 500
+  },
+  "scope": "Authenticated mixed read/write API workflows; excludes login burst, rendered browsers and provider delivery",
+  "fixture": {
+    "patients": 1000,
+    "canonical_results": 3000,
+    "reused_between_trials": true,
+    "writes_accumulated": true,
+    "no_reset": true
+  },
+  "trials": [
+    {
+      "phase": "smoke",
+      "patient_sessions": 100,
+      "staff_sessions": 21,
+      "configuration": {
+        "workers": 2,
+        "compass_pool_size": 6,
+        "compass_max_overflow": 0,
+        "read_audit_pool_size": 2,
+        "mis_pool_size": 2,
+        "mis_max_overflow": 0
+      },
+      "source_fingerprint": "c34dd0dec45a4d7ab4d39db42ac41e84ff6150e15def3aa057c00ca44d5d4d32",
+      "requests": {
+        "count": 1269,
+        "rate": 46.38305164316383
+      },
+      "failures": 0,
+      "failure_rate": 0,
+      "latency_ms": {
+        "p(99)": 506.3962999999999,
+        "max": 1309.2776,
+        "min": 115.9258,
+        "med": 127.1857,
+        "avg": 193.39839440063062,
+        "p(95)": 414.9191149999996
+      },
+      "error_outcomes": [],
+      "acceptance_passed": false,
+      "raw_report": "smoke.json",
+      "raw_report_sha256": "a4648657ae2b8a10c0dd9c2f68f38b05017adde40d1d1e90954f1571c51e792b"
+    },
+    {
+      "phase": "baseline",
+      "patient_sessions": 1000,
+      "staff_sessions": 21,
+      "configuration": {
+        "workers": 2,
+        "compass_pool_size": 6,
+        "compass_max_overflow": 0,
+        "read_audit_pool_size": 2,
+        "mis_pool_size": 2,
+        "mis_max_overflow": 0
+      },
+      "source_fingerprint": "c34dd0dec45a4d7ab4d39db42ac41e84ff6150e15def3aa057c00ca44d5d4d32",
+      "requests": {
+        "count": 13340,
+        "rate": 184.35215278788021
+      },
+      "failures": 55,
+      "failure_rate": 0.004122938530734633,
+      "latency_ms": {
+        "min": 116.1447,
+        "med": 4868.8351,
+        "avg": 4476.73072649373,
+        "p(95)": 11863.521399999996,
+        "p(99)": 17307.712937999993,
+        "max": 20000.6066
+      },
+      "error_outcomes": [
+        {
+          "status": 0,
+          "k6_error_code": 1050,
+          "count": 55
+        }
+      ],
+      "acceptance_passed": false,
+      "raw_report": "baseline.json",
+      "raw_report_sha256": "6ed2387a20f3d0fe3ef6074ddf48a1073c79d9a134040eaec561b018b61a8deb"
+    },
+    {
+      "phase": "tuned",
+      "patient_sessions": 1000,
+      "staff_sessions": 21,
+      "configuration": {
+        "workers": 2,
+        "compass_pool_size": 16,
+        "compass_max_overflow": 0,
+        "read_audit_pool_size": 4,
+        "mis_pool_size": 2,
+        "mis_max_overflow": 0
+      },
+      "source_fingerprint": "c34dd0dec45a4d7ab4d39db42ac41e84ff6150e15def3aa057c00ca44d5d4d32",
+      "requests": {
+        "count": 12144,
+        "rate": 167.82715862358717
+      },
+      "failures": 333,
+      "failure_rate": 0.027420948616600792,
+      "latency_ms": {
+        "min": 127.7618,
+        "med": 2833.6875,
+        "avg": 4827.19515221936,
+        "p(95)": 17021.2296,
+        "p(99)": 20000.345376,
+        "max": 20005.0308
+      },
+      "error_outcomes": [
+        {
+          "status": 0,
+          "k6_error_code": 1050,
+          "count": 333
+        }
+      ],
+      "acceptance_passed": false,
+      "raw_report": "tuned.json",
+      "raw_report_sha256": "ce2f682aa440bfc905be837a29bb879c930c6aff85359c486c5a1ea77af28e97"
+    },
+    {
+      "phase": "confirm",
+      "patient_sessions": 1000,
+      "staff_sessions": 21,
+      "configuration": {
+        "workers": 2,
+        "compass_pool_size": 6,
+        "compass_max_overflow": 0,
+        "read_audit_pool_size": 2,
+        "mis_pool_size": 2,
+        "mis_max_overflow": 0
+      },
+      "source_fingerprint": "1a84a0b20732c04b078961f80b45f01a43286afbff3d502428f72d62ea2133a2",
+      "requests": {
+        "count": 11257,
+        "rate": 155.56907972984436
+      },
+      "failures": 173,
+      "failure_rate": 0.015368215332681887,
+      "latency_ms": {
+        "max": 20001.0518,
+        "min": 123.9509,
+        "med": 5005.7504,
+        "avg": 5459.574650257623,
+        "p(95)": 15791.00195,
+        "p(99)": 20000.212519999997
+      },
+      "error_outcomes": [
+        {
+          "status": 0,
+          "k6_error_code": 1050,
+          "count": 173
+        }
+      ],
+      "acceptance_passed": false,
+      "raw_report": "confirm.json",
+      "raw_report_sha256": "20970a38136214eb9ba7fd7721cad63da69aa4eeb33c3a6df7bba6ee2fa00048"
+    }
+  ],
+  "cpu_telemetry": {
+    "baseline": {
+      "limbuscapacity-worker-1": {
+        "samples": 24,
+        "max_cpu_percent": 19.9,
+        "mean_cpu_percent": 10.2925
+      },
+      "limbuscapacity-api-1": {
+        "samples": 24,
+        "max_cpu_percent": 147.11,
+        "mean_cpu_percent": 102.40083333333332
+      },
+      "limbus-gateway-1": {
+        "samples": 24,
+        "max_cpu_percent": 0.53,
+        "mean_cpu_percent": 0.025416666666666667
+      },
+      "limbus-app-1": {
+        "samples": 24,
+        "max_cpu_percent": 12.19,
+        "mean_cpu_percent": 1.4908333333333335
+      },
+      "limbus-worker-1": {
+        "samples": 24,
+        "max_cpu_percent": 0.57,
+        "mean_cpu_percent": 0.08291666666666667
+      },
+      "limbus-db_mis-1": {
+        "samples": 24,
+        "max_cpu_percent": 4.96,
+        "mean_cpu_percent": 1.22125
+      },
+      "limbuscapacity-gateway-1": {
+        "samples": 24,
+        "max_cpu_percent": 30.85,
+        "mean_cpu_percent": 13.156666666666666
+      },
+      "limbus-db_compass-1": {
+        "samples": 24,
+        "max_cpu_percent": 36.67,
+        "mean_cpu_percent": 25.77625
+      },
+      "limbus-redis-1": {
+        "samples": 24,
+        "max_cpu_percent": 3.95,
+        "mean_cpu_percent": 1.2404166666666667
+      }
+    },
+    "tuned": {
+      "limbuscapacity-api-1": {
+        "samples": 24,
+        "max_cpu_percent": 141.82,
+        "mean_cpu_percent": 103.68083333333334
+      },
+      "limbuscapacity-worker-1": {
+        "samples": 24,
+        "max_cpu_percent": 18.03,
+        "mean_cpu_percent": 10.375
+      },
+      "limbus-gateway-1": {
+        "samples": 24,
+        "max_cpu_percent": 0.34,
+        "mean_cpu_percent": 0.017083333333333336
+      },
+      "limbus-app-1": {
+        "samples": 24,
+        "max_cpu_percent": 1.42,
+        "mean_cpu_percent": 0.3720833333333333
+      },
+      "limbus-worker-1": {
+        "samples": 24,
+        "max_cpu_percent": 0.9,
+        "mean_cpu_percent": 0.15041666666666667
+      },
+      "limbus-db_mis-1": {
+        "samples": 24,
+        "max_cpu_percent": 4.63,
+        "mean_cpu_percent": 1.35625
+      },
+      "limbuscapacity-gateway-1": {
+        "samples": 24,
+        "max_cpu_percent": 27.89,
+        "mean_cpu_percent": 13.606666666666667
+      },
+      "limbus-db_compass-1": {
+        "samples": 24,
+        "max_cpu_percent": 53.73,
+        "mean_cpu_percent": 29.90416666666667
+      },
+      "limbus-redis-1": {
+        "samples": 24,
+        "max_cpu_percent": 3.36,
+        "mean_cpu_percent": 0.6279166666666667
+      }
+    },
+    "confirm": {
+      "limbuscapacity-api-1": {
+        "samples": 24,
+        "max_cpu_percent": 143.74,
+        "mean_cpu_percent": 101.60458333333332
+      },
+      "limbuscapacity-worker-1": {
+        "samples": 24,
+        "max_cpu_percent": 14.76,
+        "mean_cpu_percent": 10.93125
+      },
+      "limbus-gateway-1": {
+        "samples": 24,
+        "max_cpu_percent": 0.64,
+        "mean_cpu_percent": 0.06083333333333333
+      },
+      "limbus-app-1": {
+        "samples": 24,
+        "max_cpu_percent": 10.66,
+        "mean_cpu_percent": 0.8708333333333332
+      },
+      "limbus-worker-1": {
+        "samples": 24,
+        "max_cpu_percent": 0.63,
+        "mean_cpu_percent": 0.16624999999999998
+      },
+      "limbus-db_mis-1": {
+        "samples": 24,
+        "max_cpu_percent": 5.28,
+        "mean_cpu_percent": 1.3033333333333335
+      },
+      "limbuscapacity-gateway-1": {
+        "samples": 24,
+        "max_cpu_percent": 28.39,
+        "mean_cpu_percent": 13.17125
+      },
+      "limbus-db_compass-1": {
+        "samples": 24,
+        "max_cpu_percent": 36.88,
+        "mean_cpu_percent": 26.286666666666665
+      },
+      "limbus-redis-1": {
+        "samples": 24,
+        "max_cpu_percent": 3.63,
+        "mean_cpu_percent": 0.9483333333333334
+      }
+    }
+  },
+  "quick_candidates": [
+    {
+      "candidate": "Compass/audit pools 16/4 instead of 6/2 per process",
+      "phase": "tuned",
+      "decision": "Rejected; more errors and worse p95. Main configuration unchanged."
+    },
+    {
+      "candidate": "Fresh JSON copies of fixed clinical instrument definitions",
+      "phase": "confirm",
+      "microbenchmark": {
+        "copies_per_trial": 4500,
+        "deepcopy_seconds": [
+          0.2966242000111379,
+          0.2886411999934353,
+          0.3022707999916747
+        ],
+        "json_copy_seconds": [
+          0.07941130001563579,
+          0.08211890002712607,
+          0.07994220004184172
+        ],
+        "best_time_reduction_percent": 72.48788460641036
+      },
+      "regression_checks": {
+        "passed": 99,
+        "failed": 0
+      },
+      "decision": "Rejected for this release; no measured end-to-end improvement. Local production code restored; candidate image/archive retained for reproducibility."
+    }
+  ],
+  "comparison_limit": "Single sequential trials on accumulating data and shared hardware; no causal improvement or capacity extrapolation claimed.",
+  "integrity": {
+    "counts": {
+      "patients": 1000,
+      "users": 1022,
+      "diary_entries": 5874,
+      "participation_awards": 9874,
+      "survey_submissions": 4000,
+      "messages": 6294,
+      "alerts": 546,
+      "alert_handling": 122,
+      "doctor_tasks": 1122,
+      "outbox_events": 6718,
+      "audit_events": 36149,
+      "clinical_results": 3000
+    },
+    "violations": {
+      "diaries_without_awards": 0,
+      "diaries_without_audit": 0,
+      "messages_without_outbox": 0,
+      "support_without_event": 0,
+      "processed_support_without_alert": 0,
+      "handling_patient_mismatch": 0,
+      "handling_without_audit": 0,
+      "daily_cap_violations": 0
+    },
+    "outbox": [
+      {
+        "status": "processed",
+        "total": 6718
+      }
+    ],
+    "database_activity": [
+      {
+        "state": "active",
+        "wait_event_type": null,
+        "wait_event": null,
+        "total": 1
+      },
+      {
+        "state": "idle",
+        "wait_event_type": "Client",
+        "wait_event": "ClientRead",
+        "total": 1
+      }
+    ],
+    "current_run_processing": {
+      "events": 1036,
+      "pending": 0,
+      "failed": 0,
+      "p50_processing_ms": 90.792,
+      "p95_processing_ms": 167.45024999999998,
+      "max_processing_ms": 505.207,
+      "scope": "Stored timestamps of simulator processing, before final batch commit; not provider delivery or browser presentation."
+    },
+    "server_process_probe": {}
+  },
+  "shutdown": {
+    "capacity_api_worker_gateway_stopped": true,
+    "port_8443_closed": true,
+    "main_release_unchanged": "20261027t134439z-c34dd0dec4",
+    "main_https_root": 200,
+    "main_https_health": 200,
+    "compass_db": true,
+    "mis_db": true,
+    "telegram_delivery_enabled": false
+  },
+  "next_step": "Reduce CPU work per request using endpoint/SQL/serialization profiling, or test a higher-vCPU host with the same workload. No sufficient server size proven."
+}

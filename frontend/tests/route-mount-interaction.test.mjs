@@ -45,7 +45,7 @@ test("route content mounts without animation callbacks while a draft still requi
   };
   render(h(Interactions,null,h(App)));
   const user=userEvent.setup({document:dom.window.document});
-  await user.selectOptions(screen.getByRole("combobox",{name:"Демонстрационная роль"}),"patient2");
+  await user.selectOptions(screen.getByRole("combobox",{name:"Роль"}),"patient2");
   await user.click(screen.getByRole("button",{name:"Войти",exact:true}));
   await screen.findByRole("heading",{name:"Мой день",exact:true});
   await user.click(screen.getByRole("link",{name:/^Дневник\s*Записать/}));
