@@ -9,8 +9,12 @@ engine_compass = create_async_engine(settings.compass_database_url, pool_pre_pin
     connect_args={"timeout": 3}, pool_size=settings.compass_db_pool_size, max_overflow=settings.compass_db_max_overflow)
 # Reserve a bounded pool on the same database for the mandatory pre-response
 # access record. Domain requests must not queue this write behind their reads.
+# Its only operation is one atomic INSERT. PostgreSQL commits that statement
+# before completion; avoid separate BEGIN/COMMIT/ROLLBACK network exchanges.
+# Domain writes and their outbox continue to use the transactional engine above.
 engine_read_audit = create_async_engine(settings.compass_database_url, pool_pre_ping=True, hide_parameters=True,
-    connect_args={"timeout": 3}, pool_size=settings.read_audit_db_pool_size, max_overflow=0)
+    connect_args={"timeout": 3}, pool_size=settings.read_audit_db_pool_size, max_overflow=0,
+    isolation_level="AUTOCOMMIT", skip_autocommit_rollback=True)
 engine_mis = create_async_engine(settings.mis_database_url, pool_pre_ping=True, hide_parameters=True,
     connect_args={"timeout": 3}, pool_size=settings.mis_db_pool_size, max_overflow=settings.mis_db_max_overflow)
 

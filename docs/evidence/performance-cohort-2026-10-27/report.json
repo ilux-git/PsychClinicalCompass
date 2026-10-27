@@ -1,0 +1,134 @@
+{
+  "published_release": "20261027t162048z-c4c1fa83b3",
+  "schema": "v41_clinical_scenarios",
+  "patients": 213,
+  "added_patients": 200,
+  "overall_funnel": {
+    "assigned": 529,
+    "opened": 413,
+    "completed": 374
+  },
+  "last_local_candidate": "20261027t164654z-47224ae318",
+  "candidate_deployed": false,
+  "backend_tests": {
+    "passed": 365,
+    "failed": 0,
+    "seconds": 326.93
+  },
+  "load_profile": {
+    "patients": 1000,
+    "doctors": 20,
+    "analysts": 1,
+    "action_interval_seconds": 2,
+    "limit_ms": 500
+  },
+  "max_500_passed": false,
+  "runs": [
+    {
+      "file": "sql-capacity-baseline-20261027t151242z.json",
+      "source_fingerprint": "c34dd0dec45a4d7ab4d39db42ac41e84ff6150e15def3aa057c00ca44d5d4d32",
+      "requests": {
+        "rate": 176.16635319636652,
+        "count": 12748
+      },
+      "failures": {
+        "rate": 0.008707248195795419,
+        "passes": 111,
+        "fails": 12637
+      },
+      "latency_ms": {
+        "p(99)": 19768.290625999998,
+        "max": 20002.6802,
+        "min": 118.8656,
+        "med": 4181.8859,
+        "avg": 4692.165152043605,
+        "p(95)": 13980.76959
+      }
+    },
+    {
+      "file": "sql-capacity-candidate-20261027t151242z.json",
+      "source_fingerprint": "d6776d9c6126c49ecc9c8f09e5ba15ed7be712379ba19a87dc161cf740154118",
+      "requests": {
+        "count": 16294,
+        "rate": 225.14592862934032
+      },
+      "failures": {
+        "rate": 0.0015343071069105192,
+        "passes": 25,
+        "fails": 16269
+      },
+      "latency_ms": {
+        "min": 119.5781,
+        "med": 3475.6411,
+        "avg": 3497.3435629718147,
+        "p(95)": 9874.506419999998,
+        "p(99)": 14853.45856,
+        "max": 20243.545299999998
+      }
+    },
+    {
+      "file": "sql-capacity-candidate2-20261027t151242z.json",
+      "source_fingerprint": "38e8b328438da6e8de7ca1d14775a68ac0b9f6075b3cc922df90409d8134b48c",
+      "requests": {
+        "count": 15966,
+        "rate": 217.8439835500422
+      },
+      "failures": {
+        "fails": 15954,
+        "rate": 0.000751597143930853,
+        "passes": 12
+      },
+      "latency_ms": {
+        "avg": 3785.7269718697357,
+        "p(95)": 9304.559699999993,
+        "p(99)": 13431.763628000015,
+        "max": 20238.2761,
+        "min": 125.0257,
+        "med": 3803.6246
+      }
+    },
+    {
+      "file": "sql-capacity-final-20261027t151242z.json",
+      "source_fingerprint": "fd805165075555f86697e14ede337ff169408165d22733f895ff12fdb0259c49",
+      "requests": {
+        "count": 16210,
+        "rate": 217.47290495551817
+      },
+      "failures": {
+        "rate": 0.0008636644046884639,
+        "passes": 14,
+        "fails": 16196
+      },
+      "latency_ms": {
+        "min": 130.0262,
+        "med": 3743.2769,
+        "avg": 3779.128695527163,
+        "p(95)": 9277.886399999998,
+        "p(99)": 13168.377532000006,
+        "max": 20000.7436
+      }
+    },
+    {
+      "file": "read-capacity-baseline-20261027t163913z.json",
+      "source_fingerprint": "c4c1fa83b31efea3d39d3655926f7bfc290085e1fc5a5cbd413d14b2677f9036",
+      "requests": {
+        "count": 16688,
+        "rate": 225.8142679080799
+      },
+      "failures": {
+        "rate": 0.0007790028763183126,
+        "passes": 13,
+        "fails": 16675
+      },
+      "latency_ms": {
+        "med": 3561.4102,
+        "avg": 3600.9490068556584,
+        "p(95)": 9171.823199999999,
+        "p(99)": 13327.631357999999,
+        "max": 20243.657799999997,
+        "min": 132.7548
+      }
+    }
+  ],
+  "stopped_at_user_request": true
+}

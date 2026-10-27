@@ -1,11 +1,16 @@
 from datetime import date, datetime, time, timedelta, timezone
 from zoneinfo import ZoneInfo
 
-from sqlalchemy import select
+from sqlalchemy import bindparam, select
 
 from app.modules.adherence.medication_models import MedicationItem
-from app.modules.integration.synthetic import linked_snapshot
+from app.modules.integration.synthetic import mapped_snapshot
+from app.modules.patients.models import Patient, PatientMapping
 from app.core.clinic_time import CLINIC_ZONE, clinic_day_bounds
+
+_INVENTORY = select(MedicationItem, PatientMapping.mis_id).select_from(Patient).outerjoin(
+    PatientMapping, PatientMapping.compass_patient_id == Patient.id).outerjoin(
+    MedicationItem, MedicationItem.patient_id == Patient.id).where(Patient.id == bindparam("inventory_patient_id")).order_by(MedicationItem.id)
 
 
 def item_read(row: MedicationItem):
@@ -18,10 +23,9 @@ def item_read(row: MedicationItem):
 
 
 async def inventory(session, patient):
-    source = await linked_snapshot(session, patient)
-    rows = (await session.scalars(select(MedicationItem).where(MedicationItem.patient_id == patient.id)
-                                  .order_by(MedicationItem.id))).all()
-    return inventory_from(source, rows), source
+    rows = (await session.execute(_INVENTORY, {"inventory_patient_id": patient.id})).all()
+    source = mapped_snapshot(patient.mis_id, rows[0][1] if rows else None)
+    return inventory_from(source, [item for item, _ in rows if item is not None]), source
 
 
 def inventory_from(source, local_rows):
@@ -82,5 +86,6 @@ def clinic_occurrences(item, day: date):
 def log_read(row):
     return {"id": row.id, "item_key": row.item_key, "occurrence_key": row.occurrence_key,
             "status": row.status, "reason": row.reason, "revision": row.revision,
-            "scheduled_for": row.scheduled_for, "created_at": row.created_at, "updated_at": row.updated_at,
+            "scheduled_for": row.scheduled_for.isoformat() if row.scheduled_for else None,
+            "created_at": row.created_at.isoformat(), "updated_at": row.updated_at.isoformat(),
             "source": "patient_self_report", "ingestion_verified": False}

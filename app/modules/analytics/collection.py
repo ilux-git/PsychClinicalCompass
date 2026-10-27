@@ -18,10 +18,14 @@ def duration_summary(values):
 
 
 async def generated_submission_ids(session, rows):
+    # Imported presentation events carry an explicit, non-UUID source namespace.
+    # Their stages can populate the funnel; their timestamps aren't measured UI latency.
+    generated = {response.id for assignment, _, response in rows if response is not None
+                 and getattr(assignment, "client_request_id", "").startswith("demo-cohort-v1:")}
     ids = {response.id for _, survey, response in rows if response is not None and survey.clinical_key is not None}
     if not ids:
-        return set()
-    return set((await session.scalars(select(ClinicalResult.submission_id).where(
+        return generated
+    return generated | set((await session.scalars(select(ClinicalResult.submission_id).where(
         ClinicalResult.submission_id.in_(ids),
         ClinicalResult.result.contains({"synthetic_provenance": {"generated": True}})))).all())
 

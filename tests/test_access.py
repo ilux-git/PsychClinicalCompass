@@ -5,6 +5,18 @@ from sqlalchemy.exc import DBAPIError
 from app.db.session import engine_mis
 
 
+@pytest.mark.parametrize("suffix", ["assessments", "clinical-results", "support-requests"])
+async def test_empty_history_is_visible_only_to_the_patient_and_assigned_doctor(client, headers, suffix):
+    path = f"/patients/1/{suffix}"
+    for actor in ("patient1", "doctor"):
+        response = await client.get(path, headers=headers(actor))
+        assert response.status_code == 200 and response.json() == []
+    for actor in ("patient2", "doctor2"):
+        assert (await client.get(path, headers=headers(actor))).status_code == 404
+    assert (await client.get(path, headers=headers("admin"))).status_code == 403
+    assert (await client.get(f"/patients/999/{suffix}", headers=headers("doctor"))).status_code == 404
+
+
 async def test_login_and_bad_credentials(client):
     response = await client.post("/auth/login", json={"username": "doctor", "password": "test-pass-123"})
     assert response.status_code == 200

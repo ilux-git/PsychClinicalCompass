@@ -1,0 +1,1145 @@
+{
+  "run_id": "vps-capacity-20261027-06740267c7802f7faedb",
+  "source_fixture_sha256": "6f19131b7b3bfa00dcf45d685343030e817ed5b23e57d98e16b2ee9a6b1e574d",
+  "verified_at": "2026-10-27T14:29:38.882Z",
+  "synthetic": true,
+  "driver": "k6",
+  "patient_sessions": 100,
+  "run_started_at": "2026-10-27T14:29:10.589253+00:00",
+  "driver_context": "separate Windows PC; direct public TLS; ordinary signed-in API workflows",
+  "profile": "roles-with-clinical-reads-v3",
+  "clinical_reads_enabled": true,
+  "clinical_fixture": {
+    "results_per_patient": 3,
+    "sha256": "a6bbb8e374da77069df5cf6a794ed592faf69264a8782de65838c9cc144ebb1f"
+  },
+  "source_fingerprint": "c34dd0dec45a4d7ab4d39db42ac41e84ff6150e15def3aa057c00ca44d5d4d32",
+  "schema_revision": "v41_clinical_scenarios",
+  "think_seconds": 2,
+  "think_delay_factor_range": [
+    1,
+    1
+  ],
+  "pacing_mode": "target-action-interval",
+  "target_action_interval_seconds": 2,
+  "latency_method": "k6-blocked-plus-duration-v2",
+  "diagnostic_trace": false,
+  "deployment_mode": "docker-2vcpu-4gb-smoke",
+  "doctor_sessions": 20,
+  "analyst_sessions": 1,
+  "limit_ms": 500,
+  "server_configuration": {
+    "workers": 2,
+    "compass_pool_size": 6,
+    "compass_max_overflow": 0,
+    "read_audit_pool_size": 2,
+    "mis_pool_size": 2,
+    "mis_max_overflow": 0
+  },
+  "scope": "Authenticated protocol workflows; excludes login burst and 1000 rendered browsers. Includes connection latency.",
+  "options": {
+    "summaryTrendStats": [
+      "min",
+      "med",
+      "avg",
+      "p(95)",
+      "p(99)",
+      "max"
+    ],
+    "summaryTimeUnit": "",
+    "noColor": true
+  },
+  "state": {
+    "testRunDurationMs": 27359.1313,
+    "isStdOutTTY": false,
+    "isStdErrTTY": false
+  },
+  "metrics": {
+    "iteration_duration": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "p(99)": 2001.297163,
+        "max": 2001.5401,
+        "min": 1999.0335,
+        "med": 2000.3442,
+        "avg": 2000.3493223186103,
+        "p(95)": 2001.098695
+      }
+    },
+    "user_request_latency{operation:doctor_engagement}": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "max": 892.1185,
+        "min": 241.6778,
+        "med": 278.4872,
+        "avg": 369.8977117647059,
+        "p(95)": 593.9928999999997,
+        "p(99)": 832.49338
+      },
+      "thresholds": {
+        "max<=500": {
+          "ok": false
+        }
+      }
+    },
+    "user_request_latency{operation:clinic_analytics}": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "p(95)": 820.4999199999999,
+        "p(99)": 913.4959839999999,
+        "max": 936.745,
+        "min": 459.7136,
+        "med": 512.8932500000001,
+        "avg": 574.35785
+      },
+      "thresholds": {
+        "max<=500": {
+          "ok": false
+        }
+      }
+    },
+    "workflow_failures{operation:doctor_inbox}": {
+      "contains": "default",
+      "values": {
+        "count": 0,
+        "rate": 0
+      },
+      "thresholds": {
+        "count==0": {
+          "ok": true
+        }
+      },
+      "type": "counter"
+    },
+    "workflow_failures{operation:medications}": {
+      "type": "counter",
+      "contains": "default",
+      "values": {
+        "count": 0,
+        "rate": 0
+      },
+      "thresholds": {
+        "count==0": {
+          "ok": true
+        }
+      }
+    },
+    "workflow_requests{operation:history}": {
+      "values": {
+        "count": 103,
+        "rate": 3.7647394162694043
+      },
+      "thresholds": {
+        "count>0": {
+          "ok": true
+        }
+      },
+      "type": "counter",
+      "contains": "default"
+    },
+    "user_request_latency{operation:doctor_care}": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "med": 166.11149999999998,
+        "avg": 233.34362500000006,
+        "p(95)": 376.62389,
+        "p(99)": 384.60069799999997,
+        "max": 386.5949,
+        "min": 138.6724
+      },
+      "thresholds": {
+        "max<=500": {
+          "ok": true
+        }
+      }
+    },
+    "workflow_requests{operation:event_action}": {
+      "type": "counter",
+      "contains": "default",
+      "values": {
+        "count": 7,
+        "rate": 0.25585607683384304
+      },
+      "thresholds": {
+        "count>0": {
+          "ok": true
+        }
+      }
+    },
+    "http_req_failed": {
+      "type": "rate",
+      "contains": "default",
+      "values": {
+        "rate": 0,
+        "passes": 0,
+        "fails": 1269
+      },
+      "thresholds": {
+        "rate==0": {
+          "ok": true
+        }
+      }
+    },
+    "workflow_requests{operation:doctor_inbox}": {
+      "contains": "default",
+      "values": {
+        "count": 21,
+        "rate": 0.7675682305015291
+      },
+      "thresholds": {
+        "count>0": {
+          "ok": true
+        }
+      },
+      "type": "counter"
+    },
+    "user_request_latency{operation:care_progress}": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "min": 117.5096,
+        "med": 122.2577,
+        "avg": 158.731389,
+        "p(95)": 352.44053,
+        "p(99)": 354.3928830000001,
+        "max": 373.1616
+      },
+      "thresholds": {
+        "max<=500": {
+          "ok": true
+        }
+      }
+    },
+    "workflow_requests{operation:message_outbox}": {
+      "type": "counter",
+      "contains": "default",
+      "values": {
+        "count": 100,
+        "rate": 3.655086811912043
+      },
+      "thresholds": {
+        "count>0": {
+          "ok": true
+        }
+      }
+    },
+    "http_req_receiving": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "avg": 23.367948069345953,
+        "p(95)": 111.68268,
+        "p(99)": 113.61704399999999,
+        "max": 332.4782,
+        "min": 0,
+        "med": 0
+      }
+    },
+    "data_sent": {
+      "type": "counter",
+      "contains": "data",
+      "values": {
+        "count": 406516,
+        "rate": 14858.512704312361
+      }
+    },
+    "vus": {
+      "type": "gauge",
+      "contains": "default",
+      "values": {
+        "max": 121,
+        "value": 23,
+        "min": 7
+      }
+    },
+    "workflow_requests": {
+      "type": "counter",
+      "contains": "default",
+      "values": {
+        "count": 1268,
+        "rate": 46.34650077504471
+      }
+    },
+    "workflow_requests{operation:care_progress}": {
+      "values": {
+        "count": 100,
+        "rate": 3.655086811912043
+      },
+      "thresholds": {
+        "count>0": {
+          "ok": true
+        }
+      },
+      "type": "counter",
+      "contains": "default"
+    },
+    "workflow_failures{operation:history}": {
+      "values": {
+        "count": 0,
+        "rate": 0
+      },
+      "thresholds": {
+        "count==0": {
+          "ok": true
+        }
+      },
+      "type": "counter",
+      "contains": "default"
+    },
+    "workflow_failures{operation:event_action}": {
+      "type": "counter",
+      "contains": "default",
+      "values": {
+        "count": 0,
+        "rate": 0
+      },
+      "thresholds": {
+        "count==0": {
+          "ok": true
+        }
+      }
+    },
+    "workflow_failures{operation:task_update}": {
+      "type": "counter",
+      "contains": "default",
+      "values": {
+        "rate": 0,
+        "count": 0
+      },
+      "thresholds": {
+        "count==0": {
+          "ok": true
+        }
+      }
+    },
+    "http_req_waiting": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "max": 709.9115,
+        "min": 115.9258,
+        "med": 123.5991,
+        "avg": 147.6883368794325,
+        "p(95)": 323.3437599999999,
+        "p(99)": 459.806016
+      }
+    },
+    "user_request_latency{operation:event_action}": {
+      "thresholds": {
+        "max<=500": {
+          "ok": true
+        }
+      },
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "min": 128.0948,
+        "med": 136.4651,
+        "avg": 137.9480857142857,
+        "p(95)": 151.59726,
+        "p(99)": 154.545612,
+        "max": 155.2827
+      }
+    },
+    "user_request_latency{operation:points}": {
+      "thresholds": {
+        "max<=500": {
+          "ok": true
+        }
+      },
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "min": 118.1114,
+        "med": 124.4142,
+        "avg": 177.26483737373738,
+        "p(95)": 361.73479,
+        "p(99)": 452.247678,
+        "max": 453.7117
+      }
+    },
+    "user_request_latency{operation:directory}": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "min": 239.2236,
+        "med": 257.0293,
+        "avg": 321.7071068965518,
+        "p(95)": 510.87122,
+        "p(99)": 557.489204,
+        "max": 574.3496
+      },
+      "thresholds": {
+        "max<=500": {
+          "ok": false
+        }
+      }
+    },
+    "workflow_requests{operation:support_progress}": {
+      "contains": "default",
+      "values": {
+        "count": 96,
+        "rate": 3.5088833394355614
+      },
+      "thresholds": {
+        "count>0": {
+          "ok": true
+        }
+      },
+      "type": "counter"
+    },
+    "workflow_failures{operation:doctor_care}": {
+      "thresholds": {
+        "count==0": {
+          "ok": true
+        }
+      },
+      "type": "counter",
+      "contains": "default",
+      "values": {
+        "count": 0,
+        "rate": 0
+      }
+    },
+    "workflow_failures{operation:support_progress}": {
+      "contains": "default",
+      "values": {
+        "count": 0,
+        "rate": 0
+      },
+      "thresholds": {
+        "count==0": {
+          "ok": true
+        }
+      },
+      "type": "counter"
+    },
+    "workflow_failures{operation:patient_card}": {
+      "type": "counter",
+      "contains": "default",
+      "values": {
+        "count": 0,
+        "rate": 0
+      },
+      "thresholds": {
+        "count==0": {
+          "ok": true
+        }
+      }
+    },
+    "iterations": {
+      "type": "counter",
+      "contains": "default",
+      "values": {
+        "count": 1268,
+        "rate": 46.34650077504471
+      }
+    },
+    "user_request_latency{operation:history}": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "p(95)": 353.45762999999994,
+        "p(99)": 409.6460940000002,
+        "max": 416.4656,
+        "min": 116.8364,
+        "med": 121.4917,
+        "avg": 160.2796475728155
+      },
+      "thresholds": {
+        "max<=500": {
+          "ok": true
+        }
+      }
+    },
+    "legacy_duplicated_connect_latency": {
+      "contains": "time",
+      "values": {
+        "max": 2231.8782,
+        "min": 115.9258,
+        "med": 127.1857,
+        "avg": 215.66279645110404,
+        "p(95)": 582.0705399999999,
+        "p(99)": 704.9366809999999
+      },
+      "type": "trend"
+    },
+    "workflow_requests{operation:assignments}": {
+      "type": "counter",
+      "contains": "default",
+      "values": {
+        "count": 98,
+        "rate": 3.5819850756738023
+      },
+      "thresholds": {
+        "count>0": {
+          "ok": true
+        }
+      }
+    },
+    "workflow_requests{operation:doctor_clinical}": {
+      "type": "counter",
+      "contains": "default",
+      "values": {
+        "count": 28,
+        "rate": 1.0234243073353722
+      },
+      "thresholds": {
+        "count>0": {
+          "ok": true
+        }
+      }
+    },
+    "http_req_blocked": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "avg": 22.446033806146577,
+        "p(95)": 227.03902,
+        "p(99)": 229.898316,
+        "max": 922.6006,
+        "min": 0,
+        "med": 0
+      }
+    },
+    "workflow_failures{operation:directory}": {
+      "type": "counter",
+      "contains": "default",
+      "values": {
+        "count": 0,
+        "rate": 0
+      },
+      "thresholds": {
+        "count==0": {
+          "ok": true
+        }
+      }
+    },
+    "user_request_latency{operation:task_board}": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "p(99)": 451.527938,
+        "max": 452.2355,
+        "min": 121.9208,
+        "med": 148.45385,
+        "avg": 211.3644071428571,
+        "p(95)": 449.251705
+      },
+      "thresholds": {
+        "max<=500": {
+          "ok": true
+        }
+      }
+    },
+    "user_request_latency": {
+      "values": {
+        "p(99)": 506.3962999999999,
+        "max": 1309.2776,
+        "min": 115.9258,
+        "med": 127.1857,
+        "avg": 193.39839440063062,
+        "p(95)": 414.9191149999996
+      },
+      "thresholds": {
+        "max<=500": {
+          "ok": false
+        }
+      },
+      "type": "trend",
+      "contains": "time"
+    },
+    "user_request_latency{operation:support_progress}": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "max": 368.3529,
+        "min": 116.5917,
+        "med": 121.7029,
+        "avg": 158.72253854166667,
+        "p(95)": 349.4158,
+        "p(99)": 356.20344499999993
+      },
+      "thresholds": {
+        "max<=500": {
+          "ok": true
+        }
+      }
+    },
+    "workflow_failures{operation:care_progress}": {
+      "type": "counter",
+      "contains": "default",
+      "values": {
+        "rate": 0,
+        "count": 0
+      },
+      "thresholds": {
+        "count==0": {
+          "ok": true
+        }
+      }
+    },
+    "workflow_requests{operation:diary_write}": {
+      "type": "counter",
+      "contains": "default",
+      "values": {
+        "count": 99,
+        "rate": 3.618535943792923
+      },
+      "thresholds": {
+        "count>0": {
+          "ok": true
+        }
+      }
+    },
+    "workflow_failures{operation:task_board}": {
+      "type": "counter",
+      "contains": "default",
+      "values": {
+        "count": 0,
+        "rate": 0
+      },
+      "thresholds": {
+        "count==0": {
+          "ok": true
+        }
+      }
+    },
+    "user_request_latency{operation:message_outbox}": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "max": 361.9037,
+        "min": 117.5271,
+        "med": 123.15735000000001,
+        "avg": 159.49467600000003,
+        "p(95)": 353.019775,
+        "p(99)": 360.404147
+      },
+      "thresholds": {
+        "max<=500": {
+          "ok": true
+        }
+      }
+    },
+    "workflow_failures": {
+      "type": "counter",
+      "contains": "default",
+      "values": {
+        "count": 0,
+        "rate": 0
+      }
+    },
+    "workflow_requests{operation:medications}": {
+      "type": "counter",
+      "contains": "default",
+      "values": {
+        "count": 101,
+        "rate": 3.691637680031164
+      },
+      "thresholds": {
+        "count>0": {
+          "ok": true
+        }
+      }
+    },
+    "workflow_failures{operation:doctor_clinical}": {
+      "type": "counter",
+      "contains": "default",
+      "values": {
+        "count": 0,
+        "rate": 0
+      },
+      "thresholds": {
+        "count==0": {
+          "ok": true
+        }
+      }
+    },
+    "user_request_latency{operation:survey_submit}": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "min": 115.9258,
+        "med": 120.5195,
+        "avg": 149.42500714285714,
+        "p(95)": 348.93494499999997,
+        "p(99)": 354.35120000000006,
+        "max": 361.1412
+      },
+      "thresholds": {
+        "max<=500": {
+          "ok": true
+        }
+      }
+    },
+    "user_request_latency{operation:patient_card}": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "med": 123.61664999999999,
+        "avg": 165.79233699999997,
+        "p(95)": 364.19197499999996,
+        "p(99)": 485.4762000000001,
+        "max": 516.582,
+        "min": 117.4634
+      },
+      "thresholds": {
+        "max<=500": {
+          "ok": false
+        }
+      }
+    },
+    "data_received": {
+      "type": "counter",
+      "contains": "data",
+      "values": {
+        "count": 8213187,
+        "rate": 300199.1148746744
+      }
+    },
+    "workflow_failures{operation:doctor_engagement}": {
+      "type": "counter",
+      "contains": "default",
+      "values": {
+        "count": 0,
+        "rate": 0
+      },
+      "thresholds": {
+        "count==0": {
+          "ok": true
+        }
+      }
+    },
+    "workflow_requests{operation:task_board}": {
+      "type": "counter",
+      "contains": "default",
+      "values": {
+        "count": 28,
+        "rate": 1.0234243073353722
+      },
+      "thresholds": {
+        "count>0": {
+          "ok": true
+        }
+      }
+    },
+    "workflow_failures{operation:points}": {
+      "type": "counter",
+      "contains": "default",
+      "values": {
+        "rate": 0,
+        "count": 0
+      },
+      "thresholds": {
+        "count==0": {
+          "ok": true
+        }
+      }
+    },
+    "workflow_requests{operation:clinical_history}": {
+      "thresholds": {
+        "count>0": {
+          "ok": true
+        }
+      },
+      "type": "counter",
+      "contains": "default",
+      "values": {
+        "count": 97,
+        "rate": 3.545434207554682
+      }
+    },
+    "http_reqs": {
+      "type": "counter",
+      "contains": "default",
+      "values": {
+        "count": 1269,
+        "rate": 46.38305164316383
+      }
+    },
+    "workflow_failures{operation:clinical_history}": {
+      "thresholds": {
+        "count==0": {
+          "ok": true
+        }
+      },
+      "type": "counter",
+      "contains": "default",
+      "values": {
+        "count": 0,
+        "rate": 0
+      }
+    },
+    "user_request_latency{operation:doctor_clinical}": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "min": 124.7044,
+        "med": 140.6571,
+        "avg": 208.16492857142856,
+        "p(95)": 429.20279999999997,
+        "p(99)": 475.21699400000006,
+        "max": 488.9621
+      },
+      "thresholds": {
+        "max<=500": {
+          "ok": true
+        }
+      }
+    },
+    "workflow_requests{operation:task_update}": {
+      "values": {
+        "count": 19,
+        "rate": 0.6944664942632882
+      },
+      "thresholds": {
+        "count>0": {
+          "ok": true
+        }
+      },
+      "type": "counter",
+      "contains": "default"
+    },
+    "http_req_duration": {
+      "values": {
+        "max": 709.9115,
+        "min": 115.9258,
+        "med": 125.5603,
+        "avg": 171.08604042553162,
+        "p(95)": 354.2498,
+        "p(99)": 496.01415999999955
+      },
+      "type": "trend",
+      "contains": "time"
+    },
+    "user_request_latency{operation:task_update}": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "p(95)": 182.30727999999976,
+        "p(99)": 260.72161600000004,
+        "max": 280.3252,
+        "min": 117.644,
+        "med": 122.6971,
+        "avg": 134.0946421052632
+      },
+      "thresholds": {
+        "max<=500": {
+          "ok": true
+        }
+      }
+    },
+    "user_request_latency{operation:doctor_inbox}": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "avg": 260.1872095238095,
+        "p(95)": 477.7706,
+        "p(99)": 479.79004,
+        "max": 480.2949,
+        "min": 118.9642,
+        "med": 237.5733
+      },
+      "thresholds": {
+        "max<=500": {
+          "ok": true
+        }
+      }
+    },
+    "workflow_failures{operation:survey_submit}": {
+      "values": {
+        "count": 0,
+        "rate": 0
+      },
+      "thresholds": {
+        "count==0": {
+          "ok": true
+        }
+      },
+      "type": "counter",
+      "contains": "default"
+    },
+    "user_request_latency{operation:diary_write}": {
+      "contains": "time",
+      "values": {
+        "avg": 165.5197111111111,
+        "p(95)": 359.39610999999996,
+        "p(99)": 451.4707839999999,
+        "max": 480.1791,
+        "min": 119.0304,
+        "med": 126.4539
+      },
+      "thresholds": {
+        "max<=500": {
+          "ok": true
+        }
+      },
+      "type": "trend"
+    },
+    "workflow_requests{operation:doctor_care}": {
+      "type": "counter",
+      "contains": "default",
+      "values": {
+        "count": 20,
+        "rate": 0.7310173623824087
+      },
+      "thresholds": {
+        "count>0": {
+          "ok": true
+        }
+      }
+    },
+    "http_req_sending": {
+      "values": {
+        "avg": 0.0297554767533491,
+        "p(95)": 0.4482999999999976,
+        "p(99)": 0.5418559999999999,
+        "max": 0.7248,
+        "min": 0,
+        "med": 0
+      },
+      "type": "trend",
+      "contains": "time"
+    },
+    "workflow_failures{operation:message_outbox}": {
+      "type": "counter",
+      "contains": "default",
+      "values": {
+        "count": 0,
+        "rate": 0
+      },
+      "thresholds": {
+        "count==0": {
+          "ok": true
+        }
+      }
+    },
+    "http_req_connecting": {
+      "contains": "time",
+      "values": {
+        "p(99)": 113.444688,
+        "max": 126.3122,
+        "min": 0,
+        "med": 0,
+        "avg": 10.808429078014184,
+        "p(95)": 112.09142
+      },
+      "type": "trend"
+    },
+    "vus_max": {
+      "type": "gauge",
+      "contains": "default",
+      "values": {
+        "value": 121,
+        "min": 121,
+        "max": 121
+      }
+    },
+    "user_request_latency{operation:assignments}": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "p(95)": 464.749115,
+        "p(99)": 487.98776699999996,
+        "max": 492.4293,
+        "min": 228.8826,
+        "med": 236.71550000000002,
+        "avg": 278.0052204081633
+      },
+      "thresholds": {
+        "max<=500": {
+          "ok": true
+        }
+      }
+    },
+    "workflow_requests{operation:directory}": {
+      "contains": "default",
+      "values": {
+        "rate": 1.0599751754544926,
+        "count": 29
+      },
+      "thresholds": {
+        "count>0": {
+          "ok": true
+        }
+      },
+      "type": "counter"
+    },
+    "workflow_requests{operation:doctor_engagement}": {
+      "type": "counter",
+      "contains": "default",
+      "values": {
+        "rate": 0.6213647580250473,
+        "count": 17
+      },
+      "thresholds": {
+        "count>0": {
+          "ok": true
+        }
+      }
+    },
+    "user_request_latency{operation:clinical_history}": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "max": 1309.2776,
+        "min": 228.0706,
+        "med": 233.4191,
+        "avg": 280.36943814432993,
+        "p(95)": 462.2524,
+        "p(99)": 596.3047999999941
+      },
+      "thresholds": {
+        "max<=500": {
+          "ok": false
+        }
+      }
+    },
+    "workflow_requests{operation:patient_card}": {
+      "values": {
+        "count": 100,
+        "rate": 3.655086811912043
+      },
+      "thresholds": {
+        "count>0": {
+          "ok": true
+        }
+      },
+      "type": "counter",
+      "contains": "default"
+    },
+    "workflow_failures{operation:assignments}": {
+      "contains": "default",
+      "values": {
+        "count": 0,
+        "rate": 0
+      },
+      "thresholds": {
+        "count==0": {
+          "ok": true
+        }
+      },
+      "type": "counter"
+    },
+    "workflow_requests{operation:clinic_analytics}": {
+      "contains": "default",
+      "values": {
+        "count": 8,
+        "rate": 0.29240694495296343
+      },
+      "thresholds": {
+        "count>0": {
+          "ok": true
+        }
+      },
+      "type": "counter"
+    },
+    "workflow_failures{operation:clinic_analytics}": {
+      "contains": "default",
+      "values": {
+        "count": 0,
+        "rate": 0
+      },
+      "thresholds": {
+        "count==0": {
+          "ok": true
+        }
+      },
+      "type": "counter"
+    },
+    "workflow_requests{operation:points}": {
+      "type": "counter",
+      "contains": "default",
+      "values": {
+        "count": 99,
+        "rate": 3.618535943792923
+      },
+      "thresholds": {
+        "count>0": {
+          "ok": true
+        }
+      }
+    },
+    "workflow_failures{operation:diary_write}": {
+      "values": {
+        "count": 0,
+        "rate": 0
+      },
+      "thresholds": {
+        "count==0": {
+          "ok": true
+        }
+      },
+      "type": "counter",
+      "contains": "default"
+    },
+    "checks": {
+      "type": "rate",
+      "contains": "default",
+      "values": {
+        "passes": 1268,
+        "fails": 0,
+        "rate": 1
+      },
+      "thresholds": {
+        "rate==1": {
+          "ok": true
+        }
+      }
+    },
+    "user_request_latency{operation:medications}": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "avg": 162.94849801980197,
+        "p(95)": 353.2959,
+        "p(99)": 378.3683,
+        "max": 394.14300000000003,
+        "min": 117.893,
+        "med": 125.1921
+      },
+      "thresholds": {
+        "max<=500": {
+          "ok": true
+        }
+      }
+    },
+    "workflow_requests{operation:survey_submit}": {
+      "contains": "default",
+      "values": {
+        "count": 98,
+        "rate": 3.5819850756738023
+      },
+      "thresholds": {
+        "count>0": {
+          "ok": true
+        }
+      },
+      "type": "counter"
+    },
+    "http_req_tls_handshaking": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "min": 0,
+        "med": 0,
+        "avg": 11.631057919621746,
+        "p(95)": 114.68914,
+        "p(99)": 116.904952,
+        "max": 808.4124
+      }
+    }
+  },
+  "root_group": {
+    "groups": [],
+    "checks": [],
+    "name": "",
+    "path": "",
+    "id": "d41d8cd98f00b204e9800998ecf8427e"
+  }
+}

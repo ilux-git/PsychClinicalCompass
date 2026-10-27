@@ -2,17 +2,25 @@ from fastapi import APIRouter, Depends
 from sqlalchemy import select
 from pydantic import BaseModel, ConfigDict, Field, StrictInt, field_validator
 
-from app.api.deps import CompassSession, CurrentUser, patient_for_user, require_role
+from app.api.deps import CompassSession, CurrentUser, patient_for_user, patient_read_queries, patient_read_rows, require_role
 from app.modules.access.models import User, UserRole
 from app.modules.assessments.catalog import catalog
 from app.modules.assessments.clinical_models import ClinicalBaseline, ClinicalResult
-from app.modules.assessments.clinical_service import baseline_read, ensure_clinical_survey, result_read, select_baseline
+from app.modules.assessments.clinical_service import baseline_read, ensure_clinical_survey, select_baseline
 from app.modules.assessments.catalog import instrument
 from app.modules.surveys.models import SurveySubmission
 from app.modules.surveys.service import survey_read
+from app.modules.patients.models import Patient
 
 router = APIRouter(tags=["clinical-instruments"])
 Doctor = Depends(require_role([UserRole.doctor]))
+_RESULT_HISTORY = patient_read_queries(select(Patient.id.label("scope_patient_id"), ClinicalResult.id,
+    ClinicalResult.patient_id, ClinicalResult.submission_id, ClinicalResult.instrument_key,
+    ClinicalResult.definition, ClinicalResult.score, ClinicalResult.result, ClinicalResult.created_at,
+    SurveySubmission.answers, SurveySubmission.id.label("response_source_id")).select_from(Patient).outerjoin(
+    ClinicalResult, ClinicalResult.patient_id == Patient.id).outerjoin(
+    SurveySubmission, SurveySubmission.id == ClinicalResult.submission_id).order_by(
+    ClinicalResult.created_at, ClinicalResult.id))
 
 
 class BaselineWrite(BaseModel):
@@ -43,11 +51,11 @@ async def add_instrument(key: str, session: CompassSession, doctor: User = Docto
 
 @router.get("/patients/{patient_id}/clinical-results")
 async def results(patient_id: int, session: CompassSession, user: CurrentUser) -> list[dict]:
-    await patient_for_user(session, user, patient_id)
-    rows = (await session.execute(select(ClinicalResult, SurveySubmission).join(
-        SurveySubmission, SurveySubmission.id == ClinicalResult.submission_id).where(
-        ClinicalResult.patient_id == patient_id).order_by(ClinicalResult.created_at, ClinicalResult.id))).all()
-    return [result_read(row, submission) for row, submission in rows]
+    rows = await patient_read_rows(session, user, patient_id, _RESULT_HISTORY)
+    return [{"id": row.id, "patient_id": row.patient_id, "submission_id": row.submission_id,
+        "instrument_key": row.instrument_key, "definition": row.definition, "score": row.score,
+        "result": row.result, "answers": row.answers, "created_at": row.created_at}
+        for row in rows if row.id is not None and row.response_source_id is not None]
 
 
 @router.get("/patients/{patient_id}/clinical-baselines/{key}")

@@ -1,0 +1,69 @@
+{
+  "verified_at": "2026-10-27T16:08:07.559827+00:00",
+  "base_url": "https://104.238.29.90",
+  "patients": 213,
+  "new_patients": 200,
+  "journey": {
+    "assigned": 529,
+    "opened": 413,
+    "completed": 374,
+    "opened_not_completed": 74,
+    "not_opened_not_completed": 81,
+    "completed_without_open_record": 35,
+    "completed_after_open": 339,
+    "opening_rate_percent": 78.1,
+    "completion_after_open_percent": 82.1,
+    "timing_excluded_generated": 357,
+    "timing_eligible_completed": 17,
+    "assignment_to_completion": {
+      "known": 17,
+      "unknown": 0,
+      "median_seconds": 248400.0
+    },
+    "open_to_completion": {
+      "known": 3,
+      "unknown": 14,
+      "median_seconds": 30.265
+    },
+    "delivery_to_completion": {
+      "known": 0,
+      "unknown": 17,
+      "median_seconds": null
+    },
+    "interpretation": "Назначение означает доступность в кабинете. Показ формы не равен чтению или согласию; интервалы включают перерывы, внешняя доставка не измерена."
+  },
+  "doctor_populations": [
+    111,
+    102
+  ],
+  "privacy": {
+    "min_group_size": 1,
+    "revision": 1,
+    "policy_changed": false,
+    "individual_fields_in_admin_payload": false
+  },
+  "boundaries": {
+    "admin_patient_card": 403,
+    "cohort_patient_other_card": 404,
+    "assigned_doctor_cohort_card": 200,
+    "other_doctor_cohort_card": 404
+  },
+  "new_patient_login_verified": true,
+  "new_patient_assignments": 3,
+  "original_aviandr_profiles_preserved": true,
+  "matched_entry_assets": [
+    {
+      "path": "/assets/index-BDgV-R7c.js",
+      "sha256": "4ffe3f21711a8ed2f80f1a89bce546250a870358f61167117faee609c4f4f250"
+    },
+    {
+      "path": "/assets/index-CqRuwxDY.css",
+      "sha256": "8b4bf9d0ada1702e8568aa30add32ac5c2436dd66c6d2cd930744531c9fa117f"
+    }
+  ],
+  "health": {
+    "compass_db": true,
+    "mis_db": true
+  },
+  "frontend_source_changed": false
+}

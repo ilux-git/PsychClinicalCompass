@@ -3,7 +3,7 @@ from datetime import datetime,timedelta
 from sqlalchemy import func, select
 from sqlalchemy.exc import SQLAlchemyError
 
-from app.api.deps import CompassSession, CurrentUser, patient_for_user
+from app.api.deps import CompassSession, CurrentUser, patient_for_user, patient_read_queries, patient_read_rows
 from app.db.session import async_session_mis
 from app.modules.access.models import User, UserRole
 from app.modules.assessments.models import QuestionnaireResponse
@@ -19,6 +19,15 @@ from app.modules.notes.models import DoctorTask
 from app.modules.alerts.models import Alert
 
 router = APIRouter(prefix="/patients", tags=["patients"])
+_CARD_READ = patient_read_queries(select(Patient, PatientMapping.mis_id.label("mapped_mis_id"),
+    User.id.label("linked_doctor_id"), User.display_name.label("doctor_name"),
+    User.availability.label("doctor_availability")).select_from(Patient).outerjoin(
+    PatientMapping, PatientMapping.compass_patient_id == Patient.id).outerjoin(User, User.id == Patient.doctor_id))
+_ASSESSMENT_HISTORY = patient_read_queries(select(Patient.id.label("scope_patient_id"), QuestionnaireResponse.id,
+    QuestionnaireResponse.form_type, QuestionnaireResponse.form_version, QuestionnaireResponse.answers,
+    QuestionnaireResponse.score, QuestionnaireResponse.risk_flags, QuestionnaireResponse.created_at).select_from(Patient).outerjoin(
+    QuestionnaireResponse, QuestionnaireResponse.patient_id == Patient.id).order_by(
+    QuestionnaireResponse.created_at, QuestionnaireResponse.id))
 
 
 def patient_summary(patient: Patient) -> dict:
@@ -95,35 +104,32 @@ async def directory(session: CompassSession, user: CurrentUser, q: str = Query(d
 
 @router.get("/{patient_id}")
 async def card(patient_id: int, session: CompassSession, user: CurrentUser) -> dict:
-    patient = await patient_for_user(session, user, patient_id)
-    mapping = await session.scalar(select(PatientMapping).where(PatientMapping.compass_patient_id == patient.id))
+    patient, mapped_mis_id, doctor_id, doctor_name, doctor_availability = (
+        await patient_read_rows(session, user, patient_id, _CARD_READ))[0]
     mis: dict = {"source": "MIS", "status": "not_linked", "diagnoses": [], "prescriptions": []}
-    if mapping is not None and mapping.mis_id != patient.mis_id:
+    if mapped_mis_id is not None and mapped_mis_id != patient.mis_id:
         mis["status"] = "mapping_conflict"
-    elif mapping is not None and (case:=scenario_for_mis(patient.mis_id)) is not None:
+    elif mapped_mis_id is not None and (case:=scenario_for_mis(patient.mis_id)) is not None:
         mis.update(source="synthetic_mis_json",status="available",full_name=case["full_name"],
             diagnoses=case["diagnoses"],prescriptions=case["current_prescriptions"])
-    elif mapping is not None:
+    elif mapped_mis_id is not None:
         try:
             async with async_session_mis() as mis_session:
-                source = await mis_session.get(MISPatient, mapping.mis_id)
+                source = await mis_session.get(MISPatient, mapped_mis_id)
                 mis["status"] = "available" if source else "missing"
                 if source:
                     mis.update(full_name=source.full_name, diagnoses=source.diagnoses, prescriptions=source.prescriptions)
         except (SQLAlchemyError, OSError, TimeoutError):
             mis["status"] = "unavailable"
-    doctor = await session.get(User, patient.doctor_id)
     return {**patient_summary(patient), "mis": mis,
-            "doctor": {"name": doctor.display_name, "availability": doctor.availability} if doctor else None}
+            "doctor": {"name": doctor_name, "availability": doctor_availability} if doctor_id is not None else None}
 
 
 @router.get("/{patient_id}/assessments")
 async def assessments(patient_id: int, session: CompassSession, user: CurrentUser) -> list[dict]:
-    await patient_for_user(session, user, patient_id)
-    rows = (await session.scalars(select(QuestionnaireResponse).where(QuestionnaireResponse.patient_id == patient_id)
-                                  .order_by(QuestionnaireResponse.created_at, QuestionnaireResponse.id))).all()
+    rows = await patient_read_rows(session, user, patient_id, _ASSESSMENT_HISTORY)
     return [{"id": r.id, "form_type": r.form_type, "form_version": r.form_version, "answers": r.answers, "score": r.score,
-             "risk_flags": r.risk_flags, "created_at": r.created_at} for r in rows]
+             "risk_flags": r.risk_flags, "created_at": r.created_at} for r in rows if r.id is not None]
 
 
 @router.get("/{patient_id}/timeline")

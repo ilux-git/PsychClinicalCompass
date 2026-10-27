@@ -36,7 +36,7 @@ async def medication_response(session, patient_id, data, source_key, replayed):
 
 @router.get("/patients/{patient_id}/medications")
 async def medication_schedule(patient_id: int, session: CompassSession, user: CurrentUser,
-                              on: date | None = Query(default=None), calendar: Literal["source", "clinic"] = "source"):
+                              on: date | None = Query(default=None), calendar: Literal["source", "clinic"] = "source") -> dict:
     patient = await patient_for_user(session, user, patient_id)
     now = datetime.now(timezone.utc)
     day = on or (clinic_day(now) if calendar == "clinic" else now.date())
@@ -48,8 +48,15 @@ async def medication_schedule(patient_id: int, session: CompassSession, user: Cu
                           and_(MedicationLog.scheduled_for.is_(None), source_date))
     else:
         date_filter = source_date
-    logs = (await session.scalars(select(MedicationLog).where(MedicationLog.patient_id == patient.id,
-        date_filter).order_by(MedicationLog.id))).all()
+    recent_ids = select(MedicationLog.id).where(MedicationLog.patient_id == patient.id).order_by(
+        MedicationLog.id.desc()).limit(30).correlate(None)
+    # The union retains every report on the requested day and the actual latest
+    # 30 reports, including older/future-day reads and unknown scheduled times.
+    report_rows = (await session.execute(select(MedicationLog, date_filter.label("on_selected_day")).where(
+        MedicationLog.patient_id == patient.id, or_(date_filter, MedicationLog.id.in_(recent_ids)))
+        .order_by(MedicationLog.id.desc()))).all()
+    logs = [report for report, on_day in reversed(report_rows) if on_day]
+    recent = [report for report, _ in report_rows[:30]]
     by_key = {(r.item_key, r.occurrence_key): r for r in logs}
     events = []
     for item in items:
@@ -58,10 +65,12 @@ async def medication_schedule(patient_id: int, session: CompassSession, user: Cu
             if report:
                 event.update(status=report.status, report=log_read(report))
             event["can_report"] = event["scheduled_for"] is not None and event["scheduled_for"] <= datetime.now(timezone.utc)
+            # Keep the established ISO offset format when the typed response is
+            # serialized directly by Pydantic instead of jsonable_encoder.
+            if event["scheduled_for"] is not None:
+                event["scheduled_for"] = event["scheduled_for"].isoformat()
             events.append(event)
     current_keys = {(e["item_key"], e["occurrence_key"]) for e in events}
-    recent = (await session.scalars(select(MedicationLog).where(MedicationLog.patient_id == patient.id)
-                                   .order_by(MedicationLog.id.desc()).limit(30))).all()
     return {"day": day, "day_timezone": CLINIC_TIMEZONE if calendar == "clinic" else "source", "items": items, "events": events,
             "historical_reports": [log_read(r) for r in logs if (r.item_key, r.occurrence_key) not in current_keys],
             "recent_reports": [log_read(r) for r in recent],

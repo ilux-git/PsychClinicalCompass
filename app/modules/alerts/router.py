@@ -5,10 +5,10 @@ from collections import defaultdict
 from typing import Literal
 
 from fastapi import APIRouter, Depends, HTTPException, Query
-from sqlalchemy import and_, case, func, or_, select, text
+from sqlalchemy import Integer, and_, bindparam, case, func, or_, select, text
 from sqlalchemy.dialects.postgresql import insert
 
-from app.api.deps import CompassSession, CurrentUser, patient_for_user, require_role
+from app.api.deps import CompassSession, CurrentUser, patient_for_user, patient_read_queries, patient_read_rows, require_role
 from app.modules.access.models import User, UserRole
 from app.modules.alerts.models import Alert, AlertHandling, AlertPresentation, ClinicalDecision
 from app.modules.alerts.clinical_review import completed_action_times, review_timing
@@ -24,6 +24,11 @@ from app.modules.notes.models import DoctorTask
 from app.modules.alerts.schemas import AlertActionWrite, DecisionWrite
 
 router = APIRouter(tags=["alerts"])
+_SUPPORT_HISTORY = patient_read_queries(select(Patient.id.label("scope_patient_id"),
+    Message.id.label("message_id"), Message.text, Message.created_at,
+    Alert.id.label("alert_id"), Alert.status, Alert.acknowledged_at).select_from(Patient).outerjoin(
+    Message, and_(Message.patient_id == Patient.id, Message.support_requested.is_(True))).outerjoin(
+    Alert, Alert.message_id == Message.id).order_by(Message.id.desc()).limit(bindparam("support_limit", type_=Integer)))
 Doctor = Depends(require_role([UserRole.doctor]))
 
 
@@ -112,13 +117,10 @@ async def alerts(session: CompassSession, doctor: User = Doctor, patient_id: int
 @router.get("/patients/{patient_id}/support-requests")
 async def support_requests(patient_id: int, session: CompassSession, user: CurrentUser,
                            limit: int = Query(default=20, ge=1, le=100)) -> list[dict]:
-    await patient_for_user(session, user, patient_id)
-    rows = (await session.execute(select(Message, Alert).outerjoin(Alert, Alert.message_id == Message.id).where(
-        Message.patient_id == patient_id, Message.support_requested.is_(True)
-    ).order_by(Message.id.desc()).limit(limit))).all()
-    return [{"message_id": message.id, "text": message.text, "created_at": message.created_at,
-             "status": alert.status if alert else "queued", "acknowledged_at": alert.acknowledged_at if alert else None,
-             "external_delivery_performed": False} for message, alert in rows]
+    rows = await patient_read_rows(session, user, patient_id, _SUPPORT_HISTORY, parameters={"support_limit": limit})
+    return [{"message_id": row.message_id, "text": row.text, "created_at": row.created_at,
+             "status": row.status if row.alert_id is not None else "queued", "acknowledged_at": row.acknowledged_at,
+             "external_delivery_performed": False} for row in rows if row.message_id is not None]
 
 
 @router.post("/alerts/{alert_id}/actions", status_code=201)

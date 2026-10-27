@@ -1,7 +1,7 @@
 from datetime import datetime, timezone
 
 from fastapi import APIRouter, Depends, HTTPException
-from sqlalchemy import select
+from sqlalchemy import bindparam, select, true
 
 from app.api.deps import CompassSession, patient_for_user, require_role
 from app.modules.access.models import User, UserRole
@@ -9,11 +9,17 @@ from app.modules.audit.service import record_event
 from app.modules.care.models import TreatmentStatusChange
 from app.modules.care.schemas import PatientCareProgress, TreatmentWrite
 from app.modules.care.categories import REFUSAL_CATEGORIES
-from app.modules.integration.synthetic import linked_snapshot
-from app.modules.patients.models import Patient
+from app.modules.integration.synthetic import linked_snapshot, mapped_snapshot
+from app.modules.patients.models import Patient, PatientMapping
 
 router = APIRouter(tags=["care"])
 Doctor = Depends(require_role([UserRole.doctor]))
+_LATEST_TREATMENT = select(TreatmentStatusChange.status, TreatmentStatusChange.created_at).where(
+    TreatmentStatusChange.patient_id == Patient.id).order_by(TreatmentStatusChange.id.desc()).limit(1).correlate(Patient).lateral("latest_treatment")
+_CARE_PROGRESS = select(Patient.mis_id, PatientMapping.mis_id.label("mapped_mis_id"),
+    _LATEST_TREATMENT.c.status, _LATEST_TREATMENT.c.created_at).select_from(Patient).outerjoin(
+    PatientMapping, PatientMapping.compass_patient_id == Patient.id).outerjoin(
+    _LATEST_TREATMENT, true()).where(Patient.user_id == bindparam("scope_user_id"))
 
 
 def visit_progress(source: dict, now: datetime) -> dict:
@@ -56,16 +62,13 @@ def visit_progress(source: dict, now: datetime) -> dict:
 @router.get("/participation/care-progress", response_model=PatientCareProgress)
 async def patient_care_progress(session: CompassSession,
                                 user: User = Depends(require_role([UserRole.patient]))):
-    patient = await session.scalar(select(Patient).where(Patient.user_id == user.id))
-    if patient is None:
+    row = (await session.execute(_CARE_PROGRESS, {"scope_user_id": user.id})).one_or_none()
+    if row is None:
         raise HTTPException(403, "Учётная запись не связана с пациентом")
-    latest = await session.scalar(select(TreatmentStatusChange).where(
-        TreatmentStatusChange.patient_id == patient.id).order_by(TreatmentStatusChange.id.desc()).limit(1))
     now = datetime.now(timezone.utc)
     return {"as_of": now,
-            "treatment": {"status": latest.status if latest else "unknown",
-                          "recorded_at": latest.created_at if latest else None},
-            "visits": visit_progress(await linked_snapshot(session, patient), now)}
+            "treatment": {"status": row.status if row.status is not None else "unknown", "recorded_at": row.created_at},
+            "visits": visit_progress(mapped_snapshot(row.mis_id, row.mapped_mis_id), now)}
 
 
 def status_read(row):

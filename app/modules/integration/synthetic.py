@@ -51,11 +51,15 @@ def patient_snapshot(mis_id: int | None) -> dict:
             "limitations": data.limitations}
 
 
+def mapped_snapshot(patient_mis_id, mapped_mis_id):
+    if mapped_mis_id is None or mapped_mis_id != patient_mis_id:
+        data = patient_snapshot(None)
+        data["status"] = "not_linked" if mapped_mis_id is None else "mapping_conflict"
+        return data
+    return patient_snapshot(mapped_mis_id)
+
+
 async def linked_snapshot(session, patient):
     from app.modules.patients.models import PatientMapping
     mapping = await session.scalar(select(PatientMapping).where(PatientMapping.compass_patient_id == patient.id))
-    if mapping is None or mapping.mis_id != patient.mis_id:
-        data = patient_snapshot(None)
-        data["status"] = "not_linked" if mapping is None else "mapping_conflict"
-        return data
-    return patient_snapshot(mapping.mis_id)
+    return mapped_snapshot(patient.mis_id, mapping.mis_id if mapping is not None else None)

@@ -9,6 +9,26 @@ from app.modules.adherence.medication_models import MedicationItem, MedicationLo
 from app.modules.adherence.medications import occurrences
 
 
+@pytest.mark.parametrize("calendar", ["source", "clinic"])
+async def test_old_requested_day_is_not_truncated_by_recent_history(client, headers, database, calendar):
+    old_day = date(2026, 10, 1)
+    recent_day = date(2026, 10, 25)
+    async with database() as session:
+        rows = [MedicationLog(patient_id=1, client_request_id=str(uuid4()), item_key=f"archived:{i}",
+            occurrence_key=f"{old_day if i < 40 else recent_day}@08:00@UTC:{i}",
+            status="unknown", reason="Не могу уточнить.", scheduled_for=None) for i in range(75)]
+        session.add_all(rows)
+        await session.commit()
+        old_ids = [row.id for row in rows[:40]]
+        latest_ids = [row.id for row in rows[-30:]][::-1]
+    response = await client.get(f"/patients/1/medications?on={old_day}&calendar={calendar}", headers=headers("patient1"))
+    assert response.status_code == 200
+    body = response.json()
+    assert [row["id"] for row in body["historical_reports"]] == old_ids
+    assert [row["id"] for row in body["recent_reports"]] == latest_ids
+    assert all(row["status"] == "unknown" and row["scheduled_for"] is None for row in body["historical_reports"])
+
+
 def content(**changes):
     return {"label": "Моя произвольная позиция", "instructions": "Личное описание", "schedule_text": "По моему плану",
             "schedule_kind": "fixed", "times": ["09:00"], "weekdays": list(range(7)), "timezone": "UTC",

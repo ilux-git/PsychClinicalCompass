@@ -23,7 +23,7 @@ SOURCES = [
     {"code": "apple_state_of_mind", "status": "not_connected", "label": "Apple Health / HealthKit: выбран первым источником, подключение запланировано"},
 ]
 
-_Assignment = namedtuple('_Assignment', 'id survey_id patient_id created_at due_at first_opened_at')
+_Assignment = namedtuple('_Assignment', 'id survey_id patient_id created_at due_at first_opened_at client_request_id')
 _Submission = namedtuple('_Submission', 'id answers created_at')
 
 
@@ -49,11 +49,11 @@ async def clinic_summary(session, minimum: int | None):
     # Aggregate-only facts need no ORM identity state, relationship loaders or private draft fields.
     facts = (await session.execute(select(SurveyAssignment.id, SurveyAssignment.survey_id,
         SurveyAssignment.patient_id, SurveyAssignment.created_at, SurveyAssignment.due_at,
-        SurveyAssignment.first_opened_at, SurveySubmission.id, SurveySubmission.answers,
+        SurveyAssignment.first_opened_at, SurveyAssignment.client_request_id, SurveySubmission.id, SurveySubmission.answers,
         SurveySubmission.created_at).join(
         Survey, Survey.id == SurveyAssignment.survey_id).outerjoin(
         SurveySubmission, SurveySubmission.assignment_id == SurveyAssignment.id))).all()
-    assignments = [(_Assignment(*row[:6]), _Submission(*row[6:]) if row[6] is not None else None) for row in facts]
+    assignments = [(_Assignment(*row[:7]), _Submission(*row[7:]) if row[7] is not None else None) for row in facts]
     # Published definitions are immutable. Fetch each once instead of decoding its
     # JSON again for every assignment; retain the original inner/outer join rows.
     survey_ids = {assignment.survey_id for assignment, _ in assignments}
